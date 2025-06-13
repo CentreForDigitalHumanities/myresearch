@@ -22,12 +22,12 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      # Allow live-reloading of frontend code.
+      # Enable live-reloading of frontend code.
       - ./frontend:/app
       # Use container's node_modules.
-      - /app/node_modules
+      - frontend-node-modules:/app/node_modules
     environment:
-      # Allows Nuxt to be accessible from outside.
+      # Allows Nuxt to be accessible from the outside.
       - HOST=0.0.0.0
 
   vue-prod:
@@ -38,6 +38,9 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.prod
+
+volumes:
+  frontend-node-modules:
 
 networks:
     my-research:

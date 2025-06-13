@@ -10,5 +10,5 @@ COPY package*.json ./
 RUN npm install
 
 # Nuxt 3 default port is 3000.
-# This does not actually expose the port but documents it.
+# Does not actually expose the port but documents it.
 EXPOSE 3000
