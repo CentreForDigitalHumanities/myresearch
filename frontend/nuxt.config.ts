@@ -3,7 +3,20 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-05-15",
   devtools: { enabled: true },
   modules: ["@nuxt/eslint", "@nuxt/test-utils"],
+
+  // Disable server-side rendering.
   ssr: false,
+
+  runtimeConfig: {
+    public: {
+      environment: "",
+      buildDate: "",
+      version: "",
+      SAML_URL: "",
+      API_URL: "",
+      IMPERSONATE_URL: "",
+    }
+  },
 
   vite: {
     server: {
@@ -16,7 +29,7 @@ export default defineNuxtConfig({
       devSourcemap: true,
     },
   },
-  
+
   css: ["@/shared/main.scss"],
 
   app: {
@@ -34,5 +47,10 @@ export default defineNuxtConfig({
       style: [],
       script: [],
     },
+  },
+
+  typescript: {
+    strict: true,
+    typeCheck: true,
   },
 });
