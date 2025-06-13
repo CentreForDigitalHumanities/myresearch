@@ -1,0 +1,44 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: mr-nginx
+    restart: unless-stopped
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "5000:80"
+
+  vue-dev:
+    image: mr-vue-dev
+    container_name: mr-vue
+    restart: no
+    profiles: ["dev"]
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    command: npm run dev
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+    volumes:
+      # Allow live-reloading of frontend code.
+      - ./frontend:/app
+      # Use container's node_modules.
+      - /app/node_modules
+    environment:
+      # Allows Nuxt to be accessible from outside.
+      - HOST=0.0.0.0
+
+  vue-prod:
+    image: mr-vue-prod
+    container_name: mr-vue
+    restart: unless-stopped
+    profiles: ["prod"]
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+
+networks:
+    my-research:
+      driver: bridge
