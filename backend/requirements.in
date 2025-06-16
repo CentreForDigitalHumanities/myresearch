@@ -1,0 +1,8 @@
+cdh-django-core[all] @ git+https://github.com/CentreForDigitalHumanities/django-shared-core.git@v3.2.0
+Django
+django-braces
+django-modeltranslation
+django-impersonate
+django-simple-menu
+django-debug-toolbar
+django-extensions
