@@ -51,33 +51,21 @@ django==5.0.14
     #   djangorestframework
     #   djangosaml2
 django-braces==1.17.0
-    # via
-    #   -r requirements.in
-    #   cdh-django-core
+    # via cdh-django-core
 django-csp==4.0
     # via cdh-django-core
 django-debug-toolbar==5.2.0
-    # via
-    #   -r requirements.in
-    #   cdh-django-core
+    # via cdh-django-core
 django-extensions==4.1
-    # via
-    #   -r requirements.in
-    #   cdh-django-core
+    # via cdh-django-core
 django-filter==25.1
     # via cdh-django-core
 django-impersonate==1.9.5
-    # via
-    #   -r requirements.in
-    #   cdh-django-core
+    # via cdh-django-core
 django-modeltranslation==0.19.15
-    # via
-    #   -r requirements.in
-    #   cdh-django-core
+    # via cdh-django-core
 django-simple-menu==2.1.4
-    # via
-    #   -r requirements.in
-    #   cdh-django-core
+    # via cdh-django-core
 djangorestframework==3.16.0
     # via cdh-django-core
 djangosaml2==1.10.1
