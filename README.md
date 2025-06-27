@@ -1,8 +1,5 @@
 # myresearch
 
-Node: 22.16.0 (LTS)
-Python: ~3.11
-
 This application can be run in one of three modes:
 
 - **Local**: runs the application in development mode on your own machine.
