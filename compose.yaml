@@ -27,9 +27,7 @@ services:
       postgres:
         condition: service_healthy
     restart: no
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    build: ./backend
     healthcheck:
       test: "curl -f localhost:8000"
     volumes:
