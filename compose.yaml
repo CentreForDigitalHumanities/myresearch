@@ -1,4 +1,16 @@
 services:
+  postgres:
+    image: postgres:15
+    container_name: mr-postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: 'psql -c "\l" postgres postgres'
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./backend/create_db.sql:/docker-entrypoint-initdb.d/myresearch.sql
+
   nginx:
     image: nginx:latest
     container_name: mr-nginx
@@ -7,6 +19,29 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
       - "5000:80"
+
+  django-dev:
+    image: mr-django-dev
+    container_name: mr-django
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: no
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    healthcheck:
+      test: "curl -f localhost:8000"
+    volumes:
+      - ./backend:/usr/src/app/backend
+      - bapyca:/usr/src/app/backend/__pycache__
+    expose:
+      - "8000"
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: 'mr-postgres'
 
   vue-dev:
     image: mr-vue-dev
@@ -41,6 +76,8 @@ services:
 
 volumes:
   frontend-node-modules:
+  pgdata:
+  bapyca:
 
 networks:
     my-research:
