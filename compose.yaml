@@ -2,6 +2,7 @@ services:
   nginx:
     image: nginx:latest
     container_name: mr-nginx
+    hostname: mr-nginx
     restart: unless-stopped
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
@@ -10,7 +11,8 @@ services:
 
   vue-dev:
     image: mr-vue-dev
-    container_name: mr-vue
+    container_name: mr-vue-dev
+    hostname: mr-vue
     restart: no
     profiles: ["dev"]
     build:
@@ -32,7 +34,8 @@ services:
 
   vue-prod:
     image: mr-vue-prod
-    container_name: mr-vue
+    container_name: mr-vue-prod
+    hostname: mr-vue
     restart: unless-stopped
     profiles: ["prod"]
     build:
