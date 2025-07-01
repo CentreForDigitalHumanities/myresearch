@@ -23,6 +23,7 @@ services:
   django-dev:
     image: mr-django
     container_name: mr-django-dev
+    hostname: mr-django
     depends_on:
       postgres:
         condition: service_healthy
