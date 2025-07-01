@@ -9,6 +9,9 @@ COPY package*.json ./
 # Install project dependencies.
 RUN npm install
 
+# Copy the rest of the application source code into the container.
+COPY . /app
+
 ENV NUXT_PUBLIC_BUILD_DATE="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
 # Build the application in production mode.
