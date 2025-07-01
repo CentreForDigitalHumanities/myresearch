@@ -84,9 +84,15 @@ ply==3.11
     # via lesscpy
 pscript==0.7.7
     # via vbuild
+psycopg[binary,pool]==3.2.9
+    # via -r requirements.in
+psycopg-binary==3.2.9
+    # via psycopg
+psycopg-pool==3.2.6
+    # via psycopg
 pycparser==2.22
     # via cffi
-pygments==2.19.1
+pygments==2.19.2
     # via bpython
 pyjwt==2.10.1
     # via cdh-django-core
@@ -117,6 +123,10 @@ sqlparse==0.5.3
     # via
     #   django
     #   django-debug-toolbar
+typing-extensions==4.14.0
+    # via
+    #   psycopg
+    #   psycopg-pool
 urllib3==2.5.0
     # via requests
 vbuild==0.8.2
