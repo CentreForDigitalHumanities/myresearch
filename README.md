@@ -14,7 +14,7 @@ The differences are outlined below.
 | Frontend server | Nuxt development server | Nuxt development server in container | NGINX server serving a minimized static build |
 | Backend server | TBD | TBD | TBD |
 | Live-reloading on code changes | ✔ | ✔ | ❌ |
-| Ports available | 3000 (frontend) | 8000 (NGINX), 3000 (frontend) | 5000 (NGINX) |
+| Ports available | 3000 (frontend) | 5000 (NGINX), 3000 (frontend) | 5000 (NGINX) |
 | Logging | Console | TBD | TBD |
 
 
