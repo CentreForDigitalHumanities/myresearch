@@ -21,7 +21,7 @@ services:
       - "5000:80"
 
   django-dev:
-    image: mr-django-dev
+    image: mr-django
     container_name: mr-django
     depends_on:
       postgres:
