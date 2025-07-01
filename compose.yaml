@@ -22,11 +22,12 @@ services:
 
   django-dev:
     image: mr-django
-    container_name: mr-django
+    container_name: mr-django-dev
     depends_on:
       postgres:
         condition: service_healthy
     restart: no
+    profiles: ["dev"]
     build: ./backend
     healthcheck:
       test: "curl -f localhost:8000"
