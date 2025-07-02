@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Main local app
     "main",
+    # GraphQL
+    "graphene_django",
 ]
 
 MIDDLEWARE = [
@@ -85,7 +87,12 @@ DATABASES = {
         "PORT": "5432",
     }
 }
-
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": "mydatabase",
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -131,3 +138,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Auth info
 
 AUTH_USER_MODEL = "main.User"
+
+# Graphene settings
+
+GRAPHENE = {
+    "SCHEMA": "api.graphql.schema.schema",
+}
