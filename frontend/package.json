@@ -12,8 +12,12 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/vue-fontawesome": "^3.0.1",
     "@nuxt/eslint": "^1.4.1",
     "@nuxt/test-utils": "^3.19.1",
+    "bootstrap": "^5.3.7",
     "cdh-vue-lib": "git+https://github.com/CentreForDigitalHumanities/Vue-lib.git#v0.5.8",
     "nuxt": "^3.17.5",
     "vue": "^3.5.16",
@@ -21,9 +25,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
-    "@fortawesome/fontawesome-svg-core": "^6.1.1",
-    "@fortawesome/free-solid-svg-icons": "^6.1.1",
-    "@fortawesome/vue-fontawesome": "^3.0.1",
     "@typescript-eslint/parser": "^8.34.0",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.5.0",
