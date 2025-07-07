@@ -42,10 +42,6 @@ jobs:
       WORKING_DIRECTORY: ./frontend
     steps:
       - uses: actions/checkout@v4
-      - name: Setup SSH for Github
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
