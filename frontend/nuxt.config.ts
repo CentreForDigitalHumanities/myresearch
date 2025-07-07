@@ -12,6 +12,7 @@ export default defineNuxtConfig({
       environment: "",
       buildDate: "",
       version: "",
+      static_dir: "",
       SAML_URL: "",
       API_URL: "",
       IMPERSONATE_URL: "",
@@ -27,10 +28,17 @@ export default defineNuxtConfig({
     },
     css: {
       devSourcemap: true,
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler',
+          loadPaths: ['.', 'node_modules'],
+          quietDeps: true,
+        },
+      },
     },
   },
 
-  css: ["@/shared/main.scss"],
+  css: ["~/assets/css/main.scss"],
 
   app: {
     head: {
