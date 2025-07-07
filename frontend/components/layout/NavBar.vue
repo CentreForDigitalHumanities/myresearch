@@ -53,7 +53,7 @@ const route = useRoute();
 </template>
 
 <style scoped lang="scss">
-@import "node_modules/uu-bootstrap/scss/configuration";
+@use "node_modules/uu-bootstrap/scss/configuration";
 
 .year-select {
     .dropdown-item {
@@ -67,7 +67,7 @@ const route = useRoute();
         display: inline-block;
         margin-right: 0.5rem;
 
-        @each $name, $color in $theme-colors {
+        @each $name, $color in configuration.$theme-colors {
             &.bg-#{$name} {
                 background: $color;
             }

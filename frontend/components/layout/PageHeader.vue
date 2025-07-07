@@ -49,20 +49,20 @@ const title = useAppConfig().globalTitle;
 </template>
 
 <style scoped lang="scss">
-@import "uu-bootstrap/scss/configuration";
+@use "uu-bootstrap/scss/configuration";
 .header-breadcrumbs {
     --bs-breadcrumb-margin-bottom: 0;
 
     .active {
-        color: $text-muted;
+        color: configuration.$text-muted;
     }
 }
 
 .language-switcher {
     cursor: pointer;
-    color: $text-muted;
+    color: configuration.$text-muted;
     text-transform: uppercase;
-    border-left: 1px solid $border-color;
+    border-left: 1px solid configuration.$border-color;
     padding-left: 1rem;
     user-select: none;
 }

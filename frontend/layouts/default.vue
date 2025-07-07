@@ -7,10 +7,10 @@ const title = useAppConfig().globalTitle;
         <Head>
             <Title>{{ title }}</Title>
         </Head>
-        <LayoutHeader />
+        <LayoutPageHeader />
         <LayoutNavBar />
         <slot />
-        <LayoutFooter />
+        <LayoutPageFooter />
     </div>
 </template>
 
