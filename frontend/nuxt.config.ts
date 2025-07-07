@@ -32,7 +32,8 @@ export default defineNuxtConfig({
         scss: {
           api: 'modern-compiler',
           loadPaths: ['.', 'node_modules'],
-        }
+          quietDeps: true,
+        },
       },
     },
   },
