@@ -1,7 +1,5 @@
 <script lang="ts" setup>
 import { BSIcon } from "cdh-vue-lib";
-
-const route = useRoute();
 </script>
 
 <template>
