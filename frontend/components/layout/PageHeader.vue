@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { BSIcon } from "cdh-vue-lib";
+import {useI18n} from "vue-i18n";
+
 const title = useAppConfig().globalTitle;
+const i18n = useI18n();
+
+function setLocale(locale: string) {
+    i18n.locale.value = locale;
+    localStorage.locale = locale;
+}
 </script>
 
 <template>
@@ -8,7 +16,7 @@ const title = useAppConfig().globalTitle;
         <div class="uu-header-row">
             <div class="col-3">
                 <img
-                    alt="Utrecht University"
+                    :alt="$t('Utrecht University')"
                     :src="useStaticFile('/images/logo-header-nl.svg')"
                     class="uu-logo"
                 />
@@ -28,21 +36,23 @@ const title = useAppConfig().globalTitle;
                 </NuxtLink>
             </div>
             <div
-                v-if="false"
+                v-if="$i18n.locale === 'nl'"
                 class="language-switcher"
+                @click="setLocale('en')"
             >
                 English
             </div>
             <div
-                v-if="true"
+                v-if="$i18n.locale === 'en'"
                 class="language-switcher"
+                @click="setLocale('nl')"
             >
-                Dutch
+                Nederlands
             </div>
         </div>
         <div class="uu-header-row">
             <div class="ms-auto">
-                Not logged in
+                {{ $t("Not logged in") }}
             </div>
         </div>
     </div>
