@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { BSButton } from 'cdh-vue-lib';
+
 
 </script>
 
@@ -11,6 +13,9 @@
         <div class="uu-container">
             <div class="col-12">
                 <p>{{ $t("Welcome!") }}</p>
+                <BSButton variant="primary"href="/vwr">
+                    {{ $t("Go to Processing Registry") }}
+                </BSButton>
             </div>
         </div>
     </div>
