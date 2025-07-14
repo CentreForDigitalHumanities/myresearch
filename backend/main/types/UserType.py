@@ -8,6 +8,10 @@ from main.models import User
 
 
 class UserType(DjangoObjectType):
+    """
+    NOTE: This Type was written during a very early phase of development as 
+    a proof-of-concept for implementing graphql
+    """
     class Meta:
         model = get_user_model()
         fields = ["username", "email"]
