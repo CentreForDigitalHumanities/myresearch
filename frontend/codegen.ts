@@ -11,7 +11,6 @@ if ("CODEGEN_SCHEMA" in process.env && process.env.CODEGEN_SCHEMA) {
 const config: CodegenConfig = {
     schema,
     documents: [
-        "*.vue",
         "**/*.vue",
         "composables/*.ts",
         "stores/*.ts",
