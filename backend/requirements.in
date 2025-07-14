@@ -2,3 +2,4 @@ cdh-django-core[all] @ git+https://github.com/CentreForDigitalHumanities/django-
 Django<6
 psycopg[binary,pool]
 graphene-django
+django-cors-headers
