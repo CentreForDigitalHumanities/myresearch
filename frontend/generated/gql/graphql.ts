@@ -21,6 +21,10 @@ export type Query = {
   users?: Maybe<Array<UserType>>;
 };
 
+/**
+ * NOTE: This Type was written during a very early phase of development as
+ * a proof-of-concept for implementing graphql
+ */
 export type UserType = {
   __typename: 'UserType';
   email: Scalars['String']['output'];
