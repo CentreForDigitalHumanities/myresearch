@@ -28,6 +28,12 @@ export default defineConfigWithVueTs([
   ...tseslint.configs.recommended,
   ...tseslint.configs['strictTypeChecked'],
   {
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
     rules: {
       "@typescript-eslint/no-unused-vars": "warn",
       "@typescript-eslint/no-explicit-any": "error",
