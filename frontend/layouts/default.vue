@@ -3,16 +3,15 @@ const title = useAppConfig().globalTitle;
 </script>
 
 <template>
-    <div class="uu-root-container">
-        <Head>
-            <Title>MyResearch</Title>
-        </Head>
-        <LayoutPageHeader />
-        <LayoutNavBar />
-        <slot />
-        <LayoutPageFooter />
-    </div>
+  <div class="uu-root-container">
+    <Head>
+      <Title>{{ title }}</Title>
+    </Head>
+    <LayoutPageHeader />
+    <LayoutNavBar />
+    <slot />
+    <LayoutPageFooter />
+  </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
