@@ -3,10 +3,7 @@ import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
 import pluginVue from "eslint-plugin-vue";
 import prettier from "eslint-plugin-prettier/recommended";
-import vueConfigTypescript, {
-  defineConfigWithVueTs,
-} from "@vue/eslint-config-typescript";
-import vueConfigPrettier from "@vue/eslint-config-prettier";
+import { defineConfigWithVueTs } from "@vue/eslint-config-typescript";
 
 export default defineConfigWithVueTs([
   {
@@ -22,11 +19,14 @@ export default defineConfigWithVueTs([
   {
     rules: {
       "no-unused-vars": "warn",
+      // TypeScript already handles this, and ESLint does not know about
+      // built-in / globally defined variables.
+      "no-undef": "off",
     },
   },
   // ts
   ...tseslint.configs.recommended,
-  ...tseslint.configs['strictTypeChecked'],
+  ...tseslint.configs["strictTypeChecked"],
   {
     languageOptions: {
       parserOptions: {
@@ -52,6 +52,16 @@ export default defineConfigWithVueTs([
         parser: tseslint.parser,
         extraFileExtensions: [".vue"],
       },
+    },
+    rules: {
+      "vue/multi-word-component-names": [
+        "warn",
+        {
+          // Allow single-word component names in Nuxt file names.
+          ignores: ["index", "default", "error"],
+        },
+      ],
+      "vue/no-unused-vars": "warn",
     },
   },
   {
