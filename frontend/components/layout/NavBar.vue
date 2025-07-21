@@ -11,7 +11,7 @@ import { BSIcon } from "cdh-vue-lib";
         <div class="uu-navbar-container">
             <div class="navbar-brand">
                 <img
-                    alt="Utrecht University"
+                    :alt="$t('Utrecht University')"
                     :src="useStaticFile('/images/logo-header-nl.svg')"
                 />
             </div>
@@ -38,7 +38,7 @@ import { BSIcon } from "cdh-vue-lib";
                             class="nav-link"
                             active-class="active"
                         >
-                            My studies
+                            {{ $t("My studies") }}
                         </NuxtLink>
                     </li>
                 </ul>

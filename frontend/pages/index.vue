@@ -4,13 +4,13 @@
 
 <template>
     <div class="uu-content">
-        <Title>MyResearch</Title>
+        <Title>{{ $t("MyResearch") }}</Title>
         <div class="uu-hero">
-            <h1>Welcome to MyResearch!</h1>
+            <h1>{{ $t("Welcome to MyResearch!") }}</h1>
         </div>
         <div class="uu-container">
             <div class="col-12">
-                <p>Welcome!</p>
+                <p>{{ $t("Welcome!") }}</p>
             </div>
         </div>
     </div>

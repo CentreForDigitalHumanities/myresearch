@@ -2,7 +2,7 @@
     <footer class="uu-footer">
         <div class="col-12 col-md-4">
             <img
-                alt="Utrecht University"
+                :alt="$t('Utrecht University')"
                 :src="
                     useStaticFile(
                         '/images/logo-footer-nl.svg'
@@ -14,7 +14,7 @@
             <p>
                 MyResearch
                 <br />
-                Faculty of Humanities
+                {{ $t("Faculty of Humanities") }}
             </p>
         </div>
     </footer>
