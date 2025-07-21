@@ -20,7 +20,7 @@ def check_empty_value(dictionary: dict) -> bool:
 # First check for missing translation keys
 print("Checking for missing translation keys...")
 results = subprocess.run(
-    "npx vue-i18n-extract report --vueFiles './{components,pages,layouts,composables}/**/*.?(ts|vue)' --languageFiles './locales/*.?(json|yml|yaml|js)'",
+    'npx vue-i18n-extract report --vueFiles "./{components,pages,layouts,composables}/**/*.{ts,vue}" --languageFiles "./locales/**/*.{json,yml,yaml,js}"',
     shell=True,
     check=True,
     capture_output=True,
