@@ -13,7 +13,7 @@ import { BSButton } from 'cdh-vue-lib';
         <div class="uu-container">
             <div class="col-12">
                 <p>{{ $t("Welcome!") }}</p>
-                <BSButton variant="primary"href="/vwr">
+                <BSButton variant="primary" href="/vwr">
                     {{ $t("Go to Processing Registry") }}
                 </BSButton>
             </div>
