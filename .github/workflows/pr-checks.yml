@@ -50,10 +50,10 @@ jobs:
           cache-dependency-path: "${{ env.WORKING_DIRECTORY }}/package-lock.json"
       - name: Install dependencies
         working-directory: ${{ env.WORKING_DIRECTORY }}
-        run: yarn install --frozen-lockfile
+        run: npm ci
       - name: Check
         working-directory: ${{ env.WORKING_DIRECTORY }}
         run: |
-          yarn prettier --version
-          yarn prettier -w . # Change '.' if you don't want to check everything under working-dir
+          npm run prettier -- --version
+          npm run prettier -- -w . # Change '.' if you don't want to check everything under working-dir
           git diff | cat
