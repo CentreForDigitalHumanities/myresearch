@@ -57,3 +57,24 @@ jobs:
           npx prettier --version
           npx prettier -w . # Change '.' if you don't want to check everything under working-dir
           git diff | cat
+
+  translations:
+    name: Check for missing translations
+    runs-on: ubuntu-latest
+    env:
+      WORKING_DIRECTORY: ./frontend
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: "npm"
+          cache-dependency-path: "${{ env.WORKING_DIRECTORY }}/package-lock.json"
+      - name: Install dependencies
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: npm ci
+      - name: Check frontend translations
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: |
+          npm run i18n-check
