@@ -54,6 +54,6 @@ jobs:
       - name: Check
         working-directory: ${{ env.WORKING_DIRECTORY }}
         run: |
-          npx prettier -- --version
-          npx prettier -- -w . # Change '.' if you don't want to check everything under working-dir
+          npx prettier --version
+          npx prettier -w . # Change '.' if you don't want to check everything under working-dir
           git diff | cat
