@@ -1,0 +1,59 @@
+name: Run PR quality checks
+
+on:
+  pull_request:
+
+jobs:
+  check-migrations:
+    name: Check for missing migrations
+    runs-on: ubuntu-latest
+    env:
+      WORKING_DIRECTORY: ./backend
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11" # Update if needed
+      - name: Install dependencies
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Check for missing migrations
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: |
+          python manage.py makemigrations --dry-run --check
+
+  black-check:
+    name: Check if Black thinks everything is correctly formatted
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: psf/black@stable
+        with:
+          src: ./backend
+          options: --check --diff
+
+  prettier-check:
+    name: Check if Prettier thinks everything is correctly formatted
+    runs-on: ubuntu-latest
+    env:
+      WORKING_DIRECTORY: ./frontend
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: "npm"
+          cache-dependency-path: "${{ env.WORKING_DIRECTORY }}/package-lock.json"
+      - name: Install dependencies
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: npm ci
+      - name: Check
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: |
+          npx prettier --version
+          npx prettier -w . # Change '.' if you don't want to check everything under working-dir
+          git diff | cat
