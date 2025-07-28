@@ -41,7 +41,9 @@ function stepperItemClasses(step: FormStep): string {
 
 <template>
   <div class="stepper">
-    <p>{{ useTranslateableAttribute(props.stepConfig, "title") }}</p>
+    <p class="mb-4">
+      {{ useTranslateableAttribute(props.stepConfig, "title") }}
+    </p>
     <ul>
       <li v-for="(step, index) in props.stepConfig.steps" :key="index">
         <a :class="stepperItemClasses(step)">
@@ -53,7 +55,7 @@ function stepperItemClasses(step: FormStep): string {
         <ul v-if="step.children.length > 0">
           <li v-for="(child, childIndex) in step.children" :key="childIndex">
             <a :class="stepperItemClasses(child)">
-              <span class="stepper-bubble stepper-bubble-large"></span>
+              <span class="stepper-bubble stepper-bubble-medium"></span>
               <span>{{ useTranslateableAttribute(child, "label") }}</span>
             </a>
           </li>

@@ -32,6 +32,7 @@ export interface TextQuestion extends BaseQuestion {
   type: "text";
   placeholderNl?: string;
   placeholderEn?: string;
+  lines?: number; // For multiline text / textarea questions.
 }
 
 interface MultipleTextQuestion extends TextQuestion {
@@ -46,14 +47,12 @@ interface SelectOption {
   labelEn: string;
 }
 
-interface SelectQuestion extends BaseQuestion {
+export interface SelectQuestion extends BaseQuestion {
   type: "select";
   options: SelectOption[];
 }
-interface DateQuestion extends BaseQuestion {
+export interface DateQuestion extends BaseQuestion {
   type: "date";
-  placeholderNl?: string;
-  placeholderEn?: string;
 }
 
 interface CheckboxQuestion extends BaseQuestion {

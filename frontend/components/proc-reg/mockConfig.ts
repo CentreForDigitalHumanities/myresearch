@@ -87,11 +87,45 @@ export const mockVwr: FormConfig = {
               ],
               required: true,
             },
+            {
+              id: "department",
+              labelNl: "Departement",
+              labelEn: "Department",
+              type: "select",
+              order: 2,
+              options: [
+                {
+                  value: "gkg",
+                  labelNl: "Geschiedenis en Kunstgeschiedenis",
+                  labelEn: "History and Art History",
+                },
+                {
+                  value: "tlc",
+                  labelNl: "Talen, Literatuur en Communicatie",
+                  labelEn: "Languages, Literature and Communication",
+                },
+                {
+                  value: "mcw",
+                  labelNl: "Media en Cultuurwetenschappen",
+                  labelEn: "Media and Culture Studies",
+                },
+                {
+                  value: "fnr",
+                  labelNl: "Filosofie en Religiewetenschappen",
+                  labelEn: "Philosophy and Religious Studies",
+                },
+              ],
+            },
           ],
           sideConfig: {
-            titleNl: "Vragen?",
-            titleEn: "Questions?",
-            paragraphs: [
+            questions: [
+              {
+                textNl:
+                  "Kan ik een faculteit invullen waarbij de eindverantwoordelijke niet werkzaam is?",
+                textEn:
+                  "Can I fill in a faculty where the responsible person is not employed?",
+                link: "dummy",
+              },
               {
                 textNl:
                   "Kan ik een faculteit invullen waarbij de eindverantwoordelijke niet werkzaam is?",
@@ -115,9 +149,7 @@ export const mockVwr: FormConfig = {
         },
       ],
       sideConfig: {
-        titleNl: "Vragen?",
-        titleEn: "Questions?",
-        paragraphs: [
+        questions: [
           {
             textNl: "Wat wordt er bedoeld met een studie?",
             textEn: "What is meant by a study?",
@@ -142,6 +174,101 @@ export const mockVwr: FormConfig = {
           },
         ],
       },
+    },
+    {
+      slug: "study-period",
+      labelNl: "Studieperiode",
+      labelEn: "Study period",
+      stepNameNL: "Studieperiode",
+      stepNameEN: "Study period",
+      order: 2,
+      descriptionNl:
+        "Wanneer begin je met het verzamelen van persoonsgegevens en wanneer verwacht je de resultaten te publiceren?",
+      descriptionEn:
+        "When do you start collecting personal data and when do you expect to publish the results?",
+      questions: [
+        {
+          id: "begin-date",
+          labelNl: "Startdatum",
+          labelEn: "Start date",
+          descriptionNl:
+            "Dit is de datum waarop begint met het verzamelen van persoonsgegevens.",
+          descriptionEn: "This is the date you start collecting personal data.",
+          type: "date",
+          order: 1,
+          required: true,
+        },
+        {
+          id: "end-date",
+          labelNl: "Einddatum",
+          labelEn: "End date",
+          descriptionNl:
+            "Dit is de verwachte publicatiedatum van de onderzoeksresultaten. Op deze datum gaat de archiveringstermijn van de onderzoeksdata in.",
+          descriptionEn:
+            "This is the expected publication date of the research results. The archiving period for the research data starts on this date.",
+          type: "date",
+          order: 2,
+          required: true,
+        },
+      ],
+      sideConfig: {
+        questions: [
+          {
+            textNl:
+              "Wat gebeurt er als de hier opgegeven periode is verstreken?",
+            textEn: "What happens when the specified period has expired?",
+            link: "dummy",
+          },
+          {
+            textNl: "Moet ik de archiveringsperiode meetellen?",
+            textEn: "Do I need to include the archiving period?",
+            link: "dummy",
+          },
+        ],
+      },
+    },
+    {
+      slug: "research-goal",
+      labelNl: "Onderzoeksdoel",
+      labelEn: "Research goal",
+      stepNameNL: "Onderzoeksdoel",
+      stepNameEN: "Research goal",
+      order: 3,
+      sideConfig: {
+        questions: [
+          {
+            textNl: "Wat wordt bedoeld met onderzoeksdoel?",
+            textEn: "What is meant by research goal?",
+            link: "dummy",
+          },
+          {
+            textNl: "Kan ik ook meerdere doelen opgeven?",
+            textEn: "Can I also specify multiple goals?",
+            link: "dummy",
+          },
+        ],
+        extraInfo: [
+          {
+            textNl:
+              "Persoonsgegevens mogen alleen worden verwerkt als daarmee minimaal één specifiek, welomschreven doel wordt gediend. Met deze vraag gaan we na wat het onderzoeksdoel is. Mocht je onderzoek meerdere doelen hebben, voeg dan velden toe met behulp van de knop onder het invoerveld.  Bij wetenschappelijk onderzoek is het niet altijd mogelijk om vooraf precies met zekerheid aan te geven dat de persoonsgegevens niet voor een enigszins ander doel gebruikt gaan worden. Het doel kan in de loop van je onderzoek namelijk verschuiven, bijvoorbeeld op basis van de voorlopige resultaten. Is hiervan sprake, kom dan in de toekomst terug naar deze tool en pas het antwoord op deze vraag aan.",
+            textEn:
+              "Personal data may only be processed if at least one specific, well-defined purpose is served. With this question, we will examine what the research goal is. If your research has multiple goals, please add fields using the button below the input field. In scientific research, it is not always possible to indicate in advance with certainty that the personal data will not be used for a somewhat different purpose. The purpose may shift during the course of your research, for example based on preliminary results. If this is the case, please return to this tool in the future and adjust your answer to this question.",
+          },
+        ],
+      },
+      questions: [
+        {
+          type: "text",
+          id: "research-goal",
+          labelNl: "Wat is het doel van je onderzoek?",
+          labelEn: "What is the goal of your research?",
+          placeholderNl: "Onderzoeksdoel",
+          placeholderEn: "Research goal",
+          order: 1,
+          lines: 5,
+          required: true,
+        },
+      ],
     },
   ],
 };

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { TextQuestion } from "../proc-reg/types";
+import type { DateQuestion } from "../proc-reg/types";
 
 interface Props {
-  question: TextQuestion;
+  question: DateQuestion;
 }
 
 defineProps<Props>();
@@ -19,17 +19,6 @@ defineProps<Props>();
     >
       {{ useTranslateableAttribute(question, "description") }}
     </p>
-    <input
-      v-if="!question.lines || question.lines < 2"
-      :id="question.id"
-      type="text"
-      class="form-control"
-    />
-    <textarea
-      v-if="question.lines && question.lines >= 2"
-      :id="question.id"
-      class="form-control"
-      :rows="question.lines"
-    ></textarea>
+    <input :id="question.id" type="date" class="form-control" />
   </div>
 </template>

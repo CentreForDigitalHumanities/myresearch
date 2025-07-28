@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { BSButton } from "cdh-vue-lib";
 import type { FormConfig, FormStep } from "../proc-reg/types";
 import FormStepper, { type FormStepperConfig } from "./FormStepper.vue";
@@ -11,6 +11,8 @@ interface Props {
 const props = defineProps<Props>();
 
 const formStepperConfig = computed<FormStepperConfig>(() => {
+  const selectedStepSlug = selectedStep.value?.slug;
+
   return {
     titleNl: props.formConfig.labelNl,
     titleEn: props.formConfig.labelEn,
@@ -19,7 +21,7 @@ const formStepperConfig = computed<FormStepperConfig>(() => {
       labelNl: step.stepNameNL,
       labelEn: step.stepNameEN,
       completed: false,
-      active: false,
+      active: step.slug === selectedStepSlug,
       disabled: false,
       children:
         step.substeps?.map((substep) => ({
@@ -27,7 +29,7 @@ const formStepperConfig = computed<FormStepperConfig>(() => {
           labelNl: substep.stepNameNL,
           labelEn: substep.stepNameEN,
           completed: false,
-          active: false,
+          active: substep.slug === selectedStepSlug,
           disabled: false,
           children: [],
         })) ?? [],
@@ -38,12 +40,66 @@ const formStepperConfig = computed<FormStepperConfig>(() => {
 const selectedStep = ref<FormStep | null>(
   props.formConfig.steps.length > 0 ? props.formConfig.steps[0] : null,
 );
+
+function getAllSteps(): FormStep[] {
+  const allSteps: FormStep[] = [];
+
+  props.formConfig.steps.forEach((step) => {
+    // Add main step.
+    allSteps.push(step);
+
+    if (!step.substeps || step.substeps.length === 0) {
+      return;
+    }
+
+    // Add substeps sorted by order.
+    const sortedSubsteps = [...step.substeps].sort((a, b) => a.order - b.order);
+    allSteps.push(...sortedSubsteps);
+  });
+
+  return allSteps;
+}
+
+function findCurrentStepIndex(): number {
+  const selectedStepValue = selectedStep.value;
+  if (!selectedStepValue) {
+    return -1;
+  }
+
+  const allSteps = getAllSteps();
+  return allSteps.findIndex((step) => step.slug === selectedStepValue.slug);
+}
+
 function nextStep(): void {
-  console.log("Next step clicked");
+  if (!selectedStep.value) {
+    return;
+  }
+
+  const allSteps = getAllSteps();
+  const currentIndex = findCurrentStepIndex();
+
+  if (currentIndex === -1 || currentIndex >= allSteps.length - 1) {
+    // Already at the last step or step not found.
+    return;
+  }
+
+  selectedStep.value = allSteps[currentIndex + 1];
 }
 
 function previousStep(): void {
-  console.log("Previous step clicked");
+  if (!selectedStep.value) {
+    return;
+  }
+
+  const allSteps = getAllSteps();
+  const currentIndex = findCurrentStepIndex();
+
+  if (currentIndex <= 0) {
+    // Already at the first step or step not found.
+    return;
+  }
+
+  selectedStep.value = allSteps[currentIndex - 1];
 }
 </script>
 

@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 export interface SideBarConfig {
-  titleNl?: string;
-  titleEn?: string;
-  paragraphs: {
+  questions?: {
     textNl: string;
     textEn: string;
-    link?: string;
+    link: string;
+  }[];
+  extraInfo?: {
+    textNl: string;
+    textEn: string;
   }[];
 }
 
@@ -15,20 +17,36 @@ const props = defineProps<{
 </script>
 <template>
   <div class="uu-form-help">
-    <div v-if="props.config.titleNl || props.config.titleEn">
-      <strong>{{ useTranslateableAttribute(props.config, "title") }}</strong>
+    <div class="help-item">
+      <div v-if="props.config.questions?.length">
+        <strong>{{ $t("Questions?") }}</strong>
+      </div>
+      <template v-for="(question, index) in config.questions" :key="index">
+        <a
+          :href="question.link"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="d-block my-1"
+        >
+          {{ useTranslateableAttribute(question, "text") }}
+        </a>
+      </template>
     </div>
-    <template v-for="(paragraph, index) in config.paragraphs" :key="index">
-      <a
-        v-if="paragraph.link"
-        :href="paragraph.link"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {{ useTranslateableAttribute(paragraph, "text") }}
-      </a>
-      <p v-else>{{ useTranslateableAttribute(paragraph, "text") }}</p>
-      <br />
-    </template>
+    <div class="help-item">
+      <div v-if="props.config.extraInfo?.length">
+        <strong>{{ $t("Additional Information") }}</strong>
+        <ul>
+          <li v-for="(info, index) in props.config.extraInfo" :key="index">
+            {{ useTranslateableAttribute(info, "text") }}
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.help-item:not(:last-child) {
+  margin-bottom: 2rem;
+}
+</style>
