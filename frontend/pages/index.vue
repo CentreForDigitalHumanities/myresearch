@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
   <div class="uu-content">
     <Title>MyResearch</Title>
@@ -8,7 +6,7 @@
     </div>
     <div class="uu-container">
       <div class="col-12">
-        <p>Welcome!</p>
+        <p>This website is a work in progress.</p>
       </div>
     </div>
   </div>

@@ -11,7 +11,8 @@ interface FormStep {
 }
 
 export interface FormStepperConfig {
-  title: string;
+  titleNl: string;
+  titleEn: string;
   steps: Array<FormStep>;
 }
 
@@ -38,6 +39,7 @@ function stepperItemClasses(step: FormStep): string {
 
 <template>
   <div class="stepper">
+    <p>{{ useTranslateableAttribute(props.stepConfig, "title") }}</p>
     <ul>
       <li v-for="(step, index) in props.stepConfig.steps" :key="index">
         <a :class="stepperItemClasses(step)">
