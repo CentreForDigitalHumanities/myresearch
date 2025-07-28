@@ -2,6 +2,7 @@
 import { useTranslateableAttribute } from "~/composables/useTranslation";
 
 interface FormStep {
+  slug: string;
   labelNl: string;
   labelEn: string;
   children: FormStep[];
@@ -11,12 +12,13 @@ interface FormStep {
 }
 
 export interface FormStepperConfig {
-  titleNl: string;
-  titleEn: string;
+  titleNl?: string;
+  titleEn?: string;
   steps: Array<FormStep>;
 }
 
 interface Props {
+  selectedStep: string;
   stepConfig: FormStepperConfig;
 }
 

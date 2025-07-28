@@ -37,6 +37,7 @@ export default defineConfigWithVueTs([
     rules: {
       "@typescript-eslint/no-unused-vars": "warn",
       "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-unnecessary-type-parameters": "warn",
     },
   },
   // vue
@@ -69,4 +70,15 @@ export default defineConfigWithVueTs([
   },
   // prettier
   prettier,
+  {
+    rules: {
+      ...prettier.rules,
+      "prettier/prettier": [
+        "warn",
+        {
+          endOfLine: "lf", // Warn on CRLF line endings
+        },
+      ],
+    },
+  },
 ]);
