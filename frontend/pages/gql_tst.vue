@@ -10,6 +10,7 @@ import { type GetAllUsersQuery } from "~/generated/gql/graphql";
 const GET_USERS = graphql(`
   query getAllUsers {
     users {
+      id
       username
       email
     }

@@ -149,3 +149,9 @@ AUTH_USER_MODEL = "main.User"
 GRAPHENE = {
     "SCHEMA": "api.graphql.schema.schema",
 }
+
+try:
+    # Import local settings if present
+    from .local_settings import *
+except ImportError:
+    pass
