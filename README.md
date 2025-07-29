@@ -1,3 +1,5 @@
+[![Checks](https://github.com/CentreForDigitalHumanities/myresearch/actions/workflows/pr-checks.yml/badge.svg)](https://github.com/CentreForDigitalHumanities/myresearch/actions/workflows/pr-checks.yml)
+
 # myresearch
 
 This application can be run in one of three modes:

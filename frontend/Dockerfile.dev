@@ -1,5 +1,11 @@
 FROM node:22.16.0-alpine
 
+# Add git.
+RUN apk add --no-cache git
+
+# Add python because of the i18n-check script
+RUN apk add python3
+
 # Set the working directory in the container.
 WORKDIR /app
 

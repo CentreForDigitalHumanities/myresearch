@@ -10,7 +10,9 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "codegen": "graphql-codegen --verbose --watch"
+    "codegen": "graphql-codegen --verbose --watch",
+    "i18n-extract": "vue-i18n-extract report --vueFiles \"./{components,pages,layouts,composables}/**/*.{ts,vue}\" --languageFiles \"./locales/**/*.{json,yml,yaml,js}\" --add",
+    "i18n-check": "python i18n-check.py"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
@@ -19,7 +21,7 @@
     "@nuxt/eslint": "^1.4.1",
     "@nuxt/test-utils": "^3.19.1",
     "bootstrap": "^5.3.7",
-    "cdh-vue-lib": "git+https://github.com/CentreForDigitalHumanities/Vue-lib.git#v0.5.8",
+    "cdh-vue-lib": "git+https://github.com/CentreForDigitalHumanities/Vue-lib.git#v0.6.0",
     "@vue/apollo-composable": "^4.2.2",
     "apollo-client": "^2.6.10",
     "graphql": "^15.10.1",
@@ -28,6 +30,7 @@
     "uu-bootstrap": "git+https://github.com/UtrechtUniversity/UU-Bootstrap.git#v1.5.0-alpha.1",
     "vue": "^3.5.16",
     "vue-apollo": "^3.1.2",
+    "vue-i18n": "^11.1.9",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
@@ -39,11 +42,13 @@
     "eslint": "^9.28.0",
     "eslint-plugin-vue": "^10.2.0",
     "globals": "^16.2.0",
+    "prettier": "^3.6.2",
     "prettier-eslint": "^16.4.2",
     "sass-embedded": "^1.89.2",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.34.0",
     "vue-eslint-parser": "^10.1.3",
+    "vue-i18n-extract": "^2.0.7",
     "vue-tsc": "^2.2.10"
   }
 }
