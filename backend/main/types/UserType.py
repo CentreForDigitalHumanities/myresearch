@@ -14,7 +14,7 @@ class UserType(DjangoObjectType):
     """
     class Meta:
         model = get_user_model()
-        fields = ["username", "email"]
+        fields = ["id", "username", "email"]
 
     @classmethod
     def get_queryset(cls, queryset: QuerySet[User], info: ResolveInfo) -> QuerySet[User]:
