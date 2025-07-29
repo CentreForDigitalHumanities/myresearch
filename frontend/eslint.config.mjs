@@ -26,7 +26,7 @@ export default defineConfigWithVueTs([
   },
   // ts
   ...tseslint.configs.recommended,
-  ...tseslint.configs['strictTypeChecked'],
+  ...tseslint.configs["strictTypeChecked"],
   {
     rules: {
       "@typescript-eslint/no-unused-vars": "warn",

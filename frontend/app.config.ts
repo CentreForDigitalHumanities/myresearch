@@ -1,3 +1,3 @@
 export default defineAppConfig({
-    globalTitle: "MyResearch",
+  globalTitle: "MyResearch",
 });

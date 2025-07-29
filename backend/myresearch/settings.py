@@ -27,6 +27,9 @@ SECRET_KEY = "django-insecure-s8e=1!*6dzct5!vn$0%qdc!x4$_vhd895g0a1#e$_v+oqbvvyq
 DEBUG = True
 
 ALLOWED_HOSTS = []
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 
 # Application definition
@@ -40,17 +43,27 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Main local app
     "main",
+    # Cors headers
+    "corsheaders",
+    # GraphQL
+    "graphene_django",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
 
 ROOT_URLCONF = "myresearch.urls"
 
@@ -86,7 +99,6 @@ DATABASES = {
         "PORT": "5432",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -132,3 +144,15 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Auth info
 
 AUTH_USER_MODEL = "main.User"
+
+# Graphene settings
+
+GRAPHENE = {
+    "SCHEMA": "api.graphql.schema.schema",
+}
+
+try:
+    # Import local settings if present
+    from .local_settings import *
+except ImportError:
+    pass

@@ -51,6 +51,15 @@ The differences are outlined below.
 
     (TODO: add backend install instructions).
 
+5. For development, the backend requires supplementing the settings.py with a
+local_settings.py file, which contains the following settings:
+
+    ```
+    CORS_ALLOW_ALL_ORIGINS = True
+    CORS_ALLOW_CREDENTIALS = True
+
+    CSRF_TRUSTED_ORIGINS = ["http://*:3000"]
+    ```
 
 ## Running the application in Docker
 
