@@ -13,5 +13,7 @@ class UserType(DjangoObjectType):
         fields = ["id", "username", "email"]
 
     @classmethod
-    def get_queryset(cls, queryset: QuerySet[User], info: ResolveInfo) -> QuerySet[User]:
+    def get_queryset(
+        cls, queryset: QuerySet[User], info: ResolveInfo
+    ) -> QuerySet[User]:
         return queryset.all()

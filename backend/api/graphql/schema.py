@@ -7,6 +7,4 @@ class Query(ListUsersQuery, ObjectType):
     pass
 
 
-schema = Schema(
-    query=Query
-)
+schema = Schema(query=Query)
