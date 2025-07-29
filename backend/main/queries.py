@@ -10,4 +10,4 @@ class ListUsersQuery(graphene.ObjectType):
     users = DjangoListField(UserType)
 
     def resolve_users(self, info):
-        return get_user_model().objects.all()
+        return UserType.get_queryset(get_user_model().objects.all(), info)
