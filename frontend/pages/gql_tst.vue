@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { graphql } from "~/generated/gql";
-import { useQuery } from "@vue/apollo-composable"
+import { useQuery } from "@vue/apollo-composable";
 import { type GetAllUsersQuery } from "~/generated/gql/graphql";
 
 // WARNING!
@@ -8,24 +8,25 @@ import { type GetAllUsersQuery } from "~/generated/gql/graphql";
 // REMOVE THIS PAGE AND QUERY ONCE WE HAVE ACTUAL CONTENT!
 
 const GET_USERS = graphql(`
-query getAllUsers {
-  users {
-    username
-    email
+  query getAllUsers {
+    users {
+      username
+      email
+    }
   }
-}`
-);
-    
-    const {
-      result: usersResult,
-      loading: usersLoading,
-      error: usersError
-    } = useQuery<GetAllUsersQuery>(GET_USERS);
-    
-  </script>
+`);
+
+const {
+  result: usersResult,
+  loading: usersLoading,
+  error: usersError,
+} = useQuery<GetAllUsersQuery>(GET_USERS);
+</script>
 
 <template>
   <div>
-    <p v-for="user in usersResult?.users ?? []">{{ user.username }} {{ user.email }}</p>
+    <p v-for="user in usersResult?.users ?? []">
+      {{ user.username }} {{ user.email }}
+    </p>
   </div>
 </template>
