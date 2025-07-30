@@ -10,8 +10,8 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "i18n-extract": "npx vue-i18n-extract report --vueFiles \"./{components,pages,layouts,composables}/**/*.{ts,vue}\" --languageFiles \"./locales/**/*.{json,yml,yaml,js}\" --add",
     "codegen": "graphql-codegen --verbose --watch",
-    "i18n-extract": "vue-i18n-extract report --vueFiles \"./{components,pages,layouts,composables}/**/*.{ts,vue}\" --languageFiles \"./locales/**/*.{json,yml,yaml,js}\" --add",
     "i18n-check": "python i18n-check.py"
   },
   "dependencies": {
