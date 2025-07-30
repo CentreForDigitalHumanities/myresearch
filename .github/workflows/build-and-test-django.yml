@@ -11,12 +11,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Set up Compose
         uses: docker/setup-compose-action@v1
-      - name: Copy test environment
-        run: |
-          cp .env.example .env
+      - name: Copy test environment variables
+        run: cp .env.example .env
+      - name: Build django-prod container
+        run: docker compose build django-prod
       - name: Run Django tests
-        run: |
-          docker compose run django-prod python manage.py test
+        run: docker compose run django-prod python manage.py test
       - name: Check for missing migrations
-        run: |
-          docker compose run django-prod python manage.py makemigrations --dry-run --check
+        run: docker compose run django-prod python manage.py makemigrations --dry-run --check
