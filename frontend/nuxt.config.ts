@@ -16,7 +16,7 @@ export default defineNuxtConfig({
       SAML_URL: "",
       API_URL: "",
       IMPERSONATE_URL: "",
-    }
+    },
   },
 
   vite: {
@@ -30,8 +30,8 @@ export default defineNuxtConfig({
       devSourcemap: true,
       preprocessorOptions: {
         scss: {
-          api: 'modern-compiler',
-          loadPaths: ['.', 'node_modules'],
+          api: "modern-compiler",
+          loadPaths: [".", "node_modules"],
           quietDeps: true,
         },
       },

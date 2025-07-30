@@ -61,23 +61,23 @@ function setLocale(locale: string) {
 <style scoped lang="scss">
 @use "uu-bootstrap/scss/configuration";
 .header-breadcrumbs {
-    --bs-breadcrumb-margin-bottom: 0;
+  --bs-breadcrumb-margin-bottom: 0;
 
-    .active {
-        color: configuration.$text-muted;
-    }
+  .active {
+    color: configuration.$text-muted;
+  }
 }
 
 .language-switcher {
-    cursor: pointer;
-    color: configuration.$text-muted;
-    text-transform: uppercase;
-    border-left: 1px solid configuration.$border-color;
-    padding-left: 1rem;
-    user-select: none;
+  cursor: pointer;
+  color: configuration.$text-muted;
+  text-transform: uppercase;
+  border-left: 1px solid configuration.$border-color;
+  padding-left: 1rem;
+  user-select: none;
 }
 
 .uu-logo {
-    height: 50px;
+  height: 50px;
 }
 </style>

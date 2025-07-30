@@ -54,22 +54,22 @@ import { BSIcon } from "cdh-vue-lib";
 @use "node_modules/uu-bootstrap/scss/configuration";
 
 .year-select {
-    .dropdown-item {
-        display: flex;
-        align-items: center;
-        line-height: 2rem;
-    }
-    .year-color-box {
-        width: 1.5rem;
-        height: 1.5rem;
-        display: inline-block;
-        margin-right: 0.5rem;
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    line-height: 2rem;
+  }
+  .year-color-box {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: inline-block;
+    margin-right: 0.5rem;
 
-        @each $name, $color in configuration.$theme-colors {
-            &.bg-#{$name} {
-                background: $color;
-            }
-        }
+    @each $name, $color in configuration.$theme-colors {
+      &.bg-#{$name} {
+        background: $color;
+      }
     }
+  }
 }
 </style>
