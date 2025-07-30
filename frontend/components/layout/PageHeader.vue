@@ -31,7 +31,7 @@ function setLocale(locale: string) {
                 v-if="true"
                 class="border-left px-3"
             >
-                <NuxtLink to="/admin/" class="nav-link">
+                <NuxtLink to="/backend/admin/" class="nav-link">
                     <BSIcon icon="gear" size="lg" />
                 </NuxtLink>
             </div>
