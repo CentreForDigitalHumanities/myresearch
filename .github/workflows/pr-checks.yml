@@ -76,5 +76,4 @@ jobs:
         run: npm ci
       - name: Check frontend translations
         working-directory: ${{ env.WORKING_DIRECTORY }}
-        run: |
-          npm run i18n-check
+        run: npm run i18n-check
