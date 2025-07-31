@@ -4,12 +4,10 @@ FROM python:3.11-alpine
 RUN apk add --no-cache git
 
 # Set up directories
-RUN mdkir -p /var/www/backend-static/
+RUN mkdir -p /var/www/backend-static/
 WORKDIR /usr/src/app/backend
 COPY . .
 
 # Install requirements
 RUN pip install -U pip pip-tools && pip install -r requirements.txt
 RUN pip install gunicorn
-
-COPY . .
