@@ -1,0 +1,617 @@
+[
+    {
+        "model": "main.user",
+        "pk": 1,
+        "fields": {
+            "username": "admin",
+            "password": "plain$admin",
+            "first_name": "Ad",
+            "last_name": "Min",
+            "email": "example@example.org",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": true
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 2,
+        "fields": {
+            "username": "professor1",
+            "password": "plain$professor1",
+            "first_name": "Jordan",
+            "last_name": "Belfort",
+            "email": "Jordan.Belfort@harvard-example.edu",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 3,
+        "fields": {
+            "username": "professor2",
+            "password": "plain$professor2",
+            "first_name": "Edo",
+            "last_name": "Storm",
+            "email": "E.Storm@harvard-example.edu",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 4,
+        "fields": {
+            "username": "professor3",
+            "password": "plain$professor3",
+            "first_name": "Isaac",
+            "last_name": "Newton",
+            "email": "isaacnewton@university-example.org",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 5,
+        "fields": {
+            "username": "professor4",
+            "password": "plain$professor4",
+            "first_name": "Georg",
+            "last_name": "Ohm",
+            "email": "georg.ohm@university-example.org",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 6,
+        "fields": {
+            "username": "professor5",
+            "password": "plain$professor5",
+            "first_name": "John Davison",
+            "last_name": "Rockefeller",
+            "email": "John.D.Rockefeller@university-example.org",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 7,
+        "fields": {
+            "username": "staff1",
+            "password": "plain$staff1",
+            "first_name": "Joseph",
+            "last_name": "Weeler",
+            "email": "Joseph+Weeler@university-example.org",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 8,
+        "fields": {
+            "username": "staff2",
+            "password": "plain$staff2",
+            "first_name": "Anthony",
+            "last_name": "West",
+            "email": "Anthony_West@university-example.org",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 9,
+        "fields": {
+            "username": "staff3",
+            "password": "plain$staff3",
+            "first_name": "Oscar",
+            "last_name": "Burton",
+            "email": "Osc@r__Burton@university-example.org",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 10,
+        "fields": {
+            "username": "student1",
+            "password": "plain$student1",
+            "first_name": "Student",
+            "last_name": "One",
+            "email": "student1@diy.surfconext.nl",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 11,
+        "fields": {
+            "username": "student2",
+            "password": "plain$student2",
+            "first_name": "Student",
+            "last_name": "Two",
+            "email": "s1869831907@example.org",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 12,
+        "fields": {
+            "username": "student3",
+            "password": "plain$student3",
+            "first_name": "",
+            "last_name": "Three",
+            "email": "student3@diy.surfconext.nl",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 13,
+        "fields": {
+            "username": "student4",
+            "password": "plain$student4",
+            "first_name": "Godfried",
+            "last_name": "Viggo",
+            "email": "Godfried.Viggo@unidenmark-example.dk",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 14,
+        "fields": {
+            "username": "student5",
+            "password": "plain$student5",
+            "first_name": "Daisuke",
+            "last_name": "Takahashi \u9ad9\u6a4b \u5927\u8f14",
+            "email": "U3342109@exchange-example.edu",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 15,
+        "fields": {
+            "username": "student6",
+            "password": "plain$student6",
+            "first_name": "Ph\u00f9ng Th\u1ecb",
+            "last_name": "L\u1ec7 T\u01b0",
+            "email": "LeTu02@home-university-example.org",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 16,
+        "fields": {
+            "username": "student7",
+            "password": "plain$student7",
+            "first_name": "Jaantje",
+            "last_name": "van der Sanden",
+            "email": "jsanden@uniamsterdam-example.nl",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 17,
+        "fields": {
+            "username": "student8",
+            "password": "plain$student8",
+            "first_name": "Alessandra",
+            "last_name": "G\u00f3mez Llarnas",
+            "email": "s445599@universitatmadrid-example.es",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 18,
+        "fields": {
+            "username": "student9",
+            "password": "plain$student9",
+            "first_name": "August",
+            "last_name": "Brise\u00f1o",
+            "email": "A.Briseno@universitatmadrid-example.es",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 19,
+        "fields": {
+            "username": "student10",
+            "password": "plain$student10",
+            "first_name": "Shao",
+            "last_name": "Jingy",
+            "email": "s134567@pkuni.edu-example.cn",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 20,
+        "fields": {
+            "username": "student11",
+            "password": "plain$student11",
+            "first_name": "Roman",
+            "last_name": "\u0160vejda",
+            "email": "U9088123@uni.poznantech-example.pl",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 21,
+        "fields": {
+            "username": "student12",
+            "password": "plain$student12",
+            "first_name": "Anna",
+            "last_name": "Ryb\u00ednov\u00e1",
+            "email": "U7128109@uni.poznantech-example.pl",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 22,
+        "fields": {
+            "username": "student13",
+            "password": "plain$student13",
+            "first_name": "Li Qin",
+            "last_name": "Ch'ien",
+            "email": "p0987743@pkuni.edu-example.cn",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 23,
+        "fields": {
+            "username": "student14",
+            "password": "plain$student14",
+            "first_name": "Martin",
+            "last_name": "J\u00f8rgensen",
+            "email": "jorgensen07@stockholmuni-example.se",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 24,
+        "fields": {
+            "username": "student15",
+            "password": "plain$student15",
+            "first_name": "Sander",
+            "last_name": "Kj\u00e6r",
+            "email": "kjaer11@stockholmuni-example.se",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 25,
+        "fields": {
+            "username": "student16",
+            "password": "plain$student16",
+            "first_name": "Er\u00f4ss",
+            "last_name": "Neci",
+            "email": "eross.neci@kuni.edu-example.tr",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 26,
+        "fields": {
+            "username": "student17",
+            "password": "plain$student17",
+            "first_name": "Kocsis",
+            "last_name": "Szesc\u00f5",
+            "email": "kocsis.szesco@kuni.edu-example.tr",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 27,
+        "fields": {
+            "username": "student18",
+            "password": "plain$student18",
+            "first_name": "Marjanca",
+            "last_name": "Mur\u0161i\u0107",
+            "email": "Marjanca.Mursic@kuni.edu-example.tr",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 28,
+        "fields": {
+            "username": "student19",
+            "password": "plain$student19",
+            "first_name": "Petra",
+            "last_name": "Penttil\u00e4",
+            "email": "ppentila@hotmail-example.org",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 29,
+        "fields": {
+            "username": "student20",
+            "password": "plain$student20",
+            "first_name": "J\u00f3ney",
+            "last_name": "Ing\u00f3lfsd\u00f3ttir",
+            "email": "Joney.Ingolfsdottir@unidenmark-example.dk",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 30,
+        "fields": {
+            "username": "student21",
+            "password": "plain$student21",
+            "first_name": "Pietje",
+            "last_name": "Puk",
+            "email": "Pietje.puk@exmplebilbioharderwijk.nl",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 31,
+        "fields": {
+            "username": "teacher1",
+            "password": "plain$teacher1",
+            "first_name": "Joseph",
+            "last_name": "Stiglitz",
+            "email": "J.E.Stiglitz@harvard-example.edu",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 32,
+        "fields": {
+            "username": "teacher2",
+            "password": "plain$teacher2",
+            "first_name": "Paul",
+            "last_name": "Krugman",
+            "email": "P.R.Krugman@harvard-example.edu",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 33,
+        "fields": {
+            "username": "teacher3",
+            "password": "plain$teacher3",
+            "first_name": "Ben",
+            "last_name": "Bernanke",
+            "email": "B.S.Bernanke@yale-uni-example.edu",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 34,
+        "fields": {
+            "username": "teacher4",
+            "password": "plain$teacher4",
+            "first_name": "Alan",
+            "last_name": "Greenspan",
+            "email": "A.Greenspan@yale-uni-example.edu",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 35,
+        "fields": {
+            "username": "teacher5",
+            "password": "plain$teacher5",
+            "first_name": "Andr\u00e9-Marie",
+            "last_name": "Amp\u00e8re",
+            "email": "am_ampere@electrical-uni-example.edu",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 36,
+        "fields": {
+            "username": "teacher6",
+            "password": "plain$teacher6",
+            "first_name": "Wilhelm",
+            "last_name": "R\u00f6ntgen",
+            "email": "w_rontgen@electrical-uni-example.edu",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 37,
+        "fields": {
+            "username": "teacher7",
+            "password": "plain$teacher7",
+            "first_name": "Michael",
+            "last_name": "Faraday",
+            "email": "m_faraday@electrical-uni-example.edu",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 38,
+        "fields": {
+            "username": "teacher8",
+            "password": "plain$teacher8",
+            "first_name": "Nikola",
+            "last_name": "Tesla",
+            "email": "n_tesla@electrical-uni-example.edu",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 39,
+        "fields": {
+            "username": "teacher9",
+            "password": "plain$teacher9",
+            "first_name": "Bill",
+            "last_name": "Gates",
+            "email": "bill.gates@stanford-example.edu",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 40,
+        "fields": {
+            "username": "teacher10",
+            "password": "plain$teacher10",
+            "first_name": "Steve",
+            "last_name": "Jobs",
+            "email": "steve.jobs@stanford-example.edu",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "main.user",
+        "pk": 41,
+        "fields": {
+            "username": "caesar",
+            "password": "plain$caesar",
+            "first_name": "Caesar",
+            "last_name": "Bruttius",
+            "email": "caesar.bruttius@spqr.ro",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-05-02T08:27:53.470Z",
+            "is_superuser": false
+        }
+    }
+]

@@ -34,6 +34,11 @@ INTERNAL_IPS = [
 
 # Application definition
 
+LOCAL_APPS = [
+    # Main local app
+    "main",
+]
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -41,8 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Main local app
-    "main",
+    ] + LOCAL_APPS + [
     # Cors headers
     "corsheaders",
     # GraphQL
