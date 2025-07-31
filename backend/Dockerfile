@@ -9,5 +9,6 @@ WORKDIR /usr/src/app/backend
 COPY . .
 
 # Install requirements
+RUN --mount=type=cache,target=/root/.cache/pip
 RUN pip install -U pip pip-tools && pip install -r requirements.txt
 RUN pip install gunicorn

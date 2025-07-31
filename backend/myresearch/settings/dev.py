@@ -10,3 +10,13 @@ ALLOWED_HOSTS = [
 ]
 
 from .generic_settings import *
+
+try:
+    from .local_settings import *
+except ImportError:
+    print(
+        "No local settings found. You can put local Django settings "
+        "in myresearch/settings/local_settings.py and Django will "
+        "load them when running the dev profile."
+    )
+    
