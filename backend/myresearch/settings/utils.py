@@ -2,11 +2,13 @@ from django.core.exceptions import ImproperlyConfigured
 
 import os
 
+
 def discover(key, default):
     """
     Get a key from os.env with a mandatory default value.
     """
     return os.getenv(key, default)
+
 
 def discover_or_fail(key):
     """

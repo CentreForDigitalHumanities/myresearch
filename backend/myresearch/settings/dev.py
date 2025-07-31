@@ -19,4 +19,3 @@ except ImportError:
         "in myresearch/settings/local_settings.py and Django will "
         "load them when running the dev profile."
     )
-    
