@@ -26,9 +26,7 @@ SECRET_KEY = "django-insecure-s8e=1!*6dzct5!vn$0%qdc!x4$_vhd895g0a1#e$_v+oqbvvyq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    "mr-django", '.localhost', '127.0.0.1', '[::1]'
-]
+ALLOWED_HOSTS = ["mr-django", ".localhost", "127.0.0.1", "[::1]"]
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
@@ -41,19 +39,23 @@ LOCAL_APPS = [
     "main",
 ]
 
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    ] + LOCAL_APPS + [
-    # Cors headers
-    "corsheaders",
-    # GraphQL
-    "graphene_django",
-]
+INSTALLED_APPS = (
+    [
+        "django.contrib.admin",
+        "django.contrib.auth",
+        "django.contrib.contenttypes",
+        "django.contrib.sessions",
+        "django.contrib.messages",
+        "django.contrib.staticfiles",
+    ]
+    + LOCAL_APPS
+    + [
+        # Cors headers
+        "corsheaders",
+        # GraphQL
+        "graphene_django",
+    ]
+)
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

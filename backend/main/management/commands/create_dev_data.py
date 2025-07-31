@@ -6,15 +6,16 @@ from django.apps import apps
 
 from main.models import User
 
+
 class Command(BaseCommand):
     help = "Create dev dataset for myresearch"
 
     # All models for which dev data has been implemented. Add the model to
     # this list when dev data creation has been implemented for this model.
     dev_data_models = [
-            User,
-        ]
-    
+        User,
+    ]
+
     def print(self, options, *args, **kwargs):
         if not options["silent"]:
             print(*args, **kwargs)
@@ -41,12 +42,14 @@ class Command(BaseCommand):
         for fixture in fixtures:
             call_command("loaddata", fixture)
 
-    def _check_all_models_implemented(self,):
+    def _check_all_models_implemented(
+        self,
+    ):
         """
         Gather all models from LOCAL_APPS and check if they are all present in
         dev_data_models.
         """
-        
+
         all_mr_models = []
 
         for app in settings.LOCAL_APPS:

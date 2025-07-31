@@ -27,5 +27,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("api.urls")),
     # Used as a healthcheck by the docker container
-    path('healthcheck/', lambda r: HttpResponse())
+    path("healthcheck/", lambda r: HttpResponse()),
 ]
