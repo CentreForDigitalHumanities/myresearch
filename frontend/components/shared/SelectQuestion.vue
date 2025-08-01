@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { SelectQuestion } from "../proc-reg/types";
+import type { SelectQuestion } from "../form/types";
 
 interface Props {
   question: SelectQuestion;

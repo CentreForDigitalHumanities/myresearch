@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { DateQuestion } from "../proc-reg/types";
+import type { DateQuestion } from "../form/types";
 
 interface Props {
   question: DateQuestion;

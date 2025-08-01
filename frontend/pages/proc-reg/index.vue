@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { mockVwr } from "~/components/proc-reg/mockConfig";
+import { mockVwr } from "~/components/form/procRegMockConfig";
 
 const formConfig = mockVwr;
 </script>

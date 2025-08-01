@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { FormStep } from "../proc-reg/types";
+import type { FormStep } from "../form/types";
 import FormSideBar from "./FormSideBar.vue";
 import TextQuestion from "./TextQuestion.vue";
 import SelectQuestion from "./SelectQuestion.vue";

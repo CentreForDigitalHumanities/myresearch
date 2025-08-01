@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { TextQuestion } from "../proc-reg/types";
+import type { TextQuestion } from "../form/types";
 
 interface Props {
   question: TextQuestion;

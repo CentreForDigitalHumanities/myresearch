@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed } from "vue";
 import { BSButton } from "cdh-vue-lib";
-import type { FormConfig, FormStep } from "../proc-reg/types";
+import type { FormConfig, FormStep } from "../form/types";
 import FormStepper, { type FormStepperConfig } from "./FormStepper.vue";
 
 interface Props {
