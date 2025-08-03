@@ -1,2 +1,2 @@
 # Change this if you run the backend in a different location
-NUXT_PUBLIC_API_BASE_URL="http://localhost:8000/api"
+NUXT_PUBLIC_API_URL="http://localhost:8000/api"
