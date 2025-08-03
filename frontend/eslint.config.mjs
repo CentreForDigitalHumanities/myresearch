@@ -54,10 +54,14 @@ export default defineConfigWithVueTs([
             },
         },
         rules: {
+            // Set indent to 4 spaces for HTML in .vue files.
+            "vue/html-indent": ["warn", 4],
+            // Allow more than one attribute per line in Vue templates.
+            "vue/max-attributes-per-line": "off",
+            // Allow single-word component names in Nuxt file names.
             "vue/multi-word-component-names": [
                 "warn",
                 {
-                    // Allow single-word component names in Nuxt file names.
                     ignores: ["index", "default", "error"],
                 },
             ],
@@ -65,6 +69,6 @@ export default defineConfigWithVueTs([
         },
     },
     {
-        ignores: ["node_modules", ".nuxt", ".output", "dist"],
+        ignores: ["node_modules", ".nuxt", ".output", "dist", "generated"],
     },
 ]);
