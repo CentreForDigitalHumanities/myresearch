@@ -1,68 +1,68 @@
 import type { SideBarConfig } from "../shared/FormSideBar.vue";
 
 interface BaseFormElement {
-  labelNl?: string;
-  labelEn?: string;
-  descriptionNl?: string;
-  descriptionEn?: string;
+    labelNl?: string;
+    labelEn?: string;
+    descriptionNl?: string;
+    descriptionEn?: string;
 }
 
 interface Orderable {
-  order: number;
+    order: number;
 }
 export interface FormConfig extends BaseFormElement {
-  steps: FormStep[];
+    steps: FormStep[];
 }
 export interface FormStep extends BaseFormElement, Orderable {
-  slug: string;
-  stepNameNL: string;
-  stepNameEN: string;
-  questions: Question[];
-  substeps?: FormStep[];
-  sideConfig?: SideBarConfig;
+    slug: string;
+    stepNameNL: string;
+    stepNameEN: string;
+    questions: Question[];
+    substeps?: FormStep[];
+    sideConfig?: SideBarConfig;
 }
 
 interface BaseQuestion extends BaseFormElement, Orderable {
-  id: string;
-  required?: boolean;
-  disabled?: boolean;
+    id: string;
+    required?: boolean;
+    disabled?: boolean;
 }
 
 export interface TextQuestion extends BaseQuestion {
-  type: "text";
-  placeholderNl?: string;
-  placeholderEn?: string;
-  lines?: number; // For multiline text / textarea questions.
+    type: "text";
+    placeholderNl?: string;
+    placeholderEn?: string;
+    lines?: number; // For multiline text / textarea questions.
 }
 
 interface MultipleTextQuestion extends TextQuestion {
-  multiple: true;
-  buttonTextNl: string;
-  buttonTextEn: string;
+    multiple: true;
+    buttonTextNl: string;
+    buttonTextEn: string;
 }
 
 interface SelectOption {
-  value: string;
-  labelNl: string;
-  labelEn: string;
+    value: string;
+    labelNl: string;
+    labelEn: string;
 }
 
 export interface SelectQuestion extends BaseQuestion {
-  type: "select";
-  options: SelectOption[];
+    type: "select";
+    options: SelectOption[];
 }
 export interface DateQuestion extends BaseQuestion {
-  type: "date";
+    type: "date";
 }
 
 interface CheckboxQuestion extends BaseQuestion {
-  type: "checkbox";
-  options: SelectOption[];
+    type: "checkbox";
+    options: SelectOption[];
 }
 
 type Question =
-  | TextQuestion
-  | MultipleTextQuestion
-  | SelectQuestion
-  | DateQuestion
-  | CheckboxQuestion;
+    | TextQuestion
+    | MultipleTextQuestion
+    | SelectQuestion
+    | DateQuestion
+    | CheckboxQuestion;
