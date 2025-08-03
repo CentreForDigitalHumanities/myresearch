@@ -3,7 +3,7 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-let schema = `${process.env.NUXT_PUBLIC_API_URL}/graphql`;
+let schema = `${process.env.NUXT_PUBLIC_API_URL ?? ""}/graphql`;
 if ("CODEGEN_SCHEMA" in process.env && process.env.CODEGEN_SCHEMA) {
   schema = process.env.CODEGEN_SCHEMA;
 }
