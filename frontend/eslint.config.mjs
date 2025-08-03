@@ -2,7 +2,6 @@ import globals from "globals";
 import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
 import pluginVue from "eslint-plugin-vue";
-import prettier from "eslint-plugin-prettier/recommended";
 import { defineConfigWithVueTs } from "@vue/eslint-config-typescript";
 
 export default defineConfigWithVueTs([
@@ -67,19 +66,5 @@ export default defineConfigWithVueTs([
     },
     {
         ignores: ["node_modules", ".nuxt", ".output", "dist"],
-    },
-    // prettier
-    prettier,
-    {
-        rules: {
-            ...prettier.rules,
-            "prettier/prettier": [
-                "warn",
-                {
-                    endOfLine: "lf", // Warn on CRLF line endings
-                    tabWidth: 4, // Use 4 spaces for indentation
-                },
-            ],
-        },
     },
 ]);
