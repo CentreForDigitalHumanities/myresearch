@@ -87,7 +87,7 @@ npm run i18n-extract
 This tool adds missing keys with an initial empty string as values. (A newer version of `vue-i18n-extract` includes
 an option to use `null` as initial value instead, but there is no release for this yet as of July 2025.)
 
-To check whether all keys are available **and** all messages have been translated, run:
+To check whether there are no missing keys **and** all messages have been translated, run:
 
 ```bash
 npm run i18n-check
