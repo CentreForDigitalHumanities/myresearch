@@ -60,7 +60,7 @@ function stepperItemClasses(step: FormStep): string {
                         <a :class="stepperItemClasses(child)">
                             <span
                                 class="stepper-bubble stepper-bubble-medium"
-                            ></span>
+                            />
                             <span>{{
                                 useTranslateableAttribute(child, "label")
                             }}</span>

@@ -9,7 +9,7 @@
         <div class="col-12 col-md-8 text-md-end">
             <p>
                 MyResearch
-                <br />
+                <br>
                 Faculty of Humanities
             </p>
         </div>

@@ -24,12 +24,12 @@ defineProps<Props>();
             :id="question.id"
             type="text"
             class="form-control"
-        />
+        >
         <textarea
             v-if="question.lines && question.lines >= 2"
             :id="question.id"
             class="form-control"
             :rows="question.lines"
-        ></textarea>
+        />
     </div>
 </template>
