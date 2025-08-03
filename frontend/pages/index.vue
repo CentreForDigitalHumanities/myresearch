@@ -6,7 +6,7 @@
         </div>
         <div class="uu-container">
             <div class="col-12">
-                <p>{{ $t("This website is a work in progress.") }}</p>
+                <p>{{ $t("This website is a work in progress") }}</p>
             </div>
         </div>
     </div>
