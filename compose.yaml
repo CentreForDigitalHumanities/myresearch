@@ -12,7 +12,7 @@ services:
       - pgdata:/var/lib/postgresql/data
       - ./backend/create_db.sql:/docker-entrypoint-initdb.d/myresearch.sql
 
-  nginx-dev:
+  nginx-dev: &nginx-dev
     image: nginx:latest
     container_name: mr-nginx-dev
     hostname: mr-nginx
@@ -26,20 +26,16 @@ services:
       - "5000:80"
 
   nginx-prod:
-    image: nginx:latest
+    <<: *nginx-dev
     container_name: mr-nginx-prod
-    hostname: mr-nginx
-    restart: unless-stopped
     profiles: ["prod"]
     depends_on:
       - django-prod
     volumes:
       - ./nginx.conf.prod:/etc/nginx/nginx.conf:ro
       - basta:/var/www/backend_static
-    ports:
-      - "5000:80"
 
-  django-dev:
+  django-dev: &django-dev
     image: mr-django
     container_name: mr-django-dev
     hostname: mr-django
@@ -68,26 +64,16 @@ services:
       DJANGO_SETTINGS_MODULE: "myresearch.settings.dev"
 
   django-prod:
-    image: mr-django
+    <<: *django-dev
     container_name: mr-django-prod
-    hostname: mr-django
-    depends_on:
-      postgres:
-        condition: service_healthy
     restart: unless-stopped
     profiles: ["prod"]
-    build:
-      context: ./backend
-    healthcheck:
-      test: "curl -f localhost/backend/:8000"
     volumes:
       - basta:/var/www/backend-static/
-    expose:
-      - "8000"
     command: sh -c "
       python manage.py migrate &&
       python manage.py collectstatic --no-input &&
-      python manage.py runserver 0.0.0.0:8000
+      gunicorn --timeout 300 --reload -b 0.0.0.0:8000 myresearch.wsgi:application
       "
     environment:
       DB_HOST: 'mr-postgres'
