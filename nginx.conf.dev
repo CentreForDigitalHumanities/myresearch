@@ -3,33 +3,23 @@ events { worker_connections 1024; }
 http {
     include /etc/nginx/mime.types;
     
+    proxy_http_version 1.1;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Forwarded-Host $host;
     proxy_set_header X-Port $server_port;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "Upgrade";
 
     server {
         listen 80;
 
         location /backend/ {
-	    # A resolver is required for hostname lookup at runtime
-	    # 127.0.0.11 is the Docker DNS server
-	    # resolver 127.0.0.11 valid=30s;
-	    # Uncomment this rewrite rule to hide the /backend/ URL
-	    # prefix from the backend
-	    #	    rewrite ^/backend/(.*) /$1;
-	    # Hide destination in a variable so nginx will start up
-	    # without this resolving this host first.
-	    #	    set $destination ;
             proxy_pass http://mr-django:8000;
-            proxy_http_version 1.1;
         }
 
         location / {
             proxy_pass http://mr-vue:3000;
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection "Upgrade";
         }
     }
 }
