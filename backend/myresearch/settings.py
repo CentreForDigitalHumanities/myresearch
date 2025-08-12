@@ -35,7 +35,6 @@ INTERNAL_IPS = [
 # Application definition
 
 LOCAL_APPS = [
-    # Main local app
     "main",
 ]
 
