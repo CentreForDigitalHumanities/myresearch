@@ -26,6 +26,6 @@ from django.views.decorators.csrf import csrf_exempt
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("api.urls")),
-    # Used as a healthcheck by the docker container
+    # Used for a healthcheck by the Docker container.
     path("healthcheck/", lambda r: HttpResponse()),
 ]
