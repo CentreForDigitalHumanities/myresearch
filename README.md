@@ -73,7 +73,7 @@ The `create_db.sql` script in the root of the repository can be used to create
 the database and user with the correct permissions. Run it as follows.
 
 ```bash
-psql -U postgres -f create_db.sql
+psql -U <your-postgres-username> -f create_db.sql
 ```
 
 Note that this is not needed if you are using the provided Docker setup. Also, 
