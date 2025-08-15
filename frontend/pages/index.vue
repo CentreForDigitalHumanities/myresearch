@@ -48,9 +48,7 @@
       </div>
       <aside class="uu-sidebar">
         <h2 class="uu-sidebar-header-linked">Contact</h2>
-        <!-- header stripe does not yet work here -->
         <p>
-          <!-- mail should probably come from a db or config file, that way rebo implementation will be easier -->
           {{ $t("Voor vragen neem contact op met de privacy officier: ")
           }}<a href="mailto:l.j.w.m.kessels@uu.nl">l.j.w.m.kessels@uu.nl</a>
         </p>
@@ -62,5 +60,4 @@
     </div>
   </div>
 </template>
-
 <style scoped></style>
