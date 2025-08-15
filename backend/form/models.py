@@ -94,16 +94,18 @@ class BaseQuestion(models.Model):
         abstract = True
 
 
-class SelectOption(models.Model):
-    label = models.CharField(max_length=200)
-    default_selected = models.BooleanField(default=False)
-
-
 class SelectQuestion(BaseQuestion):
-    options = models.ManyToManyField(SelectOption, related_name="questions")
     multiple = models.BooleanField(
         default=False,
         help_text="Allows multiple options to be selected if true.",
+    )
+
+
+class SelectOption(models.Model):
+    label = models.CharField(max_length=200)
+    default_selected = models.BooleanField(default=False)
+    question = models.ForeignKey(
+        SelectQuestion, on_delete=models.CASCADE, related_name="options"
     )
 
 
