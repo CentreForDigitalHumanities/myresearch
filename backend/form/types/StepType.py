@@ -1,4 +1,4 @@
-from graphene import ResolveInfo, List
+from graphene import NonNull, ResolveInfo, List, Field
 from graphene_django import DjangoObjectType
 
 from django.db.models import QuerySet, Model
@@ -8,11 +8,11 @@ from form.types.QuestionType import (
     DateQuestionType,
     FileUploadQuestionType,
     NumberQuestionType,
-    QuestionType,
     SelectQuestionType,
     TextQuestionType,
     TrueFalseQuestionType,
 )
+from form.types.StepInfoType import StepInfoType
 from form.models import (
     BaseQuestion,
     BaseQuestion,
@@ -21,13 +21,15 @@ from form.models import (
     NumberQuestion,
     SelectQuestion,
     Step,
+    StepInfo,
     TextQuestion,
     TrueFalseQuestion,
 )
 
 
 class StepType(DjangoObjectType):
-    questions = List(BaseQuestionInterface)
+    questions = List(NonNull(BaseQuestionInterface))
+    info = Field(StepInfoType)
 
     class Meta:
         model = Step
@@ -43,6 +45,7 @@ class StepType(DjangoObjectType):
             "parent",
             "parent_order",
             "substeps",
+            "info",
         ]
 
     @classmethod
@@ -69,7 +72,7 @@ class StepType(DjangoObjectType):
             (SelectQuestionType, SelectQuestion),
             (TextQuestionType, TextQuestion),
         ]
-        
+
         questions: list[BaseQuestion] = []
         for question_type, question_model in question_types:
             question_queryset = question_type.get_queryset(
@@ -78,3 +81,10 @@ class StepType(DjangoObjectType):
             questions.extend(question_queryset)
 
         return questions
+
+    @staticmethod
+    def resolve_info(parent: Step, info: ResolveInfo) -> StepInfo | None:
+        try:
+            return StepInfoType.get_queryset(StepInfo.objects, info).get(step=parent)
+        except StepInfo.DoesNotExist:
+            return None

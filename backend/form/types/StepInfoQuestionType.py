@@ -11,6 +11,7 @@ class StepInfoQuestionType(DjangoObjectType):
         model = StepInfoQuestion
         fields = [
             "id",
+            "step_info",
             "text_nl",
             "text_en",
             "link"
