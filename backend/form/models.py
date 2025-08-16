@@ -62,7 +62,9 @@ class StepInfo(models.Model):
     More information and FAQ for a specific Step within a Form.
     """
 
-    step = models.OneToOneField(Step, on_delete=models.CASCADE, related_name="info")
+    step = models.OneToOneField(
+        Step, null=True, blank=True, on_delete=models.CASCADE, related_name="info"
+    )
 
 
 class StepInfoQuestion(models.Model):
