@@ -1,7 +1,31 @@
 <script lang="ts" setup>
-import { mockVwr } from "~/components/form/procRegMockConfig";
+import { graphql } from "~/generated/gql";
 
-const formConfig = mockVwr;
+const GET_FORM = graphql(`
+    query GetForm {
+        form {
+            id
+            nameEn
+            nameNl
+            descriptionEn
+            descriptionNl
+            steps {
+                ...StepFragment
+                formOrder
+                substeps {
+                    ...StepFragment
+                    parentOrder
+                }
+            }
+        }
+    }
+`);
+
+const { result: formResult } = usePerformQuery({
+    queryDocument: GET_FORM,
+});
+
+const form = computed(() => formResult.value?.form ?? null);
 </script>
 
 <template>
@@ -11,7 +35,7 @@ const formConfig = mockVwr;
             <h1>{{ $t("Processing Registry") }}</h1>
         </div>
         <div class="uu-container">
-            <SharedMRForm :form-config="formConfig" />
+            <SharedMRForm v-if="form" :form="form" />
         </div>
     </div>
 </template>
