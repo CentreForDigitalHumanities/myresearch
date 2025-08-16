@@ -65,6 +65,8 @@ class Command(BaseCommand):
         Generate FormConfig and associated form.
         """
 
+        print("Generating FormConfig and Form...")
+
         form_config = FormConfig.objects.create(
             name="Mock Form Config",
             version="1.0",
@@ -77,6 +79,8 @@ class Command(BaseCommand):
             description_en=self.faker_en.paragraph(),
             config=form_config,
         )
+
+        print("Done!")
 
     def _generate_steps(self, options) -> None:
         for form in tqdm(Form.objects.all(), desc="Generating steps..."):
@@ -179,6 +183,7 @@ class Command(BaseCommand):
                 **_base_question_fields(step),
                 placeholder_nl=self.faker_nl.sentence(),
                 placeholder_en=self.faker_en.sentence(),
+                lines=self.faker.random_int(1, 5),
             )
 
         def _create_true_false_question(step: Step) -> None:

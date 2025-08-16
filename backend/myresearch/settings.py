@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     # GraphQL
     "graphene_django",
     # MR project apps
-    "form"
+    "form",
 ]
 
 MIDDLEWARE = [

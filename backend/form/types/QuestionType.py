@@ -107,6 +107,7 @@ class TextQuestionType(DjangoObjectType):
             "id",
             "placeholder_nl",
             "placeholder_en",
+            "lines",
         ]
 
     @classmethod

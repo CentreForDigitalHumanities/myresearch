@@ -28,7 +28,7 @@ from form.models import (
 
 
 class StepType(DjangoObjectType):
-    questions = List(NonNull(BaseQuestionInterface))
+    questions = List(NonNull(BaseQuestionInterface), required=True)
     info = Field(StepInfoType)
 
     class Meta:

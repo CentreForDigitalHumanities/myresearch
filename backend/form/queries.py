@@ -1,7 +1,6 @@
 from typing import Optional
-from graphene import Field, List, NonNull, ObjectType, ResolveInfo
+from graphene import Field, ObjectType, ResolveInfo
 
-from django.db.models import QuerySet
 
 from form.types.FormType import FormType
 from form.models import Form
