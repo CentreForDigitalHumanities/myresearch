@@ -29,6 +29,19 @@ const GET_FORM = graphql(`
                     descriptionEn
                     descriptionNl
                     required
+                    ... on SelectQuestionType {
+                        options {
+                            id
+                            labelNl
+                            labelEn
+                            defaultSelected
+                        }
+                    }
+                    ... on TextQuestionType {
+                        placeholderNl
+                        placeholderEn
+                        lines
+                    }
                 }
                 substeps {
                     id
@@ -48,6 +61,19 @@ const GET_FORM = graphql(`
                         descriptionEn
                         descriptionNl
                         required
+                        ... on SelectQuestionType {
+                            options {
+                                id
+                                labelNl
+                                labelEn
+                                defaultSelected
+                            }
+                        }
+                        ... on TextQuestionType {
+                            placeholderNl
+                            placeholderEn
+                            lines
+                        }
                     }
                 }
             }
