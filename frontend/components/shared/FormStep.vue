@@ -1,37 +1,54 @@
 <script lang="ts" setup>
-import type { FormStep } from "../form/types";
-import FormSideBar from "./FormSideBar.vue";
-import TextQuestion from "./TextQuestion.vue";
-import SelectQuestion from "./SelectQuestion.vue";
-import DateQuestion from "./DateQuestion.vue";
+import type {
+    DateQuestionType,
+    SelectQuestionType,
+    TextQuestionType,
+} from "~/generated/gql/graphql";
+import type { CombinedStep } from "./MRForm.vue";
+import { SharedFormSideBar } from "#components";
+
+type QuestionType = CombinedStep["questions"][number];
 
 interface Props {
-    step: FormStep;
+    step: CombinedStep;
+}
+defineProps<Props>();
+
+function isTextQuestion(question: QuestionType): question is TextQuestionType {
+    return question.__typename === "TextQuestionType";
 }
 
-defineProps<Props>();
+function isSelectQuestion(
+    question: QuestionType,
+): question is SelectQuestionType {
+    return question.__typename === "SelectQuestionType";
+}
+
+function isDateQuestion(question: QuestionType): question is DateQuestionType {
+    return question.__typename === "DateQuestionType";
+}
 </script>
 
 <template>
-    <h2>{{ useTranslateableAttribute(step, "label") }}</h2>
+    <h2>{{ useTranslateableAttribute(step, "name") }}</h2>
     <p>{{ useTranslateableAttribute(step, "description") }}</p>
     <div class="uu-form-row">
         <div class="d-flex flex-column">
             <div v-for="question in step.questions" :key="question.id">
-                <TextQuestion
-                    v-if="question.type === 'text'"
+                <SharedTextQuestion
+                    v-if="isTextQuestion(question)"
                     :question="question"
                 />
-                <SelectQuestion
-                    v-else-if="question.type === 'select'"
+                <SharedSelectQuestion
+                    v-else-if="isSelectQuestion(question)"
                     :question="question"
                 />
-                <DateQuestion
-                    v-else-if="question.type === 'date'"
+                <SharedDateQuestion
+                    v-else-if="isDateQuestion(question)"
                     :question="question"
                 />
             </div>
         </div>
-        <FormSideBar v-if="step.sideConfig" :config="step.sideConfig" />
+        <SharedFormSideBar v-if="step.info" :config="step.info" />
     </div>
 </template>

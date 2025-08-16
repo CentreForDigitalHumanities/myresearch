@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
+import type { GetFormQuery } from "~/generated/gql/graphql";
 
 const GET_FORM = graphql(`
     query GetForm {
@@ -10,20 +12,50 @@ const GET_FORM = graphql(`
             descriptionEn
             descriptionNl
             steps {
-                ...StepFragment
+                id
+                slug
+                nameEn
+                nameNl
+                descriptionEn
+                descriptionNl
                 formOrder
+                info {
+                    ...StepInfoFragment
+                }
+                questions {
+                    id
+                    textEn
+                    textNl
+                    descriptionEn
+                    descriptionNl
+                    required
+                }
                 substeps {
-                    ...StepFragment
+                    id
+                    slug
+                    nameEn
+                    nameNl
+                    descriptionEn
+                    descriptionNl
                     parentOrder
+                    info {
+                        ...StepInfoFragment
+                    }
+                    questions {
+                        id
+                        textEn
+                        textNl
+                        descriptionEn
+                        descriptionNl
+                        required
+                    }
                 }
             }
         }
     }
 `);
 
-const { result: formResult } = usePerformQuery({
-    queryDocument: GET_FORM,
-});
+const { result: formResult } = useQuery<GetFormQuery>(GET_FORM);
 
 const form = computed(() => formResult.value?.form ?? null);
 </script>

@@ -1,33 +1,53 @@
 <script lang="ts" setup>
 import { ref, computed } from "vue";
 import { BSButton } from "cdh-vue-lib";
-import type { FormConfig, FormStep } from "../form/types";
 import FormStepper, { type FormStepperConfig } from "./FormStepper.vue";
+import { type GetFormQuery } from "~/generated/gql/graphql";
+
+type QueriedForm = NonNullable<GetFormQuery["form"]>;
+type ParentStep = NonNullable<QueriedForm["steps"][number]>;
+type Substep = NonNullable<ParentStep["substeps"][number]>;
+
+export type CombinedStep = ParentStep | Substep;
 
 interface Props {
-    formConfig: FormConfig;
+    form: QueriedForm;
 }
 
 const props = defineProps<Props>();
+
+const steps = computed<ParentStep[]>(() =>
+    props.form.steps.map((step) => ({
+        ...step,
+        substeps:
+            step.substeps?.map((substep) => ({
+                ...substep,
+            })) ?? [],
+    })),
+);
+
+const selectedStep = ref<CombinedStep | null>(
+    steps.value.length > 0 ? steps.value[0] : null,
+);
 
 const formStepperConfig = computed<FormStepperConfig>(() => {
     const selectedStepSlug = selectedStep.value?.slug;
 
     return {
-        titleNl: props.formConfig.labelNl,
-        titleEn: props.formConfig.labelEn,
-        steps: props.formConfig.steps.map((step) => ({
+        titleNl: props.form.nameNl ?? "",
+        titleEn: props.form.nameEn ?? "",
+        steps: steps.value.map((step) => ({
             slug: step.slug,
-            labelNl: step.stepNameNL,
-            labelEn: step.stepNameEN,
+            labelNl: step.nameNl ?? "",
+            labelEn: step.nameEn ?? "",
             completed: false,
             active: step.slug === selectedStepSlug,
             disabled: false,
             children:
                 step.substeps?.map((substep) => ({
                     slug: substep.slug,
-                    labelNl: substep.stepNameNL,
-                    labelEn: substep.stepNameEN,
+                    labelNl: substep.nameNl ?? "",
+                    labelEn: substep.nameEn ?? "",
                     completed: false,
                     active: substep.slug === selectedStepSlug,
                     disabled: false,
@@ -37,14 +57,10 @@ const formStepperConfig = computed<FormStepperConfig>(() => {
     };
 });
 
-const selectedStep = ref<FormStep | null>(
-    props.formConfig.steps.length > 0 ? props.formConfig.steps[0] : null,
-);
+function getAllSteps(): CombinedStep[] {
+    const allSteps: CombinedStep[] = [];
 
-function getAllSteps(): FormStep[] {
-    const allSteps: FormStep[] = [];
-
-    props.formConfig.steps.forEach((step) => {
+    steps.value.forEach((step) => {
         // Add main step.
         allSteps.push(step);
 
@@ -53,8 +69,8 @@ function getAllSteps(): FormStep[] {
         }
 
         // Add substeps sorted by order.
-        const sortedSubsteps = [...step.substeps].sort(
-            (a, b) => a.order - b.order,
+        const sortedSubsteps: Substep[] = [...step.substeps].sort(
+            (a, b) => (a.parentOrder ?? 0) - (b.parentOrder ?? 0),
         );
         allSteps.push(...sortedSubsteps);
     });

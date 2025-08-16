@@ -1,28 +1,38 @@
 <script lang="ts" setup>
-export interface SideBarConfig {
-    questions?: {
-        textNl: string;
-        textEn: string;
-        link: string;
-    }[];
-    extraInfo?: {
-        textNl: string;
-        textEn: string;
-    }[];
-}
+import { graphql, useFragment, type FragmentType } from "~/generated/gql";
+
+const StepInfoFragment = graphql(`
+    fragment StepInfoFragment on StepInfoType {
+        id
+        questions {
+            id
+            textNl
+            textEn
+            link
+        }
+        texts {
+            id
+            textNl
+            textEn
+        }
+    }
+`);
 
 const props = defineProps<{
-    config: SideBarConfig;
+    config: FragmentType<typeof StepInfoFragment>;
 }>();
+
+const infoConfig = computed(() => useFragment(StepInfoFragment, props.config));
+
 </script>
 <template>
     <div class="uu-form-help">
         <div class="help-item">
-            <div v-if="props.config.questions?.length">
+            <div v-if="infoConfig.questions?.length">
                 <strong>{{ $t("Questions?") }}</strong>
             </div>
             <template
-                v-for="(question, index) in config.questions"
+                v-for="(question, index) in infoConfig.questions"
                 :key="index"
             >
                 <a
@@ -36,11 +46,11 @@ const props = defineProps<{
             </template>
         </div>
         <div class="help-item">
-            <div v-if="props.config.extraInfo?.length">
+            <div v-if="infoConfig.texts?.length">
                 <strong>{{ $t("Additional Information") }}</strong>
                 <ul>
                     <li
-                        v-for="(info, index) in props.config.extraInfo"
+                        v-for="(info, index) in infoConfig.texts"
                         :key="index"
                     >
                         {{ useTranslateableAttribute(info, "text") }}
