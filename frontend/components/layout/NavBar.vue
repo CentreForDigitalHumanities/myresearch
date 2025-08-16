@@ -34,7 +34,7 @@ import { BSIcon } from "cdh-vue-lib";
                     </li>
                     <li>
                         <NuxtLink
-                            to="/studies"
+                            to="/"
                             class="nav-link"
                             active-class="active"
                         >
