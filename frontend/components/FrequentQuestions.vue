@@ -7,10 +7,8 @@ const props = defineProps({
 
 let groupName = "";
 
-let questionOne = "aaa";
-let answerOne = "aaa";
 let questionsList = <string[]>[""];
-let answersList = [""];
+let answersList = <string[]>[""];
 let id = 0;
 
 if (props.QuestionsGroup == "processingRegister") {
@@ -22,18 +20,14 @@ if (props.QuestionsGroup == "processingRegister") {
   questionsList = mockData.questionsEthicalCommission;
   answersList = mockData.answersEthicalCommission;
 }
-const workingsAccordionItemsWithDuplicate = ref([
-  { id: groupName + id++, question: questionOne, answer: answerOne },
-]);
-const accordionItems = workingsAccordionItemsWithDuplicate; //= ref([]);
+const accordionItems = <any>[];
 for (let i = 0; i < questionsList.length; i++) {
-  accordionItems.value.push({
+  accordionItems.push({
     id: groupName + id++,
     question: questionsList[i],
     answer: answersList[i],
   });
 }
-//TODO this list is not yet dynamic
 </script>
 
 <template>
@@ -43,22 +37,25 @@ for (let i = 0; i < questionsList.length; i++) {
       <div v-for="accordionItem in accordionItems" :key="accordionItem.id">
         <div class="accordion-item">
           <!-- TODO: id's are dynamic but the other accordions also collapse when an item is openend-->
-          <h2 class="accordion-header" v-bind:id="'header' + accordionItem.id">
+          <h2
+            class="accordion-header"
+            v-bind:id="'header' + 'accordion' + accordionItem.id"
+          >
             <button
               class="accordion-button collapsed"
               type="button"
               data-bs-toggle="collapse"
-              v-bind:data-bs-target="'#' + accordionItem.id"
+              v-bind:data-bs-target="'#' + 'accordion' + accordionItem.id"
               aria-expanded="true"
-              v-bind:aria-controls="accordionItem.id"
+              v-bind:aria-controls="'accordion' + accordionItem.id"
             >
               {{ accordionItem.question }}
             </button>
           </h2>
           <div
-            v-bind:id="'' + accordionItem.id"
+            v-bind:id="'accordion' + accordionItem.id"
             class="accordion-collapse collapse"
-            v-bind:aria-labelledby="'header' + accordionItem.id"
+            v-bind:aria-labelledby="'header' + 'accordion' + accordionItem.id"
             data-bs-parent="#questionsMenu"
           >
             <div class="accordion-body">
