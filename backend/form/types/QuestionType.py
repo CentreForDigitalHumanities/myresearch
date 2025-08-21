@@ -96,7 +96,9 @@ class SelectQuestionType(DjangoObjectType):
 
     @staticmethod
     def resolve_options(parent: SelectQuestion, info: ResolveInfo):
-        return SelectOptionType.get_queryset(SelectOption.objects, info).filter(question=parent)
+        return SelectOptionType.get_queryset(SelectOption.objects, info).filter(
+            question=parent
+        )
 
 
 class TextQuestionType(DjangoObjectType):

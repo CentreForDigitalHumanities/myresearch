@@ -14,7 +14,7 @@ class StepInfoQuestionType(DjangoObjectType):
             "step_info",
             "text_nl",
             "text_en",
-            "link"
+            "link",
         ]
 
     @classmethod
