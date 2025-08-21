@@ -23,7 +23,6 @@ const props = defineProps<{
 }>();
 
 const infoConfig = computed(() => useFragment(StepInfoFragment, props.config));
-
 </script>
 <template>
     <div class="uu-form-help">
@@ -49,10 +48,7 @@ const infoConfig = computed(() => useFragment(StepInfoFragment, props.config));
             <div v-if="infoConfig.texts?.length">
                 <strong>{{ $t("Additional Information") }}</strong>
                 <ul>
-                    <li
-                        v-for="(info, index) in infoConfig.texts"
-                        :key="index"
-                    >
+                    <li v-for="(info, index) in infoConfig.texts" :key="index">
                         {{ useTranslateableAttribute(info, "text") }}
                     </li>
                 </ul>

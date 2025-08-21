@@ -33,11 +33,7 @@ import { BSIcon } from "cdh-vue-lib";
                         </NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink
-                            to="/"
-                            class="nav-link"
-                            active-class="active"
-                        >
+                        <NuxtLink to="/" class="nav-link" active-class="active">
                             {{ $t("My studies") }}
                         </NuxtLink>
                     </li>
