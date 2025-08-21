@@ -1,9 +1,15 @@
 {
-  "Welcome to MyResearch!": "Welkom bij MyResearch!",
-  "Utrecht University": "Universiteit Utrecht",
-  "My studies": "Mijn studies",
-  "Faculty of Humanities": "Faculteit der Geesteswetenschappen",
-  "Not logged in": "Niet ingelogd",
-  "MyResearch": "MyResearch",
-  "Welcome!": "Welkom!"
+    "Welcome to MyResearch!": "Welkom bij MyResearch!",
+    "Utrecht University": "Universiteit Utrecht",
+    "My studies": "Mijn studies",
+    "Faculty of Humanities": "Faculteit der Geesteswetenschappen",
+    "Not logged in": "Niet ingelogd",
+    "MyResearch": "MyResearch",
+    "Welcome!": "Welkom!",
+    "Processing Registry": "Verwerkingsregister",
+    "Questions?": "Vragen?",
+    "Additional Information": "Aanvullende informatie",
+    "Previous": "Vorige",
+    "Next": "Volgende",
+    "This website is a work in progress": "Deze website is momenteel in ontwikkeling"
 }

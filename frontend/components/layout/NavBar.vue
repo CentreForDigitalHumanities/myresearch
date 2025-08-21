@@ -11,7 +11,7 @@ import { BSIcon } from "cdh-vue-lib";
         <div class="uu-navbar-container">
             <div class="navbar-brand">
                 <img
-                    :alt="$t('Utrecht University')"
+                    alt="Utrecht University"
                     :src="useStaticFile('/images/logo-header-nl.svg')"
                 />
             </div>
@@ -41,6 +41,15 @@ import { BSIcon } from "cdh-vue-lib";
                             {{ $t("My studies") }}
                         </NuxtLink>
                     </li>
+                    <li>
+                        <NuxtLink
+                            to="/proc-reg"
+                            class="nav-link"
+                            active-class="active"
+                        >
+                            {{ $t("Processing Registry") }}
+                        </NuxtLink>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <!-- Placeholder for items on the right -->
@@ -54,22 +63,22 @@ import { BSIcon } from "cdh-vue-lib";
 @use "node_modules/uu-bootstrap/scss/configuration";
 
 .year-select {
-  .dropdown-item {
-    display: flex;
-    align-items: center;
-    line-height: 2rem;
-  }
-  .year-color-box {
-    width: 1.5rem;
-    height: 1.5rem;
-    display: inline-block;
-    margin-right: 0.5rem;
-
-    @each $name, $color in configuration.$theme-colors {
-      &.bg-#{$name} {
-        background: $color;
-      }
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+        line-height: 2rem;
     }
-  }
+    .year-color-box {
+        width: 1.5rem;
+        height: 1.5rem;
+        display: inline-block;
+        margin-right: 0.5rem;
+
+        @each $name, $color in configuration.$theme-colors {
+            &.bg-#{$name} {
+                background: $color;
+            }
+        }
+    }
 }
 </style>

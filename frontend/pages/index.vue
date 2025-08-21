@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
     <div class="uu-content">
         <Title>{{ $t("MyResearch") }}</Title>
@@ -8,10 +6,8 @@
         </div>
         <div class="uu-container">
             <div class="col-12">
-                <p>{{ $t("Welcome!") }}</p>
+                <p>{{ $t("This website is a work in progress") }}</p>
             </div>
         </div>
     </div>
 </template>
-
-<style scoped></style>
