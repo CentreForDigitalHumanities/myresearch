@@ -13,7 +13,8 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
           {{ $t("english_introduction") }}
         </div>
       </div>
-      <aside class="uu-sidebar">
+      <aside class="uu-sidebar pe-3">
+        <!-- TODO pe-3 does not exactly give 1.25 rem as pixels but it seems very close, low prio -->
         <RecentActivity />
       </aside>
     </div>
@@ -26,7 +27,7 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
           {{ $t("english_verwerkingsregister_uitleg") }}
         </p>
       </div>
-      <aside class="uu-sidebar">
+      <aside class="uu-sidebar pe-3">
         <FrequentQuestions
           questionsGroup="processingRegister"
           title="Frequent questions"
@@ -74,8 +75,8 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
           }}
         </p>
       </div>
-      <aside class="uu-sidebar">
-        <!-- TODO sidebar header linked does not work on the aside side, does work on the uu example site -->
+      <aside class="uu-sidebar pe-3">
+        <!-- TODO low prio: sidebar header linked does not work on the aside side, does work on the uu example site. According to the description it needs to be pixel perfect -->
         <FrequentQuestions
           questionsGroup="ethicalCommission"
           title="Frequent questions"
@@ -101,3 +102,21 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
   </div>
 </template>
 <style scoped></style>
+<!--
+calc(50% - var(--bs-uu-content-width) / 2)
+--bs-uu-content-width: 40rem;
+
+
+  --bs-uu-sidebar-width: 21.875rem;
+  --bs-uu-sidebar-gap: 6.25rem;
+  --bs-uu-sidebar-breakpoint: lg;
+  --bs-uu-sidebar-padding-x: 1.25rem;
+  --bs-uu-sidebar-padding-y: 1.25rem;
+  --bs-uu-sidebar-mobile-padding-y: 0.625rem;
+  --bs-uu-sidebar-header-padding-y: 0.625rem;
+  --bs-uu-sidebar-header-font-weight: 0;
+  --bs-uu-sidebar-nav-padding-y: 0rem;
+  --bs-uu-sidebar-nav-padding-x: 0;
+  --bs-uu-sidebar-nav-disabled-color: $gray-600;
+  --bs-uu-sidebar-nav-active-font-weight: 600;
+  -->

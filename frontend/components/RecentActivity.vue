@@ -1,8 +1,9 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="tiles uu-container">
-    <a class="tile">
+  <div class="tiles uu-container mw-100">
+    <!-- mw-100 only goes for this div and not those below them, seems to give the tiles the same size as well -->
+    <a class="tile w-100">
       <NuxtLink to="/studies/" class="nav-link">
         <div class="row justify-content-between">
           <div class="col-8">
@@ -32,7 +33,7 @@
         </div>
       </NuxtLink>
     </a>
-    <a class="tile">
+    <a class="tile w-100">
       <NuxtLink to="/studies/" class="nav-link">
         <div class="row">
           <div class="col-8">
@@ -63,4 +64,8 @@
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+hello div {
+  max-width: 100% !important;
+}
+</style>

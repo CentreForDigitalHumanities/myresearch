@@ -13,6 +13,9 @@ const answerTwo_verwerkingsregister =
   "Omdat ze anders niet in hun schil passen";
 
 export class mockData {
+  //if this becomes the permanent location than we can make this more dynamic
+  //with same setup as in useEthicsLinks.ts, saves extending the if statement.
+
   static questionsVerwerkingsregister: string[] = [
     t(questionOne_verwerkingsregister),
     t(questionTwo_verwerkingsregister),
