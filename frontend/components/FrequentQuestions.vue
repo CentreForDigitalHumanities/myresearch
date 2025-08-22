@@ -9,11 +9,12 @@ const props = defineProps({
 let groupName = "";
 let questionsList = <string[]>[""];
 let answersList = <string[]>[""];
+let id = 0;
 
 if (props.questionsGroup == "processingRegister") {
   groupName = props.questionsGroup;
-  questionsList = mockData.questionsVerwerkingsregister;
-  answersList = mockData.answersVerwerkingsregister;
+  questionsList = mockData.questionsProcessingRegister;
+  answersList = mockData.answersProcessingRegister;
 } else if (props.questionsGroup == "ethicalCommission") {
   groupName = props.questionsGroup;
   questionsList = mockData.questionsEthicalCommission;
@@ -22,7 +23,7 @@ if (props.questionsGroup == "processingRegister") {
 const accordionItems = <any>[];
 for (let i = 0; i < questionsList.length; i++) {
   accordionItems.push({
-    id: groupName + i,
+    id: groupName + id++,
     question: questionsList[i],
     answer: answersList[i],
   });
@@ -44,7 +45,7 @@ for (let i = 0; i < questionsList.length; i++) {
       class="accordion mw-100"
     >
       <div class="accordion-item mw-100">
-        <!-- TODO: accordion does not always collapse properly, accordion behaviour gets overridden from outside-->
+        <!-- TODO: accordion does not always collapse properly, accordion behaviour gets overridden from outside, update: it's even worse now-->
         <!-- TODO: id's are dynamic but the other accordions also collapse when an item is openend-->
         <h2
           class="accordion-header"
@@ -63,11 +64,11 @@ for (let i = 0; i < questionsList.length; i++) {
         </h2>
         <div
           v-bind:id="'accordion' + accordionItem.id"
-          class="accordion-collapse collapse"
+          class="accordion-collapse collapse mw-100"
           v-bind:aria-labelledby="'header' + 'accordion' + accordionItem.id"
           data-bs-parent="#questionsMenu"
         >
-          <div class="accordion-body">
+          <div class="accordion-body mw-100">
             {{ accordionItem.answer }}
           </div>
         </div>
