@@ -16,6 +16,10 @@ class Command(BaseCommand):
         User,
     ]
 
+    def add_arguments(self, parser):
+        parser.add_argument("--force", action="store_true")
+        parser.add_argument("--silent", action="store_true")
+
     def print(self, options, *args, **kwargs):
         if not options["silent"]:
             print(*args, **kwargs)
