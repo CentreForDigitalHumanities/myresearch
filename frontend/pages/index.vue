@@ -102,21 +102,3 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
   </div>
 </template>
 <style scoped></style>
-<!--
-calc(50% - var(--bs-uu-content-width) / 2)
---bs-uu-content-width: 40rem;
-
-
-  --bs-uu-sidebar-width: 21.875rem;
-  --bs-uu-sidebar-gap: 6.25rem;
-  --bs-uu-sidebar-breakpoint: lg;
-  --bs-uu-sidebar-padding-x: 1.25rem;
-  --bs-uu-sidebar-padding-y: 1.25rem;
-  --bs-uu-sidebar-mobile-padding-y: 0.625rem;
-  --bs-uu-sidebar-header-padding-y: 0.625rem;
-  --bs-uu-sidebar-header-font-weight: 0;
-  --bs-uu-sidebar-nav-padding-y: 0rem;
-  --bs-uu-sidebar-nav-padding-x: 0;
-  --bs-uu-sidebar-nav-disabled-color: $gray-600;
-  --bs-uu-sidebar-nav-active-font-weight: 600;
-  -->

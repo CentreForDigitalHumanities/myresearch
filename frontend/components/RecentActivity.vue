@@ -1,9 +1,9 @@
 <script setup lang="ts"></script>
 
 <template>
+  <!-- TODO the first tile is not clickable everywhere, second one changes icon but is also not clickable -->
   <div class="tiles uu-container mw-100">
-    <!-- mw-100 only goes for this div and not those below them, seems to give the tiles the same size as well -->
-    <a class="tile w-100">
+    <div class="tile w-100 mw-100">
       <NuxtLink to="/studies/" class="nav-link">
         <div class="row justify-content-between">
           <div class="col-8">
@@ -32,8 +32,8 @@
           <button class="btn btn-arrow-right col-6">Continue</button>
         </div>
       </NuxtLink>
-    </a>
-    <a class="tile w-100">
+    </div>
+    <a class="tile w-100 mw-100">
       <NuxtLink to="/studies/" class="nav-link">
         <div class="row">
           <div class="col-8">
@@ -65,7 +65,7 @@
 </template>
 
 <style scoped>
-hello div {
-  max-width: 100% !important;
+.tiles .tile {
+  aspect-ratio: 2/1;
 }
 </style>
