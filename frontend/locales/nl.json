@@ -6,22 +6,32 @@
   "Not logged in": "Niet ingelogd",
   "MyResearch": "MyResearch",
   "Welcome!": "Welkom!",
-  "Omdat ze anders niet in hun schil passen": "because they are yellow",
-  "english_introduction": "My research is een tool dat onderzoekers helpt met het aanvragen van een onderzoek. Op deze website kan uw onderzoek worden geregistreerd bij het verwerkingsregister en een aanvraag kan worden gedaan bij de ethische commissie of uw onderzoek wel door de beugal kan. Maar eerst is het de bedoeling dat een wegwijzer wordt ingevuld. Het kan namelijk zo zijn dat uw onderzoek bepaalde aanvragen helemaal niet hoeft te doen. Iets wat de wegwijzer samen met u uitzoekt.",
+
+  "Home" : "Home",
+  "What is MyResearch?" : "Wat is MyResearch?",
+  "Roadmap" : "Wegwijzer",
   "Processing register": "Verwerkingsregister",
-  "english_verwerkingsregister_uitleg": "Bij het verwerkingsregister start je de registratie van studies (onderzoeksprojecten) waarin er persoonsgegevens worden verwerkt. Het verwerkingsregister is een centraal overzicht van alle studies waarin persoonsgegevens een rol spelen. De Algemene VerordeningGegevensbescherming (AVG) eist dat dergelijke studies worden geregistreerd. Voor de onderzoeker zelf biedt het verwerkingsregister ook voordelen: het geeft op een gebruiksvriendelijke manier inzicht in allerlei aspecten van de gegevensverwerking, zoals de typen persoonsgegevens, de personen op wie die gegevens van toepassing zijn, de bewaartermijnen, de gebruikte software, de beveiligingsmaatregelen en de verschillende partijen die een rol spelen.",
-  "questions_privacy_officier": "Voor vragen over het verwerkingsregister neem contact op met de privacy officier: ",
-  "questions_technical": "Voor complimentjes neem contact op met: ",
+  "Ethical commission": "Ethische commissie",
+
+  "Recent Activity" : "Recente Activiteit",
   "Frequent questions": "Veelgestelde vragen",
   "Other questions": "Overige vragen",
-  "What is part of personal data?": "Wat valt er onder persoonsgegevens?",
-  "Ethical commission": "Ethische commissie",
-  "Before you begin": "Voordat je begint",
+
+  "english_myresearch_introduction": "My research is een website dat onderzoekers helpt met het aanvragen van onderzoek. Op deze website kan uw onderzoek worden geregistreerd bij het verwerkingsregister en een aanvraag kan worden gedaan bij de ethische commissie of uw onderzoek wel door de beugal kan. Maar eerst is het de bedoeling dat een wegwijzer wordt ingevuld.",
+  "english_roadmap_introduction" : "De wegwijzer is een vragenlijst dat onderzoekers helpt uit te vogelen wat er moet gebeuren om een onderzoek aan te vragen. Moet ik voor mijn onderzoek nou wel of niet een aanvraag doen bij de ethische commissie? Iets wat de wegwijzer samen met u uitzoekt. ",
+
+  "english_processing_register_introduction": "Bij het verwerkingsregister start je de registratie van studies (onderzoeksprojecten) waarin er persoonsgegevens worden verwerkt. Het verwerkingsregister is een centraal overzicht van alle studies waarin persoonsgegevens een rol spelen. De Algemene VerordeningGegevensbescherming (AVG) eist dat dergelijke studies worden geregistreerd. Voor de onderzoeker zelf biedt het verwerkingsregister ook voordelen: het geeft op een gebruiksvriendelijke manier inzicht in allerlei aspecten van de gegevensverwerking, zoals de typen persoonsgegevens, de personen op wie die gegevens van toepassing zijn, de bewaartermijnen, de gebruikte software, de beveiligingsmaatregelen en de verschillende partijen die een rol spelen.",
+  "questions_privacy_officier": "Voor vragen over het verwerkingsregister neem contact op met de privacy officier: ",
+  "questions_technical": "Voor complimentjes neem contact op met: ",
+
   "Before submitting an application, please consult:": "Check voor het indienen:",
   "Formal approval by a chamber for the FEtC-H (by means of an official approval letter) is required for research involving human participants within the UU Faculty of Humanities. You must acquire this approval prior even to recruiting participants. Therefore, always wait for the letter of approval before starting research activities.": "\n\nFormele goedkeuring door één van beide kamers van de FETC-GW (middels een formele goedkeuringsbrief) is vereist voor mensgebonden onderzoek binnen de Faculteit Geesteswetenschappen. Voorafgaand aan het onderzoek, maar ook voorafgaand aan het rekruteren van deelnemers, moet de aanvraag zijn goedgekeurd. Het is dus van belang om te wachten met de aanvang van het onderzoek tot deze brief ontvangen is.\n\nNB: Goedgekeurde aanvragen komen in het archief van deze portal te staan, zie het menu hierboven. Dit archief is toegankelijk voor iedereen met een Solis-ID die bij de Faculteit Geesteswetenschappen werkt of studeert.\n\n\nLorem ipsum dolor sit amet. Qui consequatur consequatur ut possimus reiciendis in commodi consequatur? Sit voluptatum nulla et earum impedit ad sapiente expedita rem quod incidunt ea facilis velit et repellendus voluptates. Id corporis eius eum dolorem libero aut voluptatem cupiditate. Qui vitae quia sit ullam totam 33 facilis possimus qui molestiae quae At doloremque porro.\n\nRem tenetur voluptatum sed similique quis aut quos deleniti vel tempore ipsam et quas molestiae. Qui Quis autem non aperiam delectus et veritatis velit non officia excepturi et nobis nihil et quae voluptates qui aspernatur nobis. Ut odio tenetur ea alias modi sit quibusdam quaerat.\n\nNon voluptas repudiandae et laboriosam iste qui ducimus sint. Sed repellat excepturi est quia consequatur quo velit esse aut reprehenderit debitis ea ratione ratione ut autem dignissimos. Et temporibus omnis est quis ullam ab saepe magnam et voluptatem asperiores.\n\n\nLorem ipsum dolor sit amet. Qui consequatur consequatur ut possimus reiciendis in commodi consequatur? Sit voluptatum nulla et earum impedit ad sapiente expedita rem quod incidunt ea facilis velit et repellendus voluptates. Id corporis eius eum dolorem libero aut voluptatem cupiditate. Qui vitae quia sit ullam totam 33 facilis possimus qui molestiae quae At doloremque porro.\n\nRem tenetur voluptatum sed similique quis aut quos deleniti vel tempore ipsam et quas molestiae. Qui Quis autem non aperiam delectus et veritatis velit non officia excepturi et nobis nihil et quae voluptates qui aspernatur nobis. Ut odio tenetur ea alias modi sit quibusdam quaerat.\n\nNon voluptas repudiandae et laboriosam iste qui ducimus sint. Sed repellat excepturi est quia consequatur quo velit esse aut reprehenderit debitis ea ratione ratione ut autem dignissimos. Et temporibus omnis est quis ullam ab saepe xcepturi est quia consequatur quo velit esse aut reprehenderit debitis ea ratione ratione ut autem dignissimos. Et temporibus omnis est quis ullam ab saepe xcepturi est quia consequatur quo velit esse aut reprehenderit debitis ea ratione ratione ut autem dignissimos. Et temporibus omnis est quis ullam ab saepe ",
   "link": {
     "UU-webpage of the FEtC-H": "UU-webpagina van de FETC-GW",
     "Regulations of the FEtC-H": "Reglement van de FETC-GW",
     "Model documents" : "Voorbeelddocumenten"
-  }
+  },
+
+  "What is part of personal data?": "Wat valt er onder persoonsgegevens?",
+  "Omdat ze anders niet in hun schil passen": "because they are yellow"
 }

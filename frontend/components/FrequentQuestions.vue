@@ -9,7 +9,6 @@ const props = defineProps({
 let groupName = "";
 let questionsList = <string[]>[""];
 let answersList = <string[]>[""];
-let id = 0;
 
 if (props.questionsGroup == "processingRegister") {
   groupName = props.questionsGroup;
@@ -23,7 +22,7 @@ if (props.questionsGroup == "processingRegister") {
 const accordionItems = <any>[];
 for (let i = 0; i < questionsList.length; i++) {
   accordionItems.push({
-    id: groupName + id++,
+    id: groupName + i,
     question: questionsList[i],
     answer: answersList[i],
   });
@@ -37,6 +36,7 @@ for (let i = 0; i < questionsList.length; i++) {
     <h2 v-if="props.title" class="uu-sidebar-header-linked">
       {{ $t(props.title) }}
     </h2>
+    <!-- warning: translations inside this accordion do not change until page is reloaded -->
     <div class="accordion mw-100" v-bind:id="'accordion' + groupName">
       <div
         class="mw-100"
@@ -50,7 +50,7 @@ for (let i = 0; i < questionsList.length; i++) {
               type="button"
               data-bs-toggle="collapse"
               v-bind:data-bs-target="'#collapse' + accordionItem.id"
-              aria-expanded="true"
+              aria-expanded="false"
               v-bind:aria-controls="'collapse' + accordionItem.id"
             >
               {{ accordionItem.question }}

@@ -5,12 +5,36 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
   <div class="uu-content">
     <Title>{{ $t("MyResearch") }}</Title>
     <div class="uu-hero">
-      <h1>{{ $t("Welcome to MyResearch!") }}</h1>
+      <h1>{{ $t("Home") }}</h1>
     </div>
     <div class="uu-sidebar-container uu-sidebar-right">
       <div class="uu-sidebar-content">
+        <h2 class="uu-sidebar-header-linked">
+          {{ $t("What is MyResearch?") }}
+        </h2>
         <div class="uu-container">
-          {{ $t("english_introduction") }}
+          {{ $t("english_myresearch_introduction") }}
+        </div>
+        <h2 class="uu-sidebar-header-linked">
+          {{ $t("Roadmap") }}
+        </h2>
+        <div>
+          {{ $t("english_roadmap_introduction") }}
+          <div class="uu-container">
+            <!-- TODO this looks good on accident, when making the page smaller it doens´t look good anymore -->
+            <button class="btn btn-primary width: 40%">
+              Mooie afbeelding of niet
+            </button>
+            <div id="hi" class="card" style="width: 60%">
+              <div class="card-body">
+                <h5 class="card-title">Start een nieuwe wegwijzer</h5>
+                <p class="card-text">
+                  Heb het volgende bij de hand: Helemaal Niets
+                </p>
+                <a href="#" class="btn btn-primary">Start Aanvraag</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <aside class="uu-sidebar pe-3">
@@ -24,7 +48,7 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
           {{ $t("Processing register") }}
         </h2>
         <p>
-          {{ $t("english_verwerkingsregister_uitleg") }}
+          {{ $t("english_processing_register_introduction") }}
         </p>
       </div>
       <aside class="uu-sidebar pe-3">
@@ -46,21 +70,11 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
             )
           }}
         </p>
-        <h3>{{ $t("Before you begin") }}</h3>
-        <p>{{ $t("Before submitting an application, please consult:") }}</p>
         <p>
           <a :href="useEthicsLinks('FEtC_H')" target="_blank">{{
             $t("link.UU-webpage of the FEtC-H")
           }}</a>
           for news and upcoming dates.
-        </p>
-        <p>
-          <a :href="useEthicsLinks('model_documents')" target="_blank">{{
-            $t("link.Model documents")
-          }}</a>
-          Tijdens de aanvraagprocedure kan er om een of meer bijlagen worden
-          gevraagd. Gebruik daarvoor de juiste (meest recente)
-          voorbeelddocumenten
         </p>
         <p>
           <a :href="useEthicsLinks('FEtC_H_regulations')" target="_blank">{{
@@ -101,4 +115,8 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
     </div>
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+.go-button {
+  width: 40%;
+}
+</style>
