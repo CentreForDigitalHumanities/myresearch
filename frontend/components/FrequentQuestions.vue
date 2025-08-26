@@ -30,8 +30,6 @@ for (let i = 0; i < questionsList.length; i++) {
 </script>
 
 <template>
-  <!--  TODO: mw-100 on every div is ugly overriding the (uu-sidebar .div) is better but i have been unable to do that as of now-->
-  <!-- TODO: accordion does not always collapse properly, accordion behaviour gets overridden from outside -->
   <div class="mw-100">
     <h2 v-if="props.title" class="uu-sidebar-header-linked">
       {{ $t(props.title) }}

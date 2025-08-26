@@ -1,10 +1,6 @@
 <script setup lang="ts"></script>
 
 <template>
-  <!-- TODO the first tile is not clickable everywhere, second one changes icon but is also not clickable -->
-  <!-- tiles really wants div tile directly below it but in that case the nuxtlink isnt the whole tile-->
-
-  <!-- TODO unlike frequentQuestions, recentactivity may need to be hidden once the screen gets smaller -->
   <h2 class="uu-sidebar-header-linked">{{ $t("Recent Activity") }}</h2>
   <div class="tiles uu-container mw-100">
     <div class="tile w-100 mw-100">

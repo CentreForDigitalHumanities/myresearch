@@ -25,7 +25,7 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
             <button class="btn btn-primary width: 40%">
               Mooie afbeelding of niet
             </button>
-            <div id="hi" class="card" style="width: 60%">
+            <div class="card" style="width: 60%">
               <div class="card-body">
                 <h5 class="card-title">Start een nieuwe wegwijzer</h5>
                 <p class="card-text">
@@ -38,7 +38,6 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
         </div>
       </div>
       <aside class="uu-sidebar pe-3">
-        <!-- TODO pe-3 does not exactly give 1.25 rem as pixels but it seems very close, low prio -->
         <RecentActivity />
       </aside>
     </div>
@@ -115,8 +114,4 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
     </div>
   </div>
 </template>
-<style scoped>
-.go-button {
-  width: 40%;
-}
-</style>
+<style scoped></style>
