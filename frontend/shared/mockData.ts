@@ -3,11 +3,7 @@ const { t } = i18n.global;
 
 const questionOneProcessingRegister = t("What is part of personal data?");
 const answerOneProcessingRegister = t(
-  "Persoonsgegevens zijn gegevens die iets zeggen over een levende persoon van wie je de identiteit weet, van wie " +
-    "je de identiteit te weten kunt komen of die je op een andere manier kunt herkennen. Bijvoorbeeld: contactgegevens " +
-    "zijn persoonsgegevens, maar ook veel onderzoeksgegevens zijn persoonsgegevens. Denk aan meetgegevens, antwoorden " +
-    "op vragen in een vragenlijst of interview, observaties, demografische gegevens etc. Let op: Gegevens die op geen " +
-    "enkele manier meer zijn te koppelen aan een bepaalde persoon, zijn anonieme gegevens. Dit zijn géén persoonsgegevens.",
+  "Personal data is dat that tells something about a living person of whom you know the identity, from whom you can discern the identity or whom are otherwise recognizable. For example: contact information is personal data, but also a lot of research data is personal data. Measurement data, answers on a questionnaire, or interviews, observations, demographic data and much more. Data that can not be traced back to personal data are anonymous data, those are not personal data",
 );
 const questionTwoProcessingRegister = t("Waarom zijn bananen krom?");
 const answerTwoProcessingRegister = t(

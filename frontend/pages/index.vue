@@ -13,25 +13,34 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
           {{ $t("What is MyResearch?") }}
         </h2>
         <div class="uu-container">
-          {{ $t("english_myresearch_introduction") }}
+          {{
+            $t(
+              "My Research is a website that helps researchers with submitting a request to start a research. On this website you can register your research at the processing register. But first you should fill in the roadmap",
+            )
+          }}
         </div>
         <h2 class="uu-sidebar-header-linked">
           {{ $t("Roadmap") }}
         </h2>
         <div>
-          {{ $t("english_roadmap_introduction") }}
+          {{
+            $t(
+              "The roadmap is a questionnaire that helps researchers to find out what needs to happen to submit a request to start a research. Do I need to register my research at processing register at all. Perhaps that isn't needed? Questions that the roadmap helps answering",
+            )
+          }}
           <div class="uu-container">
-            <!-- TODO this looks good on accident, when making the page smaller it doens´t look good anymore -->
             <button class="btn btn-primary width: 40%">
               Mooie afbeelding of niet
             </button>
             <div class="card" style="width: 60%">
               <div class="card-body">
-                <h5 class="card-title">Start een nieuwe wegwijzer</h5>
+                <h5 class="card-title">{{ $t("Start a new roadmap") }}</h5>
                 <p class="card-text">
-                  Heb het volgende bij de hand: Helemaal Niets
+                  {{ $t("Also possible as orientation") }}
                 </p>
-                <a href="#" class="btn btn-primary">Start Aanvraag</a>
+                <a href="#" class="btn btn-primary">{{
+                  $t("Start Roadmap")
+                }}</a>
               </div>
             </div>
           </div>
@@ -47,7 +56,11 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
           {{ $t("Processing register") }}
         </h2>
         <p>
-          {{ $t("english_processing_register_introduction") }}
+          {{
+            $t(
+              "At the processing register you register your studies that contain personal data. The processing register is a central place for all studies with personal data. The Dutch government under the Algemene Verordening Gegevensbescherming (AVG) demands that studies are registered where personal data plays a role. Registering such studies also has an advantage for that researcher that registers the study: registration gives a user-friendly overview about aspects in data processing such as the type of personal data, the persons to whom those data apply, retention periods, used software, necessary security measures and the different parties that play a role",
+            )
+          }}
         </p>
       </div>
       <aside class="uu-sidebar pe-3">
@@ -103,11 +116,14 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
       <aside class="uu-sidebar">
         <h2 class="uu-sidebar-header-linked">Contact</h2>
         <p>
-          {{ $t("questions_privacy_officier")
+          {{
+            $t(
+              "For questions about the processing register contact the privacy officer: ",
+            )
           }}<a href="mailto:l.j.w.m.kessels@uu.nl">l.j.w.m.kessels@uu.nl</a>
         </p>
         <p>
-          {{ $t("questions_technical")
+          {{ $t("For compliments contact: ")
           }}<a href="mailto:portaldev.gw@uu.nl">portaldev.gw@uu.nl</a>
         </p>
       </aside>
