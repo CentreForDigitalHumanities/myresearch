@@ -40,34 +40,36 @@ function stepperItemClasses(step: FormStep): string {
 </script>
 
 <template>
-    <div class="stepper">
-        <p class="mb-4">
-            {{ useTranslateableAttribute(props.stepConfig, "title") }}
-        </p>
-        <ul>
-            <li v-for="(step, index) in props.stepConfig.steps" :key="index">
-                <a :class="stepperItemClasses(step)">
-                    <span class="stepper-bubble stepper-bubble-largest">{{
-                        index + 1
-                    }}</span>
-                    <span>{{ useTranslateableAttribute(step, "label") }}</span>
-                </a>
-                <ul v-if="step.children.length > 0">
-                    <li
-                        v-for="(child, childIndex) in step.children"
-                        :key="childIndex"
-                    >
-                        <a :class="stepperItemClasses(child)">
-                            <span
-                                class="stepper-bubble stepper-bubble-medium"
-                            ></span>
-                            <span>{{
-                                useTranslateableAttribute(child, "label")
-                            }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+    <div class="stepper-container">
+        <div class="stepper">
+            <p class="mb-4">
+                {{ useTranslateableAttribute(props.stepConfig, "title") }}
+            </p>
+            <ul>
+                <li v-for="(step, index) in props.stepConfig.steps" :key="index">
+                    <NuxtLink :class="stepperItemClasses(step)" :to="step.slug">
+                        <span class="stepper-bubble stepper-bubble-largest">{{
+                            index + 1
+                        }}</span>
+                        <span>{{ useTranslateableAttribute(step, "label") }}</span>
+                    </NuxtLink>
+                    <ul v-if="step.children.length > 0">
+                        <li
+                            v-for="(child, childIndex) in step.children"
+                            :key="childIndex"
+                        >
+                            <NuxtLink :class="stepperItemClasses(child)" :to="child.slug">
+                                <span
+                                    class="stepper-bubble stepper-bubble-medium"
+                                ></span>
+                                <span>{{
+                                    useTranslateableAttribute(child, "label")
+                                }}</span>
+                            </NuxtLink>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
