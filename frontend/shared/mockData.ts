@@ -19,9 +19,6 @@ const questionOneEthnicalCommission = t(
 const answerOneEthnicalCommission = t(
   "Tijdens de aanvraagprocedure kan er om een of meer bijlagen worden gevraagd. Gebruik daarvoor de juiste (meest recente) voorbeelddocumenten " +
     useEthicsLinks("model_documents"),
-  //TODO creating a href here is ugly and hard to do, but i still need a link here, give the logic to ethicsLinks?
-  // still very ugly but it only has to happen one time, also vue refus    questionOneEthnicalCommission,
-  // questionTwoEthnicalCommission,es <a /> tags?
 );
 const questionTwoEthnicalCommission = t("How long do responses take");
 const answerTwoEthnicalCommission = t("Geen idee");
