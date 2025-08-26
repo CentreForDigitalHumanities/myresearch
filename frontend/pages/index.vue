@@ -102,7 +102,6 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
         </p>
       </div>
       <aside class="uu-sidebar pe-3">
-        <!-- TODO low prio: sidebar header linked does not work on the aside side, does work on the uu example site. According to the description it needs to be pixel perfect -->
         <FrequentQuestions
           questionsGroup="ethicalCommission"
           title="Frequent questions"
