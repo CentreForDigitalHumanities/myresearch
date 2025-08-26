@@ -2,7 +2,7 @@
 import { BSIcon } from "cdh-vue-lib";
 import { mockVwr } from "~/components/form/procRegMockConfig";
 
-const firstProcRegSlug = mockVwr.steps[0].slug
+const firstProcRegSlug = mockVwr.steps[0].slug;
 </script>
 
 <template>
@@ -46,7 +46,10 @@ const firstProcRegSlug = mockVwr.steps[0].slug
                     </li>
                     <li>
                         <NuxtLink
-                            :to="{ name: 'procreg-step', params: { step: firstProcRegSlug } }"
+                            :to="{
+                                name: 'procreg-step',
+                                params: { step: firstProcRegSlug },
+                            }"
                             class="nav-link"
                             active-class="active"
                         >

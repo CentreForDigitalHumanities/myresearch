@@ -8,26 +8,26 @@ import { type GetAllUsersQuery } from "~/generated/gql/graphql";
 // REMOVE THIS PAGE AND QUERY ONCE WE HAVE ACTUAL CONTENT!
 
 const GET_USERS = graphql(`
-  query getAllUsers {
-    users {
-      id
-      username
-      email
+    query getAllUsers {
+        users {
+            id
+            username
+            email
+        }
     }
-  }
 `);
 
 const {
-  result: usersResult,
-  loading: usersLoading,
-  error: usersError,
+    result: usersResult,
+    loading: usersLoading,
+    error: usersError,
 } = useQuery<GetAllUsersQuery>(GET_USERS);
 </script>
 
 <template>
-  <div>
-    <p v-for="user in usersResult?.users ?? []">
-      {{ user.username }} {{ user.email }}
-    </p>
-  </div>
+    <div>
+        <p v-for="user in usersResult?.users ?? []">
+            {{ user.username }} {{ user.email }}
+        </p>
+    </div>
 </template>

@@ -46,19 +46,27 @@ function stepperItemClasses(step: FormStep): string {
                 {{ useTranslateableAttribute(props.stepConfig, "title") }}
             </p>
             <ul>
-                <li v-for="(step, index) in props.stepConfig.steps" :key="index">
+                <li
+                    v-for="(step, index) in props.stepConfig.steps"
+                    :key="index"
+                >
                     <NuxtLink :class="stepperItemClasses(step)" :to="step.slug">
                         <span class="stepper-bubble stepper-bubble-largest">{{
                             index + 1
                         }}</span>
-                        <span>{{ useTranslateableAttribute(step, "label") }}</span>
+                        <span>{{
+                            useTranslateableAttribute(step, "label")
+                        }}</span>
                     </NuxtLink>
                     <ul v-if="step.children.length > 0">
                         <li
                             v-for="(child, childIndex) in step.children"
                             :key="childIndex"
                         >
-                            <NuxtLink :class="stepperItemClasses(child)" :to="child.slug">
+                            <NuxtLink
+                                :class="stepperItemClasses(child)"
+                                :to="child.slug"
+                            >
                                 <span
                                     class="stepper-bubble stepper-bubble-medium"
                                 ></span>

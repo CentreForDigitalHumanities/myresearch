@@ -5,8 +5,8 @@ import type { FormConfig, FormStep } from "../form/types";
 import FormStepper, { type FormStepperConfig } from "./FormStepper.vue";
 
 interface Props {
-  formConfig: FormConfig;
-  currentStepSlug: string;
+    formConfig: FormConfig;
+    currentStepSlug: string;
 }
 
 const props = defineProps<Props>();
@@ -39,7 +39,10 @@ const formStepperConfig = computed<FormStepperConfig>(() => {
 });
 
 const selectedStep = ref<FormStep | null>(
-  props.formConfig.steps.length > 0 ? getAllSteps().find(({ slug }) => slug === props.currentStepSlug) ?? null : null,
+    props.formConfig.steps.length > 0
+        ? (getAllSteps().find(({ slug }) => slug === props.currentStepSlug) ??
+              null)
+        : null,
 );
 
 function getAllSteps(): FormStep[] {
@@ -74,67 +77,71 @@ function findCurrentStepIndex(): number {
 }
 
 function getNextStepSlug(): string {
-  if (!selectedStep.value) {
-    return props.currentStepSlug;
-  }
+    if (!selectedStep.value) {
+        return props.currentStepSlug;
+    }
 
     const allSteps = getAllSteps();
     const currentIndex = findCurrentStepIndex();
 
-  if (currentIndex === -1 || currentIndex >= allSteps.length - 1) {
-    // Already at the last step or step not found.
-    return props.currentStepSlug;
-  }
+    if (currentIndex === -1 || currentIndex >= allSteps.length - 1) {
+        // Already at the last step or step not found.
+        return props.currentStepSlug;
+    }
 
-  return allSteps[currentIndex + 1].slug
+    return allSteps[currentIndex + 1].slug;
 }
 
 function getPreviousStepSlug(): string {
-  if (!selectedStep.value) {
-    return props.currentStepSlug;
-  }
+    if (!selectedStep.value) {
+        return props.currentStepSlug;
+    }
 
     const allSteps = getAllSteps();
     const currentIndex = findCurrentStepIndex();
 
-  if (currentIndex <= 0) {
-    // Already at the first step or step not found.
-    return props.currentStepSlug;
-  }
+    if (currentIndex <= 0) {
+        // Already at the first step or step not found.
+        return props.currentStepSlug;
+    }
 
-  return allSteps[currentIndex - 1].slug;
+    return allSteps[currentIndex - 1].slug;
 }
 </script>
 
 <template>
-  <div v-if="selectedStep" class="col-12 d-flex">
-    <FormStepper
-      class="col-2 d-lg-block d-none"
-      :step-config="formStepperConfig"
-      :selected-step="props.currentStepSlug"
-    />
-    <div class="col-12 col-lg-10">
-      <form class="uu-form">
-        <SharedFormStep :step="selectedStep" />
-      </form>
-      <div class="btn-group">
-        <NuxtLink :to="{ name: 'procreg-step', params: { step: getPreviousStepSlug() } }">
-          <BSButton
-            variant="primary"
-            class="btn-arrow-left"
-          >
-            {{ $t("Previous") }}
-          </BSButton>
-        </NuxtLink>
-        <NuxtLink :to="{ name: 'procreg-step', params: { step: getNextStepSlug() } }">
-          <BSButton
-            variant="primary"
-            class="btn-arrow-right"
-          >
-            {{ $t("Next") }}
-          </BSButton>
-        </NuxtLink>
-      </div>
+    <div v-if="selectedStep" class="col-12 d-flex">
+        <FormStepper
+            class="col-2 d-lg-block d-none"
+            :step-config="formStepperConfig"
+            :selected-step="props.currentStepSlug"
+        />
+        <div class="col-12 col-lg-10">
+            <form class="uu-form">
+                <SharedFormStep :step="selectedStep" />
+            </form>
+            <div class="btn-group">
+                <NuxtLink
+                    :to="{
+                        name: 'procreg-step',
+                        params: { step: getPreviousStepSlug() },
+                    }"
+                >
+                    <BSButton variant="primary" class="btn-arrow-left">
+                        {{ $t("Previous") }}
+                    </BSButton>
+                </NuxtLink>
+                <NuxtLink
+                    :to="{
+                        name: 'procreg-step',
+                        params: { step: getNextStepSlug() },
+                    }"
+                >
+                    <BSButton variant="primary" class="btn-arrow-right">
+                        {{ $t("Next") }}
+                    </BSButton>
+                </NuxtLink>
+            </div>
+        </div>
     </div>
-  </div>
 </template>

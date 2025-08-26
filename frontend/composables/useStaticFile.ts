@@ -1,5 +1,5 @@
 export default function (path: string) {
-  const runtimeConfig = useRuntimeConfig();
+    const runtimeConfig = useRuntimeConfig();
 
-  return `${runtimeConfig.public.static_dir}${path}`;
+    return `${runtimeConfig.public.static_dir}${path}`;
 }
