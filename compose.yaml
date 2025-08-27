@@ -47,7 +47,7 @@ services:
     build:
       context: ./backend
     healthcheck:
-      test: "curl -f localhost:8000"
+      test: "curl -f localhost:8000/backend/healthcheck/"
     volumes:
       - ./backend:/usr/src/app/backend
       - bapyca:/usr/src/app/backend/__pycache__
@@ -91,7 +91,10 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
-    command: npm run dev
+    entrypoint: ./start_dev.sh
+    depends_on:
+      django-dev:
+        condition: service_healthy
     expose:
       - "3000"
     ports:
@@ -104,6 +107,8 @@ services:
     environment:
       # Allows Nuxt to be accessible from the outside.
       - HOST=0.0.0.0
+      - CODEGEN_SCHEMA=http://mr-django:8000/backend/api/graphql
+      - NUXT_PUBLIC_API_URL=http://localhost:5000/backend/api
 
   vue-prod:
     image: mr-vue-prod

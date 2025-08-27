@@ -1,3 +1,5 @@
+from .utils import discover
+
 DEBUG = True
 SECRET_KEY = "django-insecure-s8e=1!*6dzct5!vn$0%qdc!x4$_vhd895g0a1#e$_v+oqbvvyq"
 
@@ -5,7 +7,20 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "mr-django",
+    "[::1]",
 ]
+
+INTERNAL_IPS = [
+    "127.0.0.1"
+]
+
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:5000",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:5000",
+] + discover("CSRF_TRUSTED_ORIGINS", [])
 
 from .generic_settings import *
 
