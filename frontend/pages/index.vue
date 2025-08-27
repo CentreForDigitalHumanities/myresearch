@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import useEthicsLinks from "~/composables/useEthicsLinks";
+import SeasonalCover from "~/components/SeasonalCover.vue";
 </script>
 <template>
   <div class="uu-content">
     <Title>{{ $t("MyResearch") }}</Title>
+    <SeasonalCover />
     <div class="uu-hero">
       <h1>{{ $t("Home") }}</h1>
     </div>
