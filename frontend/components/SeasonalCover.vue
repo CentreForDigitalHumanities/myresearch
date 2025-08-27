@@ -28,12 +28,12 @@ const seasons = {
 };
 //only considers Dutch seasons, not Australian
 function getSeasonalCoverImage() {
-  const month = new Date().getMonth() + 1; //const month goes from 1 to 12
-  if ([3, 4, 5].indexOf(month) >= 1) {
+  let month = new Date().getMonth() + 1; //const month goes from 1 to 12
+  if ([3, 4, 5].indexOf(month) >= 0) {
     return seasons["spring"];
-  } else if ([6, 7, 8].indexOf(month) >= 1) {
+  } else if ([6, 7, 8].indexOf(month) >= 0) {
     return seasons["summer"];
-  } else if ([9, 10, 11].indexOf(month) >= 1) {
+  } else if ([9, 10, 11].indexOf(month) >= 0) {
     return seasons["autumn"];
   } else {
     return seasons["winter"];
