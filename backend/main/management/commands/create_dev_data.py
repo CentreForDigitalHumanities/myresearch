@@ -1,27 +1,42 @@
 from typing import Any, Type, Type
-from django.conf import settings
-from django.db import transaction
-from django.db.models import Model
-from django.core.management.base import BaseCommand, CommandError
 from tqdm import tqdm
 from faker import Faker
 
+from django.conf import settings
+from django.apps import apps
+from django.db import transaction
+from django.db.models import Model
+from django.core.management.base import BaseCommand, CommandError
+from django.core.management import call_command
+
+from main.models import User
 from form.models import (
+    DateAnswer,
     DateQuestion,
+    DateQuestionAnswer,
+    FileUploadAnswer,
     FileUploadQuestion,
+    FileUploadQuestionAnswer,
     MRForm,
     MRFormConfig,
+    NumberAnswer,
     NumberQuestion,
+    NumberQuestionAnswer,
+    SelectAnswer,
     SelectOption,
     SelectQuestion,
+    SelectQuestionAnswer,
     Step,
     StepInfo,
     StepInfoQuestion,
     StepInfoText,
+    TextAnswer,
     TextQuestion,
+    TextQuestionAnswer,
+    TrueFalseAnswer,
     TrueFalseQuestion,
+    TrueFalseQuestionAnswer,
 )
-
 
 MIN_STEPS_PER_FORM = 3
 MAX_STEPS_PER_FORM = 10
@@ -40,6 +55,38 @@ class Command(BaseCommand):
     faker_nl = faker["nl_NL"]
     faker_en = faker["en_GB"]
 
+    # All models for which dev data has been implemented. Add the model to
+    # this list when dev data creation has been implemented for this model.
+    dev_data_models = [
+        User,
+        MRFormConfig,
+        MRForm,
+        Step,
+        StepInfo,
+        StepInfoQuestion,
+        StepInfoText,
+        DateQuestion,
+        FileUploadQuestion,
+        NumberQuestion,
+        SelectOption,
+        SelectQuestion,
+        TextQuestion,
+        TrueFalseQuestion,
+        # TODO: actually implement the following
+        DateAnswer,
+        FileUploadAnswer,
+        NumberAnswer,
+        SelectAnswer,
+        TextAnswer,
+        TrueFalseAnswer,
+        DateQuestionAnswer,
+        FileUploadQuestionAnswer,
+        NumberQuestionAnswer,
+        SelectQuestionAnswer,
+        TextQuestionAnswer,
+        TrueFalseQuestionAnswer,    
+    ]
+
     def add_arguments(self, parser):
         parser.add_argument("--force", action="store_true")
         parser.add_argument("--silent", action="store_true")
@@ -54,7 +101,11 @@ class Command(BaseCommand):
                 "Refusing to execute command unless DEBUG = True in settings.py"
             )
 
+        self._check_all_models_implemented()
+
         with transaction.atomic():
+            self._create_test_users(options)
+
             form = self._generate_form(options)
             self._generate_steps(options, form)
             self._generate_questions(options, form)
@@ -229,3 +280,35 @@ class Command(BaseCommand):
                         _create_number_question(step, question_index)
                     case "file_upload":
                         _create_file_upload_question(step, question_index)
+
+    def _create_test_users(self, options):
+        """
+        Create mock users for test purposes from fixtures.
+        """
+        fixtures = [
+            "main/management/commands/dev_fixtures/dev_users.json",
+        ]
+
+        for fixture in fixtures:
+            call_command("loaddata", fixture)
+
+    def _check_all_models_implemented(
+        self,
+    ):
+        """
+        Gather all models from LOCAL_APPS and check if they are all present in
+        dev_data_models.
+        """
+
+        all_mr_models = []
+
+        for app in settings.LOCAL_APPS:
+            for mr_model in apps.get_app_config(app).get_models():
+                all_mr_models.append(mr_model)
+
+        for mr_model in all_mr_models:
+            if mr_model not in self.dev_data_models:
+                raise CommandError(
+                    f"The model {mr_model} is not yet represented in the dev "
+                    "data creation."
+                )
