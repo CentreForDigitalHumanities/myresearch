@@ -49,11 +49,28 @@ class Step(models.Model):
 
     class Meta:
         constraints = [
+            # Every step must have either a form order or a parent order, but not both.
             models.CheckConstraint(
-                check=Q(parent_order__isnull=False, form_order__isnull=True)
-                | Q(parent_order__isnull=True, form_order__isnull=False),
+                check=Q(
+                    parent_id__isnull=False,
+                    parent_order__isnull=False,
+                    form_order__isnull=True,
+                )
+                | Q(
+                    parent_order__isnull=True,
+                    form_id__isnull=False,
+                    form_order__isnull=False,
+                ),
                 name="either_form_order_or_parent_order",
-            )
+            ),
+            # Every substep within a step must have a unique parent order.
+            models.UniqueConstraint(
+                fields=["parent", "parent_order"], name="unique_parent_order"
+            ),
+            # Every step within a form must have a unique form order.
+            models.UniqueConstraint(
+                fields=["form", "form_order"], name="unique_form_order"
+            ),
         ]
 
 
@@ -86,6 +103,9 @@ class StepInfoText(models.Model):
 class BaseQuestion(models.Model):
     text = models.CharField(max_length=200)
     step = models.ForeignKey(Step, on_delete=models.CASCADE)
+    step_order = models.PositiveIntegerField(
+        null=True, blank=True, help_text="The order of this question within the step."
+    )
     description = models.TextField(
         blank=True,
         help_text="Context about the question and its purpose, which will be shown to the user.",
@@ -94,6 +114,9 @@ class BaseQuestion(models.Model):
 
     class Meta:
         abstract = True
+        constraints = [
+            models.UniqueConstraint(fields=["step_id", "step_order"], name="%(app_label)s_%(class)s_unique_step_order")
+        ]
 
 
 class SelectQuestion(BaseQuestion):
