@@ -8,7 +8,7 @@ type QueriedForm = NonNullable<GetFormQuery["form"]>;
 type ParentStep = NonNullable<QueriedForm["steps"][number]>;
 type Substep = NonNullable<ParentStep["substeps"][number]>;
 
-export type CombinedStep = ParentStep | Substep;
+export type Step = ParentStep | Substep;
 
 interface Props {
     form: QueriedForm;
@@ -19,14 +19,13 @@ const props = defineProps<Props>();
 const steps = computed<ParentStep[]>(() =>
     props.form.steps.map((step) => ({
         ...step,
-        substeps:
-            step.substeps?.map((substep) => ({
-                ...substep,
-            })) ?? [],
+        substeps: step.substeps.map((substep) => ({
+            ...substep,
+        })),
     })),
 );
 
-const selectedStep = ref<CombinedStep | null>(
+const selectedStep = ref<Step | null>(
     steps.value.length > 0 ? steps.value[0] : null,
 );
 
@@ -43,28 +42,27 @@ const formStepperConfig = computed<FormStepperConfig>(() => {
             completed: false,
             active: step.slug === selectedStepSlug,
             disabled: false,
-            children:
-                step.substeps?.map((substep) => ({
-                    slug: substep.slug,
-                    labelNl: substep.nameNl ?? "",
-                    labelEn: substep.nameEn ?? "",
-                    completed: false,
-                    active: substep.slug === selectedStepSlug,
-                    disabled: false,
-                    children: [],
-                })) ?? [],
+            children: step.substeps.map((substep) => ({
+                slug: substep.slug,
+                labelNl: substep.nameNl ?? "",
+                labelEn: substep.nameEn ?? "",
+                completed: false,
+                active: substep.slug === selectedStepSlug,
+                disabled: false,
+                children: [],
+            })),
         })),
     };
 });
 
-function getAllSteps(): CombinedStep[] {
-    const allSteps: CombinedStep[] = [];
+function getAllSteps(): Step[] {
+    const allSteps: Step[] = [];
 
     steps.value.forEach((step) => {
         // Add main step.
         allSteps.push(step);
 
-        if (!step.substeps || step.substeps.length === 0) {
+        if (step.substeps.length === 0) {
             return;
         }
 

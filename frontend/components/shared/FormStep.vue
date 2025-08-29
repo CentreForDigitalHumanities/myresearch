@@ -4,13 +4,13 @@ import type {
     SelectQuestionType,
     TextQuestionType,
 } from "~/generated/gql/graphql";
-import type { CombinedStep } from "./MRForm.vue";
+import type { Step } from "./MRForm.vue";
 import { SharedFormSideBar } from "#components";
 
-type QuestionType = CombinedStep["questions"][number];
+type QuestionType = Step["questions"][number];
 
 interface Props {
-    step: CombinedStep;
+    step: Step;
 }
 defineProps<Props>();
 
