@@ -23,7 +23,6 @@ from form.models import (
 )
 
 
-NUMBER_OF_FORMS = 10
 MIN_STEPS_PER_FORM = 3
 MAX_STEPS_PER_FORM = 10
 MIN_SUBSTEPS_PER_STEP = 0
@@ -56,13 +55,13 @@ class Command(BaseCommand):
             )
 
         with transaction.atomic():
-            self._generate_form(options)
-            self._generate_steps(options)
-            self._generate_questions(options)
+            form = self._generate_form(options)
+            self._generate_steps(options, form)
+            self._generate_questions(options, form)
 
-    def _generate_form(self, options) -> None:
+    def _generate_form(self, options) -> MRForm:
         """
-        Generate FormConfig and associated form.
+        Generate FormConfig and associated Form.
         """
 
         print("Generating FormConfig and Form...")
@@ -72,7 +71,7 @@ class Command(BaseCommand):
             version="1.0",
         )
 
-        MRForm.objects.create(
+        form = MRForm.objects.create(
             name_nl=self.faker_nl.sentence(nb_words=5),
             name_en=self.faker_en.sentence(nb_words=5),
             description_nl=self.faker_nl.paragraph(),
@@ -82,15 +81,34 @@ class Command(BaseCommand):
 
         print("Done!")
 
-    def _generate_steps(self, options) -> None:
-        for form in tqdm(MRForm.objects.all(), desc="Generating steps..."):
-            number_of_steps = self.faker.random_int(
-                MIN_STEPS_PER_FORM, MAX_STEPS_PER_FORM
+        return form
+
+    def _generate_steps(self, options, form: MRForm) -> None:
+        number_of_steps = self.faker.random_int(MIN_STEPS_PER_FORM, MAX_STEPS_PER_FORM)
+
+        for step_index in tqdm(range(number_of_steps), desc="Generating steps..."):
+            step = Step.objects.create(
+                form=form,
+                form_order=step_index,
+                slug=self.faker.slug(),
+                name_nl=self.faker_nl.sentence(nb_words=5),
+                name_en=self.faker_en.sentence(nb_words=5),
+                description_nl=self.faker_nl.paragraph(),
+                description_en=self.faker_en.paragraph(),
             )
-            for step_index in range(number_of_steps):
-                step = Step.objects.create(
-                    form=form,
-                    form_order=step_index,
+
+            number_of_substeps = self.faker.random_int(
+                MIN_SUBSTEPS_PER_STEP, MAX_SUBSTEPS_PER_STEP
+            )
+
+            if self.faker.pybool():
+                # Generate step info.
+                self._create_step_info(step)
+
+            for substep_index in range(number_of_substeps):
+                substep = Step.objects.create(
+                    parent=step,
+                    parent_order=substep_index,
                     slug=self.faker.slug(),
                     name_nl=self.faker_nl.sentence(nb_words=5),
                     name_en=self.faker_en.sentence(nb_words=5),
@@ -98,28 +116,9 @@ class Command(BaseCommand):
                     description_en=self.faker_en.paragraph(),
                 )
 
-                number_of_substeps = self.faker.random_int(
-                    MIN_SUBSTEPS_PER_STEP, MAX_SUBSTEPS_PER_STEP
-                )
-
                 if self.faker.pybool():
                     # Generate step info.
-                    self._create_step_info(step)
-
-                for substep_index in range(number_of_substeps):
-                    substep = Step.objects.create(
-                        parent=step,
-                        form_order=substep_index,
-                        slug=self.faker.slug(),
-                        name_nl=self.faker_nl.sentence(nb_words=5),
-                        name_en=self.faker_en.sentence(nb_words=5),
-                        description_nl=self.faker_nl.paragraph(),
-                        description_en=self.faker_en.paragraph(),
-                    )
-
-                    if self.faker.pybool():
-                        # Generate step info.
-                        self._create_step_info(substep)
+                    self._create_step_info(substep)
 
     def _create_step_info(self, step: Step) -> None:
         """Generates step information for a given step."""
@@ -154,20 +153,21 @@ class Command(BaseCommand):
             generate_step_info_text()
             generate_step_info_questions()
 
-    def _generate_questions(self, options) -> None:
-        def _base_question_fields(step: Step) -> dict:
+    def _generate_questions(self, options, form: MRForm) -> None:
+        def _base_question_fields(step: Step, order: int) -> dict:
             return {
                 "text_nl": self.faker_nl.sentence().replace(".", "?"),
                 "text_en": self.faker_en.sentence().replace(".", "?"),
                 "step": step,
+                "step_order": order,
                 "description_nl": self.faker_nl.paragraph(),
                 "description_en": self.faker_en.paragraph(),
                 "required": self.faker.pybool(),
             }
 
-        def _create_select_question(step: Step) -> None:
+        def _create_select_question(step: Step, index: int) -> None:
             select_question = SelectQuestion.objects.create(
-                **_base_question_fields(step),
+                **_base_question_fields(step, index),
                 multiple=self.faker.pybool(),
             )
 
@@ -178,51 +178,54 @@ class Command(BaseCommand):
                     question=select_question,
                 )
 
-        def _create_text_question(step: Step) -> None:
+        def _create_text_question(step: Step, index: int) -> None:
             TextQuestion.objects.create(
-                **_base_question_fields(step),
+                **_base_question_fields(step, index),
                 placeholder_nl=self.faker_nl.sentence(),
                 placeholder_en=self.faker_en.sentence(),
                 lines=self.faker.random_int(1, 5),
             )
 
-        def _create_true_false_question(step: Step) -> None:
+        def _create_true_false_question(step: Step, index: int) -> None:
             TrueFalseQuestion.objects.create(
-                **_base_question_fields(step), default_value=self.faker.pybool()
+                **_base_question_fields(step, index), default_value=self.faker.pybool()
             )
 
-        def _create_date_question(step: Step) -> None:
+        def _create_date_question(step: Step, index: int) -> None:
             DateQuestion.objects.create(
-                **_base_question_fields(step), future_only=self.faker.pybool()
+                **_base_question_fields(step, index), future_only=self.faker.pybool()
             )
 
-        def _create_number_question(step: Step) -> None:
+        def _create_number_question(step: Step, index: int) -> None:
             NumberQuestion.objects.create(
-                **_base_question_fields(step), positive_only=self.faker.pybool()
+                **_base_question_fields(step, index), positive_only=self.faker.pybool()
             )
 
-        def _create_file_upload_question(step: Step) -> None:
+        def _create_file_upload_question(step: Step, index: int) -> None:
             FileUploadQuestion.objects.create(
-                **_base_question_fields(step), size_limit=1024
+                **_base_question_fields(step, index), size_limit=1024
             )
 
-        for step in tqdm(Step.objects.all(), desc="Generating questions..."):
+        # Only create questions for the form that was just created.
+        form_steps = Step.objects.filter(form=form)
+
+        for step in tqdm(form_steps, desc="Generating questions..."):
             number_of_questions = self.faker.random_int(
                 MIN_QUESTIONS_PER_STEP, MAX_QUESTIONS_PER_STEP
             )
-            for _question_index in range(number_of_questions):
+            for question_index in range(number_of_questions):
                 question_type = self.faker.random_element(ALL_QUESTIONS)
 
                 match question_type:
                     case "select":
-                        _create_select_question(step)
+                        _create_select_question(step, question_index)
                     case "text":
-                        _create_text_question(step)
+                        _create_text_question(step, question_index)
                     case "true_false":
-                        _create_true_false_question(step)
+                        _create_true_false_question(step, question_index)
                     case "date":
-                        _create_date_question(step)
+                        _create_date_question(step, question_index)
                     case "number":
-                        _create_number_question(step)
+                        _create_number_question(step, question_index)
                     case "file_upload":
-                        _create_file_upload_question(step)
+                        _create_file_upload_question(step, question_index)
