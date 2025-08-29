@@ -115,7 +115,10 @@ class BaseQuestion(models.Model):
     class Meta:
         abstract = True
         constraints = [
-            models.UniqueConstraint(fields=["step_id", "step_order"], name="%(app_label)s_%(class)s_unique_step_order")
+            models.UniqueConstraint(
+                fields=["step_id", "step_order"],
+                name="%(app_label)s_%(class)s_unique_step_order",
+            )
         ]
 
 

@@ -84,7 +84,7 @@ class Command(BaseCommand):
         NumberQuestionAnswer,
         SelectQuestionAnswer,
         TextQuestionAnswer,
-        TrueFalseQuestionAnswer,    
+        TrueFalseQuestionAnswer,
     ]
 
     def add_arguments(self, parser):
