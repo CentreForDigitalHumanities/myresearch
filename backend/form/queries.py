@@ -2,7 +2,7 @@ from typing import Optional
 from graphene import Field, ObjectType, ResolveInfo
 
 
-from backend.form.types.MRFormType import MRFormType
+from form.types.MRFormType import MRFormType
 from form.models import MRForm
 
 

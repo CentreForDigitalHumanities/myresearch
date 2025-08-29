@@ -5,7 +5,7 @@ from graphene_django import DjangoObjectType
 from django.db.models import QuerySet
 
 from form.types.StepType import StepType
-from backend.form.types.MRFormConfigType import MRFormConfigType
+from form.types.MRFormConfigType import MRFormConfigType
 from form.models import MRForm, MRFormConfig, Step
 
 
