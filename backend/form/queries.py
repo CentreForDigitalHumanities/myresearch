@@ -2,19 +2,19 @@ from typing import Optional
 from graphene import Field, ObjectType, ResolveInfo
 
 
-from form.types.FormType import FormType
-from form.models import Form
+from backend.form.types.MRFormType import MRFormType
+from form.models import MRForm
 
 
 class FormQueries(ObjectType):
     form = Field(
-        FormType, description="Retrieves the latest form. For testing purposes only."
+        MRFormType, description="Retrieves the latest form. For testing purposes only."
     )
 
     @staticmethod
-    def resolve_form(root, info: ResolveInfo) -> Optional[Form]:
+    def resolve_form(root, info: ResolveInfo) -> Optional[MRForm]:
         return (
-            FormType.get_queryset(Form.objects, info)
+            MRFormType.get_queryset(MRForm.objects, info)
             .order_by("-config__created_at")
             .first()
         )

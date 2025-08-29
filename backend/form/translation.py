@@ -3,7 +3,7 @@ from modeltranslation.translator import register, TranslationOptions
 from .models import (
     DateQuestion,
     FileUploadQuestion,
-    Form,
+    MRForm,
     NumberQuestion,
     SelectOption,
     Step,
@@ -15,7 +15,7 @@ from .models import (
 )
 
 
-@register(Form)
+@register(MRForm)
 class FormTranslationOptions(TranslationOptions):
     fields = ["name", "description"]
 

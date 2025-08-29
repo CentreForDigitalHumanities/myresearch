@@ -5,14 +5,14 @@ from graphene_django import DjangoObjectType
 from django.db.models import QuerySet
 
 from form.types.StepType import StepType
-from form.types.FormConfigType import FormConfigType
-from form.models import Form, FormConfig, Step
+from backend.form.types.MRFormConfigType import MRFormConfigType
+from form.models import MRForm, MRFormConfig, Step
 
 
-class FormType(DjangoObjectType):
+class MRFormType(DjangoObjectType):
 
     class Meta:
-        model = Form
+        model = MRForm
         fields = [
             "id",
             "name_nl",
@@ -25,21 +25,21 @@ class FormType(DjangoObjectType):
 
     @classmethod
     def get_queryset(
-        cls, queryset: QuerySet[Form], info: ResolveInfo
-    ) -> QuerySet[Form]:
+        cls, queryset: QuerySet[MRForm], info: ResolveInfo
+    ) -> QuerySet[MRForm]:
         return queryset
 
     @staticmethod
-    def resolve_config(parent: Form, info: ResolveInfo) -> Optional[FormConfig]:
+    def resolve_config(parent: MRForm, info: ResolveInfo) -> Optional[MRFormConfig]:
         try:
-            return FormConfigType.get_queryset(FormConfig.objects, info).get(
+            return MRFormConfigType.get_queryset(MRFormConfig.objects, info).get(
                 form=parent
             )
-        except FormConfig.DoesNotExist:
+        except MRFormConfig.DoesNotExist:
             return None
 
     @staticmethod
-    def resolve_steps(parent: Form, info: ResolveInfo) -> QuerySet[Step]:
+    def resolve_steps(parent: MRForm, info: ResolveInfo) -> QuerySet[Step]:
         return (
             StepType.get_queryset(Step.objects, info)
             .filter(form=parent)

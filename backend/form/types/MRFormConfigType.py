@@ -3,13 +3,13 @@ from graphene_django import DjangoObjectType
 
 from django.db.models import QuerySet
 
-from form.models import FormConfig
+from form.models import MRFormConfig
 
 
-class FormConfigType(DjangoObjectType):
+class MRFormConfigType(DjangoObjectType):
 
     class Meta:
-        model = FormConfig
+        model = MRFormConfig
         fields = [
             "id",
             "name",
@@ -21,6 +21,6 @@ class FormConfigType(DjangoObjectType):
 
     @classmethod
     def get_queryset(
-        cls, queryset: QuerySet[FormConfig], info: ResolveInfo
-    ) -> QuerySet[FormConfig]:
+        cls, queryset: QuerySet[MRFormConfig], info: ResolveInfo
+    ) -> QuerySet[MRFormConfig]:
         return queryset

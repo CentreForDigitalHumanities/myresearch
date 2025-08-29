@@ -9,8 +9,8 @@ from faker import Faker
 from form.models import (
     DateQuestion,
     FileUploadQuestion,
-    Form,
-    FormConfig,
+    MRForm,
+    MRFormConfig,
     NumberQuestion,
     SelectOption,
     SelectQuestion,
@@ -67,12 +67,12 @@ class Command(BaseCommand):
 
         print("Generating FormConfig and Form...")
 
-        form_config = FormConfig.objects.create(
+        form_config = MRFormConfig.objects.create(
             name="Mock Form Config",
             version="1.0",
         )
 
-        Form.objects.create(
+        MRForm.objects.create(
             name_nl=self.faker_nl.sentence(nb_words=5),
             name_en=self.faker_en.sentence(nb_words=5),
             description_nl=self.faker_nl.paragraph(),
@@ -83,7 +83,7 @@ class Command(BaseCommand):
         print("Done!")
 
     def _generate_steps(self, options) -> None:
-        for form in tqdm(Form.objects.all(), desc="Generating steps..."):
+        for form in tqdm(MRForm.objects.all(), desc="Generating steps..."):
             number_of_steps = self.faker.random_int(
                 MIN_STEPS_PER_FORM, MAX_STEPS_PER_FORM
             )

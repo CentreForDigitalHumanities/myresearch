@@ -6,18 +6,18 @@ from django.contrib.postgres.fields import ArrayField
 user_model = get_user_model()
 
 
-class FormConfig(models.Model):
+class MRFormConfig(models.Model):
     name = models.CharField(max_length=200)
     version = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class Form(models.Model):
+class MRForm(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     config = models.OneToOneField(
-        FormConfig, on_delete=models.CASCADE, related_name="form"
+        MRFormConfig, on_delete=models.CASCADE, related_name="form"
     )
 
 
@@ -32,7 +32,7 @@ class Step(models.Model):
     )
 
     form = models.ForeignKey(
-        Form, null=True, blank=True, on_delete=models.CASCADE, related_name="steps"
+        MRForm, null=True, blank=True, on_delete=models.CASCADE, related_name="steps"
     )
     form_order = models.PositiveIntegerField(
         null=True, blank=True, help_text="The order of this step within the form."
