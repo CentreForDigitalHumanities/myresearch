@@ -35,7 +35,6 @@ class DateQuestionType(DjangoObjectType):
         model = DateQuestion
         interfaces = [BaseQuestionInterface]
         fields = [
-            "id",
             "future_only",
         ]
 
@@ -51,7 +50,6 @@ class FileUploadQuestionType(DjangoObjectType):
         model = FileUploadQuestion
         interfaces = [BaseQuestionInterface]
         fields = [
-            "id",
             "size_limit",
         ]
 
@@ -67,7 +65,6 @@ class NumberQuestionType(DjangoObjectType):
         model = NumberQuestion
         interfaces = [BaseQuestionInterface]
         fields = [
-            "id",
             "positive_only",
         ]
 
@@ -83,7 +80,6 @@ class SelectQuestionType(DjangoObjectType):
         model = SelectQuestion
         interfaces = [BaseQuestionInterface]
         fields = [
-            "id",
             "options",
             "multiple",
         ]
@@ -106,7 +102,6 @@ class TextQuestionType(DjangoObjectType):
         model = TextQuestion
         interfaces = [BaseQuestionInterface]
         fields = [
-            "id",
             "placeholder_nl",
             "placeholder_en",
             "lines",
@@ -124,7 +119,6 @@ class TrueFalseQuestionType(DjangoObjectType):
         model = TrueFalseQuestion
         interfaces = [BaseQuestionInterface]
         fields = [
-            "id",
             "default_value",
         ]
 
