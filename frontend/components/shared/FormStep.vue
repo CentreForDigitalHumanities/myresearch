@@ -47,6 +47,9 @@ function isDateQuestion(question: QuestionType): question is DateQuestionType {
                     v-else-if="isDateQuestion(question)"
                     :question="question"
                 />
+                <p v-else class="my-3">
+                    {{ question.__typename }} does not have a component yet. 😢
+                </p>
             </div>
         </div>
         <SharedFormSideBar v-if="step.info" :config="step.info" />
