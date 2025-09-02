@@ -3,6 +3,7 @@ import springURL from "@/assets/images/covers/coverimage-spring.jpg";
 import summerURL from "@/assets/images/covers/coverimage-summer.jpg";
 import autumnURL from "@/assets/images/covers/coverimage-autumn.jpg";
 import winterURL from "@/assets/images/covers/coverimage-winter.jpg";
+
 const seasons = {
   spring: {
     image: springURL,
@@ -26,9 +27,8 @@ const seasons = {
     classes: "align-items-middle",
   },
 };
-//only considers Dutch seasons, not Australian
 function getSeasonalCoverImage() {
-  const month = new Date().getMonth() + 1;
+  const month = new Date().getMonth() + 1; //months go from 1 to 12.
   if ([3, 4, 5].includes(month)) {
     return seasons["spring"];
   } else if ([6, 7, 8].indexOf(month) >= 0) {
