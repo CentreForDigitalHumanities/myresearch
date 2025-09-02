@@ -29,7 +29,7 @@ const seasons = {
 //only considers Dutch seasons, not Australian
 function getSeasonalCoverImage() {
   let month = new Date().getMonth() + 1; //const month goes from 1 to 12
-  if ([3, 4, 5].indexOf(month) >= 0) {
+  if ([3, 4, 5].includes(month)) {
     return seasons["spring"];
   } else if ([6, 7, 8].indexOf(month) >= 0) {
     return seasons["summer"];
