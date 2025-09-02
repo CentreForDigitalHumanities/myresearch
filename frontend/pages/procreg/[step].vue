@@ -19,7 +19,7 @@ const route = useRoute();
         <div class="uu-container">
             <SharedMRForm
                 :form-config="formConfig"
-                :currentStepSlug="stepSlug(route.params.step)"
+                :current-step-slug="stepSlug(route.params.step)"
             />
         </div>
     </div>
