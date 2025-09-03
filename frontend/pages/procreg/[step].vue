@@ -84,6 +84,12 @@ const GET_FORM = graphql(`
 const { result: formResult } = useQuery<GetFormQuery>(GET_FORM);
 
 const form = computed(() => formResult.value?.form ?? null);
+
+function stepSlug(route: string | string[]): string {
+    return Array.isArray(route) ? route[0] : route;
+}
+
+const route = useRoute();
 </script>
 
 <template>
@@ -93,7 +99,11 @@ const form = computed(() => formResult.value?.form ?? null);
             <h1>{{ $t("Processing Registry") }}</h1>
         </div>
         <div class="uu-container">
-            <SharedMRForm v-if="form" :form="form" />
+            <SharedMRForm
+                v-if="form"
+                :form="form"
+                :current-step-slug="stepSlug(route.params.step)"
+            />
         </div>
     </div>
 </template>

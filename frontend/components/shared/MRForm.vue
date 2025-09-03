@@ -12,6 +12,7 @@ export type Step = ParentStep | Substep;
 
 interface Props {
     form: QueriedForm;
+    currentStepSlug: string;
 }
 
 const props = defineProps<Props>();
@@ -23,10 +24,6 @@ const steps = computed<ParentStep[]>(() =>
             ...substep,
         })),
     })),
-);
-
-const selectedStep = ref<Step | null>(
-    steps.value.length > 0 ? steps.value[0] : null,
 );
 
 const formStepperConfig = computed<FormStepperConfig>(() => {
@@ -55,6 +52,10 @@ const formStepperConfig = computed<FormStepperConfig>(() => {
     };
 });
 
+
+
+const selectedStep = ref<Step | null>(defaultStep());
+
 function getAllSteps(): Step[] {
     const allSteps: Step[] = [];
 
@@ -76,6 +77,14 @@ function getAllSteps(): Step[] {
     return allSteps;
 }
 
+function defaultStep(): Step | null {
+    const allSteps = getAllSteps();
+    if (allSteps.length <= 0) {
+        return null;
+    }
+    return allSteps.find(({ slug }) => slug === props.currentStepSlug) ?? null;
+}
+
 function findCurrentStepIndex(): number {
     const selectedStepValue = selectedStep.value;
     if (!selectedStepValue) {
@@ -86,9 +95,9 @@ function findCurrentStepIndex(): number {
     return allSteps.findIndex((step) => step.slug === selectedStepValue.slug);
 }
 
-function nextStep(): void {
+function getNextStepSlug(): string {
     if (!selectedStep.value) {
-        return;
+        return props.currentStepSlug;
     }
 
     const allSteps = getAllSteps();
@@ -96,15 +105,15 @@ function nextStep(): void {
 
     if (currentIndex === -1 || currentIndex >= allSteps.length - 1) {
         // Already at the last step or step not found.
-        return;
+        return props.currentStepSlug;
     }
 
-    selectedStep.value = allSteps[currentIndex + 1];
+    return allSteps[currentIndex + 1].slug;
 }
 
-function previousStep(): void {
+function getPreviousStepSlug(): string {
     if (!selectedStep.value) {
-        return;
+        return props.currentStepSlug;
     }
 
     const allSteps = getAllSteps();
@@ -112,10 +121,10 @@ function previousStep(): void {
 
     if (currentIndex <= 0) {
         // Already at the first step or step not found.
-        return;
+        return props.currentStepSlug;
     }
 
-    selectedStep.value = allSteps[currentIndex - 1];
+    return allSteps[currentIndex - 1].slug;
 }
 </script>
 
@@ -124,27 +133,33 @@ function previousStep(): void {
         <FormStepper
             class="col-2 d-lg-block d-none"
             :step-config="formStepperConfig"
-            :selected-step="selectedStep.slug"
+            :selected-step="props.currentStepSlug"
         />
         <div class="col-12 col-lg-10">
             <form class="uu-form">
                 <SharedFormStep :step="selectedStep" />
             </form>
             <div class="btn-group">
-                <BSButton
-                    variant="primary"
-                    class="btn-arrow-left"
-                    @click="() => previousStep()"
+                <NuxtLink
+                    :to="{
+                        name: 'procreg-step',
+                        params: { step: getPreviousStepSlug() },
+                    }"
                 >
-                    {{ $t("Previous") }}
-                </BSButton>
-                <BSButton
-                    variant="primary"
-                    class="btn-arrow-right"
-                    @click="() => nextStep()"
+                    <BSButton variant="primary" class="btn-arrow-left">
+                        {{ $t("Previous") }}
+                    </BSButton>
+                </NuxtLink>
+                <NuxtLink
+                    :to="{
+                        name: 'procreg-step',
+                        params: { step: getNextStepSlug() },
+                    }"
                 >
-                    {{ $t("Next") }}
-                </BSButton>
+                    <BSButton variant="primary" class="btn-arrow-right">
+                        {{ $t("Next") }}
+                    </BSButton>
+                </NuxtLink>
             </div>
         </div>
     </div>
