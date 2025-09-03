@@ -26,7 +26,7 @@ const {
 
 <template>
     <div>
-        <p v-for="user in usersResult?.users ?? []">
+        <p v-for="user in usersResult?.users ?? []" :key="user.id">
             {{ user.username }} {{ user.email }}
         </p>
     </div>
