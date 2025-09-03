@@ -60,20 +60,21 @@ local_settings.py file, which contains the following settings:
     CSRF_TRUSTED_ORIGINS = ["http://*:3000"]
     ```
 
-6. Create a new local development database. The Django development server 
-expects a database with the following details. (This can be changed as needed 
-in `settings.py`):
+6. Create a new local development database. The first PostgreSQL start-up will
+normally do this for you, but in case you need to do this manually, follow this
+step. The Django development server expects a database with the following
+details. (This can be changed as needed in `settings.py`):
 - DB name: `myresearch`
 - Host: `localhost`
 - Port: `5432`
 - User: `myresearch`
 - Password: `myresearch`
 
-The `create_db.sql` script in the root of the repository can be used to create 
-the database and user with the correct permissions. Run it as follows.
+The file `backend/create_db.sql` can be used to create the database and user 
+with the correct permissions. Run it as follows.
 
 ```bash
-psql -U <your-postgres-username> -f create_db.sql
+psql -U <your-postgres-username> -f backend/create_db.sql
 ```
 
 Note that this is not needed if you are using the provided Docker setup. Also, 
