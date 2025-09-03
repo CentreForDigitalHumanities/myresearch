@@ -52,8 +52,6 @@ const formStepperConfig = computed<FormStepperConfig>(() => {
     };
 });
 
-
-
 const selectedStep = ref<Step | null>(defaultStep());
 
 function getAllSteps(): Step[] {
