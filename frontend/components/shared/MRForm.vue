@@ -38,12 +38,15 @@ const formStepperConfig = computed<FormStepperConfig>(() => {
     };
 });
 
-const selectedStep = ref<FormStep | null>(
-    props.formConfig.steps.length > 0
-        ? (getAllSteps().find(({ slug }) => slug === props.currentStepSlug) ??
-              null)
-        : null,
-);
+function defaultStep(): FormStep | null {
+    const allSteps = getAllSteps();
+    if (allSteps.length <= 0) {
+        return null;
+    }
+    return allSteps.find(({ slug }) => slug === props.currentStepSlug) ?? null;
+}
+
+const selectedStep = ref<FormStep | null>(defaultStep());
 
 function getAllSteps(): FormStep[] {
     const allSteps: FormStep[] = [];
