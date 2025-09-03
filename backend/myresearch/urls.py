@@ -19,13 +19,16 @@ from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import path, include
 
-from graphene_django.views import GraphQLView
-from django.views.decorators.csrf import csrf_exempt
-
-
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("api/", include("api.urls")),
-    # Used for a healthcheck by the Docker container.
-    path("healthcheck/", lambda r: HttpResponse()),
+    path(
+        "backend/",
+        include(
+            [
+                path("admin/", admin.site.urls),
+                path("api/", include("api.urls")),
+                # Used for a healthcheck by the Docker container.
+                path("healthcheck/", lambda r: HttpResponse()),
+            ],
+        ),
+    )
 ]
