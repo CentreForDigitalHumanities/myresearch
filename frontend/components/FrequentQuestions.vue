@@ -1,45 +1,32 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { mockData } from "~/shared/mockData";
 
-const props = defineProps({
-  questionsGroup: String,
-  title: String,
-});
-
-let groupName = "";
-let questionsList = <string[]>[""];
-let answersList = <string[]>[""];
-
-if (props.questionsGroup == "processingRegister") {
-  groupName = props.questionsGroup;
-  questionsList = mockData.questionsProcessingRegister;
-  answersList = mockData.answersProcessingRegister;
-} else if (props.questionsGroup == "ethicalCommission") {
-  groupName = props.questionsGroup;
-  questionsList = mockData.questionsEthicalCommission;
-  answersList = mockData.answersEthicalCommission;
+interface Props {
+  questionsGroup: string;
+  title: string;
 }
-const accordionItems = <any>[];
-for (let i = 0; i < questionsList.length; i++) {
-  accordionItems.push({
-    id: groupName + i,
-    question: questionsList[i],
-    answer: answersList[i],
-  });
+const props = defineProps<Props>();
+
+const questionAnswers: Map<string, string> | undefined =
+  mockData.getQuestionAnswers(props.questionsGroup);
+
+if (questionAnswers === undefined) {
+  console.log(
+    "undefined questionGroup found for the frequentQuestions component",
+  );
 }
 </script>
 
 <template>
   <div class="mw-100">
-    <h2 v-if="props.title" class="uu-sidebar-header-linked">
-      {{ $t(props.title) }}
+    <h2 class="uu-sidebar-header-linked">
+      {{ $t(title) }}
     </h2>
-    <!-- warning: translations inside this accordion do not change until page is reloaded -->
-    <div class="accordion mw-100" v-bind:id="'accordion' + groupName">
+    <div class="accordion mw-100" v-bind:id="'accordion' + questionsGroup">
       <div
         class="mw-100"
-        v-for="accordionItem in accordionItems"
-        :key="accordionItem.id"
+        v-for="(questionAnswer, index) in questionAnswers"
+        :key="questionsGroup + index"
       >
         <div class="accordion-item mw-100">
           <h2 class="accordion-header">
@@ -47,24 +34,24 @@ for (let i = 0; i < questionsList.length; i++) {
               class="accordion-button"
               type="button"
               data-bs-toggle="collapse"
-              v-bind:data-bs-target="'#collapse' + accordionItem.id"
+              v-bind:data-bs-target="'#collapse' + questionsGroup + index"
               aria-expanded="false"
-              v-bind:aria-controls="'collapse' + accordionItem.id"
+              v-bind:aria-controls="'collapse' + questionsGroup + index"
             >
-              {{ accordionItem.question }}
+              {{ $t(questionAnswer[0]) }}
             </button>
           </h2>
           <div
-            v-bind:id="'collapse' + accordionItem.id"
+            v-bind:id="'collapse' + questionsGroup + index"
             class="accordion-collapse collapse mw-100"
-            v-bind:data-bs-parent="'#accordion' + groupName"
+            v-bind:data-bs-parent="'#accordion' + questionsGroup"
           >
-            <div class="accordion-body mw-100">{{ accordionItem.answer }}</div>
+            <div class="accordion-body mw-100">
+              {{ $t(questionAnswer[1]) }}
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<style scoped></style>

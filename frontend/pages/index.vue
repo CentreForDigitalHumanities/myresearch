@@ -110,7 +110,7 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
     </div>
     <div class="uu-sidebar-container uu-sidebar-right uu-sidebar-sticky">
       <div class="uu-sidebar-content">
-        <FrequentQuestions title="Other questions" />
+        <FrequentQuestions title="Other questions" questionsGroup="" />
       </div>
       <aside class="uu-sidebar">
         <h2 class="uu-sidebar-header-linked">Contact</h2>
