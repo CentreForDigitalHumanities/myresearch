@@ -22,7 +22,7 @@ if (questionAnswers === undefined) {
     <h2 class="uu-sidebar-header-linked">
       {{ $t(title) }}
     </h2>
-    <div class="accordion mw-100" v-bind:id="'accordion' + questionsGroup">
+    <div class="accordion mw-100" :id="'accordion' + questionsGroup">
       <div
         class="mw-100"
         v-for="(questionAnswer, index) in questionAnswers"

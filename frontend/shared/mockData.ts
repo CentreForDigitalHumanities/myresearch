@@ -46,9 +46,16 @@ ethicalCommissionQuestionAnswers.set(
   answerFourEthnicalCommission,
 );
 
+let otherQuestionAnswers = new Map<string, string>();
+otherQuestionAnswers.set(
+  "When will the Ethical Commission be added to to My Research?",
+  "After an estimated 2000 cups of coffee.",
+);
+
 let questionAnswers = new Map<string, Map<string, string>>();
 questionAnswers.set("processingRegister", processingQuestionAnswers);
 questionAnswers.set("ethicalCommission", ethicalCommissionQuestionAnswers);
+questionAnswers.set("other", otherQuestionAnswers);
 
 export class mockData {
   static getQuestionAnswers(
