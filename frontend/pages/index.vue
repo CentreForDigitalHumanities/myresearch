@@ -67,7 +67,7 @@ import SeasonalCover from "~/components/SeasonalCover.vue";
       </div>
       <aside class="uu-sidebar pe-3">
         <FrequentQuestions
-          questionsGroup="processingRegister"
+          questions-group="processingRegister"
           title="Frequent questions"
         />
       </aside>
@@ -86,33 +86,32 @@ import SeasonalCover from "~/components/SeasonalCover.vue";
         </p>
         <p>
           <a :href="useEthicsLinks('FEtC_H')" target="_blank">{{
-            $t("link.UU-webpage of the FEtC-H")
+            $t("UU-webpage of the FEtC-H")
           }}</a>
-          for news and upcoming dates.
         </p>
         <p>
           <a :href="useEthicsLinks('FEtC_H_regulations')" target="_blank">{{
-            $t("link.Regulations of the FEtC-H")
+            $t("Regulations of the FEtC-H")
           }}</a>
         </p>
         <p>
           {{
             $t(
-              "Het reglement van de FETC-GW. Tijdens de aanvraagprocedure kan er om een of meer bijlagen worden gevraagd. Gebruik daarvoor de juiste (meest recente) voorbeelddocumenten/templates.",
+              "During the application it may be possible that you need submit certain documents. Use the most recent model documents. ",
             )
           }}
         </p>
       </div>
       <aside class="uu-sidebar pe-3">
         <FrequentQuestions
-          questionsGroup="ethicalCommission"
+          questions-group="ethicalCommission"
           title="Frequent questions"
         />
       </aside>
     </div>
     <div class="uu-sidebar-container uu-sidebar-right uu-sidebar-sticky">
       <div class="uu-sidebar-content">
-        <FrequentQuestions title="Other questions" />
+        <FrequentQuestions title="Other questions" questions-group="other" />
       </div>
       <aside class="uu-sidebar">
         <h2 class="uu-sidebar-header-linked">Contact</h2>
