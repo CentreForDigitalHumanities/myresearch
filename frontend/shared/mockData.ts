@@ -54,7 +54,7 @@ otherQuestionAnswers.set(
   "After an estimated 2000 cups of coffee.",
 );
 otherQuestionAnswers.set(
-  "Why am I looking at a picture of a cat?",
+  "Why am I looking at a picture of a cat? ",
   "https://cataas.com/cat", //unable to display cat links in accordion, a disappointment.
 );
 
