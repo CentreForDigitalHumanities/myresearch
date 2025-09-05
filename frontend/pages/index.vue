@@ -29,18 +29,21 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
             )
           }}
           <div class="uu-container">
-            <button class="btn btn-primary width: 40%">
-              Mooie afbeelding of niet
-            </button>
-            <div class="card" style="width: 60%">
-              <div class="card-body">
-                <h5 class="card-title">{{ $t("Start a new roadmap") }}</h5>
-                <p class="card-text">
-                  {{ $t("Also possible as orientation") }}
-                </p>
-                <a href="#" class="btn btn-primary">{{
-                  $t("Start Roadmap")
-                }}</a>
+            <div class="card-image-left">
+              <img
+                src="https://cataas.com/cat?height=200"
+                alt="Mooie afbeelding of niet"
+              />
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{ $t("Start a new roadmap") }}</h5>
+                  <p class="card-text">
+                    {{ $t("Also possible as orientation") }}
+                  </p>
+                  <a href="#" class="btn btn-primary">{{
+                    $t("Start Roadmap")
+                  }}</a>
+                </div>
               </div>
             </div>
           </div>
@@ -128,4 +131,16 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
     </div>
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+.card {
+  width: 60%;
+}
+
+.card-image-left {
+  display: flex;
+}
+
+.card-image-left img {
+  width: 30%;
+}
+</style>
