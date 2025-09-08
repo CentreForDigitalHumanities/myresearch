@@ -34,6 +34,8 @@ services:
     volumes:
       - ./nginx.conf.prod:/etc/nginx/nginx.conf:ro
       - basta:/var/www/backend_static
+    ports:
+      - "8000:80"
 
   django-dev: &django-dev
     image: mr-django
@@ -68,6 +70,7 @@ services:
     container_name: mr-django-prod
     restart: unless-stopped
     profiles: ["prod"]
+    ports:
     volumes:
       - basta:/var/www/backend-static/
     command: sh -c "
