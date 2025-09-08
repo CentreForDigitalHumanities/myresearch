@@ -6,7 +6,7 @@ import winterURL from "@/assets/images/covers/coverimage-winter.jpg";
 
 const seasons = {
   //originally the images that come from /Ethics had css classes as well,
-  // but they seemed no longer needed.
+  // but they seem to be no longer needed.
   spring: {
     image: springURL,
     author: "Dick Boetekees",
