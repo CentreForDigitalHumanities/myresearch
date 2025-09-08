@@ -49,7 +49,7 @@ services:
     build:
       context: ./backend
     healthcheck:
-      test: "curl -f localhost:8000/backend/healthcheck/"
+      test: "curl -f mr-django:8000/backend/healthcheck/"
     volumes:
       - ./backend:/usr/src/app/backend
       - bapyca:/usr/src/app/backend/__pycache__
