@@ -70,7 +70,7 @@ services:
     container_name: mr-django-prod
     restart: unless-stopped
     profiles: ["prod"]
-    ports:
+    ports: []
     volumes:
       - basta:/var/www/backend-static/
     command: sh -c "
