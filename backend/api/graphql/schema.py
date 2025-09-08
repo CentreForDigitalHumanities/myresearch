@@ -20,6 +20,8 @@ class Query(ListUsersQuery, FormQueries, ObjectType):
 schema = Schema(
     query=Query,
     types=[
+        # These types are not queried directly, so they are included here to
+        # make Graphene aware of them.
         BaseQuestionInterface,
         DateQuestionType,
         FileUploadQuestionType,
