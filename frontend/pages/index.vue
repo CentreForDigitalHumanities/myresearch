@@ -81,7 +81,14 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
         <p>
           {{
             $t(
-              "Formal approval by a chamber for the FEtC-H (by means of an official approval letter) is required for research involving human participants within the UU Faculty of Humanities. You must acquire this approval prior even to recruiting participants. Therefore, always wait for the letter of approval before starting research activities.",
+              "Formal approval by a chamber for the FEtC-H (by means of an official approval letter) is required for research involving human participants within the UU Faculty of Humanities. You must acquire this approval prior even to recruiting participants. Therefore, always wait for the letter of approval before starting research activities. ",
+            )
+          }}
+        </p>
+        <p>
+          {{
+            $t(
+              "Please Note: Accepted applications go to the archive. See above menu. The archive is available for everyone at the same facility with with a Solid-ID. ",
             )
           }}
         </p>
@@ -98,7 +105,7 @@ import useEthicsLinks from "~/composables/useEthicsLinks";
         <p>
           {{
             $t(
-              "During the application it may be possible that you need submit certain documents. Use the most recent model documents. ",
+              "Lorem ipsum dolor sit amet. Qui consequatur consequatur ut possimus reiciendis in commodi consequatur? Sit voluptatum nulla et earum impedit ad sapiente expedita rem quod incidunt ea facilis velit et repellendus voluptates. Id corporis eius eum dolorem libero aut voluptatem cupiditate. Qui vitae quia sit ullam totam 33 facilis possimus qui molestiae quae At doloremque porro.Rem tenetur voluptatum sed similique quis aut quos deleniti vel tempore ipsam et quas molestiae. Qui Quis autem non aperiam delectus et veritatis velit non officia excepturi et nobis nihil et quae voluptates qui aspernatur nobis. Ut odio tenetur ea alias modi sit quibusdam quaerat.Non voluptas repudiandae et laboriosam iste qui ducimus sint. Sed repellat excepturi est quia consequatur quo velit esse aut reprehenderit debitis ea ratione ratione ut autem dignissimos. Et temporibus omnis est quis ullam ab saepe magnam et voluptatem asperiores.Lorem ipsum dolor sit amet. Qui consequatur consequatur ut possimus reiciendis in commodi consequatur? Sit voluptatum nulla et earum impedit ad sapiente expedita rem quod incidunt ea facilis velit et repellendus voluptates. Id corporis eius eum dolorem libero aut voluptatem cupiditate. Qui vitae quia sit ullam totam 33 facilis possimus qui molestiae quae At doloremque porro.Rem tenetur voluptatum sed similique quis aut quos deleniti vel tempore ipsam et quas molestiae. Qui Quis autem non aperiam delectus et veritatis velit non officia excepturi et nobis nihil et quae voluptates qui aspernatur nobis. Ut odio tenetur ea alias modi sit quibusdam quaerat.Non voluptas repudiandae et laboriosam iste qui ducimus sint. Sed repellat excepturi est quia consequatur quo velit esse aut reprehenderit debitis ea ratione ratione ut autem dignissimos. Et temporibus omnis est quis ullam ab saepe xcepturi est quia consequatur quo velit esse aut reprehenderit debitis ea ratione ratione ut autem dignissimos. Et temporibus omnis est quis ullam ab saepe xcepturi est quia consequatur quo velit esse aut reprehenderit debitis ea ratione ratione ut autem dignissimos. Et temporibus omnis est quis ullam ab saepe ",
             )
           }}
         </p>
