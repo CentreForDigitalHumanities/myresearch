@@ -5,7 +5,7 @@ import autumnURL from "@/assets/images/covers/coverimage-autumn.jpg";
 import winterURL from "@/assets/images/covers/coverimage-winter.jpg";
 
 const seasons = {
-  //originally the images that come from /Ethics had css classes as well,
+  // originally the images that come from Ethics had CSS.classes as well,
   // but they seemed no longer needed.
   spring: {
     image: springURL,
@@ -47,7 +47,7 @@ const seasonCover = getSeasonalCoverImage();
       alt="cover"
     />
     <div class="uu-cover-copyright uu-cover-copyright-right">
-      Cover by {{ seasonCover.author }}
+      {{ $t("Cover by ") }} {{ seasonCover.author }}
     </div>
   </div>
 </template>
