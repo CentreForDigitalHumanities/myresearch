@@ -119,6 +119,9 @@ services:
     hostname: mr-vue
     restart: unless-stopped
     profiles: ["prod"]
+    depends_on:
+      django-prod:
+        condition: service_healthy
     build:
       context: ./frontend
       dockerfile: Dockerfile.prod
