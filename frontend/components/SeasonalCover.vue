@@ -42,7 +42,7 @@ const seasonCover = getSeasonalCoverImage();
 <template>
   <div class="uu-cover h-400">
     <img
-      v-bind:src="seasonCover.image"
+      :src="seasonCover.image"
       class="uu-cover-image w-100"
       alt="cover"
     />
