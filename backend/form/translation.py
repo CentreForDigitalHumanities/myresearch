@@ -1,14 +1,14 @@
 from modeltranslation.translator import register, TranslationOptions
 
 from .models import (
+    BaseQuestion,
     DateQuestion,
     FileUploadQuestion,
+    FormInfoText,
     MRForm,
     NumberQuestion,
     SelectOption,
-    Step,
-    StepInfoQuestion,
-    StepInfoText,
+    FormInfoQuestion,
     TextQuestion,
     SelectQuestion,
     TrueFalseQuestion,
@@ -20,19 +20,19 @@ class FormTranslationOptions(TranslationOptions):
     fields = ["name", "description"]
 
 
-@register(Step)
-class StepTranslationOptions(TranslationOptions):
-    fields = ["name", "description"]
-
-
-@register(StepInfoQuestion)
-class StepInfoQuestionTranslationOptions(TranslationOptions):
+@register(FormInfoQuestion)
+class FormInfoQuestionTranslationOptions(TranslationOptions):
     fields = ["text"]
 
 
-@register(StepInfoText)
-class StepInfoTextTranslationOptions(TranslationOptions):
+@register(FormInfoText)
+class FormInfoTextTranslationOptions(TranslationOptions):
     fields = ["text"]
+
+
+@register(BaseQuestion)
+class BaseQuestionTranslationOptions(TranslationOptions):
+    fields = ["text", "description"]
 
 
 @register(SelectOption)
@@ -42,29 +42,29 @@ class SelectOptionTranslationOptions(TranslationOptions):
 
 @register(SelectQuestion)
 class SelectQuestionTranslationOptions(TranslationOptions):
-    fields = ["text", "description"]
+    pass
 
 
 @register(TrueFalseQuestion)
 class TrueFalseQuestionTranslationOptions(TranslationOptions):
-    fields = ["text", "description"]
+    pass
 
 
 @register(TextQuestion)
 class TextQuestionTranslationOptions(TranslationOptions):
-    fields = ["text", "description", "placeholder"]
+    fields = ["placeholder"]
 
 
 @register(NumberQuestion)
 class NumberQuestionTranslationOptions(TranslationOptions):
-    fields = ["text", "description"]
+    pass
 
 
 @register(DateQuestion)
 class DateQuestionTranslationOptions(TranslationOptions):
-    fields = ["text", "description"]
+    pass
 
 
 @register(FileUploadQuestion)
 class FileUploadQuestionTranslationOptions(TranslationOptions):
-    fields = ["text", "description"]
+    pass

@@ -8,13 +8,15 @@ from form.models import MRForm
 
 class FormQueries(ObjectType):
     form = Field(
-        MRFormType, description="Retrieves the latest form. For testing purposes only."
+        MRFormType,
+        description="Retrieves the latest top-level form. For testing purposes only.",
     )
 
     @staticmethod
     def resolve_form(root, info: ResolveInfo) -> Optional[MRForm]:
         return (
             MRFormType.get_queryset(MRForm.objects, info)
-            .order_by("-config__created_at")
+            .filter(parent__isnull=True)
+            .order_by("-created_at")
             .first()
         )

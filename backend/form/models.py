@@ -5,96 +5,37 @@ from django.contrib.postgres.fields import ArrayField
 
 user_model = get_user_model()
 
-
-class MRFormConfig(models.Model):
-    name = models.CharField(max_length=200)
-    version = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-
 class MRForm(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
-    config = models.OneToOneField(
-        MRFormConfig, on_delete=models.CASCADE, related_name="form"
-    )
-
-
-# Step and StepInfo
-class Step(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.TextField(null=True, blank=True)
+    version = models.CharField(max_length=100)
     slug = models.SlugField(
         max_length=200,
         unique=True,
         help_text="Used in the URL.",
     )
-
-    form = models.ForeignKey(
-        MRForm, null=True, blank=True, on_delete=models.CASCADE, related_name="steps"
-    )
-    form_order = models.PositiveIntegerField(
-        null=True, blank=True, help_text="The order of this step within the form."
-    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     parent = models.ForeignKey(
-        "self", null=True, blank=True, on_delete=models.CASCADE, related_name="substeps"
-    )
-    parent_order = models.PositiveIntegerField(
-        null=True,
-        blank=True,
-        help_text="The order of this step within its parent step.",
+        "self", null=True, blank=True, on_delete=models.CASCADE, related_name="subforms"
     )
 
     class Meta:
-        constraints = [
-            # Every step must have either a form order or a parent order, but not both.
-            models.CheckConstraint(
-                check=Q(
-                    parent_id__isnull=False,
-                    parent_order__isnull=False,
-                    form_order__isnull=True,
-                )
-                | Q(
-                    parent_order__isnull=True,
-                    form_id__isnull=False,
-                    form_order__isnull=False,
-                ),
-                name="either_form_order_or_parent_order",
-            ),
-            # Every substep within a step must have a unique parent order.
-            models.UniqueConstraint(
-                fields=["parent", "parent_order"], name="unique_parent_order"
-            ),
-            # Every step within a form must have a unique form order.
-            models.UniqueConstraint(
-                fields=["form", "form_order"], name="unique_form_order"
-            ),
-        ]
+        order_with_respect_to = "parent"
 
 
-class StepInfo(models.Model):
-    """
-    More information and FAQ for a specific Step within a Form.
-    """
-
-    step = models.OneToOneField(
-        Step, null=True, blank=True, on_delete=models.CASCADE, related_name="info"
-    )
-
-
-class StepInfoQuestion(models.Model):
-    step_info = models.ForeignKey(
-        StepInfo, on_delete=models.CASCADE, related_name="questions"
+class FormInfoQuestion(models.Model):
+    form = models.ForeignKey(
+        MRForm, on_delete=models.CASCADE, related_name="info_questions"
     )
     text = models.CharField(max_length=200)
     link = models.URLField(max_length=200)
 
 
-class StepInfoText(models.Model):
-    step_info = models.ForeignKey(
-        StepInfo, on_delete=models.CASCADE, related_name="texts"
+class FormInfoText(models.Model):
+    form = models.ForeignKey(
+        MRForm, on_delete=models.CASCADE, related_name="info_texts"
     )
     text = models.TextField()
 
@@ -102,10 +43,7 @@ class StepInfoText(models.Model):
 # Questions
 class BaseQuestion(models.Model):
     text = models.CharField(max_length=200)
-    step = models.ForeignKey(Step, on_delete=models.CASCADE)
-    step_order = models.PositiveIntegerField(
-        null=True, blank=True, help_text="The order of this question within the step."
-    )
+    form = models.ForeignKey(MRForm, on_delete=models.CASCADE, related_name="questions")
     description = models.TextField(
         blank=True,
         help_text="Context about the question and its purpose, which will be shown to the user.",
@@ -113,13 +51,7 @@ class BaseQuestion(models.Model):
     required = models.BooleanField(default=False)
 
     class Meta:
-        abstract = True
-        constraints = [
-            models.UniqueConstraint(
-                fields=["step_id", "step_order"],
-                name="%(app_label)s_%(class)s_unique_step_order",
-            )
-        ]
+        order_with_respect_to = "form"
 
 
 class SelectQuestion(BaseQuestion):
@@ -162,13 +94,10 @@ class FileUploadQuestion(BaseQuestion):
 class BaseAnswer(models.Model):
     # This means you can access true_false_answers with <user>.truefalseanswers etc.
     user = models.ForeignKey(
-        user_model, on_delete=models.CASCADE, related_name="%(class)ss"
+        user_model, on_delete=models.PROTECT, related_name="%(class)ss"
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
 
 
 class SelectAnswer(BaseAnswer):
