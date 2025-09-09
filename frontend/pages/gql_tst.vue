@@ -9,13 +9,13 @@ import { type GetAllUsersQuery, type CreateUser } from "~/generated/gql/graphql"
 // REMOVE THIS PAGE AND QUERY ONCE WE HAVE ACTUAL CONTENT!
 
 const GET_USERS = graphql(`
-  query getAllUsers {
-    users {
-      id
-      username
-      email
+    query getAllUsers {
+        users {
+            id
+            username
+            email
+        }
     }
-  }
 `);
 
 const CREATE_USER = graphql(`
