@@ -1,14 +1,14 @@
-import graphene
+from graphene import String, Mutation, Field, ID
 
 from main.types.UserType import UserType
 from django.contrib.auth import get_user_model
     
-class CreateUser(graphene.Mutation):
+class CreateUser(Mutation):
     class Arguments:
-        username = graphene.String(required=True)
-        email = graphene.String(required=True)
+        username = String(required=True)
+        email = String(required=True)
 
-    user = graphene.Field(UserType)
+    user = Field(UserType)
 
     def mutate(self, info, username, email):
         user = get_user_model()(username=username, email=email)
@@ -16,13 +16,13 @@ class CreateUser(graphene.Mutation):
         return CreateUser(user=user)
 
 
-class UpdateUser(graphene.Mutation):
+class UpdateUser(Mutation):
     class Arguments:
-        id = graphene.ID(required=True)
-        username = graphene.String(required=True)
-        email = graphene.String(required=True)
+        id = ID(required=True)
+        username = String(required=True)
+        email = String(required=True)
 
-    user = graphene.Field(UserType)
+    user = Field(UserType)
 
     def mutate(self, info, id, username=None, email=None):
         try:
@@ -39,11 +39,11 @@ class UpdateUser(graphene.Mutation):
         return UpdateUser(user=user)
 
 
-class DeleteUser(graphene.Mutation):
+class DeleteUser(Mutation):
     class Arguments:
-        id = graphene.ID(required=True)
+        id = ID(required=True)
 
-    success = graphene.Boolean()
+    success = Boolean()
 
     def mutate(self, info, id):
         try:
