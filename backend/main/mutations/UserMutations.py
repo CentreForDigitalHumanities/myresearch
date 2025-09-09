@@ -51,7 +51,7 @@ class DeleteUser(Mutation):
     def mutate(cls, root: None, info: ResolveInfo, username: str, email: str):
         try:
             user = get_user_model().objects.get(pk=id)
-        except user.DoesNotExist:
+        except get_user_model().DoesNotExist:
             raise Exception("User not found")
 
         user.delete()
