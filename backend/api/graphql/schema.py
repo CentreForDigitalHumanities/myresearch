@@ -16,12 +16,6 @@ class Mutation(ObjectType):
     update_user = UpdateUser.Field()
     delete_user = DeleteUser.Field()
 
-class Mutation(ObjectType):
-
-    create_user = CreateUser.Field()
-    update_user = UpdateUser.Field()
-    delete_user = DeleteUser.Field()
-
 
 schema = Schema(
     query=Query,
