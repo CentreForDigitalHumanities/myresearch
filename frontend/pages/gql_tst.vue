@@ -80,17 +80,17 @@ function submitUser() {
           Username:
       </p>
       <input
+          v-model="username"
           type="text"
           class="form-control"
-          v-model="username"
       />
       <p>
           E-mail:
       </p>
       <input
+          v-model="email"
           type="text"
           class="form-control"
-          v-model="email"
       />
       </div>
     </div>
