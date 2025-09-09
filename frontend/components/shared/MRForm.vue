@@ -1,41 +1,31 @@
 <script lang="ts" setup>
-import type { QuestionType } from "~/generated/gql/graphql";
 import {
     SharedDateQuestion,
+    SharedFileUploadQuestion,
     SharedFormSideBar,
+    SharedNumberQuestion,
     SharedSelectQuestion,
     SharedTextQuestion,
+    SharedTrueFalseQuestion,
 } from "#components";
 import type { CombinedForm } from "./FormWrapper.vue";
 import type { Component } from "vue";
-
-type QuestionTypeWithTypeName = Pick<QuestionType, "__typename">;
 
 interface Props {
     form: CombinedForm;
 }
 defineProps<Props>();
 
-const questionComponentMap: Record<
-    QuestionType["__typename"],
-    Component | null
-> = {
-    // The type assertions here are to satisfy the linter.
-    // Imported components are treated as 'any', but there is nothing we can do
-    // to change this.
+// Imported components are treated as 'any', so the linter complains, but there
+// is nothing we can do to change this, so we need to assert the type manually.
+const questionComponentMap = {
     TextQuestionType: SharedTextQuestion as Component,
     SelectQuestionType: SharedSelectQuestion as Component,
     DateQuestionType: SharedDateQuestion as Component,
-    FileUploadQuestionType: null,
-    NumberQuestionType: null,
-    TrueFalseQuestionType: null,
+    NumberQuestionType: SharedNumberQuestion as Component,
+    TrueFalseQuestionType: SharedTrueFalseQuestion as Component,
+    FileUploadQuestionType: SharedFileUploadQuestion as Component,
 };
-
-function getQuestionComponent(
-    question: QuestionTypeWithTypeName,
-): Component | null {
-    return questionComponentMap[question.__typename];
-}
 </script>
 
 <template>
@@ -45,13 +35,9 @@ function getQuestionComponent(
         <div class="d-flex flex-column">
             <div v-for="question in form.questions" :key="question.id">
                 <component
-                    :is="getQuestionComponent(question)"
-                    v-if="getQuestionComponent(question) !== null"
+                    :is="questionComponentMap[question.__typename]"
                     :question="question"
                 />
-                <p v-else class="my-3">
-                    {{ question.__typename }} does not have a component yet. 😢
-                </p>
             </div>
         </div>
         <SharedFormSideBar :form="form" />

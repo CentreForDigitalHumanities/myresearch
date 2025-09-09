@@ -29,6 +29,15 @@ const GET_FORM = graphql(`
                         defaultSelected
                     }
                 }
+                ... on NumberQuestionType {
+                    positiveOnly
+                }
+                ... on TrueFalseQuestionType {
+                    defaultValue
+                }
+                ... on FileUploadQuestionType {
+                    sizeLimit
+                }
                 ... on TextQuestionType {
                     placeholderNl
                     placeholderEn
@@ -58,6 +67,15 @@ const GET_FORM = graphql(`
                             defaultSelected
                         }
                     }
+                    ... on NumberQuestionType {
+                        positiveOnly
+                    }
+                    ... on TrueFalseQuestionType {
+                        defaultValue
+                    }
+                    ... on FileUploadQuestionType {
+                        sizeLimit
+                    }
                     ... on TextQuestionType {
                         placeholderNl
                         placeholderEn
@@ -86,6 +104,15 @@ const GET_FORM = graphql(`
                                 labelEn
                                 defaultSelected
                             }
+                        }
+                        ... on NumberQuestionType {
+                            positiveOnly
+                        }
+                        ... on TrueFalseQuestionType {
+                            defaultValue
+                        }
+                        ... on FileUploadQuestionType {
+                            sizeLimit
                         }
                         ... on TextQuestionType {
                             placeholderNl
