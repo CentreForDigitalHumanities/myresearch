@@ -4,8 +4,9 @@ from main.types.UserType import UserType
 from django.contrib.auth import get_user_model
     
 class CreateUser(Mutation):
-    class Arguments:
-        username = String(required=True)
+
+    user = Field(UserType)
+
         email = String(required=True)
 
     user = Field(UserType)
@@ -18,12 +19,13 @@ class CreateUser(Mutation):
 
 
 class UpdateUser(Mutation):
+
+    user = Field(UserType)
+
     class Arguments:
         id = ID(required=True)
         username = String(required=True)
         email = String(required=True)
-
-    user = Field(UserType)
 
     @classmethod
     def mutate(cls, root: None, info: ResolveInfo, username: str, email: str):
@@ -42,10 +44,11 @@ class UpdateUser(Mutation):
 
 
 class DeleteUser(Mutation):
-    class Arguments:
-        id = ID(required=True)
 
     success = Boolean()
+    
+    class Arguments:
+        id = ID(required=True)
 
     @classmethod
     def mutate(cls, root: None, info: ResolveInfo, username: str, email: str):
