@@ -1,19 +1,23 @@
 from tqdm import tqdm
 from faker import Faker
 
+from django.apps import apps
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
+from django.core.management import call_command
 from django.db import transaction
 
+from main.models import User
 from form.models import (
-    DateQuestion,
-    FileUploadQuestion,
-    FormInfoText,
+    BaseQuestion,
     MRForm,
+    FormInfoText,
+    FormInfoQuestion,
+    FileUploadQuestion,
     NumberQuestion,
+    DateQuestion,
     SelectOption,
     SelectQuestion,
-    FormInfoQuestion,
     TextQuestion,
     TrueFalseQuestion,
 )
@@ -44,6 +48,23 @@ class Command(BaseCommand):
     faker_nl = faker["nl_NL"]
     faker_en = faker["en_GB"]
 
+    # All models for which dev data has been implemented. Add the model to
+    # this list when dev data creation has been implemented for this model.
+    dev_data_models = [
+        User,
+        MRForm,
+        DateQuestion,
+        FileUploadQuestion,
+        NumberQuestion,
+        SelectOption,
+        SelectQuestion,
+        TextQuestion,
+        TrueFalseQuestion,
+        FormInfoText,
+        FormInfoQuestion,
+        BaseQuestion
+    ]
+
     def add_arguments(self, parser):
         parser.add_argument("--force", action="store_true")
         parser.add_argument("--silent", action="store_true")
@@ -57,6 +78,10 @@ class Command(BaseCommand):
             raise CommandError(
                 "Refusing to execute command unless DEBUG = True in settings.py"
             )
+
+        self._check_all_models_implemented()
+
+        self._create_test_users(options)
 
         with transaction.atomic():
             form = self._generate_root_form(options)
@@ -239,23 +264,34 @@ class Command(BaseCommand):
                     case "file_upload":
                         _create_file_upload_question(step, question_index)
 
-    # def _check_all_models_implemented(
-    #     self,
-    # ):
-    #     """
-    #     Gather all models from LOCAL_APPS and check if they are all present in
-    #     dev_data_models.
-    #     """
+    def _create_test_users(self, options):
+        """
+        Create mock users for test purposes from fixtures.
+        """
+        fixtures = [
+            "main/management/commands/dev_fixtures/dev_users.json",
+        ]
 
-    #     all_mr_models = []
+        for fixture in fixtures:
+            call_command("loaddata", fixture)
 
-    #     for app in settings.LOCAL_APPS:
-    #         for mr_model in apps.get_app_config(app).get_models():
-    #             all_mr_models.append(mr_model)
+    def _check_all_models_implemented(
+        self,
+    ):
+        """
+        Gather all models from LOCAL_APPS and check if they are all present in
+        dev_data_models.
+        """
 
-    #     for mr_model in all_mr_models:
-    #         if mr_model not in self.dev_data_models:
-    #             raise CommandError(
-    #                 f"The model {mr_model} is not yet represented in the dev "
-    #                 "data creation."
-    #             )
+        all_mr_models = []
+
+        for app in settings.LOCAL_APPS:
+            for mr_model in apps.get_app_config(app).get_models():
+                all_mr_models.append(mr_model)
+
+        for mr_model in all_mr_models:
+            if mr_model not in self.dev_data_models:
+                raise CommandError(
+                    f"The model {mr_model} is not yet represented in the dev "
+                    "data creation."
+                )
