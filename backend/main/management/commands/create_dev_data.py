@@ -62,7 +62,7 @@ class Command(BaseCommand):
         TrueFalseQuestion,
         FormInfoText,
         FormInfoQuestion,
-        BaseQuestion
+        BaseQuestion,
     ]
 
     def add_arguments(self, parser):
