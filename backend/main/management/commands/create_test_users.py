@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import transaction
 from django.core.management import BaseCommand, call_command, CommandError
 
+
 class Command(BaseCommand):
     help = "Create dev dataset for myresearch"
 
@@ -29,6 +30,6 @@ class Command(BaseCommand):
             raise CommandError(
                 "Refusing to execute command unless DEBUG = True in settings.py"
             )
-        
+
         with transaction.atomic():
             self._create_test_users(options)

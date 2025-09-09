@@ -20,9 +20,12 @@ const questionComponentMap: Record<
     QuestionType["__typename"],
     Component | null
 > = {
-    TextQuestionType: SharedTextQuestion,
-    SelectQuestionType: SharedSelectQuestion,
-    DateQuestionType: SharedDateQuestion,
+    // The type assertions here are to satisfy the linter.
+    // Imported components are treated as 'any', but there is nothing we can do
+    // to change this.
+    TextQuestionType: SharedTextQuestion as Component,
+    SelectQuestionType: SharedSelectQuestion as Component,
+    DateQuestionType: SharedDateQuestion as Component,
     FileUploadQuestionType: null,
     NumberQuestionType: null,
     TrueFalseQuestionType: null,

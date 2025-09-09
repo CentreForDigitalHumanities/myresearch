@@ -17,8 +17,8 @@ from form.models import (
 
 class BaseQuestionInterface(Interface):
     """
-    Based on the BaseQuestion model, which is the base class for all question 
-    models. Types implementing this interface should be based on models that 
+    Based on the BaseQuestion model, which is the base class for all question
+    models. Types implementing this interface should be based on models that
     extend BaseQuestion.
     """
 

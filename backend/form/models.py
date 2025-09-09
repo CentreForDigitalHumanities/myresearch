@@ -5,6 +5,7 @@ from django.contrib.postgres.fields import ArrayField
 
 user_model = get_user_model()
 
+
 class MRForm(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
