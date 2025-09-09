@@ -1,4 +1,4 @@
-from graphene import String, Mutation, Field, ID
+from graphene import String, Mutation, Field, ID, Boolean, ResolveInfo
 
 from main.types.UserType import UserType
 from django.contrib.auth import get_user_model
@@ -9,8 +9,9 @@ class CreateUser(Mutation):
         email = String(required=True)
 
     user = Field(UserType)
-
-    def mutate(self, info, username, email):
+    
+    @classmethod
+    def mutate(cls, root: None, info: ResolveInfo, username: str, email: str):
         user = get_user_model()(username=username, email=email)
         user.save()
         return CreateUser(user=user)
@@ -24,7 +25,8 @@ class UpdateUser(Mutation):
 
     user = Field(UserType)
 
-    def mutate(self, info, id, username=None, email=None):
+    @classmethod
+    def mutate(cls, root: None, info: ResolveInfo, username: str, email: str):
         try:
             user = get_user_model().objects.get(pk=id)
         except get_user_model().DoesNotExist:
@@ -45,7 +47,8 @@ class DeleteUser(Mutation):
 
     success = Boolean()
 
-    def mutate(self, info, id):
+    @classmethod
+    def mutate(cls, root: None, info: ResolveInfo, username: str, email: str):
         try:
             user = get_user_model().objects.get(pk=id)
         except user.DoesNotExist:
