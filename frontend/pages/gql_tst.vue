@@ -41,17 +41,34 @@ const {
 const username = ref("");
 const email = ref("");
 
-const { mutate: createUser, loading: createUserLoading, error: createUserError } = useMutation<CreateUser>(CREATE_USER);
+const {
+    mutate: createUser,
+    loading: createUserLoading,
+    error: createUserError,
+} = useMutation<CreateUser>(CREATE_USER, {
+    update: (cache) => {
+        cache.evict({ fieldName: "users" });
+        cache.gc();
+    },
+});
 
-function submitUser() {
-  createUser({
-    email: email.value,
-    username: username.value,
-  }).then(() => {
-    refetch();
+async function submitUser(): Promise<void> {
+    try {
+        const results = await createUser({
+            email: email.value,
+            username: username.value,
+        });
+
+        if (results?.data?.user) {
+            console.log("User created!");
+        }
+    } catch (error) {
+        console.error("Error creating user:", error);
+        return;
+    }
+
     username.value = "";
     email.value = "";
-  });
 }
 
 </script>
