@@ -59,7 +59,7 @@ function submitUser() {
 <template>
   <h3 class="mt-3">Scroll to the bottom to add a new user!</h3>
   <div>
-    <p v-for="user in usersResult?.users ?? []">
+    <p v-for="user in usersResult?.users ?? []" :key="user.id">
       {{ user.username }} {{ user.email }}
     </p>
   </div>
