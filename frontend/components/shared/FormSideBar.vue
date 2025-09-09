@@ -1,16 +1,15 @@
 <script lang="ts" setup>
 import { graphql, useFragment, type FragmentType } from "~/generated/gql";
 
-const StepInfoFragment = graphql(`
-    fragment StepInfoFragment on StepInfoType {
-        id
-        questions {
+const FormInfoFragment = graphql(`
+    fragment FormInfoFragment on MRFormType {
+        infoQuestions {
             id
             textNl
             textEn
             link
         }
-        texts {
+        infoTexts {
             id
             textNl
             textEn
@@ -19,19 +18,19 @@ const StepInfoFragment = graphql(`
 `);
 
 const props = defineProps<{
-    config: FragmentType<typeof StepInfoFragment>;
+    form: FragmentType<typeof FormInfoFragment>;
 }>();
 
-const infoConfig = computed(() => useFragment(StepInfoFragment, props.config));
+const formInfo = computed(() => useFragment(FormInfoFragment, props.form));
 </script>
 <template>
     <div class="uu-form-help">
         <div class="help-item">
-            <div v-if="infoConfig.questions?.length">
+            <div v-if="formInfo.infoQuestions?.length">
                 <strong>{{ $t("Questions?") }}</strong>
             </div>
             <template
-                v-for="(question, index) in infoConfig.questions"
+                v-for="(question, index) in formInfo.infoQuestions"
                 :key="index"
             >
                 <a
@@ -45,10 +44,13 @@ const infoConfig = computed(() => useFragment(StepInfoFragment, props.config));
             </template>
         </div>
         <div class="help-item">
-            <div v-if="infoConfig.texts?.length">
+            <div v-if="formInfo.infoTexts?.length">
                 <strong>{{ $t("Additional Information") }}</strong>
                 <ul>
-                    <li v-for="(info, index) in infoConfig.texts" :key="index">
+                    <li
+                        v-for="(info, index) in formInfo.infoTexts"
+                        :key="index"
+                    >
                         {{ useTranslateableAttribute(info, "text") }}
                     </li>
                 </ul>
