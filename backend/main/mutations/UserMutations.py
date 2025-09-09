@@ -4,7 +4,8 @@ from graphene_django.types import ErrorType
 from main.types.UserType import UserType
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User, AnonymousUser
-    
+
+
 class CreateUser(Mutation):
 
     user = Field(UserType)
@@ -13,11 +14,11 @@ class CreateUser(Mutation):
     class Arguments:
         username = String(required=True)
         email = String(required=True)
-    
+
     @classmethod
     def mutate(cls, root: None, info: ResolveInfo, username: str, email: str):
 
-        current_user: User | AnonymousUser | None  = info.context.user
+        current_user: User | AnonymousUser | None = info.context.user
         if not current_user.is_superuser:
             return cls(errors=["User is not authorised to create other users."])
 
@@ -41,10 +42,10 @@ class UpdateUser(Mutation):
 
         user = get_user_model().objects.get(pk=id)
 
-        current_user: User | AnonymousUser | None  = info.context.user
+        current_user: User | AnonymousUser | None = info.context.user
         if not current_user.is_superuser:
             return cls(errors=["User is not authorised to create other users."])
-        
+
         if user is None:
             error = ErrorType(
                 field="id",
@@ -72,12 +73,12 @@ class DeleteUser(Mutation):
     @classmethod
     def mutate(cls, root: None, info: ResolveInfo, username: str, email: str):
 
-        current_user: User | AnonymousUser | None  = info.context.user
+        current_user: User | AnonymousUser | None = info.context.user
         if not current_user.is_superuser:
             return cls(errors=["User is not authorised to create other users."])
 
         user = get_user_model().objects.get(pk=id)
-        
+
         if user is None:
             error = ErrorType(
                 field="id",

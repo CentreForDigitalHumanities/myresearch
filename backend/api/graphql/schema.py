@@ -7,8 +7,10 @@ from main.mutations.UserMutations import (
     DeleteUser,
 )
 
+
 class Query(ListUsersQuery, ObjectType):
     pass
+
 
 class Mutation(ObjectType):
 
