@@ -1,5 +1,8 @@
 FROM python:3.11-alpine
 
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
 # Add git to install some requirements
 # Add curl to use for container healthcheck
 RUN apk add --no-cache git curl
