@@ -18,8 +18,8 @@ export interface FormStepperConfig {
 }
 
 interface Props {
-    selectedStep: string;
-    stepConfig: FormStepperConfig;
+    selectedFormSlug: string;
+    stepperConfig: FormStepperConfig;
 }
 
 const props = defineProps<Props>();
@@ -43,11 +43,11 @@ function stepperItemClasses(step: FormStep): string {
     <div class="stepper-container">
         <div class="stepper">
             <p class="mb-4">
-                {{ useTranslateableAttribute(props.stepConfig, "title") }}
+                {{ useTranslateableAttribute(props.stepperConfig, "title") }}
             </p>
             <ul>
                 <li
-                    v-for="(step, index) in props.stepConfig.steps"
+                    v-for="(step, index) in props.stepperConfig.steps"
                     :key="`${step.slug}-${index}`"
                 >
                     <NuxtLink :class="stepperItemClasses(step)" :to="step.slug">

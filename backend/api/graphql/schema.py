@@ -1,13 +1,14 @@
 from graphene import Schema, ObjectType
 
 from form.types.QuestionType import (
+    QuestionType,
+    BaseQuestionInterface,
     TrueFalseQuestionType,
     DateQuestionType,
     TextQuestionType,
     SelectQuestionType,
     FileUploadQuestionType,
     NumberQuestionType,
-    BaseQuestionInterface,
 )
 from form.queries import FormQueries
 from main.queries import ListUsersQuery
@@ -22,12 +23,13 @@ schema = Schema(
     types=[
         # These types are not queried directly, so they are included here to
         # make Graphene aware of them.
+        QuestionType,
         BaseQuestionInterface,
+        TrueFalseQuestionType,
         DateQuestionType,
+        TextQuestionType,
+        SelectQuestionType,
         FileUploadQuestionType,
         NumberQuestionType,
-        SelectQuestionType,
-        TextQuestionType,
-        TrueFalseQuestionType,
     ],
 )

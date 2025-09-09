@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { SharedFormWrapper } from "#components";
 import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
 import type { GetFormQuery } from "~/generated/gql/graphql";
@@ -7,21 +8,41 @@ const GET_FORM = graphql(`
     query GetForm {
         form {
             id
+            slug
             nameEn
             nameNl
             descriptionEn
             descriptionNl
-            steps {
+            ...FormInfoFragment
+            questions {
+                id
+                textEn
+                textNl
+                descriptionEn
+                descriptionNl
+                required
+                ... on SelectQuestionType {
+                    options {
+                        id
+                        labelNl
+                        labelEn
+                        defaultSelected
+                    }
+                }
+                ... on TextQuestionType {
+                    placeholderNl
+                    placeholderEn
+                    lines
+                }
+            }
+            subforms {
                 id
                 slug
                 nameEn
                 nameNl
                 descriptionEn
                 descriptionNl
-                formOrder
-                info {
-                    ...StepInfoFragment
-                }
+                ...FormInfoFragment
                 questions {
                     id
                     textEn
@@ -43,17 +64,14 @@ const GET_FORM = graphql(`
                         lines
                     }
                 }
-                substeps {
+                subforms {
                     id
                     slug
                     nameEn
                     nameNl
                     descriptionEn
                     descriptionNl
-                    parentOrder
-                    info {
-                        ...StepInfoFragment
-                    }
+                    ...FormInfoFragment
                     questions {
                         id
                         textEn
@@ -85,11 +103,11 @@ const { result: formResult } = useQuery<GetFormQuery>(GET_FORM);
 
 const form = computed(() => formResult.value?.form ?? null);
 
-function stepSlug(route: string | string[]): string {
+const route = useRoute();
+
+function formSlug(route: string | string[]): string {
     return Array.isArray(route) ? route[0] : route;
 }
-
-const route = useRoute();
 </script>
 
 <template>
@@ -99,10 +117,10 @@ const route = useRoute();
             <h1>{{ $t("Processing Registry") }}</h1>
         </div>
         <div class="uu-container">
-            <SharedMRForm
+            <SharedFormWrapper
                 v-if="form"
                 :form="form"
-                :current-step-slug="stepSlug(route.params.step)"
+                :current-form-slug="formSlug(route.params.slug)"
             />
         </div>
     </div>
