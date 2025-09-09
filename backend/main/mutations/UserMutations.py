@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 class CreateUser(Mutation):
 
     user = Field(UserType)
+    errors = List(ErrorType)
 
     class Arguments:
         username = String(required=True)
