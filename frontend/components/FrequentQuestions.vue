@@ -1,20 +1,14 @@
 <script lang="ts" setup>
-import { mockData } from "~/shared/mockData";
+import { MockData, type MockQuestionKey } from "~/shared/mockData";
 
 interface Props {
-  questionsGroup: string;
+  questionsGroup: MockQuestionKey;
   title: string;
 }
 const props = defineProps<Props>();
 
-const questionAnswers: Map<string, string> | undefined =
-  mockData.getQuestionAnswers(props.questionsGroup);
-
-if (questionAnswers === undefined) {
-  console.log(
-    "undefined questionGroup found for the frequentQuestions component",
-  );
-}
+const questionAnswers: Record<string, string> =
+  MockData.mockQuestions[props.questionsGroup];
 </script>
 
 <template>
@@ -25,7 +19,7 @@ if (questionAnswers === undefined) {
     <div class="accordion mw-100" :id="'accordion' + questionsGroup">
       <div
         class="mw-100"
-        v-for="(questionAnswer, index) in questionAnswers"
+        v-for="(answer, question, index) in questionAnswers"
         :key="questionsGroup + index"
       >
         <div class="accordion-item mw-100">
@@ -34,20 +28,20 @@ if (questionAnswers === undefined) {
               class="accordion-button"
               type="button"
               data-bs-toggle="collapse"
-              v-bind:data-bs-target="'#collapse' + questionsGroup + index"
+              :data-bs-target="'#collapse' + questionsGroup + index"
               aria-expanded="false"
-              v-bind:aria-controls="'collapse' + questionsGroup + index"
+              :aria-controls="'collapse' + questionsGroup + index"
             >
-              {{ $t(questionAnswer[0]) }}
+              {{ $t(question) }}
             </button>
           </h2>
           <div
-            v-bind:id="'collapse' + questionsGroup + index"
+            :id="'collapse' + questionsGroup + index"
             class="accordion-collapse collapse mw-100"
-            v-bind:data-bs-parent="'#accordion' + questionsGroup"
+            :data-bs-parent="'#accordion' + questionsGroup"
           >
             <div class="accordion-body mw-100">
-              {{ $t(questionAnswer[1]) }}
+              {{ $t(answer) }}
             </div>
           </div>
         </div>

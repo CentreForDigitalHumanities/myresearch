@@ -41,13 +41,9 @@ const seasonCover = getSeasonalCoverImage();
 
 <template>
   <div class="uu-cover h-400">
-    <img
-      :src="seasonCover.image"
-      class="uu-cover-image w-100"
-      alt="cover"
-    />
+    <img :src="seasonCover.image" class="uu-cover-image w-100" alt="cover" />
     <div class="uu-cover-copyright uu-cover-copyright-right">
-      {{ $t("Cover by ") }} {{ seasonCover.author }}
+      {{ $t("Cover by") }} {{ seasonCover.author }}
     </div>
   </div>
 </template>

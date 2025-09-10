@@ -17,7 +17,7 @@ import SeasonalCover from "~/components/SeasonalCover.vue";
         <div class="uu-container">
           {{
             $t(
-              "My Research is a website that helps researchers with submitting a request to start a research. On this website you can register your research at the processing register. But first you should fill in the roadmap",
+              "My Research is a website that helps researchers with submitting a request to start a research. On this website you can register your research at the processing registry. First, however, you should fill in the roadmap",
             )
           }}
         </div>
@@ -27,7 +27,7 @@ import SeasonalCover from "~/components/SeasonalCover.vue";
         <div>
           {{
             $t(
-              "The roadmap is a questionnaire that helps researchers to find out what needs to happen to submit a request to start a research. Do I need to register my research at processing register at all. Perhaps that isn't needed? Questions that the roadmap helps answering",
+              "The Roadmap is a questionnaire that helps researchers to find out what needs to happen before starting a research project. Do I need to register my research at processing registry at all or not? The Roadmap helps you answer this question.",
             )
           }}
           <div class="uu-container">
@@ -58,19 +58,19 @@ import SeasonalCover from "~/components/SeasonalCover.vue";
     <div class="uu-sidebar-container uu-sidebar-right uu-sidebar-sticky">
       <div class="uu-sidebar-content">
         <h2 class="uu-sidebar-header-linked">
-          {{ $t("Processing register") }}
+          {{ $t("Processing registry") }}
         </h2>
         <p>
           {{
             $t(
-              "At the processing register you register your studies that contain personal data. The processing register is a central place for all studies with personal data. The Dutch government under the Algemene Verordening Gegevensbescherming (AVG) demands that studies are registered where personal data plays a role. Registering such studies also has an advantage for that researcher that registers the study: registration gives a user-friendly overview about aspects in data processing such as the type of personal data, the persons to whom those data apply, retention periods, used software, necessary security measures and the different parties that play a role",
+              "At the processing registry you register your studies that contain personal data. The processing registry is a central place for all studies with personal data. The Dutch government under the Algemene Verordening Gegevensbescherming (AVG) demands that studies are registered where personal data plays a role. Registering such studies also has an advantage for that researcher that registers the study: registration gives a user-friendly overview about aspects in data processing such as the type of personal data, the persons to whom those data apply, retention periods, used software, necessary security measures and the different parties that play a role",
             )
           }}
         </p>
       </div>
       <aside class="uu-sidebar pe-3">
         <FrequentQuestions
-          questions-group="processingRegister"
+          questions-group="processingRegistry"
           title="Frequent questions"
         />
       </aside>
@@ -83,7 +83,7 @@ import SeasonalCover from "~/components/SeasonalCover.vue";
         <p>
           {{
             $t(
-              "Formal approval by a chamber for the FEtC-H (by means of an official approval letter) is required for research involving human participants within the UU Faculty of Humanities. You must acquire this approval prior even to recruiting participants. Therefore, always wait for the letter of approval before starting research activities. ",
+              "Formal approval by a chamber for the FEtC-H (by means of an official approval letter) is required for research involving human participants within the UU Faculty of Humanities. You must acquire this approval prior even to recruiting participants. Therefore, always wait for the letter of approval before starting research activities.",
             )
           }}
         </p>
@@ -128,12 +128,12 @@ import SeasonalCover from "~/components/SeasonalCover.vue";
         <p>
           {{
             $t(
-              "For questions about the processing register contact the privacy officer: ",
-            )
+              "For questions about the processing registry contact the privacy officer:",
+            ) + " "
           }}<a href="mailto:l.j.w.m.kessels@uu.nl">l.j.w.m.kessels@uu.nl</a>
         </p>
         <p>
-          {{ $t("For compliments contact: ")
+          {{ $t("For compliments contact:") + " "
           }}<a href="mailto:portaldev.gw@uu.nl">portaldev.gw@uu.nl</a>
         </p>
       </aside>
