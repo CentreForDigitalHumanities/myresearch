@@ -118,7 +118,7 @@ async function submitUser(): Promise<void> {
           type="submit"
           :loading="createUserLoading"
       >
-          {{ $t("Submit") }}
+          Submit
       </BSButton>
   </div>
             </form>
