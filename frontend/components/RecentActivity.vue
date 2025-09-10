@@ -7,7 +7,7 @@
       <NuxtLink to="/studies/" class="nav-link">
         <div class="row">
           <div class="col-9">
-            <strong>refnumber + Titelmet langere naam</strong>
+            <strong>refnumber + Titel met langere naam</strong>
           </div>
           <div class="col-3">25-08-23</div>
         </div>
