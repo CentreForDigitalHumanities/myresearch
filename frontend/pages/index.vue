@@ -140,16 +140,17 @@ import SeasonalCover from "~/components/SeasonalCover.vue";
     </div>
   </div>
 </template>
-<style scoped>
+
+<style lang="scss" scoped>
 .card {
   width: 60%;
 }
 
 .card-image-left {
   display: flex;
-}
 
-.card-image-left img {
-  width: 30%;
+  & img {
+    width: 30%;
+  }
 }
 </style>

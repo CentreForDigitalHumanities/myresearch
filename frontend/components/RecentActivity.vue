@@ -37,11 +37,12 @@
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .tiles .tile {
   aspect-ratio: 2/1;
-}
-.tiles .tile:hover {
-  background: white;
+
+  &:hover {
+    background: white;
+  }
 }
 </style>
