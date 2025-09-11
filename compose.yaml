@@ -120,6 +120,33 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.prod
 
+  dev-idp:
+    image: ghcr.io/centrefordigitalhumanities/development-idp/development-idp:latest
+    ports:
+      - "7000:7000"
+    environment:
+      - DJANGO_SECRET_KEY=django-insecure-lb=q@u4df-x0th(5u%$eye_ti#etst+5z+%2=lrh$$le3&v_y$
+      - DJANGO_DEBUG=False
+      - DJANGO_DEBUG_TOOLBAR=True
+      - DJANGO_HOST=localhost:7000
+      - DJANGO_ALLOWED_HOSTS=dev-idp,localhost,127.0.0.1
+      - DJANGO_DB_TYPE=sqlite3
+      - DJANGO_SQLLITE_FILE=/run/db/db.sqlite3
+      - DJANGO_HTTPS=False
+
+      - DJANGO_IDP_PRIVATE_KEY=/run/secrets/private_key
+      - DJANGO_IDP_PUBLIC_CERT=/run/secrets/public_cert
+    volumes:
+      - ./db:/run/db
+    profiles:
+      ["dev"]
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    secrets:
+      - private_key
+      - public_cert
+
 volumes:
   frontend-node-modules:
   pgdata:
@@ -129,3 +156,9 @@ volumes:
 networks:
     my-research:
       driver: bridge
+
+secrets:
+  private_key:
+    file: ./certificates/private.key
+  public_cert:
+    file: ./certificates/public.cert
