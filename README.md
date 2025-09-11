@@ -73,47 +73,74 @@ The differences are outlined below.
    cd myresearch
    ```
 
-2. Install frontend dependencies:
+2. Activate a virtual environment and install backend dependencies:
+   ```bash
+   cd backend
+   python -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   ```
+
+3. Create a new local development database. The first PostgreSQL start-up will
+   normally do this for you, but in case you need to do this manually, follow this
+   step. The Django development server expects a database with the following
+   details. (This can be changed as needed in `settings.py`):
+   - DB name: `myresearch`
+   - Host: `localhost`
+   - Port: `5432`
+   - User: `myresearch`
+   - Password: `myresearch`
+
+   The file `backend/create_db.sql` can be used to create the database and user 
+   with the correct permissions. Run it as follows.
+
+   ```bash
+   psql -U <your-postgres-username> -f backend/create_db.sql
+
+4. Run the database migrations for the first time:
+   ```bash
+   python manage.py migrate
+   ```
+   
+Note that, by default, `manage.py` uses the Django settings from 
+`backend/myresearch/settings/dev.py`. If you are using the Docker setup, this 
+is overridden by the docker-compose file so that the right set of settings are
+used. If you want special settings for your local setup, create a file 
+`backend/myresearch/settings/local_settings.py`. This file is automatically
+imported and overrides any predefined settings.
+
+5. Fill the database with development data:
+   ```bash
+   python manage.py create_dev_data
+   ```
+
+6. Run the development server on the background:
+   ```bash
+   python manage.py runserver &
+   ```
+
+7. Install frontend dependencies:
     ```bash
     cd frontend
     npm install
     ```
 
-3. Start the frontend:
+8. Create a `.env` file in the `frontend` subdirectory, for which you may use the template:
+   ```bash
+   cp env_template .env
+   ```
+
+9. Run the GraphQL schema generator on the background (this will only work if the backend is running):
+   ```bash
+   npm run codegen
+   ```
+
+10. Start the frontend:
     ```bash
     npm run dev
     ```
 
-4. Open your browser and navigate to `http://localhost:3000` to visit the application!
-
-    (TODO: add backend install instructions).
-
-5. For development, the backend requires supplementing the settings.py with a
-local_settings.py file, which contains the following settings:
-
-    ```
-    CORS_ALLOW_ALL_ORIGINS = True
-    CORS_ALLOW_CREDENTIALS = True
-
-    CSRF_TRUSTED_ORIGINS = ["http://*:3000"]
-    ```
-
-6. Create a new local development database. The first PostgreSQL start-up will
-normally do this for you, but in case you need to do this manually, follow this
-step. The Django development server expects a database with the following
-details. (This can be changed as needed in `settings.py`):
-- DB name: `myresearch`
-- Host: `localhost`
-- Port: `5432`
-- User: `myresearch`
-- Password: `myresearch`
-
-The file `backend/create_db.sql` can be used to create the database and user 
-with the correct permissions. Run it as follows.
-
-```bash
-psql -U <your-postgres-username> -f backend/create_db.sql
-```
+11. Open your browser and navigate to `http://localhost:3000` to visit the application!
 
 Note that this is not needed if you are using the provided Docker setup. Also, 
 make sure to never use these standard settings in a production environment.
