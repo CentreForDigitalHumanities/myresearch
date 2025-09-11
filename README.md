@@ -1,6 +1,25 @@
 [![Checks](https://github.com/CentreForDigitalHumanities/myresearch/actions/workflows/pr-checks.yml/badge.svg)](https://github.com/CentreForDigitalHumanities/myresearch/actions/workflows/pr-checks.yml)
 
-# myresearch
+# MyResearch
+
+Welcome to MyResearch!
+
+MyResearch is a web application to facilitate various administrative tasks surrounding research
+at Utrecht University. MyResearch will help researchers to determine which administrative tasks
+they have to perform and allow them to fill in the respective forms. MyResearch also orchestrates
+the workflow surrounding the approval of these forms. MyResearch is created by the PortalDev team of 
+[Humanities IT](https://cdh.uu.nl/about/humanities-it-services/) (part of Centre for Digital Humanities)
+for the Faculty of Humanities and the Faculty of Law, Economics and Governance.
+
+MyResearch is currently in active development and is not ready for usage. When completed, it will
+contain the following parts:
+
+- A "roadmap" ("wegwijzer"), which helps the researcher to determine which administrative tasks they 
+have to perform
+- Forms to register a research project into the processing registry of the university and apply
+for approval from the side of one of the applicable ethics committee
+
+## Running the application
 
 This application can be run in one of three modes:
 
