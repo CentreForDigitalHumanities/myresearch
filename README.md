@@ -48,14 +48,14 @@ This application can be run in one of three modes:
 
 The differences are outlined below.
 
-| | Local | Docker dev | Docker prod |
-| --- | --- | --- | --- |
-| PostgreSQL database | On host machine | In container | In container |
-| Frontend server | Nuxt development server | Nuxt development server in container | NGINX server serving a minimized static build |
-| Backend server | TBD | TBD | TBD |
-| Live-reloading on code changes | ✔ | ✔ | ❌ |
-| Ports available | 3000 (frontend) | 5000 (NGINX), 3000 (frontend) | 5000 (NGINX) |
-| Logging | Console | TBD | TBD |
+| | Local                     | Docker dev                             | Docker prod                                   |
+| --- |---------------------------|----------------------------------------|-----------------------------------------------|
+| PostgreSQL database | On host machine           | In container                           | In container                                  |
+| Frontend server | Nuxt development server   | Nuxt development server in container   | NGINX server serving a minimized static build |
+| Backend server | Django development server | Dajgno development server in container | Gunicorn                                      |
+| Live-reloading on code changes | ✔                         | ✔                                      | ❌                                             |
+| Ports available | 3000 (frontend)           | 5000 (NGINX), 3000 (frontend)          | 5000 (NGINX)                                  |
+| Logging | Console                   | TBD                                    | TBD                                           |
 
 
 ## Running the application locally
