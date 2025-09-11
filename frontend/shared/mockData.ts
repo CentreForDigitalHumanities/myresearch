@@ -14,8 +14,9 @@ export class MockData {
     },
     ethicalCommission: {
       "Where can i find the documents I have to deliver?":
-        "During the application it may be possible that you need submit certain documents. Use the most recent model documents. " +
-        useEthicsLinks("model_documents"),
+        "During the application it may be possible that you need submit certain documents. Use the most recent model documents." +
+        " " +
+        "https://intranet.uu.nl/en/documents-ethics-assessment-committee-humanities",
       "How long do responses take after submission?": "No idea.",
       "What happens if my application gets rejected?":
         "You will need to make a revision and resubmit the application.",

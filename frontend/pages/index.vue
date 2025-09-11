@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import useEthicsLinks from "~/composables/useEthicsLinks";
 import SeasonalCover from "~/components/SeasonalCover.vue";
 </script>
 <template>
@@ -95,14 +94,16 @@ import SeasonalCover from "~/components/SeasonalCover.vue";
           }}
         </p>
         <p>
-          <a :href="useEthicsLinks('FEtC_H')" target="_blank">{{
+          <a :href="$t('https://fetc-gw.wp.hum.uu.nl/en/')" target="_blank">{{
             $t("UU-webpage of the FEtC-H")
           }}</a>
         </p>
         <p>
-          <a :href="useEthicsLinks('FEtC_H_regulations')" target="_blank">{{
-            $t("Regulations of the FEtC-H")
-          }}</a>
+          <a
+            :href="$t('https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/')"
+            target="_blank"
+            >{{ $t("Regulations of the FEtC-H") }}</a
+          >
         </p>
         <p>
           {{
