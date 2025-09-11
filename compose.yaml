@@ -1,5 +1,5 @@
 services:
-  postgres:
+  mr-postgres:
     image: postgres:15
     container_name: mr-postgres
     environment:
@@ -42,7 +42,7 @@ services:
     container_name: mr-django-dev
     hostname: mr-django
     depends_on:
-      postgres:
+      mr-postgres:
         condition: service_healthy
     restart: no
     profiles: ["dev"]
