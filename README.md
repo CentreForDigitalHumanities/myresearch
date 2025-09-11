@@ -161,7 +161,12 @@ This will start a Docker Compose network with the following containers:
    cd myresearch
    ```
 
-2. Build the Docker images:
+2. If you want to use the production profile, make sure to have a `.env`
+   file in the root directory. You can base this file on `.env.example`. 
+
+   Note: the file `frontend/.env` is not needed for the Docker compose setup.
+
+3. Build the Docker images:
 
    ```bash
    # In development mode:
@@ -171,6 +176,16 @@ This will start a Docker Compose network with the following containers:
    docker compose --profile prod up --build -d
    ```
 
-    For subsequent runs, you may omit `--build`, unless you switch branches, update dependencies or edit `compose.yml` or one of the `Dockerfile`s. This will ensure that the images are rebuilt with the latest changes.
+   For subsequent runs, you may omit `--build`, unless you switch branches, update dependencies or edit `compose.yml` or one of the `Dockerfile`s. This will ensure that the images are rebuilt with the latest changes.
 
-3. Open your browser and navigate to `http://localhost:5000` to visit the application!
+Note that in production mode the GraphQL schema generator is not run; the schema
+is supposed to be created in development mode and to be committed to the codebase.
+
+4. The database will automatically be initialized, but you may want to fill it with
+   development data:
+   
+   ```bash
+   docker compose run django-{dev|prod} python manage.py create_dev_data  # add `--force` for prod
+   ```
+
+5. Open your browser and navigate to `http://localhost:5000` to visit the application!
