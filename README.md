@@ -19,6 +19,25 @@ have to perform
 - Forms to register a research project into the processing registry of the university and apply
 for approval from the side of one of the applicable ethics committee
 
+## Application architecture
+
+MyResearch consists of two parts:
+
+* A backend, written in Python and powered by the [Django](https://www.djangoproject.com) framework
+for web applications
+* A frontend, written in JavaScript using the [Vue.js](https://vuejs.org/) frontend framework in
+combination with [Nuxt](https://nuxt.com/)
+
+The backend and frontend communicate through GraphQL, which is facilitated in the frontend by 
+[Graphene](https://graphene-python.org/) (including the `Graphene-Django` extension) and by 
+
+The application is bilingual (English and Dutch). Translations of the backend part are managed by
+Django using `gettext` (static strings) and the `django-modeltranslation` extension (strings in 
+the database). Translations of the frontend part are managed by the `vue-i18n` extension.
+
+The application is deployed on Utrecht University's servers using Docker containers, which allows
+us to minimize the differences between the development and deployment environments.
+
 ## Running the application
 
 This application can be run in one of three modes:
