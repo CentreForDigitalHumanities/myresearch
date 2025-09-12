@@ -17,6 +17,7 @@ if (status === "DRAFT") {
   statusIcon = scale;
   buttonText = "Assess";
 }
+//TODO get proper exampledata.
 </script>
 
 <template>
@@ -48,13 +49,3 @@ if (status === "DRAFT") {
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.tiles .tile {
-  aspect-ratio: 2/1;
-
-  &:hover {
-    background: white;
-  }
-}
-</style>
