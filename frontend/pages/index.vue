@@ -105,13 +105,6 @@ import SeasonalCover from "~/components/SeasonalCover.vue";
             >{{ $t("Regulations of the FEtC-H") }}</a
           >
         </p>
-        <p>
-          {{
-            $t(
-              "Lorem ipsum dolor sit amet. Qui consequatur consequatur ut possimus reiciendis in commodi consequatur? Sit voluptatum nulla et earum impedit ad sapiente expedita rem quod incidunt ea facilis velit et repellendus voluptates. Id corporis eius eum dolorem libero aut voluptatem cupiditate. Qui vitae quia sit ullam totam 33 facilis possimus qui molestiae quae At doloremque porro.Rem tenetur voluptatum sed similique quis aut quos deleniti vel tempore ipsam et quas molestiae. Qui Quis autem non aperiam delectus et veritatis velit non officia excepturi et nobis nihil et quae voluptates qui aspernatur nobis. Ut odio tenetur ea alias modi sit quibusdam quaerat.Non voluptas repudiandae et laboriosam iste qui ducimus sint. Sed repellat excepturi est quia consequatur quo velit esse aut reprehenderit debitis ea ratione ratione ut autem dignissimos. Et temporibus omnis est quis ullam ab saepe magnam et voluptatem asperiores.Lorem ipsum dolor sit amet. Qui consequatur consequatur ut possimus reiciendis in commodi consequatur? Sit voluptatum nulla et earum impedit ad sapiente expedita rem quod incidunt ea facilis velit et repellendus voluptates. Id corporis eius eum dolorem libero aut voluptatem cupiditate. Qui vitae quia sit ullam totam 33 facilis possimus qui molestiae quae At doloremque porro.Rem tenetur voluptatum sed similique quis aut quos deleniti vel tempore ipsam et quas molestiae. Qui Quis autem non aperiam delectus et veritatis velit non officia excepturi et nobis nihil et quae voluptates qui aspernatur nobis. Ut odio tenetur ea alias modi sit quibusdam quaerat.Non voluptas repudiandae et laboriosam iste qui ducimus sint. Sed repellat excepturi est quia consequatur quo velit esse aut reprehenderit debitis ea ratione ratione ut autem dignissimos. Et temporibus omnis est quis ullam ab saepe xcepturi est quia consequatur quo velit esse aut reprehenderit debitis ea ratione ratione ut autem dignissimos. Et temporibus omnis est quis ullam ab saepe xcepturi est quia consequatur quo velit esse aut reprehenderit debitis ea ratione ratione ut autem dignissimos. Et temporibus omnis est quis ullam ab saepe ",
-            )
-          }}
-        </p>
       </div>
       <aside class="uu-sidebar pe-3">
         <FrequentQuestions

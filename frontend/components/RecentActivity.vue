@@ -1,39 +1,51 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import scale from "assets/images/icons/scale.png";
+import pencil from "assets/images/icons/pencil.png";
+let status = "DRAFT";
+
+const refNumber = "234324_2025";
+const title = "Voorstel Kattenbiologie";
+const type = "proposal_in_ethics";
+let statusIcon = "";
+let buttonText = "";
+let dateSubmitted = "2025-01-24";
+let lastEdited = "2025-04-23";
+if (status === "DRAFT") {
+  statusIcon = pencil;
+  buttonText = "Continue";
+} else if (status === "SUBMITTED_TO_SUPERVISOR") {
+  statusIcon = scale;
+  buttonText = "Assess";
+}
+</script>
 
 <template>
   <h2 class="uu-sidebar-header-linked">{{ $t("Recent Activity") }}</h2>
-  <div class="tiles uu-container mw-100">
-    <a class="tile w-100 mw-100 justify-content-center">
-      <NuxtLink to="/studies/" class="nav-link">
-        <div class="row">
-          <div class="col-9">
-            <strong>refnumber + Titel met langere naam</strong>
-          </div>
-          <div class="col-3">25-08-23</div>
+  <div class="card mb-2 text-bg-light mw-100">
+    <div class="card-body mw-100">
+      <div class="d-flex align-items-center mw-100">
+        <h3 class="card-title">{{ refNumber }}</h3>
+        <div class="text-muted ms-auto">
+          {{ $t("Last edited") }}: {{ lastEdited }}
         </div>
-        <p></p>
-        <div class="row justify-content-around">
-          <div class="col-6">TYPE</div>
-          <div class="col-6">Wegwijzer</div>
+      </div>
+      <h5 class="card-title">{{ title }}</h5>
+      <div class="text-muted mw-100">
+        <div class="mw-100">{{ $t("Type") }}: {{ type }}</div>
+        <div class="mw-100">
+          {{ $t("State") }}: <img :src="statusIcon" class="" alt="card_img" />
+          {{ status }}
         </div>
-        <div class="row">
-          <div class="col-6">Status</div>
-          <div class="col-6">DRAFT</div>
+        <div class="mw-100">
+          <p>{{ $t("Date submitted") }}: {{ dateSubmitted }}</p>
         </div>
-        <div class="row">
-          <div class="col-6">fav color</div>
-          <div class="col-6">
-            geel met een hele lange tekst erachter geplakt
-          </div>
-        </div>
-        <p></p>
-        <div class="row justify-content-end">
-          <button class="btn btn-primary btn-arrow-right col-12">
-            Continue
-          </button>
-        </div>
-      </NuxtLink>
-    </a>
+      </div>
+      <div class="d-flex mt-3 mw-100">
+        <NuxtLink href="#" class="ms-auto btn btn-primary btn-arrow-right">
+          {{ $t(buttonText) }}
+        </NuxtLink>
+      </div>
+    </div>
   </div>
 </template>
 

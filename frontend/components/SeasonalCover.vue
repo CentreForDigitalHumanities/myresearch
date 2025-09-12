@@ -5,8 +5,6 @@ import autumnURL from "@/assets/images/covers/coverimage-autumn.jpg";
 import winterURL from "@/assets/images/covers/coverimage-winter.jpg";
 
 const seasons = {
-  // originally the images that come from Ethics had CSS.classes as well,
-  // but they seemed no longer needed.
   spring: {
     image: springURL,
     author: "Dick Boetekees",
@@ -47,4 +45,3 @@ const seasonCover = getSeasonalCoverImage();
     </div>
   </div>
 </template>
-<style scoped></style>
