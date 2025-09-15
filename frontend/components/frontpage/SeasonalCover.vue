@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import springURL from "@/assets/images/covers/coverimage-spring.jpg";
-import summerURL from "@/assets/images/covers/coverimage-summer.jpg";
-import autumnURL from "@/assets/images/covers/coverimage-autumn.jpg";
-import winterURL from "@/assets/images/covers/coverimage-winter.jpg";
+import springURL from "assets/images/covers/coverimage-spring.jpg";
+import summerURL from "assets/images/covers/coverimage-summer.jpg";
+import autumnURL from "assets/images/covers/coverimage-autumn.jpg";
+import winterURL from "assets/images/covers/coverimage-winter.jpg";
 
 const seasons = {
   spring: {

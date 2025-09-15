@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import SeasonalCover from "~/components/SeasonalCover.vue";
+import SeasonalCover from "~/components/frontpage/SeasonalCover.vue";
+import RecentActivity from "~/components/frontpage/RecentActivity.vue";
+import FrequentQuestions from "~/components/frontpage/FrequentQuestions.vue";
 </script>
 <template>
   <div class="uu-content">
