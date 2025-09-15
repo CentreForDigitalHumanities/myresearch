@@ -28,8 +28,9 @@ for web applications
 * A frontend, written in JavaScript using the [Vue.js](https://vuejs.org/) frontend framework in
 combination with [Nuxt](https://nuxt.com/)
 
-The backend and frontend communicate through GraphQL, which is facilitated in the frontend by 
+The backend and frontend communicate through GraphQL, which is facilitated in the backend by 
 [Graphene](https://graphene-python.org/) (including the `Graphene-Django` extension) and by 
+[Apollo Client](https://github.com/apollographql/apollo-client) in the frontend.
 
 The application is bilingual (English and Dutch). Translations of the backend part are managed by
 Django using `gettext` (static strings) and the `django-modeltranslation` extension (strings in 
@@ -52,7 +53,7 @@ The differences are outlined below.
 | --- |---------------------------|----------------------------------------|-----------------------------------------------|
 | PostgreSQL database | On host machine           | In container                           | In container                                  |
 | Frontend server | Nuxt development server   | Nuxt development server in container   | NGINX server serving a minimized static build |
-| Backend server | Django development server | Dajgno development server in container | Gunicorn                                      |
+| Backend server | Django development server | Django development server in container | Gunicorn                                      |
 | Live-reloading on code changes | ✔                         | ✔                                      | ❌                                             |
 | Ports available | 3000 (frontend)           | 5000 (NGINX), 3000 (frontend)          | 5000 (NGINX)                                  |
 | Logging | Console                   | TBD                                    | TBD                                           |
