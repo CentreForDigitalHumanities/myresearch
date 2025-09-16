@@ -63,58 +63,62 @@ const isRoadmap = (obj: Proposal | Roadmap): obj is Roadmap => {
     v-for="activity in recentActivity"
     class="card mb-2 text-bg-light mw-100"
   >
-    <div v-if="isProposal(activity)" class="card-body mw-100">
-      <div class="d-flex align-items-center mw-100">
+    <div class="card-body mw-100">
+      <template v-if="isProposal(activity)">
+        <div class="d-flex align-items-center mw-100">
+          <h3 class="card-title">{{ activity.refNumber }}</h3>
+          <div class="text-muted ms-auto">
+            {{ $t("Last edited") }}: {{ activity.lastEdited }}
+          </div>
+        </div>
+        <h5 class="card-title">{{ activity.title }}</h5>
+        <div class="text-muted mw-100">
+          <div class="mw-100">{{ $t("Type") }}: {{ activity.type }}</div>
+          <div class="mw-100">
+            {{ $t("Status") }}:
+            <img
+              class="icon"
+              v-if="activity.status == 'DRAFT'"
+              :src="pencil"
+              alt="pencil.png"
+            />
+            <span v-if="activity.status == 'DRAFT'"
+              ><Pencil class="icon"
+            /></span>
+            <img
+              class="icon"
+              v-if="activity.status == 'SUBMITTED_TO_SUPERVISOR'"
+              :src="scale"
+              alt="scale.png"
+            />
+            <span v-if="activity.status == 'SUBMITTED_TO_SUPERVISOR'"
+              ><Scale class="icon"
+            /></span>
+            {{ activity.status }}
+          </div>
+          <div class="mw-100">
+            <p>{{ $t("Date submitted") }}: {{ activity.dateSubmitted }}</p>
+          </div>
+        </div>
+        <div class="d-flex mt-3 mw-100">
+          <NuxtLink href="#" class="ms-auto btn btn-primary btn-arrow-right">
+            <span v-if="activity.status == 'DRAFT'">{{ $t("Continue") }}</span>
+            <span v-if="activity.status == 'SUBMITTED_TO_SUPERVISOR'">{{
+              $t("Assess")
+            }}</span>
+          </NuxtLink>
+        </div>
+      </template>
+      <template v-if="isRoadmap(activity)">
         <h3 class="card-title">{{ activity.refNumber }}</h3>
-        <div class="text-muted ms-auto">
-          {{ $t("Last edited") }}: {{ activity.lastEdited }}
+        <div>{{ activity.roadmapBody }}</div>
+        <div>{{ $t("Steps completed") }}: {{ activity.stepsCompleted }}</div>
+        <div class="d-flex mt-3 mw-100">
+          <NuxtLink href="#" class="ms-auto btn btn-primary btn-arrow-right"
+            >{{ $t("View Conclusion") }}
+          </NuxtLink>
         </div>
-      </div>
-      <h5 class="card-title">{{ activity.title }}</h5>
-      <div class="text-muted mw-100">
-        <div class="mw-100">{{ $t("Type") }}: {{ activity.type }}</div>
-        <div class="mw-100">
-          {{ $t("Status") }}:
-          <img
-            class="icon"
-            v-if="activity.status == 'DRAFT'"
-            :src="pencil"
-            alt="pencil.png"
-          />
-          <span v-if="activity.status == 'DRAFT'"><Pencil class="icon" /></span>
-          <img
-            class="icon"
-            v-if="activity.status == 'SUBMITTED_TO_SUPERVISOR'"
-            :src="scale"
-            alt="scale.png"
-          />
-          <span v-if="activity.status == 'SUBMITTED_TO_SUPERVISOR'"
-            ><Scale class="icon"
-          /></span>
-          {{ activity.status }}
-        </div>
-        <div class="mw-100">
-          <p>{{ $t("Date submitted") }}: {{ activity.dateSubmitted }}</p>
-        </div>
-      </div>
-      <div class="d-flex mt-3 mw-100">
-        <NuxtLink href="#" class="ms-auto btn btn-primary btn-arrow-right">
-          <span v-if="activity.status == 'DRAFT'">{{ $t("Continue") }}</span>
-          <span v-if="activity.status == 'SUBMITTED_TO_SUPERVISOR'">{{
-            $t("Assess")
-          }}</span>
-        </NuxtLink>
-      </div>
-    </div>
-    <div v-if="isRoadmap(activity)" class="card-body mw-100">
-      <h3 class="card-title">{{ activity.refNumber }}</h3>
-      <div>{{ activity.roadmapBody }}</div>
-      <div>{{ $t("Steps completed") }}: {{ activity.stepsCompleted }}</div>
-      <div class="d-flex mt-3 mw-100">
-        <NuxtLink href="#" class="ms-auto btn btn-primary btn-arrow-right"
-          >{{ $t("View Conclusion") }}
-        </NuxtLink>
-      </div>
+      </template>
     </div>
   </div>
 </template>
