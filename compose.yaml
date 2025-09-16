@@ -44,6 +44,8 @@ services:
         condition: service_healthy
     restart: no
     profiles: ["dev"]
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     build:
       context: ./backend
     healthcheck:
@@ -62,6 +64,8 @@ services:
     environment:
       DB_HOST: 'mr-postgres'
       DJANGO_SETTINGS_MODULE: "myresearch.settings.dev"
+      SAML_BASE_URL: ${SAML_BASE_URL}
+      IDP_METADATA_URL: ${IDP_METADATA_URL}
 
   django-prod:
     <<: *django-dev
@@ -124,12 +128,14 @@ services:
     image: ghcr.io/centrefordigitalhumanities/development-idp/development-idp:latest
     ports:
       - "7000:7000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       - DJANGO_SECRET_KEY=django-insecure-lb=q@u4df-x0th(5u%$eye_ti#etst+5z+%2=lrh$$le3&v_y$
       - DJANGO_DEBUG=False
       - DJANGO_DEBUG_TOOLBAR=True
       - DJANGO_HOST=localhost:7000
-      - DJANGO_ALLOWED_HOSTS=dev-idp,localhost,127.0.0.1
+      - DJANGO_ALLOWED_HOSTS=dev-idp,localhost,127.0.0.1,host.docker.internal
       - DJANGO_DB_TYPE=sqlite3
       - DJANGO_SQLLITE_FILE=/run/db/db.sqlite3
       - DJANGO_HTTPS=False
