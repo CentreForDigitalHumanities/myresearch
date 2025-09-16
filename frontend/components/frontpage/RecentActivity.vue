@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import scale from "assets/images/icons/scale.png";
 import pencil from "assets/images/icons/pencil.png";
+import { Scale } from "lucide-vue-next";
+import { Pencil } from "lucide-vue-next";
 import RecentActivity from "~/components/frontpage/RecentActivity.vue";
 
 type Status = "DRAFT" | "SUBMITTED_TO_SUPERVISOR";
@@ -15,6 +17,7 @@ type Proposal = {
 type Roadmap = {
   refNumber: number;
   roadmapBody: string;
+  stepsCompleted: string;
 };
 
 //mockdata
@@ -27,8 +30,8 @@ const staticDraftProposal: Proposal = {
   lastEdited: "2025-04-23",
 };
 const staticSendToProposal: Proposal = {
-  refNumber: 4,
-  title: "hi",
+  refNumber: 4234_2023,
+  title: "hi mom I am on the internet",
   type: "proposal_in_ethics",
   status: "SUBMITTED_TO_SUPERVISOR",
   dateSubmitted: "2025-01-24",
@@ -37,6 +40,7 @@ const staticSendToProposal: Proposal = {
 const staticRoadmap: Roadmap = {
   refNumber: 3_2025,
   roadmapBody: "body content of roadmap",
+  stepsCompleted: "1/6",
 };
 
 const recentActivity: RecentActivity[] = [
@@ -72,15 +76,21 @@ const isRoadmap = (obj: Proposal | Roadmap): obj is Roadmap => {
         <div class="mw-100">
           {{ $t("Status") }}:
           <img
+            class="icon"
             v-if="activity.status == 'DRAFT'"
             :src="pencil"
             alt="pencil.png"
           />
+          <span v-if="activity.status == 'DRAFT'"><Pencil class="icon" /></span>
           <img
-            v-else-if="activity.status == 'SUBMITTED_TO_SUPERVISOR'"
+            class="icon"
+            v-if="activity.status == 'SUBMITTED_TO_SUPERVISOR'"
             :src="scale"
             alt="scale.png"
           />
+          <span v-if="activity.status == 'SUBMITTED_TO_SUPERVISOR'"
+            ><Scale class="icon"
+          /></span>
           {{ activity.status }}
         </div>
         <div class="mw-100">
@@ -99,6 +109,7 @@ const isRoadmap = (obj: Proposal | Roadmap): obj is Roadmap => {
     <div v-if="isRoadmap(activity)" class="card-body mw-100">
       <h3 class="card-title">{{ activity.refNumber }}</h3>
       <div>{{ activity.roadmapBody }}</div>
+      <div>{{ $t("Steps completed") }}: {{ activity.stepsCompleted }}</div>
       <div class="d-flex mt-3 mw-100">
         <NuxtLink href="#" class="ms-auto btn btn-primary btn-arrow-right"
           >{{ $t("View Conclusion") }}
@@ -107,3 +118,11 @@ const isRoadmap = (obj: Proposal | Roadmap): obj is Roadmap => {
     </div>
   </div>
 </template>
+<style lang="scss" scoped>
+.icon {
+  color: black;
+  height: 1em;
+  width: 1em;
+  margin-bottom: 5px;
+}
+</style>
