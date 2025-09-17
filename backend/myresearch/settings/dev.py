@@ -45,4 +45,4 @@ try:
     LOGIN_REDIRECT_URL = "http://localhost:5000/"
 
 except ImportError:
-    print('Proceeding without SAML')
+    print("Proceeding without SAML")
