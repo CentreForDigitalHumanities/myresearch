@@ -38,13 +38,9 @@ function setLocale(locale: string) {
         <div class="uu-header-row">
             <!-- TODO: make only relevant link appear, 
             once we can check if user.is_authenticated -->
-            <a href="/saml/login/" class="nav-link ms-auto">
-                Login
-            </a>
+            <a href="/saml/login/" class="nav-link ms-auto"> Login </a>
             <div class="nav-link">|</div>
-            <a href="/saml/logout/" class="nav-link">
-                Logout
-            </a>
+            <a href="/saml/logout/" class="nav-link"> Logout </a>
         </div>
     </div>
 </template>
