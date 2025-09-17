@@ -36,7 +36,15 @@ function setLocale(locale: string) {
             <div v-if="true" class="language-switcher">Dutch</div>
         </div>
         <div class="uu-header-row">
-            <div class="ms-auto">Not logged in</div>
+            <!-- TODO: make only relevant link appear, 
+            once we can check if user.is_authenticated -->
+            <a href="/saml/login/" class="nav-link ms-auto">
+                Login
+            </a>
+            <div class="nav-link">|</div>
+            <a href="/saml/logout/" class="nav-link">
+                Logout
+            </a>
         </div>
     </div>
 </template>
