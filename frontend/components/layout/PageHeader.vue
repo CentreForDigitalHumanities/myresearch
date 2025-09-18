@@ -32,8 +32,20 @@ function setLocale(locale: string) {
                     <BSIcon icon="gear" size="lg" />
                 </NuxtLink>
             </div>
-            <div v-if="false" class="language-switcher">English</div>
-            <div v-if="true" class="language-switcher">Dutch</div>
+            <div
+                v-if="$i18n.locale === 'nl'"
+                class="language-switcher"
+                @click="setLocale('en')"
+            >
+                English
+            </div>
+            <div
+                v-if="$i18n.locale === 'en'"
+                class="language-switcher"
+                @click="setLocale('nl')"
+            >
+                Nederlands
+            </div>
         </div>
         <div class="uu-header-row">
             <div class="ms-auto">Not logged in</div>
