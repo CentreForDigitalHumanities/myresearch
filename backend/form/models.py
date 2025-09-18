@@ -52,30 +52,6 @@ class Step(models.Model):
             )
         ]
 
-    @property
-    def get_form(self) -> MRForm:
-        """Returns the MRForm this step belongs to, whether directly or indirectly."""
-
-        def _get_form_recursive(step: Step, visited: set[int]) -> MRForm:
-            """Helper method to recursively find the MRForm, tracking visited steps to avoid infinite loops."""
-
-            if step.pk is None:
-                raise ValueError("Step must be saved before calling get_form.")
-
-            if step.pk in visited:
-                raise ValueError("Circular reference detected in step hierarchy.")
-            visited.add(step.pk)
-
-            if step.form:
-                return step.form
-            elif step.parent:
-                return _get_form_recursive(step.parent, visited)
-            else:
-                # This should never happen.
-                raise ValueError("Step is neither a top-level step nor a substep.")
-
-        return _get_form_recursive(self, set())
-
 
 class StepInfoQuestion(models.Model):
     step = models.ForeignKey(
