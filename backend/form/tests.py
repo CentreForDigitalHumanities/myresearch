@@ -17,7 +17,7 @@ class StepConstraintTests(TestCase):
 
         # Transactions are needed to avoid TransactionManagementError in tests.
         with transaction.atomic():
-            # Should not be able to create a step with both parent and form
+            # The user should not be able to create a step with both parent and form.
             with self.assertRaises(IntegrityError):
                 Step.objects.create(
                     name="Invalid Step",
@@ -26,7 +26,7 @@ class StepConstraintTests(TestCase):
                     form=self.form,
                 )
 
-        # Should not be able to create a step with neither parent nor form
+        # The user should not be able to create a step with neither parent nor form.
         with transaction.atomic():
             with self.assertRaises(IntegrityError):
                 Step.objects.create(
