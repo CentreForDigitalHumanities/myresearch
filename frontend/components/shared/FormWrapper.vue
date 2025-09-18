@@ -11,40 +11,32 @@ export type Substep = NonNullable<Step["substeps"][number]>;
 export type CombinedStep = Step | Substep;
 
 interface Props {
-    form: NonNullable<GetFormQuery["form"]>;
-    currentFormSlug: string;
+    form: QueriedForm;
+    currentStepSlug: string;
 }
 
 const props = defineProps<Props>();
 
-const formStepperConfig = computed<FormStepperConfig>(() => {
-    const selectedFormSlug = props.currentFormSlug;
-
-    const topLevelForm = props.form;
-
-    return {
-        titleNl: topLevelForm.nameNl ?? "",
-        titleEn: topLevelForm.nameEn ?? "",
-        steps: topLevelForm.steps.map((step) => ({
-            slug: step.slug,
-            labelNl: step.nameNl ?? "",
-            labelEn: step.nameEn ?? "",
+const formStepperConfig = computed<FormStepperConfig>(() => ({
+    steps: props.form.steps.map((step) => ({
+        slug: step.slug,
+        labelNl: step.nameNl ?? "",
+        labelEn: step.nameEn ?? "",
+        completed: false,
+        active: step.slug === props.currentStepSlug,
+        disabled: false,
+        substeps: step.substeps.map((substep) => ({
+            slug: substep.slug,
+            labelNl: substep.nameNl ?? "",
+            labelEn: substep.nameEn ?? "",
             completed: false,
-            active: step.slug === selectedFormSlug,
+            active: substep.slug === props.currentStepSlug,
             disabled: false,
-            children: step.substeps.map((substep) => ({
-                slug: substep.slug,
-                labelNl: substep.nameNl ?? "",
-                labelEn: substep.nameEn ?? "",
-                completed: false,
-                active: substep.slug === selectedFormSlug,
-                disabled: false,
-                // Let's only go 2 levels deep for now.
-                children: [],
-            })),
+            // Let's only go 2 levels deep for now.
+            substeps: [],
         })),
-    };
-});
+    })),
+}));
 
 const allSteps = computed(() => getAllSteps(props.form));
 const selectedStep = computed(() => {
@@ -52,17 +44,11 @@ const selectedStep = computed(() => {
     if (steps.length <= 0) {
         return null;
     }
-    return steps.find(({ slug }) => slug === props.currentFormSlug) ?? null;
+    return steps.find(({ slug }) => slug === props.currentStepSlug) ?? null;
 });
 
 function getAllSteps(form: QueriedForm): CombinedStep[] {
-    const collectedSteps: CombinedStep[] = form.steps;
-    form.steps.forEach((step) => {
-        if ("substeps" in step) {
-            collectedSteps.push(...step.substeps);
-        }
-    });
-    return collectedSteps;
+    return form.steps.flatMap((step) => [step, ...step.substeps]);
 }
 
 function findCurrentStepIndex(): number {
@@ -77,7 +63,7 @@ function findCurrentStepIndex(): number {
 
 function getNextStepSlug(): string {
     if (!selectedStep.value) {
-        return props.currentFormSlug;
+        return props.currentStepSlug;
     }
 
     const steps = allSteps.value;
@@ -85,7 +71,7 @@ function getNextStepSlug(): string {
 
     if (currentIndex === -1 || currentIndex >= steps.length - 1) {
         // Already at the last step or step not found.
-        return props.currentFormSlug;
+        return props.currentStepSlug;
     }
 
     return steps[currentIndex + 1].slug;
@@ -93,7 +79,7 @@ function getNextStepSlug(): string {
 
 function getPreviousStepSlug(): string {
     if (!selectedStep.value) {
-        return props.currentFormSlug;
+        return props.currentStepSlug;
     }
 
     const steps = allSteps.value;
@@ -101,7 +87,7 @@ function getPreviousStepSlug(): string {
 
     if (currentIndex <= 0) {
         // Already at the first step or step not found.
-        return props.currentFormSlug;
+        return props.currentStepSlug;
     }
 
     return steps[currentIndex - 1].slug;
@@ -113,7 +99,6 @@ function getPreviousStepSlug(): string {
         <FormStepper
             class="col-3 d-lg-block d-none pe-2"
             :stepper-config="formStepperConfig"
-            :selected-form-slug="props.currentFormSlug"
         />
         <div class="col-12 col-lg-9">
             <form class="uu-form">

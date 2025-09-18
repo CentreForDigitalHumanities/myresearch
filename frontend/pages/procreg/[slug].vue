@@ -98,7 +98,7 @@ const form = computed(() => formResult.value?.form ?? null);
 
 const route = useRoute();
 
-function formSlug(route: string | string[]): string {
+function stepSlug(route: string | string[]): string {
     return Array.isArray(route) ? route[0] : route;
 }
 </script>
@@ -113,7 +113,7 @@ function formSlug(route: string | string[]): string {
             <SharedFormWrapper
                 v-if="form"
                 :form="form"
-                :current-form-slug="formSlug(route.params.slug)"
+                :current-step-slug="stepSlug(route.params.slug)"
             />
         </div>
     </div>
