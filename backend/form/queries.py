@@ -16,7 +16,6 @@ class FormQueries(ObjectType):
     def resolve_form(root, info: ResolveInfo) -> Optional[MRForm]:
         return (
             MRFormType.get_queryset(MRForm.objects, info)
-            .filter(parent__isnull=True)
             .order_by("-created_at")
             .first()
         )

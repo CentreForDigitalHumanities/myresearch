@@ -8,11 +8,11 @@ import {
     SharedTextQuestion,
     SharedTrueFalseQuestion,
 } from "#components";
-import type { CombinedForm } from "./FormWrapper.vue";
+import type { CombinedStep } from "./FormWrapper.vue";
 import type { Component } from "vue";
 
 interface Props {
-    form: CombinedForm;
+    form: CombinedStep;
 }
 defineProps<Props>();
 

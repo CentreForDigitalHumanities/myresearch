@@ -4,11 +4,11 @@ import { BSButton } from "cdh-vue-lib";
 import FormStepper, { type FormStepperConfig } from "./FormStepper.vue";
 import { type GetFormQuery } from "~/generated/gql/graphql";
 
-export type TopLevelForm = NonNullable<GetFormQuery["form"]>;
-export type Subform = NonNullable<TopLevelForm["subforms"][number]>;
-export type NestedSubform = NonNullable<Subform["subforms"][number]>;
+export type QueriedForm = NonNullable<GetFormQuery["form"]>;
+export type Step = NonNullable<QueriedForm["steps"][number]>;
+export type Substep = NonNullable<Step["substeps"][number]>;
 
-export type CombinedForm = TopLevelForm | Subform | NestedSubform;
+export type CombinedStep = Step | Substep;
 
 interface Props {
     form: NonNullable<GetFormQuery["form"]>;
@@ -25,19 +25,19 @@ const formStepperConfig = computed<FormStepperConfig>(() => {
     return {
         titleNl: topLevelForm.nameNl ?? "",
         titleEn: topLevelForm.nameEn ?? "",
-        steps: topLevelForm.subforms.map((form) => ({
-            slug: form.slug,
-            labelNl: form.nameNl ?? "",
-            labelEn: form.nameEn ?? "",
+        steps: topLevelForm.steps.map((step) => ({
+            slug: step.slug,
+            labelNl: step.nameNl ?? "",
+            labelEn: step.nameEn ?? "",
             completed: false,
-            active: form.slug === selectedFormSlug,
+            active: step.slug === selectedFormSlug,
             disabled: false,
-            children: form.subforms.map((subform) => ({
-                slug: subform.slug,
-                labelNl: subform.nameNl ?? "",
-                labelEn: subform.nameEn ?? "",
+            children: step.substeps.map((substep) => ({
+                slug: substep.slug,
+                labelNl: substep.nameNl ?? "",
+                labelEn: substep.nameEn ?? "",
                 completed: false,
-                active: subform.slug === selectedFormSlug,
+                active: substep.slug === selectedFormSlug,
                 disabled: false,
                 // Let's only go 2 levels deep for now.
                 children: [],
@@ -46,70 +46,70 @@ const formStepperConfig = computed<FormStepperConfig>(() => {
     };
 });
 
-const allForms = computed(() => getAllForms(props.form));
-const selectedForm = computed(() => {
-    const forms = allForms.value;
-    if (forms.length <= 0) {
+const allSteps = computed(() => getAllSteps(props.form));
+const selectedStep = computed(() => {
+    const steps = allSteps.value;
+    if (steps.length <= 0) {
         return null;
     }
-    return forms.find(({ slug }) => slug === props.currentFormSlug) ?? null;
+    return steps.find(({ slug }) => slug === props.currentFormSlug) ?? null;
 });
 
-function getAllForms(form: CombinedForm) {
-    const collectedForms = [form];
-    if ("subforms" in form) {
-        form.subforms.forEach((subform) => {
-            collectedForms.push(...getAllForms(subform));
-        });
-    }
-    return collectedForms;
+function getAllSteps(form: QueriedForm): CombinedStep[] {
+    const collectedSteps: CombinedStep[] = form.steps;
+    form.steps.forEach((step) => {
+        if ("substeps" in step) {
+            collectedSteps.push(...step.substeps);
+        }
+    });
+    return collectedSteps;
 }
 
-function findCurrentFormIndex(): number {
-    const selectedFormValue = selectedForm.value;
-    if (!selectedFormValue) {
+function findCurrentStepIndex(): number {
+    const selectedStepValue = selectedStep.value;
+    if (!selectedStepValue) {
         return -1;
     }
 
-    const forms = allForms.value;
-    return forms.findIndex((form) => form.slug === selectedFormValue.slug);
+    const steps = allSteps.value;
+    return steps.findIndex((step) => step.slug === selectedStepValue.slug);
 }
 
-function getNextFormSlug(): string {
-    if (!selectedForm.value) {
+function getNextStepSlug(): string {
+    if (!selectedStep.value) {
         return props.currentFormSlug;
     }
 
-    const forms = allForms.value;
-    const currentIndex = findCurrentFormIndex();
+    const steps = allSteps.value;
+    const currentIndex = findCurrentStepIndex();
 
-    if (currentIndex === -1 || currentIndex >= forms.length - 1) {
-        // Already at the last form or form not found.
+    if (currentIndex === -1 || currentIndex >= steps.length - 1) {
+        // Already at the last step or step not found.
         return props.currentFormSlug;
     }
 
-    return forms[currentIndex + 1].slug;
+    return steps[currentIndex + 1].slug;
 }
 
-function getPreviousFormSlug(): string {
-    if (!selectedForm.value) {
+function getPreviousStepSlug(): string {
+    if (!selectedStep.value) {
         return props.currentFormSlug;
     }
 
-    const forms = allForms.value;
-    const currentIndex = findCurrentFormIndex();
+    const steps = allSteps.value;
+    const currentIndex = findCurrentStepIndex();
 
     if (currentIndex <= 0) {
-        // Already at the first form or form not found.
+        // Already at the first step or step not found.
         return props.currentFormSlug;
     }
 
-    return forms[currentIndex - 1].slug;
+    return steps[currentIndex - 1].slug;
 }
 </script>
 
 <template>
-    <div v-if="selectedForm" class="col-12 d-flex">
+    <div v-if="selectedStep" class="col-12 d-flex">
         <FormStepper
             class="col-3 d-lg-block d-none pe-2"
             :stepper-config="formStepperConfig"
@@ -117,13 +117,13 @@ function getPreviousFormSlug(): string {
         />
         <div class="col-12 col-lg-9">
             <form class="uu-form">
-                <SharedMRForm :form="selectedForm" />
+                <SharedMRForm :form="selectedStep" />
             </form>
             <div class="btn-group">
                 <NuxtLink
                     :to="{
                         name: 'procreg-slug',
-                        params: { slug: getPreviousFormSlug() },
+                        params: { slug: getPreviousStepSlug() },
                     }"
                 >
                     <BSButton variant="primary" class="btn-arrow-left">
@@ -133,7 +133,7 @@ function getPreviousFormSlug(): string {
                 <NuxtLink
                     :to="{
                         name: 'procreg-slug',
-                        params: { slug: getNextFormSlug() },
+                        params: { slug: getNextStepSlug() },
                     }"
                 >
                     <BSButton variant="primary" class="btn-arrow-right">

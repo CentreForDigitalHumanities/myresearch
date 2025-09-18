@@ -10,13 +10,19 @@ const GET_FIRST_SLUG = graphql(`
     query GetFirstSlug {
         form {
             id
-            slug
+            steps {
+                id
+                slug
+            }
         }
     }
 `);
 
 const { result } = useQuery<GetFirstSlugQuery>(GET_FIRST_SLUG);
-const slug = computed<string | null>(() => result.value?.form?.slug ?? null);
+const slug = computed<string | null>(() => {
+    const firstStep = result.value?.form?.steps[0];
+    return firstStep?.slug || null;
+});
 </script>
 
 <template>

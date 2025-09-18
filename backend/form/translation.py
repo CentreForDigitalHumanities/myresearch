@@ -4,11 +4,12 @@ from .models import (
     BaseQuestion,
     DateQuestion,
     FileUploadQuestion,
-    FormInfoText,
+    StepInfoText,
     MRForm,
+    Step,
     NumberQuestion,
     SelectOption,
-    FormInfoQuestion,
+    StepInfoQuestion,
     TextQuestion,
     SelectQuestion,
     TrueFalseQuestion,
@@ -16,16 +17,21 @@ from .models import (
 
 
 @register(MRForm)
-class FormTranslationOptions(TranslationOptions):
+class MRFormTranslationOptions(TranslationOptions):
+    fields = ["name"]
+
+
+@register(Step)
+class StepTranslationOptions(TranslationOptions):
     fields = ["name", "description"]
 
 
-@register(FormInfoQuestion)
+@register(StepInfoQuestion)
 class FormInfoQuestionTranslationOptions(TranslationOptions):
     fields = ["text"]
 
 
-@register(FormInfoText)
+@register(StepInfoText)
 class FormInfoTextTranslationOptions(TranslationOptions):
     fields = ["text"]
 

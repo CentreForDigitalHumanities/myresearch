@@ -8,43 +8,9 @@ const GET_FORM = graphql(`
     query GetForm {
         form {
             id
-            slug
             nameEn
             nameNl
-            descriptionEn
-            descriptionNl
-            ...FormInfoFragment
-            questions {
-                id
-                textEn
-                textNl
-                descriptionEn
-                descriptionNl
-                required
-                ... on SelectQuestionType {
-                    options {
-                        id
-                        labelNl
-                        labelEn
-                        defaultSelected
-                    }
-                }
-                ... on NumberQuestionType {
-                    positiveOnly
-                }
-                ... on TrueFalseQuestionType {
-                    defaultValue
-                }
-                ... on FileUploadQuestionType {
-                    sizeLimit
-                }
-                ... on TextQuestionType {
-                    placeholderNl
-                    placeholderEn
-                    lines
-                }
-            }
-            subforms {
+            steps {
                 id
                 slug
                 nameEn
@@ -82,7 +48,7 @@ const GET_FORM = graphql(`
                         lines
                     }
                 }
-                subforms {
+                substeps {
                     id
                     slug
                     nameEn

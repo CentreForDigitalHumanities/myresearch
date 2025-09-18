@@ -2,7 +2,7 @@
 import { graphql, useFragment, type FragmentType } from "~/generated/gql";
 
 const FormInfoFragment = graphql(`
-    fragment FormInfoFragment on MRFormType {
+    fragment FormInfoFragment on StepType {
         infoQuestions {
             id
             textNl

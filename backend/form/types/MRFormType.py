@@ -1,35 +1,13 @@
-from graphene import List, NonNull, ResolveInfo
+from graphene import ResolveInfo
 from graphene_django import DjangoObjectType
 
-from django.db.models import QuerySet, Model
+from django.db.models import QuerySet
 
-from form.models import (
-    BaseQuestion,
-    DateQuestion,
-    FileUploadQuestion,
-    FormInfoText,
-    FormInfoQuestion,
-    MRForm,
-    NumberQuestion,
-    SelectQuestion,
-    TextQuestion,
-    TrueFalseQuestion,
-)
-from form.types.QuestionType import (
-    BaseQuestionInterface,
-    DateQuestionType,
-    FileUploadQuestionType,
-    NumberQuestionType,
-    SelectQuestionType,
-    TextQuestionType,
-    TrueFalseQuestionType,
-)
-from form.types.FormInfoTextType import FormInfoTextType
-from form.types.FormInfoQuestionType import FormInfoQuestionType
+from form.types.StepType import StepType
+from form.models import MRForm, Step
 
 
 class MRFormType(DjangoObjectType):
-    questions = List(NonNull(BaseQuestionInterface), required=True)
 
     class Meta:
         model = MRForm
@@ -37,17 +15,9 @@ class MRFormType(DjangoObjectType):
             "id",
             "name_nl",
             "name_en",
-            "description_nl",
-            "description_en",
-            "slug",
-            "version",
             "created_at",
             "updated_at",
-            "parent",
-            "subforms",
-            "info_questions",
-            "info_texts",
-            "questions",
+            "steps",
         ]
 
     @classmethod
@@ -57,35 +27,5 @@ class MRFormType(DjangoObjectType):
         return queryset
 
     @staticmethod
-    def resolve_info_texts(parent: MRForm, info: ResolveInfo) -> QuerySet[FormInfoText]:
-        return FormInfoTextType.get_queryset(FormInfoText.objects, info).filter(
-            form=parent
-        )
-
-    @staticmethod
-    def resolve_info_questions(
-        parent: MRForm, info: ResolveInfo
-    ) -> QuerySet[FormInfoQuestion]:
-        return FormInfoQuestionType.get_queryset(FormInfoQuestion.objects, info).filter(
-            form=parent
-        )
-
-    @staticmethod
-    def resolve_questions(parent: MRForm, info: ResolveInfo) -> list[BaseQuestion]:
-        question_types: list[tuple[type[DjangoObjectType], type[Model]]] = [
-            (TrueFalseQuestionType, TrueFalseQuestion),
-            (DateQuestionType, DateQuestion),
-            (FileUploadQuestionType, FileUploadQuestion),
-            (NumberQuestionType, NumberQuestion),
-            (SelectQuestionType, SelectQuestion),
-            (TextQuestionType, TextQuestion),
-        ]
-
-        questions: list[BaseQuestion] = []
-        for question_type, question_model in question_types:
-            question_queryset = question_type.get_queryset(
-                question_model.objects, info
-            ).filter(form=parent)
-            questions.extend(question_queryset)
-
-        return questions
+    def resolve_steps(parent: MRForm, info: ResolveInfo) -> QuerySet[Step]:
+        return StepType.get_queryset(Step.objects, info).filter(form=parent)

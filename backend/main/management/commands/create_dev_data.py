@@ -11,8 +11,9 @@ from main.models import User
 from form.models import (
     BaseQuestion,
     MRForm,
-    FormInfoText,
-    FormInfoQuestion,
+    Step,
+    StepInfoText,
+    StepInfoQuestion,
     FileUploadQuestion,
     NumberQuestion,
     DateQuestion,
@@ -22,20 +23,20 @@ from form.models import (
     TrueFalseQuestion,
 )
 
-# Min/max number of subforms for the top-level form.
-MIN_FORMS_IN_ROOT_FORM = 3
-MAX_FORMS_IN_ROOT_FORM = 5
+# Min/max number of steps for the (top-level) form.
+MIN_STEPS_IN_ROOT_FORM = 3
+MAX_STEPS_IN_ROOT_FORM = 5
 
-# Min/max number of subforms in a subform.
-MIN_FORMS_IN_SUBFORM = 0
-MAX_FORMS_IN_SUBFORM = 5
+# Min/max number of substeps in a step.
+MIN_SUBSTEPS_IN_STEP = 0
+MAX_SUBSTEPS_IN_STEP = 5
 
-# Min/max number of questions per form.
-MIN_QUESTIONS_IN_FORM = 1
-MAX_QUESTIONS_IN_FORM = 5
+# Min/max number of questions per step.
+MIN_QUESTIONS_IN_STEP = 1
+MAX_QUESTIONS_IN_STEP = 5
 
-# Limits nested subforms to avoid infinite recursion.
-MAX_SUBFORM_DEPTH = 3
+# Limits nested steps to avoid infinite recursion.
+MAX_STEP_DEPTH = 3
 
 
 ALL_QUESTIONS = ["select", "text", "true_false", "date", "number", "file_upload"]
@@ -53,6 +54,7 @@ class Command(BaseCommand):
     dev_data_models = [
         User,
         MRForm,
+        Step,
         DateQuestion,
         FileUploadQuestion,
         NumberQuestion,
@@ -60,8 +62,8 @@ class Command(BaseCommand):
         SelectQuestion,
         TextQuestion,
         TrueFalseQuestion,
-        FormInfoText,
-        FormInfoQuestion,
+        StepInfoText,
+        StepInfoQuestion,
         BaseQuestion,
     ]
 
@@ -84,87 +86,90 @@ class Command(BaseCommand):
         self._create_test_users(options)
 
         with transaction.atomic():
-            form = self._generate_root_form(options)
-            self._generate_forms(options, form, 0)
+            form = self._generate_form(options)
+            self._generate_steps(options, form)
             self._generate_questions(options, form)
 
-    def _generate_root_form(self, options) -> MRForm:
+    def _generate_form(self, options) -> MRForm:
         """
-        Generate a root/top-level MRForm.
+        Generate a root MRForm with top-level steps.
         """
 
-        print("Generating root/top-level form...")
+        print("Generating root form with top-level steps...")
 
         form = MRForm.objects.create(
             name_nl=self.faker_nl.sentence(nb_words=5),
             name_en=self.faker_en.sentence(nb_words=5),
-            description_nl=self.faker_nl.paragraph(),
-            description_en=self.faker_en.paragraph(),
-            slug=self.faker.unique.slug(),
-            version="1.0",
         )
 
         print("Done!")
 
         return form
 
-    def _generate_forms(self, options, form: MRForm, depth: int) -> None:
+    def _generate_steps(self, options, form: MRForm) -> None:
         """
-        Generate a root form and its subforms recursively, up to a certain depth.
+        Generate steps and substeps, up to a certain depth.
         """
-        if depth >= MAX_SUBFORM_DEPTH:
-            return
 
-        if depth == 0:
-            num_subforms = self.faker.random_int(
-                MIN_FORMS_IN_ROOT_FORM, MAX_FORMS_IN_ROOT_FORM
-            )
-        else:
-            num_subforms = self.faker.random_int(
-                MIN_FORMS_IN_SUBFORM, MAX_FORMS_IN_SUBFORM
+        def _generate_substeps(step: Step, depth: int) -> None:
+            """
+            Generate substeps recursively for a given step, up to a certain depth.
+            """
+
+            if depth >= MAX_STEP_DEPTH:
+                return
+
+            num_substeps = self.faker.random_int(
+                MIN_SUBSTEPS_IN_STEP, MAX_SUBSTEPS_IN_STEP
             )
 
-        for _ in tqdm(
-            range(num_subforms),
-            desc=f"Generating subforms for form {form.name[:10]} (depth: {depth})",
-        ):
-            subform = MRForm.objects.create(
-                parent=form,
+            for _ in tqdm(
+                range(num_substeps),
+                desc=f"Generating substeps for step {step.name[:10]} (depth: {depth})",
+            ):
+                substep = Step.objects.create(
+                    parent=step,
+                    form=None,
+                    name_nl=self.faker_nl.sentence(nb_words=5),
+                    name_en=self.faker_en.sentence(nb_words=5),
+                    description_nl=self.faker_nl.paragraph(),
+                    description_en=self.faker_en.paragraph(),
+                    slug=self.faker.unique.slug(),
+                )
+
+                _generate_substeps(substep, depth + 1)
+
+        # Generate top-level steps for the form.
+        num_steps = self.faker.random_int(
+            MIN_STEPS_IN_ROOT_FORM, MAX_STEPS_IN_ROOT_FORM
+        )
+
+        for _ in tqdm(range(num_steps), desc="Generating top-level steps..."):
+            step = Step.objects.create(
+                form=form,
                 name_nl=self.faker_nl.sentence(nb_words=5),
                 name_en=self.faker_en.sentence(nb_words=5),
                 description_nl=self.faker_nl.paragraph(),
                 description_en=self.faker_en.paragraph(),
                 slug=self.faker.unique.slug(),
-                version=form.version,
             )
+            _generate_substeps(step, 1)
 
-            forms_in_subform = self.faker.random_int(
-                MIN_FORMS_IN_SUBFORM, MAX_FORMS_IN_SUBFORM
-            )
-
-            if self.faker.pybool():
-                # Generate step info.
-                self._create_form_info(subform)
-
-            self._generate_forms(options, subform, depth + 1)
-
-    def _create_form_info(self, form: MRForm) -> None:
-        """Generates form information for a given form."""
+    def _create_step_info(self, step: Step) -> None:
+        """Generates side information for a given step."""
 
         def generate_form_info_text() -> None:
-            """Generates 1-3 pieces of FormInfoText for a given form."""
             for _ in range(self.faker.random_int(1, 3)):
-                FormInfoText.objects.create(
-                    form=form,
+                StepInfoText.objects.create(
+                    step=step,
                     text_nl=self.faker_nl.paragraph(),
                     text_en=self.faker_en.paragraph(),
                 )
 
         def generate_form_info_questions() -> None:
-            """Generates 1-3 pieces of FormInfoQuestion for a given form."""
             for _ in range(self.faker.random_int(1, 3)):
-                FormInfoQuestion.objects.create(
-                    form=form,
+                StepInfoQuestion.objects.create(
+                    step=step,
                     text_nl=self.faker_nl.sentence(),
                     text_en=self.faker_en.sentence(),
                     link=self.faker.url(),
@@ -181,17 +186,17 @@ class Command(BaseCommand):
             generate_form_info_questions()
 
     def _generate_questions(self, options, form: MRForm) -> None:
-        def _base_question_fields(form: MRForm, order: int) -> dict:
+        def _base_question_fields(step: Step, order: int) -> dict:
             return {
                 "text_nl": self.faker_nl.sentence().replace(".", "?"),
                 "text_en": self.faker_en.sentence().replace(".", "?"),
-                "form": form,
+                "step": step,
                 "description_nl": self.faker_nl.paragraph(),
                 "description_en": self.faker_en.paragraph(),
                 "required": self.faker.pybool(),
             }
 
-        def _create_select_question(form: MRForm, index: int) -> None:
+        def _create_select_question(form: Step, index: int) -> None:
             select_question = SelectQuestion.objects.create(
                 **_base_question_fields(form, index),
                 multiple=self.faker.pybool(),
@@ -204,7 +209,7 @@ class Command(BaseCommand):
                     question=select_question,
                 )
 
-        def _create_text_question(form: MRForm, index: int) -> None:
+        def _create_text_question(form: Step, index: int) -> None:
             TextQuestion.objects.create(
                 **_base_question_fields(form, index),
                 placeholder_nl=self.faker_nl.sentence(),
@@ -212,40 +217,52 @@ class Command(BaseCommand):
                 lines=self.faker.random_int(1, 5),
             )
 
-        def _create_true_false_question(form: MRForm, index: int) -> None:
+        def _create_true_false_question(form: Step, index: int) -> None:
             TrueFalseQuestion.objects.create(
                 **_base_question_fields(form, index), default_value=self.faker.pybool()
             )
 
-        def _create_date_question(form: MRForm, index: int) -> None:
+        def _create_date_question(form: Step, index: int) -> None:
             DateQuestion.objects.create(
                 **_base_question_fields(form, index), future_only=self.faker.pybool()
             )
 
-        def _create_number_question(form: MRForm, index: int) -> None:
+        def _create_number_question(form: Step, index: int) -> None:
             NumberQuestion.objects.create(
                 **_base_question_fields(form, index), positive_only=self.faker.pybool()
             )
 
-        def _create_file_upload_question(form: MRForm, index: int) -> None:
+        def _create_file_upload_question(form: Step, index: int) -> None:
             FileUploadQuestion.objects.create(
                 **_base_question_fields(form, index), size_limit=1024
             )
 
-        def _get_all_subforms(current_form: MRForm) -> list[MRForm]:
-            """Recursively gather all subforms of a given form."""
-            all_subforms: list[MRForm] = []
-            subforms = MRForm.objects.filter(parent=current_form)
-            for subform in subforms:
-                all_subforms.append(subform)
-                all_subforms.extend(_get_all_subforms(subform))
-            return all_subforms
+        def _get_all_steps(form: MRForm) -> list[Step]:
+            """Recursively gather all steps and substeps of a given form."""
 
-        all_forms = _get_all_subforms(form)
+            def _get_all_substeps(step: Step) -> list[Step]:
+                """Recursively gather all substeps of a given step."""
+                all_substeps: list[Step] = []
+                substeps = Step.objects.filter(parent=step)
+                for substep in substeps:
+                    all_substeps.append(substep)
+                    all_substeps.extend(_get_all_substeps(substep))
+                return all_substeps
 
-        for step in tqdm(all_forms, desc="Generating questions..."):
+            all_steps: list[Step] = []
+
+            steps = Step.objects.filter(form=form)
+            for step in steps:
+                all_steps.append(step)
+                all_steps.extend(_get_all_substeps(step))
+
+            return all_steps
+
+        all_steps = _get_all_steps(form)
+
+        for step in tqdm(all_steps, desc="Generating questions..."):
             number_of_questions = self.faker.random_int(
-                MIN_QUESTIONS_IN_FORM, MAX_QUESTIONS_IN_FORM
+                MIN_QUESTIONS_IN_STEP, MAX_QUESTIONS_IN_STEP
             )
             for question_index in range(number_of_questions):
                 question_type = self.faker.random_element(ALL_QUESTIONS)

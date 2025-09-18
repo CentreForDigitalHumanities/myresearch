@@ -1,5 +1,6 @@
 from graphene import Schema, ObjectType
 
+from form.types import StepType
 from form.types.QuestionType import (
     QuestionType,
     BaseQuestionInterface,
