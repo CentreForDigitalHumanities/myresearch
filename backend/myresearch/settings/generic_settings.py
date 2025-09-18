@@ -16,38 +16,32 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-s8e=1!*6dzct5!vn$0%qdc!x4$_vhd895g0a1#e$_v+oqbvvyq"
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
-
-
 # Application definition
 
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    # Main local app
+LOCAL_APPS = [
     "main",
-    # Cors headers
-    "corsheaders",
-    # GraphQL
-    "graphene_django",
 ]
+
+INSTALLED_APPS = (
+    [
+        "django.contrib.admin",
+        "django.contrib.auth",
+        "django.contrib.contenttypes",
+        "django.contrib.sessions",
+        "django.contrib.messages",
+        "django.contrib.staticfiles",
+    ]
+    + LOCAL_APPS
+    + [
+        # Cors headers
+        "corsheaders",
+        # GraphQL
+        "graphene_django",
+    ]
+)
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -62,8 +56,6 @@ MIDDLEWARE = [
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
-
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
 
 ROOT_URLCONF = "myresearch.urls"
 
@@ -134,7 +126,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "backend/static/"
+STATIC_ROOT = "/var/www/backend-static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -150,9 +143,3 @@ AUTH_USER_MODEL = "main.User"
 GRAPHENE = {
     "SCHEMA": "api.graphql.schema.schema",
 }
-
-try:
-    # Import local settings if present
-    from .local_settings import *
-except ImportError:
-    pass

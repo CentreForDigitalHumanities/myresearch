@@ -5,7 +5,7 @@ const title = useAppConfig().globalTitle;
 <template>
     <div class="uu-root-container">
         <Head>
-            <Title>MyResearch</Title>
+            <Title>{{ title }}</Title>
         </Head>
         <LayoutPageHeader />
         <LayoutNavBar />

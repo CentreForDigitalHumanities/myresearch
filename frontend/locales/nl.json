@@ -10,6 +10,7 @@
   "What is MyResearch?": "Wat is MyResearch?",
   "Roadmap": "Wegwijzer",
   "Processing registry": "Verwerkingsregister",
+  "Processing Registry": "Verwerkingsregister",
   "Ethical commission": "Ethische commissie",
   "Recent Activity": "Recente Activiteit",
   "Frequent questions": "Veelgestelde vragen",
@@ -56,5 +57,9 @@
   "Type" : "Type",
   "Last edited": "Laatst bijgewerkt",
   "View Conclusion": "Conclusie bekijken",
-  "Steps completed": "Stappen voltooid"
+  "Steps completed": "Stappen voltooid",
+  "Questions?": "Vragen?",
+  "Additional Information": "Aanvullende informatie",
+  "Previous": "Vorige",
+  "Next": "Volgende"
 }

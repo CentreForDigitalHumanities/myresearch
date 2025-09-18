@@ -3,54 +3,83 @@ import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
 import pluginVue from "eslint-plugin-vue";
 import prettier from "eslint-plugin-prettier/recommended";
-import vueConfigTypescript, {
-  defineConfigWithVueTs,
-} from "@vue/eslint-config-typescript";
-import vueConfigPrettier from "@vue/eslint-config-prettier";
+import { defineConfigWithVueTs } from "@vue/eslint-config-typescript";
 
 export default defineConfigWithVueTs([
-  {
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-      },
+    {
+        languageOptions: {
+            globals: {
+                ...globals.browser,
+                ...globals.node,
+            },
+        },
     },
-  },
-  // js
-  pluginJs.configs.recommended,
-  {
-    rules: {
-      "no-unused-vars": "warn",
+    // js
+    pluginJs.configs.recommended,
+    {
+        rules: {
+            "no-unused-vars": "warn",
+            // TypeScript already handles this, and ESLint does not know about
+            // built-in / globally defined variables.
+            "no-undef": "off",
+        },
     },
-  },
-  // ts
-  ...tseslint.configs.recommended,
-  ...tseslint.configs["strictTypeChecked"],
-  {
-    rules: {
-      "@typescript-eslint/no-unused-vars": "warn",
-      "@typescript-eslint/no-explicit-any": "error",
+    // ts
+    ...tseslint.configs.recommended,
+    ...tseslint.configs["strictTypeChecked"],
+    {
+        languageOptions: {
+            parserOptions: {
+                projectService: true,
+                tsconfigRootDir: import.meta.dirname,
+            },
+        },
+        rules: {
+            "@typescript-eslint/no-unused-vars": "warn",
+            "@typescript-eslint/no-explicit-any": "error",
+            "@typescript-eslint/no-unnecessary-type-parameters": "warn",
+        },
     },
-  },
-  // vue
-  ...pluginVue.configs["flat/essential"],
-  ...pluginVue.configs["flat/strongly-recommended"],
-  ...pluginVue.configs["flat/recommended"],
-  {
-    files: ["*.vue", "**/*.vue"],
-    languageOptions: {
-      parserOptions: {
-        ecmaVersion: "latest",
-        sourceType: "module",
-        parser: tseslint.parser,
-        extraFileExtensions: [".vue"],
-      },
+    // vue
+    ...pluginVue.configs["flat/essential"],
+    ...pluginVue.configs["flat/strongly-recommended"],
+    ...pluginVue.configs["flat/recommended"],
+    {
+        files: ["*.vue", "**/*.vue"],
+        languageOptions: {
+            parserOptions: {
+                ecmaVersion: "latest",
+                sourceType: "module",
+                parser: tseslint.parser,
+                extraFileExtensions: [".vue"],
+            },
+        },
+        rules: {
+            "vue/multi-word-component-names": [
+                "warn",
+                {
+                    // Allow single-word component names in Nuxt file names.
+                    ignores: ["index", "default", "error"],
+                },
+            ],
+            "vue/no-unused-vars": "warn",
+        },
     },
-  },
-  {
-    ignores: ["node_modules", ".nuxt", ".output", "dist"],
-  },
-  // prettier
-  prettier,
+    {
+        ignores: ["node_modules", ".nuxt", ".output", "dist"],
+    },
+    // prettier
+    prettier,
+    {
+        rules: {
+            ...prettier.rules,
+            "prettier/prettier": [
+                "warn",
+                {
+                    endOfLine: "lf", // Warn on CRLF line endings
+                    tabWidth: 4, // Use 4 spaces for indentation
+                },
+            ],
+        },
+    },
 ]);
