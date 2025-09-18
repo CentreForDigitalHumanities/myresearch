@@ -1,10 +1,16 @@
 <script lang="ts" setup>
-import type { DateQuestionType } from "~/generated/gql/graphql";
+import type { FileUploadQuestionType } from "~/generated/gql/graphql";
 
 interface Props {
     question: Pick<
-        DateQuestionType,
-        "id" | "textNl" | "textEn" | "descriptionNl" | "descriptionEn"
+        FileUploadQuestionType,
+        | "id"
+        | "textNl"
+        | "textEn"
+        | "descriptionNl"
+        | "descriptionEn"
+        // Not currently enforced.
+        | "sizeLimit"
     >;
 }
 
@@ -22,6 +28,6 @@ defineProps<Props>();
         >
             {{ useTranslateableAttribute(question, "description") }}
         </p>
-        <input :id="question.id" type="date" class="form-control" />
+        <input :id="question.id" type="file" class="form-control" />
     </div>
 </template>
