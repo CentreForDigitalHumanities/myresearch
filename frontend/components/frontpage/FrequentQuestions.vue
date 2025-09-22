@@ -3,6 +3,7 @@ import {
     type AnswerPart,
     type LinkData,
     type MockQuestionKey,
+    type ImageData,
     mockQuestions,
 } from "~/shared/mockData";
 
@@ -15,8 +16,11 @@ const props = defineProps<Props>();
 const questionAnswers: Record<string, AnswerPart[]> =
     mockQuestions[props.questionsGroup];
 
-const isLinkData = (obj: LinkData | string): obj is LinkData => {
+const isLinkData = (obj: LinkData | string | ImageData): obj is LinkData => {
     return obj.hasOwnProperty("url");
+};
+const isImageData = (obj: LinkData | string | ImageData): obj is ImageData => {
+    return obj.hasOwnProperty("imageUrl");
 };
 </script>
 
@@ -61,6 +65,14 @@ const isLinkData = (obj: LinkData | string): obj is LinkData => {
                                         <!-- still untranslated, something with slot can help? -->
                                         {{ $t(answerPart.text) }}
                                     </NuxtLink>
+                                </template>
+                                <template v-else-if="isImageData(answerPart)">
+                                    <img
+                                        :src="answerPart.imageUrl"
+                                        :alt="answerPart.altText"
+                                        :height="answerPart.pixelHeight"
+                                    />
+                                    <!--mw is still 100 here -->
                                 </template>
                                 <template v-else>
                                     {{ $t(answerPart) }}

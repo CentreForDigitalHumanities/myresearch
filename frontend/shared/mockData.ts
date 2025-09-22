@@ -7,7 +7,12 @@ export type LinkData = {
     text: string;
     url: string;
 };
-export type AnswerPart = string | LinkData;
+export type ImageData = {
+    imageUrl: string;
+    altText: string;
+    pixelHeight: number;
+};
+export type AnswerPart = string | LinkData | ImageData;
 type MockQuestions = Record<MockQuestionKey, Record<string, AnswerPart[]>>;
 export const mockQuestions: MockQuestions = {
     processingRegistry: {
@@ -37,6 +42,12 @@ export const mockQuestions: MockQuestions = {
         "When will the Ethical Commission be added to to My Research?": [
             "After an estimated 2000 cups of coffee.",
         ],
-        "Why am I looking at a picture of a cat?": ["https://cataas.com/cat"],
+        "Why am I looking at a picture of a cat?": [
+            {
+                imageUrl: "https://cataas.com/cat",
+                altText: "My cat is gone",
+                pixelHeight: 300,
+            },
+        ],
     },
 };
