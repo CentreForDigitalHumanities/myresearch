@@ -10,7 +10,6 @@ export type LinkData = {
 export type ImageData = {
     imageUrl: string;
     altText: string;
-    pixelHeight: number;
 };
 export type AnswerPart = string | LinkData | ImageData;
 type MockQuestions = Record<MockQuestionKey, Record<string, AnswerPart[]>>;
@@ -25,7 +24,7 @@ export const mockQuestions: MockQuestions = {
         "Where can i find the documents I have to deliver?": [
             "During the application it may be possible that you need submit certain documents. Use the most recent model documents.",
             {
-                text: "Model Documents",
+                text: "Model documents",
                 url: "https://intranet.uu.nl/en/documents-ethics-assessment-committee-humanities",
             },
             "You can also find the links to the documents during the application itself.",
@@ -46,7 +45,6 @@ export const mockQuestions: MockQuestions = {
             {
                 imageUrl: "https://cataas.com/cat",
                 altText: "My cat is gone",
-                pixelHeight: 300,
             },
         ],
     },

@@ -83,19 +83,19 @@ const isRoadmap = (obj: Proposal | Roadmap): obj is Roadmap => {
                             :src="pencil"
                             alt="pencil.png"
                         />
-                        <span v-if="activity.status == 'DRAFT'"
+                        <template v-if="activity.status == 'DRAFT'"
                             ><Pencil class="icon"
-                        /></span>
+                        /></template>
                         <img
                             v-if="activity.status == 'SUBMITTED_TO_SUPERVISOR'"
                             class="icon"
                             :src="scale"
                             alt="scale.png"
                         />
-                        <span
+                        <template
                             v-if="activity.status == 'SUBMITTED_TO_SUPERVISOR'"
                             ><Scale class="icon"
-                        /></span>
+                        /></template>
                         {{ activity.status }}
                     </div>
                     <div class="mw-100">

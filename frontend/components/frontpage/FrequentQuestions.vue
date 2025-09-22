@@ -6,6 +6,7 @@ import {
     type ImageData,
     mockQuestions,
 } from "~/shared/mockData";
+import { Scale } from "lucide-vue-next";
 
 interface Props {
     questionsGroup: MockQuestionKey;
@@ -61,16 +62,17 @@ const isImageData = (obj: LinkData | string | ImageData): obj is ImageData => {
                                 :key="answerIndex"
                             >
                                 <template v-if="isLinkData(answerPart)">
-                                    <NuxtLink :to="answerPart.url">
-                                        <!-- still untranslated, something with slot can help? -->
+                                    <a
+                                        :href="$t(answerPart.url)"
+                                        target="_blank"
+                                    >
                                         {{ $t(answerPart.text) }}
-                                    </NuxtLink>
+                                    </a>
                                 </template>
                                 <template v-else-if="isImageData(answerPart)">
                                     <img
                                         :src="answerPart.imageUrl"
                                         :alt="answerPart.altText"
-                                        :height="answerPart.pixelHeight"
                                     />
                                     <!--mw is still 100 here -->
                                 </template>
