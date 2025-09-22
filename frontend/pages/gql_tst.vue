@@ -26,7 +26,11 @@ const CREATE_USER = graphql(`
         id
         username
       }
-    }
+      errors {
+        messages
+        field
+        }
+    }   
 }`
 )
 

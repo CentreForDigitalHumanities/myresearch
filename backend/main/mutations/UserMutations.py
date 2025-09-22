@@ -4,6 +4,8 @@ from graphene_django.types import ErrorType
 from main.types.UserType import UserType
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User, AnonymousUser
+from django.core.validators import EmailValidator
+from django.core.exceptions import ValidationError
 
 
 class CreateUser(Mutation):
@@ -20,7 +22,23 @@ class CreateUser(Mutation):
 
         current_user: User | AnonymousUser | None = info.context.user
         if not current_user.is_superuser:
-            return cls(errors=["User is not authorised to create other users."])
+            error = ErrorType(
+                field="",
+                messages=["You are not authorized to create users"]
+            )
+            return cls(errors=[error])
+        
+        #Validate that the email adress is correct:
+        email_validator = EmailValidator()
+
+        try:
+            email_validator(email)
+        except ValidationError:
+            error = ErrorType(
+                field="email",
+                messages=["Enter a valid email adress."]
+            )
+            return cls(errors=[error])
 
         user = get_user_model()(username=username, email=email)
         user.save()
@@ -44,12 +62,28 @@ class UpdateUser(Mutation):
 
         current_user: User | AnonymousUser | None = info.context.user
         if not current_user.is_superuser:
-            return cls(errors=["User is not authorised to create other users."])
+            error = ErrorType(
+                field="",
+                messages=["You are not authorized to create users"]
+            )
+            return cls(errors=[error])
 
         if user is None:
             error = ErrorType(
                 field="id",
                 messages=["User not found."],
+            )
+            return cls(errors=[error])
+        
+        #Validate that the email adress is correct:
+        email_validator = EmailValidator()
+
+        try:
+            email_validator(email)
+        except ValidationError:
+            error = ErrorType(
+                field="email",
+                messages=["Enter a valid email adress."]
             )
             return cls(errors=[error])
 
@@ -75,7 +109,11 @@ class DeleteUser(Mutation):
 
         current_user: User | AnonymousUser | None = info.context.user
         if not current_user.is_superuser:
-            return cls(errors=["User is not authorised to create other users."])
+            error = ErrorType(
+                field="",
+                messages=["You are not authorized to create users"]
+            )
+            return cls(errors=[error])
 
         user = get_user_model().objects.get(pk=id)
 
