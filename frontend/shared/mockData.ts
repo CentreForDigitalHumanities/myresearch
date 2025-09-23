@@ -11,8 +11,8 @@ export type ImageData = {
     imageUrl: string;
     altText: string;
 };
-export type AnswerPart = string | LinkData | ImageData;
-type MockQuestions = Record<MockQuestionKey, Record<string, AnswerPart[]>>;
+export type Answer = (string | LinkData | ImageData)[];
+type MockQuestions = Record<MockQuestionKey, Record<string, Answer>>;
 export const mockQuestions: MockQuestions = {
     processingRegistry: {
         "What is part of personal data?": [

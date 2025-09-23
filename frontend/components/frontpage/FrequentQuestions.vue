@@ -1,12 +1,11 @@
 <script lang="ts" setup>
 import {
-    type AnswerPart,
+    type Answer,
     type LinkData,
     type MockQuestionKey,
     type ImageData,
     mockQuestions,
 } from "~/shared/mockData";
-import { Scale } from "lucide-vue-next";
 
 interface Props {
     questionsGroup: MockQuestionKey;
@@ -14,7 +13,7 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-const questionAnswers: Record<string, AnswerPart[]> =
+const questionAnswers: Record<string, Answer> =
     mockQuestions[props.questionsGroup];
 
 const isLinkData = (obj: LinkData | string | ImageData): obj is LinkData => {
@@ -32,7 +31,7 @@ const isImageData = (obj: LinkData | string | ImageData): obj is ImageData => {
         </h2>
         <div :id="'accordion' + questionsGroup" class="accordion mw-100">
             <div
-                v-for="(answerParts, question, index) in questionAnswers"
+                v-for="(answer, question, index) in questionAnswers"
                 :key="questionsGroup + index"
                 class="mw-100"
             >
@@ -58,8 +57,13 @@ const isImageData = (obj: LinkData | string | ImageData): obj is ImageData => {
                     >
                         <div class="accordion-body mw-100">
                             <template
-                                v-for="(answerPart, answerIndex) in answerParts"
-                                :key="answerIndex"
+                                v-for="(answerPart, answerIndex) in answer"
+                                :key="
+                                    'collapse' +
+                                    questionsGroup +
+                                    index +
+                                    answerIndex
+                                "
                             >
                                 <template v-if="isLinkData(answerPart)">
                                     <a
@@ -74,7 +78,6 @@ const isImageData = (obj: LinkData | string | ImageData): obj is ImageData => {
                                         :src="answerPart.imageUrl"
                                         :alt="answerPart.altText"
                                     />
-                                    <!--mw is still 100 here -->
                                 </template>
                                 <template v-else>
                                     {{ $t(answerPart) }}

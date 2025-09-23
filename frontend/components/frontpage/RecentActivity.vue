@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import scale from "assets/images/icons/scale.png";
-import pencil from "assets/images/icons/pencil.png";
 import { Scale } from "lucide-vue-next";
 import { Pencil } from "lucide-vue-next";
 
@@ -77,21 +75,9 @@ const isRoadmap = (obj: Proposal | Roadmap): obj is Roadmap => {
                     </div>
                     <div class="mw-100">
                         {{ $t("Status") }}:
-                        <img
-                            v-if="activity.status == 'DRAFT'"
-                            class="icon"
-                            :src="pencil"
-                            alt="pencil.png"
-                        />
                         <template v-if="activity.status == 'DRAFT'"
                             ><Pencil class="icon"
                         /></template>
-                        <img
-                            v-if="activity.status == 'SUBMITTED_TO_SUPERVISOR'"
-                            class="icon"
-                            :src="scale"
-                            alt="scale.png"
-                        />
                         <template
                             v-if="activity.status == 'SUBMITTED_TO_SUPERVISOR'"
                             ><Scale class="icon"
