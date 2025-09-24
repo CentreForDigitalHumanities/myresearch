@@ -1,7 +1,7 @@
 services:
   mr-postgres:
     image: postgres:15
-    container_name: mr-postgres
+    container_name: ${NAME_PREFIX}mr-postgres
     environment:
       - POSTGRES_PASSWORD=postgres
     healthcheck:
@@ -14,7 +14,7 @@ services:
 
   nginx-dev: &nginx-dev
     image: nginx:latest
-    container_name: mr-nginx-dev
+    container_name: ${NAME_PREFIX}mr-nginx-dev
     hostname: mr-nginx
     restart: unless-stopped
     profiles: ["dev"]
@@ -28,7 +28,7 @@ services:
 
   nginx-prod:
     <<: *nginx-dev
-    container_name: mr-nginx-prod
+    container_name: ${NAME_PREFIX}mr-nginx-prod
     profiles: ["prod"]
     depends_on:
       - django-prod
@@ -41,7 +41,7 @@ services:
 
   django-dev: &django-dev
     image: mr-django
-    container_name: mr-django-dev
+    container_name: ${NAME_PREFIX}mr-django-dev
     hostname: mr-django
     depends_on:
       mr-postgres:
@@ -69,7 +69,7 @@ services:
 
   django-prod:
     <<: *django-dev
-    container_name: mr-django-prod
+    container_name: ${NAME_PREFIX}mr-django-prod
     restart: unless-stopped
     profiles: ["prod"]
     ports: []
@@ -89,7 +89,7 @@ services:
 
   vue-dev:
     image: mr-vue-dev
-    container_name: mr-vue-dev
+    container_name: ${NAME_PREFIX}mr-vue-dev
     hostname: mr-vue
     restart: no
     profiles: ["dev"]
@@ -117,7 +117,7 @@ services:
 
   vue-prod:
     image: mr-vue-prod
-    container_name: mr-vue-prod
+    container_name: ${NAME_PREFIX}mr-vue-prod
     hostname: mr-vue
     restart: unless-stopped
     profiles: ["prod"]
