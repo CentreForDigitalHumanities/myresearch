@@ -51,7 +51,7 @@ services:
     build:
       context: ./backend
     healthcheck:
-      test: "curl -f mr-django:8000/backend/healthcheck/"
+      test: "curl -f mr-django:8000/healthcheck/"
     volumes:
       - ./backend:/usr/src/app/backend
       - bapyca:/usr/src/app/backend/__pycache__
@@ -112,8 +112,8 @@ services:
     environment:
       # Allows Nuxt to be accessible from the outside.
       - HOST=0.0.0.0
-      - CODEGEN_SCHEMA=http://mr-django:8000/backend/api/graphql
-      - NUXT_PUBLIC_API_URL=http://localhost:5000/backend/api
+      - CODEGEN_SCHEMA=http://mr-django:8000/api/graphql
+      - NUXT_PUBLIC_API_URL=${BASE_URL}/api
 
   vue-prod:
     image: mr-vue-prod
