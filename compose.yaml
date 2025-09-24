@@ -33,7 +33,7 @@ services:
       - django-prod
     volumes:
       - ./nginx.conf.prod:/etc/nginx/nginx.conf:ro
-      - basta:/var/www/backend_static
+      - backend_static:/var/www/backend_static/
     ports:
       - "5000:80"
 
@@ -72,7 +72,7 @@ services:
     profiles: ["prod"]
     ports: []
     volumes:
-      - basta:/var/www/backend-static/
+      - backend_static:/var/www/backend-static/
     command: sh -c "
       python manage.py migrate &&
       python manage.py collectstatic --no-input &&
@@ -130,7 +130,7 @@ volumes:
   frontend-node-modules:
   pgdata:
   bapyca:
-  basta:
+  backend_static:
 
 networks:
     my-research:
