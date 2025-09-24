@@ -1,8 +1,11 @@
 <script lang="ts" setup>
-import type { DateQuestion } from "../form/types";
+import type { DateQuestionType } from "~/generated/gql/graphql";
 
 interface Props {
-    question: DateQuestion;
+    question: Pick<
+        DateQuestionType,
+        "id" | "textNl" | "textEn" | "descriptionNl" | "descriptionEn"
+    >;
 }
 
 defineProps<Props>();
@@ -11,7 +14,7 @@ defineProps<Props>();
 <template>
     <div class="uu-form-field">
         <label :for="question.id" class="form-label">{{
-            useTranslateableAttribute(question, "label")
+            useTranslateableAttribute(question, "text")
         }}</label>
         <p
             v-if="question.descriptionNl || question.descriptionEn"
