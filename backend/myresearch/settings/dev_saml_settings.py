@@ -7,12 +7,12 @@ import os
 _BASE_DIR = path.dirname(os.path.dirname(__file__))
 
 SAML_CONFIG = create_saml_config(
-    base_url=discover("SAML_BASE_URL", "http://localhost:8000/"),
+    base_url=discover("SAML_BASE_URL", "http://localhost:5000/"),
     name="myresearch",
     key_file=path.join(_BASE_DIR, "certs/private.key"),
     cert_file=path.join(_BASE_DIR, "certs/public.cert"),
     idp_metadata=discover(
-        "IDP_METADATA_URL", "http://host.docker.internal:7000/saml/idp/metadata/"
+        "IDP_METADATA_URL", "http://mr-dev-idp:7000/saml/idp/metadata/"
     ),
     contact_given_name="Humanities IT Portal Development",
     contact_email="portaldev.gw@uu.nl",
