@@ -20,6 +20,7 @@ services:
     profiles: ["dev"]
     depends_on:
       - django-dev
+      - vue-dev
     volumes:
       - ./nginx.conf.dev:/etc/nginx/nginx.conf:ro
     ports:
