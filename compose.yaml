@@ -35,7 +35,7 @@ services:
       - ./nginx.conf.prod:/etc/nginx/nginx.conf:ro
       - basta:/var/www/backend_static
     ports:
-      - "8000:80"
+      - "5000:80"
 
   django-dev: &django-dev
     image: mr-django
