@@ -14,12 +14,12 @@ http {
     server {
         listen 80;
 	
-        location /backend/static/ {
+        location /backend_static/ {
             alias /var/www/backend_static/;
             autoindex off;
         }
 
-        location /backend/ {
+        location /(api|admin)/ {
             proxy_pass http://mr-django:8000;
         }
 

@@ -32,6 +32,7 @@ services:
     profiles: ["prod"]
     depends_on:
       - django-prod
+      - vue-prod
     volumes:
       - ./nginx.conf.prod:/etc/nginx/nginx.conf:ro
       - backend_static:/var/www/backend_static/
@@ -73,7 +74,7 @@ services:
     profiles: ["prod"]
     ports: []
     volumes:
-      - backend_static:/var/www/backend-static/
+      - backend_static:/var/www/backend_static/
     command: sh -c "
       python manage.py migrate &&
       python manage.py collectstatic --no-input &&
