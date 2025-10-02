@@ -19,7 +19,11 @@ http {
             autoindex off;
         }
 
-        location /(api|admin)/ {
+        location /api/ {
+            proxy_pass http://mr-django:8000;
+        }
+
+        location /admin/ {
             proxy_pass http://mr-django:8000;
         }
 
