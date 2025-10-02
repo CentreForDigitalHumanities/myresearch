@@ -16,7 +16,7 @@ class Study (models.Model):
         TODO: This function should probably live in some kind off mixin for all
         models in MyResearch.
         """
-        if not user.is_authenticated():
+        if not user.is_authenticated:
             return False
         if permission == MRPermissionTypes.EDIT:
             return self.can_be_edited_by(user)

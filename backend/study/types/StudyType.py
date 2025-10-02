@@ -31,7 +31,7 @@ class StudyType(DjangoObjectType):
 
         user = info.context.user
 
-        if not user.is_authenticated():
+        if not user.is_authenticated:
             return queryset.none()
         if permission == MRPermissionTypes.VIEW:
             return cls.viewable_queryset(user,queryset)
