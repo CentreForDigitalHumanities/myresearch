@@ -21,11 +21,13 @@ from study.mutations.StudyMutations import CreateStudy, UpdateStudy, DeleteStudy
 class Query(ListUsersQuery, FormQueries, StudyQuery, ObjectType):
     pass
 
+
 class Mutation(ObjectType):
 
     create_study = CreateStudy.Field()
     update_study = UpdateStudy.Field()
     delete_study = DeleteStudy.Field()
+
 
 schema = Schema(
     query=Query,

@@ -2,7 +2,8 @@ from main.models import User, MRPermissionTypes
 
 from django.db import models
 
-class Study (models.Model):
+
+class Study(models.Model):
 
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -10,7 +11,7 @@ class Study (models.Model):
 
     def can_be_accessed_by(self, user, permission):
         """
-        Check whether an object can be accessed by a specific user, with a 
+        Check whether an object can be accessed by a specific user, with a
         specific permission type.
 
         TODO: This function should probably live in some kind off mixin for all
@@ -34,7 +35,7 @@ class Study (models.Model):
         if user.is_privacy_officer:
             return True
         return False
-    
+
     def can_be_edited_by(self, user):
 
         if user == self.created_by:

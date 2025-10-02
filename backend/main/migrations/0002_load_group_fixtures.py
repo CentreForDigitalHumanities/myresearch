@@ -15,6 +15,7 @@ group_fixtures = """
 {"model": "auth.group","pk": 2,"fields": {"name": "FETC member","permissions": []}}
 """
 
+
 def load_registration_fixtures(apps, schema_editor):
     from django.core.serializers import deserialize
 
@@ -29,6 +30,7 @@ def load_registration_fixtures(apps, schema_editor):
     ):
         for obj in deserialize("jsonl", group_fixtures):
             obj.save()
+
 
 class Migration(migrations.Migration):
 

@@ -5,6 +5,7 @@ from study.types.StudyType import StudyType
 from study.models import Study
 from main.models import MRPermissionTypes
 
+
 class CreateStudy(Mutation):
 
     study = Field(StudyType)
@@ -14,7 +15,12 @@ class CreateStudy(Mutation):
         title = String(required=True)
 
     @classmethod
-    def mutate(cls, root: None, info: ResolveInfo, title: str,):
+    def mutate(
+        cls,
+        root: None,
+        info: ResolveInfo,
+        title: str,
+    ):
 
         user = info.context.user
         # Initialize the study, but do not save()
@@ -24,11 +30,10 @@ class CreateStudy(Mutation):
         # Check if the user has Edit permission
         if not study.can_be_accessed_by(user, MRPermissionTypes.EDIT):
             error = ErrorType(
-                field="",
-                messages=["You are not authorized to create this study."]
+                field="", messages=["You are not authorized to create this study."]
             )
             return cls(errors=[error])
-        
+
         # If permission check gets passed, save() and return the study
         study.save()
         return cls(study=study)
@@ -44,7 +49,13 @@ class UpdateStudy(Mutation):
         title = String(required=True)
 
     @classmethod
-    def mutate(cls, root: None, info: ResolveInfo, title: str, id: int,):
+    def mutate(
+        cls,
+        root: None,
+        info: ResolveInfo,
+        title: str,
+        id: int,
+    ):
 
         study = Study.objects.get(pk=id)
 
@@ -55,14 +66,13 @@ class UpdateStudy(Mutation):
                 messages=["Study not found."],
             )
             return cls(errors=[error])
-        
+
         user = info.context.user
 
         # Check if the user has Edit permission
         if not study.can_be_accessed_by(user, MRPermissionTypes.EDIT):
             error = ErrorType(
-                field="",
-                messages=["You are not authorized to update this study."]
+                field="", messages=["You are not authorized to update this study."]
             )
             return cls(errors=[error])
 
@@ -82,7 +92,12 @@ class DeleteStudy(Mutation):
         id = ID(required=True)
 
     @classmethod
-    def mutate(cls, root: None, info: ResolveInfo, id: int,):
+    def mutate(
+        cls,
+        root: None,
+        info: ResolveInfo,
+        id: int,
+    ):
 
         user = info.context.user
 
@@ -95,12 +110,11 @@ class DeleteStudy(Mutation):
                 messages=["Study not found."],
             )
             return cls(errors=[error])
-        
+
         # Check if the user has Edit permission
         if not study.can_be_accessed_by(user, MRPermissionTypes.EDIT):
             error = ErrorType(
-                field="",
-                messages=["You are not authorized to delete this study."]
+                field="", messages=["You are not authorized to delete this study."]
             )
             return cls(errors=[error])
 

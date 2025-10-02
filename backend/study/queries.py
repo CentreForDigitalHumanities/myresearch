@@ -36,12 +36,15 @@ class StudyQuery(ObjectType):
             return Study
         return None
 
-    def resolve_study_list(root, info: ResolveInfo,) -> QuerySet[Study]:
+    def resolve_study_list(
+        root,
+        info: ResolveInfo,
+    ) -> QuerySet[Study]:
         queryset = StudyType.get_queryset(
             Study.objects, info, permission=MRPermissionTypes.VIEW
         )
         return queryset.all()
-    
+
     def resolve_my_study(root, info: ResolveInfo, id) -> Optional[Study]:
         try:
             study = Study.objects.get(id=id)
@@ -51,9 +54,11 @@ class StudyQuery(ObjectType):
             return Study
         return None
 
-    def resolve_my_study_list(root, info: ResolveInfo,) -> QuerySet[Study]:
+    def resolve_my_study_list(
+        root,
+        info: ResolveInfo,
+    ) -> QuerySet[Study]:
         queryset = StudyType.get_queryset(
             Study.objects, info, permission=MRPermissionTypes.EDIT
         )
         return queryset.all()
-
