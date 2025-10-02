@@ -25,7 +25,6 @@ class CreateStudy(Mutation):
         user = info.context.user
         # Initialize the study, but do not save()
         study = Study(title=title, created_by=user)
-        print(study)
 
         # Check if the user has Edit permission
         if not study.can_be_accessed_by(user, MRPermissionTypes.EDIT):
