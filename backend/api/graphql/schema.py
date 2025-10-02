@@ -13,9 +13,10 @@ from form.types.QuestionType import (
 )
 from form.queries import FormQueries
 from main.queries import ListUsersQuery
+from study.queries import StudyQuery
 
 
-class Query(ListUsersQuery, FormQueries, ObjectType):
+class Query(ListUsersQuery, FormQueries, StudyQuery, ObjectType):
     pass
 
 

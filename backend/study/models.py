@@ -1,4 +1,4 @@
-from main.models import User
+from main.models import User, MRPermissionTypes
 
 from django.db import models
 
@@ -7,6 +7,25 @@ class Study (models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     title = models.CharField()
+
+    def can_be_accessed_by(self, user, permission):
+        """
+        Check whether an object can be accessed by a specific user, with a 
+        specific permission type.
+
+        TODO: This function should probably live in some kind off mixin for all
+        models in MyResearch.
+        """
+        if not user.is_authenticated():
+            return False
+        if permission == MRPermissionTypes.EDIT:
+            return self.can_be_edited_by(user)
+        if permission == MRPermissionTypes.VIEW:
+            return self.can_be_viewed_by(user)
+        raise ValueError(
+            f"{self}.can_be_accessed_by() has received a permission type which "
+            "has not yet been implemented."
+        )
 
     def can_be_viewed_by(self, user):
 
