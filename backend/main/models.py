@@ -18,8 +18,9 @@ class User(AbstractUser):
 
 class MRPermissionTypes(models.IntegerChoices):
     """
-    PermissionTypes are used in ObjectType's get_queryset method, to decide
-    which queryset gets returned, based on the user's permissions.
+    PermissionTypes are used in ObjectType's get_queryset method and Model's 
+    can_be_accessed_by() method, to decide which queryset gets returned or 
+    whether a user has access to an object, based on the user's permissions.
     """
 
     VIEW = 1
