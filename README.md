@@ -179,8 +179,8 @@ This will start a Docker Compose network with the following containers:
 
    For subsequent runs, you may omit `--build`, unless you switch branches, update dependencies or edit `compose.yml` or one of the `Dockerfile`s. This will ensure that the images are rebuilt with the latest changes.
 
-Note that in production mode the GraphQL schema generator is not run; the schema
-is supposed to be created in development mode and to be committed to the codebase.
+   Note that in production mode the GraphQL schema generator is not run; the schema
+   is supposed to be created in development mode and to be committed to the codebase.
 
 4. The database will automatically be initialized, but you may want to fill it with
    development data:
@@ -190,3 +190,15 @@ is supposed to be created in development mode and to be committed to the codebas
    ```
 
 5. Open your browser and navigate to `http://localhost:5000` to visit the application!
+
+6. For the dev profile, you can login using the SAML [Development-IDP](https://github.com/CentreForDigitalHumanities/Development-IdP).
+
+   To make this work, you need to add MyResearch as a Service Provider to the Dev-Idp. To do so:
+      - visit `localhost:7000`
+      - Login as an admin user.
+      - Add a service provider with the following settings:
+         - Entity ID: `http://localhost:5000/saml/metadata/`
+         - Metadata url: `http://host.docker.internal:5000/saml/metadata/`
+         - Attribute map: `UU`
+
+   You should then be able to log into MyResearch using the Dev-Idp.

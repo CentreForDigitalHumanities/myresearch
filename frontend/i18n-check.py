@@ -26,13 +26,15 @@ results = subprocess.run(
     capture_output=True,
 )
 if "Missing Keys" in results.stdout.decode():
-    print("Missing translation keys found. Run 'npm run i18n-extract' and add the missing translations.")
+    print(
+        "Missing translation keys found. Run 'npm run i18n-extract' and add the missing translations."
+    )
     exit(1)
 print("Ok.")
 
 for translation_file in translation_files:
     print(f"Checking '{translation_file}' for missing translations...")
-    translations = json.load(open(translation_file, 'r'))
+    translations = json.load(open(translation_file, "r"))
     if check_empty_value(translations):
         print("One or more translations are missing.")
         exit(1)

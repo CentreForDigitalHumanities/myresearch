@@ -18,6 +18,10 @@ Including another URLconf
 from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import path, include
+from django.conf import settings
+
+from djangosaml2.views import LoginView
+from cdh.federated_auth.saml.views import LogoutInitView
 
 urlpatterns = [
     path(
@@ -30,5 +34,11 @@ urlpatterns = [
                 path("healthcheck/", lambda r: HttpResponse()),
             ],
         ),
-    )
+    ),
+    # SAML urls
+    path("saml/login/", LoginView.as_view(), name="login"),
+    # We can only have one logout view. Luckily, the SAML logout view can
+    # handle local accounts as well.
+    path("saml/logout/", LogoutInitView.as_view(), name="logout"),
+    path("saml/", include("djangosaml2.urls")),
 ]
