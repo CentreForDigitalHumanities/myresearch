@@ -5,21 +5,18 @@ interface FormStep {
     slug: string;
     labelNl: string;
     labelEn: string;
-    children: FormStep[];
+    substeps: FormStep[];
     completed: boolean;
     active: boolean;
     disabled: boolean;
 }
 
 export interface FormStepperConfig {
-    titleNl?: string;
-    titleEn?: string;
     steps: Array<FormStep>;
 }
 
 interface Props {
-    selectedStep: string;
-    stepConfig: FormStepperConfig;
+    stepperConfig: FormStepperConfig;
 }
 
 const props = defineProps<Props>();
@@ -42,13 +39,10 @@ function stepperItemClasses(step: FormStep): string {
 <template>
     <div class="stepper-container">
         <div class="stepper">
-            <p class="mb-4">
-                {{ useTranslateableAttribute(props.stepConfig, "title") }}
-            </p>
             <ul>
                 <li
-                    v-for="(step, index) in props.stepConfig.steps"
-                    :key="index"
+                    v-for="(step, index) in props.stepperConfig.steps"
+                    :key="`${step.slug}-${index}`"
                 >
                     <NuxtLink :class="stepperItemClasses(step)" :to="step.slug">
                         <span class="stepper-bubble stepper-bubble-largest">{{
@@ -58,10 +52,10 @@ function stepperItemClasses(step: FormStep): string {
                             useTranslateableAttribute(step, "label")
                         }}</span>
                     </NuxtLink>
-                    <ul v-if="step.children.length > 0">
+                    <ul v-if="step.substeps.length > 0">
                         <li
-                            v-for="(child, childIndex) in step.children"
-                            :key="childIndex"
+                            v-for="(child, childIndex) in step.substeps"
+                            :key="`${child.slug}-${childIndex}`"
                         >
                             <NuxtLink
                                 :class="stepperItemClasses(child)"

@@ -1,10 +1,15 @@
 <script lang="ts" setup>
-import type { DateQuestionType } from "~/generated/gql/graphql";
+import type { NumberQuestionType } from "~/generated/gql/graphql";
 
 interface Props {
     question: Pick<
-        DateQuestionType,
-        "id" | "textNl" | "textEn" | "descriptionNl" | "descriptionEn"
+        NumberQuestionType,
+        | "id"
+        | "textNl"
+        | "textEn"
+        | "descriptionNl"
+        | "descriptionEn"
+        | "positiveOnly"
     >;
 }
 
@@ -22,6 +27,11 @@ defineProps<Props>();
         >
             {{ useTranslateableAttribute(question, "description") }}
         </p>
-        <input :id="question.id" type="date" class="form-control" />
+        <input
+            :id="question.id"
+            type="number"
+            class="form-control"
+            :min="question.positiveOnly ? 0 : undefined"
+        />
     </div>
 </template>

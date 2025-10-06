@@ -28,12 +28,24 @@ function setLocale(locale: string) {
                 <!-- Spacer element, moves the next elements to the right -->
             </div>
             <div v-if="true" class="border-left px-3">
-                <NuxtLink to="/backend/admin/" class="nav-link">
+                <NuxtLink to="/" class="nav-link">
                     <BSIcon icon="gear" size="lg" />
                 </NuxtLink>
             </div>
-            <div v-if="false" class="language-switcher">English</div>
-            <div v-if="true" class="language-switcher">Dutch</div>
+            <div
+                v-if="$i18n.locale === 'nl'"
+                class="language-switcher"
+                @click="setLocale('en')"
+            >
+                English
+            </div>
+            <div
+                v-if="$i18n.locale === 'en'"
+                class="language-switcher"
+                @click="setLocale('nl')"
+            >
+                Nederlands
+            </div>
         </div>
         <div class="uu-header-row">
             <!-- TODO: make only relevant link appear, 
