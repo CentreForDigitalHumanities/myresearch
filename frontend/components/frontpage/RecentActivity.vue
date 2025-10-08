@@ -80,9 +80,9 @@ const isRoadmap = (
                     </div>
                     <div class="mw-100">
                         {{ $t("Status") }}:
-                        <template v-if="activity.status == 'DRAFT'"
-                            ><Pencil class="icon"
-                        /></template>
+                        <template v-if="activity.status == 'DRAFT'">
+                            <Pencil class="icon"/>
+                        </template>
                         <template
                             v-if="activity.status == 'SUBMITTED_TO_SUPERVISOR'"
                             ><Scale class="icon"
