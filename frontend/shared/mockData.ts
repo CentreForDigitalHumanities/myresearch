@@ -12,7 +12,7 @@ export const mockQuestions: MockQuestions = {
         "Why are bananas curved?": ["Because they are yellow."],
     },
     ethicalCommission: {
-        "Where can i find the documents I have to deliver?": [
+        "Where can I find the documents that I have to submit?": [
             "During the application it may be possible that you need submit certain documents. Use the most recent model documents.",
             {
                 text: "Model documents",
