@@ -45,6 +45,7 @@ const recentActivity: RecentActivity[] = [
     staticSendToProposal,
     staticRoadmap,
 ];
+
 type RecentActivity = Proposal | Roadmap;
 
 const isProposal = (
@@ -52,6 +53,7 @@ const isProposal = (
 ): recentActivity is Proposal => {
     return recentActivity.hasOwnProperty("status");
 };
+
 const isRoadmap = (
     recentActivity: Proposal | Roadmap,
 ): recentActivity is Roadmap => {
@@ -81,7 +83,7 @@ const isRoadmap = (
                     <div class="mw-100">
                         {{ $t("Status") }}:
                         <template v-if="activity.status == 'DRAFT'">
-                            <Pencil class="icon"/>
+                            <Pencil class="icon" />
                         </template>
                         <template
                             v-if="activity.status == 'SUBMITTED_TO_SUPERVISOR'"

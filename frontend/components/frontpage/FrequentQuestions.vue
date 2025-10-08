@@ -11,11 +11,14 @@ export type FrequentQuestionKey =
     | "processingRegistry"
     | "ethicalCommission"
     | "other";
+
 export type Answer = (string | LinkData | ImageData)[];
+
 type LinkData = {
     text: string;
     url: string;
 };
+
 type ImageData = {
     imageUrl: string;
     altText: string;
@@ -29,6 +32,7 @@ const isLinkData = (
 ): answerPart is LinkData => {
     return answerPart.hasOwnProperty("url");
 };
+
 const isImageData = (
     answerPart: LinkData | string | ImageData,
 ): answerPart is ImageData => {
