@@ -7,7 +7,7 @@ type MockQuestions = Record<FrequentQuestionKey, Record<string, Answer>>;
 export const mockQuestions: MockQuestions = {
     processingRegistry: {
         "What is part of personal data?": [
-            "Personal data is dat that tells something about a living person of whom you know the identity, from whom you can discern the identity or whom are otherwise recognizable. For example: contact information is personal data, but also a lot of research data is personal data. Measurement data, answers on a questionnaire, or interviews, observations, demographic data and much more. Data that can not be traced back to personal data are anonymous data, those are not personal data",
+            "Personal data are data that tells something about a living person whose identity you know or can be discovered, or who is otherwise recognisable. Contact details are personal data, but data obtained through research (measurements, questionnaires, interviews, observations etc.) may count as personal data as well. Data that cannot be traced back to an individual are anonymous data. These are not considered personal data",
         ],
         "Why are bananas curved?": ["Because they are yellow."],
     },
