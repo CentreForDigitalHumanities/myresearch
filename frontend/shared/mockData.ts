@@ -20,7 +20,7 @@ export const mockQuestions: MockQuestions = {
             },
             "You can also find the links to the documents during the application itself.",
         ],
-        "How long do responses take after submission?": ["No idea."],
+        "How long does it take to receive a reply after submitting?": ["No idea."],
         "What happens if my application gets rejected?": [
             "You will need to make a revision and resubmit the application.",
         ],
