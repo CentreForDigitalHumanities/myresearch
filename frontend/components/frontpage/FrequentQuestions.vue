@@ -1,17 +1,21 @@
 <script lang="ts" setup>
-import {
-    type Answer,
-    type LinkData,
-    type MockQuestionKey,
-    type ImageData,
-    mockQuestions,
-} from "~/shared/mockData";
+import { type MockQuestionKey, mockQuestions } from "~/shared/mockData";
 
 interface Props {
     questionsGroup: MockQuestionKey;
     title: string;
 }
 const props = defineProps<Props>();
+
+export type Answer = (string | LinkData | ImageData)[];
+type LinkData = {
+    text: string;
+    url: string;
+};
+type ImageData = {
+    imageUrl: string;
+    altText: string;
+};
 
 const questionAnswers: Record<string, Answer> =
     mockQuestions[props.questionsGroup];

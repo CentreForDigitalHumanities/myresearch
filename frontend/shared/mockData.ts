@@ -1,17 +1,10 @@
+import { type Answer } from "~/components/frontpage/FrequentQuestions.vue";
+
 export type MockQuestionKey =
     | "processingRegistry"
     | "ethicalCommission"
     | "other";
 
-export type LinkData = {
-    text: string;
-    url: string;
-};
-export type ImageData = {
-    imageUrl: string;
-    altText: string;
-};
-export type Answer = (string | LinkData | ImageData)[];
 type MockQuestions = Record<MockQuestionKey, Record<string, Answer>>;
 export const mockQuestions: MockQuestions = {
     processingRegistry: {
