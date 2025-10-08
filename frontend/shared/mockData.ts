@@ -24,7 +24,7 @@ export const mockQuestions: MockQuestions = {
         "What happens if my application gets rejected?": [
             "You will need to revise and resubmit the application.",
         ],
-        "Help my draft application suddenly changed": [
+        "Why did my draft application suddenly change?": [
             "It is possible for the supervisor to change your application.",
         ],
     },
