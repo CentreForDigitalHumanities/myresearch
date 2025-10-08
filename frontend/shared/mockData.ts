@@ -13,7 +13,7 @@ export const mockQuestions: MockQuestions = {
     },
     ethicalCommission: {
         "Where can I find the documents that I have to submit?": [
-            "During the application it may be possible that you need submit certain documents. Use the most recent model documents.",
+            "During the application you may need to submit certain documents. Use the most recent model documents.",
             {
                 text: "Model documents",
                 url: "https://intranet.uu.nl/en/documents-ethics-assessment-committee-humanities",
