@@ -28,7 +28,7 @@ const staticDraftProposal: Proposal = {
 };
 const staticSendToProposal: Proposal = {
     refNumber: 4234_2023,
-    title: "hi mom I am on the internet",
+    title: "Placeholder",
     type: "proposal_in_ethics",
     status: "SUBMITTED_TO_SUPERVISOR",
     dateSubmitted: "2025-01-24",
