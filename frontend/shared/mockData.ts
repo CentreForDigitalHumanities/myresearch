@@ -1,11 +1,9 @@
-import { type Answer } from "~/components/frontpage/FrequentQuestions.vue";
+import {
+    type Answer,
+    type FrequentQuestionKey,
+} from "~/components/frontpage/FrequentQuestions.vue";
 
-export type MockQuestionKey =
-    | "processingRegistry"
-    | "ethicalCommission"
-    | "other";
-
-type MockQuestions = Record<MockQuestionKey, Record<string, Answer>>;
+type MockQuestions = Record<FrequentQuestionKey, Record<string, Answer>>;
 export const mockQuestions: MockQuestions = {
     processingRegistry: {
         "What is part of personal data?": [

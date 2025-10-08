@@ -1,12 +1,16 @@
 <script lang="ts" setup>
-import { type MockQuestionKey, mockQuestions } from "~/shared/mockData";
+import { mockQuestions } from "~/shared/mockData";
 
 interface Props {
-    questionsGroup: MockQuestionKey;
+    questionsGroup: FrequentQuestionKey;
     title: string;
 }
 const props = defineProps<Props>();
 
+export type FrequentQuestionKey =
+    | "processingRegistry"
+    | "ethicalCommission"
+    | "other";
 export type Answer = (string | LinkData | ImageData)[];
 type LinkData = {
     text: string;
@@ -20,11 +24,15 @@ type ImageData = {
 const questionAnswers: Record<string, Answer> =
     mockQuestions[props.questionsGroup];
 
-const isLinkData = (obj: LinkData | string | ImageData): obj is LinkData => {
-    return obj.hasOwnProperty("url");
+const isLinkData = (
+    answerPart: LinkData | string | ImageData,
+): answerPart is LinkData => {
+    return answerPart.hasOwnProperty("url");
 };
-const isImageData = (obj: LinkData | string | ImageData): obj is ImageData => {
-    return obj.hasOwnProperty("imageUrl");
+const isImageData = (
+    answerPart: LinkData | string | ImageData,
+): answerPart is ImageData => {
+    return answerPart.hasOwnProperty("imageUrl");
 };
 </script>
 
@@ -87,7 +95,6 @@ const isImageData = (obj: LinkData | string | ImageData): obj is ImageData => {
                                     {{ $t(answerPart) }}
                                 </template>
                                 {{ " " }}
-                                <!-- I just want a space here there has to be a better way to do this. -->
                             </template>
                         </div>
                     </div>

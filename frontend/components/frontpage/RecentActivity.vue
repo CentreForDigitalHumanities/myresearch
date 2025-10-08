@@ -46,11 +46,16 @@ const recentActivity: RecentActivity[] = [
     staticRoadmap,
 ];
 type RecentActivity = Proposal | Roadmap;
-const isProposal = (obj: Proposal | Roadmap): obj is Proposal => {
-    return obj.hasOwnProperty("status");
+
+const isProposal = (
+    recentActivity: Proposal | Roadmap,
+): recentActivity is Proposal => {
+    return recentActivity.hasOwnProperty("status");
 };
-const isRoadmap = (obj: Proposal | Roadmap): obj is Roadmap => {
-    return obj.hasOwnProperty("roadmapBody");
+const isRoadmap = (
+    recentActivity: Proposal | Roadmap,
+): recentActivity is Roadmap => {
+    return recentActivity.hasOwnProperty("roadmapBody");
 };
 </script>
 
