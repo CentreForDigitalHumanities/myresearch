@@ -22,7 +22,7 @@ export const mockQuestions: MockQuestions = {
         ],
         "How long does it take to receive a reply after submitting?": ["No idea."],
         "What happens if my application gets rejected?": [
-            "You will need to make a revision and resubmit the application.",
+            "You will need to revise and resubmit the application.",
         ],
         "Help my draft application suddenly changed": [
             "It is possible for the supervisor to change your application.",
