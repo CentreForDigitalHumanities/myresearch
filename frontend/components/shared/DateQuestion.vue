@@ -1,14 +1,13 @@
 <script lang="ts" setup>
-import type { DateQuestionType } from "~/generated/gql/graphql";
+import type { DateQuestionWithValue } from "~/composables/useBuildForm";
 
 interface Props {
-    question: Pick<
-        DateQuestionType,
-        "id" | "textNl" | "textEn" | "descriptionNl" | "descriptionEn"
-    >;
+    question: DateQuestionWithValue;
 }
 
 defineProps<Props>();
+
+const modelValue = defineModel<string>();
 </script>
 
 <template>
@@ -22,6 +21,11 @@ defineProps<Props>();
         >
             {{ useTranslateableAttribute(question, "description") }}
         </p>
-        <input :id="question.id" type="date" class="form-control" />
+        <input
+            :id="question.id"
+            v-model="modelValue"
+            type="date"
+            class="form-control"
+        />
     </div>
 </template>

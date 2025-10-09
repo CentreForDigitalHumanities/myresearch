@@ -1,20 +1,13 @@
 <script lang="ts" setup>
-import type { SelectQuestionType } from "~/generated/gql/graphql";
+import type { SelectQuestionWithValue } from "~/composables/useBuildForm";
 
 interface Props {
-    question: Pick<
-        SelectQuestionType,
-        | "id"
-        | "textNl"
-        | "textEn"
-        | "descriptionNl"
-        | "descriptionEn"
-        | "options"
-        | "multiple"
-    >;
+    question: SelectQuestionWithValue;
 }
 
 defineProps<Props>();
+
+const modelValue = defineModel<string>();
 </script>
 
 <template>
@@ -28,7 +21,10 @@ defineProps<Props>();
         >
             {{ useTranslateableAttribute(question, "description") }}
         </p>
-        <select :id="question.id" class="form-control">
+        <select :id="question.id" v-model="modelValue" class="form-control">
+            <option disabled value="">
+                {{ $t("Please select one") }}
+            </option>
             <option
                 v-for="option in question.options"
                 :key="option.id"

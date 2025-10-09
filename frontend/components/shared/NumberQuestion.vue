@@ -1,19 +1,13 @@
 <script lang="ts" setup>
-import type { NumberQuestionType } from "~/generated/gql/graphql";
+import type { NumberQuestionWithValue } from "~/composables/useBuildForm";
 
 interface Props {
-    question: Pick<
-        NumberQuestionType,
-        | "id"
-        | "textNl"
-        | "textEn"
-        | "descriptionNl"
-        | "descriptionEn"
-        | "positiveOnly"
-    >;
+    question: NumberQuestionWithValue;
 }
 
 defineProps<Props>();
+
+const modelValue = defineModel<number>();
 </script>
 
 <template>
@@ -29,6 +23,7 @@ defineProps<Props>();
         </p>
         <input
             :id="question.id"
+            v-model="modelValue"
             type="number"
             class="form-control"
             :min="question.positiveOnly ? 0 : undefined"

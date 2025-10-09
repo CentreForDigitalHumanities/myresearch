@@ -1,21 +1,13 @@
 <script lang="ts" setup>
-import type { TextQuestionType } from "~/generated/gql/graphql";
+import type { TextQuestionWithValue } from "~/composables/useBuildForm";
 
 interface Props {
-    question: Pick<
-        TextQuestionType,
-        | "id"
-        | "textNl"
-        | "textEn"
-        | "descriptionNl"
-        | "descriptionEn"
-        | "placeholderNl"
-        | "placeholderEn"
-        | "lines"
-    >;
+    question: TextQuestionWithValue;
 }
 
 defineProps<Props>();
+
+const modelValue = defineModel<string>();
 </script>
 
 <template>
@@ -32,12 +24,14 @@ defineProps<Props>();
         <input
             v-if="!question.lines || question.lines < 2"
             :id="question.id"
+            v-model="modelValue"
             type="text"
             class="form-control"
         />
         <textarea
             v-if="question.lines && question.lines >= 2"
             :id="question.id"
+            v-model="modelValue"
             class="form-control"
             :rows="question.lines"
         ></textarea>

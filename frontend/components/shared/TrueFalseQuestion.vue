@@ -1,19 +1,13 @@
 <script lang="ts" setup>
-import type { TrueFalseQuestionType } from "~/generated/gql/graphql";
+import type { TrueFalseQuestionWithValue } from "~/composables/useBuildForm";
 
 interface Props {
-    question: Pick<
-        TrueFalseQuestionType,
-        | "id"
-        | "textNl"
-        | "textEn"
-        | "descriptionNl"
-        | "descriptionEn"
-        | "defaultValue"
-    >;
+    question: TrueFalseQuestionWithValue;
 }
 
 defineProps<Props>();
+
+const modelValue = defineModel<boolean>();
 </script>
 
 <template>
@@ -21,9 +15,9 @@ defineProps<Props>();
         <div class="form-check">
             <input
                 :id="question.id"
+                v-model="modelValue"
                 type="checkbox"
                 class="form-check-input"
-                :checked="question.defaultValue"
             />
             <label :for="question.id" class="form-check-label">{{
                 useTranslateableAttribute(question, "text")

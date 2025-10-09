@@ -1,20 +1,43 @@
 <script lang="ts" setup>
-import type { FileUploadQuestionType } from "~/generated/gql/graphql";
+import type { FileUploadQuestionWithValue } from "~/composables/useBuildForm";
 
 interface Props {
-    question: Pick<
-        FileUploadQuestionType,
-        | "id"
-        | "textNl"
-        | "textEn"
-        | "descriptionNl"
-        | "descriptionEn"
-        // Not currently enforced.
-        | "sizeLimit"
-    >;
+    question: FileUploadQuestionWithValue;
 }
 
-defineProps<Props>();
+interface Emits {
+    (e: "update:modelValue", value: File | null): void;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits<Emits>();
+
+const localQuestion = ref<File | null>(props.question.value);
+const fileInput = ref<HTMLInputElement | null>(null);
+
+function onFileChanged(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.files) {
+        localQuestion.value = target.files[0];
+    } else {
+        localQuestion.value = null;
+    }
+    updateModelValue();
+}
+
+function removeFile(): void {
+    localQuestion.value = null;
+    updateModelValue();
+
+    // Update the input control to reflect the removal.
+    if (fileInput.value) {
+        fileInput.value.value = "";
+    }
+}
+
+function updateModelValue(): void {
+    emit("update:modelValue", localQuestion.value);
+}
 </script>
 
 <template>
@@ -28,6 +51,26 @@ defineProps<Props>();
         >
             {{ useTranslateableAttribute(question, "description") }}
         </p>
-        <input :id="question.id" type="file" class="form-control" />
+        <input
+            :id="question.id"
+            ref="fileInput"
+            type="file"
+            class="form-control"
+            @change="onFileChanged($event)"
+        />
+        <div v-if="localQuestion" class="mt-2">
+            <strong>{{ $t("Selected file") }}:</strong>
+            {{ localQuestion.name }} ({{
+                (localQuestion.size / 1024).toFixed(2)
+            }}
+            KB)
+            <button
+                type="button"
+                class="btn btn-outline-secondary btn-sm ms-2"
+                @click="removeFile"
+            >
+                {{ $t("Remove") }}
+            </button>
+        </div>
     </div>
 </template>
