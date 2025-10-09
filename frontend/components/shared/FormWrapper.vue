@@ -4,6 +4,7 @@ import { BSButton } from "cdh-vue-lib";
 import type { QueriedForm } from "./FormWrapper";
 import FormStepper, { type FormStepperConfig } from "./FormStepper";
 import MRForm from "./MRForm.vue";
+import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConfig";
 
 interface Props {
     queriedForm: QueriedForm;
@@ -13,6 +14,7 @@ const props = defineProps<Props>();
 
 const formObject = computed(() => reactive(useBuildForm(props.queriedForm)));
 
+// Only for dev purposes: log form values on change.
 watch(
     () => formObject,
     (newFormObject) => {
@@ -22,32 +24,9 @@ watch(
 );
 
 // Stepper configuration
-const formStepperConfig = computed<FormStepperConfig | null>(() => {
-    const stepperConfig: FormStepperConfig = {
-        steps: formObject.value.steps.map((step) => ({
-            slug: step.slug,
-            labelNl: step.nameNl ?? "",
-            labelEn: step.nameEn ?? "",
-            completed: false,
-            active: step.slug === props.currentStepSlug,
-            disabled: false,
-            substeps:
-                "substeps" in step
-                    ? (step.substeps?.map((substep) => ({
-                          slug: substep.slug,
-                          labelNl: substep.nameNl ?? "",
-                          labelEn: substep.nameEn ?? "",
-                          completed: false,
-                          active: substep.slug === props.currentStepSlug,
-                          disabled: false,
-                          // Let's only go 2 levels deep for now.
-                          substeps: [],
-                      })) ?? [])
-                    : [],
-        })),
-    };
-    return stepperConfig;
-});
+const formStepperConfig = computed<FormStepperConfig | null>(() =>
+    useBuildFormStepperConfig(props.queriedForm, props.currentStepSlug),
+);
 
 const allSteps = computed(() => getAllSteps(formObject.value));
 const selectedStep = computed(() => {
