@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { SharedFormWrapper } from "#components";
 import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
 import type { GetFormQuery } from "~/generated/gql/graphql";
+import FormWrapper from "~/components/shared/FormWrapper.vue";
 
 const GET_FORM = graphql(`
     query GetForm {
@@ -110,7 +110,7 @@ function stepSlug(route: string | string[]): string {
             <h1>{{ $t("Processing Registry") }}</h1>
         </div>
         <div class="uu-container">
-            <SharedFormWrapper
+            <FormWrapper
                 v-if="form"
                 :form="form"
                 :current-step-slug="stepSlug(route.params.slug)"
