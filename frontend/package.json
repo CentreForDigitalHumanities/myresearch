@@ -21,6 +21,8 @@
         "@nuxt/eslint": "^1.4.1",
         "@nuxt/test-utils": "^3.19.1",
         "@vue/apollo-composable": "^4.2.2",
+        "@vuelidate/core": "^2.0.3",
+        "@vuelidate/validators": "^2.0.4",
         "apollo-client": "^2.6.10",
         "bootstrap": "^5.3.7",
         "cdh-vue-lib": "git+https://github.com/CentreForDigitalHumanities/Vue-lib.git#0.6.0",
