@@ -2,17 +2,17 @@
 import {
     SharedDateQuestion,
     SharedFileUploadQuestion,
-    SharedFormSideBar,
     SharedNumberQuestion,
     SharedSelectQuestion,
     SharedTextQuestion,
     SharedTrueFalseQuestion,
 } from "#components";
-import type { CombinedStep } from "./FormWrapper.vue";
+import FormSideBar from "./FormSideBar.vue";
 import type { Component } from "vue";
+import type { CombinedStepWithValues } from "~/composables/useBuildForm";
 
 interface Props {
-    form: CombinedStep;
+    step: CombinedStepWithValues;
 }
 defineProps<Props>();
 
@@ -29,17 +29,18 @@ const questionComponentMap = {
 </script>
 
 <template>
-    <h2>{{ useTranslateableAttribute(form, "name") }}</h2>
-    <p>{{ useTranslateableAttribute(form, "description") }}</p>
+    <h2>{{ useTranslateableAttribute(step, "name") }}</h2>
+    <p>{{ useTranslateableAttribute(step, "description") }}</p>
     <div class="uu-form-row">
         <div class="d-flex flex-column">
-            <div v-for="question in form.questions" :key="question.id">
+            <div v-for="question in step.questions" :key="question.id">
                 <component
                     :is="questionComponentMap[question.__typename]"
+                    v-model="question.value"
                     :question="question"
                 />
             </div>
         </div>
-        <SharedFormSideBar :form="form" />
+        <FormSideBar :step="step" />
     </div>
 </template>

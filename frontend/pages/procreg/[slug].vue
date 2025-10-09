@@ -26,6 +26,7 @@ const GET_FORM = graphql(`
                     descriptionNl
                     required
                     ... on SelectQuestionType {
+                        multiple
                         options {
                             id
                             labelNl
@@ -47,6 +48,9 @@ const GET_FORM = graphql(`
                         placeholderEn
                         lines
                     }
+                    ... on DateQuestionType {
+                        futureOnly
+                    }
                 }
                 substeps {
                     id
@@ -64,6 +68,7 @@ const GET_FORM = graphql(`
                         descriptionNl
                         required
                         ... on SelectQuestionType {
+                            multiple
                             options {
                                 id
                                 labelNl
@@ -84,6 +89,9 @@ const GET_FORM = graphql(`
                             placeholderNl
                             placeholderEn
                             lines
+                        }
+                        ... on DateQuestionType {
+                            futureOnly
                         }
                     }
                 }
@@ -112,7 +120,7 @@ function stepSlug(route: string | string[]): string {
         <div class="uu-container">
             <FormWrapper
                 v-if="form"
-                :form="form"
+                :queried-form="form"
                 :current-step-slug="stepSlug(route.params.slug)"
             />
         </div>
