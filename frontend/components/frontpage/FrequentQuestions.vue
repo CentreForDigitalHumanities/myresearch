@@ -12,32 +12,19 @@ export type FrequentQuestionKey =
     | "ethicalCommission"
     | "other";
 
-export type Answer = (string | LinkData | ImageData)[];
+// Not just Answer to avoid future clashes with actual form answers.
+export interface FrequentAnswerPart {
+    text: string | null;
+    url: string | null;
+    image: {
+        src: string;
+        altText: string;
+    } | null;
+}
+export type FrequentAnswer = FrequentAnswerPart[];
 
-type LinkData = {
-    text: string;
-    url: string;
-};
-
-type ImageData = {
-    imageUrl: string;
-    altText: string;
-};
-
-const questionAnswers: Record<string, Answer> =
+const questionAnswers: Record<string, FrequentAnswer> =
     mockQuestions[props.questionsGroup];
-
-const isLinkData = (
-    answerPart: LinkData | string | ImageData,
-): answerPart is LinkData => {
-    return answerPart.hasOwnProperty("url");
-};
-
-const isImageData = (
-    answerPart: LinkData | string | ImageData,
-): answerPart is ImageData => {
-    return answerPart.hasOwnProperty("imageUrl");
-};
 </script>
 
 <template>
@@ -81,22 +68,22 @@ const isImageData = (
                                     answerIndex
                                 "
                             >
-                                <template v-if="isLinkData(answerPart)">
-                                    <a
-                                        :href="$t(answerPart.url)"
-                                        target="_blank"
-                                    >
+                                <a
+                                    v-if="answerPart.url != null"
+                                    :href="$t(answerPart.url)"
+                                    target="_blank"
+                                >
+                                    <template v-if="answerPart.text != null">
                                         {{ $t(answerPart.text) }}
-                                    </a>
-                                </template>
-                                <template v-else-if="isImageData(answerPart)">
-                                    <img
-                                        :src="answerPart.imageUrl"
-                                        :alt="answerPart.altText"
-                                    />
-                                </template>
-                                <template v-else>
-                                    {{ $t(answerPart) }}
+                                    </template>
+                                </a>
+                                <img
+                                    v-else-if="answerPart.image != null"
+                                    :src="answerPart.image.src"
+                                    :alt="answerPart.image.altText"
+                                />
+                                <template v-else-if="answerPart.text != null">
+                                    {{ $t(answerPart.text) }}
                                 </template>
                                 {{ " " }}
                             </template>
