@@ -12,8 +12,9 @@ export type FrequentQuestionKey =
     | "ethicalCommission"
     | "other";
 
-// Not just Answer to avoid future clashes with actual form answers.
-export interface FrequentAnswerPart {
+/** One or more FrequentAnswerParts form a FrequentAnswer.
+ * @text If url is not null then text is assumed to be the url text */
+interface FrequentAnswerPart {
     text: string | null;
     url: string | null;
     image: {
