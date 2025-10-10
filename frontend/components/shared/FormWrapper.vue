@@ -5,6 +5,7 @@ import type { QueriedForm } from "./FormWrapper";
 import FormStepper, { type FormStepperConfig } from "./FormStepper";
 import MRForm from "./MRForm.vue";
 import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConfig";
+import { useProcessForm } from "~/composables/useProcessForm";
 import useVuelidate from "@vuelidate/core";
 
 interface Props {
@@ -13,7 +14,9 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-const formArtifacts = computed(() => reactive(useBuildForm(props.queriedForm)));
+const formArtifacts = computed(() =>
+    reactive(useProcessForm(props.queriedForm)),
+);
 
 const formObject = computed(() => formArtifacts.value.formWithValues);
 const validationRules = computed(() => formArtifacts.value.validationRules);

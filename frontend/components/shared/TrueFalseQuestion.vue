@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { TrueFalseQuestionWithValue } from "~/composables/useBuildForm";
+import type { TrueFalseQuestionWithValue } from "~/composables/useProcessForm";
 
 interface Props {
     question: TrueFalseQuestionWithValue;

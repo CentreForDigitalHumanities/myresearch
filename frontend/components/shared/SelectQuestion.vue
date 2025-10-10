@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { SelectQuestionWithValue } from "~/composables/useBuildForm";
+import type { SelectQuestionWithValue } from "~/composables/useProcessForm";
 
 interface Props {
     question: SelectQuestionWithValue;

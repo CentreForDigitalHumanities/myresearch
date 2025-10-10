@@ -89,20 +89,34 @@ type FormValidationRules = {
     steps: StepValidationRules[];
 };
 
-interface FormDerivates {
+interface FormAndValidation {
     formWithValues: FormWithValues;
     validationRules: FormValidationRules;
 }
 
 /**
- * Transforms a `QueriedForm` object into a `FormWithValues` object by adding a
- * `value` field to each question within the form's steps and substeps, and
- * generates validation rules for required questions.
+ * Processes a queried form (QueriedForm) to produce two derivates:
+ *
+ * 1. A form structure with default values for each question (FormWithValues).
+ *   This is the same object as the QueriedForm object, but with added `value`
+ *   and `location` properties to each question.
+ *
+ *      The `value` property holds the value of the question, initialized to a
+ *      default value based on the question type.
+ *
+ *      The `location` property is a string that represents the path to the
+ *      question's value in the form structure. We need this to find the
+ *      corresponding value in the validation object.
+ *
+ * 2. A validation object (ValidationRules) containing the rules needed to
+ * validate the form. This object mirrors the structure of the form, as
+ * required by Vuelidate.
  *
  * @param queriedForm - The form data retrieved from a query
- * @returns An object containing the form with values and validation rules
+ * @returns An object containing the form with value attributes and the
+ * validation rules.
  */
-function useBuildForm(queriedForm: QueriedForm): FormDerivates {
+function useProcessForm(queriedForm: QueriedForm): FormAndValidation {
     const { t } = i18n.global;
 
     return {
@@ -111,37 +125,75 @@ function useBuildForm(queriedForm: QueriedForm): FormDerivates {
     };
 }
 
+function buildFormWithValues(queriedForm: QueriedForm): FormWithValues {
+    return {
+        ...queriedForm,
+        steps: queriedForm.steps.map((step, stepIndex) => ({
+            ...step,
+            questions: step.questions.map((q, qIndex) =>
+                addValueToQuestion(q, qIndex, stepIndex),
+            ),
+            substeps: step.substeps.map((substep, substepIndex) => ({
+                ...substep,
+                questions: substep.questions.map((q, qIndex) =>
+                    addValueToQuestion(q, qIndex, stepIndex, substepIndex),
+                ),
+            })),
+        })),
+    };
+}
+
+function getDefaultValueForQuestion(question: QuestionType): unknown {
+    switch (question.__typename) {
+        case "TextQuestionType":
+        case "DateQuestionType":
+        case "SelectQuestionType":
+            return "";
+        case "NumberQuestionType":
+            return 0;
+        case "TrueFalseQuestionType":
+            return question.defaultValue;
+        case "FileUploadQuestionType":
+            return null;
+    }
+}
+
+function addValueToQuestion(
+    question: QuestionType,
+    questionIndex: number,
+    stepIndex: number,
+    substepIndex?: number,
+): QuestionWithValue {
+    const locationParts: string[] = ["steps", stepIndex.toString()];
+    if (substepIndex !== undefined) {
+        locationParts.push("substeps", substepIndex.toString());
+    }
+    locationParts.push("questions", questionIndex.toString(), "value");
+
+    const location = locationParts.join(".");
+
+    return {
+        ...question,
+        location,
+        value: getDefaultValueForQuestion(question) as never,
+    };
+}
+
 function buildValidationRules(
     queriedForm: QueriedForm,
     t: (key: string) => string,
 ): FormValidationRules {
     return {
-        steps: queriedForm.steps.map((step) => addValidationForStep(step, t)),
-    };
-}
-
-function addValidationForStep(
-    step: Step,
-    t: (key: string) => string,
-): StepValidationRules {
-    return {
-        questions: step.questions.map((question) =>
-            addValidationForQuestion(question, t),
-        ),
-        substeps: step.substeps.map((substep) =>
-            addValidationForSubstep(substep, t),
-        ),
-    };
-}
-
-function addValidationForSubstep(
-    substep: Substep,
-    t: (key: string) => string,
-): SubstepValidationRules {
-    return {
-        questions: substep.questions.map((question) =>
-            addValidationForQuestion(question, t),
-        ),
+        steps: queriedForm.steps.map((step) => ({
+            questions: step.questions.map((q) =>
+                addValidationForQuestion(q, t),
+            ),
+            substeps: step.substeps.map((substep) => ({
+                questions: substep.questions.map((q) =>
+                    addValidationForQuestion(q, t),
+                ),
+            })),
+        })),
     };
 }
 
@@ -159,7 +211,7 @@ function addValidationForQuestion(
         );
     }
 
-    // Question-type specific rules
+    // Question-type specific rules. This is an example. Add more as needed.
     switch (question.__typename) {
         case "NumberQuestionType":
             // Example: Add min/max value validation if needed
@@ -175,74 +227,5 @@ function addValidationForQuestion(
         value: rules,
     };
 }
-function buildFormWithValues(queriedForm: QueriedForm): FormWithValues {
-    const formWithValues: FormWithValues = {
-        ...queriedForm,
-        steps: queriedForm.steps.map((step, stepIndex) =>
-            addValuesToStep(step, stepIndex),
-        ),
-    };
-    return formWithValues;
-}
 
-function addValuesToStep(step: Step, stepIndex: number): StepWithValues {
-    return {
-        ...step,
-        questions: step.questions.map((question, questionIndex) =>
-            addValueToQuestion(question, questionIndex, stepIndex),
-        ),
-        substeps: step.substeps.map((substep, substepIndex) =>
-            addValuesToSubstep(substep, stepIndex, substepIndex),
-        ),
-    };
-}
-
-function addValuesToSubstep(
-    substep: Substep,
-    stepIndex: number,
-    substepIndex: number,
-): SubstepWithValues {
-    return {
-        ...substep,
-        questions: substep.questions.map((question, questionIndex) =>
-            addValueToQuestion(
-                question,
-                questionIndex,
-                stepIndex,
-                substepIndex,
-            ),
-        ),
-    };
-}
-
-function addValueToQuestion(
-    question: QuestionType,
-    questionIndex: number,
-    stepIndex: number,
-    substepIndex?: number,
-): QuestionWithValue {
-    const locationParts: string[] = ["steps", stepIndex.toString()];
-    if (substepIndex !== undefined) {
-        locationParts.push("substeps", substepIndex.toString());
-    }
-    locationParts.push("questions", questionIndex.toString(), "value");
-
-    const location = locationParts.join(".");
-
-    switch (question.__typename) {
-        case "TextQuestionType":
-            return { ...question, location, value: "" };
-        case "NumberQuestionType":
-            return { ...question, location, value: 0 };
-        case "TrueFalseQuestionType":
-            return { ...question, location, value: question.defaultValue };
-        case "FileUploadQuestionType":
-            return { ...question, location, value: null };
-        case "DateQuestionType":
-            return { ...question, location, value: "" };
-        case "SelectQuestionType":
-            return { ...question, location, value: "" };
-    }
-}
-
-export { useBuildForm };
+export { useProcessForm };

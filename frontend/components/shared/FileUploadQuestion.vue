@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { FileUploadQuestionWithValue } from "~/composables/useBuildForm";
+import type { FileUploadQuestionWithValue } from "~/composables/useProcessForm";
 
 interface Props {
     question: FileUploadQuestionWithValue;

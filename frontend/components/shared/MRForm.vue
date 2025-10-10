@@ -12,7 +12,7 @@ import type { Component } from "vue";
 import type {
     CombinedStepWithValues,
     QuestionWithValue,
-} from "~/composables/useBuildForm";
+} from "~/composables/useProcessForm";
 import type { ErrorObject, Validation } from "@vuelidate/core";
 
 interface Props {

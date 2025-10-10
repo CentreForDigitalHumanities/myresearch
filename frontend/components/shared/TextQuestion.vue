@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { TextQuestionWithValue } from "~/composables/useBuildForm";
+import type { TextQuestionWithValue } from "~/composables/useProcessForm";
 
 interface Props {
     question: TextQuestionWithValue;
