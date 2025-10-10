@@ -42,11 +42,8 @@ const selectedStep = computed(() => {
 function getAllSteps(form: FormWithValues): CombinedStepWithValues[] {
     return form.steps.flatMap((step) => {
         const steps: CombinedStepWithValues[] = [step];
-        if ("substeps" in step) {
-            const substeps = step.substeps;
-            if (substeps) {
-                steps.push(...substeps);
-            }
+        if (step.substeps) {
+            steps.push(...step.substeps);
         }
         return steps;
     });
