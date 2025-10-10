@@ -3,6 +3,7 @@ import type { SelectQuestionWithValue } from "~/composables/useBuildForm";
 
 interface Props {
     question: SelectQuestionWithValue;
+    isInvalid: boolean;
 }
 
 defineProps<Props>();
@@ -11,17 +12,22 @@ const modelValue = defineModel<string>();
 </script>
 
 <template>
-    <div class="uu-form-field">
-        <label :for="question.id" class="form-label">{{
-            useTranslateableAttribute(question, "text")
-        }}</label>
+    <div>
+        <label :for="question.id" class="form-label">
+            {{ useTranslateableAttribute(question, "text") }}
+        </label>
         <p
             v-if="question.descriptionNl || question.descriptionEn"
             class="text-muted"
         >
             {{ useTranslateableAttribute(question, "description") }}
         </p>
-        <select :id="question.id" v-model="modelValue" class="form-control">
+        <select
+            :id="question.id"
+            v-model="modelValue"
+            class="form-control"
+            :class="{ 'is-invalid': isInvalid }"
+        >
             <option disabled value="">
                 {{ $t("Please select one") }}
             </option>

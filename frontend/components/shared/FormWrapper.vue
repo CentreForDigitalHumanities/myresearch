@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import { computed, watch } from "vue";
+import { computed } from "vue";
 import { BSButton } from "cdh-vue-lib";
 import type { QueriedForm } from "./FormWrapper";
 import FormStepper, { type FormStepperConfig } from "./FormStepper";
 import MRForm from "./MRForm.vue";
 import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConfig";
+import useVuelidate from "@vuelidate/core";
 
 interface Props {
     queriedForm: QueriedForm;
@@ -12,16 +13,14 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-const formObject = computed(() => reactive(useBuildForm(props.queriedForm)));
+const formArtifacts = computed(() => reactive(useBuildForm(props.queriedForm)));
 
-// Only for dev purposes: log form values on change.
-watch(
-    () => formObject,
-    (newFormObject) => {
-        console.log("Form values changed:", newFormObject.value);
-    },
-    { deep: true },
-);
+const formObject = computed(() => formArtifacts.value.formWithValues);
+const validationRules = computed(() => formArtifacts.value.validationRules);
+
+const v$ = useVuelidate(validationRules, formObject, {
+    $autoDirty: true,
+});
 
 // Stepper configuration
 const formStepperConfig = computed<FormStepperConfig | null>(() =>
@@ -102,7 +101,7 @@ function getPreviousStepSlug(): string {
         />
         <div class="col-12 col-lg-9">
             <form class="uu-form">
-                <MRForm :step="selectedStep" />
+                <MRForm :step="selectedStep" :vuelidate="v$" />
             </form>
             <div class="btn-group">
                 <NuxtLink

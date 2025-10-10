@@ -3,6 +3,7 @@ import type { FileUploadQuestionWithValue } from "~/composables/useBuildForm";
 
 interface Props {
     question: FileUploadQuestionWithValue;
+    isInvalid: boolean;
 }
 
 interface Emits {
@@ -41,10 +42,10 @@ function updateModelValue(): void {
 </script>
 
 <template>
-    <div class="uu-form-field">
-        <label :for="question.id" class="form-label">{{
-            useTranslateableAttribute(question, "text")
-        }}</label>
+    <div>
+        <label :for="question.id" class="form-label">
+            {{ useTranslateableAttribute(question, "text") }}
+        </label>
         <p
             v-if="question.descriptionNl || question.descriptionEn"
             class="text-muted"
@@ -56,6 +57,7 @@ function updateModelValue(): void {
             ref="fileInput"
             type="file"
             class="form-control"
+            :class="{ 'is-invalid': isInvalid }"
             @change="onFileChanged($event)"
         />
         <div v-if="localQuestion" class="mt-2">
