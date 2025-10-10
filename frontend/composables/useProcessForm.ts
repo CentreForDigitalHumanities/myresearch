@@ -16,11 +16,9 @@ import type {
 import { i18n } from "@/plugins/i18n";
 import type { ValidationRuleWithParams } from "@vuelidate/core";
 
-// Augmented Question types with two additional properties:
-// - location: a string representing the path to the question's value in the validation object;
-// - value: the actual answer value, with a type corresponding to the question type;
+// Augmented question types
 interface LocatedQuestion {
-    location: string; // e.g., "steps.0.substeps.1.questions.2"
+    location: string; // Should be something like "steps.0.substeps.1.questions.2"
 }
 
 export type TextQuestionWithValue = TextQuestionType &
@@ -56,11 +54,11 @@ export type QuestionWithValue =
     | DateQuestionWithValue
     | SelectQuestionWithValue;
 
-type SubstepWithValues = Omit<Substep, "questions"> & {
+export type SubstepWithValues = Omit<Substep, "questions"> & {
     questions: QuestionWithValue[];
 };
 
-type StepWithValues = Omit<Step, "questions" | "substeps"> & {
+export type StepWithValues = Omit<Step, "questions" | "substeps"> & {
     questions: QuestionWithValue[];
     substeps: SubstepWithValues[] | null;
 };
@@ -68,7 +66,7 @@ type StepWithValues = Omit<Step, "questions" | "substeps"> & {
 export type CombinedStepWithValues = StepWithValues | SubstepWithValues;
 
 export type FormWithValues = Omit<QueriedForm, "steps"> & {
-    steps: CombinedStepWithValues[];
+    steps: StepWithValues[];
 };
 
 // Validation-related types
@@ -95,26 +93,23 @@ interface FormAndValidation {
 }
 
 /**
- * Processes a queried form (QueriedForm) to produce two derivates:
+ * Processes a queried form (QueriedForm) to produce two derivatives:
  *
- * 1. A form structure with default values for each question (FormWithValues).
- *   This is the same object as the QueriedForm object, but with added `value`
- *   and `location` properties to each question.
+ * 1. **Form structure with default values** (FormWithValues):
+ *    - Augments the QueriedForm with `value` and `location` properties for each question.
+ *    - `value`: initialized to a type-appropriate default (empty string, 0, false, null, etc.)
+ *    - `location`: dot-notation path to the question's value (e.g. "steps.0.substeps.1.questions.2.value")
+ *      This path enables mapping between form values and validation rules.
  *
- *      The `value` property holds the value of the question, initialized to a
- *      default value based on the question type.
+ * 2. **Validation rules object** (FormValidationRules):
+ *    - Mirrors the form structure as required by Vuelidate
+ *    - Contains validation rules for each question (e.g. required, positiveOnly)
+ *    - Rules are based on question properties and type-specific constraints
  *
- *      The `location` property is a string that represents the path to the
- *      question's value in the form structure. We need this to find the
- *      corresponding value in the validation object.
- *
- * 2. A validation object (ValidationRules) containing the rules needed to
- * validate the form. This object mirrors the structure of the form, as
- * required by Vuelidate.
- *
- * @param queriedForm - The form data retrieved from a query
- * @returns An object containing the form with value attributes and the
- * validation rules.
+ * @param queriedForm - The form data retrieved from a GraphQL query
+ * @returns An object containing:
+ *  - `formWithValues`: The augmented form structure with value/location properties
+ *  - `validationRules`: The Vuelidate-compatible validation rules object
  */
 function useProcessForm(queriedForm: QueriedForm): FormAndValidation {
     const { t } = i18n.global;
@@ -130,53 +125,82 @@ function buildFormWithValues(queriedForm: QueriedForm): FormWithValues {
         ...queriedForm,
         steps: queriedForm.steps.map((step, stepIndex) => ({
             ...step,
-            questions: step.questions.map((q, qIndex) =>
-                addValueToQuestion(q, qIndex, stepIndex),
+            questions: step.questions.map((question, questionIndex) =>
+                addValueAndLocationToQuestion(
+                    question,
+                    questionIndex,
+                    stepIndex,
+                ),
             ),
             substeps: step.substeps.map((substep, substepIndex) => ({
                 ...substep,
-                questions: substep.questions.map((q, qIndex) =>
-                    addValueToQuestion(q, qIndex, stepIndex, substepIndex),
+                questions: substep.questions.map((question, questionIndex) =>
+                    addValueAndLocationToQuestion(
+                        question,
+                        questionIndex,
+                        stepIndex,
+                        substepIndex,
+                    ),
                 ),
             })),
         })),
     };
 }
 
-function getDefaultValueForQuestion(question: QuestionType): unknown {
-    switch (question.__typename) {
-        case "TextQuestionType":
-        case "DateQuestionType":
-        case "SelectQuestionType":
-            return "";
-        case "NumberQuestionType":
-            return 0;
-        case "TrueFalseQuestionType":
-            return question.defaultValue;
-        case "FileUploadQuestionType":
-            return null;
-    }
-}
-
-function addValueToQuestion(
-    question: QuestionType,
+function formatQuestionLocation(
     questionIndex: number,
     stepIndex: number,
     substepIndex?: number,
-): QuestionWithValue {
+): string {
     const locationParts: string[] = ["steps", stepIndex.toString()];
     if (substepIndex !== undefined) {
         locationParts.push("substeps", substepIndex.toString());
     }
     locationParts.push("questions", questionIndex.toString(), "value");
 
-    const location = locationParts.join(".");
+    return locationParts.join(".");
+}
 
-    return {
-        ...question,
-        location,
-        value: getDefaultValueForQuestion(question) as never,
-    };
+function addValueAndLocationToQuestion(
+    question: QuestionType,
+    questionIndex: number,
+    stepIndex: number,
+    substepIndex?: number,
+): QuestionWithValue {
+    const location = formatQuestionLocation(
+        questionIndex,
+        stepIndex,
+        substepIndex,
+    );
+
+    switch (question.__typename) {
+        case "TextQuestionType":
+        case "DateQuestionType":
+        case "SelectQuestionType":
+            return {
+                ...question,
+                location,
+                value: "",
+            };
+        case "NumberQuestionType":
+            return {
+                ...question,
+                location,
+                value: 0,
+            };
+        case "TrueFalseQuestionType":
+            return {
+                ...question,
+                location,
+                value: question.defaultValue,
+            };
+        case "FileUploadQuestionType":
+            return {
+                ...question,
+                location,
+                value: null,
+            };
+    }
 }
 
 function buildValidationRules(
@@ -185,8 +209,8 @@ function buildValidationRules(
 ): FormValidationRules {
     return {
         steps: queriedForm.steps.map((step) => ({
-            questions: step.questions.map((q) =>
-                addValidationForQuestion(q, t),
+            questions: step.questions.map((question) =>
+                addValidationForQuestion(question, t),
             ),
             substeps: step.substeps.map((substep) => ({
                 questions: substep.questions.map((q) =>
