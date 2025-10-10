@@ -61,5 +61,10 @@
   "Questions?": "Vragen?",
   "Additional Information": "Aanvullende informatie",
   "Previous": "Vorige",
-  "Next": "Volgende"
+  "Next": "Volgende",
+  "Please select one": "Maak een keuze",
+  "Remove": "Verwijderen",
+  "Selected file": "Geselecteerd bestand",
+  "This field is required": "Dit veld is verplicht",
+  "The number must be positive": "Het getal moet positief zijn"
 }
