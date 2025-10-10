@@ -24,7 +24,7 @@ export const mockQuestions: MockQuestions = {
     ethicalCommission: {
         "Where can I find the documents that I have to submit?": [
             {
-                text: "During the application you may need to submit certain documents. Use the most recent model documents.",
+                text: "During the application you may need to submit certain documents. Use the most recent ",
                 url: null,
                 image: null,
             },
