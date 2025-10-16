@@ -33,7 +33,7 @@ class StudyQuery(ObjectType):
         except Study.DoesNotExist:
             return None
         if study.can_be_accessed_by(info.context.user, MRPermissionTypes.VIEW):
-            return Study
+            return study
         return None
 
     def resolve_study_list(
@@ -51,7 +51,7 @@ class StudyQuery(ObjectType):
         except Study.DoesNotExist:
             return None
         if study.can_be_accessed_by(info.context.user, MRPermissionTypes.EDIT):
-            return Study
+            return study
         return None
 
     def resolve_my_study_list(
