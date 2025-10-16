@@ -32,7 +32,7 @@ class Study(models.Model):
 
         if user == self.created_by:
             return True
-        if user.is_privacy_officer:
+        if user.is_privacy_officer or user.is_fetc_member:
             return True
         return False
 
