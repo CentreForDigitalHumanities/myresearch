@@ -55,11 +55,9 @@ class UpdateStudy(Mutation):
         title: str,
         id: int,
     ):
-
-        study = Study.objects.get(pk=id)
-
-        # Check if the study exists.
-        if study is None:
+        try:
+            study = Study.objects.get(pk=id)
+        except Study.DoesNotExist:
             error = ErrorType(
                 field="id",
                 messages=["Study not found."],
@@ -100,10 +98,9 @@ class DeleteStudy(Mutation):
 
         user = info.context.user
 
-        study = Study.objects.get(pk=id)
-
-        # Check if the study exists.
-        if study is None:
+        try:
+            study = Study.objects.get(pk=id)
+        except Study.DoesNotExist:
             error = ErrorType(
                 field="id",
                 messages=["Study not found."],
