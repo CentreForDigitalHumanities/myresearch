@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("title", models.CharField()),
+                ("title", models.CharField(max_length=200,)),
                 (
                     "created_by",
                     models.ForeignKey(
