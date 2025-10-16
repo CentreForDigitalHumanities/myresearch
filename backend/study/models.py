@@ -7,7 +7,9 @@ class Study(models.Model):
 
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    title = models.CharField(max_length=200,)
+    title = models.CharField(
+        max_length=200,
+    )
 
     def can_be_accessed_by(self, user, permission):
         """
