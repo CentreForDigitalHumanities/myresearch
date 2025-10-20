@@ -55,7 +55,7 @@ const isProposal = (
 };
 
 const isRoadmap = (
-    recentActivity: Proposal | Roadmap,
+    recentActivity: RecentActivity,
 ): recentActivity is Roadmap => {
     return recentActivity.hasOwnProperty("roadmapBody");
 };
