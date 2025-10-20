@@ -134,6 +134,7 @@ services:
 
   dev-idp:
     image: ghcr.io/centrefordigitalhumanities/development-idp/development-idp:latest
+    hostname: mr-dev-idp
     ports:
       - "7000:7000"
     extra_hosts:
@@ -143,7 +144,7 @@ services:
       - DJANGO_DEBUG=False
       - DJANGO_DEBUG_TOOLBAR=True
       - DJANGO_HOST=localhost:7000
-      - DJANGO_ALLOWED_HOSTS=dev-idp,localhost,127.0.0.1,host.docker.internal
+      - DJANGO_ALLOWED_HOSTS=mr-dev-idp,localhost,127.0.0.1,host.docker.internal
       - DJANGO_DB_TYPE=sqlite3
       - DJANGO_SQLLITE_FILE=/run/db/db.sqlite3
       - DJANGO_HTTPS=False

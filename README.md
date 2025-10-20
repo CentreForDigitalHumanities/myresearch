@@ -197,8 +197,8 @@ This will start a Docker Compose network with the following containers:
       - visit `localhost:7000`
       - Login as an admin user.
       - Add a service provider with the following settings:
-         - Entity ID: `http://localhost:8000/saml/metadata/`
-         - Metadata url: `http://host.docker.internal:8000/saml/metadata/`
+         - Entity ID: `http://localhost:5000/saml/metadata/`
+         - Metadata url: `http://host.docker.internal:5000/saml/metadata/`
          - Attribute map: `UU`
 
    You should then be able to log into MyResearch using the Dev-Idp.
