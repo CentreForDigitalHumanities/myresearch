@@ -49,7 +49,7 @@ const recentActivity: RecentActivity[] = [
 type RecentActivity = Proposal | Roadmap;
 
 const isProposal = (
-    recentActivity: Proposal | Roadmap,
+    recentActivity: RecentActivity,
 ): recentActivity is Proposal => {
     return recentActivity.hasOwnProperty("status");
 };
