@@ -27,8 +27,8 @@ class StudyType(DjangoObjectType):
         Return the queryset of studies, based on the permission, defined in the
         query.
 
-        TODO: This function should probably live in some kind off mixin for all
-        DjangoObjectType's in MyResearch.
+        TODO: This function should probably live in some kind of mixin for all
+        DjangoObjectTypes in MyResearch.
         """
 
         user = info.context.user
