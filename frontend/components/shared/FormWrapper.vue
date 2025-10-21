@@ -14,12 +14,12 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-const formArtifacts = computed(() =>
+const processedForm = computed(() =>
     reactive(useProcessForm(props.queriedForm)),
 );
 
-const formObject = computed(() => formArtifacts.value.formWithValues);
-const validationRules = computed(() => formArtifacts.value.validationRules);
+const formObject = computed(() => processedForm.value.formWithValues);
+const validationRules = computed(() => processedForm.value.validationRules);
 
 const v$ = useVuelidate(validationRules, formObject, {
     $autoDirty: true,
