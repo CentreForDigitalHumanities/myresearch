@@ -13,21 +13,21 @@ interface Emits {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
-const localQuestion = ref<File | null>(props.question.value);
+const currentFile = ref<File | null>(props.question.value);
 const fileInput = ref<HTMLInputElement | null>(null);
 
 function onFileChanged(event: Event) {
     const target = event.target as HTMLInputElement;
     if (target.files) {
-        localQuestion.value = target.files[0];
+        currentFile.value = target.files[0];
     } else {
-        localQuestion.value = null;
+        currentFile.value = null;
     }
     updateModelValue();
 }
 
 function removeFile(): void {
-    localQuestion.value = null;
+    currentFile.value = null;
     updateModelValue();
 
     // Update the input control to reflect the removal.
@@ -37,7 +37,7 @@ function removeFile(): void {
 }
 
 function updateModelValue(): void {
-    emit("update:modelValue", localQuestion.value);
+    emit("update:modelValue", currentFile.value);
 }
 </script>
 
@@ -60,10 +60,10 @@ function updateModelValue(): void {
             :class="{ 'is-invalid': isInvalid }"
             @change="onFileChanged($event)"
         />
-        <div v-if="localQuestion" class="mt-2">
+        <div v-if="currentFile" class="mt-2">
             <strong>{{ $t("Selected file") }}:</strong>
-            {{ localQuestion.name }} ({{
-                (localQuestion.size / 1024).toFixed(2)
+            {{ currentFile.name }} ({{
+                (currentFile.size / (1024 * 1024)).toFixed(1)
             }}
             KB)
             <button
