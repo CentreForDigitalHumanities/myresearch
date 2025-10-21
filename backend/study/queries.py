@@ -11,7 +11,7 @@ from main.models import MRPermissionTypes
 class StudyQuery(ObjectType):
     study = Field(
         StudyType,
-        id=Int(),
+        id=ID(required=True),
     )
 
     study_list = List(
