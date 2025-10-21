@@ -9,6 +9,7 @@ generated
 
 # Node dependencies
 node_modules
+.nvmrc
 
 # Logs
 logs
