@@ -1,5 +1,5 @@
 from typing import Optional
-from graphene import Field, List, ObjectType, ResolveInfo, Int
+from graphene import Field, List, ObjectType, ResolveInfo, Int, ID
 
 from django.db.models import QuerySet
 
@@ -20,7 +20,7 @@ class StudyQuery(ObjectType):
 
     my_study = Field(
         StudyType,
-        id=Int(),
+        id=ID(required=True),
     )
 
     my_study_list = List(
