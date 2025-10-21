@@ -12,9 +12,9 @@ export type FrequentQuestionKey =
     | "ethicalCommission"
     | "other";
 
-/** One or more FrequentAnswerParts form a FrequentAnswer.
+/** this interface is used in FrequentQuestions.vue
  * @text If url is not null then text is assumed to be the url text */
-interface FrequentAnswerPart {
+export interface FrequentAnswer {
     text: string | null;
     url: string | null;
     image: {
@@ -22,7 +22,6 @@ interface FrequentAnswerPart {
         altText: string;
     } | null;
 }
-export type FrequentAnswer = FrequentAnswerPart[];
 
 const questionAnswers: Record<string, FrequentAnswer> =
     mockQuestions[props.questionsGroup];
@@ -60,34 +59,24 @@ const questionAnswers: Record<string, FrequentAnswer> =
                         :data-bs-parent="'#accordion' + questionsGroup"
                     >
                         <div class="accordion-body mw-100">
-                            <template
-                                v-for="(answerPart, answerIndex) in answer"
-                                :key="
-                                    'collapse' +
-                                    questionsGroup +
-                                    index +
-                                    answerIndex
-                                "
+                            <a
+                                v-if="answer.url != null"
+                                :href="$t(answer.url)"
+                                target="_blank"
                             >
-                                <a
-                                    v-if="answerPart.url != null"
-                                    :href="$t(answerPart.url)"
-                                    target="_blank"
-                                >
-                                    <template v-if="answerPart.text != null">
-                                        {{ $t(answerPart.text) }}
-                                    </template>
-                                </a>
-                                <img
-                                    v-else-if="answerPart.image != null"
-                                    :src="answerPart.image.src"
-                                    :alt="answerPart.image.altText"
-                                />
-                                <template v-else-if="answerPart.text != null">
-                                    {{ $t(answerPart.text) }}
+                                <template v-if="answer.text != null">
+                                    {{ $t(answer.text) }}
                                 </template>
-                                {{ " " }}
+                            </a>
+                            <img
+                                v-else-if="answer.image != null"
+                                :src="answer.image.src"
+                                :alt="answer.image.altText"
+                            />
+                            <template v-else-if="answer.text != null">
+                                {{ $t(answer.text) }}
                             </template>
+                            {{ " " }}
                         </div>
                     </div>
                 </div>
