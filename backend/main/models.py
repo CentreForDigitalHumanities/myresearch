@@ -17,12 +17,12 @@ class User(AbstractUser):
         return self.FETC_MEMBER in [g.name for g in self.groups.all()]
 
 
-class MRPermissionTypes(models.IntegerChoices):
+class MRPermission(models.TextChoices):
     """
     PermissionTypes are used in ObjectType's get_queryset method and Model's
     can_be_accessed_by() method, to decide which queryset gets returned or
     whether a user has access to an object, based on the user's permissions.
     """
 
-    VIEW = 1
-    EDIT = 2
+    VIEW = "View"
+    EDIT = "Edit"
