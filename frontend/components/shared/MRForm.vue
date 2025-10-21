@@ -32,14 +32,14 @@ const questionComponentMap = {
     FileUploadQuestionType: SharedFileUploadQuestion as Component,
 };
 
-function getErrorsForControl(question: QuestionWithValue): ErrorObject[] {
+function getErrors(question: QuestionWithValue): ErrorObject[] {
     return props.vuelidate.$errors.filter(
         (error) => error.$propertyPath === question.location,
     );
 }
 
 function hasErrors(question: QuestionWithValue): boolean {
-    return getErrorsForControl(question).length > 0;
+    return getErrors(question).length > 0;
 }
 </script>
 
@@ -60,7 +60,7 @@ function hasErrors(question: QuestionWithValue): boolean {
                     :is-invalid="hasErrors(question)"
                 />
                 <div
-                    v-for="error of getErrorsForControl(question)"
+                    v-for="error of getErrors(question)"
                     :key="error.$uid"
                     class="invalid-feedback"
                 >
