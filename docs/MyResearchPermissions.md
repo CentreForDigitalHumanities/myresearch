@@ -1,4 +1,4 @@
-# Overview of Permssions in Myresearch
+# Overview of Permissions in MyResearch
 
 This document was last edited on 02-10-2025. May need to be updated!
 
