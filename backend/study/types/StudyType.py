@@ -4,7 +4,7 @@ from graphene_django import DjangoObjectType
 from django.db.models import QuerySet
 
 from study.models import Study
-from main.models import User, MRPermissionTypes
+from main.models import User, MRPermission
 
 
 class StudyType(DjangoObjectType):
@@ -35,9 +35,9 @@ class StudyType(DjangoObjectType):
 
         if not user.is_authenticated:
             return queryset.none()
-        if permission == MRPermissionTypes.VIEW:
+        if permission == MRPermission.VIEW:
             return cls.viewable_queryset(user, queryset)
-        if permission == MRPermissionTypes.EDIT:
+        if permission == MRPermission.EDIT:
             return cls.editable_queryset(user, queryset)
         # NOTE: This should never happen.
         raise ValueError(

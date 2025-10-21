@@ -5,7 +5,7 @@ from django.db.models import QuerySet
 
 from study.models import Study
 from study.types.StudyType import StudyType
-from main.models import MRPermissionTypes
+from main.models import MRPermission
 
 
 class StudyQuery(ObjectType):
@@ -27,38 +27,40 @@ class StudyQuery(ObjectType):
         StudyType,
     )
 
-    def resolve_study(root, info: ResolveInfo, id) -> Optional[Study]:
+    @staticmethod
+    def resolve_study(root, info: ResolveInfo, id: int) -> Optional[Study]:
+        queryset = StudyType.get_queryset(Study.objects, info, permission=MRPermission.VIEW)
         try:
-            study = Study.objects.get(id=id)
+            return queryset.get(id=id)
         except Study.DoesNotExist:
             return None
-        if study.can_be_accessed_by(info.context.user, MRPermissionTypes.VIEW):
-            return study
-        return None
 
+    @staticmethod
     def resolve_study_list(
         root,
         info: ResolveInfo,
     ) -> QuerySet[Study]:
         queryset = StudyType.get_queryset(
-            Study.objects, info, permission=MRPermissionTypes.VIEW
+            Study.objects, info, permission=MRPermission.VIEW
         )
         return queryset.all()
 
-    def resolve_my_study(root, info: ResolveInfo, id) -> Optional[Study]:
+    @staticmethod
+    def resolve_my_study(root, info: ResolveInfo, id: int) -> Optional[Study]:
         try:
             study = Study.objects.get(id=id)
         except Study.DoesNotExist:
             return None
-        if study.can_be_accessed_by(info.context.user, MRPermissionTypes.EDIT):
+        if study.can_be_accessed_by(info.context.user, MRPermission.EDIT):
             return study
         return None
 
+    @staticmethod
     def resolve_my_study_list(
         root,
         info: ResolveInfo,
     ) -> QuerySet[Study]:
         queryset = StudyType.get_queryset(
-            Study.objects, info, permission=MRPermissionTypes.EDIT
+            Study.objects, info, permission=MRPermission.EDIT
         )
         return queryset.all()

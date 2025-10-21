@@ -1,4 +1,4 @@
-from main.models import User, MRPermissionTypes
+from main.models import User, MRPermission
 
 from django.db import models
 
@@ -21,9 +21,9 @@ class Study(models.Model):
         """
         if not user.is_authenticated:
             return False
-        if permission == MRPermissionTypes.EDIT:
+        if permission == MRPermission.EDIT:
             return self.can_be_edited_by(user)
-        if permission == MRPermissionTypes.VIEW:
+        if permission == MRPermission.VIEW:
             return self.can_be_viewed_by(user)
         raise ValueError(
             f"{self}.can_be_accessed_by() has received a permission type which "

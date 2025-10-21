@@ -2,7 +2,7 @@ from graphene import Mutation, ID, Boolean, ResolveInfo, List
 from graphene_django.types import ErrorType
 
 from study.models import Study
-from main.models import MRPermissionTypes
+from main.models import MRPermission
 
 
 class DeleteStudyMutation(Mutation):
@@ -33,7 +33,7 @@ class DeleteStudyMutation(Mutation):
             return cls(errors=[error])
 
         # Check if the user has Edit permission
-        if not study.can_be_accessed_by(user, MRPermissionTypes.EDIT):
+        if not study.can_be_accessed_by(user, MRPermission.EDIT):
             error = ErrorType(
                 field="", messages=["You are not authorized to delete this study."]
             )

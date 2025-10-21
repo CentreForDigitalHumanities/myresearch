@@ -1,4 +1,4 @@
-from backend.main.models import MRPermissionTypes
+from backend.main.models import MRPermission
 from backend.study.models import Study
 from backend.study.types.StudyType import StudyType
 
@@ -36,7 +36,7 @@ class UpdateStudyMutation(Mutation):
         user = info.context.user
 
         # Check if the user has Edit permission
-        if not study.can_be_accessed_by(user, MRPermissionTypes.EDIT):
+        if not study.can_be_accessed_by(user, MRPermission.EDIT):
             error = ErrorType(
                 field="", messages=["You are not authorized to update this study."]
             )
