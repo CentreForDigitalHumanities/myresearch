@@ -15,7 +15,9 @@ from form.queries import FormQueries
 from main.queries import ListUsersQuery
 from study.queries import StudyQuery
 
-from study.mutations.StudyMutations import CreateStudy, UpdateStudy, DeleteStudy
+from study.mutations.CreateStudyMutation import CreateStudyMutation
+from study.mutations.UpdateStudyMutation import UpdateStudyMutation
+from study.mutations.DeleteStudyMutation import DeleteStudyMutation
 
 
 class Query(ListUsersQuery, FormQueries, StudyQuery, ObjectType):
@@ -24,9 +26,9 @@ class Query(ListUsersQuery, FormQueries, StudyQuery, ObjectType):
 
 class Mutation(ObjectType):
 
-    create_study = CreateStudy.Field()
-    update_study = UpdateStudy.Field()
-    delete_study = DeleteStudy.Field()
+    create_study = CreateStudyMutation.Field()
+    update_study = UpdateStudyMutation.Field()
+    delete_study = DeleteStudyMutation.Field()
 
 
 schema = Schema(
