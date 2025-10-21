@@ -56,7 +56,7 @@ class UpdateStudy(Mutation):
         id: int,
     ):
         try:
-            study = Study.objects.get(pk=id)
+            study = StudyType.get_queryset(Study.objects, info).get(pk=id)
         except Study.DoesNotExist:
             error = ErrorType(
                 field="id",
