@@ -1,5 +1,5 @@
 from typing import Optional
-from graphene import Field, List, ObjectType, ResolveInfo, ID, String
+from graphene import Field, List, ObjectType, ResolveInfo, ID, String, NonNull
 
 from django.db.models import QuerySet
 
@@ -16,14 +16,21 @@ class StudyQuery(ObjectType):
     )
 
     studies = List(
-        StudyType,
+        NonNull(
+            StudyType,
+        ),
         mrpermission=String(required=True),
+        required=True,
     )
 
     @staticmethod
-    def resolve_study(root, info: ResolveInfo, id: int, mrpermission: str) -> Optional[Study]:
+    def resolve_study(
+        root, info: ResolveInfo, id: int, mrpermission: str
+    ) -> Optional[Study]:
         queryset = StudyType.get_queryset(
-            Study.objects, info, mrpermission=mrpermission,
+            Study.objects,
+            info,
+            mrpermission=mrpermission,
         )
         try:
             return queryset.get(id=id)
@@ -31,11 +38,7 @@ class StudyQuery(ObjectType):
             return None
 
     @staticmethod
-    def resolve_studies(
-        root,
-        info: ResolveInfo,
-        mrpermission: str
-    ) -> QuerySet[Study]:
+    def resolve_studies(root, info: ResolveInfo, mrpermission: str) -> QuerySet[Study]:
         return StudyType.get_queryset(
             Study.objects, info, mrpermission=mrpermission
         ).all()
