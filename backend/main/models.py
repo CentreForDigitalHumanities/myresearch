@@ -1,20 +1,20 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-
-class User(AbstractUser):
-
-    # Some constants used for group names
+class MRGroups(models.TextChoices):
     PRIVACY_OFFICER = "Privacy officer"
     FETC_MEMBER = "FETC member"
 
+class User(AbstractUser):
+
+
     @property
     def is_privacy_officer(self):
-        return self.PRIVACY_OFFICER in [g.name for g in self.groups.all()]
+        return MRGroups.PRIVACY_OFFICER in [g.name for g in self.groups.all()]
 
     @property
     def is_fetc_member(self):
-        return self.FETC_MEMBER in [g.name for g in self.groups.all()]
+        return MRGroups.FETC_MEMBER in [g.name for g in self.groups.all()]
     
     def has_access_to(self, object, mrpermission):
         """
