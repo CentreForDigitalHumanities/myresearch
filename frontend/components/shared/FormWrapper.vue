@@ -5,7 +5,7 @@ import type { QueriedForm } from "./FormWrapper";
 import FormStepper, { type FormStepperConfig } from "./FormStepper";
 import MRForm from "./MRForm.vue";
 import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConfig";
-import { useProcessForm } from "~/composables/useProcessForm";
+import { useFormState } from "~/composables/useFormState";
 import useVuelidate from "@vuelidate/core";
 
 interface Props {
@@ -14,23 +14,29 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-const processedForm = computed(() =>
-    reactive(useProcessForm(props.queriedForm)),
+const { formObject, validationRules } = useFormState(props.queriedForm);
+
+const v$ = useVuelidate(
+    validationRules,
+    computed(() => formObject.value ?? { steps: [] }),
+    {
+        $autoDirty: true,
+    },
 );
-
-const formObject = computed(() => processedForm.value.formWithValues);
-const validationRules = computed(() => processedForm.value.validationRules);
-
-const v$ = useVuelidate(validationRules, formObject, {
-    $autoDirty: true,
-});
 
 // Stepper configuration
 const formStepperConfig = computed<FormStepperConfig | null>(() =>
     useBuildFormStepperConfig(props.queriedForm, props.currentStepSlug),
 );
 
-const allSteps = computed(() => getAllSteps(formObject.value));
+const allSteps = computed(() => {
+    const formValue = formObject.value;
+    if (!formValue) {
+        return [];
+    }
+    return getAllSteps(formValue);
+});
+
 const selectedStep = computed(() => {
     const steps = allSteps.value;
     if (steps.length <= 0) {
