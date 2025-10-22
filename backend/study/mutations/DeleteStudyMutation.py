@@ -1,6 +1,8 @@
 from graphene import Mutation, ID, Boolean, ResolveInfo, List
 from graphene_django.types import ErrorType
+from django.db.models import QuerySet
 
+from study.types.StudyType import StudyType
 from study.models import Study
 from main.models import MRPermission
 
@@ -21,21 +23,12 @@ class DeleteStudyMutation(Mutation):
         id: int,
     ):
 
-        user = info.context.user
-
         try:
-            study = Study.objects.get(pk=id)
+            study = StudyType.get_queryset(Study.objects, info, MRPermission.EDIT).get(pk=id)
         except Study.DoesNotExist:
             error = ErrorType(
                 field="id",
                 messages=["Study not found."],
-            )
-            return cls(errors=[error])
-
-        # Check if the user has Edit permission
-        if not study.can_be_accessed_by(user, MRPermission.EDIT):
-            error = ErrorType(
-                field="", messages=["You are not authorized to delete this study."]
             )
             return cls(errors=[error])
 

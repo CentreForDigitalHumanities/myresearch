@@ -1,5 +1,5 @@
 from typing import Optional
-from graphene import Field, List, ObjectType, ResolveInfo, Int, ID
+from graphene import Field, List, ObjectType, ResolveInfo, ID, String
 
 from django.db.models import QuerySet
 
@@ -12,55 +12,30 @@ class StudyQuery(ObjectType):
     study = Field(
         StudyType,
         id=ID(required=True),
+        mrpermission=String(required=True),
     )
 
-    study_list = List(
+    studies = List(
         StudyType,
-    )
-
-    my_study = Field(
-        StudyType,
-        id=ID(required=True),
-    )
-
-    my_study_list = List(
-        StudyType,
+        mrpermission=String(required=True),
     )
 
     @staticmethod
-    def resolve_study(root, info: ResolveInfo, id: int) -> Optional[Study]:
-        queryset = StudyType.get_queryset(Study.objects, info, permission=MRPermission.VIEW)
+    def resolve_study(root, info: ResolveInfo, id: int, mrpermission: str) -> Optional[Study]:
+        queryset = StudyType.get_queryset(
+            Study.objects, info, mrpermission=mrpermission,
+        )
         try:
             return queryset.get(id=id)
         except Study.DoesNotExist:
             return None
 
     @staticmethod
-    def resolve_study_list(
+    def resolve_studies(
         root,
         info: ResolveInfo,
+        mrpermission: str
     ) -> QuerySet[Study]:
-        queryset = StudyType.get_queryset(
-            Study.objects, info, permission=MRPermission.VIEW
-        )
-        return queryset.all()
-
-    @staticmethod
-    def resolve_my_study(root, info: ResolveInfo, id: int) -> Optional[Study]:
-        try:
-            study = Study.objects.get(id=id)
-        except Study.DoesNotExist:
-            return None
-        if study.can_be_accessed_by(info.context.user, MRPermission.EDIT):
-            return study
-        return None
-
-    @staticmethod
-    def resolve_my_study_list(
-        root,
-        info: ResolveInfo,
-    ) -> QuerySet[Study]:
-        queryset = StudyType.get_queryset(
-            Study.objects, info, permission=MRPermission.EDIT
-        )
-        return queryset.all()
+        return StudyType.get_queryset(
+            Study.objects, info, mrpermission=mrpermission
+        ).all()
