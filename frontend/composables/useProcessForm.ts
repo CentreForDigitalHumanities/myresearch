@@ -70,20 +70,20 @@ export type FormWithValues = Omit<QueriedForm, "steps"> & {
 };
 
 // Validation-related types
-type QuestionValidationRule = {
+type ValidationRule = {
     value: Record<string, ValidationRuleWithParams>;
 };
 
 type SubstepValidationRules = {
-    questions: QuestionValidationRule[];
+    questions: ValidationRule[];
 };
 
 type StepValidationRules = {
-    questions: QuestionValidationRule[];
+    questions: ValidationRule[];
     substeps: SubstepValidationRules[];
 };
 
-type FormValidationRules = {
+export type FormValidationRules = {
     steps: StepValidationRules[];
 };
 
@@ -93,23 +93,23 @@ interface FormAndValidation {
 }
 
 /**
- * Processes a queried form (QueriedForm) to produce two derivatives:
+ * Processes a queried form (QueriedForm) to produce two derived structures:
  *
  * 1. **Form structure with default values** (FormWithValues):
- *    - Augments the QueriedForm with `value` and `location` properties for each question.
- *    - `value`: initialized to a type-appropriate default (empty string, 0, false, null, etc.)
- *    - `location`: dot-notation path to the question's value (e.g. "steps.0.substeps.1.questions.2.value")
+ *    - Augmented QueriedForm with `value` and `location` properties for each question.
+ *    - `value`: initialized to a type-appropriate default (empty string, 0, false, null, etc.).
+ *    - `location`: dot-notation path to the question's value (e.g. "steps.0.substeps.1.questions.2.value").
  *      This path enables mapping between form values and validation rules.
  *
  * 2. **Validation rules object** (FormValidationRules):
- *    - Mirrors the form structure as required by Vuelidate
- *    - Contains validation rules for each question (e.g. required, positiveOnly)
- *    - Rules are based on question properties and type-specific constraints
+ *    - Mirrors the form structure as required by Vuelidate.
+ *    - Contains validation rules for each question (e.g. required, positiveOnly).
+ *    - Rules are based on question properties and type-specific constraints.
  *
  * @param queriedForm - The form data retrieved from a GraphQL query
  * @returns An object containing:
- *  - `formWithValues`: The augmented form structure with value/location properties
- *  - `validationRules`: The Vuelidate-compatible validation rules object
+ *  - `formWithValues`: The augmented form structure with value/location properties.
+ *  - `validationRules`: The Vuelidate-compatible validation rules object.
  */
 function useProcessForm(queriedForm: QueriedForm): FormAndValidation {
     const { t } = i18n.global;
@@ -147,6 +147,9 @@ function buildFormWithValues(queriedForm: QueriedForm): FormWithValues {
     };
 }
 
+/**
+ * Formats and returns a string representing the location of a question within a nested form structure, e.g. `"steps.0.substeps.1.questions.2.value"` for the value of the 3rd question in the 2nd substep of the 1st step.
+ */
 function formatQuestionLocation(
     questionIndex: number,
     stepIndex: number,
@@ -210,21 +213,21 @@ function buildValidationRules(
     return {
         steps: queriedForm.steps.map((step) => ({
             questions: step.questions.map((question) =>
-                addValidationForQuestion(question, t),
+                addValidationRule(question, t),
             ),
             substeps: step.substeps.map((substep) => ({
                 questions: substep.questions.map((q) =>
-                    addValidationForQuestion(q, t),
+                    addValidationRule(q, t),
                 ),
             })),
         })),
     };
 }
 
-function addValidationForQuestion(
+function addValidationRule(
     question: QuestionType,
     t: (key: string) => string,
-): QuestionValidationRule {
+): ValidationRule {
     const rules: Record<string, ValidationRuleWithParams> = {};
 
     // General validation rules
