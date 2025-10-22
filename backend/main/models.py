@@ -1,13 +1,13 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+
 class MRGroups(models.TextChoices):
     PRIVACY_OFFICER = "Privacy officer"
     FETC_MEMBER = "FETC member"
 
+
 class User(AbstractUser):
-
-
     @property
     def is_privacy_officer(self):
         return MRGroups.PRIVACY_OFFICER in [g.name for g in self.groups.all()]
@@ -15,7 +15,7 @@ class User(AbstractUser):
     @property
     def is_fetc_member(self):
         return MRGroups.FETC_MEMBER in [g.name for g in self.groups.all()]
-    
+
     def has_access_to(self, object, mrpermission):
         """
         Utility function to check if a user has access to a specific object,

@@ -34,5 +34,3 @@ class CreateStudyMutation(Mutation):
                 field="", messages=["You are not authorized to create this study."]
             )
             return cls(errors=[error])
-
-

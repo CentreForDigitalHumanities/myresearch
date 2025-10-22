@@ -2,6 +2,7 @@ from main.models import User, MRPermission
 
 from django.db import models
 
+
 class BaseMRManager(models.Manager):
     """
     A Base manager class for handling object permissions.
@@ -24,7 +25,7 @@ class BaseMRManager(models.Manager):
                 return self._viewable_objects(user)
             case MRPermission.EDIT:
                 return self._editable_objects(user)
-            
+
         # NOTE: This should never happen.
         raise ValueError(
             "accessible_objects() has received a permission type which has not "
@@ -38,5 +39,3 @@ class BaseMRManager(models.Manager):
     def _editable_objects(self, user: User):
         # Needs to be overwritten for a specific object's permissions
         return self
-
-    

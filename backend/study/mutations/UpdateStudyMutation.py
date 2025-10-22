@@ -24,7 +24,9 @@ class UpdateStudyMutation(Mutation):
         id: int,
     ):
         try:
-            study = StudyType.get_queryset(Study.objects, info, MRPermission.EDIT).get(pk=id)
+            study = StudyType.get_queryset(Study.objects, info, MRPermission.EDIT).get(
+                pk=id
+            )
         except Study.DoesNotExist:
             error = ErrorType(
                 field="id",
