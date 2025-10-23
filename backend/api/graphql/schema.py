@@ -13,11 +13,11 @@ from form.types.QuestionType import (
 )
 from form.queries import FormQueries
 from main.queries import ListUsersQuery
-from study.queries import StudyQuery
+from research.queries import StudyQuery
 
-from study.mutations.CreateStudyMutation import CreateStudyMutation
-from study.mutations.UpdateStudyMutation import UpdateStudyMutation
-from study.mutations.DeleteStudyMutation import DeleteStudyMutation
+from research.mutations.CreateStudyMutation import CreateStudyMutation
+from research.mutations.UpdateStudyMutation import UpdateStudyMutation
+from research.mutations.DeleteStudyMutation import DeleteStudyMutation
 
 
 class Query(ListUsersQuery, FormQueries, StudyQuery, ObjectType):

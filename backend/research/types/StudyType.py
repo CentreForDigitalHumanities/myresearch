@@ -3,7 +3,7 @@ from graphene_django import DjangoObjectType
 
 from django.db.models import QuerySet
 
-from study.models import Study
+from research.models import Study
 
 
 class StudyType(DjangoObjectType):

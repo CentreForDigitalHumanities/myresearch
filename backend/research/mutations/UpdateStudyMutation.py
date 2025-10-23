@@ -1,6 +1,6 @@
 from main.models import MRPermission
-from study.models import Study
-from study.types.StudyType import StudyType
+from research.models import Study
+from research.types.StudyType import StudyType
 
 from graphene import ID, Field, List, Mutation, ResolveInfo, String
 from graphene_django.types import ErrorType
@@ -24,7 +24,7 @@ class UpdateStudyMutation(Mutation):
         id: int,
     ):
         try:
-            study = StudyType.get_queryset(Study.objects, info, MRPermission.EDIT).get(
+            study = StudyType.get_queryset(Study.objects, info,).get(
                 pk=id
             )
         except Study.DoesNotExist:

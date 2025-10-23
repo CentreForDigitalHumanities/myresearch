@@ -2,8 +2,8 @@ from graphene import Mutation, ID, Boolean, ResolveInfo, List
 from graphene_django.types import ErrorType
 from django.db.models import QuerySet
 
-from study.types.StudyType import StudyType
-from study.models import Study
+from research.types.StudyType import StudyType
+from research.models import Study
 from main.models import MRPermission
 
 
@@ -24,7 +24,7 @@ class DeleteStudyMutation(Mutation):
     ):
 
         try:
-            study = StudyType.get_queryset(Study.objects, info, MRPermission.EDIT).get(
+            study = StudyType.get_queryset(Study.objects, info,).get(
                 pk=id
             )
         except Study.DoesNotExist:

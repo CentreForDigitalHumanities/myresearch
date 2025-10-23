@@ -1,5 +1,5 @@
-from study.models import Study
-from study.types.StudyType import StudyType
+from research.models import Study
+from research.types.StudyType import StudyType
 
 from graphene import Field, List, Mutation, ResolveInfo, String
 from graphene_django.types import ErrorType

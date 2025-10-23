@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 LOCAL_APPS = [
     "main",
     "form",
-    "study",
+    "research",
 ]
 
 INSTALLED_APPS = (
