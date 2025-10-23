@@ -12,7 +12,7 @@ function setLocale(locale: string) {
 }
 
 const currentUserStore = useCurrentUserStore();
-await currentUserStore.loadData();
+await callOnce("user", () => currentUserStore.loadData());
 </script>
 
 <template>
@@ -31,7 +31,10 @@ await currentUserStore.loadData();
             <div class="ms-auto">
                 <!-- Spacer element, moves the next elements to the right -->
             </div>
-            <div v-if="currentUserStore.currentUser?.isStaff" class="border-left px-3">
+            <div
+                v-if="currentUserStore.currentUser?.isStaff"
+                class="border-left px-3"
+            >
                 <NuxtLink to="/" class="nav-link">
                     <BSIcon icon="gear" size="lg" />
                 </NuxtLink>
@@ -52,17 +55,17 @@ await currentUserStore.loadData();
             </div>
         </div>
         <div class="uu-header-row">
-            <div
-                v-if="currentUserStore.currentUser"
-                class="ms-auto"
-            >
-                Welcome, {{ currentUserStore.currentUser?.fullName }}! (<a href="/saml/logout" class="text-decoration-underline">Logout</a>)
+            <div v-if="currentUserStore.currentUser" class="ms-auto">
+                {{ $t("Welcome, {name}", { name: currentUserStore.currentUser?.fullName }) }} (<a
+                    href="/saml/logout"
+                    class="text-decoration-underline"
+                    >{{ $t("Logout") }}</a
+                >)
             </div>
-            <div
-                v-else
-                class="ms-auto"
-            >
-                <a href="/saml/login" class="text-decoration-underline">Login</a>
+            <div v-else class="ms-auto">
+                <a href="/saml/login" class="text-decoration-underline"
+                    >{{ $t("Login") }}</a
+                >
             </div>
         </div>
     </div>
