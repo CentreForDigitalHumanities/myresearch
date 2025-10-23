@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { BSIcon } from "cdh-vue-lib";
 import { useI18n } from "vue-i18n";
+import { useCurrentUserStore } from "~/stores/current-user";
 
 const title = useAppConfig().globalTitle;
 const i18n = useI18n();
@@ -9,6 +10,9 @@ function setLocale(locale: string) {
     i18n.locale.value = locale;
     localStorage.locale = locale;
 }
+
+const currentUserStore = useCurrentUserStore();
+await currentUserStore.loadData();
 </script>
 
 <template>
@@ -48,11 +52,18 @@ function setLocale(locale: string) {
             </div>
         </div>
         <div class="uu-header-row">
-            <!-- TODO: make only relevant link appear, 
-            once we can check if user.is_authenticated -->
-            <a href="/saml/login/" class="nav-link ms-auto"> Login </a>
-            <div class="nav-link">|</div>
-            <a href="/saml/logout/" class="nav-link"> Logout </a>
+            <div
+                v-if="currentUserStore.currentUser"
+                class="ms-auto"
+            >
+                Welcome, {{ currentUserStore.currentUser?.fullName }}! (<a href="/saml/logout" class="text-decoration-underline">Logout</a>)
+            </div>
+            <div
+                v-else
+                class="ms-auto"
+            >
+                <a href="/saml/login" class="text-decoration-underline">Login</a>
+            </div>
         </div>
     </div>
 </template>
