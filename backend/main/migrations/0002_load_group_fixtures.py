@@ -16,7 +16,7 @@ group_fixtures = """
 """
 
 
-def load_registration_fixtures(apps, schema_editor):
+def load_group_fixtures(apps, schema_editor):
     from django.core.serializers import deserialize
 
     # We must patch the apps manager from the Python deserializer
@@ -39,5 +39,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(load_registration_fixtures, migrations.RunPython.noop),
+        migrations.RunPython(load_group_fixtures, migrations.RunPython.noop),
     ]
