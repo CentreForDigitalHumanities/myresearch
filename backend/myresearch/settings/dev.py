@@ -8,6 +8,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "mr-django",
     "[::1]",
+    "host.docker.internal",
 ]
 
 INTERNAL_IPS = ["127.0.0.1"]
@@ -30,3 +31,17 @@ except ImportError:
         "in myresearch/settings/local_settings.py and Django will "
         "load them when running the dev profile."
     )
+
+# SAML STUFF
+try:
+    from .dev_saml_settings import *
+
+    # Only add the required apps/middleware if we could load the SAML config
+    INSTALLED_APPS += SAML_APPS
+    MIDDLEWARE += SAML_MIDDLEWARE
+
+    LOGOUT_REDIRECT_URL = "http://localhost:5000/"
+    LOGIN_REDIRECT_URL = "http://localhost:5000/"
+
+except ImportError:
+    print("Proceeding without SAML")

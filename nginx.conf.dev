@@ -18,6 +18,10 @@ http {
             proxy_pass http://mr-django:8000;
         }
 
+        location /saml/ {
+            proxy_pass http://mr-django:8000;
+        }
+
         location / {
             proxy_pass http://mr-vue:3000;
         }

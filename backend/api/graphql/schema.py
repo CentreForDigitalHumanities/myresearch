@@ -12,7 +12,6 @@ from form.types.QuestionType import (
     NumberQuestionType,
 )
 from form.queries import FormQueries
-from main.queries import ListUsersQuery
 from research.queries import StudyQuery
 
 from research.mutations.CreateStudyMutation import CreateStudyMutation
@@ -20,8 +19,15 @@ from research.mutations.UpdateStudyMutation import UpdateStudyMutation
 from research.mutations.DeleteStudyMutation import DeleteStudyMutation
 
 
-class Query(ListUsersQuery, FormQueries, StudyQuery, ObjectType):
+class Query(FormQueries, StudyQuery, ObjectType):
     pass
+
+
+class Mutation(ObjectType):
+
+    create_study = CreateStudyMutation.Field()
+    update_study = UpdateStudyMutation.Field()
+    delete_study = DeleteStudyMutation.Field()
 
 
 class Mutation(ObjectType):
