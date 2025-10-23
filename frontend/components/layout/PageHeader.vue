@@ -31,7 +31,7 @@ await currentUserStore.loadData();
             <div class="ms-auto">
                 <!-- Spacer element, moves the next elements to the right -->
             </div>
-            <div v-if="true" class="border-left px-3">
+            <div v-if="currentUserStore.currentUser?.isStaff" class="border-left px-3">
                 <NuxtLink to="/" class="nav-link">
                     <BSIcon icon="gear" size="lg" />
                 </NuxtLink>
