@@ -21,7 +21,10 @@ class User(AbstractUser):
         Utility function to check if a user has access to a specific object,
         with a specific permission.
         """
-        return object in object.__class__.objects.accessible_objects(self, mr_permission)
+        return object in object.__class__.objects.accessible_objects(
+            self, mr_permission
+        )
+
 
 class MRPermission(models.TextChoices):
     """

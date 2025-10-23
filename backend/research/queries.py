@@ -38,6 +38,6 @@ class StudyQuery(ObjectType):
 
     @staticmethod
     def resolve_studies(root, info: ResolveInfo, mr_permission: str) -> QuerySet[Study]:
-        return StudyType.get_queryset(
-            Study.objects, info
-        ).accessible_objects(info.context.user, mr_permission)
+        return StudyType.get_queryset(Study.objects, info).accessible_objects(
+            info.context.user, mr_permission
+        )
