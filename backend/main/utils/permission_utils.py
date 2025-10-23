@@ -12,15 +12,15 @@ class BaseMRManager(models.Manager):
     queryset of objects, based on the users permissions via accessible_objects.
     """
 
-    def accessible_objects(self, user: User, mrpermission):
+    def accessible_objects(self, user: User, mr_permission):
         """
-        A base method redirecting to filters based on specific mrpermission's
+        A base method redirecting to filters based on specific mr_permission's
         """
 
         # If a user is not authenticated, return no objects
         if not user.is_authenticated:
             return self.none()
-        match mrpermission:
+        match mr_permission:
             case MRPermission.VIEW:
                 return self._viewable_objects(user)
             case MRPermission.EDIT:
@@ -39,3 +39,4 @@ class BaseMRManager(models.Manager):
     def _editable_objects(self, user: User):
         # Needs to be overwritten for a specific object's permissions
         return self
+

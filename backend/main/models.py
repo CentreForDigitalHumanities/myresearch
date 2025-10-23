@@ -16,13 +16,12 @@ class User(AbstractUser):
     def is_fetc_member(self):
         return MRGroups.FETC_MEMBER in [g.name for g in self.groups.all()]
 
-    def has_access_to(self, object, mrpermission):
+    def has_access_to(self, object, mr_permission):
         """
         Utility function to check if a user has access to a specific object,
         with a specific permission.
         """
-        return object in object.__class__.objects.accessible_objects(self, mrpermission)
-
+        return object in object.__class__.objects.accessible_objects(self, mr_permission)
 
 class MRPermission(models.TextChoices):
     """

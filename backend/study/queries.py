@@ -12,33 +12,32 @@ class StudyQuery(ObjectType):
     study = Field(
         StudyType,
         id=ID(required=True),
-        mrpermission=String(required=True),
+        mr_permission=String(required=True),
     )
 
     studies = List(
         NonNull(
             StudyType,
         ),
-        mrpermission=String(required=True),
+        mr_permission=String(required=True),
         required=True,
     )
 
     @staticmethod
     def resolve_study(
-        root, info: ResolveInfo, id: int, mrpermission: str
+        root, info: ResolveInfo, id: int, mr_permission: str
     ) -> Optional[Study]:
         queryset = StudyType.get_queryset(
             Study.objects,
             info,
-            mrpermission=mrpermission,
-        )
+        ).accessible_objects(info.context.user, mr_permission)
         try:
             return queryset.get(id=id)
         except Study.DoesNotExist:
             return None
 
     @staticmethod
-    def resolve_studies(root, info: ResolveInfo, mrpermission: str) -> QuerySet[Study]:
+    def resolve_studies(root, info: ResolveInfo, mr_permission: str) -> QuerySet[Study]:
         return StudyType.get_queryset(
-            Study.objects, info, mrpermission=mrpermission
-        ).all()
+            Study.objects, info, mr_permission=mr_permission
+        ).accessible_objects(info.context.user, mr_permission)
