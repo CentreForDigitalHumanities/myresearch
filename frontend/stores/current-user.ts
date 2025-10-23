@@ -1,9 +1,10 @@
 import { defineStore } from "pinia";
 import { useApolloClient } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
+import type { GetCurrentUserQuery } from "~/generated/gql/graphql";
 
 interface State {
-    currentUser?: any;
+    currentUser?: GetCurrentUserQuery["currentUser"];
 }
 
 export const useCurrentUserStore = defineStore("currentUser", {
@@ -23,6 +24,7 @@ export const useCurrentUserStore = defineStore("currentUser", {
                         username
                         email
                         fullName
+                        isStaff
                     }
                 }
             `);
