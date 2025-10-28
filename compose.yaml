@@ -133,6 +133,7 @@ services:
   dev-idp:
     image: ghcr.io/centrefordigitalhumanities/development-idp/development-idp:latest
     hostname: mr-dev-idp
+    container_name: ${NAME_PREFIX}mr-dev-idp
     ports:
       - "7000:7000"
     extra_hosts:
