@@ -36,8 +36,6 @@ services:
     volumes:
       - ./nginx.conf.prod:/etc/nginx/nginx.conf:ro
       - backend_static:/var/www/backend_static/
-    ports:
-      - "5000:80"
 
   django-dev: &django-dev
     image: mr-django
