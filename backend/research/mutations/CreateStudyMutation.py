@@ -25,7 +25,6 @@ class CreateStudyMutation(Mutation):
 
         # Check if the user has Create permission
         if Study.can_be_created_by(user):
-            # Initialize the study, but do not save()
             study = Study(title=title, created_by=user)
             study.save()
             return cls(study=study)
