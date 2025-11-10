@@ -12,7 +12,19 @@ http {
     server {
         listen 80;
 
-        location /backend/ {
+        location /api/ {
+            proxy_pass http://mr-django:8000;
+        }
+
+        location /admin/ {
+            proxy_pass http://mr-django:8000;
+        }
+
+        location /backend_static/ {
+            proxy_pass http://mr-django:8000;
+        }
+
+        location /saml/ {
             proxy_pass http://mr-django:8000;
         }
 
