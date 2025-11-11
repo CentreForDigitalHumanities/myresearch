@@ -21,4 +21,4 @@ class UserType(DjangoObjectType):
 
     @staticmethod
     def resolve_full_name(parent: User, info: ResolveInfo) -> str:
-        return f"{parent.first_name} {parent.last_name}"
+        return parent.get_full_name()
