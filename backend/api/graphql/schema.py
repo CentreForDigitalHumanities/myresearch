@@ -13,13 +13,14 @@ from form.types.QuestionType import (
 )
 from form.queries import FormQueries
 from research.queries import StudyQuery
+from main.queries import UserQueries
 
 from research.mutations.CreateStudyMutation import CreateStudyMutation
 from research.mutations.UpdateStudyMutation import UpdateStudyMutation
 from research.mutations.DeleteStudyMutation import DeleteStudyMutation
 
 
-class Query(FormQueries, StudyQuery, ObjectType):
+class Query(FormQueries, UserQueries, StudyQuery, ObjectType):
     pass
 
 

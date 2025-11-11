@@ -20,8 +20,10 @@ export const i18n = createI18n({
     globalInjection: true,
     locale,
     messages,
-    formatFallbackMessages: true,
+    fallbackFormat: true,
     fallbackLocale: defaultLocale,
+    fallbackWarn: false,
+    missingWarn: false,
 });
 
 export default defineNuxtPlugin(({ vueApp }) => {
