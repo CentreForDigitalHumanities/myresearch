@@ -138,3 +138,145 @@ class DateQuestion(BaseQuestion):
 
 class FileUploadQuestion(BaseQuestion):
     size_limit = models.PositiveIntegerField()
+
+
+# User responses / answers
+class UserFormSubmission(models.Model):
+    """Tracks a user's progress through a form."""
+
+    user = models.ForeignKey(user_model, on_delete=models.CASCADE)
+    form = models.ForeignKey(MRForm, on_delete=models.CASCADE)
+    started_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    completed_at = models.DateTimeField(null=True, blank=True)
+
+
+class QuestionResponse(models.Model):
+    """Stores a user's answer to a question."""
+
+    submission = models.ForeignKey(
+        UserFormSubmission, on_delete=models.CASCADE, related_name="responses"
+    )
+    question = models.ForeignKey(BaseQuestion, on_delete=models.CASCADE)
+
+    answer = models.JSONField()
+
+    # For repeated questions/steps, track which instance this is
+    # 0 = first instance, 1 = second, etc.
+    repeat_index = models.PositiveIntegerField(
+        default=0, help_text="Index for repeated questions."
+    )
+
+    answered_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ["submission", "question", "repeat_index"]
+
+
+# Conditional logic for questions and steps
+
+
+class StepCondition(models.Model):
+    """Defines when a step should be shown/hidden or repeated."""
+
+    target_step = models.ForeignKey(
+        Step,
+        on_delete=models.CASCADE,
+        related_name="conditions",
+        help_text="The step that this condition applies to.",
+    )
+
+    trigger_question = models.ForeignKey(
+        BaseQuestion,
+        on_delete=models.CASCADE,
+        related_name="triggered_step_conditions",
+        help_text="The question whose answer triggers this condition.",
+    )
+
+    CONDITION_TYPES = [
+        ("show", "Show target step"),
+        ("hide", "Hide target step"),
+        ("repeat", "Repeat target step a fixed number of times"),
+        ("repeat_dynamic", "Repeat based on answer value"),
+    ]
+    condition_type = models.CharField(max_length=20, choices=CONDITION_TYPES)
+
+    # JSON field to store the expected answer that triggers this condition
+    # Examples:
+    # For TrueFalse: {"value": true}
+    # For Select: {"option_ids": [1, 3]}
+    # For Number: {"min": 5} or {"exact": 10}
+    # For any answer: {} (empty dict means any non-empty answer triggers)
+    trigger_value = models.JSONField()
+
+    # For (static) 'repeat' type: how many times should the step be repeated.
+    repeat_count = models.PositiveIntegerField(null=True, blank=True)
+
+    # For 'repeat_dynamic' type: use the answer to the trigger question to
+    # determine how many times to repeat the target step.
+    use_answer_as_count = models.BooleanField(default=False)
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                check=(
+                    ~Q(condition_type__in=["repeat", "repeat_dynamic"])
+                    | Q(repeat_count__isnull=False)
+                    | Q(use_answer_as_count=True)
+                ),
+                name="repeat_requires_count_or_dynamic",
+            )
+        ]
+
+
+class QuestionCondition(models.Model):
+    """Defines when a question should be shown/hidden or repeated."""
+
+    target_question = models.ForeignKey(
+        BaseQuestion,
+        on_delete=models.CASCADE,
+        related_name="conditions",
+        help_text="The question that this condition applies to.",
+    )
+
+    trigger_question = models.ForeignKey(
+        BaseQuestion,
+        on_delete=models.CASCADE,
+        related_name="triggered_conditions",
+        help_text="The question whose answer triggers this condition.",
+    )
+
+    CONDITION_TYPES = [
+        ("show", "Show target question"),
+        ("hide", "Hide target question"),
+        ("repeat", "Repeat target question a fixed number of times"),
+        ("repeat_dynamic", "Repeat based on answer value"),
+    ]
+    condition_type = models.CharField(max_length=20, choices=CONDITION_TYPES)
+
+    # JSON field to store the expected answer that triggers this condition
+    # Examples:
+    # For TrueFalse: {"value": true}
+    # For Select: {"option_ids": [1, 3]}
+    # For Number: {"min": 5} or {"exact": 10}
+    # For any answer: {} (empty dict means any non-empty answer triggers)
+    trigger_value = models.JSONField()
+
+    # For (static)'repeat' type: how many times should the question be repeated.
+    repeat_count = models.PositiveIntegerField(null=True, blank=True)
+
+    # For 'repeat_dynamic' type: use the answer to the trigger question to
+    # determine how many times to repeat the target question.
+    use_answer_as_count = models.BooleanField(default=False)
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                check=(
+                    ~Q(condition_type__in=["repeat", "repeat_dynamic"])
+                    | Q(repeat_count__isnull=False)
+                    | Q(use_answer_as_count=True)
+                ),
+                name="repeat_requires_count_or_dynamic",
+            )
+        ]
