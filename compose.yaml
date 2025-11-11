@@ -1,7 +1,7 @@
 services:
-  postgres:
+  mr-postgres:
     image: postgres:15
-    container_name: mr-postgres
+    container_name: ${NAME_PREFIX}mr-postgres
     environment:
       - POSTGRES_PASSWORD=postgres
     healthcheck:
@@ -16,12 +16,13 @@ services:
 
   nginx-dev: &nginx-dev
     image: nginx:latest
-    container_name: mr-nginx-dev
+    container_name: ${NAME_PREFIX}mr-nginx-dev
     hostname: mr-nginx
     restart: unless-stopped
     profiles: ["dev"]
     depends_on:
       - django-dev
+      - vue-dev
     volumes:
       - ./nginx.conf.dev:/etc/nginx/nginx.conf:ro
     ports:
@@ -29,20 +30,21 @@ services:
 
   nginx-prod:
     <<: *nginx-dev
-    container_name: mr-nginx-prod
+    container_name: ${NAME_PREFIX}mr-nginx-prod
     profiles: ["prod"]
     depends_on:
       - django-prod
+      - vue-prod
     volumes:
       - ./nginx.conf.prod:/etc/nginx/nginx.conf:ro
-      - basta:/var/www/backend_static
+      - backend_static:/var/www/backend_static/
 
   django-dev: &django-dev
     image: mr-django
-    container_name: mr-django-dev
+    container_name: ${NAME_PREFIX}mr-django-dev
     hostname: mr-django
     depends_on:
-      postgres:
+      mr-postgres:
         condition: service_healthy
     restart: no
     profiles: ["dev"]
@@ -51,7 +53,7 @@ services:
     build:
       context: ./backend
     healthcheck:
-      test: "curl -f localhost:8000/backend/healthcheck/"
+      test: "curl -f mr-django:8000/healthcheck/"
     volumes:
       - ./backend:/usr/src/app/backend
       - bapyca:/usr/src/app/backend/__pycache__
@@ -71,11 +73,12 @@ services:
 
   django-prod:
     <<: *django-dev
-    container_name: mr-django-prod
+    container_name: ${NAME_PREFIX}mr-django-prod
     restart: unless-stopped
     profiles: ["prod"]
+    ports: []
     volumes:
-      - basta:/var/www/backend-static/
+      - backend_static:/var/www/backend_static/
     command: sh -c "
       python manage.py migrate &&
       python manage.py collectstatic --no-input &&
@@ -90,7 +93,7 @@ services:
 
   vue-dev:
     image: mr-vue-dev
-    container_name: mr-vue-dev
+    container_name: ${NAME_PREFIX}mr-vue-dev
     hostname: mr-vue
     restart: no
     profiles: ["dev"]
@@ -113,16 +116,19 @@ services:
     environment:
       # Allows Nuxt to be accessible from the outside.
       - HOST=0.0.0.0
-      - CODEGEN_SCHEMA=http://mr-django:8000/backend/api/graphql
-      - NUXT_PUBLIC_API_URL=http://localhost:5000/backend/api
-      - NUXT_PUBLIC_SAML_URL=http://localhost:5000/saml
+      - CODEGEN_SCHEMA=http://mr-django:8000/api/graphql
+      - NUXT_PUBLIC_API_URL=${BASE_URL}/api
+      - NUXT_PUBLIC_SAML_URL=${BASE_URL}/saml
 
   vue-prod:
     image: mr-vue-prod
-    container_name: mr-vue-prod
+    container_name: ${NAME_PREFIX}mr-vue-prod
     hostname: mr-vue
     restart: unless-stopped
     profiles: ["prod"]
+    depends_on:
+      django-prod:
+        condition: service_healthy
     build:
       context: ./frontend
       dockerfile: Dockerfile.prod
@@ -130,6 +136,7 @@ services:
   dev-idp:
     image: ghcr.io/centrefordigitalhumanities/development-idp/development-idp:latest
     hostname: mr-dev-idp
+    container_name: ${NAME_PREFIX}mr-dev-idp
     ports:
       - "7000:7000"
     extra_hosts:
@@ -161,7 +168,7 @@ volumes:
   frontend-node-modules:
   pgdata:
   bapyca:
-  basta:
+  backend_static:
 
 networks:
     my-research:

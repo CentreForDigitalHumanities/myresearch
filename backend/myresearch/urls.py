@@ -24,17 +24,11 @@ from djangosaml2.views import LoginView
 from cdh.federated_auth.saml.views import LogoutInitView
 
 urlpatterns = [
-    path(
-        "backend/",
-        include(
-            [
-                path("admin/", admin.site.urls),
-                path("api/", include("api.urls")),
-                # Used for a healthcheck by the Docker container.
-                path("healthcheck/", lambda r: HttpResponse()),
-            ],
-        ),
-    ),
+    path("admin/", admin.site.urls),
+    path("api/", include("api.urls")),
+    # Used for a healthcheck by the Docker container.
+    # Not accessible through nginx!
+    path("healthcheck/", lambda r: HttpResponse()),
     # SAML urls
     path("saml/login/", LoginView.as_view(), name="login"),
     # We can only have one logout view. Luckily, the SAML logout view can

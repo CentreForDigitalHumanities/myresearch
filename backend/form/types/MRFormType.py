@@ -8,7 +8,6 @@ from form.models import MRForm, Step
 
 
 class MRFormType(DjangoObjectType):
-
     class Meta:
         model = MRForm
         fields = [
