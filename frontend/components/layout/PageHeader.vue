@@ -11,8 +11,18 @@ function setLocale(locale: string) {
     localStorage.locale = locale;
 }
 
+const config = useRuntimeConfig();
 const currentUserStore = useCurrentUserStore();
 await callOnce("user", () => currentUserStore.loadData());
+
+const loginUrl = computed(() => {
+    const redirect = encodeURIComponent(window.location.href);
+    return `${config.public.SAML_URL}/login/?next=${redirect}`;
+});
+const logoutUrl = computed(() => {
+    // Current page may not be available after logout, so redirect to home page
+    return `${config.public.SAML_URL}/logout/`;
+});
 </script>
 
 <template>
@@ -57,13 +67,13 @@ await callOnce("user", () => currentUserStore.loadData());
         <div class="uu-header-row">
             <div v-if="currentUserStore.currentUser" class="ms-auto">
                 {{ $t("Welcome, {name}", { name: currentUserStore.currentUser?.fullName }) }} (<a
-                    href="/saml/logout"
+                    :href="logoutUrl"
                     class="text-decoration-underline"
                     >{{ $t("Logout") }}</a
                 >)
             </div>
             <div v-else class="ms-auto">
-                <a href="/saml/login" class="text-decoration-underline"
+                <a :href="loginUrl" class="text-decoration-underline"
                     >{{ $t("Login") }}</a
                 >
             </div>
