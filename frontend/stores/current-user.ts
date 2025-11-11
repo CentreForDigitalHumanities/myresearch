@@ -3,37 +3,30 @@ import { useApolloClient } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
 import type { GetCurrentUserQuery } from "~/generated/gql/graphql";
 
-interface State {
-    currentUser?: GetCurrentUserQuery["currentUser"];
-}
+export const useCurrentUserStore = defineStore("currentUser", () => {
+    const currentUser = ref<GetCurrentUserQuery["currentUser"]>();
 
-export const useCurrentUserStore = defineStore("currentUser", {
-    state: (): State => {
-        return {
-            currentUser: undefined,
-        };
-    },
-    actions: {
-        async loadData() {
-            const { client } = useApolloClient();
+    async function loadData() {
+        const { client } = useApolloClient();
 
-            const GET_CURRENT_USER = graphql(`
-                query getCurrentUser {
-                    currentUser {
-                        id
-                        username
-                        email
-                        fullName
-                        isStaff
-                    }
+        const GET_CURRENT_USER = graphql(`
+            query getCurrentUser {
+                currentUser {
+                    id
+                    username
+                    email
+                    fullName
+                    isStaff
                 }
-            `);
+            }
+        `);
 
-            const result = await client.query({
-                query: GET_CURRENT_USER,
-            });
+        const result = await client.query({
+            query: GET_CURRENT_USER,
+        });
 
-            this.currentUser = result.data.currentUser ?? undefined;
-        },
-    },
+        currentUser.value = result.data.currentUser ?? undefined;
+    }
+
+    return { currentUser, loadData };
 });
