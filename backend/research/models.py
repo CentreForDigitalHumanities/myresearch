@@ -7,7 +7,7 @@ from django.db import models
 class StudyManager(BaseMRManager):
     def _viewable_objects(self, user: User):
         if user.is_privacy_officer or user.is_fetc_member:
-            return self
+            return self.all()
         return self.filter(created_by=user)
 
     def _editable_objects(self, user: User):
