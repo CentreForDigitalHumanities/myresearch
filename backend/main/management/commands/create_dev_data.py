@@ -284,6 +284,11 @@ class Command(BaseCommand):
     def _create_test_users(self, options):
         """
         Create mock users for test purposes from fixtures.
+
+        NOTE: These users are the same as the ones provided by the
+        Dev-IDP and must be kept the same!
+
+        TODO: Find a way to just import them directly from the Dev-IDP
         """
         fixtures = [
             "main/management/commands/dev_fixtures/dev_users.json",
