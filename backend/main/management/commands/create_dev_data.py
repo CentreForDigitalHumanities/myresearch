@@ -46,6 +46,7 @@ ALL_QUESTIONS = ["select", "text", "true_false", "date", "number", "file_upload"
 MIN_STUDIES_PER_USER = 1
 MAX_STUDIES_PER_USER = 4
 
+
 class Command(BaseCommand):
     help = "Create dev dataset for myresearch"
 
@@ -316,10 +317,10 @@ class Command(BaseCommand):
 
             for _ in range(num_studies):
                 Study.objects.create(
-                    created_by = user,
-                    title = self.faker_nl.sentence(nb_words=5),
+                    created_by=user,
+                    title=self.faker_nl.sentence(nb_words=5),
                 )
-            
+
     def _check_all_models_implemented(
         self,
     ):
