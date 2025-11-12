@@ -8,6 +8,7 @@ from django.core.management import call_command
 from django.db import transaction
 
 from main.models import User
+from research.models import Study
 from form.models import (
     BaseQuestion,
     MRForm,
@@ -41,6 +42,9 @@ MAX_STEP_DEPTH = 3
 
 ALL_QUESTIONS = ["select", "text", "true_false", "date", "number", "file_upload"]
 
+# Min/max number of studies per user
+MIN_STUDIES_PER_USER = 1
+MAX_STUDIES_PER_USER = 4
 
 class Command(BaseCommand):
     help = "Create dev dataset for myresearch"
@@ -65,6 +69,7 @@ class Command(BaseCommand):
         StepInfoText,
         StepInfoQuestion,
         BaseQuestion,
+        Study,
     ]
 
     def add_arguments(self, parser):
@@ -86,6 +91,7 @@ class Command(BaseCommand):
         self._create_test_users(options)
 
         with transaction.atomic():
+            self._create_studies(options)
             form = self._generate_form(options)
             self._generate_steps(options, form)
             self._generate_questions(options, form)
@@ -297,6 +303,23 @@ class Command(BaseCommand):
         for fixture in fixtures:
             call_command("loaddata", fixture)
 
+    def _create_studies(self, options):
+        """
+        Create mock studies for each user
+        """
+
+        for user in tqdm(User.objects.all(), "Generating studies ..."):
+
+            num_studies = self.faker.random_int(
+                MIN_STUDIES_PER_USER, MAX_STUDIES_PER_USER
+            )
+
+            for _ in range(num_studies):
+                Study.objects.create(
+                    created_by = user,
+                    title = self.faker_nl.sentence(nb_words=5),
+                )
+            
     def _check_all_models_implemented(
         self,
     ):
