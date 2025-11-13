@@ -3,3 +3,5 @@ Django<6
 psycopg[binary,pool]
 graphene-django
 django-cors-headers
+tqdm
+faker

@@ -1,150 +1,45 @@
 <script lang="ts" setup>
-import { ref, computed } from "vue";
-import { BSButton } from "cdh-vue-lib";
-import type { FormConfig, FormStep } from "../form/types";
-import FormStepper, { type FormStepperConfig } from "./FormStepper.vue";
+import {
+    SharedDateQuestion,
+    SharedFileUploadQuestion,
+    SharedFormSideBar,
+    SharedNumberQuestion,
+    SharedSelectQuestion,
+    SharedTextQuestion,
+    SharedTrueFalseQuestion,
+} from "#components";
+import type { CombinedStep } from "./FormWrapper.vue";
+import type { Component } from "vue";
 
 interface Props {
-    formConfig: FormConfig;
-    currentStepSlug: string;
+    form: CombinedStep;
 }
+defineProps<Props>();
 
-const props = defineProps<Props>();
-
-const formStepperConfig = computed<FormStepperConfig>(() => {
-    const selectedStepSlug = selectedStep.value?.slug;
-
-    return {
-        titleNl: props.formConfig.labelNl,
-        titleEn: props.formConfig.labelEn,
-        steps: props.formConfig.steps.map((step) => ({
-            slug: step.slug,
-            labelNl: step.stepNameNL,
-            labelEn: step.stepNameEN,
-            completed: false,
-            active: step.slug === selectedStepSlug,
-            disabled: false,
-            children:
-                step.substeps?.map((substep) => ({
-                    slug: substep.slug,
-                    labelNl: substep.stepNameNL,
-                    labelEn: substep.stepNameEN,
-                    completed: false,
-                    active: substep.slug === selectedStepSlug,
-                    disabled: false,
-                    children: [],
-                })) ?? [],
-        })),
-    };
-});
-
-function defaultStep(): FormStep | null {
-    const allSteps = getAllSteps();
-    if (allSteps.length <= 0) {
-        return null;
-    }
-    return allSteps.find(({ slug }) => slug === props.currentStepSlug) ?? null;
-}
-
-const selectedStep = ref<FormStep | null>(defaultStep());
-
-function getAllSteps(): FormStep[] {
-    const allSteps: FormStep[] = [];
-
-    props.formConfig.steps.forEach((step) => {
-        // Add main step.
-        allSteps.push(step);
-
-        if (!step.substeps || step.substeps.length === 0) {
-            return;
-        }
-
-        // Add substeps sorted by order.
-        const sortedSubsteps = [...step.substeps].sort(
-            (a, b) => a.order - b.order,
-        );
-        allSteps.push(...sortedSubsteps);
-    });
-
-    return allSteps;
-}
-
-function findCurrentStepIndex(): number {
-    const selectedStepValue = selectedStep.value;
-    if (!selectedStepValue) {
-        return -1;
-    }
-
-    const allSteps = getAllSteps();
-    return allSteps.findIndex((step) => step.slug === selectedStepValue.slug);
-}
-
-function getNextStepSlug(): string {
-    if (!selectedStep.value) {
-        return props.currentStepSlug;
-    }
-
-    const allSteps = getAllSteps();
-    const currentIndex = findCurrentStepIndex();
-
-    if (currentIndex === -1 || currentIndex >= allSteps.length - 1) {
-        // Already at the last step or step not found.
-        return props.currentStepSlug;
-    }
-
-    return allSteps[currentIndex + 1].slug;
-}
-
-function getPreviousStepSlug(): string {
-    if (!selectedStep.value) {
-        return props.currentStepSlug;
-    }
-
-    const allSteps = getAllSteps();
-    const currentIndex = findCurrentStepIndex();
-
-    if (currentIndex <= 0) {
-        // Already at the first step or step not found.
-        return props.currentStepSlug;
-    }
-
-    return allSteps[currentIndex - 1].slug;
-}
+// Imported components are treated as 'any', so the linter complains, but there
+// is nothing we can do to change this, so we need to assert the type manually.
+const questionComponentMap = {
+    TextQuestionType: SharedTextQuestion as Component,
+    SelectQuestionType: SharedSelectQuestion as Component,
+    DateQuestionType: SharedDateQuestion as Component,
+    NumberQuestionType: SharedNumberQuestion as Component,
+    TrueFalseQuestionType: SharedTrueFalseQuestion as Component,
+    FileUploadQuestionType: SharedFileUploadQuestion as Component,
+};
 </script>
 
 <template>
-    <div v-if="selectedStep" class="col-12 d-flex">
-        <FormStepper
-            class="col-2 d-lg-block d-none"
-            :step-config="formStepperConfig"
-            :selected-step="props.currentStepSlug"
-        />
-        <div class="col-12 col-lg-10">
-            <form class="uu-form">
-                <SharedFormStep :step="selectedStep" />
-            </form>
-            <div class="btn-group">
-                <NuxtLink
-                    :to="{
-                        name: 'procreg-step',
-                        params: { step: getPreviousStepSlug() },
-                    }"
-                >
-                    <BSButton variant="primary" class="btn-arrow-left">
-                        {{ $t("Previous") }}
-                    </BSButton>
-                </NuxtLink>
-                <NuxtLink
-                    :to="{
-                        name: 'procreg-step',
-                        params: { step: getNextStepSlug() },
-                    }"
-                >
-                    <BSButton variant="primary" class="btn-arrow-right">
-                        {{ $t("Next") }}
-                    </BSButton>
-                </NuxtLink>
+    <h2>{{ useTranslateableAttribute(form, "name") }}</h2>
+    <p>{{ useTranslateableAttribute(form, "description") }}</p>
+    <div class="uu-form-row">
+        <div class="d-flex flex-column">
+            <div v-for="question in form.questions" :key="question.id">
+                <component
+                    :is="questionComponentMap[question.__typename]"
+                    :question="question"
+                />
             </div>
         </div>
+        <SharedFormSideBar :form="form" />
     </div>
 </template>

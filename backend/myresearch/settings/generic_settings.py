@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 
+from django.utils.translation import gettext_lazy as _
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,6 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 LOCAL_APPS = [
     "main",
+    "form",
+    "research",
 ]
 
 INSTALLED_APPS = (
@@ -36,10 +40,9 @@ INSTALLED_APPS = (
     ]
     + LOCAL_APPS
     + [
-        # Cors headers
         "corsheaders",
-        # GraphQL
         "graphene_django",
+        "modeltranslation",
     ]
 )
 
@@ -116,6 +119,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
+LANGUAGES = [
+    ("en", _("English")),
+    ("nl", _("Dutch")),
+]
+
 TIME_ZONE = "UTC"
 
 USE_I18N = True
@@ -126,8 +134,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "backend/static/"
-STATIC_ROOT = "/var/www/backend-static/"
+STATIC_URL = "backend_static/"
+STATIC_ROOT = "/var/www/backend_static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

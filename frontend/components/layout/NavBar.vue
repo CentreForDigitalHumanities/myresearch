@@ -1,8 +1,28 @@
 <script lang="ts" setup>
+import { useQuery } from "@vue/apollo-composable";
 import { BSIcon } from "cdh-vue-lib";
-import { mockVwr } from "~/components/form/procRegMockConfig";
+import useStaticFile from "~/composables/useStaticFile";
+import { graphql } from "~/generated/gql";
+import type { GetFirstSlugQuery } from "~/generated/gql/graphql";
 
-const firstProcRegSlug = mockVwr.steps[0].slug;
+// We only need to know the slug of the top-level form so we can link to it.
+const GET_FIRST_SLUG = graphql(`
+    query GetFirstSlug {
+        form {
+            id
+            steps {
+                id
+                slug
+            }
+        }
+    }
+`);
+
+const { result } = useQuery<GetFirstSlugQuery>(GET_FIRST_SLUG);
+const slug = computed<string | null>(() => {
+    const firstStep = result.value?.form?.steps[0];
+    return firstStep?.slug || null;
+});
 </script>
 
 <template>
@@ -36,19 +56,16 @@ const firstProcRegSlug = mockVwr.steps[0].slug;
                         </NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink
-                            to="/studies"
-                            class="nav-link"
-                            active-class="active"
-                        >
+                        <NuxtLink to="/" class="nav-link" active-class="active">
                             {{ $t("My studies") }}
                         </NuxtLink>
                     </li>
                     <li>
                         <NuxtLink
+                            v-if="slug"
                             :to="{
-                                name: 'procreg-step',
-                                params: { step: firstProcRegSlug },
+                                name: 'procreg-slug',
+                                params: { slug },
                             }"
                             class="nav-link"
                             active-class="active"

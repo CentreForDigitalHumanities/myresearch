@@ -1,3 +1,4 @@
 # Change this if you run the backend in a different location
 # This will be overridden by compose.yml.
 NUXT_PUBLIC_API_BASE_URL="http://localhost:8000/backend/api"
+NUXT_PUBLIC_SAML_URL="http://localhost:8000/saml"
