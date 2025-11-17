@@ -1,6 +1,7 @@
 from graphene import (
-    ObjectType,
+    ID,
     Int,
+    ObjectType,
     String,
     Boolean,
     List,
@@ -26,7 +27,7 @@ from form.services.form_evaluator import FormEvaluator
 class UserQuestionInstanceType(ObjectType):
     """Represents a single instance of a question for a user (accounting for repeats)."""
 
-    question_id = Int(required=True)
+    question_id = ID(required=True)
     question_type = String(required=True)
     text = String(required=True)
     description = String()
@@ -45,7 +46,7 @@ class UserQuestionInstanceType(ObjectType):
 class UserStepInstanceType(ObjectType):
     """Represents a single instance of a step for a user (accounting for repeats)."""
 
-    step_id = Int(required=True)
+    step_id = ID(required=True)
     name = String(required=True)
     description = String()
     slug = String(required=True)
@@ -64,13 +65,13 @@ class UserStepInstanceType(ObjectType):
 class UserFormType(ObjectType):
     """The form structure as it appears to a specific user."""
 
-    form_id = Int(required=True)
+    form_id = ID(required=True)
     name = String(required=True)
     steps = List(
         NonNull(UserStepInstanceType),
         required=True,
     )
-    submission_id = Int()
+    submission_id = ID()
     started_at = DateTime()
     completed_at = DateTime()
 
@@ -162,7 +163,7 @@ class UserFormResolver:
         for repeat_index in range(repeat_count):
             # Get all questions for this step instance
             questions = []
-            for question in step.questions.select_subclasses():
+            for question in BaseQuestion.objects.filter(step=step):
                 questions.extend(self.resolve_question_instances(question))
 
             # Get all substeps for this step instance

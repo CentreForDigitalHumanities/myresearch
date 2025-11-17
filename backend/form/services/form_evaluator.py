@@ -1,4 +1,3 @@
-from typing import Dict, List, Tuple, Optional
 from django.contrib.auth import get_user_model
 
 from form.models import (
@@ -26,7 +25,7 @@ class FormEvaluator:
         self._responses_cache = None
 
     @property
-    def submission(self) -> Optional[UserFormSubmission]:
+    def submission(self) -> UserFormSubmission | None:
         """Get or create the user's submission."""
         if self._submission is None:
             self._submission, _ = UserFormSubmission.objects.get_or_create(
@@ -35,7 +34,7 @@ class FormEvaluator:
         return self._submission
 
     @property
-    def responses(self) -> Dict[int, List[QuestionResponse]]:
+    def responses(self) -> dict[int, list[QuestionResponse]]:
         """Cache all responses for this submission, grouped by question_id."""
         if self._responses_cache is None:
             self._responses_cache = {}
@@ -49,7 +48,7 @@ class FormEvaluator:
                     self._responses_cache[response.question.pk].append(response)
         return self._responses_cache
 
-    def check_trigger_value(self, answer: Dict, trigger_value: Dict) -> bool:
+    def check_trigger_value(self, answer: dict, trigger_value: dict) -> bool:
         """Check if an answer matches the trigger condition."""
         if not trigger_value:  # Empty dict = any answer
             return bool(answer)
@@ -113,7 +112,7 @@ class FormEvaluator:
         # If no conditions, it's visible by default
         if not show_conditions.exists() and not hide_conditions.exists():
             return True
-
+        
         # Check show conditions - at least one must be met
         if show_conditions.exists():
             show_condition_met = False
@@ -203,7 +202,7 @@ class FormEvaluator:
 
     def get_user_answer(
         self, question: BaseQuestion, repeat_index: int = 0
-    ) -> Optional[Dict]:
+    ) -> dict | None:
         """Get the user's answer for a specific question instance."""
         responses = self.responses.get(question.pk, [])
         for response in responses:

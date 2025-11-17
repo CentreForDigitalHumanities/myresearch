@@ -5,11 +5,28 @@ from django.contrib.auth import get_user_model
 user_model = get_user_model()
 
 
+CONDITION_HELP_TEXT = """
+JSON field defining the expected answer that triggers this condition.
+- For Text: {"value": "expected text"}
+- For TrueFalse: {"value": true}
+- For Select: {"option_ids": [1, 3]}
+- For Number: {"min": 5} or {"exact": 10}
+- For any answer: {} (empty dict means any non-empty answer triggers)
+"""
+
+
 class MRForm(models.Model):
     name = models.CharField(max_length=200)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Form"
+        verbose_name_plural = "Forms"
+
+    def __str__(self):
+        return f"{self.name} ({self.pk})"
 
 
 class Step(models.Model):
@@ -76,6 +93,9 @@ class Step(models.Model):
 
         return _get_form_recursive(self, set())
 
+    def __str__(self):
+        return f"{self.name} ({self.pk})"
+
 
 class StepInfoQuestion(models.Model):
     step = models.ForeignKey(
@@ -102,6 +122,9 @@ class BaseQuestion(models.Model):
 
     class Meta:
         order_with_respect_to = "step"
+
+    def __str__(self):
+        return f"{self.text} ({self.pk})"
 
 
 class SelectQuestion(BaseQuestion):
@@ -150,6 +173,9 @@ class UserFormSubmission(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     completed_at = models.DateTimeField(null=True, blank=True)
 
+    def __str__(self) -> str:
+        return f"Submission {self.pk} by {self.user} started at {self.started_at.strftime('%Y-%m-%d %H:%M:%S')} (Form {self.form.pk})"
+
 
 class QuestionResponse(models.Model):
     """Stores a user's answer to a question."""
@@ -171,6 +197,9 @@ class QuestionResponse(models.Model):
 
     class Meta:
         unique_together = ["submission", "question", "repeat_index"]
+
+    def __str__(self):
+        return f"Response to Q{self.question.pk} in Submission {self.submission.pk}"
 
 
 # Conditional logic for questions and steps
@@ -201,13 +230,7 @@ class StepCondition(models.Model):
     ]
     condition_type = models.CharField(max_length=20, choices=CONDITION_TYPES)
 
-    # JSON field to store the expected answer that triggers this condition
-    # Examples:
-    # For TrueFalse: {"value": true}
-    # For Select: {"option_ids": [1, 3]}
-    # For Number: {"min": 5} or {"exact": 10}
-    # For any answer: {} (empty dict means any non-empty answer triggers)
-    trigger_value = models.JSONField()
+    trigger_value = models.JSONField(help_text=CONDITION_HELP_TEXT)
 
     # For (static) 'repeat' type: how many times should the step be repeated.
     repeat_count = models.PositiveIntegerField(null=True, blank=True)
@@ -224,9 +247,12 @@ class StepCondition(models.Model):
                     | Q(repeat_count__isnull=False)
                     | Q(use_answer_as_count=True)
                 ),
-                name="repeat_requires_count_or_dynamic",
+                name="repeat_requires_count_or_dynamic_step",
             )
         ]
+
+    def __str__(self):
+        return f"Condition on Step {self.target_step.pk} triggered by Question {self.trigger_question.pk}"
 
 
 class QuestionCondition(models.Model):
@@ -254,13 +280,7 @@ class QuestionCondition(models.Model):
     ]
     condition_type = models.CharField(max_length=20, choices=CONDITION_TYPES)
 
-    # JSON field to store the expected answer that triggers this condition
-    # Examples:
-    # For TrueFalse: {"value": true}
-    # For Select: {"option_ids": [1, 3]}
-    # For Number: {"min": 5} or {"exact": 10}
-    # For any answer: {} (empty dict means any non-empty answer triggers)
-    trigger_value = models.JSONField()
+    trigger_value = models.JSONField(help_text=CONDITION_HELP_TEXT)
 
     # For (static)'repeat' type: how many times should the question be repeated.
     repeat_count = models.PositiveIntegerField(null=True, blank=True)
@@ -277,6 +297,9 @@ class QuestionCondition(models.Model):
                     | Q(repeat_count__isnull=False)
                     | Q(use_answer_as_count=True)
                 ),
-                name="repeat_requires_count_or_dynamic",
+                name="repeat_requires_count_or_dynamic_question",
             )
         ]
+
+    def __str__(self):
+        return f"Condition on Question {self.target_question.pk} triggered by Question {self.trigger_question.pk}"
