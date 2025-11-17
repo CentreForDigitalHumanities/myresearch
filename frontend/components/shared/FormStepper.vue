@@ -1,19 +1,6 @@
 <script lang="ts" setup>
 import { useTranslateableAttribute } from "~/composables/useTranslation";
-
-interface FormStep {
-    slug: string;
-    labelNl: string;
-    labelEn: string;
-    substeps: FormStep[];
-    completed: boolean;
-    active: boolean;
-    disabled: boolean;
-}
-
-export interface FormStepperConfig {
-    steps: Array<FormStep>;
-}
+import type { FormStep, FormStepperConfig } from "./FormStepper";
 
 interface Props {
     stepperConfig: FormStepperConfig;

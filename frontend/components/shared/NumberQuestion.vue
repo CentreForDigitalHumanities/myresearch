@@ -1,26 +1,21 @@
 <script lang="ts" setup>
-import type { NumberQuestionType } from "~/generated/gql/graphql";
+import type { NumberQuestionWithValue } from "~/composables/useProcessForm";
 
 interface Props {
-    question: Pick<
-        NumberQuestionType,
-        | "id"
-        | "textNl"
-        | "textEn"
-        | "descriptionNl"
-        | "descriptionEn"
-        | "positiveOnly"
-    >;
+    question: NumberQuestionWithValue;
+    isInvalid: boolean;
 }
 
 defineProps<Props>();
+
+const modelValue = defineModel<number>();
 </script>
 
 <template>
-    <div class="uu-form-field">
-        <label :for="question.id" class="form-label">{{
-            useTranslateableAttribute(question, "text")
-        }}</label>
+    <div>
+        <label :for="question.id" class="form-label">
+            {{ useTranslateableAttribute(question, "text") }}
+        </label>
         <p
             v-if="question.descriptionNl || question.descriptionEn"
             class="text-muted"
@@ -29,8 +24,10 @@ defineProps<Props>();
         </p>
         <input
             :id="question.id"
+            v-model="modelValue"
             type="number"
             class="form-control"
+            :class="{ 'is-invalid': isInvalid }"
             :min="question.positiveOnly ? 0 : undefined"
         />
     </div>

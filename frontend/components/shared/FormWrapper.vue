@@ -1,44 +1,42 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import { BSButton } from "cdh-vue-lib";
-import FormStepper, { type FormStepperConfig } from "./FormStepper.vue";
-import { type GetFormQuery } from "~/generated/gql/graphql";
-
-export type QueriedForm = NonNullable<GetFormQuery["form"]>;
-export type Step = NonNullable<QueriedForm["steps"][number]>;
-export type Substep = NonNullable<Step["substeps"][number]>;
-
-export type CombinedStep = Step | Substep;
+import type { QueriedForm } from "./FormWrapper";
+import FormStepper, { type FormStepperConfig } from "./FormStepper";
+import MRForm from "./MRForm.vue";
+import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConfig";
+import { useFormState } from "~/composables/useFormState";
+import useVuelidate from "@vuelidate/core";
 
 interface Props {
-    form: QueriedForm;
+    queriedForm: QueriedForm;
     currentStepSlug: string;
 }
-
 const props = defineProps<Props>();
 
-const formStepperConfig = computed<FormStepperConfig>(() => ({
-    steps: props.form.steps.map((step) => ({
-        slug: step.slug,
-        labelNl: step.nameNl ?? "",
-        labelEn: step.nameEn ?? "",
-        completed: false,
-        active: step.slug === props.currentStepSlug,
-        disabled: false,
-        substeps: step.substeps.map((substep) => ({
-            slug: substep.slug,
-            labelNl: substep.nameNl ?? "",
-            labelEn: substep.nameEn ?? "",
-            completed: false,
-            active: substep.slug === props.currentStepSlug,
-            disabled: false,
-            // Let's only go 2 levels deep for now.
-            substeps: [],
-        })),
-    })),
-}));
+const { formObject, validationRules } = useFormState(props.queriedForm);
 
-const allSteps = computed(() => getAllSteps(props.form));
+const v$ = useVuelidate(
+    validationRules,
+    computed(() => formObject.value ?? { steps: [] }),
+    {
+        $autoDirty: true,
+    },
+);
+
+// Stepper configuration
+const formStepperConfig = computed<FormStepperConfig | null>(() =>
+    useBuildFormStepperConfig(props.queriedForm, props.currentStepSlug),
+);
+
+const allSteps = computed(() => {
+    const formValue = formObject.value;
+    if (!formValue) {
+        return [];
+    }
+    return getAllSteps(formValue);
+});
+
 const selectedStep = computed(() => {
     const steps = allSteps.value;
     if (steps.length <= 0) {
@@ -47,8 +45,14 @@ const selectedStep = computed(() => {
     return steps.find(({ slug }) => slug === props.currentStepSlug) ?? null;
 });
 
-function getAllSteps(form: QueriedForm): CombinedStep[] {
-    return form.steps.flatMap((step) => [step, ...step.substeps]);
+function getAllSteps(form: FormWithValues): CombinedStepWithValues[] {
+    return form.steps.flatMap((step) => {
+        const steps: CombinedStepWithValues[] = [step];
+        if (step.substeps) {
+            steps.push(...step.substeps);
+        }
+        return steps;
+    });
 }
 
 function findCurrentStepIndex(): number {
@@ -97,12 +101,13 @@ function getPreviousStepSlug(): string {
 <template>
     <div v-if="selectedStep" class="col-12 d-flex">
         <FormStepper
+            v-if="formStepperConfig"
             class="col-3 d-lg-block d-none pe-2"
             :stepper-config="formStepperConfig"
         />
         <div class="col-12 col-lg-9">
             <form class="uu-form">
-                <SharedMRForm :form="selectedStep" />
+                <MRForm :step="selectedStep" :vuelidate="v$" />
             </form>
             <div class="btn-group">
                 <NuxtLink

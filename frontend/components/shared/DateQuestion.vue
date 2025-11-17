@@ -1,27 +1,33 @@
 <script lang="ts" setup>
-import type { DateQuestionType } from "~/generated/gql/graphql";
+import type { DateQuestionWithValue } from "~/composables/useProcessForm";
 
 interface Props {
-    question: Pick<
-        DateQuestionType,
-        "id" | "textNl" | "textEn" | "descriptionNl" | "descriptionEn"
-    >;
+    question: DateQuestionWithValue;
+    isInvalid: boolean;
 }
 
 defineProps<Props>();
+
+const modelValue = defineModel<string>();
 </script>
 
 <template>
-    <div class="uu-form-field">
-        <label :for="question.id" class="form-label">{{
-            useTranslateableAttribute(question, "text")
-        }}</label>
+    <div>
+        <label :for="question.id" class="form-label">
+            {{ useTranslateableAttribute(question, "text") }}
+        </label>
         <p
             v-if="question.descriptionNl || question.descriptionEn"
             class="text-muted"
         >
             {{ useTranslateableAttribute(question, "description") }}
         </p>
-        <input :id="question.id" type="date" class="form-control" />
+        <input
+            :id="question.id"
+            v-model="modelValue"
+            type="date"
+            class="form-control"
+            :class="{ 'is-invalid': isInvalid }"
+        />
     </div>
 </template>
