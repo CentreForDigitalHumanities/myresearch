@@ -11,6 +11,8 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./backend/create_db.sql:/docker-entrypoint-initdb.d/myresearch.sql
+    ports:
+      - "54320:5432"
 
   nginx-dev: &nginx-dev
     image: nginx:latest
@@ -116,6 +118,7 @@ services:
       - HOST=0.0.0.0
       - CODEGEN_SCHEMA=http://mr-django:8000/api/graphql
       - NUXT_PUBLIC_API_URL=${BASE_URL}/api
+      - NUXT_PUBLIC_SAML_URL=${BASE_URL}/saml
 
   vue-prod:
     image: mr-vue-prod
