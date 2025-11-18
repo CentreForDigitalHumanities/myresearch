@@ -33,7 +33,6 @@ class FormQueries(ObjectType):
         root, info: ResolveInfo, form_id: str
     ) -> Optional[UserFormType]:
         user = info.context.user
-        print('User:', user)
         if not user.is_authenticated:
             return None
 
