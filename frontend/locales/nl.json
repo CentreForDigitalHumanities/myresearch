@@ -64,5 +64,13 @@
   "Next": "Volgende",
   "Welcome, {name}": "Welkom, {name}",
   "Logout": "Uitloggen",
-  "Login": "Inloggen"
+  "Login": "Inloggen",
+  "Studies": "Studies",
+  "title ascending": "Titel, A-Z",
+  "title descending": "Titel, Z-A",
+  "last name ascending": "Achternaam, A-Z",
+  "last name descending": "Achternaam, Z-A",
+  "Creator": "Aanvrager",
+  "Title": "Titel",
+  "No results found": "Geen resultaten gevonden."
 }
