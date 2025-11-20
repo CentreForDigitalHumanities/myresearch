@@ -36,7 +36,7 @@ def test_database_constraint_prevents_invalid_steps(test_form: MRForm):
             )
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestStepTopForm:
     """Tests for the Step.top_form property."""
 
