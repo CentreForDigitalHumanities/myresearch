@@ -34,8 +34,8 @@ class BaseMRManager(models.Manager):
 
     def _viewable_objects(self, user: User):
         # Needs to be overwritten for a specific object's permissions
-        return self
+        return self.all()
 
     def _editable_objects(self, user: User):
         # Needs to be overwritten for a specific object's permissions
-        return self
+        return self.all()

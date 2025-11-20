@@ -11,7 +11,8 @@
             "is_staff": true,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": true
+            "is_superuser": true,
+            "groups": [1,2]
         }
     },
     {
@@ -26,7 +27,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": [1]
         }
     },
     {
@@ -35,13 +37,14 @@
         "fields": {
             "username": "professor2",
             "password": "plain$professor2",
-            "first_name": "Edo",
-            "last_name": "Storm",
-            "email": "E.Storm@harvard-example.edu",
+            "first_name": "Steve",
+            "last_name": "Wynn",
+            "email": "S.Wynn@harvard-example.edu",
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": [1]
         }
     },
     {
@@ -56,7 +59,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": [1]
         }
     },
     {
@@ -71,7 +75,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": [2]
         }
     },
     {
@@ -86,7 +91,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": [2]
         }
     },
     {
@@ -101,7 +107,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -116,7 +123,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -131,7 +139,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -146,7 +155,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -161,7 +171,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -176,7 +187,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -191,7 +203,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -206,7 +219,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -221,7 +235,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -236,7 +251,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -251,7 +267,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -266,7 +283,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -281,7 +299,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -296,7 +315,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -311,7 +331,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -326,7 +347,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -341,7 +363,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -356,7 +379,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -371,7 +395,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -386,7 +411,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -401,7 +427,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -416,7 +443,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -431,7 +459,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -446,7 +475,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -461,7 +491,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -476,7 +507,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -491,7 +523,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -506,7 +539,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -521,7 +555,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -536,7 +571,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -551,7 +587,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -566,7 +603,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -581,7 +619,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -596,7 +635,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     },
     {
@@ -611,7 +651,8 @@
             "is_staff": false,
             "is_active": true,
             "date_joined": "2023-05-02T08:27:53.470Z",
-            "is_superuser": false
+            "is_superuser": false,
+            "groups": []
         }
     }
 ]
