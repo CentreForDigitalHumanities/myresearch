@@ -56,8 +56,8 @@ const slug = computed<string | null>(() => {
                         </NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink to="/" class="nav-link" active-class="active">
-                            {{ $t("My studies") }}
+                        <NuxtLink to="/studies/" class="nav-link" active-class="active">
+                            {{ $t("Studies") }}
                         </NuxtLink>
                     </li>
                     <li>
