@@ -19,9 +19,7 @@ def search_smart_split(search_terms):
             yield unescape_string_literal(term)
         else:
             # non-quoted tokens are split by comma, keeping only non-empty ones
-            yield from (
-                sub_term.strip() for sub_term in term.split(",") if sub_term
-            )
+            yield from (sub_term.strip() for sub_term in term.split(",") if sub_term)
 
 
 class SearchFilter:

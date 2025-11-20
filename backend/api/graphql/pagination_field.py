@@ -105,9 +105,7 @@ class GQLListPaginationConnectionField(Field):
             "offset",
             Int(description="Offset in the list of results to start"),
         )
-        kwargs.setdefault(
-            "limit", Int(description="The number of items to retrieve")
-        )
+        kwargs.setdefault("limit", Int(description="The number of items to retrieve"))
         kwargs.setdefault(
             "ordering", String(description="How the list should be ordered")
         )
@@ -253,9 +251,7 @@ class GQLListPaginationConnectionField(Field):
 
     @property
     def args(self):
-        return to_arguments(
-            self._base_args or OrderedDict(), self.filtering_args
-        )
+        return to_arguments(self._base_args or OrderedDict(), self.filtering_args)
 
     @args.setter
     def args(self, args):
@@ -274,8 +270,7 @@ class GQLListPaginationConnectionField(Field):
                 meta.update(self._extra_filter_meta)
 
             filterset_class = (
-                self._provided_filterset_class
-                or self.node_type._meta.filterset_class
+                self._provided_filterset_class or self.node_type._meta.filterset_class
             )
             self._filterset_class = get_filterset_class(filterset_class, **meta)
 

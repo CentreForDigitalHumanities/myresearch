@@ -11,10 +11,8 @@ class UserQueries(ObjectType):
     )
 
     users = List(
-        NonNull(
-            UserType
-        ),
-        required = True,
+        NonNull(UserType),
+        required=True,
     )
 
     @staticmethod
@@ -27,7 +25,7 @@ class UserQueries(ObjectType):
         except User.DoesNotExist:
             # Should never happen.
             return None
-        
+
     @staticmethod
     def resolve_users(root: None, info: ResolveInfo) -> list[User] | list:
         user = info.context.user  # type: User

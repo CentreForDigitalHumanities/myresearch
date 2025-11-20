@@ -17,7 +17,7 @@ class StudyQuery(ObjectType):
     )
 
     studies = List(
-    StudyType,
+        StudyType,
         mr_permission=String(required=True),
         required=True,
     )
@@ -47,7 +47,9 @@ class StudyQuery(ObjectType):
         )
 
     @staticmethod
-    def resolve_study_pages(root, info: ResolveInfo, mr_permission: str, **kwargs) -> QuerySet[Study]:
+    def resolve_study_pages(
+        root, info: ResolveInfo, mr_permission: str, **kwargs
+    ) -> QuerySet[Study]:
         return StudyType.get_queryset(Study.objects, info).accessible_objects(
             info.context.user, mr_permission
         )

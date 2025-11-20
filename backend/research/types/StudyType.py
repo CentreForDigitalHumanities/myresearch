@@ -7,6 +7,7 @@ from api.gql_list_object_type import GQLListObjectType
 from main.models import User
 from research.models import Study
 
+
 class StudyFilter(FilterSet):
 
     created_by_ids = ModelMultipleChoiceFilter(
@@ -23,9 +24,7 @@ class StudyType(GQLListObjectType):
             "created_by",
         ]
         filterset_class = StudyFilter
-        search_fields = [
-            "title"
-        ]
+        search_fields = ["title"]
 
     @classmethod
     def get_queryset(
