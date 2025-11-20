@@ -102,6 +102,7 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
 </script>
 
 <template>
+    <h4>Note: This page is a proof-of-concept for future lists.</h4>
     <SharedGraphQLList
         v-model:variables="variables"
         :query-document="GET_STUDY_PAGES"
@@ -138,7 +139,7 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
                     </tr>
                     <tr v-if="!isLoading && data?.length === 0">
                         <td colspan="5" class="text-center">
-                            {{ $t("errors.no_results_found") }}
+                            {{ $t("No results found") }}
                         </td>
                     </tr>
                 </tbody>
