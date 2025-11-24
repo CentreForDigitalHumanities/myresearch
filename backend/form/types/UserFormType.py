@@ -1,17 +1,16 @@
 from graphene import (
     ID,
+    Field,
     Int,
     ObjectType,
+    ResolveInfo,
     String,
-    Boolean,
     List,
     DateTime,
-    JSONString,
     NonNull,
 )
 
 from form.models import (
-    SelectOption,
     Step,
     BaseQuestion,
     SelectQuestion,
@@ -22,60 +21,20 @@ from form.models import (
     FileUploadQuestion,
 )
 from form.services.form_evaluator import FormEvaluator
+from form.types.StepType import StepType
+from form.types.UserQuestionType import (
+    BaseUserQuestionInterface,
+    UserDateQuestionType,
+    UserFileUploadQuestionType,
+    UserSelectQuestionType,
+    UserTextQuestionType,
+    UserNumberQuestionType,
+    UserTrueFalseQuestionType,
+    UserQuestionType,
+)
 
 
-class UserQuestionInstanceType(ObjectType):
-    """Represents a single instance of a question for a user (accounting for repeats)."""
-
-    question_id = ID(required=True)
-    repeat_index = Int(required=True)
-
-    # User's answer (if any)
-    answer = JSONString()
-
-    # Resolved fields from the associated question
-    question_type = String(required=True)
-    text_nl = String(required=True)
-    text_en = String(required=True)
-    description_nl = String()
-    description_en = String()
-    required = Boolean(required=True)
-    question_data = JSONString(
-        description="Type-specific question data (options, placeholder, etc.)"
-    )
-
-    def resolve_question_type(self, info):
-        question = BaseQuestion.objects.get(pk=self.question_id)
-        resolver = UserFormResolver(self.evaluator)
-        return resolver._get_question_type_name(question)
-
-    def resolve_text_nl(self, info):
-        question = BaseQuestion.objects.get(pk=self.question_id)
-        return question.text_nl
-
-    def resolve_text_en(self, info):
-        question = BaseQuestion.objects.get(pk=self.question_id)
-        return question.text_en
-
-    def resolve_description_nl(self, info):
-        question = BaseQuestion.objects.get(pk=self.question_id)
-        return question.description_nl
-
-    def resolve_description_en(self, info):
-        question = BaseQuestion.objects.get(pk=self.question_id)
-        return question.description_en
-
-    def resolve_required(self, info):
-        question = BaseQuestion.objects.get(pk=self.question_id)
-        return question.required
-
-    def resolve_question_data(self, info):
-        question = BaseQuestion.objects.get(pk=self.question_id)
-        resolver = UserFormResolver(self.evaluator)
-        return resolver._get_question_data(question)
-
-
-class UserStepInstanceType(ObjectType):
+class UserStepType(ObjectType):
     """Represents a single instance of a step for a user (accounting for repeats)."""
 
     step_id = ID(required=True)
@@ -87,11 +46,11 @@ class UserStepInstanceType(ObjectType):
     repeat_index = Int(required=True)
 
     questions = List(
-        NonNull(UserQuestionInstanceType),
+        NonNull(BaseUserQuestionInterface),
         required=True,
     )
     substeps = List(
-        lambda: NonNull(UserStepInstanceType),
+        lambda: NonNull(UserStepType),
         required=True,
     )
 
@@ -103,7 +62,7 @@ class UserFormType(ObjectType):
     name_nl = String(required=True)
     name_en = String(required=True)
     steps = List(
-        NonNull(UserStepInstanceType),
+        NonNull(UserStepType),
         required=True,
     )
     submission_id = ID()
@@ -117,55 +76,37 @@ class UserFormResolver:
     def __init__(self, evaluator: FormEvaluator):
         self.evaluator = evaluator
 
-    def _get_question_type_name(self, question: BaseQuestion) -> str:
-        """Get the concrete question type name."""
-        if isinstance(question, SelectQuestion):
-            return "select"
-        elif isinstance(question, TrueFalseQuestion):
-            return "truefalse"
-        elif isinstance(question, TextQuestion):
-            return "text"
-        elif isinstance(question, NumberQuestion):
-            return "number"
-        elif isinstance(question, DateQuestion):
-            return "date"
-        elif isinstance(question, FileUploadQuestion):
-            return "fileupload"
-        return "base"
+    def _create_question_instance(
+        self, question: BaseQuestion, repeat_index: int
+    ) -> ObjectType:
+        """Create the appropriate user question instance type based on the question type."""
+        answer = self.evaluator.get_user_answer(question, repeat_index)
 
-    def _get_question_data(self, question: BaseQuestion) -> dict:
-        """Get type-specific question data."""
-        data = {}
+        base_data = {
+            "question_id": question.pk,
+            "repeat_index": repeat_index,
+            "answer": answer,
+            "question": question,  # Pass the question object for field resolution
+        }
 
-        if isinstance(question, SelectQuestion):
-            data["multiple"] = question.multiple
-            data["options"] = [
-                {
-                    "id": opt.pk,
-                    "label_nl": opt.label_nl,
-                    "label_en": opt.label_en,
-                    "default_selected": opt.default_selected,
-                }
-                for opt in SelectOption.objects.filter(question=question).all()
-            ]
-        elif isinstance(question, TextQuestion):
-            data["placeholder_nl"] = question.placeholder_nl
-            data["placeholder_en"] = question.placeholder_en
-            data["lines"] = question.lines
-        elif isinstance(question, NumberQuestion):
-            data["positive_only"] = question.positive_only
-        elif isinstance(question, DateQuestion):
-            data["future_only"] = question.future_only
-        elif isinstance(question, FileUploadQuestion):
-            data["size_limit"] = question.size_limit
-        elif isinstance(question, TrueFalseQuestion):
-            data["default_value"] = question.default_value
+        # Access the specific subclass using Django's reverse relation attributes
+        if hasattr(question, "textquestion"):
+            return UserTextQuestionType(**base_data)
+        elif hasattr(question, "numberquestion"):
+            return UserNumberQuestionType(**base_data)
+        elif hasattr(question, "truefalsequestion"):
+            return UserTrueFalseQuestionType(**base_data)
+        elif hasattr(question, "datequestion"):
+            return UserDateQuestionType(**base_data)
+        elif hasattr(question, "selectquestion"):
+            return UserSelectQuestionType(**base_data)
+        elif hasattr(question, "fileuploadquestion"):
+            return UserFileUploadQuestionType(**base_data)
 
-        return data
+        # Fallback (should not happen)
+        return UserTextQuestionType(**base_data)
 
-    def resolve_question_instances(
-        self, question: BaseQuestion
-    ) -> list[UserQuestionInstanceType]:
+    def resolve_question_instances(self, question: BaseQuestion) -> list:
         """Resolve all instances of a question (considering repeats)."""
         if not self.evaluator.is_question_visible(question):
             return []
@@ -174,17 +115,12 @@ class UserFormResolver:
         instances = []
 
         for repeat_index in range(repeat_count):
-            instance = UserQuestionInstanceType(
-                question_id=question.pk,
-                repeat_index=repeat_index,
-                answer=self.evaluator.get_user_answer(question, repeat_index),
-            )
-            instance.evaluator = self.evaluator
+            instance = self._create_question_instance(question, repeat_index)
             instances.append(instance)
 
         return instances
 
-    def resolve_steps(self) -> list[UserStepInstanceType]:
+    def resolve_steps(self) -> list[UserStepType]:
         form = self.evaluator.form
 
         steps = []
@@ -193,7 +129,7 @@ class UserFormResolver:
 
         return steps
 
-    def _resolve_step_instances(self, step: Step) -> list[UserStepInstanceType]:
+    def _resolve_step_instances(self, step: Step) -> list[UserStepType]:
         """Resolve all instances of a step (considering repeats)."""
         if not self.evaluator.is_step_visible(step):
             return []
@@ -213,7 +149,7 @@ class UserFormResolver:
                 substeps.extend(self._resolve_step_instances(substep))
 
             instances.append(
-                UserStepInstanceType(
+                UserStepType(
                     step_id=step.pk,
                     name_nl=step.name_nl,
                     name_en=step.name_en,
