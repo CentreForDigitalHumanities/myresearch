@@ -11,6 +11,16 @@ from form.types.QuestionType import (
     FileUploadQuestionType,
     NumberQuestionType,
 )
+from form.types.UserQuestionType import (
+    UserQuestionType,
+    BaseUserQuestionInterface,
+    UserTextQuestionType,
+    UserNumberQuestionType,
+    UserTrueFalseQuestionType,
+    UserDateQuestionType,
+    UserSelectQuestionType,
+    UserFileUploadQuestionType,
+)
 from form.queries import FormQueries
 from research.queries import StudyQuery
 from main.queries import UserQueries
@@ -39,6 +49,15 @@ schema = Schema(
     types=[
         # These types are not queried directly, so they are included here to
         # make Graphene aware of them.
+        UserQuestionType,
+        BaseUserQuestionInterface,
+        UserTextQuestionType,
+        UserNumberQuestionType,
+        UserTrueFalseQuestionType,
+        UserDateQuestionType,
+        UserSelectQuestionType,
+        UserFileUploadQuestionType,
+
         QuestionType,
         BaseQuestionInterface,
         TrueFalseQuestionType,
