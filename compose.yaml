@@ -133,6 +133,9 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.prod
+      args:
+        - NUXT_PUBLIC_API_URL=${BASE_URL}/api
+        - CODEGEN_SCHEMA=schema.json
 
   dev-idp:
     image: ghcr.io/centrefordigitalhumanities/development-idp/development-idp:latest

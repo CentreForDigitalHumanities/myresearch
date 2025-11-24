@@ -15,6 +15,13 @@ RUN npm install
 # Copy the rest of the application source code into the container.
 COPY . /app
 
+# Get static graphql schema
+ARG CODEGEN_SCHEMA
+env CODEGEN_SCHEMA=${CODEGEN_SCHEMA}
+
+# Make sure the API URL is available at generate time
+ARG NUXT_PUBLIC_API_URL
+ENV NUXT_PUBLIC_API_URL=${NUXT_PUBLIC_API_URL}
 
 # Build the application in production mode.
 RUN npm run generate
