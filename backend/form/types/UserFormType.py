@@ -28,19 +28,41 @@ class UserQuestionInstanceType(ObjectType):
     """Represents a single instance of a question for a user (accounting for repeats)."""
 
     question_id = ID(required=True)
-    question_type = String(required=True)
-    text = String(required=True)
-    description = String()
-    required = Boolean(required=True)
     repeat_index = Int(required=True)
 
     # User's answer (if any)
     answer = JSONString()
 
-    # Question-specific fields
+    # Resolved fields from the associated question
+    question_type = String(required=True)
+    text = String(required=True)
+    description = String()
+    required = Boolean(required=True)
     question_data = JSONString(
         description="Type-specific question data (options, placeholder, etc.)"
     )
+
+    def resolve_question_type(self, info):
+        question = BaseQuestion.objects.get(pk=self.question_id)
+        resolver = UserFormResolver(self.evaluator)
+        return resolver._get_question_type_name(question)
+
+    def resolve_text(self, info):
+        question = BaseQuestion.objects.get(pk=self.question_id)
+        return question.text
+
+    def resolve_description(self, info):
+        question = BaseQuestion.objects.get(pk=self.question_id)
+        return question.description
+
+    def resolve_required(self, info):
+        question = BaseQuestion.objects.get(pk=self.question_id)
+        return question.required
+
+    def resolve_question_data(self, info):
+        question = BaseQuestion.objects.get(pk=self.question_id)
+        resolver = UserFormResolver(self.evaluator)
+        return resolver._get_question_data(question)
 
 
 class UserStepInstanceType(ObjectType):
@@ -137,22 +159,26 @@ class UserFormResolver:
         instances = []
 
         for repeat_index in range(repeat_count):
-            instances.append(
-                UserQuestionInstanceType(
-                    question_id=question.pk,
-                    question_type=self._get_question_type_name(question),
-                    text=question.text,
-                    description=question.description,
-                    required=question.required,
-                    repeat_index=repeat_index,
-                    answer=self.evaluator.get_user_answer(question, repeat_index),
-                    question_data=self._get_question_data(question),
-                )
+            instance = UserQuestionInstanceType(
+                question_id=question.pk,
+                repeat_index=repeat_index,
+                answer=self.evaluator.get_user_answer(question, repeat_index),
             )
+            instance.evaluator = self.evaluator
+            instances.append(instance)
 
         return instances
 
-    def resolve_step_instances(self, step: Step) -> list[UserStepInstanceType]:
+    def resolve_steps(self) -> list[UserStepInstanceType]:
+        form = self.evaluator.form
+
+        steps = []
+        for step in Step.objects.filter(form=form, parent__isnull=True).all():
+            steps.extend(self._resolve_step_instances(step))
+
+        return steps
+
+    def _resolve_step_instances(self, step: Step) -> list[UserStepInstanceType]:
         """Resolve all instances of a step (considering repeats)."""
         if not self.evaluator.is_step_visible(step):
             return []
@@ -169,7 +195,7 @@ class UserFormResolver:
             # Get all substeps for this step instance
             substeps = []
             for substep in Step.objects.filter(parent=step).all():
-                substeps.extend(self.resolve_step_instances(substep))
+                substeps.extend(self._resolve_step_instances(substep))
 
             instances.append(
                 UserStepInstanceType(

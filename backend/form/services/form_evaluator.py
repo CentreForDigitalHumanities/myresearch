@@ -16,21 +16,35 @@ UserType = type[User]
 
 
 class FormEvaluator:
-    """Evaluates conditional logic to determine visible questions/steps for a user."""
+    """
+    Evaluates conditional logic to determine visible questions/steps for a user.
 
-    def __init__(self, form: MRForm, user: UserType):
+    Args:
+        form: The MRForm template being evaluated
+        user: The user for whom the form is being evaluated
+        create_submission: Whether to create a UserFormSubmission if one doesn't exist.
+    """
+
+    def __init__(self, form: MRForm, user: UserType, create_submission: bool = False):
         self.form = form
         self.user = user
+        self.create_submission = create_submission
         self._submission = None
         self._responses_cache = None
 
     @property
     def submission(self) -> UserFormSubmission | None:
-        """Get or create the user's submission."""
+        """Get or optionally create the user's submission."""
         if self._submission is None:
-            self._submission, _ = UserFormSubmission.objects.get_or_create(
-                user=self.user, form=self.form
-            )
+            try:
+                self._submission = UserFormSubmission.objects.get(
+                    user=self.user, form=self.form
+                )
+            except UserFormSubmission.DoesNotExist:
+                if self.create_submission:
+                    self._submission = UserFormSubmission.objects.create(
+                        user=self.user, form=self.form
+                    )
         return self._submission
 
     @property

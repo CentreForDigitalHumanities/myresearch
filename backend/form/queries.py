@@ -16,7 +16,6 @@ class FormQueries(ObjectType):
 
     user_form = Field(
         UserFormType,
-        form_id=ID(required=True),
         description="Retrieves the user's submission for a specific form.",
     )
 
@@ -29,26 +28,22 @@ class FormQueries(ObjectType):
         )
 
     @staticmethod
-    def resolve_user_form(
-        root, info: ResolveInfo, form_id: str
-    ) -> Optional[UserFormType]:
+    def resolve_user_form(root, info: ResolveInfo) -> Optional[UserFormType]:
         user = info.context.user
         if not user.is_authenticated:
             return None
 
-        try:
-            form = MRForm.objects.get(pk=form_id)
-        except MRForm.DoesNotExist:
+        # Get the latest form template
+        form = MRForm.objects.order_by("-created_at").first()
+
+        if not form:
             return None
 
         evaluator = FormEvaluator(form, user)
-        resolver = UserFormResolver(evaluator)
-
-        steps = []
-        for step in Step.objects.filter(form=form).all():
-            steps.extend(resolver.resolve_step_instances(step))
-
         submission = evaluator.submission
+
+        resolver = UserFormResolver(evaluator)
+        steps = resolver.resolve_steps()
 
         return UserFormType(
             form_id=form.pk,
