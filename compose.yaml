@@ -6,7 +6,7 @@ services:
       - POSTGRES_PASSWORD=postgres
     healthcheck:
       test: 'psql -c "\l" postgres postgres'
-      start_period: 5s
+      start_period: 2s
     restart: always
     volumes:
       - pgdata:/var/lib/postgresql/data
@@ -54,6 +54,7 @@ services:
       context: ./backend
     healthcheck:
       test: "curl -f mr-django:8000/healthcheck/"
+      start_period: 2s
     volumes:
       - ./backend:/usr/src/app/backend
       - bapyca:/usr/src/app/backend/__pycache__
