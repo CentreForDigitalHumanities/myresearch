@@ -35,8 +35,10 @@ class UserQuestionInstanceType(ObjectType):
 
     # Resolved fields from the associated question
     question_type = String(required=True)
-    text = String(required=True)
-    description = String()
+    text_nl = String(required=True)
+    text_en = String(required=True)
+    description_nl = String()
+    description_en = String()
     required = Boolean(required=True)
     question_data = JSONString(
         description="Type-specific question data (options, placeholder, etc.)"
@@ -47,13 +49,21 @@ class UserQuestionInstanceType(ObjectType):
         resolver = UserFormResolver(self.evaluator)
         return resolver._get_question_type_name(question)
 
-    def resolve_text(self, info):
+    def resolve_text_nl(self, info):
         question = BaseQuestion.objects.get(pk=self.question_id)
-        return question.text
+        return question.text_nl
 
-    def resolve_description(self, info):
+    def resolve_text_en(self, info):
         question = BaseQuestion.objects.get(pk=self.question_id)
-        return question.description
+        return question.text_en
+
+    def resolve_description_nl(self, info):
+        question = BaseQuestion.objects.get(pk=self.question_id)
+        return question.description_nl
+
+    def resolve_description_en(self, info):
+        question = BaseQuestion.objects.get(pk=self.question_id)
+        return question.description_en
 
     def resolve_required(self, info):
         question = BaseQuestion.objects.get(pk=self.question_id)
@@ -69,8 +79,10 @@ class UserStepInstanceType(ObjectType):
     """Represents a single instance of a step for a user (accounting for repeats)."""
 
     step_id = ID(required=True)
-    name = String(required=True)
-    description = String()
+    name_nl = String(required=True)
+    name_en = String(required=True)
+    description_nl = String()
+    description_en = String()
     slug = String(required=True)
     repeat_index = Int(required=True)
 
@@ -88,7 +100,8 @@ class UserFormType(ObjectType):
     """The form structure as it appears to a specific user."""
 
     form_id = ID(required=True)
-    name = String(required=True)
+    name_nl = String(required=True)
+    name_en = String(required=True)
     steps = List(
         NonNull(UserStepInstanceType),
         required=True,
@@ -129,13 +142,15 @@ class UserFormResolver:
             data["options"] = [
                 {
                     "id": opt.pk,
-                    "label": opt.label,
+                    "label_nl": opt.label_nl,
+                    "label_en": opt.label_en,
                     "default_selected": opt.default_selected,
                 }
                 for opt in SelectOption.objects.filter(question=question).all()
             ]
         elif isinstance(question, TextQuestion):
-            data["placeholder"] = question.placeholder
+            data["placeholder_nl"] = question.placeholder_nl
+            data["placeholder_en"] = question.placeholder_en
             data["lines"] = question.lines
         elif isinstance(question, NumberQuestion):
             data["positive_only"] = question.positive_only
@@ -200,8 +215,10 @@ class UserFormResolver:
             instances.append(
                 UserStepInstanceType(
                     step_id=step.pk,
-                    name=step.name,
-                    description=step.description,
+                    name_nl=step.name_nl,
+                    name_en=step.name_en,
+                    description_nl=step.description_nl,
+                    description_en=step.description_en,
                     slug=(
                         f"{step.slug}-{repeat_index}" if repeat_index > 0 else step.slug
                     ),

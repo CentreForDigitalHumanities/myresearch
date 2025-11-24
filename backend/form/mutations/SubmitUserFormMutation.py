@@ -210,7 +210,8 @@ class SubmitUserFormMutation(Mutation):
 
         user_form = UserFormType(
             form_id=form.pk,
-            name=form.name,
+            name_nl=form.name_nl,
+            name_en=form.name_en,
             steps=steps,
             submission_id=submission.pk,
             started_at=submission.started_at,

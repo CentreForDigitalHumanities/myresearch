@@ -47,7 +47,8 @@ class FormQueries(ObjectType):
 
         return UserFormType(
             form_id=form.pk,
-            name=form.name,
+            name_nl=form.name_nl,
+            name_en=form.name_en,
             steps=steps,
             submission_id=submission.pk if submission else None,
             started_at=submission.started_at if submission else None,
