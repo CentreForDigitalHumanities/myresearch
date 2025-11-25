@@ -6,9 +6,10 @@ from django.contrib.auth.models import AnonymousUser, Group
 from main.models import MRGroups, MRPermission, User
 from .models import Study
 
- ###############
+#################
 # User fixtures #
- ###############
+#################
+
 
 @pytest.fixture
 def test_anonymous_user() -> AnonymousUser:
@@ -37,9 +38,11 @@ def test_fetc_user() -> User:
 def test_user() -> User:
     return User.objects.create(username="user", password="1234")
 
- ################
+
+##################
 # Study fixtures #
- ################
+##################
+
 
 @pytest.fixture
 def test_study(test_user) -> Study:
@@ -50,9 +53,11 @@ def test_study(test_user) -> Study:
 def test_po_study(test_po_user) -> Study:
     return Study.objects.create(title="test_po_user's study", created_by=test_po_user)
 
- ##################
+
+####################
 # Permission Tests #
- ##################
+####################
+
 
 @pytest.mark.django_db(transaction=True)
 class TestStudyPermissions:
