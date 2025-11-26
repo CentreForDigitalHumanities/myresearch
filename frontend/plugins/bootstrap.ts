@@ -1,6 +1,33 @@
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import {
+    Alert,
+    Button,
+    Collapse,
+    Dropdown,
+    Modal,
+    Offcanvas,
+    Popover,
+    ScrollSpy,
+    Tab,
+    Toast,
+    Tooltip,
+} from "bootstrap";
 
 export default defineNuxtPlugin(() => {
-    // Bootstrap initializes itself globally.
-    // No further action is typically needed here.
+    return {
+        provide: {
+            bootstrap: {
+                Alert,
+                Button,
+                Collapse,
+                Dropdown,
+                Modal,
+                Offcanvas,
+                Popover,
+                ScrollSpy,
+                Tab,
+                Toast,
+                Tooltip,
+            },
+        },
+    };
 });
