@@ -4,7 +4,7 @@ For list pages in MyResearch, we use GraphQLList. This is a custom implementatio
 
 ## What does GraphQLList do?
 
-GraphQLList produces a nicely styled list, based on a GraphQLQuery to the backend. It can be made searchable, have custom ordering and filters.
+GraphQLList produces a nicely styled list, based on a GraphQL query to the backend. It can be made searchable and have custom ordering and filters.
 
 ## Preparing a Query
 
