@@ -99,7 +99,7 @@ query GetStudyPages(
 ```
 There is some extra variables here, which are provided via GQLListPaginationConnectionField. Furthermore, there is also the variable that we use for our filter (`colorIds`). Our `Book` objects are available in the `result` property of the query result.
 
-Next, we'll need to define the variable that we are passing into our GraphQLList component. These are kindoff like default variables for search and ordering. In our case they might look like this:
+Next, we'll need to define the variables that we are passing into our GraphQLList component, such as `search` and `ordering`. You can provide default values for them in the following way.
 ```
 const variables = ref<GraphQLListVariables>({
     search: "",
