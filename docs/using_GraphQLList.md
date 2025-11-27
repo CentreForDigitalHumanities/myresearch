@@ -46,7 +46,7 @@ class BookType(GQLListObjectType):
 ```
 This ensures that the `Book`'s Title and Author are searchable and the we can filter the list of books based on its color (supposing this is a related object in this case). For more information on how to write filters, check out the docs for [django-filter](https://django-filter.readthedocs.io/en/stable/index.html).
 
-Next, we need to add a `book_pages` query to our `BookQuery` object. This uses a custom field object, which adds some relevant attributex to a list-like query for pagination. The field is called GQLListPaginationConnectionField. Add the field to your query object like so:
+Next, we need to add a `book_pages` query to our `BookQuery` object. This uses a custom field object, which adds some relevant attributes to a list-like query for pagination. The field is called `GQLListPaginationConnectionField`. Add the field to your query object like so:
 
 ```
     book_pages = GQLListPaginationConnectionField(
