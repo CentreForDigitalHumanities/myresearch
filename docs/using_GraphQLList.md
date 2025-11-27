@@ -61,7 +61,7 @@ With a resolver, that will look similar to other List resolvers:
 ```
 This is all the work in the backend done!
 ## Rendering your query using GraphQLList
-Next we'll render this Query using our GraphQLList component. First, create a new page where you want your list to live. Then we'll need to setup a few things. The most important thing is your graphql query, which might look something like this:
+Next we'll render the result of this query using our GraphQLList component. First, create a new page where you want your list to live. Then we'll need to setup a few things. The most important thing is your GraphQL query, which might look something like this:
 ```
 const GET_STUDY_PAGES = graphql(`
 query GetStudyPages(
