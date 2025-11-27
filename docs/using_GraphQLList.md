@@ -57,7 +57,7 @@ With a resolver, that will look similar to other List resolvers:
 ```
     @staticmethod
     def resolve_book_pages(root, info: ResolveInfo, **kwargs) -> QuerySet[Book]:
-        return BookType.get_queryset(book.objects, info)
+        return BookType.get_queryset(Book.objects, info)
 ```
 This is all the work in the backend done!
 ## Rendering your query using GraphQLList
