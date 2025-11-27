@@ -1,6 +1,6 @@
 # Using GraphQLList
 
-For list pages in MyResearch, we use GraphQLList. This is a custom implementation of UUList, which is itself a custom vue component for rendering lists, part of [CDH Vue-lib](https://github.com/CentreForDigitalHumanities/Vue-lib). GraphQLList has been developed for use in the [DIAPP](https://github.com/CentreForDigitalHumanities/DIAPP). For now (nov. 2025), we have simply copied this implementation into MyResearch, but ideally, these vue components and custom Graphene/Django objects used for GraphQLList, should live in a separate library for other portals using the Vue/GraphQL/Django stack. This is a quick piece of documentation to explain how to use GraphQLList, as there are a lot of moving parts.
+For list pages in MyResearch, we use GraphQLList. This is a custom implementation of UUList, which is itself a custom Vue component for rendering lists, part of [CDH Vue-lib](https://github.com/CentreForDigitalHumanities/Vue-lib). GraphQLList has originally been developed for use in the [DIAPP](https://github.com/CentreForDigitalHumanities/DIAPP). For now (Nov. 2025), we have simply copied this implementation into MyResearch, but ideally, these Vue components and custom Graphene/Django objects used for GraphQLList, should live in a separate library for other portals using the Vue/GraphQL/Django stack. This is a quick piece of documentation to explain how to use GraphQLList, as there are a lot of moving parts.
 
 ## What does GraphQLList do?
 
