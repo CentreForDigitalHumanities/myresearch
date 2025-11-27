@@ -10,7 +10,7 @@ GraphQLList produces a nicely styled list, based on a GraphQL query to the backe
 
 Let's try to make a GQLList for a hypothetical `Book` object.
 
-To prepare a query, we firstly need to ensure that we are using our custom override of Graphene's DjangoObjectType: GQLListObjectType. This allows us to add fields to DjangoObjectType's Meta. In the ObjectType, we can also specify which fields should be searchable and what kind of filters we would like to have available for this object. We could for instance make the `Book`'s ObjectType look something like this:
+To prepare a query, we first need to ensure that we are using our custom override of Graphene's DjangoObjectType: GQLListObjectType. This allows us to add fields to DjangoObjectType's Meta. In the ObjectType, we can also specify which fields should be searchable and what kind of filters we would like to have available for this object. We could for instance make the `Book`'s ObjectType look something like this:
 
 ```
 class BookFilter(FilterSet):
