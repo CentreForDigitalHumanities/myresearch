@@ -58,6 +58,9 @@ The differences are outlined below.
 | Ports available | 3000 (frontend)           | 5000 (NGINX), 3000 (frontend)          | 5000 (NGINX)                                  |
 | Logging | Console                   | TBD                                    | TBD                                           |
 
+In development mode, the backend dependencies are included in the Docker image and only
+updated when building the container, while the frontend dependencies are mounted as a
+volume and updated automatically every time the container starts.
 
 ## Running the application locally
 
