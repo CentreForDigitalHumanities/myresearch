@@ -8,7 +8,7 @@ import type { GetFirstSlugQuery } from "~/generated/gql/graphql";
 // We only need to know the slug of the top-level form so we can link to it.
 const GET_FIRST_SLUG = graphql(`
     query GetFirstSlug {
-        userForm {
+        form {
             formId
             steps {
                 stepId
@@ -20,7 +20,7 @@ const GET_FIRST_SLUG = graphql(`
 
 const { result } = useQuery<GetFirstSlugQuery>(GET_FIRST_SLUG);
 const slug = computed<string | null>(() => {
-    const firstStep = result.value?.userForm?.steps[0];
+    const firstStep = result.value?.form?.steps[0];
     return firstStep?.slug || null;
 });
 </script>

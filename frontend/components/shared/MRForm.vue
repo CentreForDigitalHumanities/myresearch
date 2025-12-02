@@ -50,7 +50,7 @@ function hasErrors(question: QuestionWithValue): boolean {
         <div class="d-flex flex-column">
             <div
                 v-for="question in step.questions"
-                :key="question.id"
+                :key="`${question.questionId}-${question.repeatIndex}`"
                 class="uu-form-field"
             >
                 <component

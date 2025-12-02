@@ -164,6 +164,70 @@ function formatQuestionLocation(
     return locationParts.join(".");
 }
 
+/**
+ * Parses the answer JSON string and returns a typed value.
+ * Falls back to default values when answer is null/undefined.
+ */
+function parseAnswer(
+    answer: string | null | undefined,
+    typename: string,
+    defaultValue?: boolean,
+): string | number | boolean | null {
+    if (answer) {
+        try {
+            const parsed: unknown = JSON.parse(answer);
+            // The answer object typically has a 'value' key
+            if (
+                parsed &&
+                typeof parsed === "object" &&
+                "value" in parsed &&
+                (typeof (parsed as { value: unknown; }).value === "string" ||
+                    typeof (parsed as { value: unknown; }).value === "number" ||
+                    typeof (parsed as { value: unknown; }).value === "boolean")
+            ) {
+                return (parsed as { value: string | number | boolean; }).value;
+            }
+            // For select questions, might have option_id or option_ids
+            if (
+                parsed &&
+                typeof parsed === "object" &&
+                "option_id" in parsed &&
+                typeof (parsed as { option_id: unknown; }).option_id === "string"
+            ) {
+                return (parsed as { option_id: string; }).option_id;
+            }
+            // If it's a primitive, return it directly
+            if (
+                typeof parsed === "string" ||
+                typeof parsed === "number" ||
+                typeof parsed === "boolean"
+            ) {
+                return parsed;
+            }
+            return null;
+        } catch {
+            // If parsing fails, return the raw string for text-like fields
+            return answer;
+        }
+    }
+
+    // Return type-appropriate defaults when no answer exists
+    switch (typename) {
+        case "TextQuestionType":
+        case "DateQuestionType":
+        case "SelectQuestionType":
+            return "";
+        case "NumberQuestionType":
+            return 0;
+        case "TrueFalseQuestionType":
+            return defaultValue ?? false;
+        case "FileUploadQuestionType":
+            return null;
+        default:
+            return "";
+    }
+}
+
 function addValueAndLocationToQuestion(
     question: QuestionType,
     questionIndex: number,
@@ -183,25 +247,38 @@ function addValueAndLocationToQuestion(
             return {
                 ...question,
                 location,
-                value: "",
+                value: parseAnswer(
+                    question.answer as string | null | undefined,
+                    question.__typename,
+                ) as string,
             };
         case "NumberQuestionType":
             return {
                 ...question,
                 location,
-                value: 0,
+                value: parseAnswer(
+                    question.answer as string | null | undefined,
+                    question.__typename,
+                ) as number,
             };
         case "TrueFalseQuestionType":
             return {
                 ...question,
                 location,
-                value: question.defaultValue,
+                value: parseAnswer(
+                    question.answer as string | null | undefined,
+                    question.__typename,
+                    question.defaultValue,
+                ) as boolean,
             };
         case "FileUploadQuestionType":
             return {
                 ...question,
                 location,
-                value: null,
+                value: parseAnswer(
+                    question.answer as string | null | undefined,
+                    question.__typename,
+                ) as null,
             };
     }
 }

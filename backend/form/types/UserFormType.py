@@ -1,69 +1,16 @@
-from graphene import (
-    ID,
-    Int,
-    ObjectType,
-    String,
-    List,
-    DateTime,
-    NonNull,
-    ResolveInfo,
-)
+from graphene import ID, ObjectType, String, List, DateTime, NonNull
 
-from django.db.models import QuerySet
-
-from form.models import (
-    Step,
-    BaseQuestion,
-    StepInfoQuestion,
-    StepInfoText,
-)
+from form.types.StepType import StepType
+from form.models import Step, BaseQuestion
 from form.services.form_evaluator import FormEvaluator
-from form.types.StepInfoQuestionType import StepInfoQuestionType
-from form.types.StepInfoTextType import StepInfoTextType
-from form.types.UserQuestionType import (
-    BaseUserQuestionInterface,
-    UserDateQuestionType,
-    UserFileUploadQuestionType,
-    UserSelectQuestionType,
-    UserTextQuestionType,
-    UserNumberQuestionType,
-    UserTrueFalseQuestionType,
+from form.types.QuestionType import (
+    DateQuestionType,
+    FileUploadQuestionType,
+    SelectQuestionType,
+    TextQuestionType,
+    NumberQuestionType,
+    TrueFalseQuestionType,
 )
-
-
-class UserStepType(ObjectType):
-    """Represents a single instance of a step for a user (accounting for repeats)."""
-
-    step_id = ID(required=True)
-    name_nl = String(required=True)
-    name_en = String(required=True)
-    description_nl = String()
-    description_en = String()
-    slug = String(required=True)
-    repeat_index = Int(required=True)
-
-    questions = List(
-        NonNull(BaseUserQuestionInterface),
-        required=True,
-    )
-    substeps = List(
-        lambda: NonNull(UserStepType),
-        required=True,
-    )
-    info_questions = List(NonNull(StepInfoQuestionType), required=True)
-    info_texts = List(NonNull(StepInfoTextType), required=True)
-
-    @staticmethod
-    def resolve_info_questions(parent, info: ResolveInfo) -> QuerySet[StepInfoQuestion]:
-        if not parent.step_id:
-            return StepInfoQuestion.objects.none()
-        return StepInfoQuestion.objects.filter(step_id=parent.step_id)
-    
-    @staticmethod
-    def resolve_info_texts(parent, info: ResolveInfo) -> QuerySet[StepInfoText]:
-        if not parent.step_id:
-            return StepInfoText.objects.none()
-        return StepInfoText.objects.filter(step_id=parent.step_id)
 
 
 class UserFormType(ObjectType):
@@ -73,7 +20,7 @@ class UserFormType(ObjectType):
     name_nl = String(required=True)
     name_en = String(required=True)
     steps = List(
-        NonNull(UserStepType),
+        NonNull(StepType),
         required=True,
     )
     submission_id = ID()
@@ -83,11 +30,7 @@ class UserFormType(ObjectType):
 
 class UserFormResolver:
     """
-    Helper to resolve user-specific form structure.
-
-    Transforms the user-specific form in FormEvaluator into a GraphQL-friendly
-    UserFormType structure.
-
+    Transforms the user-specific form into a GraphQL types for API access.
     """
 
     def __init__(self, evaluator: FormEvaluator):
@@ -108,20 +51,20 @@ class UserFormResolver:
 
         # Access the specific subclass using Django's reverse relation attributes
         if hasattr(question, "textquestion"):
-            return UserTextQuestionType(**base_data)
+            return TextQuestionType(**base_data)
         elif hasattr(question, "numberquestion"):
-            return UserNumberQuestionType(**base_data)
+            return NumberQuestionType(**base_data)
         elif hasattr(question, "truefalsequestion"):
-            return UserTrueFalseQuestionType(**base_data)
+            return TrueFalseQuestionType(**base_data)
         elif hasattr(question, "datequestion"):
-            return UserDateQuestionType(**base_data)
+            return DateQuestionType(**base_data)
         elif hasattr(question, "selectquestion"):
-            return UserSelectQuestionType(**base_data)
+            return SelectQuestionType(**base_data)
         elif hasattr(question, "fileuploadquestion"):
-            return UserFileUploadQuestionType(**base_data)
+            return FileUploadQuestionType(**base_data)
 
         # Fallback (should not happen)
-        return UserTextQuestionType(**base_data)
+        return TextQuestionType(**base_data)
 
     def resolve(self) -> UserFormType:
         """Resolve the complete user form structure."""
@@ -142,7 +85,7 @@ class UserFormResolver:
             completed_at=submission.completed_at if submission else None,  # type: ignore
         )
 
-    def _resolve_step_instances(self, step: Step) -> list[UserStepType]:
+    def _resolve_step_instances(self, step: Step) -> list[StepType]:
         """Resolve all instances of a step (considering repeats)."""
         if not self.evaluator.is_step_visible(step):
             return []
@@ -162,7 +105,7 @@ class UserFormResolver:
                 substeps.extend(self._resolve_step_instances(substep))
 
             instances.append(
-                UserStepType(
+                StepType(
                     step_id=step.pk,  # type: ignore
                     name_nl=step.name_nl,  # type: ignore
                     name_en=step.name_en,  # type: ignore

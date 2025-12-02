@@ -17,7 +17,7 @@ interface FormState {
  */
 export function useFormState(queriedForm: QueriedForm) {
     // Use the form's unique identifier as the state key
-    const formId = queriedForm.id;
+    const formId = queriedForm.formId;
 
     // useState is a cache in which values are stored globally by key.
     // If a value already exists for the given key, it is returned.
