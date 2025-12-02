@@ -14,7 +14,6 @@ from graphene import (
 
 from form.models import (
     BaseQuestion,
-    SelectOption,
     TrueFalseQuestion,
     DateQuestion,
     FileUploadQuestion,

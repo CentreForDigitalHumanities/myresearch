@@ -6,13 +6,20 @@ from graphene import (
     List,
     DateTime,
     NonNull,
+    ResolveInfo,
 )
+
+from django.db.models import QuerySet
 
 from form.models import (
     Step,
     BaseQuestion,
+    StepInfoQuestion,
+    StepInfoText,
 )
 from form.services.form_evaluator import FormEvaluator
+from form.types.StepInfoQuestionType import StepInfoQuestionType
+from form.types.StepInfoTextType import StepInfoTextType
 from form.types.UserQuestionType import (
     BaseUserQuestionInterface,
     UserDateQuestionType,
@@ -43,6 +50,20 @@ class UserStepType(ObjectType):
         lambda: NonNull(UserStepType),
         required=True,
     )
+    info_questions = List(NonNull(StepInfoQuestionType), required=True)
+    info_texts = List(NonNull(StepInfoTextType), required=True)
+
+    @staticmethod
+    def resolve_info_questions(parent, info: ResolveInfo) -> QuerySet[StepInfoQuestion]:
+        if not parent.step_id:
+            return StepInfoQuestion.objects.none()
+        return StepInfoQuestion.objects.filter(step_id=parent.step_id)
+    
+    @staticmethod
+    def resolve_info_texts(parent, info: ResolveInfo) -> QuerySet[StepInfoText]:
+        if not parent.step_id:
+            return StepInfoText.objects.none()
+        return StepInfoText.objects.filter(step_id=parent.step_id)
 
 
 class UserFormType(ObjectType):
