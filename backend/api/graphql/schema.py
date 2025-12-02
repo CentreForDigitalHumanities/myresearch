@@ -17,7 +17,6 @@ from main.queries import UserQueries
 from research.mutations.CreateStudyMutation import CreateStudyMutation
 from research.mutations.UpdateStudyMutation import UpdateStudyMutation
 from research.mutations.DeleteStudyMutation import DeleteStudyMutation
-from form.mutations.SubmitUserFormMutation import SubmitUserFormMutation
 
 
 class Query(FormQueries, UserQueries, StudyQuery, ObjectType):
@@ -25,11 +24,9 @@ class Query(FormQueries, UserQueries, StudyQuery, ObjectType):
 
 
 class Mutation(ObjectType):
-
     create_study = CreateStudyMutation.Field()
     update_study = UpdateStudyMutation.Field()
     delete_study = DeleteStudyMutation.Field()
-    submit_user_form = SubmitUserFormMutation.Field()
 
 
 schema = Schema(
