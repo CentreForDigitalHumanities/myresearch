@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.db.models import QuerySet
 
 from form.models import (
     UserFormSubmission,
@@ -17,11 +18,12 @@ UserType = type[User]
 
 class FormEvaluator:
     """
-    Evaluates conditional logic to determine visible questions/steps for a user.
+    Creates a user-specific view of a form, with conditional logic and repeats
+    applied, based on a user's last submission.
 
     Args:
-        form: The MRForm template being evaluated
-        user: The user for whom the form is being evaluated
+        form: The MRForm config/template being evaluated.
+        user: The user for whom the form is being evaluated.
         create_submission: Whether to create a UserFormSubmission if one doesn't exist.
     """
 
@@ -34,17 +36,27 @@ class FormEvaluator:
 
     @property
     def submission(self) -> UserFormSubmission | None:
-        """Get or optionally create the user's submission."""
+        """
+        Get or optionally create the user's submission.
+
+        For now, this fetches the latest submission; in the future, we will
+        want to support multiple submissions per user.
+        """
         if self._submission is None:
-            try:
-                self._submission = UserFormSubmission.objects.get(
+            if self.create_submission:
+                self._submission = UserFormSubmission.objects.create(
                     user=self.user, form=self.form
                 )
-            except UserFormSubmission.DoesNotExist:
-                if self.create_submission:
-                    self._submission = UserFormSubmission.objects.create(
-                        user=self.user, form=self.form
+            else:
+                self._submission = (
+                    UserFormSubmission.objects.filter(
+                        user=self.user,
+                        form=self.form,
                     )
+                    .order_by("-updated_at")
+                    .first()
+                )
+
         return self._submission
 
     @property
@@ -126,33 +138,28 @@ class FormEvaluator:
         # If no conditions, it's visible by default
         if not show_conditions.exists() and not hide_conditions.exists():
             return True
-        
+
         # Check show conditions - at least one must be met
         if show_conditions.exists():
-            show_condition_met = False
-            for condition in show_conditions:
-                trigger_responses = self.responses.get(
-                    condition.trigger_question.pk, []
-                )
-                if trigger_responses:
-                    if self.check_trigger_value(
-                        trigger_responses[0].answer, condition.trigger_value
-                    ):
-                        show_condition_met = True
-                        break
-            if not show_condition_met:
-                return False
+            show_question = self._check_conditions(show_conditions)
+            return show_question
+        
+        if hide_conditions.exists():
+            hide_question = self._check_conditions(hide_conditions)
+            return not hide_question
 
-        # Check hide conditions - if any is met, hide the question
-        for condition in hide_conditions:
+        return True
+    
+    def _check_conditions(self, conditions: QuerySet[QuestionCondition]) -> bool:
+        """Helper to evaluate show conditions."""
+        for condition in conditions:
             trigger_responses = self.responses.get(condition.trigger_question.pk, [])
             if trigger_responses:
                 if self.check_trigger_value(
                     trigger_responses[0].answer, condition.trigger_value
                 ):
-                    return False
-
-        return True
+                    return True
+        return False
 
     def get_repeat_count_for_step(self, step: Step) -> int:
         """Determine how many times a step should appear."""
