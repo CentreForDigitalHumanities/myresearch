@@ -11,6 +11,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./backend/create_db.sql:/docker-entrypoint-initdb.d/myresearch.sql
+      - ./scripts/dumps:/mnt/dumps
     ports:
       - "54320:5432"
 
