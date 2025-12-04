@@ -72,11 +72,10 @@
   "Login": "Inloggen",
   "You can also find the links to the documents during the application itself.": "Je kan de links naar de documenten ook tijdens de aanvraag vinden.",
   "Study": "Studie",
-  "Study overview": "Studie overzicht",
+  "Study overview": "Studieoverzicht",
   "Creator details": "Details aanvrager",
   "Created by:": "Aangemaakt door:",
   "Creator email:": "E-mail aanvrager:",
-  "Study details:": "Studie details:",
   "Created on:": "Gemaakt op:",
   "Submitted on:": "Ingediend op:",
   "Overview": "Overzicht",
@@ -87,5 +86,11 @@
   "Created": "Aangemaakt",
   "Submitted for review": "Ingediend ter beoordeling",
   "Review from Privacy Officer": "Beoordeling van privacy officer",
-  "Conclusion": "Conclusie"
+  "Conclusion": "Conclusie",
+  "Show sidebar": "Toon zijbalk",
+  "Continue editing": "Ga verder",
+  "Submit": "Indienen",
+  "Submitted": "Ingediend",
+  "Revision Created": "Revisie aangemaakt",
+  "Study details": "Studiedetails"
 }

@@ -3,6 +3,9 @@ import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
 import type { GetStudyQuery } from "~/generated/gql/graphql";
 import { showError, createError } from "#app";
+import StudyDetailsSidebar from "./StudyDetailsSidebar.vue";
+import AvailableActions from "./AvailableActions.vue";
+import StudyProgessBar from "./StudyProgessBar.vue";
 
 // retrieve study
 
@@ -40,7 +43,7 @@ watchEffect(() => {
     }
 });
 
-// Some functions to generate mockdates
+// Some functions to generate mockdata
 
 function randomDatePastYear(): string {
     const today = new Date();
@@ -66,49 +69,26 @@ function randomDatePastYear(): string {
 function randomNumber100to1000(): number {
     return Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
 }
+
+// If study is even, it is a draft. If it is odd, it is in the review phase
+
+const StudyStatus = computed(() =>
+    Number(study.value?.id) % 2 === 0 ? "draft" : "review",
+);
 </script>
 
 <template>
     <div class="uu-content">
         <Title>{{ $t("Study") }}: {{ study?.title }}</Title>
         <div class="uu-hero">
-            <h1>{{ $t("Study overview") }}: {{ study?.title }}</h1>
+            <h1>{{ $t("Study overview") }}</h1>
         </div>
         <!-- Sidebar -->
         <div class="uu-sidebar-container">
-            <aside class="uu-sidebar">
-                <button
-                    class="uu-sidebar-toggle"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#exampleSidebar"
-                    aria-expanded="false"
-                >
-                    {{ $t("Show sidebar") }}
-                </button>
-                <div id="exampleSidebar" class="uu-sidebar-collapse collapse">
-                    <h3>{{ $t("Creator details") }}</h3>
-                    <ul>
-                        <li class="mt-2">
-                            {{ $t("Created by:") }}
-                            {{ study?.createdBy.fullName }}
-                        </li>
-                        <li class="mt-2">
-                            {{ $t("Creator email:") }}
-                            {{ study?.createdBy.email }}
-                        </li>
-                    </ul>
-                    <h3>{{ $t("Study details:") }}</h3>
-                    <ul>
-                        <li class="mt-2">
-                            {{ $t("Created on:") }} {{ randomDatePastYear() }}
-                        </li>
-                        <li class="mt-2">
-                            {{ $t("Submitted on:") }} {{ randomDatePastYear() }}
-                        </li>
-                    </ul>
-                </div>
-            </aside>
+            <StudyDetailsSidebar
+                :study="study"
+                :randomDatePastYear="randomDatePastYear()"
+            />
             <!-- Content -->
             <div class="uu-sidebar-content">
                 <div class="uu-container">
@@ -117,7 +97,7 @@ function randomNumber100to1000(): number {
                         <div class="col me-5">
                             <h1>
                                 2025-{{ randomNumber100to1000() }} -
-                                {{ study?.title }} {{ $t("Overview") }}
+                                <em>{{ study?.title }}</em>
                             </h1>
                             <p>
                                 {{
@@ -128,69 +108,11 @@ function randomNumber100to1000(): number {
                                 <em>{{ study?.title }}</em
                                 >.
                             </p>
-                            <h3>Available actions:</h3>
-                            <div class="tiles">
-                                <a class="tile h-100">
-                                    <strong>{{ $t("View PDF") }}</strong>
-                                </a>
-                                <a class="tile h-100">
-                                    <strong>{{
-                                        $t("View attachments")
-                                    }}</strong>
-                                </a>
-                                <a class="tile h-100">
-                                    <strong>{{ $t("Submit decision") }}</strong>
-                                </a>
-                            </div>
+                            <AvailableActions :study-status="StudyStatus" />
                         </div>
                         <!-- Progess bar -->
                         <div class="col-2">
-                            <div class="stepper h-100">
-                                <ul
-                                    class="h-100 d-flex flex-column justify-content-between"
-                                >
-                                    <li>
-                                        <a class="stepper-item">
-                                            <span
-                                                class="stepper-bubble stepper-bubble-largest complete"
-                                            ></span>
-                                            <span>{{ $t("Created") }}</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="stepper-item">
-                                            <span
-                                                class="stepper-bubble stepper-bubble-largest complete"
-                                            ></span>
-                                            <span>{{
-                                                $t("Submitted for review")
-                                            }}</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="stepper-item active">
-                                            <span
-                                                class="stepper-bubble stepper-bubble-largest incomplete"
-                                            ></span>
-                                            <span class="text-wrap">{{
-                                                $t(
-                                                    "Review from Privacy Officer",
-                                                )
-                                            }}</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="stepper-item">
-                                            <span
-                                                class="stepper-bubble stepper-bubble-largest"
-                                            ></span>
-                                            <span class="text-wrap">{{
-                                                $t("Conclusion")
-                                            }}</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <StudyProgessBar :study-status="StudyStatus" />
                         </div>
                     </div>
                 </div>
