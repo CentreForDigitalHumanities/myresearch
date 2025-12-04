@@ -61,7 +61,7 @@ const AvailableActions = computed(() =>
 </script>
 
 <template>
-    <h3 class="mb-3">Available actions:</h3>
+    <h3 class="mb-3">{{ $t("Available actions:") }}</h3>
     <div class="tiles">
         <a
             v-for="(action, index) in AvailableActions"
