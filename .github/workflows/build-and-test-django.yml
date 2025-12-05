@@ -18,4 +18,4 @@ jobs:
       - name: Check for missing migrations
         run: docker compose run django-prod python manage.py makemigrations --dry-run --check
       - name: Run Django tests
-        run: docker compose run django-prod python manage.py test
+        run: docker compose run django-prod pytest
