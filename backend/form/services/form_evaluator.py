@@ -76,8 +76,9 @@ class FormEvaluator:
 
     def check_trigger_value(self, answer: dict, trigger_value: dict) -> bool:
         """Check if an answer matches the trigger condition."""
-        if not trigger_value:  # Empty dict = any answer
-            return bool(answer)
+        # If trigger_value is {}, the condition is always considered met.
+        if not trigger_value:
+            return True
 
         # Number comparisons
         if "min" in trigger_value:
@@ -87,7 +88,8 @@ class FormEvaluator:
         if "exact" in trigger_value:
             return answer.get("value") == trigger_value["exact"]
 
-        # Select option checks
+        # Select option checks -- currently: the check passes if *any* of the
+        # answer's ids are in the list of ids in trigger_value.
         if "option_ids" in trigger_value:
             user_option_ids = answer.get("option_ids", [])
             if "option_id" in answer:
@@ -127,7 +129,12 @@ class FormEvaluator:
         return 1  # Default: show once
 
     def is_question_visible(self, question: BaseQuestion) -> bool:
-        """Check if a question should be shown based on show/hide conditions."""
+        """
+        Check if a question should be shown based on show/hide conditions.
+
+        If a question has both show and hide conditions, show conditions are
+        evaluated first (i.e. take precedence).
+        """
         show_conditions = QuestionCondition.objects.filter(
             target_question=question, condition_type="show"
         )
@@ -135,11 +142,11 @@ class FormEvaluator:
             target_question=question, condition_type="hide"
         )
 
-        # If no conditions, it's visible by default
+        # If no conditions exist, the question is visible by default.
         if not show_conditions.exists() and not hide_conditions.exists():
             return True
 
-        # Check show conditions - at least one must be met
+        # Check show conditions - at least one must be met.
         if show_conditions.exists():
             show_question = self._check_conditions(show_conditions)
             return show_question

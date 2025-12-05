@@ -1,12 +1,8 @@
 import pytest
-from django.test import TestCase
+
 from django.db import IntegrityError, transaction
-from .models import MRForm, Step
 
-
-@pytest.fixture
-def test_form() -> MRForm:
-    return MRForm.objects.create(name="Test Form")
+from form.models import MRForm, Step
 
 
 @pytest.mark.django_db(transaction=True)
