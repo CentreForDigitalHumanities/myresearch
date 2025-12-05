@@ -3,7 +3,8 @@ from graphene import Field, ObjectType, ResolveInfo
 
 
 from form.services.form_evaluator import FormEvaluator
-from form.types.UserFormType import UserFormResolver, UserFormType
+from form.services.user_form_resolver import UserFormResolver
+from form.types.UserFormType import UserFormType
 from form.models import MRForm
 
 
