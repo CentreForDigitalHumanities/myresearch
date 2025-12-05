@@ -59,9 +59,7 @@ def test_po_study(po_user) -> Study:
 
 @pytest.mark.django_db()
 class TestStudyPermissions:
-    def test_create_permission(
-        self, anonymous_user: AnonymousUser, normal_user: User
-    ):
+    def test_create_permission(self, anonymous_user: AnonymousUser, normal_user: User):
         """Test that users need to be authenticated to create a Study"""
 
         assert Study.can_be_created_by(anonymous_user) == False
