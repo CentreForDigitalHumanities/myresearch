@@ -362,9 +362,9 @@ class TestComplexConditionScenarios:
 
     def test_repeat_with_conditional_trigger_value(self, test_form, test_user):
         """Repeat condition should only trigger when trigger_value matches."""
-        
+
         MINIMAL_VALUE = 2
-        
+
         step = Step.objects.create(name="Step", slug="step", form=test_form)
 
         trigger_question = NumberQuestion.objects.create(text="How many?", step=step)
@@ -394,8 +394,13 @@ class TestComplexConditionScenarios:
         assert evaluator.get_repeat_count_for_question(target_question) == 1
 
         # Update answer to MINIMAL_VALUE + 1.
-        QuestionResponse.objects.filter(question=trigger_question).update(answer={"value": MINIMAL_VALUE + 1})
+        QuestionResponse.objects.filter(question=trigger_question).update(
+            answer={"value": MINIMAL_VALUE + 1}
+        )
         evaluator._responses_cache = None  # Clear cache
 
         # Now the question should repeat MINIMAL_VALUE + 1 times.
-        assert evaluator.get_repeat_count_for_question(target_question) == MINIMAL_VALUE + 1
+        assert (
+            evaluator.get_repeat_count_for_question(target_question)
+            == MINIMAL_VALUE + 1
+        )

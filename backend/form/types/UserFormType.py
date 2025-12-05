@@ -16,5 +16,3 @@ class UserFormType(ObjectType):
     submission_id = ID()
     started_at = DateTime()
     completed_at = DateTime()
-
-

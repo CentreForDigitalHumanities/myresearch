@@ -204,6 +204,7 @@ class QuestionResponse(models.Model):
 
 # Conditional logic for questions and steps
 
+
 class StepCondition(models.Model):
     """Defines when a step should be shown/hidden or repeated."""
 

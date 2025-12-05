@@ -150,13 +150,13 @@ class FormEvaluator:
         if show_conditions.exists():
             show_question = self._check_conditions(show_conditions)
             return show_question
-        
+
         if hide_conditions.exists():
             hide_question = self._check_conditions(hide_conditions)
             return not hide_question
 
         return True
-    
+
     def _check_conditions(self, conditions: QuerySet[QuestionCondition]) -> bool:
         """Helper to evaluate show conditions."""
         for condition in conditions:

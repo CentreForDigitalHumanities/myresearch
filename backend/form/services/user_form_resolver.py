@@ -4,7 +4,14 @@ from form.models import BaseQuestion, Step
 from form.services.form_evaluator import FormEvaluator
 from form.types.StepType import StepType
 from form.types.UserFormType import UserFormType
-from form.types.QuestionType import DateQuestionType, FileUploadQuestionType, NumberQuestionType, SelectQuestionType, TextQuestionType, TrueFalseQuestionType
+from form.types.QuestionType import (
+    DateQuestionType,
+    FileUploadQuestionType,
+    NumberQuestionType,
+    SelectQuestionType,
+    TextQuestionType,
+    TrueFalseQuestionType,
+)
 
 
 class UserFormResolver:
