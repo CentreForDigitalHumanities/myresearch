@@ -44,14 +44,14 @@ class BaseQuestionInterface(Interface):
     @classmethod
     def resolve_type(cls, instance, info):
         """Resolve to the correct concrete type based on the question type."""
-        # The instance should have a question attribute
         if hasattr(instance, "question"):
             question = instance.question
         else:
-            # Fallback: fetch the question from the database
+        # Questions created by UserFormResolver._create_question_instance 
+        # should always have the question object; this is a fallback.
+        # TODO: Implement a logger to warn us of such cases in production.
             question = BaseQuestion.objects.get(pk=instance.question_id)
 
-        # Use hasattr to check for Django's reverse relation attributes
         if hasattr(question, "textquestion"):
             return TextQuestionType
         elif hasattr(question, "numberquestion"):
@@ -232,7 +232,9 @@ class QuestionType(Union):
     @classmethod
     def resolve_type(cls, instance, info: ResolveInfo):
         # Get the actual question to determine type
-        question = BaseQuestion.objects.get(pk=instance.question_id)
+        question = getattr(instance, "question", None)
+        if question is None:
+            question = BaseQuestion.objects.get(pk=instance.question_id)
 
         if isinstance(question, TextQuestion):
             return TextQuestionType

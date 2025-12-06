@@ -32,7 +32,8 @@ class UserFormResolver:
             "question_id": question.pk,
             "repeat_index": repeat_index,
             "answer": answer,
-            "question": question,  # Pass the question object for field resolution
+            # The 'question' field is used for BaseQuestionInterface.resolve_type.
+            "question": question,
         }
 
         # Access the specific subclass using Django's reverse relation attributes
@@ -76,19 +77,22 @@ class UserFormResolver:
         if not self.evaluator.is_step_visible(step):
             return []
 
+        step_questions = list(BaseQuestion.objects.filter(step=step))
+        step_substeps = list(Step.objects.filter(parent=step).all())
+
         repeat_count = self.evaluator.get_repeat_count_for_step(step)
         instances = []
 
         for repeat_index in range(repeat_count):
             # Get all questions for this step instance
-            questions = []
-            for question in BaseQuestion.objects.filter(step=step):
-                questions.extend(self._resolve_question_instances(question))
-
+            questions = [
+                self._resolve_question_instances(question) for question in step_questions
+            ]
+            
             # Get all substeps for this step instance
-            substeps = []
-            for substep in Step.objects.filter(parent=step).all():
-                substeps.extend(self._resolve_step_instances(substep))
+            substeps = [
+                self._resolve_step_instances(substep) for substep in step_substeps
+            ]
 
             instances.append(
                 StepType(

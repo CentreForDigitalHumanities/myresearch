@@ -12,7 +12,7 @@ from form.models import (
     TrueFalseQuestion,
     UserFormSubmission,
 )
-from form.services.form_evaluator import FormEvaluator
+from form.services.form_evaluator import MAX_REPEAT_LIMIT, FormEvaluator
 
 
 @pytest.mark.django_db
@@ -493,12 +493,15 @@ class TestFormEvaluatorStepConditions:
         self, test_form, test_step, test_user, trigger_question
     ):
         """Step with repeat condition should return static repeat count."""
+
+        REPEAT_COUNT = 4
+
         StepCondition.objects.create(
             target_step=test_step,
             trigger_question=trigger_question,
             condition_type="repeat",
             trigger_value={},
-            repeat_count=4,
+            repeat_count=REPEAT_COUNT,
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
@@ -510,7 +513,7 @@ class TestFormEvaluatorStepConditions:
 
         evaluator = FormEvaluator(test_form, test_user)
 
-        assert evaluator.get_repeat_count_for_step(test_step) == 4
+        assert evaluator.get_repeat_count_for_step(test_step) == REPEAT_COUNT
 
     def test_step_repeat_dynamic_uses_answer_value(
         self, test_form, test_step, test_user
@@ -520,6 +523,8 @@ class TestFormEvaluatorStepConditions:
             text="How many steps?",
             step=test_step,
         )
+
+        REPEAT_COUNT = 3
 
         StepCondition.objects.create(
             target_step=test_step,
@@ -533,12 +538,12 @@ class TestFormEvaluatorStepConditions:
         QuestionResponse.objects.create(
             submission=submission,
             question=number_trigger,
-            answer={"value": 3},
+            answer={"value": REPEAT_COUNT},
         )
 
         evaluator = FormEvaluator(test_form, test_user)
 
-        assert evaluator.get_repeat_count_for_step(test_step) == 3
+        assert evaluator.get_repeat_count_for_step(test_step) == REPEAT_COUNT
 
     def test_step_repeat_dynamic_minimum_is_one(self, test_form, test_step, test_user):
         """Step repeat count should be at least 1."""
@@ -565,6 +570,34 @@ class TestFormEvaluatorStepConditions:
         evaluator = FormEvaluator(test_form, test_user)
 
         assert evaluator.get_repeat_count_for_step(test_step) == 1
+
+    def test_step_repeate_dynamic_maximum_limit(self, test_form, test_step, test_user):
+        """Step repeat count should not exceed maximum limit."""
+        number_trigger = NumberQuestion.objects.create(
+            text="How many steps?",
+            step=test_step,
+        )
+
+        EXCESSIVE_COUNT = 99999999999
+
+        StepCondition.objects.create(
+            target_step=test_step,
+            trigger_question=number_trigger,
+            condition_type="repeat_dynamic",
+            trigger_value={},
+            use_answer_as_count=True,
+        )
+
+        submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        QuestionResponse.objects.create(
+            submission=submission,
+            question=number_trigger,
+            answer={"value": EXCESSIVE_COUNT},
+        )
+
+        evaluator = FormEvaluator(test_form, test_user)
+
+        assert evaluator.get_repeat_count_for_step(test_step) == MAX_REPEAT_LIMIT
 
     def test_no_step_repeat_condition_returns_one(
         self, test_form, test_step, test_user
@@ -598,7 +631,7 @@ class TestFormEvaluatorSubmission:
     def test_returns_latest_submission(self, test_form, test_user):
         """FormEvaluator should return the most recent submission."""
         # Create older submission
-        older = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        UserFormSubmission.objects.create(user=test_user, form=test_form)
         # Create newer submission
         newer = UserFormSubmission.objects.create(user=test_user, form=test_form)
 
