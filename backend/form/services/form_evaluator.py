@@ -15,6 +15,9 @@ User = get_user_model()
 
 UserType = type[User]
 
+# How often we will allow a question or step to be repeated
+MAX_REPEAT_LIMIT = 10
+
 
 class FormEvaluator:
     """
@@ -102,32 +105,6 @@ class FormEvaluator:
 
         return False
 
-    def get_repeat_count_for_question(self, question: BaseQuestion) -> int:
-        """Determine how many times a question should appear."""
-        conditions = QuestionCondition.objects.filter(
-            target_question=question, condition_type__in=["repeat", "repeat_dynamic"]
-        )
-
-        for condition in conditions:
-            trigger_responses = self.responses.get(condition.trigger_question.pk, [])
-            if not trigger_responses:
-                continue
-
-            # Use the first response (repeat_index=0) as the trigger
-            trigger_answer = trigger_responses[0].answer
-
-            if not self.check_trigger_value(trigger_answer, condition.trigger_value):
-                continue
-
-            if condition.use_answer_as_count:
-                # Dynamic repeat based on answer value
-                return max(1, trigger_answer.get("value", 1))
-            elif condition.repeat_count:
-                # Static repeat count
-                return condition.repeat_count
-
-        return 1  # Default: show once
-
     def is_question_visible(self, question: BaseQuestion) -> bool:
         """
         Check if a question should be shown based on show/hide conditions.
@@ -157,8 +134,10 @@ class FormEvaluator:
 
         return True
 
-    def _check_conditions(self, conditions: QuerySet[QuestionCondition]) -> bool:
-        """Helper to evaluate show conditions."""
+    def _check_conditions(
+        self, conditions: QuerySet[QuestionCondition] | QuerySet[StepCondition]
+    ) -> bool:
+        """Helper to evaluate whether any in a set of conditions are met."""
         for condition in conditions:
             trigger_responses = self.responses.get(condition.trigger_question.pk, [])
             if trigger_responses:
@@ -173,7 +152,19 @@ class FormEvaluator:
         conditions = StepCondition.objects.filter(
             target_step=step, condition_type__in=["repeat", "repeat_dynamic"]
         )
+        return self._get_repeat_count(conditions)
 
+    def get_repeat_count_for_question(self, question: BaseQuestion) -> int:
+        """Determine how many times a question should appear."""
+        conditions = QuestionCondition.objects.filter(
+            target_question=question, condition_type__in=["repeat", "repeat_dynamic"]
+        )
+        return self._get_repeat_count(conditions)
+
+    def _get_repeat_count(
+        self, conditions: QuerySet[StepCondition] | QuerySet[QuestionCondition]
+    ) -> int:
+        """Helper to determine repeat count from conditions."""
         for condition in conditions:
             trigger_responses = self.responses.get(condition.trigger_question.pk, [])
             if not trigger_responses:
@@ -185,10 +176,13 @@ class FormEvaluator:
                 continue
 
             if condition.use_answer_as_count:
-                return max(1, trigger_answer.get("value", 1))
+                # Dynamic repeat based on answer value, constrained to reasonable limits.
+                input_value = trigger_answer.get("value")
+                return min(max(1, input_value), MAX_REPEAT_LIMIT)
             elif condition.repeat_count:
                 return condition.repeat_count
 
+        # Default: show once.
         return 1
 
     def is_step_visible(self, step: Step) -> bool:
@@ -204,27 +198,12 @@ class FormEvaluator:
             return True
 
         if show_conditions.exists():
-            show_condition_met = False
-            for condition in show_conditions:
-                trigger_responses = self.responses.get(
-                    condition.trigger_question.pk, []
-                )
-                if trigger_responses:
-                    if self.check_trigger_value(
-                        trigger_responses[0].answer, condition.trigger_value
-                    ):
-                        show_condition_met = True
-                        break
-            if not show_condition_met:
-                return False
+            show_step = self._check_conditions(show_conditions)
+            return show_step
 
-        for condition in hide_conditions:
-            trigger_responses = self.responses.get(condition.trigger_question.pk, [])
-            if trigger_responses:
-                if self.check_trigger_value(
-                    trigger_responses[0].answer, condition.trigger_value
-                ):
-                    return False
+        if hide_conditions.exists():
+            hide_step = self._check_conditions(hide_conditions)
+            return not hide_step
 
         return True
 
