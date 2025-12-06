@@ -88,7 +88,7 @@ class UserFormResolver:
             questions = []
             for question in step_questions:
                 questions.extend(self._resolve_question_instances(question))
-            
+
             # Get all substeps
             substeps = []
             for substep in step_substeps:

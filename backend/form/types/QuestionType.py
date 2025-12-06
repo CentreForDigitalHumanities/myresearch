@@ -47,9 +47,9 @@ class BaseQuestionInterface(Interface):
         if hasattr(instance, "question"):
             question = instance.question
         else:
-        # Questions created by UserFormResolver._create_question_instance 
-        # should always have the question object; this is a fallback.
-        # TODO: Implement a logger to warn us of such cases in production.
+            # Questions created by UserFormResolver._create_question_instance
+            # should always have the question object; this is a fallback.
+            # TODO: Implement a logger to warn us of such cases in production.
             question = BaseQuestion.objects.get(pk=instance.question_id)
 
         if hasattr(question, "textquestion"):
