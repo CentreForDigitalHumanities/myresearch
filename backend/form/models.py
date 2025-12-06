@@ -4,8 +4,7 @@ from django.contrib.auth import get_user_model
 
 user_model = get_user_model()
 
-
-CONDITION_HELP_TEXT = """
+TRIGGER_VALUE_HELP_TEXT = """
 JSON field defining the expected answer that triggers this condition.
 - For Text: {"value": "expected text"}
 - For TrueFalse: {"value": true}
@@ -203,9 +202,55 @@ class QuestionResponse(models.Model):
 
 
 # Conditional logic for questions and steps
+class BaseCondition(models.Model):
+    """Abstract base class for conditions on steps or questions."""
+
+    trigger_question = models.ForeignKey(
+        BaseQuestion,
+        on_delete=models.CASCADE,
+        help_text="The question whose answer triggers this condition.",
+    )
+
+    CONDITION_TYPES = [
+        ("show", "Show target"),
+        ("hide", "Hide target"),
+        ("repeat", "Repeat target a fixed number of times"),
+        ("repeat_dynamic", "Repeat based on answer value"),
+    ]
+    condition_type = models.CharField(max_length=20, choices=CONDITION_TYPES)
+
+    trigger_value = models.JSONField(help_text=TRIGGER_VALUE_HELP_TEXT)
+
+    # For (static) 'repeat' type: how many times should the target be repeated.
+    repeat_count = models.PositiveIntegerField(null=True, blank=True)
+
+    # For 'repeat_dynamic' type: use the answer to the trigger question to
+    # determine how many times to repeat the target.
+    use_answer_as_count = models.BooleanField(default=False)
+
+    class Meta:
+        abstract = True
+
+    @classmethod
+    def get_repeat_constraint(cls, name: str) -> models.CheckConstraint:
+        """
+        Returns a constraint to be used by subclasses.
+
+        You cannot define constraints on abstract base classes, so
+        subclasses should call this method to get the constraint to add
+        to their Meta.constraints.
+        """
+        return models.CheckConstraint(
+            check=(
+                ~Q(condition_type__in=["repeat", "repeat_dynamic"])
+                | Q(repeat_count__isnull=False)
+                | Q(use_answer_as_count=True)
+            ),
+            name=name,
+        )
 
 
-class StepCondition(models.Model):
+class StepCondition(BaseCondition):
     """Defines when a step should be shown/hidden or repeated."""
 
     target_step = models.ForeignKey(
@@ -222,40 +267,16 @@ class StepCondition(models.Model):
         help_text="The question whose answer triggers this condition.",
     )
 
-    CONDITION_TYPES = [
-        ("show", "Show target step"),
-        ("hide", "Hide target step"),
-        ("repeat", "Repeat target step a fixed number of times"),
-        ("repeat_dynamic", "Repeat based on answer value"),
-    ]
-    condition_type = models.CharField(max_length=20, choices=CONDITION_TYPES)
-
-    trigger_value = models.JSONField(help_text=CONDITION_HELP_TEXT)
-
-    # For (static) 'repeat' type: how many times should the step be repeated.
-    repeat_count = models.PositiveIntegerField(null=True, blank=True)
-
-    # For 'repeat_dynamic' type: use the answer to the trigger question to
-    # determine how many times to repeat the target step.
-    use_answer_as_count = models.BooleanField(default=False)
-
     class Meta:
         constraints = [
-            models.CheckConstraint(
-                check=(
-                    ~Q(condition_type__in=["repeat", "repeat_dynamic"])
-                    | Q(repeat_count__isnull=False)
-                    | Q(use_answer_as_count=True)
-                ),
-                name="repeat_requires_count_or_dynamic_step",
-            )
+            BaseCondition.get_repeat_constraint("repeat_requires_count_or_dynamic_step")
         ]
 
     def __str__(self):
         return f"Condition on Step {self.target_step.pk} triggered by Question {self.trigger_question.pk}"
 
 
-class QuestionCondition(models.Model):
+class QuestionCondition(BaseCondition):
     """Defines when a question should be shown/hidden or repeated."""
 
     target_question = models.ForeignKey(
@@ -272,32 +293,10 @@ class QuestionCondition(models.Model):
         help_text="The question whose answer triggers this condition.",
     )
 
-    CONDITION_TYPES = [
-        ("show", "Show target question"),
-        ("hide", "Hide target question"),
-        ("repeat", "Repeat target question a fixed number of times"),
-        ("repeat_dynamic", "Repeat based on answer value"),
-    ]
-    condition_type = models.CharField(max_length=20, choices=CONDITION_TYPES)
-
-    trigger_value = models.JSONField(help_text=CONDITION_HELP_TEXT)
-
-    # For (static)'repeat' type: how many times should the question be repeated.
-    repeat_count = models.PositiveIntegerField(null=True, blank=True)
-
-    # For 'repeat_dynamic' type: use the answer to the trigger question to
-    # determine how many times to repeat the target question.
-    use_answer_as_count = models.BooleanField(default=False)
-
     class Meta:
         constraints = [
-            models.CheckConstraint(
-                check=(
-                    ~Q(condition_type__in=["repeat", "repeat_dynamic"])
-                    | Q(repeat_count__isnull=False)
-                    | Q(use_answer_as_count=True)
-                ),
-                name="repeat_requires_count_or_dynamic_question",
+            BaseCondition.get_repeat_constraint(
+                "repeat_requires_count_or_dynamic_question"
             )
         ]
 
