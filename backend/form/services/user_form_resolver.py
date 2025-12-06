@@ -84,15 +84,15 @@ class UserFormResolver:
         instances = []
 
         for repeat_index in range(repeat_count):
-            # Get all questions for this step instance
-            questions = [
-                self._resolve_question_instances(question) for question in step_questions
-            ]
+            # Get all questions
+            questions = []
+            for question in step_questions:
+                questions.extend(self._resolve_question_instances(question))
             
-            # Get all substeps for this step instance
-            substeps = [
-                self._resolve_step_instances(substep) for substep in step_substeps
-            ]
+            # Get all substeps
+            substeps = []
+            for substep in step_substeps:
+                substeps.extend(self._resolve_step_instances(substep))
 
             instances.append(
                 StepType(
