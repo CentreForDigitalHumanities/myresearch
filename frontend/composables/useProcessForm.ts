@@ -168,11 +168,11 @@ function formatQuestionLocation(
  * Parses the answer JSON string and returns a typed value.
  * Falls back to default values when answer is null/undefined.
  */
-function parseAnswer(
-    answer: string | null | undefined,
-    typename: string,
+function parseAnswer<ReturnType>(
+    answer: QuestionType["answer"],
+    typename: QuestionType["__typename"],
     defaultValue?: boolean,
-): string | number | boolean | null {
+): ReturnType {
     if (answer) {
         try {
             const parsed: unknown = JSON.parse(answer);
@@ -181,20 +181,20 @@ function parseAnswer(
                 parsed &&
                 typeof parsed === "object" &&
                 "value" in parsed &&
-                (typeof (parsed as { value: unknown; }).value === "string" ||
-                    typeof (parsed as { value: unknown; }).value === "number" ||
-                    typeof (parsed as { value: unknown; }).value === "boolean")
+                (typeof parsed.value === "string" ||
+                    typeof parsed.value === "number" ||
+                    typeof parsed.value === "boolean")
             ) {
-                return (parsed as { value: string | number | boolean; }).value;
+                return parsed.value as ReturnType;
             }
             // For select questions, might have option_id or option_ids
             if (
                 parsed &&
                 typeof parsed === "object" &&
                 "option_id" in parsed &&
-                typeof (parsed as { option_id: unknown; }).option_id === "string"
+                typeof parsed.option_id === "string"
             ) {
-                return (parsed as { option_id: string; }).option_id;
+                return parsed.option_id as ReturnType;
             }
             // If it's a primitive, return it directly
             if (
@@ -202,16 +202,25 @@ function parseAnswer(
                 typeof parsed === "number" ||
                 typeof parsed === "boolean"
             ) {
-                return parsed;
+                return parsed as ReturnType;
             }
-            return null;
-        } catch {
-            // If parsing fails, return the raw string for text-like fields
-            return answer;
+            // Unexpected format, return type-appropriate default
+            return getDefaultAnswer(typename, defaultValue) as ReturnType;
+        } catch (e) {
+            // If parsing fails, return type-appropriate default
+            return getDefaultAnswer(typename, defaultValue) as ReturnType;
         }
     }
 
     // Return type-appropriate defaults when no answer exists
+    return getDefaultAnswer(typename, defaultValue) as ReturnType;
+}
+
+// Helper to get type-appropriate default answer
+function getDefaultAnswer(
+    typename: QuestionType["__typename"],
+    defaultValue?: boolean,
+): string | number | boolean | null {
     switch (typename) {
         case "TextQuestionType":
         case "DateQuestionType":
@@ -247,38 +256,35 @@ function addValueAndLocationToQuestion(
             return {
                 ...question,
                 location,
-                value: parseAnswer(
-                    question.answer as string | null | undefined,
+                value: parseAnswer<string>(
+                    question.answer,
                     question.__typename,
-                ) as string,
+                ),
             };
         case "NumberQuestionType":
             return {
                 ...question,
                 location,
-                value: parseAnswer(
-                    question.answer as string | null | undefined,
+                value: parseAnswer<number>(
+                    question.answer,
                     question.__typename,
-                ) as number,
+                ),
             };
         case "TrueFalseQuestionType":
             return {
                 ...question,
                 location,
-                value: parseAnswer(
-                    question.answer as string | null | undefined,
+                value: parseAnswer<boolean>(
+                    question.answer,
                     question.__typename,
                     question.defaultValue,
-                ) as boolean,
+                ),
             };
         case "FileUploadQuestionType":
             return {
                 ...question,
                 location,
-                value: parseAnswer(
-                    question.answer as string | null | undefined,
-                    question.__typename,
-                ) as null,
+                value: parseAnswer<null>(question.answer, question.__typename),
             };
     }
 }
