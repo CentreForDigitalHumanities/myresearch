@@ -3,9 +3,9 @@ import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
 import type { GetStudyQuery } from "~/generated/gql/graphql";
 import { showError, createError } from "#app";
-import StudyDetailsSidebar from "./StudyDetailsSidebar.vue";
-import AvailableActions from "./AvailableActions.vue";
-import StudyProgessBar from "./StudyProgessBar.vue";
+import StudyDetailsSidebar from "../../components/study_detail/StudyDetailsSidebar.vue";
+import AvailableActions from "../../components/study_detail/AvailableActions.vue";
+import StudyProgessBar from "../../components/study_detail/StudyProgessBar.vue";
 
 // retrieve study
 
@@ -103,11 +103,11 @@ const studyStatus = computed(() =>
                                 <em>{{ study?.title }}</em
                                 >.
                             </p>
-                            <AvailableActions :study-status="StudyStatus" />
+                            <AvailableActions :study-status="studyStatus" />
                         </div>
                         <!-- Progess bar -->
                         <div class="col-2">
-                            <StudyProgessBar :study-status="StudyStatus" />
+                            <StudyProgessBar :study-status="studyStatus" />
                         </div>
                     </div>
                 </div>
