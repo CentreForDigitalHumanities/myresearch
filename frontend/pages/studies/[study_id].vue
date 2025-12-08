@@ -58,12 +58,7 @@ function randomDatePastYear(): string {
     const randomTime = start + Math.random() * (end - start);
     const randomDate = new Date(randomTime);
 
-    // Format as DD-MM-YYYY
-    const dd = String(randomDate.getDate()).padStart(2, "0");
-    const mm = String(randomDate.getMonth() + 1).padStart(2, "0"); // months are 0-based
-    const yyyy = randomDate.getFullYear();
-
-    return `${dd}-${mm}-${yyyy}`;
+    return randomDate.toISOString().split("T")[0];
 }
 
 function randomNumber100to1000(): number {
