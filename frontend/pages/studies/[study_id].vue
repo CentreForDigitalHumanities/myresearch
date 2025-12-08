@@ -67,7 +67,7 @@ function randomNumber100to1000(): number {
 
 // If study is even, it is a draft. If it is odd, it is in the review phase
 
-const StudyStatus = computed(() =>
+const studyStatus = computed(() =>
     Number(study.value?.id) % 2 === 0 ? "draft" : "review",
 );
 </script>
