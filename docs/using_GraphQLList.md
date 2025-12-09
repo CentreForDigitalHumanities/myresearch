@@ -1,16 +1,16 @@
 # Using GraphQLList
 
-For list pages in MyResearch, we use GraphQLList. This is a custom implementation of UUList, which is itself a custom vue component for rendering lists, part of [CDH Vue-lib](https://github.com/CentreForDigitalHumanities/Vue-lib). GraphQLList has been developed for use in the [DIAPP](https://github.com/CentreForDigitalHumanities/DIAPP). For now (nov. 2025), we have simply copied this implementation into MyResearch, but ideally, these vue components and custom Graphene/Django objects used for GraphQLList, should live in a separate library for other portals using the Vue/GraphQL/Django stack. This is a quick piece of documentation to explain how to use GraphQLList, as there are a lot of moving parts.
+For list pages in MyResearch, we use GraphQLList. This is a custom implementation of UUList, which is itself a custom Vue component for rendering lists, part of [CDH Vue-lib](https://github.com/CentreForDigitalHumanities/Vue-lib). GraphQLList has originally been developed for use in the [DIAPP](https://github.com/CentreForDigitalHumanities/DIAPP). For now (Nov. 2025), we have simply copied this implementation into MyResearch, but ideally, these Vue components and custom Graphene/Django objects used for GraphQLList, should live in a separate library for other portals using the Vue/GraphQL/Django stack. This is a quick piece of documentation to explain how to use GraphQLList, as there are a lot of moving parts.
 
 ## What does GraphQLList do?
 
-GraphQLList produces a nicely styled list, based on a GraphQLQuery to the backend. It can be made searchable, have custom ordering and filters.
+GraphQLList produces a nicely styled list, based on a GraphQL query to the backend. It can be made searchable and have custom ordering and filters.
 
 ## Preparing a Query
 
 Let's try to make a GQLList for a hypothetical `Book` object.
 
-To prepare a query, we firstly need to ensure that we are using our custom override of Graphene's DjangoObjectType: GQLListObjectType. This allows us to add fields to DjangoObjectType's Meta. In the ObjectType, we can also specify which fields should be searchable and what kind of filters we would like to have available for this object. We could for instance make the `Book`'s ObjectType look something like this:
+To prepare a query, we first need to ensure that we are using our custom override of Graphene's DjangoObjectType: GQLListObjectType. This allows us to add fields to DjangoObjectType's Meta. In the ObjectType, we can also specify which fields should be searchable and what kind of filters we would like to have available for this object. We could for instance make the `Book`'s ObjectType look something like this:
 
 ```
 class BookFilter(FilterSet):
@@ -46,7 +46,7 @@ class BookType(GQLListObjectType):
 ```
 This ensures that the `Book`'s Title and Author are searchable and the we can filter the list of books based on its color (supposing this is a related object in this case). For more information on how to write filters, check out the docs for [django-filter](https://django-filter.readthedocs.io/en/stable/index.html).
 
-Next, we need to add a `book_pages` query to our `BookQuery` object. This uses a custom field object, which adds some relevant attributex to a list-like query for pagination. The field is called GQLListPaginationConnectionField. Add the field to your query object like so:
+Next, we need to add a `book_pages` query to our `BookQuery` object. This uses a custom field object, which adds some relevant attributes to a list-like query for pagination. The field is called `GQLListPaginationConnectionField`. Add the field to your query object like so:
 
 ```
     book_pages = GQLListPaginationConnectionField(
@@ -57,11 +57,11 @@ With a resolver, that will look similar to other List resolvers:
 ```
     @staticmethod
     def resolve_book_pages(root, info: ResolveInfo, **kwargs) -> QuerySet[Book]:
-        return BookType.get_queryset(book.objects, info)
+        return BookType.get_queryset(Book.objects, info)
 ```
 This is all the work in the backend done!
 ## Rendering your query using GraphQLList
-Next we'll render this Query using our GraphQLList component. First, create a new page where you want your list to live. Then we'll need to setup a few things. The most important thing is your graphql query, which might look something like this:
+Next we'll render the result of this query using our GraphQLList component. First, create a new page where you want your list to live. Then we'll need to setup a few things. The most important thing is your GraphQL query, which might look something like this:
 ```
 const GET_STUDY_PAGES = graphql(`
 query GetStudyPages(
@@ -97,9 +97,9 @@ query GetStudyPages(
   }
 }
 ```
-There is some extra variables here, which are provided via GQLListPaginationConnectionField. Furthermore, there is also the variable that we use for our filter (`colorIds`). Our `Book` objects are withing the result part of the query.
+There is some extra variables here, which are provided via GQLListPaginationConnectionField. Furthermore, there is also the variable that we use for our filter (`colorIds`). Our `Book` objects are available in the `result` property of the query result.
 
-Next, we'll need to define the variable that we are passing into our GraphQLList component. These are kindoff like default variables for search and ordering. In our case they might look like this:
+Next, we'll need to define the variables that we are passing into our GraphQLList component, such as `search` and `ordering`. You can provide default values for them in the following way.
 ```
 const variables = ref<GraphQLListVariables>({
     search: "",
