@@ -6,7 +6,6 @@ from django.db.models import QuerySet
 from api.graphql.pagination_field import GQLListPaginationConnectionField
 from research.models import Study
 from research.types.StudyType import StudyType
-from main.models import MRPermission
 
 
 class StudyQuery(ObjectType):
