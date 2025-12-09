@@ -70,7 +70,7 @@ const AvailableActions = computed(() =>
             class="tile h-100 justify-content-around"
         >
             <strong class="text-center">{{ $t(action.label) }}</strong>
-            <component :is="action.icon" class="icon">            
+            <component :is="action.icon">            
             </component>
         </a>
     </div>
