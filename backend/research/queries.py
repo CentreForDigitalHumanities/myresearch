@@ -17,7 +17,9 @@ class StudyQuery(ObjectType):
     )
 
     studies = List(
-        StudyType,
+        NonNull(
+            StudyType,
+        ),
         mr_permission=String(required=True),
         required=True,
     )
