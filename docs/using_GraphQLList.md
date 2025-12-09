@@ -63,16 +63,15 @@ This is all the work in the backend done!
 ## Rendering your query using GraphQLList
 Next we'll render the result of this query using our GraphQLList component. First, create a new page where you want your list to live. Then we'll need to setup a few things. The most important thing is your GraphQL query, which might look something like this:
 ```
-const GET_STUDY_PAGES = graphql(`
-query GetStudyPages(
+const GET_BOOK_PAGES = graphql(`
+query GetBookPages(
   $limit: Int
   $offset: Int
   $ordering: String
   $search: String
   $colorIds: [ID]
 ) {
-  studyPages(
-    mrPermission: "View"
+  BookPages(
     limit: $limit
     offset: $offset
     ordering: $ordering
