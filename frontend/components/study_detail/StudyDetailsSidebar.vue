@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import type { StudyType } from '~/generated/gql/graphql';
+
 defineProps<{
-    study: any;
+    study: StudyType;
     randomDatePastYear: string;
 }>();
 </script>
