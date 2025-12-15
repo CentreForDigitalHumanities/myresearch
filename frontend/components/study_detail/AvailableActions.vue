@@ -19,52 +19,49 @@ type AvailableAction = {
 
 // Draft actions
 
-const Continue: AvailableAction = {
+const draftActions: AvailableAction[] = [
+  {
     label: t("Continue editing"),
     href: "#",
     icon: PencilLine,
-};
-
-const Submit: AvailableAction = {
+  },
+  {
     label: t("Submit"),
     href: "#",
     icon: Send,
-};
-
-const DraftActions: AvailableAction[] = [Continue, Submit];
+  }
+];
 
 // Actions for the PO
 
-const ViewPDF: AvailableAction = {
+const POActions: AvailableAction[] = [
+    {
     label: t("View PDF"),
     href: "#",
     icon: FileText,
-};
-
-const ViewAttachments: AvailableAction = {
+    },
+    {
     label: t("View attachments"),
     href: "#",
     icon: Paperclip,
-};
-
-const SubmitDecision: AvailableAction = {
+    },
+    {
     label: t("Submit decision"),
     href: "#",
     icon: Scale,
-};
+    }
+];
 
-const POActions: AvailableAction[] = [ViewPDF, ViewAttachments, SubmitDecision];
-
-const AvailableActions = computed(() =>
-    props.studyStatus === "draft" ? DraftActions : POActions,
+const availableActions = computed(() =>
+    props.studyStatus === "draft" ? draftActions : POActions,
 );
 </script>
 
 <template>
-    <h3 class="mb-3">{{ $t("Available actions:") }}</h3>
+    <h3 class="mb-3">{{ $t("Available actions") }}:</h3>
     <div class="tiles">
         <a
-            v-for="(action, index) in AvailableActions"
+            v-for="(action, index) in availableActions"
             :key="index"
             :href="action.href"
             class="tile h-100 justify-content-around"

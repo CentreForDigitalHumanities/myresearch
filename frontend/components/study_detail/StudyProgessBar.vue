@@ -15,75 +15,75 @@ type ProgressItem = {
 
 // draft scenario
 
-const Created: ProgressItem = {
+const created: ProgressItem = {
 	label: t("Created"),
 	isActive: false,
 	isComplete: true,
 }
 
-const NotYetSubmitted: ProgressItem = {
+const notYetSubmitted: ProgressItem = {
 	label: t("Submitted"),
 	isActive: true,
 	isComplete: false,
 }
 
-const NotYetReviewed: ProgressItem = {
+const notYetReviewed: ProgressItem = {
 	label: t("Review from Privacy Officer"),
 	isActive: false,
 	isComplete: false,
 }
 
-const NotYetConcluded: ProgressItem = {
+const notYetConcluded: ProgressItem = {
 	label: t("Conclusion"),
 	isActive: false,
 	isComplete: false,
 }
 
-const DraftProgress: ProgressItem[] = [
-	Created,
-	NotYetSubmitted,
-	NotYetReviewed,
-	NotYetConcluded,
+const draftProgress: ProgressItem[] = [
+	created,
+	notYetSubmitted,
+	notYetReviewed,
+	notYetConcluded,
 ]
 
 // Revision scenario
 
-const Submitted: ProgressItem = {
-	label: NotYetSubmitted.label,
+const submitted: ProgressItem = {
+	label: notYetSubmitted.label,
 	isActive: false,
 	isComplete: true,
 }
 
-const Reviewed: ProgressItem = {
-	label: NotYetReviewed.label,
+const reviewed: ProgressItem = {
+	label: notYetReviewed.label,
 	isActive: false,
 	isComplete: true,
 }
 
-const RevisionCreated: ProgressItem = {
+const revisionCreated: ProgressItem = {
 	label: t("Revision Created"),
 	isActive: false,
 	isComplete: true,
 }
 
-const ActiveReview: ProgressItem = {
-	label: NotYetReviewed.label,
+const activeReview: ProgressItem = {
+	label: notYetReviewed.label,
 	isActive: true,
 	isComplete: false,
 }
 
-const RevisionReviewProgress: ProgressItem[] = [
-	Created,
-	Submitted,
-	Reviewed,
-	RevisionCreated,
-	Submitted,
-	ActiveReview,
-	NotYetConcluded,
+const revisionReviewProgress: ProgressItem[] = [
+	created,
+	submitted,
+	reviewed,
+	revisionCreated,
+	submitted,
+	activeReview,
+	notYetConcluded,
 ]
 
-const ProgressItems = computed(() =>
-    props.studyStatus === "draft" ? DraftProgress : RevisionReviewProgress,
+const progressItems = computed(() =>
+    props.studyStatus === "draft" ? draftProgress : revisionReviewProgress,
 );
 
 </script>
@@ -91,7 +91,7 @@ const ProgressItems = computed(() =>
 <template>
     <div class="stepper h-100">
         <ul class="h-100 d-flex flex-column justify-content-between">
-            <li v-for="(progressItem, index) in ProgressItems" :key="index">
+            <li v-for="(progressItem, index) in progressItems" :key="index">
                 <a class="stepper-item disabled" v-bind:class="{ active: progressItem.isActive }">
                     <span
                         class="stepper-bubble stepper-bubble-largest" v-bind:class="{ complete: progressItem.isComplete, incomplete: !progressItem.isComplete && progressItem.isActive }"
