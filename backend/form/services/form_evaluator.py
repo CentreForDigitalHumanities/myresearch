@@ -126,27 +126,29 @@ class FormEvaluator:
 
         # Check show conditions - at least one must be met.
         if show_conditions.exists():
-            show_question = self._check_conditions(show_conditions)
-            return show_question
+            return any(
+                self._condition_is_met(condition) for condition in show_conditions
+            )
 
         if hide_conditions.exists():
-            hide_question = self._check_conditions(hide_conditions)
-            return not hide_question
+            return not any(
+                self._condition_is_met(condition) for condition in hide_conditions
+            )
 
         return True
 
-    def _check_conditions(
-        self, conditions: QuerySet[QuestionCondition] | QuerySet[StepCondition]
-    ) -> bool:
-        """Helper to evaluate whether any in a set of conditions are met."""
-        for condition in conditions:
-            trigger_responses = self.responses.get(condition.trigger_question.pk, [])
-            if trigger_responses:
-                if self.check_trigger_value(
-                    trigger_responses[0].answer, condition.trigger_value
-                ):
-                    return True
-        return False
+    def _condition_is_met(self, condition: QuestionCondition | StepCondition) -> bool:
+        """
+        Helper to evaluate whether a condition is met.
+
+        Returns True if *any* response to the trigger question matches the trigger value.
+        """
+        trigger_responses = self.responses.get(condition.trigger_question.pk, [])
+        # Returns False if list is empty.
+        return any(
+            self.check_trigger_value(response.answer, condition.trigger_value)
+            for response in trigger_responses
+        )
 
     def get_repeat_count_for_step(self, step: Step) -> int:
         """Determine how many times a step should appear."""
@@ -206,13 +208,16 @@ class FormEvaluator:
         if not show_conditions.exists() and not hide_conditions.exists():
             return True
 
+        # Check show conditions - at least one must be met.
         if show_conditions.exists():
-            show_step = self._check_conditions(show_conditions)
-            return show_step
+            return any(
+                self._condition_is_met(condition) for condition in show_conditions
+            )
 
         if hide_conditions.exists():
-            hide_step = self._check_conditions(hide_conditions)
-            return not hide_step
+            return not any(
+                self._condition_is_met(condition) for condition in hide_conditions
+            )
 
         return True
 
