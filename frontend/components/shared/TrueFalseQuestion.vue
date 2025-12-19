@@ -15,13 +15,16 @@ const modelValue = defineModel<boolean>();
     <div>
         <div class="form-check">
             <input
-                :id="question.id"
+                :id="`${question.questionId}-${question.repeatIndex}`"
                 v-model="modelValue"
                 type="checkbox"
                 class="form-check-input"
                 :class="{ 'is-invalid': isInvalid }"
             />
-            <label :for="question.id" class="form-check-label">
+            <label
+                :for="`${question.questionId}-${question.repeatIndex}`"
+                class="form-check-label"
+            >
                 {{ useTranslateableAttribute(question, "text") }}
             </label>
         </div>

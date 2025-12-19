@@ -1,19 +1,15 @@
 import pytest
-from django.test import TestCase
+
 from django.db import IntegrityError, transaction
-from .models import MRForm, Step
 
-
-@pytest.fixture
-def test_form() -> MRForm:
-    return MRForm.objects.create(name="Test Form")
+from form.models import MRForm, Step
 
 
 @pytest.mark.django_db(transaction=True)
-def test_database_constraint_prevents_invalid_steps(test_form: MRForm):
+def test_database_constraint_prevents_invalid_steps(form: MRForm):
     """Test that the database constraint prevents creating invalid steps."""
 
-    parent_step = Step.objects.create(name="Parent", slug="parent", form=test_form)
+    parent_step = Step.objects.create(name="Parent", slug="parent", form=form)
 
     # Transactions are needed to avoid TransactionManagementError in tests.
     with transaction.atomic():
@@ -23,7 +19,7 @@ def test_database_constraint_prevents_invalid_steps(test_form: MRForm):
                 name="Invalid Step",
                 slug="invalid",
                 parent=parent_step,
-                form=test_form,
+                form=form,
             )
 
     # The user should not be able to create a step with neither parent nor form.
@@ -40,41 +36,37 @@ def test_database_constraint_prevents_invalid_steps(test_form: MRForm):
 class TestStepTopForm:
     """Tests for the Step.top_form property."""
 
-    def test_top_level_step_returns_own_form(self, test_form: MRForm):
+    def test_top_level_step_returns_own_form(self, form: MRForm):
         """Test that a top-level step returns its own form."""
-        step = Step.objects.create(
-            name="Top Level Step", slug="top-level", form=test_form
-        )
+        step = Step.objects.create(name="Top Level Step", slug="top-level", form=form)
 
-        assert step.top_form == test_form
+        assert step.top_form == form
 
-    def test_substep_returns_parent_form(self, test_form: MRForm):
+    def test_substep_returns_parent_form(self, form: MRForm):
         """Test that a substep returns its parent's form."""
-        parent_step = Step.objects.create(
-            name="Parent Step", slug="parent", form=test_form
-        )
+        parent_step = Step.objects.create(name="Parent Step", slug="parent", form=form)
 
         substep = Step.objects.create(
             name="Substep", slug="substep", parent=parent_step
         )
 
-        assert substep.top_form == test_form
+        assert substep.top_form == form
 
-    def test_multi_level_nesting_returns_top_form(self, test_form: MRForm):
+    def test_multi_level_nesting_returns_top_form(self, form: MRForm):
         """Test that deeply nested steps return the top-level form."""
         # Create hierarchy: form -> step1 -> step2 -> step3
-        step1 = Step.objects.create(name="Step 1", slug="step1", form=test_form)
+        step1 = Step.objects.create(name="Step 1", slug="step1", form=form)
 
         step2 = Step.objects.create(name="Step 2", slug="step2", parent=step1)
 
         step3 = Step.objects.create(name="Step 3", slug="step3", parent=step2)
 
         # All steps should return the same top-level form
-        assert step1.top_form == step2.top_form == step3.top_form == test_form
+        assert step1.top_form == step2.top_form == step3.top_form == form
 
-    def test_unsaved_step_raises_error(self, test_form: MRForm):
+    def test_unsaved_step_raises_error(self, form: MRForm):
         """Test that calling top_form on an unsaved step raises ValueError."""
-        step = Step(name="Unsaved Step", slug="unsaved", form=test_form)
+        step = Step(name="Unsaved Step", slug="unsaved", form=form)
 
         with pytest.raises(ValueError) as cm:
             _ = step.top_form

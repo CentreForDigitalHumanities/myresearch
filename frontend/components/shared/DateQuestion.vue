@@ -13,7 +13,7 @@ const modelValue = defineModel<string>();
 
 <template>
     <div>
-        <label :for="question.id" class="form-label">
+        <label :for="`${question.questionId}-${question.repeatIndex}`" class="form-label">
             {{ useTranslateableAttribute(question, "text") }}
         </label>
         <p
@@ -23,7 +23,7 @@ const modelValue = defineModel<string>();
             {{ useTranslateableAttribute(question, "description") }}
         </p>
         <input
-            :id="question.id"
+            :id="`${question.questionId}-${question.repeatIndex}`"
             v-model="modelValue"
             type="date"
             class="form-control"

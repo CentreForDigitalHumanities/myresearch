@@ -7,19 +7,22 @@ import FormWrapper from "~/components/shared/FormWrapper.vue";
 const GET_FORM = graphql(`
     query GetForm {
         form {
-            id
+            formId
             nameEn
             nameNl
             steps {
-                id
+                stepId
                 slug
+                repeatIndex
                 nameEn
                 nameNl
                 descriptionEn
                 descriptionNl
                 ...FormInfoFragment
                 questions {
-                    id
+                    questionId
+                    repeatIndex
+                    answer
                     textEn
                     textNl
                     descriptionEn
@@ -53,15 +56,18 @@ const GET_FORM = graphql(`
                     }
                 }
                 substeps {
-                    id
+                    stepId
                     slug
+                    repeatIndex
                     nameEn
                     nameNl
                     descriptionEn
                     descriptionNl
                     ...FormInfoFragment
                     questions {
-                        id
+                        questionId
+                        repeatIndex
+                        answer
                         textEn
                         textNl
                         descriptionEn
