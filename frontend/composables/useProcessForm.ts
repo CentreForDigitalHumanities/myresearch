@@ -196,14 +196,6 @@ function parseAnswer<ReturnType>(
             ) {
                 return parsed.option_id as ReturnType;
             }
-            // If it's a primitive, return it directly
-            if (
-                typeof parsed === "string" ||
-                typeof parsed === "number" ||
-                typeof parsed === "boolean"
-            ) {
-                return parsed as ReturnType;
-            }
             // Unexpected format, return type-appropriate default
             return getDefaultAnswer(typename, defaultValue) as ReturnType;
         } catch (e) {
