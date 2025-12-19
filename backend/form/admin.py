@@ -355,6 +355,13 @@ class QuestionResponseAdmin(admin.ModelAdmin):
     answer_preview.short_description = "Answer"
 
 
+TRIGGER_VALUE_HELP_TEXT = """
+JSON field defining when this condition triggers. 
+Examples: {'value': true}, {'option_ids': [1, 3]}, {'min': 5}. 
+For a full explanation, see form/README.md.
+"""
+
+
 # Condition admins
 @admin.register(StepCondition)
 class StepConditionAdmin(admin.ModelAdmin):
@@ -373,7 +380,7 @@ class StepConditionAdmin(admin.ModelAdmin):
             "Trigger Configuration",
             {
                 "fields": ("trigger_value",),
-                "description": "JSON field defining when this condition triggers. Examples: {'value': true}, {'option_ids': [1, 3]}, {'min': 5}",
+                "description": TRIGGER_VALUE_HELP_TEXT,
             },
         ),
         (
@@ -409,7 +416,7 @@ class QuestionConditionAdmin(admin.ModelAdmin):
             "Trigger Configuration",
             {
                 "fields": ("trigger_value",),
-                "description": "JSON field defining when this condition triggers. Examples: {'value': true}, {'option_ids': [1, 3]}, {'min': 5}",
+                "description": TRIGGER_VALUE_HELP_TEXT,
             },
         ),
         (
