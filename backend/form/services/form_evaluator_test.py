@@ -1,6 +1,7 @@
 import pytest
 
 from form.models import (
+    BaseCondition,
     NumberQuestion,
     QuestionCondition,
     QuestionResponse,
@@ -66,13 +67,18 @@ class TestFormEvaluatorCheckTriggerValue:
         """Test option_ids matching with single select."""
         evaluator = FormEvaluator(form, test_user)
 
-        # Single option_id format
         assert (
-            evaluator.check_trigger_value({"option_id": 1}, {"option_ids": [1, 2, 3]})
+            evaluator.check_trigger_value(
+                answer={"option_ids": [1]},
+                trigger_value={"option_ids": [1]},
+            )
             is True
         )
         assert (
-            evaluator.check_trigger_value({"option_id": 5}, {"option_ids": [1, 2, 3]})
+            evaluator.check_trigger_value(
+                answer={"option_ids": [5]},
+                trigger_value={"option_ids": [1]},
+            )
             is False
         )
 
@@ -80,16 +86,29 @@ class TestFormEvaluatorCheckTriggerValue:
         """Test option_ids matching with multiple select."""
         evaluator = FormEvaluator(form, test_user)
 
-        # Multiple option_ids format
+        # Complete match
         assert (
             evaluator.check_trigger_value(
-                {"option_ids": [1, 4]}, {"option_ids": [1, 2, 3]}
+                answer={"option_ids": [1, 2, 3]},
+                trigger_value={"option_ids": [1, 2, 3]},
             )
             is True
-        )  # 1 matches
+        )
+
+        # Answer has extra value: condition is met.
         assert (
             evaluator.check_trigger_value(
-                {"option_ids": [4, 5]}, {"option_ids": [1, 2, 3]}
+                answer={"option_ids": [1, 2, 3]},
+                trigger_value={"option_ids": [1, 2]},
+            )
+            is True
+        )
+
+        # Answer lacks one value: condition is not met.
+        assert (
+            evaluator.check_trigger_value(
+                answer={"option_ids": [1, 2]},
+                trigger_value={"option_ids": [1, 2, 3]},
             )
             is False
         )
@@ -253,7 +272,7 @@ class TestFormEvaluatorQuestionConditions:
         QuestionResponse.objects.create(
             submission=submission,
             question=select_trigger,
-            answer={"option_id": option1.pk},
+            answer={"option_ids": [option1.pk, option2.pk]},
         )
 
         evaluator = FormEvaluator(form, test_user)
@@ -297,7 +316,7 @@ class TestFormEvaluatorQuestionConditions:
         QuestionCondition.objects.create(
             target_question=target_question,
             trigger_question=trigger_question,
-            condition_type="repeat",
+            condition_type=BaseCondition.ConditionType.REPEAT,
             trigger_value={},  # Any answer triggers
             repeat_count=NUMBER_OF_REPEATS,
         )
@@ -331,7 +350,7 @@ class TestFormEvaluatorQuestionConditions:
         QuestionCondition.objects.create(
             target_question=target_question,
             trigger_question=number_trigger,
-            condition_type="repeat_dynamic",
+            condition_type=BaseCondition.ConditionType.REPEAT_DYNAMIC,
             trigger_value={},  # Any answer triggers
             use_answer_as_count=True,
         )
@@ -362,7 +381,7 @@ class TestFormEvaluatorQuestionConditions:
         QuestionCondition.objects.create(
             target_question=target_question,
             trigger_question=number_trigger,
-            condition_type="repeat_dynamic",
+            condition_type=BaseCondition.ConditionType.REPEAT_DYNAMIC,
             trigger_value={},
             use_answer_as_count=True,
         )
@@ -491,7 +510,7 @@ class TestFormEvaluatorStepConditions:
         StepCondition.objects.create(
             target_step=step,
             trigger_question=trigger_question,
-            condition_type="repeat",
+            condition_type=BaseCondition.ConditionType.REPEAT,
             trigger_value={},
             repeat_count=REPEAT_COUNT,
         )
@@ -519,7 +538,7 @@ class TestFormEvaluatorStepConditions:
         StepCondition.objects.create(
             target_step=step,
             trigger_question=number_trigger,
-            condition_type="repeat_dynamic",
+            condition_type=BaseCondition.ConditionType.REPEAT_DYNAMIC,
             trigger_value={},
             use_answer_as_count=True,
         )
@@ -545,7 +564,7 @@ class TestFormEvaluatorStepConditions:
         StepCondition.objects.create(
             target_step=step,
             trigger_question=number_trigger,
-            condition_type="repeat_dynamic",
+            condition_type=BaseCondition.ConditionType.REPEAT_DYNAMIC,
             trigger_value={},
             use_answer_as_count=True,
         )
@@ -573,7 +592,7 @@ class TestFormEvaluatorStepConditions:
         StepCondition.objects.create(
             target_step=step,
             trigger_question=number_trigger,
-            condition_type="repeat_dynamic",
+            condition_type=BaseCondition.ConditionType.REPEAT_DYNAMIC,
             trigger_value={},
             use_answer_as_count=True,
         )

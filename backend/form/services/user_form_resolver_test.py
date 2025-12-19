@@ -1,6 +1,7 @@
 import pytest
 
 from form.models import (
+    BaseCondition,
     NumberQuestion,
     QuestionCondition,
     QuestionResponse,
@@ -119,7 +120,7 @@ class TestUserFormResolver:
         QuestionCondition.objects.create(
             target_question=target_question,
             trigger_question=trigger_question,
-            condition_type="repeat",
+            condition_type=BaseCondition.ConditionType.REPEAT,
             trigger_value={},
             repeat_count=NUM_OF_REPEATS,
         )
@@ -163,7 +164,7 @@ class TestUserFormResolver:
         StepCondition.objects.create(
             target_step=step2,
             trigger_question=trigger_q,
-            condition_type="repeat_dynamic",
+            condition_type=BaseCondition.ConditionType.REPEAT_DYNAMIC,
             trigger_value={},
             use_answer_as_count=True,
         )
@@ -342,7 +343,7 @@ class TestComplexConditionScenarios:
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
 
-        # User selects opt3 only
+        # User selects option 3 only.
         QuestionResponse.objects.create(
             submission=submission,
             question=select_question,
@@ -352,9 +353,17 @@ class TestComplexConditionScenarios:
         evaluator = FormEvaluator(form, test_user)
         assert evaluator.is_question_visible(target) is False
 
-        # Now add option_1
+        # All options in the condition are selected.
         QuestionResponse.objects.filter(question=select_question).update(
-            answer={"option_ids": [option_1.pk, option_3.pk]}
+            answer={"option_ids": [option_1.pk, option_2.pk]}
+        )
+        evaluator._responses_cache = None  # Clear cache
+
+        assert evaluator.is_question_visible(target) is True
+
+        # User selects all options.
+        QuestionResponse.objects.filter(question=select_question).update(
+            answer={"option_ids": [option_1.pk, option_2.pk, option_3.pk]}
         )
         evaluator._responses_cache = None  # Clear cache
 
@@ -374,7 +383,7 @@ class TestComplexConditionScenarios:
         QuestionCondition.objects.create(
             target_question=target_question,
             trigger_question=trigger_question,
-            condition_type="repeat_dynamic",
+            condition_type=BaseCondition.ConditionType.REPEAT_DYNAMIC,
             trigger_value={"min": MINIMAL_VALUE},
             use_answer_as_count=True,
         )
