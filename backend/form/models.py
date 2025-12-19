@@ -4,15 +4,6 @@ from django.contrib.auth import get_user_model
 
 user_model = get_user_model()
 
-TRIGGER_VALUE_HELP_TEXT = """
-JSON field defining the expected answer that triggers this condition.
-- For Text: {"value": "expected text"}
-- For TrueFalse: {"value": true}
-- For Select: {"option_ids": [1, 3]}
-- For Number: {"min": 5} or {"exact": 10}
-- For any answer: {} (empty dict means any non-empty answer triggers)
-"""
-
 
 class MRForm(models.Model):
     name = models.CharField(max_length=200)
@@ -219,7 +210,8 @@ class BaseCondition(models.Model):
     ]
     condition_type = models.CharField(max_length=20, choices=CONDITION_TYPES)
 
-    trigger_value = models.JSONField(help_text=TRIGGER_VALUE_HELP_TEXT)
+    # Check out form/README.md for more information on how to format this field.
+    trigger_value = models.JSONField()
 
     # For (static) 'repeat' type: how many times should the target be repeated.
     repeat_count = models.PositiveIntegerField(null=True, blank=True)
