@@ -187,14 +187,13 @@ function parseAnswer<ReturnType>(
             ) {
                 return parsed.value as ReturnType;
             }
-            // For select questions, might have option_id or option_ids
             if (
                 parsed &&
                 typeof parsed === "object" &&
-                "option_id" in parsed &&
-                typeof parsed.option_id === "string"
+                "option_ids" in parsed &&
+                Array.isArray(parsed.option_ids)
             ) {
-                return parsed.option_id as ReturnType;
+                return parsed.option_ids.join(", ") as ReturnType;
             }
             // Unexpected format, return type-appropriate default
             return getDefaultAnswer(typename, defaultValue) as ReturnType;

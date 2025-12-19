@@ -83,25 +83,25 @@ class FormEvaluator:
         if not trigger_value:
             return True
 
-        # Number comparisons
-        if "min" in trigger_value:
-            return answer.get("value", 0) >= trigger_value["min"]
-        if "max" in trigger_value:
-            return answer.get("value", 0) <= trigger_value["max"]
-        if "exact" in trigger_value:
-            return answer.get("value") == trigger_value["exact"]
+        # Use a less cumbersome alias.
+        VK = BaseCondition.TriggerValueKeys
 
-        # Select option checks -- currently: the check passes if *any* of the
-        # answer's ids are in the list of ids in trigger_value.
-        if "option_ids" in trigger_value:
-            user_option_ids = answer.get("option_ids", [])
-            if "option_id" in answer:
-                user_option_ids = [answer["option_id"]]
-            return any(opt in trigger_value["option_ids"] for opt in user_option_ids)
+        # Number comparisons
+        if VK.MIN in trigger_value:
+            return answer.get("value", 0) >= trigger_value[VK.MIN]
+        if VK.MAX in trigger_value:
+            return answer.get("value", 0) <= trigger_value[VK.MAX]
+        if VK.EXACT in trigger_value:
+            return answer.get("value") == trigger_value[VK.EXACT]
+        # Select option checks -- currently: the check passes if *all* of the
+        # trigger_value's ids are in the list of ids in the answer.
+        if VK.OPTION_IDS in trigger_value:
+            user_option_ids = answer.get(VK.OPTION_IDS, [])
+            return all(opt in user_option_ids for opt in trigger_value[VK.OPTION_IDS])
 
         # Direct value match (for booleans, strings, etc.)
-        if "value" in trigger_value:
-            return answer.get("value") == trigger_value["value"]
+        if VK.VALUE in trigger_value:
+            return answer.get("value") == trigger_value[VK.VALUE]
 
         return False
 

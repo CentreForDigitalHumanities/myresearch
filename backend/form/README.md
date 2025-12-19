@@ -62,7 +62,7 @@ TextQuestion:       {"value": "user text"}
 NumberQuestion:     {"value": 42}
 TrueFalseQuestion:  {"value": true}
 DateQuestion:       {"value": "2025-12-31"}
-SelectQuestion:     {"option_ids": [1, 3]} or {"option_id": 1}
+SelectQuestion:     {"option_ids": [1, 3]}
 FileUploadQuestion: {"file_url": "/path/to/file"}
 ```
 
@@ -157,17 +157,16 @@ The `trigger_value` field is a JSON object defining when a condition activates. 
 { "value": "2025-12-19" }
 ```
 
-5. SelectQuestion: option ID matching, either single or multiple selection.
-
-```json
-{ "option_id": 1 }
-```
-
-For multiple matches: any of the selected options match.
+5. SelectQuestion: option ID matching
 
 ```json
 { "option_ids": [1, 3] }
 ```
+
+If multiple option IDs are provided in the same condition, **all** must be present in the user's answer for the condition to be met. If the user selects additional options beyond those specified, the condition is still considered met.
+
+If you wish to implement a condition that triggers if **any** of a set of options are selected,
+create multiple conditions with the same target and different single option IDs.
 
 6. BooleanQuestion: boolean matching
 
