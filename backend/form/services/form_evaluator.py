@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db.models import QuerySet
 
 from form.models import (
+    BaseCondition,
     UserFormSubmission,
     QuestionResponse,
     BaseQuestion,
@@ -113,10 +114,10 @@ class FormEvaluator:
         evaluated first (i.e. take precedence).
         """
         show_conditions = QuestionCondition.objects.filter(
-            target_question=question, condition_type="show"
+            target_question=question, condition_type=BaseCondition.ConditionType.SHOW
         )
         hide_conditions = QuestionCondition.objects.filter(
-            target_question=question, condition_type="hide"
+            target_question=question, condition_type=BaseCondition.ConditionType.HIDE
         )
 
         # If no conditions exist, the question is visible by default.
@@ -150,14 +151,22 @@ class FormEvaluator:
     def get_repeat_count_for_step(self, step: Step) -> int:
         """Determine how many times a step should appear."""
         conditions = StepCondition.objects.filter(
-            target_step=step, condition_type__in=["repeat", "repeat_dynamic"]
+            target_step=step,
+            condition_type__in={
+                BaseCondition.ConditionType.REPEAT,
+                BaseCondition.ConditionType.REPEAT_DYNAMIC,
+            },
         )
         return self._get_repeat_count(conditions)
 
     def get_repeat_count_for_question(self, question: BaseQuestion) -> int:
         """Determine how many times a question should appear."""
         conditions = QuestionCondition.objects.filter(
-            target_question=question, condition_type__in=["repeat", "repeat_dynamic"]
+            target_question=question,
+            condition_type__in={
+                BaseCondition.ConditionType.REPEAT,
+                BaseCondition.ConditionType.REPEAT_DYNAMIC,
+            },
         )
         return self._get_repeat_count(conditions)
 

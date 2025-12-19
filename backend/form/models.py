@@ -196,19 +196,29 @@ class QuestionResponse(models.Model):
 class BaseCondition(models.Model):
     """Abstract base class for conditions on steps or questions."""
 
+    class ConditionType(models.TextChoices):
+        SHOW = "show", "Show target"
+        HIDE = "hide", "Hide target"
+        REPEAT = "repeat", "Repeat target a fixed number of times"
+        REPEAT_DYNAMIC = "repeat_dynamic", "Repeat based on answer value"
+
+    class TriggerValueKeys(models.TextChoices):
+        VALUE = "value", "Value"
+        OPTION_IDS = "option_ids", "Option IDs"
+        MIN = "min", "Minimum"
+        MAX = "max", "Maximum"
+        EXACT = "exact", "Exact"
+
     trigger_question = models.ForeignKey(
         BaseQuestion,
         on_delete=models.CASCADE,
         help_text="The question whose answer triggers this condition.",
     )
 
-    CONDITION_TYPES = [
-        ("show", "Show target"),
-        ("hide", "Hide target"),
-        ("repeat", "Repeat target a fixed number of times"),
-        ("repeat_dynamic", "Repeat based on answer value"),
-    ]
-    condition_type = models.CharField(max_length=20, choices=CONDITION_TYPES)
+    condition_type = models.CharField(
+        max_length=20,
+        choices=ConditionType.choices,
+    )
 
     # Check out form/README.md for more information on how to format this field.
     trigger_value = models.JSONField()
@@ -234,7 +244,12 @@ class BaseCondition(models.Model):
         """
         return models.CheckConstraint(
             check=(
-                ~Q(condition_type__in=["repeat", "repeat_dynamic"])
+                ~Q(
+                    condition_type__in={
+                        BaseCondition.ConditionType.REPEAT,
+                        BaseCondition.ConditionType.REPEAT_DYNAMIC,
+                    }
+                )
                 | Q(repeat_count__isnull=False)
                 | Q(use_answer_as_count=True)
             ),
