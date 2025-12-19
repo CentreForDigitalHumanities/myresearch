@@ -19,45 +19,41 @@ from form.services.form_evaluator import MAX_REPEAT_LIMIT, FormEvaluator
 class TestFormEvaluatorCheckTriggerValue:
     """Tests for FormEvaluator.check_trigger_value method."""
 
-    def test_empty_trigger_value_returns_true_for_any_answer(
-        self, test_form, test_user
-    ):
+    def test_empty_trigger_value_returns_true_for_any_answer(self, form, test_user):
         """Empty trigger_value dict should match any non-empty answer."""
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.check_trigger_value({"value": "anything"}, {}) is True
         assert evaluator.check_trigger_value({"value": 123}, {}) is True
         assert evaluator.check_trigger_value({"value": True}, {}) is True
 
-    def test_empty_trigger_value_returns_false_for_empty_answer(
-        self, test_form, test_user
-    ):
+    def test_empty_trigger_value_returns_false_for_empty_answer(self, form, test_user):
         """Empty trigger_value dict should match any answer, including empty/falsy ones."""
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.check_trigger_value({}, {}) is True
         assert evaluator.check_trigger_value({"value": ""}, {}) is True
         assert evaluator.check_trigger_value({"value": 0}, {}) is True
 
-    def test_min_comparison(self, test_form, test_user):
+    def test_min_comparison(self, form, test_user):
         """Test minimum value comparison."""
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.check_trigger_value({"value": 10}, {"min": 5}) is True
         assert evaluator.check_trigger_value({"value": 5}, {"min": 5}) is True
         assert evaluator.check_trigger_value({"value": 3}, {"min": 5}) is False
 
-    def test_max_comparison(self, test_form, test_user):
+    def test_max_comparison(self, form, test_user):
         """Test maximum value comparison."""
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.check_trigger_value({"value": 3}, {"max": 5}) is True
         assert evaluator.check_trigger_value({"value": 5}, {"max": 5}) is True
         assert evaluator.check_trigger_value({"value": 10}, {"max": 5}) is False
 
-    def test_exact_comparison(self, test_form, test_user):
+    def test_exact_comparison(self, form, test_user):
         """Test exact value comparison."""
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.check_trigger_value({"value": 5}, {"exact": 5}) is True
         assert evaluator.check_trigger_value({"value": 10}, {"exact": 5}) is False
@@ -66,9 +62,9 @@ class TestFormEvaluatorCheckTriggerValue:
             is True
         )
 
-    def test_option_ids_with_single_option(self, test_form, test_user):
+    def test_option_ids_with_single_option(self, form, test_user):
         """Test option_ids matching with single select."""
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         # Single option_id format
         assert (
@@ -80,9 +76,9 @@ class TestFormEvaluatorCheckTriggerValue:
             is False
         )
 
-    def test_option_ids_with_multiple_options(self, test_form, test_user):
+    def test_option_ids_with_multiple_options(self, form, test_user):
         """Test option_ids matching with multiple select."""
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         # Multiple option_ids format
         assert (
@@ -98,17 +94,17 @@ class TestFormEvaluatorCheckTriggerValue:
             is False
         )
 
-    def test_value_comparison_for_booleans(self, test_form, test_user):
+    def test_value_comparison_for_booleans(self, form, test_user):
         """Test direct value matching for booleans."""
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.check_trigger_value({"value": True}, {"value": True}) is True
         assert evaluator.check_trigger_value({"value": False}, {"value": True}) is False
         assert evaluator.check_trigger_value({"value": False}, {"value": False}) is True
 
-    def test_value_comparison_for_strings(self, test_form, test_user):
+    def test_value_comparison_for_strings(self, form, test_user):
         """Test direct value matching for strings."""
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.check_trigger_value({"value": "yes"}, {"value": "yes"}) is True
         assert evaluator.check_trigger_value({"value": "no"}, {"value": "yes"}) is False
@@ -119,15 +115,15 @@ class TestFormEvaluatorQuestionConditions:
     """Tests for QuestionCondition evaluation in FormEvaluator."""
 
     def test_question_visible_by_default_without_conditions(
-        self, test_form, test_user, target_question
+        self, form, test_user, target_question
     ):
         """Question without conditions should be visible by default."""
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.is_question_visible(target_question) is True
 
     def test_show_condition_hides_question_when_not_met(
-        self, test_form, test_user, trigger_question, target_question
+        self, form, test_user, trigger_question, target_question
     ):
         """Question with show condition should be hidden when condition is not met."""
         # Create show condition
@@ -138,13 +134,13 @@ class TestFormEvaluatorQuestionConditions:
             trigger_value={"value": "specific_answer"},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         # No submission/response means condition not met
         assert evaluator.is_question_visible(target_question) is False
 
     def test_show_condition_shows_question_when_met(
-        self, test_form, test_user, trigger_question, target_question
+        self, form, test_user, trigger_question, target_question
     ):
         """Question with show condition should be visible when condition is met."""
 
@@ -158,19 +154,19 @@ class TestFormEvaluatorQuestionConditions:
         )
 
         # Create submission and response
-        submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
         QuestionResponse.objects.create(
             submission=submission,
             question=trigger_question,
             answer={"value": SPECIFIC_ANSWER},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.is_question_visible(target_question) is True
 
     def test_hide_condition_shows_question_when_not_met(
-        self, test_form, test_user, trigger_question, target_question
+        self, form, test_user, trigger_question, target_question
     ):
         """Question with hide condition should be visible when condition is not met."""
         QuestionCondition.objects.create(
@@ -180,13 +176,13 @@ class TestFormEvaluatorQuestionConditions:
             trigger_value={"value": "hide_me"},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         # No response means the hide condition is not met, so question is shown.
         assert evaluator.is_question_visible(target_question) is True
 
     def test_hide_condition_hides_question_when_met(
-        self, test_form, test_user, trigger_question, target_question
+        self, form, test_user, trigger_question, target_question
     ):
         """Question with hide condition should be hidden when condition is met."""
         QuestionCondition.objects.create(
@@ -196,24 +192,24 @@ class TestFormEvaluatorQuestionConditions:
             trigger_value={"value": "hide_me"},
         )
 
-        submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
         QuestionResponse.objects.create(
             submission=submission,
             question=trigger_question,
             answer={"value": "hide_me"},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.is_question_visible(target_question) is False
 
     def test_show_condition_with_boolean_trigger(
-        self, test_form, test_step, test_user, target_question
+        self, form, step, test_user, target_question
     ):
         """Show condition triggered by boolean (TrueFalse) question."""
         bool_trigger = TrueFalseQuestion.objects.create(
             text="Do you want more?",
-            step=test_step,
+            step=step,
         )
 
         QuestionCondition.objects.create(
@@ -223,24 +219,24 @@ class TestFormEvaluatorQuestionConditions:
             trigger_value={"value": True},
         )
 
-        submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
         QuestionResponse.objects.create(
             submission=submission,
             question=bool_trigger,
             answer={"value": True},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.is_question_visible(target_question) is True
 
     def test_show_condition_with_select_option_trigger(
-        self, test_form, test_step, test_user, target_question
+        self, form, step, test_user, target_question
     ):
         """Show condition triggered by select option."""
         select_trigger = SelectQuestion.objects.create(
             text="Choose an option",
-            step=test_step,
+            step=step,
             multiple=False,
         )
         option1 = SelectOption.objects.create(label="Option 1", question=select_trigger)
@@ -253,24 +249,24 @@ class TestFormEvaluatorQuestionConditions:
             trigger_value={"option_ids": [option1.pk, option2.pk]},
         )
 
-        submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
         QuestionResponse.objects.create(
             submission=submission,
             question=select_trigger,
             answer={"option_id": option1.pk},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.is_question_visible(target_question) is True
 
     def test_show_condition_with_number_min_trigger(
-        self, test_form, test_step, test_user, target_question
+        self, form, step, test_user, target_question
     ):
         """Show condition triggered by number >= min value."""
         number_trigger = NumberQuestion.objects.create(
             text="How many?",
-            step=test_step,
+            step=step,
         )
 
         QuestionCondition.objects.create(
@@ -280,19 +276,19 @@ class TestFormEvaluatorQuestionConditions:
             trigger_value={"min": 5},
         )
 
-        submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
         QuestionResponse.objects.create(
             submission=submission,
             question=number_trigger,
             answer={"value": 7},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.is_question_visible(target_question) is True
 
     def test_repeat_condition_static_count(
-        self, test_form, test_user, trigger_question, target_question
+        self, form, test_user, trigger_question, target_question
     ):
         """Question with repeat condition should return static repeat count."""
 
@@ -306,14 +302,14 @@ class TestFormEvaluatorQuestionConditions:
             repeat_count=NUMBER_OF_REPEATS,
         )
 
-        submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
         QuestionResponse.objects.create(
             submission=submission,
             question=trigger_question,
             answer={"value": "anything"},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert (
             evaluator.get_repeat_count_for_question(target_question)
@@ -321,7 +317,7 @@ class TestFormEvaluatorQuestionConditions:
         )
 
     def test_repeat_dynamic_condition_uses_answer_value(
-        self, test_form, test_step, test_user, target_question
+        self, form, step, test_user, target_question
     ):
         """Question with repeat_dynamic should use answer value as count."""
 
@@ -329,7 +325,7 @@ class TestFormEvaluatorQuestionConditions:
 
         number_trigger = NumberQuestion.objects.create(
             text="How many times?",
-            step=test_step,
+            step=step,
         )
 
         QuestionCondition.objects.create(
@@ -340,14 +336,14 @@ class TestFormEvaluatorQuestionConditions:
             use_answer_as_count=True,
         )
 
-        submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
         QuestionResponse.objects.create(
             submission=submission,
             question=number_trigger,
             answer={"value": NUMBER_OF_REPEATS},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert (
             evaluator.get_repeat_count_for_question(target_question)
@@ -355,12 +351,12 @@ class TestFormEvaluatorQuestionConditions:
         )
 
     def test_repeat_dynamic_minimum_is_one(
-        self, test_form, test_step, test_user, target_question
+        self, form, step, test_user, target_question
     ):
         """Repeat count should be at least 1 even with 0 or negative answer."""
         number_trigger = NumberQuestion.objects.create(
             text="How many times?",
-            step=test_step,
+            step=step,
         )
 
         QuestionCondition.objects.create(
@@ -371,22 +367,20 @@ class TestFormEvaluatorQuestionConditions:
             use_answer_as_count=True,
         )
 
-        submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
         QuestionResponse.objects.create(
             submission=submission,
             question=number_trigger,
             answer={"value": 0},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.get_repeat_count_for_question(target_question) == 1
 
-    def test_no_repeat_condition_returns_one(
-        self, test_form, test_user, target_question
-    ):
+    def test_no_repeat_condition_returns_one(self, form, test_user, target_question):
         """Question without repeat condition should have repeat count of 1."""
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.get_repeat_count_for_question(target_question) == 1
 
@@ -395,253 +389,247 @@ class TestFormEvaluatorQuestionConditions:
 class TestFormEvaluatorStepConditions:
     """Tests for StepCondition evaluation in FormEvaluator."""
 
-    def test_step_visible_by_default_without_conditions(
-        self, test_form, test_step, test_user
-    ):
+    def test_step_visible_by_default_without_conditions(self, form, step, test_user):
         """Step without conditions should be visible by default."""
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
-        assert evaluator.is_step_visible(test_step) is True
+        assert evaluator.is_step_visible(step) is True
 
     def test_show_condition_hides_step_when_not_met(
-        self, test_form, test_step, test_user, trigger_question
+        self, form, step, test_user, trigger_question
     ):
         """Step with show condition should be hidden when condition is not met."""
         StepCondition.objects.create(
-            target_step=test_step,
+            target_step=step,
             trigger_question=trigger_question,
             condition_type="show",
             trigger_value={"value": "show_step"},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
-        assert evaluator.is_step_visible(test_step) is False
+        assert evaluator.is_step_visible(step) is False
 
     def test_show_condition_shows_step_when_met(
-        self, test_form, test_step, test_user, trigger_question
+        self, form, step, test_user, trigger_question
     ):
         """Step with show condition should be visible when condition is met."""
         # Create another step to hold the trigger question.
         trigger_step = Step.objects.create(
-            name="Trigger Step", slug="trigger-step", form=test_form
+            name="Trigger Step", slug="trigger-step", form=form
         )
         trigger_q = TextQuestion.objects.create(text="Trigger", step=trigger_step)
 
         SPECIFIC_ANSWER = "show_step"
 
         StepCondition.objects.create(
-            target_step=test_step,
+            target_step=step,
             trigger_question=trigger_q,
             condition_type="show",
             trigger_value={"value": SPECIFIC_ANSWER},
         )
 
-        submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
         QuestionResponse.objects.create(
             submission=submission,
             question=trigger_q,
             answer={"value": SPECIFIC_ANSWER},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
-        assert evaluator.is_step_visible(test_step) is True
+        assert evaluator.is_step_visible(step) is True
 
     def test_hide_condition_shows_step_when_not_met(
-        self, test_form, test_step, test_user, trigger_question
+        self, form, step, test_user, trigger_question
     ):
         """Step with hide condition should be visible when condition is not met."""
         StepCondition.objects.create(
-            target_step=test_step,
+            target_step=step,
             trigger_question=trigger_question,
             condition_type="hide",
             trigger_value={"value": "hide_step"},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         # No response: hide condition is not met, so the step is visible.
-        assert evaluator.is_step_visible(test_step) is True
+        assert evaluator.is_step_visible(step) is True
 
     def test_hide_condition_hides_step_when_met(
-        self, test_form, test_step, test_user, trigger_question
+        self, form, step, test_user, trigger_question
     ):
         """Step with hide condition should be hidden when condition is met."""
 
         SPECIFIC_ANSWER = "hide_step"
 
         StepCondition.objects.create(
-            target_step=test_step,
+            target_step=step,
             trigger_question=trigger_question,
             condition_type="hide",
             trigger_value={"value": SPECIFIC_ANSWER},
         )
 
-        submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
         QuestionResponse.objects.create(
             submission=submission,
             question=trigger_question,
             answer={"value": SPECIFIC_ANSWER},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
-        assert evaluator.is_step_visible(test_step) is False
+        assert evaluator.is_step_visible(step) is False
 
     def test_step_repeat_condition_static_count(
-        self, test_form, test_step, test_user, trigger_question
+        self, form, step, test_user, trigger_question
     ):
         """Step with repeat condition should return static repeat count."""
 
         REPEAT_COUNT = 4
 
         StepCondition.objects.create(
-            target_step=test_step,
+            target_step=step,
             trigger_question=trigger_question,
             condition_type="repeat",
             trigger_value={},
             repeat_count=REPEAT_COUNT,
         )
 
-        submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
         QuestionResponse.objects.create(
             submission=submission,
             question=trigger_question,
             answer={"value": "trigger"},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
-        assert evaluator.get_repeat_count_for_step(test_step) == REPEAT_COUNT
+        assert evaluator.get_repeat_count_for_step(step) == REPEAT_COUNT
 
-    def test_step_repeat_dynamic_uses_answer_value(
-        self, test_form, test_step, test_user
-    ):
+    def test_step_repeat_dynamic_uses_answer_value(self, form, step, test_user):
         """Step with repeat_dynamic should use answer value as count."""
         number_trigger = NumberQuestion.objects.create(
             text="How many steps?",
-            step=test_step,
+            step=step,
         )
 
         REPEAT_COUNT = 3
 
         StepCondition.objects.create(
-            target_step=test_step,
+            target_step=step,
             trigger_question=number_trigger,
             condition_type="repeat_dynamic",
             trigger_value={},
             use_answer_as_count=True,
         )
 
-        submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
         QuestionResponse.objects.create(
             submission=submission,
             question=number_trigger,
             answer={"value": REPEAT_COUNT},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
-        assert evaluator.get_repeat_count_for_step(test_step) == REPEAT_COUNT
+        assert evaluator.get_repeat_count_for_step(step) == REPEAT_COUNT
 
-    def test_step_repeat_dynamic_minimum_is_one(self, test_form, test_step, test_user):
+    def test_step_repeat_dynamic_minimum_is_one(self, form, step, test_user):
         """Step repeat count should be at least 1."""
         number_trigger = NumberQuestion.objects.create(
             text="How many steps?",
-            step=test_step,
+            step=step,
         )
 
         StepCondition.objects.create(
-            target_step=test_step,
+            target_step=step,
             trigger_question=number_trigger,
             condition_type="repeat_dynamic",
             trigger_value={},
             use_answer_as_count=True,
         )
 
-        submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
         QuestionResponse.objects.create(
             submission=submission,
             question=number_trigger,
             answer={"value": -5},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
-        assert evaluator.get_repeat_count_for_step(test_step) == 1
+        assert evaluator.get_repeat_count_for_step(step) == 1
 
-    def test_step_repeate_dynamic_maximum_limit(self, test_form, test_step, test_user):
+    def test_step_repeate_dynamic_maximum_limit(self, form, step, test_user):
         """Step repeat count should not exceed maximum limit."""
         number_trigger = NumberQuestion.objects.create(
             text="How many steps?",
-            step=test_step,
+            step=step,
         )
 
         EXCESSIVE_COUNT = 99999999999
 
         StepCondition.objects.create(
-            target_step=test_step,
+            target_step=step,
             trigger_question=number_trigger,
             condition_type="repeat_dynamic",
             trigger_value={},
             use_answer_as_count=True,
         )
 
-        submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
         QuestionResponse.objects.create(
             submission=submission,
             question=number_trigger,
             answer={"value": EXCESSIVE_COUNT},
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
-        assert evaluator.get_repeat_count_for_step(test_step) == MAX_REPEAT_LIMIT
+        assert evaluator.get_repeat_count_for_step(step) == MAX_REPEAT_LIMIT
 
-    def test_no_step_repeat_condition_returns_one(
-        self, test_form, test_step, test_user
-    ):
+    def test_no_step_repeat_condition_returns_one(self, form, step, test_user):
         """Step without repeat condition should have repeat count of 1."""
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
-        assert evaluator.get_repeat_count_for_step(test_step) == 1
+        assert evaluator.get_repeat_count_for_step(step) == 1
 
 
 @pytest.mark.django_db
 class TestFormEvaluatorSubmission:
     """Tests for FormEvaluator submission handling."""
 
-    def test_creates_submission_when_flag_set(self, test_form, test_user):
+    def test_creates_submission_when_flag_set(self, form, test_user):
         """FormEvaluator should create submission when create_submission=True."""
-        evaluator = FormEvaluator(test_form, test_user, create_submission=True)
+        evaluator = FormEvaluator(form, test_user, create_submission=True)
 
         submission = evaluator.submission
 
         assert submission is not None
         assert submission.user == test_user
-        assert submission.form == test_form
+        assert submission.form == form
 
-    def test_returns_none_when_no_submission_exists(self, test_form, test_user):
+    def test_returns_none_when_no_submission_exists(self, form, test_user):
         """FormEvaluator should return None when no submission exists."""
-        evaluator = FormEvaluator(test_form, test_user, create_submission=False)
+        evaluator = FormEvaluator(form, test_user, create_submission=False)
 
         assert evaluator.submission is None
 
-    def test_returns_latest_submission(self, test_form, test_user):
+    def test_returns_latest_submission(self, form, test_user):
         """FormEvaluator should return the most recent submission."""
         # Create older submission
-        UserFormSubmission.objects.create(user=test_user, form=test_form)
+        UserFormSubmission.objects.create(user=test_user, form=form)
         # Create newer submission
-        newer = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        newer = UserFormSubmission.objects.create(user=test_user, form=form)
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.submission == newer
 
-    def test_get_user_answer(self, test_form, test_user, trigger_question):
+    def test_get_user_answer(self, form, test_user, trigger_question):
         """Test get_user_answer retrieves correct answer."""
-        submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
         QuestionResponse.objects.create(
             submission=submission,
             question=trigger_question,
@@ -649,20 +637,18 @@ class TestFormEvaluatorSubmission:
             repeat_index=0,
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.get_user_answer(trigger_question, 0) == {"value": "my answer"}
         assert evaluator.get_user_answer(trigger_question, 1) is None
 
-    def test_get_user_answer_with_repeat_index(
-        self, test_form, test_user, trigger_question
-    ):
+    def test_get_user_answer_with_repeat_index(self, form, test_user, trigger_question):
         """Test get_user_answer with different repeat indices."""
 
         FIRST_ANSWER = "first"
         SECOND_ANSWER = "second"
 
-        submission = UserFormSubmission.objects.create(user=test_user, form=test_form)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
         QuestionResponse.objects.create(
             submission=submission,
             question=trigger_question,
@@ -676,7 +662,7 @@ class TestFormEvaluatorSubmission:
             repeat_index=1,
         )
 
-        evaluator = FormEvaluator(test_form, test_user)
+        evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.get_user_answer(trigger_question, 0) == {"value": FIRST_ANSWER}
         assert evaluator.get_user_answer(trigger_question, 1) == {
