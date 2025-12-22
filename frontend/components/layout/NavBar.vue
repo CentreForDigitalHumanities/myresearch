@@ -9,9 +9,9 @@ import type { GetFirstSlugQuery } from "~/generated/gql/graphql";
 const GET_FIRST_SLUG = graphql(`
     query GetFirstSlug {
         form {
-            id
+            formId
             steps {
-                id
+                stepId
                 slug
             }
         }
