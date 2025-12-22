@@ -31,9 +31,9 @@ class Study(models.Model):
 
     objects = StudyManager()
 
-#######################
-# Staus Change Object #
-#######################
+########################
+# Status Change Object #
+########################
 
 class Statuses(models.TextChoices):
     CREATED = "CRE"
@@ -43,23 +43,71 @@ class Statuses(models.TextChoices):
     REVISED = "REV"
     COMPLETED = "COM"
 
+class StatusChangeManager(BaseMRManager):
+    def _viewable_objects(self, user: User):
+        if user.is_privacy_officer or user.is_fetc_member:
+            return self.all()
+        return self.filter(created_by=user)
+
+    def _editable_objects(self, user: User):
+        return self.filter(created_by=user)
+
 class StatusChange(models.Model):
+    """
+    Object which handles the status of a UserFormSubmission.
+    """
 
     status = models.CharField(
         choices=Statuses.choices
     )
 
-    # Not currently in this branch
-
-    # user_form_submission = models.ForeignKey(
-    #     "form.UserFormSubmission",
-    #     on_delete=models.CASCADE,
-    #     related_name="status_changes",
-    # )
+    user_form_submission = models.ForeignKey(
+        "form.UserFormSubmission",
+        on_delete=models.CASCADE,
+        related_name="status_changes",
+    )
 
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return f"{Statuses(self.new_status).label}: {self.changed_time.strftime("%d-%m-%Y, %H:%M")}" 
+        return f"{Statuses(self.new_status).label}: {self.changed_time.strftime("%d-%m-%Y, %H:%M")}"
+    
+#################
+# Review object #
+#################
+
+class ReviewRound(models.Model):
+
+    reviewed_form = models.ForeignKey(
+        "form.UserFormSubmission",
+        on_delete=models.CASCADE,
+        related_name="status_changes",
+    )
+
+    is_active = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["created_at"]
+
+class Review(models.Model):
+
+    review_form = models.ForeignKey(
+        "form.UserFormSubmission",
+        on_delete=models.CASCADE,
+        related_name="status_changes",
+    )
+
+    round = models.ForeignKey(
+        ReviewRound,
+        related_name="reviews",
+        on_delete=models.CASCADE,
+    )
+
+    reviewer = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
