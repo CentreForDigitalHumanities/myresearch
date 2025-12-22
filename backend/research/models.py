@@ -1,3 +1,4 @@
+from form.models import UserFormSubmission
 from main.models import User, MRPermission
 from main.utils.permission_utils import BaseMRManager
 
@@ -31,6 +32,18 @@ class Study(models.Model):
 
     objects = StudyManager()
 
+##########################
+# Study Form Submissions #
+##########################
+
+class StudyFormSubmission(UserFormSubmission):
+    """
+    Subclass of UserFormSubmission, used specifically for submitted forms that
+    relate to a specific study.
+    """
+
+    study = models.ForeignKey(Study, on_delete=models.CASCADE, related_name="form_submissions")
+
 ########################
 # Status Change Object #
 ########################
@@ -45,7 +58,7 @@ class Statuses(models.TextChoices):
 
 class StatusChange(models.Model):
     """
-    Object which handles the status of a UserFormSubmission.
+    Object which handles the status of a StudyFormSubmission.
     """
 
     status = models.CharField(
@@ -53,7 +66,7 @@ class StatusChange(models.Model):
     )
 
     user_form_submission = models.ForeignKey(
-        "form.UserFormSubmission",
+        "research.StudyFormSubmission",
         on_delete=models.CASCADE,
         related_name="status_changes",
     )
@@ -85,7 +98,7 @@ class ReviewRoundManager(BaseMRManager):
 class ReviewRound(models.Model):
 
     reviewed_form = models.ForeignKey(
-        "form.UserFormSubmission",
+        "research.StudyFormSubmission",
         on_delete=models.CASCADE,
         related_name="review_rounds",
     )
