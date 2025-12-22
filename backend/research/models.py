@@ -43,15 +43,6 @@ class Statuses(models.TextChoices):
     REVISED = "REV"
     COMPLETED = "COM"
 
-class StatusChangeManager(BaseMRManager):
-    def _viewable_objects(self, user: User):
-        if user.is_privacy_officer or user.is_fetc_member:
-            return self.all()
-        return self.filter(created_by=user)
-
-    def _editable_objects(self, user: User):
-        return self.filter(created_by=user)
-
 class StatusChange(models.Model):
     """
     Object which handles the status of a UserFormSubmission.
