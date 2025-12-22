@@ -69,12 +69,25 @@ class StatusChange(models.Model):
 # Review object #
 #################
 
+class ReviewRoundManager(BaseMRManager):
+    def _viewable_objects(self, user: User):
+        # PO and FETC members can view all reviews
+        if user.is_privacy_officer or user.is_fetc_member:
+            return self.all()
+        # Users can see completed reviews of their own forms
+        return self.filter(reviewed_form__user=user, is_active = False)
+
+    def _editable_objects(self, user: User):
+        if user.is_privacy_officer:
+            return self.all()
+        return self.none()
+
 class ReviewRound(models.Model):
 
     reviewed_form = models.ForeignKey(
         "form.UserFormSubmission",
         on_delete=models.CASCADE,
-        related_name="status_changes",
+        related_name="review_rounds",
     )
 
     is_active = models.BooleanField(default=True)
@@ -84,21 +97,23 @@ class ReviewRound(models.Model):
     class Meta:
         ordering = ["created_at"]
 
+    objects = ReviewRoundManager()
+
 class Review(models.Model):
 
     review_form = models.ForeignKey(
         "form.UserFormSubmission",
         on_delete=models.CASCADE,
-        related_name="status_changes",
     )
 
     round = models.ForeignKey(
         ReviewRound,
-        related_name="reviews",
         on_delete=models.CASCADE,
+        related_name="reviews",
     )
 
     reviewer = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
+        related_name="reviews",
     )
