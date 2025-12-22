@@ -94,7 +94,7 @@ class StatusChange(models.Model):
         ordering = ["created_at"]
 
     def __str__(self) -> str:
-        return f"{Statuses(self.new_status).label}: {self.changed_time.strftime("%d-%m-%Y, %H:%M")}"
+        return f"{Statuses(self.new_status).label}: {self.created_at.strftime('%d-%m-%Y, %H:%M')}"
     
 #################
 # Review object #
