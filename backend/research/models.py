@@ -8,6 +8,7 @@ from django.db import models
 # Study Object #
 ################
 
+
 class StudyManager(BaseMRManager):
     def _viewable_objects(self, user: User):
         if user.is_privacy_officer or user.is_fetc_member:
@@ -32,12 +33,13 @@ class Study(models.Model):
 
     objects = StudyManager()
 
+
 ##########################
 # Study Form Submissions #
 ##########################
 
-class StudyFormSubmissionManager(BaseMRManager):
 
+class StudyFormSubmissionManager(BaseMRManager):
     def _viewable_objects(self, user: User):
         if user.is_privacy_officer or user.is_fetc_member:
             return self.exclude(status=Statuses.DRAFT)
@@ -46,20 +48,28 @@ class StudyFormSubmissionManager(BaseMRManager):
     def _editable_objects(self, user: User):
         return self.filter(created_by=user)
 
+
 class StudyFormSubmission(UserFormSubmission):
     """
     Subclass of UserFormSubmission, used specifically for submitted forms that
     relate to a specific study.
     """
-    study = models.ForeignKey(Study, on_delete=models.CASCADE, related_name="form_submissions")
+
+    study = models.ForeignKey(
+        Study, on_delete=models.CASCADE, related_name="form_submissions"
+    )
 
     @property
-    def status(self,):
+    def status(
+        self,
+    ):
         return self.status_changes.last().status
+
 
 ########################
 # Status Change Object #
 ########################
+
 
 class Statuses(models.TextChoices):
     DRAFT = "DRA"
@@ -69,15 +79,14 @@ class Statuses(models.TextChoices):
     REVISED = "REV"
     COMPLETED = "COM"
 
+
 class StatusChange(models.Model):
     """
     Object which handles the status of a StudyFormSubmission. These are appended
     to a StudyFormSubmission as a side effect for certain actions.
     """
 
-    status = models.CharField(
-        choices=Statuses.choices
-    )
+    status = models.CharField(choices=Statuses.choices)
 
     user_form_submission = models.ForeignKey(
         "research.StudyFormSubmission",
@@ -95,10 +104,12 @@ class StatusChange(models.Model):
 
     def __str__(self) -> str:
         return f"{Statuses(self.new_status).label}: {self.created_at.strftime('%d-%m-%Y, %H:%M')}"
-    
+
+
 #################
 # Review object #
 #################
+
 
 class ReviewRoundManager(BaseMRManager):
     def _viewable_objects(self, user: User):
@@ -106,12 +117,13 @@ class ReviewRoundManager(BaseMRManager):
         if user.is_privacy_officer or user.is_fetc_member:
             return self.all()
         # Users can see completed reviews of their own forms
-        return self.filter(reviewed_form__user=user, is_active = False)
+        return self.filter(reviewed_form__user=user, is_active=False)
 
     def _editable_objects(self, user: User):
         if user.is_privacy_officer:
             return self.all()
         return self.none()
+
 
 class ReviewRound(models.Model):
 
@@ -129,6 +141,7 @@ class ReviewRound(models.Model):
         ordering = ["created_at"]
 
     objects = ReviewRoundManager()
+
 
 class Review(models.Model):
 
