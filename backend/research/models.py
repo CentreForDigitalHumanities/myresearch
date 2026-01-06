@@ -39,30 +39,31 @@ class Study(models.Model):
 ##########################
 
 
-class StudyFormSubmissionManager(BaseMRManager):
+class StudyFormManager(BaseMRManager):
     def _viewable_objects(self, user: User):
         if user.is_privacy_officer or user.is_fetc_member:
-            return self.exclude(status=Statuses.DRAFT)
+            return self.exclude(status=SubmissionStatus.DRAFT)
         return self.filter(created_by=user)
 
     def _editable_objects(self, user: User):
         return self.filter(created_by=user)
 
 
-class StudyFormSubmission(UserFormSubmission):
+class StudyForm(models.Model):
     """
-    Subclass of UserFormSubmission, used specifically for submitted forms that
+    Subclass of UserForm, used specifically for submitted forms that
     relate to a specific study.
     """
 
-    study = models.ForeignKey(
-        Study, on_delete=models.CASCADE, related_name="form_submissions"
+    submission = models.OneToOneField(
+        UserFormSubmission,
+        on_delete=models.CASCADE,
     )
 
+    study = models.OneToOneField(Study, on_delete=models.CASCADE, related_name="form")
+
     @property
-    def status(
-        self,
-    ):
+    def status(self):
         return self.status_changes.last().status
 
 
@@ -71,25 +72,23 @@ class StudyFormSubmission(UserFormSubmission):
 ########################
 
 
-class Statuses(models.TextChoices):
+class SubmissionStatus(models.TextChoices):
     DRAFT = "DRA"
     SUBMITTED = "SUB"
     APPROVED = "APP"
     REJECTED = "REJ"
-    REVISED = "REV"
-    COMPLETED = "COM"
 
 
 class StatusChange(models.Model):
     """
-    Object which handles the status of a StudyFormSubmission. These are appended
-    to a StudyFormSubmission as a side effect for certain actions.
+    Object which handles the status of a StudyForm. These are appended
+    to a StudyForm as a side effect for certain actions.
     """
 
-    status = models.CharField(choices=Statuses.choices)
+    status = models.CharField(choices=SubmissionStatus.choices)
 
-    user_form_submission = models.ForeignKey(
-        "research.StudyFormSubmission",
+    study_form = models.ForeignKey(
+        StudyForm,
         on_delete=models.CASCADE,
         related_name="status_changes",
     )
@@ -99,11 +98,10 @@ class StatusChange(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-
         ordering = ["created_at"]
 
     def __str__(self) -> str:
-        return f"{Statuses(self.new_status).label}: {self.created_at.strftime('%d-%m-%Y, %H:%M')}"
+        return f"{SubmissionStatus(self.status).label}: {self.created_at.strftime('%d-%m-%Y, %H:%M')}"
 
 
 #################
@@ -128,7 +126,7 @@ class ReviewRoundManager(BaseMRManager):
 class ReviewRound(models.Model):
 
     reviewed_form = models.ForeignKey(
-        "research.StudyFormSubmission",
+        StudyForm,
         on_delete=models.CASCADE,
         related_name="review_rounds",
     )
