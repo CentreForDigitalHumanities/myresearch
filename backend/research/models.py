@@ -143,6 +143,11 @@ class ReviewRound(models.Model):
     objects = ReviewRoundManager()
 
 
+class ReviewVerdict(models.TextChoices):
+    APPROVED = "APP"
+    REJECTED = "REJ"
+
+
 class Review(models.Model):
 
     round = models.ForeignKey(
@@ -156,3 +161,7 @@ class Review(models.Model):
         on_delete=models.CASCADE,
         related_name="reviews",
     )
+
+    comments = models.TextField()
+
+    verdict = models.CharField(choices=ReviewVerdict.choices)
