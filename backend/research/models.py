@@ -145,11 +145,6 @@ class ReviewRound(models.Model):
 
 class Review(models.Model):
 
-    review_form = models.ForeignKey(
-        "form.UserFormSubmission",
-        on_delete=models.CASCADE,
-    )
-
     round = models.ForeignKey(
         ReviewRound,
         on_delete=models.CASCADE,
