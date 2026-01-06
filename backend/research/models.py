@@ -133,8 +133,6 @@ class ReviewRound(models.Model):
         related_name="review_rounds",
     )
 
-    is_active = models.BooleanField(default=True)
-
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
