@@ -1,34 +1,36 @@
 <script lang="ts" setup>
-import type { SelectQuestionType } from "~/generated/gql/graphql";
+import type { SelectQuestionWithValue } from "~/composables/useProcessForm";
 
 interface Props {
-    question: Pick<
-        SelectQuestionType,
-        | "id"
-        | "textNl"
-        | "textEn"
-        | "descriptionNl"
-        | "descriptionEn"
-        | "options"
-        | "multiple"
-    >;
+    question: SelectQuestionWithValue;
+    isInvalid: boolean;
 }
 
 defineProps<Props>();
+
+const modelValue = defineModel<string>();
 </script>
 
 <template>
-    <div class="uu-form-field">
-        <label :for="question.id" class="form-label">{{
-            useTranslateableAttribute(question, "text")
-        }}</label>
+    <div>
+        <label :for="`${question.questionId}-${question.repeatIndex}`" class="form-label">
+            {{ useTranslateableAttribute(question, "text") }}
+        </label>
         <p
             v-if="question.descriptionNl || question.descriptionEn"
             class="text-muted"
         >
             {{ useTranslateableAttribute(question, "description") }}
         </p>
-        <select :id="question.id" class="form-control">
+        <select
+            :id="`${question.questionId}-${question.repeatIndex}`"
+            v-model="modelValue"
+            class="form-control"
+            :class="{ 'is-invalid': isInvalid }"
+        >
+            <option disabled value="">
+                {{ $t("Please select one") }}
+            </option>
             <option
                 v-for="option in question.options"
                 :key="option.id"

@@ -1,28 +1,21 @@
 <script lang="ts" setup>
-import type { TextQuestionType } from "~/generated/gql/graphql";
+import type { TextQuestionWithValue } from "~/composables/useProcessForm";
 
 interface Props {
-    question: Pick<
-        TextQuestionType,
-        | "id"
-        | "textNl"
-        | "textEn"
-        | "descriptionNl"
-        | "descriptionEn"
-        | "placeholderNl"
-        | "placeholderEn"
-        | "lines"
-    >;
+    question: TextQuestionWithValue;
+    isInvalid: boolean;
 }
 
 defineProps<Props>();
+
+const modelValue = defineModel<string>();
 </script>
 
 <template>
-    <div class="uu-form-field">
-        <label :for="question.id" class="form-label">{{
-            useTranslateableAttribute(question, "text")
-        }}</label>
+    <div>
+        <label :for="`${question.questionId}-${question.repeatIndex}`" class="form-label"
+            >{{ useTranslateableAttribute(question, "text") }}
+        </label>
         <p
             v-if="question.descriptionNl || question.descriptionEn"
             class="text-muted"
@@ -31,14 +24,18 @@ defineProps<Props>();
         </p>
         <input
             v-if="!question.lines || question.lines < 2"
-            :id="question.id"
+            :id="`${question.questionId}-${question.repeatIndex}`"
+            v-model="modelValue"
             type="text"
             class="form-control"
+            :class="{ 'is-invalid': isInvalid }"
         />
         <textarea
             v-if="question.lines && question.lines >= 2"
-            :id="question.id"
+            :id="`${question.questionId}-${question.repeatIndex}`"
+            v-model="modelValue"
             class="form-control"
+            :class="{ 'is-invalid': isInvalid }"
             :rows="question.lines"
         ></textarea>
     </div>

@@ -9,14 +9,7 @@ RUN apk add python3
 # Set the working directory in the container.
 WORKDIR /app
 
-# Copy package.json and package-lock.json (if available).
-COPY package*.json ./
-
-# Copy start_dev.sh script
-COPY start_dev.sh ./
-
-# Install project dependencies
-RUN npm install
+# Source is not copied because it is mounted as a volume
 
 # Nuxt 3 default port is 3000.
 # Does not actually expose the port but documents it.

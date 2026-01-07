@@ -18,19 +18,19 @@ const FormInfoFragment = graphql(`
 `);
 
 const props = defineProps<{
-    form: FragmentType<typeof FormInfoFragment>;
+    step: FragmentType<typeof FormInfoFragment>;
 }>();
 
-const formInfo = computed(() => useFragment(FormInfoFragment, props.form));
+const stepInfo = computed(() => useFragment(FormInfoFragment, props.step));
 </script>
 <template>
     <div class="uu-form-help">
         <div class="help-item">
-            <div v-if="formInfo.infoQuestions?.length">
+            <div v-if="stepInfo.infoQuestions?.length">
                 <strong>{{ $t("Questions?") }}</strong>
             </div>
             <template
-                v-for="(question, index) in formInfo.infoQuestions"
+                v-for="(question, index) in stepInfo.infoQuestions"
                 :key="index"
             >
                 <a
@@ -44,11 +44,11 @@ const formInfo = computed(() => useFragment(FormInfoFragment, props.form));
             </template>
         </div>
         <div class="help-item">
-            <div v-if="formInfo.infoTexts?.length">
+            <div v-if="stepInfo.infoTexts?.length">
                 <strong>{{ $t("Additional Information") }}</strong>
                 <ul>
                     <li
-                        v-for="(info, index) in formInfo.infoTexts"
+                        v-for="(info, index) in stepInfo.infoTexts"
                         :key="index"
                     >
                         {{ useTranslateableAttribute(info, "text") }}

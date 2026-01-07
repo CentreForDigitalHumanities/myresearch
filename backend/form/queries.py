@@ -2,20 +2,31 @@ from typing import Optional
 from graphene import Field, ObjectType, ResolveInfo
 
 
-from form.types.MRFormType import MRFormType
+from form.services.form_evaluator import FormEvaluator
+from form.services.user_form_resolver import UserFormResolver
+from form.types.UserFormType import UserFormType
 from form.models import MRForm
 
 
 class FormQueries(ObjectType):
     form = Field(
-        MRFormType,
-        description="Retrieves the latest top-level form. For testing purposes only.",
+        UserFormType,
+        description="Retrieves the user's submission for a specific form.",
     )
 
     @staticmethod
-    def resolve_form(root, info: ResolveInfo) -> Optional[MRForm]:
-        return (
-            MRFormType.get_queryset(MRForm.objects, info)
-            .order_by("-created_at")
-            .first()
-        )
+    def resolve_form(root, info: ResolveInfo) -> Optional[UserFormType]:
+        user = info.context.user
+        if not user.is_authenticated:
+            return None
+
+        # Get the latest form config/template (for dev purposes only)
+        form_config = MRForm.objects.order_by("-created_at").first()
+
+        if not form_config:
+            return None
+
+        evaluator = FormEvaluator(form_config, user)
+        resolver = UserFormResolver(evaluator)
+
+        return resolver.resolve()

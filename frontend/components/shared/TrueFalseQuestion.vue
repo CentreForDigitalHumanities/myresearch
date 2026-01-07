@@ -1,33 +1,32 @@
 <script lang="ts" setup>
-import type { TrueFalseQuestionType } from "~/generated/gql/graphql";
+import type { TrueFalseQuestionWithValue } from "~/composables/useProcessForm";
 
 interface Props {
-    question: Pick<
-        TrueFalseQuestionType,
-        | "id"
-        | "textNl"
-        | "textEn"
-        | "descriptionNl"
-        | "descriptionEn"
-        | "defaultValue"
-    >;
+    question: TrueFalseQuestionWithValue;
+    isInvalid: boolean;
 }
 
 defineProps<Props>();
+
+const modelValue = defineModel<boolean>();
 </script>
 
 <template>
-    <div class="uu-form-field">
+    <div>
         <div class="form-check">
             <input
-                :id="question.id"
+                :id="`${question.questionId}-${question.repeatIndex}`"
+                v-model="modelValue"
                 type="checkbox"
                 class="form-check-input"
-                :checked="question.defaultValue"
+                :class="{ 'is-invalid': isInvalid }"
             />
-            <label :for="question.id" class="form-check-label">{{
-                useTranslateableAttribute(question, "text")
-            }}</label>
+            <label
+                :for="`${question.questionId}-${question.repeatIndex}`"
+                class="form-check-label"
+            >
+                {{ useTranslateableAttribute(question, "text") }}
+            </label>
         </div>
         <p
             v-if="question.descriptionNl || question.descriptionEn"

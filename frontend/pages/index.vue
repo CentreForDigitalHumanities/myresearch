@@ -18,7 +18,7 @@ import FrequentQuestions from "~/components/frontpage/FrequentQuestions.vue";
                 <div class="uu-container">
                     {{
                         $t(
-                            "My Research is a website that helps researchers with submitting a request to start a research. On this website you can register your research at the processing registry. First, however, you should fill in the roadmap",
+                            "My Research is a website that helps researchers with submitting a request to register a research. On this website you can register your research at the processing registry. First, however, you should fill in the roadmap",
                         )
                     }}
                 </div>

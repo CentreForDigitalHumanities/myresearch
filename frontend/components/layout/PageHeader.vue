@@ -66,16 +66,20 @@ const logoutUrl = computed(() => {
         </div>
         <div class="uu-header-row">
             <div v-if="currentUserStore.currentUser" class="ms-auto">
-                {{ $t("Welcome, {name}", { name: currentUserStore.currentUser?.fullName }) }} (<a
-                    :href="logoutUrl"
-                    class="text-decoration-underline"
-                    >{{ $t("Logout") }}</a
+                {{
+                    $t("Welcome, {name}", {
+                        name: currentUserStore.currentUser?.fullName,
+                    })
+                }}
+                (<a :href="logoutUrl" class="text-decoration-underline">{{
+                    $t("Logout")
+                }}</a
                 >)
             </div>
             <div v-else class="ms-auto">
-                <a :href="loginUrl" class="text-decoration-underline"
-                    >{{ $t("Login") }}</a
-                >
+                <a :href="loginUrl" class="text-decoration-underline">{{
+                    $t("Login")
+                }}</a>
             </div>
         </div>
     </div>
