@@ -126,7 +126,9 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
                 <tbody>
                     <tr v-for="row in data" :key="row.id">
                         <td class="align-middle">
-                            {{ row.title }}
+                            <NuxtLink :to="{ name: 'studies-study_id', params: { study_id: row.id } }">
+                                {{ row.title }}
+                            </NuxtLink>
                         </td>
                         <td>
                             {{ row.createdBy.fullName }}
