@@ -31,6 +31,10 @@ class Study(models.Model):
     def can_be_created_by(user):
         return user.is_authenticated
 
+    @property
+    def status(self):
+        return self.status_changes.last().status
+
     objects = StudyManager()
 
 
@@ -51,7 +55,7 @@ class StudyFormManager(BaseMRManager):
 
 class StudyForm(models.Model):
     """
-    Subclass of UserForm, used specifically for submitted forms that
+    Ties a UserFormSubmission to a study. Used specifically for submitted forms that
     relate to a specific study.
     """
 
@@ -60,11 +64,7 @@ class StudyForm(models.Model):
         on_delete=models.CASCADE,
     )
 
-    study = models.OneToOneField(Study, on_delete=models.CASCADE, related_name="form")
-
-    @property
-    def status(self):
-        return self.status_changes.last().status
+    study = models.ForeignKey(Study, on_delete=models.CASCADE, related_name="forms")
 
 
 ########################
@@ -81,14 +81,14 @@ class SubmissionStatus(models.TextChoices):
 
 class StatusChange(models.Model):
     """
-    Object which handles the status of a StudyForm. These are appended
-    to a StudyForm as a side effect for certain actions.
+    Object which handles the status of a Study. These are appended
+    to a Study as a side effect for certain actions.
     """
 
     status = models.CharField(choices=SubmissionStatus.choices)
 
-    study_form = models.ForeignKey(
-        StudyForm,
+    study = models.ForeignKey(
+        Study,
         on_delete=models.CASCADE,
         related_name="status_changes",
     )
@@ -125,10 +125,10 @@ class ReviewRoundManager(BaseMRManager):
 
 class ReviewRound(models.Model):
 
-    reviewed_form = models.ForeignKey(
+    reviewed_form = models.OneToOneField(
         StudyForm,
         on_delete=models.CASCADE,
-        related_name="review_rounds",
+        related_name="review_round",
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
