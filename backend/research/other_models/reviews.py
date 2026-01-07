@@ -1,8 +1,7 @@
 from django.db import models
 
-from backend.main.models import User
-from backend.main.utils.permission_utils import BaseMRManager
-from backend.research.models import Study, StudyForm
+from main.models import User
+from main.utils.permission_utils import BaseMRManager
 
 ########################
 # Status Change Object #
@@ -25,7 +24,7 @@ class StatusChange(models.Model):
     status = models.CharField(choices=SubmissionStatus.choices)
 
     study = models.ForeignKey(
-        Study,
+        "research.Study",
         on_delete=models.CASCADE,
         related_name="status_changes",
     )
@@ -63,7 +62,7 @@ class ReviewRoundManager(BaseMRManager):
 class ReviewRound(models.Model):
 
     reviewed_form = models.OneToOneField(
-        StudyForm,
+        "research.StudyForm",
         on_delete=models.CASCADE,
         related_name="review_round",
     )
