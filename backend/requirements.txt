@@ -172,7 +172,7 @@ typing-extensions==4.15.0
     #   psycopg-pool
 tzdata==2025.2
     # via faker
-urllib3==2.5.0
+urllib3==2.6.3
     # via requests
 vbuild==0.8.2
     # via cdh-django-core
