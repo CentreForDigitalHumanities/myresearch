@@ -12,7 +12,8 @@ import type {
     GraphQLListData,
     GraphQLListVariables,
 } from "~/components/shared/types";
-
+// This component has (mostly) been copied from DIAPP! 
+// See: https://github.com/CentreForDigitalHumanities/DIAPP
 //
 // Component defs
 //

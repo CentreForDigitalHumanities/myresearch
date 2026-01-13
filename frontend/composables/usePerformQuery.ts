@@ -10,7 +10,8 @@ import type {
     VariablesParameter,
     // @ts-expect-error - types not explicitly exported by the package
 } from "@vue/apollo-composable/dist/useQuery";
-
+// This component has (mostly) been copied from DIAPP (for making GraphQLList work)
+// See: https://github.com/CentreForDigitalHumanities/DIAPP
 interface PerformQueryInputWithVariables<
     Query,
     Variables extends OperationVariables
