@@ -17,7 +17,7 @@ class UserQueries(ObjectType):
 
     @staticmethod
     def resolve_current_user(root: None, info: ResolveInfo) -> User | None:
-        user = info.context.user  # type: User
+        user: User = info.context.user
         if user.is_anonymous:
             return None
         try:

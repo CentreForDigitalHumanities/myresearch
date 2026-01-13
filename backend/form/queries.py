@@ -2,6 +2,7 @@ from typing import Optional
 from graphene import Field, ObjectType, ResolveInfo
 
 
+from main.models import User
 from form.services.form_evaluator import FormEvaluator
 from form.services.user_form_resolver import UserFormResolver
 from form.types.UserFormType import UserFormType
@@ -16,7 +17,7 @@ class FormQueries(ObjectType):
 
     @staticmethod
     def resolve_form(root, info: ResolveInfo) -> Optional[UserFormType]:
-        user = info.context.user
+        user: User = info.context.user
         if not user.is_authenticated:
             return None
 
