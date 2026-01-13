@@ -27,7 +27,7 @@ class UserQueries(ObjectType):
             return None
 
     @staticmethod
-    def resolve_users(root: None, info: ResolveInfo) -> list[User] | list:
+    def resolve_users(root: None, info: ResolveInfo) -> QuerySet[User]:
         user = info.context.user  # type: User
         if user.is_anonymous:
             return []
