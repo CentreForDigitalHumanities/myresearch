@@ -71,7 +71,7 @@ query GetBookPages(
   $search: String
   $colorIds: [ID]
 ) {
-  BookPages(
+  bookPages(
     limit: $limit
     offset: $offset
     ordering: $ordering
