@@ -1,4 +1,5 @@
 from graphene import List, NonNull, ObjectType, Field, ResolveInfo
+from django.db.models import QuerySet
 
 from main.models import User
 from main.types.UserType import UserType
@@ -28,7 +29,7 @@ class UserQueries(ObjectType):
 
     @staticmethod
     def resolve_users(root: None, info: ResolveInfo) -> QuerySet[User]:
-        user = info.context.user  # type: User
+        user: User = info.context.user
         if user.is_anonymous:
             return []
         return UserType.get_queryset(User.objects, info).order_by("id")
