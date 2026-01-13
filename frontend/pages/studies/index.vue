@@ -4,6 +4,7 @@ import type { GraphQLListVariables } from "~/components/shared/types";
 import { SharedGraphQLList } from "#components";
 import { useI18n } from "vue-i18n";
 import type { UUListTypes } from "cdh-vue-lib";
+import Loading from "~/components/shared/Loading.vue";
 import { useQuery } from "@vue/apollo-composable";
 import type { GetUsersQuery } from "~/generated/gql/graphql"
 
