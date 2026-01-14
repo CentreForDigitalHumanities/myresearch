@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { StudyType } from '~/generated/gql/graphql';
+import type { GetStudyQuery } from "~/generated/gql/graphql";
 
 defineProps<{
-    study: StudyType;
+    study: GetStudyQuery["study"] | null;
     randomDatePastYear: string;
 }>();
 </script>
@@ -22,21 +22,21 @@ defineProps<{
             <h3>{{ $t("Creator details") }}</h3>
             <ul>
                 <li class="mt-2">
-                    {{ $t("Created by:") }}
+                    {{ $t("Created by") }}:
                     {{ study?.createdBy.fullName }}
                 </li>
                 <li class="mt-2">
-                    {{ $t("Creator email:") }}
+                    {{ $t("Creator email") }}:
                     {{ study?.createdBy.email }}
                 </li>
             </ul>
             <h3>{{ $t("Study details") }}</h3>
             <ul>
                 <li class="mt-2">
-                    {{ $t("Created on:") }} {{ randomDatePastYear }}
+                    {{ $t("Created on") }}: {{ randomDatePastYear }}
                 </li>
                 <li class="mt-2">
-                    {{ $t("Submitted on:") }} {{ randomDatePastYear }}
+                    {{ $t("Submitted on") }}: {{ randomDatePastYear }}
                 </li>
             </ul>
         </div>

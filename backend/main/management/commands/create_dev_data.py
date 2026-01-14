@@ -76,6 +76,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("--force", action="store_true")
         parser.add_argument("--silent", action="store_true")
+        parser.add_argument("--ignore-missing-models", action="store_true")
 
     def print(self, options, *args, **kwargs):
         if not options["silent"]:
@@ -87,7 +88,8 @@ class Command(BaseCommand):
                 "Refusing to execute command unless DEBUG = True in settings.py"
             )
 
-        self._check_all_models_implemented()
+        if not options["ignore_missing_models"]:
+            self._check_all_models_implemented()
 
         self._create_test_users(options)
 
