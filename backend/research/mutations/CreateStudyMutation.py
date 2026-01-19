@@ -1,3 +1,4 @@
+from main.models import User
 from research.models import Study
 from research.types.StudyType import StudyType
 
@@ -21,7 +22,7 @@ class CreateStudyMutation(Mutation):
         title: str,
     ):
 
-        user = info.context.user
+        user: User = info.context.user
 
         # Check if the user has Create permission
         if Study.can_be_created_by(user):

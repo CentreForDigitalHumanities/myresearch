@@ -43,7 +43,7 @@ function updateModelValue(): void {
 
 <template>
     <div>
-        <label :for="question.id" class="form-label">
+        <label :for="`${question.questionId}-${question.repeatIndex}`" class="form-label">
             {{ useTranslateableAttribute(question, "text") }}
         </label>
         <p
@@ -53,7 +53,7 @@ function updateModelValue(): void {
             {{ useTranslateableAttribute(question, "description") }}
         </p>
         <input
-            :id="question.id"
+            :id="`${question.questionId}-${question.repeatIndex}`"
             ref="fileInput"
             type="file"
             class="form-control"

@@ -13,7 +13,7 @@ const modelValue = defineModel<string>();
 
 <template>
     <div>
-        <label :for="question.id" class="form-label"
+        <label :for="`${question.questionId}-${question.repeatIndex}`" class="form-label"
             >{{ useTranslateableAttribute(question, "text") }}
         </label>
         <p
@@ -24,7 +24,7 @@ const modelValue = defineModel<string>();
         </p>
         <input
             v-if="!question.lines || question.lines < 2"
-            :id="question.id"
+            :id="`${question.questionId}-${question.repeatIndex}`"
             v-model="modelValue"
             type="text"
             class="form-control"
@@ -32,7 +32,7 @@ const modelValue = defineModel<string>();
         />
         <textarea
             v-if="question.lines && question.lines >= 2"
-            :id="question.id"
+            :id="`${question.questionId}-${question.repeatIndex}`"
             v-model="modelValue"
             class="form-control"
             :class="{ 'is-invalid': isInvalid }"
