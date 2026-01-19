@@ -339,6 +339,7 @@ class Command(BaseCommand):
 
         for mr_model in all_mr_models:
             if mr_model not in self.dev_data_models:
+                continue
                 raise CommandError(
                     f"The model {mr_model} is not yet represented in the dev "
                     "data creation."
