@@ -182,6 +182,6 @@ networks:
 
 secrets:
   private_key:
-    file: ./certificates/private.key
+    file: ./secrets/private.key
   public_cert:
-    file: ./certificates/public.cert
+    file: ./secrets/public.cert
