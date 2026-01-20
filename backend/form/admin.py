@@ -132,7 +132,7 @@ class StepAdmin(admin.ModelAdmin):
     search_fields = ("name_nl", "name_en", "slug", "description_nl", "description_en")
     prepopulated_fields = {"slug": ("name_nl", "name_en")}
     fieldsets = (
-        (None, {"fields": ("name_nl", "name_en", "slug", "description")}),
+        (None, {"fields": ("name_nl", "name_en", "slug", "description_nl", "description_en")}),
         (
             "Hierarchy",
             {
