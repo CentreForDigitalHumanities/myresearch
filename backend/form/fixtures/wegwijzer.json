@@ -1,0 +1,178 @@
+[
+{
+    "model": "form.mrform",
+    "pk": 1,
+    "fields": {
+        "name": "Roadmap",
+        "name_en": "Roadmap",
+        "name_nl": "Wegwijzer",
+        "created_at": "2026-01-20T10:01:55.327Z",
+        "updated_at": "2026-01-20T10:01:55.327Z"
+    }
+},
+{
+    "model": "form.step",
+    "pk": 1,
+    "fields": {
+        "name": "Roadmap",
+        "name_en": "Roadmap",
+        "name_nl": "Wegwijzer",
+        "description": "Welcome to the roadmap! Answer the questions below to find out what you have to do.",
+        "description_en": "Welcome to the roadmap! Answer the questions below to find out what you have to do.",
+        "description_nl": "Gebruik het formulier hieronder om je onderzoek op MyResearch te registreren.",
+        "slug": "roadmap",
+        "form": 1,
+        "parent": null,
+        "_order": 0
+    }
+},
+{
+    "model": "form.step",
+    "pk": 2,
+    "fields": {
+        "name": "Processing registry",
+        "name_en": "Processing registry",
+        "name_nl": "Verwerkingsregister",
+        "description": "",
+        "description_en": "",
+        "description_nl": null,
+        "slug": "processing-registry",
+        "form": 1,
+        "parent": null,
+        "_order": 1
+    }
+},
+{
+    "model": "form.basequestion",
+    "pk": 1,
+    "fields": {
+        "text": "First name",
+        "text_en": "First name",
+        "text_nl": "Voornaam",
+        "step": 1,
+        "description": "",
+        "description_en": "",
+        "description_nl": "",
+        "required": true,
+        "_order": 0
+    }
+},
+{
+    "model": "form.basequestion",
+    "pk": 2,
+    "fields": {
+        "text": "Surname",
+        "text_en": "Surname",
+        "text_nl": "Achternaam",
+        "step": 1,
+        "description": "",
+        "description_en": "",
+        "description_nl": "",
+        "required": true,
+        "_order": 1
+    }
+},
+{
+    "model": "form.basequestion",
+    "pk": 3,
+    "fields": {
+        "text": "Study name",
+        "text_en": "Study name",
+        "text_nl": "Studienaam",
+        "step": 1,
+        "description": "Please enter the name of the study you intend to carry out.",
+        "description_en": "Please enter the name of the study you intend to carry out.",
+        "description_nl": "Wat is de naam van de studie die je wilt uitvoeren?",
+        "required": true,
+        "_order": 2
+    }
+},
+{
+    "model": "form.basequestion",
+    "pk": 4,
+    "fields": {
+        "text": "Will you be processing personal data as part of the study?",
+        "text_en": "Will you be processing personal data as part of the study?",
+        "text_nl": "Verwerk je tijdens deze studie persoonsgegevens?",
+        "step": 1,
+        "description": "",
+        "description_en": "",
+        "description_nl": "",
+        "required": false,
+        "_order": 4
+    }
+},
+{
+    "model": "form.basequestion",
+    "pk": 5,
+    "fields": {
+        "text": "Start date",
+        "text_en": "Start date",
+        "text_nl": "Startdatum",
+        "step": 1,
+        "description": "When will your study start?",
+        "description_en": "When will your study start?",
+        "description_nl": "Wanneer gaat je studie van start?",
+        "required": true,
+        "_order": 3
+    }
+},
+{
+    "model": "form.truefalsequestion",
+    "pk": 4,
+    "fields": {
+        "default_value": false
+    }
+},
+{
+    "model": "form.textquestion",
+    "pk": 1,
+    "fields": {
+        "placeholder": "",
+        "placeholder_en": "",
+        "placeholder_nl": null,
+        "lines": 1
+    }
+},
+{
+    "model": "form.textquestion",
+    "pk": 2,
+    "fields": {
+        "placeholder": "",
+        "placeholder_en": "",
+        "placeholder_nl": null,
+        "lines": 1
+    }
+},
+{
+    "model": "form.textquestion",
+    "pk": 3,
+    "fields": {
+        "placeholder": "",
+        "placeholder_en": "",
+        "placeholder_nl": null,
+        "lines": 1
+    }
+},
+{
+    "model": "form.datequestion",
+    "pk": 5,
+    "fields": {
+        "future_only": true
+    }
+},
+{
+    "model": "form.stepcondition",
+    "pk": 1,
+    "fields": {
+        "condition_type": "show",
+        "trigger_value": {
+            "value": true
+        },
+        "repeat_count": null,
+        "use_answer_as_count": false,
+        "target_step": 2,
+        "trigger_question": 4
+    }
+}
+]
