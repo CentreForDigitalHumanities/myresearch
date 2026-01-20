@@ -53,7 +53,9 @@ class StepAdminForm(ModelForm):
         # Validate that the provided IDs exist.
         available_ids = [question.id for question in self.instance.questions.all()]
         invalid_ids = [
-            question_id for question_id in requested_order if question_id not in available_ids
+            question_id
+            for question_id in requested_order
+            if question_id not in available_ids
         ]
 
         if invalid_ids:
