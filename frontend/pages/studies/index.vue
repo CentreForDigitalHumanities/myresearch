@@ -6,48 +6,47 @@ import { useI18n } from "vue-i18n";
 import type { UUListTypes } from "cdh-vue-lib";
 import Loading from "~/components/shared/Loading.vue";
 import { useQuery } from "@vue/apollo-composable";
-import type { GetUsersQuery } from "~/generated/gql/graphql"
 
 const { t } = useI18n();
 
 // The query supplying the data for the list
 const GET_STUDY_PAGES = graphql(`
-query GetStudyPages(
-  $limit: Int
-  $offset: Int
-  $ordering: String
-  $search: String
-  $createdByIds: [ID]
-) {
-  studyPages(
-    mrPermission: "View"
-    limit: $limit
-    offset: $offset
-    ordering: $ordering
-    search: $search
-    createdByIds: $createdByIds
-  ) {
-    results {
-      id
-      title
-      createdBy {
-        id
-        fullName
-      }
+    query GetStudyPages(
+        $limit: Int
+        $offset: Int
+        $ordering: String
+        $search: String
+        $createdByIds: [ID]
+    ) {
+        studyPages(
+            mrPermission: "View"
+            limit: $limit
+            offset: $offset
+            ordering: $ordering
+            search: $search
+            createdByIds: $createdByIds
+        ) {
+            results {
+                id
+                title
+                createdBy {
+                    id
+                    fullName
+                }
+            }
+            pageInfo {
+                count
+                limit
+                offset
+            }
+        }
     }
-    pageInfo {
-      count
-      limit
-      offset
-    }
-  }
-}
 `);
 
 const variables = ref<GraphQLListVariables>({
     search: "",
     ordering: "title",
-    createdByIds: [], 
+    createdByIds: [],
 });
 
 const orderingOptions = computed(() => {
@@ -73,16 +72,15 @@ const orderingOptions = computed(() => {
 
 // Secondary Query to derive filter options from
 const GET_USERS = graphql(`
-query getUsers {
-  users {
-    id
-    fullName
-  }
-}
-`)
+    query getUsers {
+        users {
+            id
+            fullName
+        }
+    }
+`);
 
-
-const { result } = useQuery<GetUsersQuery>(GET_USERS);
+const { result } = useQuery(GET_USERS);
 
 const users = computed(() => result.value?.users ?? []);
 
@@ -90,16 +88,12 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
     const userFilter: UUListTypes.FilterDefinition = {
         field: "createdByIds",
         label: t("Creator"),
-        options: users.value.map((user: any) => [
-            user.id,
-            user.fullName,
-        ]),
+        options: users.value.map((user) => [user.id, user.fullName]),
         type: "checkbox",
         initial: [],
     };
     return [userFilter];
 });
-
 </script>
 
 <template>
@@ -127,7 +121,12 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
                 <tbody>
                     <tr v-for="row in data" :key="row.id">
                         <td class="align-middle">
-                            <NuxtLink :to="{ name: 'studies-study_id', params: { study_id: row.id } }">
+                            <NuxtLink
+                                :to="{
+                                    name: 'studies-study_id',
+                                    params: { study_id: row.id },
+                                }"
+                            >
                                 {{ row.title }}
                             </NuxtLink>
                         </td>
