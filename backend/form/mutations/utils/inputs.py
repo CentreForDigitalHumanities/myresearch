@@ -1,0 +1,19 @@
+from graphene import InputObjectType, ID, List, NonNull, JSONString, Int
+
+
+class ResponseInput(InputObjectType):
+    id = ID()
+    question_id = ID(required = True)
+    answer = JSONString(required = True)
+    repeat_index = Int(required = True)
+
+class UserFormInput(InputObjectType):
+    
+    id = ID()
+
+    form_config_id = ID()
+
+    responses = List(
+        NonNull(ResponseInput),
+        required=True
+    )
