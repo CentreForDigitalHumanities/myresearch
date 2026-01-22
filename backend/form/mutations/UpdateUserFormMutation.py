@@ -1,22 +1,50 @@
 from django.db import transaction
-from graphene import Field, List, Mutation, String
+from django.utils import timezone
+from graphene import List, Mutation, ResolveInfo, String, Boolean
+from graphene_django.types import ErrorType
 
+from form.models import QuestionResponse, UserFormSubmission
+from form.mutations.utils.inputs import UserFormInput
 from form.types.UserFormType import UserFormType
 
 
 class UpdateUserFormMutation(Mutation):
     class Arguments:
-        input = UserFormInput(required=True)
+        user_form_input = UserFormInput(required=True)
 
-    user_form = Field(UserFormType)
+    ok = Boolean()
     errors = List(String)
 
     @classmethod
-    def mutate(cls, root, info, input):
-        try:
-            with transaction.atomic():
-                user_form = cls.save_project(input)
-                return UpdateUserFormMutation(user_form=user_form, errors=[])
+    def mutate(
+        cls,
+        root: None,
+        info: ResolveInfo,
+        user_form_input,
+    ):
+        if not user_form_input["id"]:
+            submission = UserFormSubmission.objects.create(user=info.context.user, form_id=user_form_input["form_config_id"])
+        else:
+            submission = UserFormSubmission.objects.get(id = user_form_input["id"])
 
-        except Exception as e:
-            return UpdateUserFormMutation(user_form=None, errors=[str(e)])
+        for response in user_form_input["responses"]:
+            try:
+                qr = QuestionResponse.objects.get(id = response.id)
+                if qr.answer != response.answer:
+                    qr.answer = response.answer
+                    qr.save()
+            except QuestionResponse.DoesNotExist:
+                print([submission.id, response.question_id, response.repeat_index, response.id])
+                QuestionResponse.objects.create(
+                    submission = submission,
+                    question_id = response.question_id,
+                    answer = response.answer,
+                    repeat_index = response.repeat_index,
+                )
+            except:
+                error = ErrorType(
+                    messages=["something went wrong ..."]
+                )
+                return cls(ok=False, errors=[error])
+            
+        return cls(ok=True, errors=[])  
