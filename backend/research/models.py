@@ -48,7 +48,7 @@ class Study(models.Model):
 class StudyFormManager(BaseMRManager):
     def _viewable_objects(self, user: User):
         if user.is_privacy_officer or user.is_fetc_member:
-            return self.exclude(status=SubmissionStatus.DRAFT)
+            return self.exclude(study__status=SubmissionStatus.DRAFT)
         return self.filter(created_by=user)
 
     def _editable_objects(self, user: User):
