@@ -34,6 +34,7 @@ class BaseQuestionInterface(Interface):
     )
     repeat_index = Int(required=True)
     answer = JSONString()
+    response_id = ID()
 
     text_nl = String(required=True)
     text_en = String(required=True)
