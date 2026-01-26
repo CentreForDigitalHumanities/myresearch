@@ -38,32 +38,3 @@ class Study(models.Model):
         return self.status_changes.last().status
 
     objects = StudyManager()
-
-
-##########################
-# Study Form Submissions #
-##########################
-
-
-class StudyFormManager(BaseMRManager):
-    def _viewable_objects(self, user: User):
-        if user.is_privacy_officer or user.is_fetc_member:
-            return self.exclude(study__status=SubmissionStatus.DRAFT)
-        return self.filter(created_by=user)
-
-    def _editable_objects(self, user: User):
-        return self.filter(created_by=user)
-
-
-class StudyForm(models.Model):
-    """
-    Ties a UserFormSubmission to a study. Used specifically for submitted forms that
-    relate to a specific study.
-    """
-
-    submission = models.OneToOneField(
-        UserFormSubmission,
-        on_delete=models.CASCADE,
-    )
-
-    study = models.ForeignKey(Study, on_delete=models.CASCADE, related_name="forms")

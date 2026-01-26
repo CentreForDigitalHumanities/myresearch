@@ -62,7 +62,7 @@ class ReviewRoundManager(BaseMRManager):
 class ReviewRound(models.Model):
 
     reviewed_form = models.OneToOneField(
-        "research.StudyForm",
+        "form.UserFormSubmission",
         on_delete=models.CASCADE,
         related_name="review_round",
     )
