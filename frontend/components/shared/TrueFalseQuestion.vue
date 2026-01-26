@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { TrueFalseQuestionWithValue } from "~/composables/useProcessForm";
+import FormLabel from "./FormLabel.vue";
 
 interface Props {
     question: TrueFalseQuestionWithValue;
@@ -21,12 +22,7 @@ const modelValue = defineModel<boolean>();
                 class="form-check-input"
                 :class="{ 'is-invalid': isInvalid }"
             />
-            <label
-                :for="`${question.questionId}-${question.repeatIndex}`"
-                class="form-check-label"
-            >
-                {{ useTranslateableAttribute(question, "text") }}
-            </label>
+            <FormLabel :question="question" label-class="form-check-label" />
         </div>
         <p
             v-if="question.descriptionNl || question.descriptionEn"
