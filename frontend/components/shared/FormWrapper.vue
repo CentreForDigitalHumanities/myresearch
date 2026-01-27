@@ -7,14 +7,93 @@ import MRForm from "./MRForm.vue";
 import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConfig";
 import { useFormState } from "~/composables/useFormState";
 import useVuelidate from "@vuelidate/core";
+import { graphql } from "~/generated/gql";
+import type { UserFormInput, ResponseInput, UpdateUserFormMutation, MutationUpdateUserFormArgs, GetFormQuery } from "~/generated/gql/graphql";
+import type { ApolloQueryResult } from '@apollo/client';
+import { useMutation } from "@vue/apollo-composable";
 
 interface Props {
     queriedForm: QueriedForm;
     currentStepSlug: string;
+    refetchForm: () => Promise<ApolloQueryResult<GetFormQuery>> | undefined;
 }
 const props = defineProps<Props>();
 
 const { formObject, validationRules } = useFormState(props.queriedForm);
+
+// Watch for changes in the form and mutate and refetch
+// This is just a proof-of-concept and our mutation/refetching strategy needs to
+// get refined.
+watch(
+    formObject,
+    () => {
+        submitForm();
+    },
+    { deep: true },
+);
+
+const UPDATE_USER_FORM = graphql(`
+    mutation SaveUserForm($id: ID, $formConfigId: ID, $responses: [ResponseInput!]!) {
+        updateUserForm(userFormInput: { id: $id, formConfigId: $formConfigId, responses: $responses }) {
+            errors
+            ok
+        }
+    }
+`);
+
+const { mutate: mutateForm } = useMutation<UpdateUserFormMutation>(
+    UPDATE_USER_FORM,
+)
+
+
+function submitForm(): void {
+    const formData = formObject.value;
+    if (formData) {
+        const inputData = useTransformFormDataToMutationInput(formData);
+        mutateForm(inputData).then(() => {
+            if (props.refetchForm) {
+                props.refetchForm();
+            }
+        });
+    }
+}
+
+function useTransformFormDataToMutationInput(
+    formData: FormWithValues,
+): UserFormInput {
+    // Utility function to transform our form into the expected input for our mutation
+
+    function useCollectQuestions(
+        step: StepWithValues | SubstepWithValues,
+    ): QuestionWithValue[] {
+        // helper function to get all questions as a flat list
+        const ownQuestions = step.questions ?? [];
+
+        const subStepQuestions =
+            "substeps" in step
+                ? (step.substeps?.flatMap(useCollectQuestions) ?? [])
+                : [];
+
+        return [...ownQuestions, ...subStepQuestions];
+    }
+
+    const questions = formData.steps.flatMap(useCollectQuestions);
+
+    return {
+        id: props.queriedForm.submissionId ?? null,
+        formConfigId: props.queriedForm.formId,
+        responses: questions.map(
+            (question: QuestionWithValue): ResponseInput => {
+                return {
+                    answer: JSON.stringify({value: question.value}),
+                    id: question.responseId,
+                    questionId: question.questionId,
+                    repeatIndex: question.repeatIndex,
+                };
+            },
+        ),
+    };
+}
 
 const v$ = useVuelidate(
     validationRules,
