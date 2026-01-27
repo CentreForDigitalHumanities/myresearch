@@ -159,7 +159,9 @@ class UserFormSubmission(models.Model):
 
     user = models.ForeignKey(user_model, on_delete=models.CASCADE)
     form = models.ForeignKey(MRForm, on_delete=models.CASCADE)
-    study = models.ForeignKey("research.Study", on_delete=models.CASCADE, related_name="forms")
+    study = models.ForeignKey(
+        "research.Study", on_delete=models.CASCADE, related_name="forms", null=True
+    )
     started_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     completed_at = models.DateTimeField(null=True, blank=True)

@@ -1,4 +1,3 @@
-
 from research.other_models.reviews import SubmissionStatus
 from form.models import UserFormSubmission
 from main.models import User, MRPermission
