@@ -19,5 +19,6 @@ try:
     LOGOUT_REDIRECT_URL = "/"
     LOGIN_REDIRECT_URL = "/"
 
-except ImportError:
+except Exception as e:
     print("Proceeding without SAML")
+    print("Exception:", e)
