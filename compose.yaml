@@ -68,7 +68,7 @@ services:
       - "8000:8000"
     environment:
       DB_HOST: 'mr-postgres'
-      DJANGO_SETTINGS_MODULE: "myresearch.settings.dev"
+      DJANGO_SETTINGS_MODULE: myresearch.settings.dev
       SAML_BASE_URL: ${SAML_BASE_URL}
       IDP_METADATA_URL: ${IDP_METADATA_URL}
 
@@ -87,7 +87,7 @@ services:
       "
     environment:
       DB_HOST: 'mr-postgres'
-      DJANGO_SETTINGS_MODULE: "myresearch.settings.prod"
+      DJANGO_SETTINGS_MODULE: myresearch.settings.prod
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
       DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
       CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
@@ -148,7 +148,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
-      - DJANGO_SECRET_KEY=django-insecure-lb=q@u4df-x0th(5u%$eye_ti#etst+5z+%2=lrh$$le3&v_y$
+      - DJANGO_SECRET_KEY=django-insecure-wa2AengahShofo8tieR6
       - DJANGO_DEBUG=False
       - DJANGO_DEBUG_TOOLBAR=True
       - DJANGO_HOST=localhost:7000
