@@ -12,8 +12,8 @@ class UpdateUserFormMutation(Mutation):
     class Arguments:
         user_form_input = UserFormInput(required=True)
 
-    ok = Boolean()
-    errors = List(String)
+    ok = Boolean(required=True)
+    errors = List(String, required=True)
 
     @classmethod
     def mutate(
@@ -25,21 +25,21 @@ class UpdateUserFormMutation(Mutation):
         if not user_form_input["id"]:
             submission = UserFormSubmission.objects.create(user=info.context.user, form_id=user_form_input["form_config_id"])
         else:
-            submission = UserFormSubmission.objects.get(id = user_form_input["id"])
+            submission = UserFormSubmission.objects.get(id=user_form_input["id"])
 
         for response in user_form_input["responses"]:
             try:
-                qr = QuestionResponse.objects.get(id = response.id)
+                qr = QuestionResponse.objects.get(id=response.id)
                 if qr.answer != response.answer:
                     qr.answer = response.answer
                     qr.save()
             except QuestionResponse.DoesNotExist:
                 print([submission.id, response.question_id, response.repeat_index, response.id])
                 QuestionResponse.objects.create(
-                    submission = submission,
-                    question_id = response.question_id,
-                    answer = response.answer,
-                    repeat_index = response.repeat_index,
+                    submission=submission,
+                    question_id=response.question_id,
+                    answer=response.answer,
+                    repeat_index=response.repeat_index,
                 )
             except:
                 error = ErrorType(
