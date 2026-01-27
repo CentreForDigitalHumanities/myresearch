@@ -8,8 +8,13 @@ import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConf
 import { useFormState } from "~/composables/useFormState";
 import useVuelidate from "@vuelidate/core";
 import { graphql } from "~/generated/gql";
-import type { UserFormInput, ResponseInput, UpdateUserFormMutation, MutationUpdateUserFormArgs, GetFormQuery } from "~/generated/gql/graphql";
-import type { ApolloQueryResult } from '@apollo/client';
+import type {
+    UserFormInput,
+    ResponseInput,
+    UpdateUserFormMutation,
+    GetFormQuery,
+} from "~/generated/gql/graphql";
+import type { ApolloQueryResult } from "@apollo/client";
 import { useMutation } from "@vue/apollo-composable";
 
 interface Props {
@@ -19,7 +24,8 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-const { formObject, validationRules } = useFormState(props.queriedForm);
+const queried = computed(() => props.queriedForm);
+const { formObject, validationRules } = useFormState(queried);
 
 // Watch for changes in the form and mutate and refetch
 // This is just a proof-of-concept and our mutation/refetching strategy needs to
@@ -33,28 +39,38 @@ watch(
 );
 
 const UPDATE_USER_FORM = graphql(`
-    mutation SaveUserForm($id: ID, $formConfigId: ID, $responses: [ResponseInput!]!) {
-        updateUserForm(userFormInput: { id: $id, formConfigId: $formConfigId, responses: $responses }) {
+    mutation SaveUserForm(
+        $id: ID
+        $formConfigId: ID
+        $responses: [ResponseInput!]!
+    ) {
+        updateUserForm(
+            userFormInput: {
+                id: $id
+                formConfigId: $formConfigId
+                responses: $responses
+            }
+        ) {
             errors
             ok
         }
     }
 `);
 
-const { mutate: mutateForm } = useMutation<UpdateUserFormMutation>(
-    UPDATE_USER_FORM,
-)
-
+const { mutate: mutateForm } =
+    useMutation<UpdateUserFormMutation>(UPDATE_USER_FORM);
 
 function submitForm(): void {
     const formData = formObject.value;
     if (formData) {
         const inputData = useTransformFormDataToMutationInput(formData);
-        mutateForm(inputData).then(() => {
-            if (props.refetchForm) {
-                props.refetchForm();
-            }
-        });
+        mutateForm(inputData)
+            .then(() => {
+                void props.refetchForm();
+            })
+            .catch((error: unknown) => {
+                console.error("Error updating form:", error);
+            });
     }
 }
 
@@ -67,7 +83,7 @@ function useTransformFormDataToMutationInput(
         step: StepWithValues | SubstepWithValues,
     ): QuestionWithValue[] {
         // helper function to get all questions as a flat list
-        const ownQuestions = step.questions ?? [];
+        const ownQuestions = step.questions;
 
         const subStepQuestions =
             "substeps" in step
@@ -85,7 +101,7 @@ function useTransformFormDataToMutationInput(
         responses: questions.map(
             (question: QuestionWithValue): ResponseInput => {
                 return {
-                    answer: JSON.stringify({value: question.value}),
+                    answer: JSON.stringify({ value: question.value }),
                     id: question.responseId,
                     questionId: question.questionId,
                     repeatIndex: question.repeatIndex,
