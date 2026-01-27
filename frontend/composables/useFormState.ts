@@ -1,11 +1,6 @@
 import type { QueriedForm } from "~/components/shared/FormWrapper";
 import { useProcessForm } from "~/composables/useProcessForm";
-import type {
-    FormValidationRules,
-    FormWithValues,
-    StepWithValues,
-    SubstepWithValues,
-} from "~/composables/useProcessForm";
+import type { FormValidationRules, FormWithValues } from "~/composables/useProcessForm";
 import type { Ref } from "vue";
 
 interface FormState {
@@ -37,20 +32,13 @@ export function useFormState(queriedFormRef: Ref<QueriedForm>) {
         };
     }
 
-    // Watch for refetches.
+    // Reprocess form input upon refetching.
     watch(
         queriedFormRef,
         (newQueriedForm) => {
-            const currentForm = formState.value.formWithValues;
             const processed = useProcessForm(newQueriedForm);
-
-            // If we don't have a form yet, set it.
-            // Otherwise, update the existing form with server data.
-            if (!currentForm) {
-                formState.value.formWithValues = processed.formWithValues;
-            } else {
-                reconcileForms(currentForm, processed.formWithValues);
-            }
+            formState.value.formWithValues = processed.formWithValues;
+            formState.value.validationRules = processed.validationRules;
         },
         { deep: true },
     );
@@ -64,51 +52,4 @@ export function useFormState(queriedFormRef: Ref<QueriedForm>) {
         }),
         validationRules: computed(() => formState.value.validationRules),
     };
-}
-
-/**
- * Reconciles the current form with incoming form data so all nested objects
- * are updated in place, preserving reactivity.
- * 
- * For now this only updates responseIds, but if other properties of nested
- * objects (steps, questions) need to be updated based on server data, that
- * logic can be added here.
- */
-function reconcileForms(
-    currentForm: FormWithValues,
-    incomingForm: FormWithValues,
-): void {
-    currentForm.steps.forEach((currentStep, stepIndex) => {
-        const incomingStep = incomingForm.steps[stepIndex];
-        reconcileSteps(currentStep, incomingStep);
-    });
-}
-
-function reconcileSteps(
-    currentStep: StepWithValues | SubstepWithValues,
-    incomingStep: StepWithValues | SubstepWithValues,
-): void {
-    incomingStep.questions.forEach((incomingQuestion) => {
-        const currentQuestion = currentStep.questions.find(
-            (q) => q.questionId === incomingQuestion.questionId,
-        );
-        if (currentQuestion) {
-            currentQuestion.responseId = incomingQuestion.responseId;
-        }
-    });
-
-    if (!("substeps" in currentStep) || !("substeps" in incomingStep)) {
-        return;
-    }
-
-    incomingStep.substeps?.forEach((incomingSubstep) => {
-        const currentSubstep = currentStep.substeps?.find(
-            (s) =>
-                s.stepId === incomingSubstep.stepId &&
-                s.repeatIndex === incomingSubstep.repeatIndex,
-        );
-        if (currentSubstep) {
-            reconcileSteps(currentSubstep, incomingSubstep);
-        }
-    });
 }
