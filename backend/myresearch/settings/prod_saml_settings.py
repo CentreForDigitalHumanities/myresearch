@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from os import path
 from cdh.federated_auth.saml.settings import *
-from .utils import discover
+from .utils import discover_or_fail
 import os
 
 _BASE_DIR = path.dirname(os.path.dirname(__file__))
