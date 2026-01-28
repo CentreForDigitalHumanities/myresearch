@@ -4,6 +4,11 @@ type TranslateableObject<Key extends string> = {
     [K in `${Key}Nl` | `${Key}En`]?: string | null;
 };
 
+function useTranslation<Key extends string>(key: Key | number): string {
+    const { t } = i18n.global;
+    return t(key);
+}
+
 function useTranslateableAttribute<Key extends string>(
     modelObject: TranslateableObject<Key>,
     key: Key,
@@ -19,4 +24,4 @@ function useTranslateableAttribute<Key extends string>(
     return value ?? "";
 }
 
-export { useTranslateableAttribute };
+export { useTranslation, useTranslateableAttribute };
