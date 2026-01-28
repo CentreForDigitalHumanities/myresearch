@@ -658,7 +658,7 @@ class TestFormEvaluatorSubmission:
 
         evaluator = FormEvaluator(form, test_user)
 
-        assert evaluator.get_user_response(trigger_question, 0) == {
+        assert evaluator.get_user_response(trigger_question, 0).answer == {
             "value": "my answer"
         }
         assert evaluator.get_user_response(trigger_question, 1) is None
@@ -685,9 +685,9 @@ class TestFormEvaluatorSubmission:
 
         evaluator = FormEvaluator(form, test_user)
 
-        assert evaluator.get_user_response(trigger_question, 0) == {
+        assert evaluator.get_user_response(trigger_question, 0).answer == {
             "value": FIRST_ANSWER
         }
-        assert evaluator.get_user_response(trigger_question, 1) == {
+        assert evaluator.get_user_response(trigger_question, 1).answer == {
             "value": SECOND_ANSWER
         }
