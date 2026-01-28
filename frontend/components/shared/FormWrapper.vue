@@ -63,7 +63,7 @@ const { mutate: mutateForm } =
 function submitForm(): void {
     const formData = formObject.value;
     if (formData) {
-        const inputData = useTransformFormDataToMutationInput(formData);
+        const inputData = FormDataToMutationInput(formData);
         mutateForm(inputData)
             .then(() => {
                 void props.refetchForm();
@@ -74,27 +74,15 @@ function submitForm(): void {
     }
 }
 
-function useTransformFormDataToMutationInput(
+function FormDataToMutationInput(
     formData: FormWithValues,
 ): UserFormInput {
     // Utility function to transform our form into the expected input for our mutation
 
-    function useCollectQuestions(
-        step: StepWithValues | SubstepWithValues,
-    ): QuestionWithValue[] {
-        // helper function to get all questions as a flat list
-        const ownQuestions = step.questions;
+    // First collect all questions
+    const questions = formData.steps.flatMap(getAllQuestions);
 
-        const subStepQuestions =
-            "substeps" in step
-                ? (step.substeps?.flatMap(useCollectQuestions) ?? [])
-                : [];
-
-        return [...ownQuestions, ...subStepQuestions];
-    }
-
-    const questions = formData.steps.flatMap(useCollectQuestions);
-
+    // Then return out object in its expected form
     return {
         id: props.queriedForm.submissionId ?? null,
         formConfigId: props.queriedForm.formId,
@@ -148,6 +136,20 @@ function getAllSteps(form: FormWithValues): CombinedStepWithValues[] {
         }
         return steps;
     });
+}
+
+function getAllQuestions(
+    step: StepWithValues | SubstepWithValues,
+): QuestionWithValue[] {
+    // helper function to get all questions as a flat list
+    const ownQuestions = step.questions;
+
+    const subStepQuestions =
+        "substeps" in step
+            ? (step.substeps?.flatMap(getAllQuestions) ?? [])
+            : [];
+
+    return [...ownQuestions, ...subStepQuestions];
 }
 
 function findCurrentStepIndex(): number {
