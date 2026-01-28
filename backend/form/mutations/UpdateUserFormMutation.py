@@ -23,7 +23,9 @@ class UpdateUserFormMutation(Mutation):
         user_form_input,
     ):
         if not user_form_input["id"]:
-            submission = UserFormSubmission.objects.create(user=info.context.user, form_id=user_form_input["form_config_id"])
+            submission = UserFormSubmission.objects.create(
+                user=info.context.user, form_id=user_form_input["form_config_id"]
+            )
         else:
             submission = UserFormSubmission.objects.get(id=user_form_input["id"])
 
@@ -34,7 +36,14 @@ class UpdateUserFormMutation(Mutation):
                     qr.answer = response.answer
                     qr.save()
             except QuestionResponse.DoesNotExist:
-                print([submission.id, response.question_id, response.repeat_index, response.id])
+                print(
+                    [
+                        submission.id,
+                        response.question_id,
+                        response.repeat_index,
+                        response.id,
+                    ]
+                )
                 QuestionResponse.objects.create(
                     submission=submission,
                     question_id=response.question_id,
@@ -42,9 +51,7 @@ class UpdateUserFormMutation(Mutation):
                     repeat_index=response.repeat_index,
                 )
             except:
-                error = ErrorType(
-                    messages=["something went wrong ..."]
-                )
+                error = ErrorType(messages=["something went wrong ..."])
                 return cls(ok=False, errors=[error])
-            
-        return cls(ok=True, errors=[])  
+
+        return cls(ok=True, errors=[])
