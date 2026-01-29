@@ -102,5 +102,6 @@
   "Creator": "Aanvrager",
   "Title": "Titel",
   "No results found": "Geen resultaten gevonden.",
-  "Loading": "Aan het laden"
+  "Loading": "Aan het laden",
+  "List could not be fetched.": "Ophalen lijst mislukt."
 }
