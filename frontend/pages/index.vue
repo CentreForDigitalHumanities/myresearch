@@ -2,6 +2,7 @@
 import SeasonalCover from "~/components/frontpage/SeasonalCover.vue";
 import RecentActivity from "~/components/frontpage/RecentActivity.vue";
 import FrequentQuestions from "~/components/frontpage/FrequentQuestions.vue";
+import { useNotification } from "~/composables/useNotification";
 </script>
 <template>
     <div class="uu-content">
@@ -45,9 +46,9 @@ import FrequentQuestions from "~/components/frontpage/FrequentQuestions.vue";
                                     <p class="card-text">
                                         {{ $t("Also possible as orientation") }}
                                     </p>
-                                    <a href="#" class="btn btn-primary">{{
+                                    <button class="btn btn-primary" @click="useNotification('Starting a roadmap is not yet possible.', 'warning', 5)">{{
                                         $t("Start Roadmap")
-                                    }}</a>
+                                    }}</button>
                                 </div>
                             </div>
                         </div>
