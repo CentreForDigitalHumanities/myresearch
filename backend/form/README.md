@@ -232,4 +232,3 @@ Update the form in Django Admin as you wish. Once you're satisfied, update the f
 ```bash
 python manage.py dumpdata form --output form/fixtures/wegwijzer.json --indent 4
 ```
-
