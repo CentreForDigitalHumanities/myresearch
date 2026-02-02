@@ -1,9 +1,12 @@
 from django.contrib import admin
+
+from form.forms import StepAdminForm
 from .models import (
     MRForm,
     Step,
     StepInfoQuestion,
     StepInfoText,
+    BaseQuestion,
     SelectQuestion,
     SelectOption,
     TrueFalseQuestion,
@@ -92,6 +95,20 @@ class QuestionResponseInline(admin.StackedInline):
     readonly_fields = ("answered_at",)
 
 
+class QuestionInline(admin.TabularInline):
+    model = BaseQuestion
+    extra = 0
+    fields = ("id", "text", "required", "description")
+    readonly_fields = ("id", "text", "required", "description")
+    can_delete = False
+    show_change_link = True
+    verbose_name = "Question"
+    verbose_name_plural = "Questions in This Step"
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+
 # Main model admins
 @admin.register(MRForm)
 class MRFormAdmin(admin.ModelAdmin):
@@ -115,7 +132,18 @@ class StepAdmin(admin.ModelAdmin):
     search_fields = ("name_nl", "name_en", "slug", "description_nl", "description_en")
     prepopulated_fields = {"slug": ("name_nl", "name_en")}
     fieldsets = (
-        (None, {"fields": ("name_nl", "name_en", "slug", "description")}),
+        (
+            None,
+            {
+                "fields": (
+                    "name_nl",
+                    "name_en",
+                    "slug",
+                    "description_nl",
+                    "description_en",
+                )
+            },
+        ),
         (
             "Hierarchy",
             {
@@ -123,13 +151,22 @@ class StepAdmin(admin.ModelAdmin):
                 "description": "Set either 'form' (for top-level steps) OR 'parent' (for substeps), not both.",
             },
         ),
+        (
+            "Question Order",
+            {
+                "fields": ("question_order",),
+                "description": "Set the display order of questions. Use the question IDs shown in the Questions inline below.",
+            },
+        ),
     )
     inlines = [
         SubstepInline,
         StepInfoQuestionInline,
         StepInfoTextInline,
+        QuestionInline,
         StepConditionInline,
     ]
+    form = StepAdminForm
 
     def created_at_display(self, obj):
         # Steps don't have created_at, but showing placeholder for structure
