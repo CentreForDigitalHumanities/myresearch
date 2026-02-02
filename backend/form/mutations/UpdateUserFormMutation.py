@@ -4,8 +4,10 @@ from graphene import List, Mutation, ResolveInfo, String, Boolean
 from graphene_django.types import ErrorType
 
 from form.models import QuestionResponse, UserFormSubmission
-from form.mutations.utils.inputs import UserFormInput
+from form.mutations.utils.inputs import ResponseInput, UserFormInput
 from form.types.UserFormType import UserFormType
+from main.models import User
+from research.models import Study
 
 
 class UpdateUserFormMutation(Mutation):
@@ -22,36 +24,62 @@ class UpdateUserFormMutation(Mutation):
         info: ResolveInfo,
         user_form_input,
     ):
-        if not user_form_input["id"]:
-            submission = UserFormSubmission.objects.create(
-                user=info.context.user, form_id=user_form_input["form_config_id"]
+        user: User = info.context.user
+        submission = get_or_create_submission(user, user_form_input)
+
+        responses = user_form_input.responses
+
+        try:
+            save_responses(submission.pk, responses)
+        except Exception as e:
+            error = ErrorType(messages=[f"Answers could not be saved: {str(e)}"])
+            return cls(ok=False, errors=[error])  # type: ignore
+
+        create_study(submission)
+
+        return cls(ok=True, errors=[])  # type: ignore
+
+
+def get_or_create_submission(
+    user: User, user_form_input: UserFormInput
+) -> UserFormSubmission:
+    submission_id = user_form_input.id
+    if not submission_id:
+        form_config_id = user_form_input.form_config_id
+        return UserFormSubmission.objects.create(user=user, form_id=form_config_id)
+    else:
+        return UserFormSubmission.objects.get(id=submission_id)
+
+
+def save_responses(submission_id: str, responses: list[ResponseInput]):
+    for response in responses:
+        try:
+            qr = QuestionResponse.objects.get(id=response.id)
+            if qr.answer != response.answer:
+                qr.answer = response.answer
+                qr.save()
+        except QuestionResponse.DoesNotExist:
+            print(
+                [
+                    submission_id,
+                    response.question_id,
+                    response.repeat_index,
+                    response.id,
+                ]
             )
-        else:
-            submission = UserFormSubmission.objects.get(id=user_form_input["id"])
+            QuestionResponse.objects.create(
+                submission_id=submission_id,
+                question_id=response.question_id,
+                answer=response.answer,
+                repeat_index=response.repeat_index,
+            )
+        except:
+            error = ErrorType(messages=["something went wrong ..."])
+            return cls(ok=False, errors=[error])  # type: ignore
 
-        for response in user_form_input["responses"]:
-            try:
-                qr = QuestionResponse.objects.get(id=response.id)
-                if qr.answer != response.answer:
-                    qr.answer = response.answer
-                    qr.save()
-            except QuestionResponse.DoesNotExist:
-                print(
-                    [
-                        submission.id,
-                        response.question_id,
-                        response.repeat_index,
-                        response.id,
-                    ]
-                )
-                QuestionResponse.objects.create(
-                    submission=submission,
-                    question_id=response.question_id,
-                    answer=response.answer,
-                    repeat_index=response.repeat_index,
-                )
-            except:
-                error = ErrorType(messages=["something went wrong ..."])
-                return cls(ok=False, errors=[error])
 
-        return cls(ok=True, errors=[])
+def create_study(submission: UserFormSubmission):
+    Study.objects.create(
+        form=submission.form,
+        created_by=submission.user,
+    )

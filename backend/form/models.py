@@ -7,9 +7,19 @@ user_model = get_user_model()
 
 class MRForm(models.Model):
     name = models.CharField(max_length=200)
+    version = models.CharField(max_length=10, help_text="E.g. 1.0.0, 2.15.3")
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    study_name_question = models.ForeignKey(
+        "form.BaseQuestion",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="study_name_forms",
+        help_text="If set, the answer to this question will be used as the study name.",
+    )
 
     class Meta:
         verbose_name = "Form"
