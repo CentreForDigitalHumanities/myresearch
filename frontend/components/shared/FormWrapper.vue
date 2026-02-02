@@ -27,13 +27,24 @@ const props = defineProps<Props>();
 const queried = computed(() => props.queriedForm);
 const { formObject, validationRules } = useFormState(queried);
 
+// Debounced submit function
+let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+const debouncedSubmit = () => {
+    if (debounceTimer) {
+        clearTimeout(debounceTimer);
+    }
+    debounceTimer = setTimeout(() => {
+        submitForm();
+    }, 300);
+};
+
 // Watch for changes in the form and mutate and refetch
 // This is just a proof-of-concept and our mutation/refetching strategy needs to
 // get refined.
 watch(
     formObject,
     () => {
-        submitForm();
+        debouncedSubmit();
     },
     { deep: true },
 );
@@ -60,23 +71,36 @@ const UPDATE_USER_FORM = graphql(`
 const { mutate: mutateForm } =
     useMutation<UpdateUserFormMutation>(UPDATE_USER_FORM);
 
+const submittedInput = ref<string>("");
+
 function submitForm(): void {
     const formData = formObject.value;
-    if (formData) {
-        const inputData = FormDataToMutationInput(formData);
-        mutateForm(inputData)
-            .then(() => {
-                void props.refetchForm();
-            })
-            .catch((error: unknown) => {
-                console.error("Error updating form:", error);
-            });
+    if (!formData) {
+        return;
     }
+
+    const inputData = FormDataToMutationInput(formData);
+
+    const newInputData = JSON.stringify(inputData);
+    const oldInputData = submittedInput.value;
+
+    // No changes detected. Skip submission.
+    if (newInputData === oldInputData) {
+        return;
+    }
+
+    submittedInput.value = newInputData;
+
+    mutateForm(inputData)
+        .then(() => {
+            void props.refetchForm();
+        })
+        .catch((error: unknown) => {
+            console.error("Error updating form:", error);
+        });
 }
 
-function FormDataToMutationInput(
-    formData: FormWithValues,
-): UserFormInput {
+function FormDataToMutationInput(formData: FormWithValues): UserFormInput {
     // Utility function to transform our form into the expected input for our mutation
 
     // First collect all questions
