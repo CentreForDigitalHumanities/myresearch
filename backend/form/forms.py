@@ -63,7 +63,15 @@ class StepAdminForm(ModelForm):
                 f"Invalid question IDs: {', '.join(map(str, invalid_ids))}. "
                 f"Available IDs: {', '.join(map(str, available_ids))}"
             )
+        
+        # Make sure that all available IDs are included.
+        missing_ids = set(available_ids) - set(requested_order)
 
+        if missing_ids:
+            raise ValidationError(
+                f"Missing IDs: {', '.join(map(str, missing_ids))}. "
+                f"Available IDs: {', '.join(map(str, available_ids))}"
+            )
         return question_order
 
     def save(self, commit=True):
