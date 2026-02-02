@@ -1,7 +1,13 @@
+from research.other_models.reviews import SubmissionStatus
+from form.models import UserFormSubmission
 from main.models import User, MRPermission
 from main.utils.permission_utils import BaseMRManager
 
 from django.db import models
+
+################
+# Study Object #
+################
 
 
 class StudyManager(BaseMRManager):
@@ -25,5 +31,9 @@ class Study(models.Model):
     @staticmethod
     def can_be_created_by(user):
         return user.is_authenticated
+
+    @property
+    def status(self):
+        return self.status_changes.last().status
 
     objects = StudyManager()
