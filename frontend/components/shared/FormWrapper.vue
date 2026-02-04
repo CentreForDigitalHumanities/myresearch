@@ -76,14 +76,13 @@ function submitForm(): void {
             });
     }
 }
-
+/**
+ * Utility function to transform our form into the expected input for our mutation
+ */
 function formDataToMutationInput(formData: FormWithValues): UserFormInput {
-    // Utility function to transform our form into the expected input for our mutation
 
-    // First collect all questions
     const questions = formData.steps.flatMap(getAllQuestions);
 
-    // Then return out object in its expected form
     return {
         id: props.queriedForm.submissionId ?? null,
         formConfigId: props.queriedForm.formId,
