@@ -40,7 +40,7 @@ class UpdateUserFormSubmission(Mutation):
                     repeat_index=response.repeat_index,
                 )
             except:
-                error = ErrorType(messages=["something went wrong ..."])
+                error = ErrorType(messages=[f"Failed to save responses for UserFormSubmission with id: {getattr(user_form_input, "id", None)}"])
                 return cls(ok=False, errors=[error])
 
         return cls(ok=True, errors=[])
