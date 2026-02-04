@@ -19,14 +19,14 @@ class UpdateUserFormSubmission(Mutation):
         info: ResolveInfo,
         user_form_input: UserFormInput,
     ):
-        if not user_form_input["id"]:
+        if not getattr(user_form_input, "id", None):
             submission = UserFormSubmission.objects.create(
                 user=info.context.user, form_id=user_form_input["form_config_id"]
             )
         else:
             submission = UserFormSubmission.objects.get(id=user_form_input["id"])
 
-        for response in user_form_input["responses"]:
+        for response in getattr(user_form_input, "responses", []):
             try:
                 qr = QuestionResponse.objects.get(id=response.id)
                 if qr.answer != response.answer:
