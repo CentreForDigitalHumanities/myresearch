@@ -13,7 +13,7 @@ class UpdateUserFormMutation(Mutation):
         user_form_input = UserFormInput(required=True)
 
     ok = Boolean(required=True)
-    errors = List(String, required=True)
+    errors = List(NonNull(ErrorType), required=True)
 
     @classmethod
     def mutate(
