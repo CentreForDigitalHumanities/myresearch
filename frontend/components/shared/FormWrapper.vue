@@ -138,10 +138,12 @@ function getAllSteps(form: FormWithValues): CombinedStepWithValues[] {
     });
 }
 
+/**
+ * Returns all questions from a step in a flat list.
+ */
 function getAllQuestions(
     step: StepWithValues | SubstepWithValues,
 ): QuestionWithValue[] {
-    // helper function to get all questions as a flat list
     const ownQuestions = step.questions;
 
     const subStepQuestions =
