@@ -19,12 +19,12 @@ class UpdateUserFormSubmission(Mutation):
         info: ResolveInfo,
         user_form_input: UserFormInput,
     ):
-        if not getattr(user_form_input, "id", None):
+        if not getattr(user_form_input, "submission_id", None):
             submission = UserFormSubmission.objects.create(
                 user=info.context.user, form_id=user_form_input["form_config_id"]
             )
         else:
-            submission = UserFormSubmission.objects.get(id=user_form_input["id"])
+            submission = UserFormSubmission.objects.get(id=user_form_input["submission_id"])
 
         for response in getattr(user_form_input, "responses", []):
             try:

@@ -41,13 +41,13 @@ watch(
 
 const UPDATE_USER_FORM = graphql(`
     mutation SaveFormSubmission(
-        $id: ID
+        $submissionId: ID
         $formConfigId: ID
         $responses: [ResponseInput!]!
     ) {
         updateFormSubmission(
             userFormInput: {
-                id: $id
+                submissionId: $submissionId
                 formConfigId: $formConfigId
                 responses: $responses
             }
@@ -85,7 +85,7 @@ function formDataToMutationInput(formData: FormWithValues): UserFormInput {
     const questions = formData.steps.flatMap(getAllQuestions);
 
     return {
-        id: props.queriedForm.submissionId ?? null,
+        submissionId: props.queriedForm.submissionId ?? null,
         formConfigId: props.queriedForm.formId,
         responses: questions.map(
             (question: QuestionWithValue): ResponseInput => {
