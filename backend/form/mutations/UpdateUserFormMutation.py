@@ -20,7 +20,7 @@ class UpdateUserFormMutation(Mutation):
         cls,
         root: None,
         info: ResolveInfo,
-        user_form_input,
+        user_form_input: UserFormInput,
     ):
         if not user_form_input["id"]:
             submission = UserFormSubmission.objects.create(
