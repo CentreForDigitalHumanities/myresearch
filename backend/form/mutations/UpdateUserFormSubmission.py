@@ -5,7 +5,7 @@ from form.models import QuestionResponse, UserFormSubmission
 from form.mutations.utils.inputs import UserFormInput
 
 
-class UpdateUserFormMutation(Mutation):
+class UpdateUserFormSubmission(Mutation):
     class Arguments:
         user_form_input = UserFormInput(required=True)
 
