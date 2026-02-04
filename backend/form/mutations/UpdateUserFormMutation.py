@@ -36,14 +36,6 @@ class UpdateUserFormMutation(Mutation):
                     qr.answer = response.answer
                     qr.save()
             except QuestionResponse.DoesNotExist:
-                print(
-                    [
-                        submission.id,
-                        response.question_id,
-                        response.repeat_index,
-                        response.id,
-                    ]
-                )
                 QuestionResponse.objects.create(
                     submission=submission,
                     question_id=response.question_id,
