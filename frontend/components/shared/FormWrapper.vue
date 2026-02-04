@@ -76,7 +76,7 @@ function submitForm(): void {
 
 function FormDataToMutationInput(
     formData: FormWithValues,
-): UserFormInput {
+function formDataToMutationInput(formData: FormWithValues): UserFormInput {
     // Utility function to transform our form into the expected input for our mutation
 
     // First collect all questions
