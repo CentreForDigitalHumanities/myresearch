@@ -24,7 +24,9 @@ class UpdateUserFormSubmission(Mutation):
                 user=info.context.user, form_id=user_form_input["form_config_id"]
             )
         else:
-            submission = UserFormSubmission.objects.get(id=user_form_input["submission_id"])
+            submission = UserFormSubmission.objects.get(
+                id=user_form_input["submission_id"]
+            )
 
         for response in getattr(user_form_input, "responses", []):
             try:
@@ -40,7 +42,11 @@ class UpdateUserFormSubmission(Mutation):
                     repeat_index=response.repeat_index,
                 )
             except:
-                error = ErrorType(messages=[f"Failed to save responses for UserFormSubmission with id: {getattr(user_form_input, 'id', None)}"])
+                error = ErrorType(
+                    messages=[
+                        f"Failed to save responses for UserFormSubmission with id: {getattr(user_form_input, 'id', None)}"
+                    ]
+                )
                 return cls(ok=False, errors=[error])
 
         return cls(ok=True, errors=[])
