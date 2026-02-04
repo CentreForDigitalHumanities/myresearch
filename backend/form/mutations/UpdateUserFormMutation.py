@@ -1,11 +1,8 @@
-from django.db import transaction
-from django.utils import timezone
 from graphene import List, Mutation, NonNull, ResolveInfo, String, Boolean
 from graphene_django.types import ErrorType
 
 from form.models import QuestionResponse, UserFormSubmission
 from form.mutations.utils.inputs import UserFormInput
-from form.types.UserFormType import UserFormType
 
 
 class UpdateUserFormMutation(Mutation):
