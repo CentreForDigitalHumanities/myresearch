@@ -28,7 +28,7 @@ class Mutation(ObjectType):
     create_study = CreateStudyMutation.Field()
     update_study = UpdateStudyMutation.Field()
     delete_study = DeleteStudyMutation.Field()
-    update_user_form = UpdateUserFormSubmission.Field()
+    update_form_submission = UpdateUserFormSubmission.Field()
 
 
 schema = Schema(

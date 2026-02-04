@@ -11,7 +11,7 @@ import { graphql } from "~/generated/gql";
 import type {
     UserFormInput,
     ResponseInput,
-    UpdateUserFormMutation,
+    UpdateUserFormSubmission,
     GetFormQuery,
 } from "~/generated/gql/graphql";
 import type { ApolloQueryResult } from "@apollo/client";
@@ -39,12 +39,12 @@ watch(
 );
 
 const UPDATE_USER_FORM = graphql(`
-    mutation SaveUserForm(
+    mutation SaveFormSubmission(
         $id: ID
         $formConfigId: ID
         $responses: [ResponseInput!]!
     ) {
-        updateUserForm(
+        updateFormSubmission(
             userFormInput: {
                 id: $id
                 formConfigId: $formConfigId
@@ -61,7 +61,7 @@ const UPDATE_USER_FORM = graphql(`
 `);
 
 const { mutate: mutateForm } =
-    useMutation<UpdateUserFormMutation>(UPDATE_USER_FORM);
+    useMutation<UpdateUserFormSubmission>(UPDATE_USER_FORM);
 
 function submitForm(): void {
     const formData = formObject.value;
