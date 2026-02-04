@@ -51,7 +51,10 @@ const UPDATE_USER_FORM = graphql(`
                 responses: $responses
             }
         ) {
-            errors
+            errors {
+                field
+                messages
+            }
             ok
         }
     }
@@ -63,7 +66,7 @@ const { mutate: mutateForm } =
 function submitForm(): void {
     const formData = formObject.value;
     if (formData) {
-        const inputData = FormDataToMutationInput(formData);
+        const inputData = formDataToMutationInput(formData);
         mutateForm(inputData)
             .then(() => {
                 void props.refetchForm();
@@ -74,8 +77,6 @@ function submitForm(): void {
     }
 }
 
-function FormDataToMutationInput(
-    formData: FormWithValues,
 function formDataToMutationInput(formData: FormWithValues): UserFormInput {
     // Utility function to transform our form into the expected input for our mutation
 
