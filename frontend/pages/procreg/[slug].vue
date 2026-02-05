@@ -10,6 +10,7 @@ const GET_FORM = graphql(`
             formId
             nameEn
             nameNl
+            submissionId
             steps {
                 stepId
                 slug
@@ -23,6 +24,7 @@ const GET_FORM = graphql(`
                     questionId
                     repeatIndex
                     answer
+                    responseId
                     textEn
                     textNl
                     descriptionEn
@@ -68,6 +70,7 @@ const GET_FORM = graphql(`
                         questionId
                         repeatIndex
                         answer
+                        responseId
                         textEn
                         textNl
                         descriptionEn
@@ -106,7 +109,7 @@ const GET_FORM = graphql(`
     }
 `);
 
-const { result: formResult } = useQuery<GetFormQuery>(GET_FORM);
+const { result: formResult, refetch } = useQuery<GetFormQuery>(GET_FORM);
 
 const form = computed(() => formResult.value?.form ?? null);
 
@@ -128,6 +131,7 @@ function stepSlug(route: string | string[]): string {
                 v-if="form"
                 :queried-form="form"
                 :current-step-slug="stepSlug(route.params.slug)"
+                @form-saved="refetch()"
             />
         </div>
     </div>

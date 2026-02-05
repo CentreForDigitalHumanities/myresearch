@@ -221,12 +221,12 @@ class FormEvaluator:
 
         return True
 
-    def get_user_answer(
+    def get_user_response(
         self, question: BaseQuestion, repeat_index: int = 0
-    ) -> dict | None:
-        """Get the user's answer for a specific question instance."""
+    ) -> QuestionResponse | None:
+        """Get the user's response for a specific question instance."""
         responses = self.responses.get(question.pk, [])
         for response in responses:
             if response.repeat_index == repeat_index:
-                return response.answer
+                return response
         return None
