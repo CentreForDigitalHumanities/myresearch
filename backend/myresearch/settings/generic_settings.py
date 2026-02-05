@@ -43,6 +43,7 @@ INSTALLED_APPS = (
         "corsheaders",
         "graphene_django",
         "modeltranslation",
+        "django-extensions",
     ]
 )
 
