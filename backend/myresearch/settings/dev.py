@@ -1,4 +1,4 @@
-from .utils import discover
+from .utils import discover, discover_list
 
 DEBUG = True
 SECRET_KEY = "django-insecure-s8e=1!*6dzct5!vn$0%qdc!x4$_vhd895g0a1#e$_v+oqbvvyq"
@@ -19,7 +19,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5000",
     "http://127.0.0.1:3000",
     "http://127.0.0.1:5000",
-] + discover("CSRF_TRUSTED_ORIGINS", [])
+] + discover_list("CSRF_TRUSTED_ORIGINS", [])
 
 from .generic_settings import *
 

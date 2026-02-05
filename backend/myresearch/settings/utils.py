@@ -9,6 +9,17 @@ def discover(key, default):
     """
     return os.getenv(key, default)
 
+def discover_list(key, default):
+    """
+    Get a comma-separated list from os.env with a
+    mandatory default value.
+    """
+    raw = discover(key, "")
+    out = [
+        item for item in raw.split(",") if item != ""
+    [
+    return out
+
 
 def discover_or_fail(key):
     """
