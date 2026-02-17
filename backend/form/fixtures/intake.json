@@ -3,8 +3,8 @@
         "model": "form.mrform",
         "pk": 1,
         "fields": {
-            "name": "Roadmap",
-            "name_en": "Roadmap",
+            "name": "Intake",
+            "name_en": "Intake",
             "name_nl": "Intake",
             "created_at": "2026-01-20T10:01:55.327Z",
             "updated_at": "2026-01-20T10:01:55.327Z"
@@ -14,8 +14,8 @@
         "model": "form.step",
         "pk": 1,
         "fields": {
-            "name": "Roadmap",
-            "name_en": "Roadmap",
+            "name": "Intake",
+            "name_en": "Intake",
             "name_nl": "Intake",
             "description": "Welcome to MyResearch! Answer the questions below to find out what you have to do.",
             "description_en": "Welcome to MyResearch! Answer the questions below to find out what you have to do.",
