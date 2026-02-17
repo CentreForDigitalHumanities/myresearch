@@ -173,9 +173,17 @@ class UserFormSubmission(models.Model):
 class QuestionResponse(models.Model):
     """Stores a user's answer to a question."""
 
-    submission = models.ForeignKey(
-        UserFormSubmission, on_delete=models.CASCADE, related_name="responses"
+    submissions = models.ManyToManyField(
+        UserFormSubmission, related_name="responses"
     )
+    
+    @property
+    def first_submission(self,):
+        """
+        Returns the submission where a response got introduced first
+        """
+        return self.submissions.order_by("started_at").first()
+    
     question = models.ForeignKey(BaseQuestion, on_delete=models.CASCADE)
 
     answer = models.JSONField()
