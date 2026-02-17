@@ -197,7 +197,7 @@ class QuestionResponse(models.Model):
     answered_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = ["submission", "question", "repeat_index"]
+        unique_together = ["question", "repeat_index"]
 
     def __str__(self):
         return f"Response to Q{self.question.pk} in Submission {self.submission.pk}"
