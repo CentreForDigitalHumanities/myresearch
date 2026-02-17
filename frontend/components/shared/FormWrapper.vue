@@ -7,13 +7,6 @@ import MRForm from "./MRForm.vue";
 import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConfig";
 import { useFormState } from "~/composables/useFormState";
 import useVuelidate from "@vuelidate/core";
-import { graphql } from "~/generated/gql";
-import type {
-    UserFormInput,
-    ResponseInput,
-    UpdateUserFormSubmission,
-} from "~/generated/gql/graphql";
-import { useMutation } from "@vue/apollo-composable";
 
 interface Props {
     queriedForm: QueriedForm;
@@ -22,7 +15,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const queried = computed(() => props.queriedForm);
-const { formObject, validationRules } = useFormState(queried);
+const { formObject, validationRules, submitForm } = useFormState(queried);
 
 // Watch for changes in the form and mutate and refetch
 // This is just a proof-of-concept and our mutation/refetching strategy needs to
@@ -34,69 +27,6 @@ watch(
     },
     { deep: true },
 );
-
-const UPDATE_USER_FORM = graphql(`
-    mutation SaveFormSubmission(
-        $submissionId: ID
-        $formConfigId: ID
-        $responses: [ResponseInput!]!
-    ) {
-        updateFormSubmission(
-            userFormInput: {
-                submissionId: $submissionId
-                formConfigId: $formConfigId
-                responses: $responses
-            }
-        ) {
-            ok
-            errors {
-                field
-                messages
-            }
-        }
-    }
-`);
-
-const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
-    UPDATE_USER_FORM,
-    {
-        update: (cache) => {
-            cache.evict({ fieldName: "form" });
-            cache.gc();
-        },
-    },
-);
-
-function submitForm(): void {
-    const formData = formObject.value;
-    if (formData) {
-        const inputData = formDataToMutationInput(formData);
-        mutateForm(inputData).catch((error: unknown) => {
-            console.error("Error updating form:", error);
-        });
-    }
-}
-/**
- * Utility function to transform our form into the expected input for our mutation
- */
-function formDataToMutationInput(formData: FormWithValues): UserFormInput {
-    const questions = formData.steps.flatMap(getAllQuestions);
-
-    return {
-        submissionId: props.queriedForm.submissionId ?? null,
-        formConfigId: props.queriedForm.formId,
-        responses: questions.map(
-            (question: QuestionWithValue): ResponseInput => {
-                return {
-                    answer: JSON.stringify({ value: question.value }),
-                    id: question.responseId,
-                    questionId: question.questionId,
-                    repeatIndex: question.repeatIndex,
-                };
-            },
-        ),
-    };
-}
 
 const v$ = useVuelidate(
     validationRules,
@@ -135,22 +65,6 @@ function getAllSteps(form: FormWithValues): CombinedStepWithValues[] {
         }
         return steps;
     });
-}
-
-/**
- * Returns all questions from a step in a flat list.
- */
-function getAllQuestions(
-    step: StepWithValues | SubstepWithValues,
-): QuestionWithValue[] {
-    const ownQuestions = step.questions;
-
-    const subStepQuestions =
-        "substeps" in step
-            ? (step.substeps?.flatMap(getAllQuestions) ?? [])
-            : [];
-
-    return [...ownQuestions, ...subStepQuestions];
 }
 
 function findCurrentStepIndex(): number {

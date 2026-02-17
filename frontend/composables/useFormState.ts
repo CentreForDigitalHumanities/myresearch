@@ -1,13 +1,41 @@
 import type { QueriedForm } from "~/components/shared/FormWrapper";
 import { useProcessForm } from "~/composables/useProcessForm";
-import type { FormValidationRules, FormWithValues } from "~/composables/useProcessForm";
+import type {
+    FormValidationRules,
+    FormWithValues,
+} from "~/composables/useProcessForm";
 import type { Ref } from "vue";
+import { graphql } from "~/generated/gql";
+import { useMutation } from "@vue/apollo-composable";
+import type { UpdateUserFormSubmission } from "~/generated/gql/graphql";
 
 interface FormState {
     formWithValues: FormWithValues | null;
     validationRules: FormValidationRules;
     formId: string | null;
 }
+
+const UPDATE_USER_FORM = graphql(`
+    mutation SaveFormSubmission(
+        $submissionId: ID
+        $formConfigId: ID
+        $responses: [ResponseInput!]!
+    ) {
+        updateFormSubmission(
+            userFormInput: {
+                submissionId: $submissionId
+                formConfigId: $formConfigId
+                responses: $responses
+            }
+        ) {
+            ok
+            errors {
+                field
+                messages
+            }
+        }
+    }
+`);
 
 export function useFormState(queriedFormRef: Ref<QueriedForm>) {
     const formId = queriedFormRef.value.formId;
@@ -43,6 +71,35 @@ export function useFormState(queriedFormRef: Ref<QueriedForm>) {
         { deep: true },
     );
 
+    const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
+        UPDATE_USER_FORM,
+        {
+            update: (cache) => {
+                cache.evict({ fieldName: "form" });
+                cache.gc();
+            },
+        },
+    );
+
+    function submitForm(): void {
+        const submissionId =
+            formState.value.formWithValues?.submissionId ?? null;
+        const formConfigId = formState.value.formId;
+        const formData = formState.value.formWithValues;
+        if (!formData) {
+            return;
+        }
+
+        const inputData = useFormDataToMutationInput(
+            formData,
+            submissionId,
+            formConfigId,
+        );
+        mutateForm(inputData).catch((error: unknown) => {
+            console.error("Error updating form:", error);
+        });
+    }
+
     return {
         formObject: computed({
             get: () => formState.value.formWithValues,
@@ -51,5 +108,6 @@ export function useFormState(queriedFormRef: Ref<QueriedForm>) {
             },
         }),
         validationRules: computed(() => formState.value.validationRules),
+        submitForm,
     };
 }
