@@ -373,15 +373,19 @@ class UserFormSubmissionAdmin(admin.ModelAdmin):
 @admin.register(QuestionResponse)
 class QuestionResponseAdmin(admin.ModelAdmin):
     list_display = (
-        "submission",
+        "first_submission",
         "question",
         "repeat_index",
         "answer_preview",
         "answered_at",
     )
-    list_filter = ("submission__form", "answered_at")
-    search_fields = ("submission__user__username", "question__text")
+    list_filter = ("answered_at",)
+    search_fields = ("question__text",)
     readonly_fields = ("answered_at",)
+
+    @admin.display(description="First submission")
+    def first_submission(self, obj):
+        return obj.first_submission
 
     def answer_preview(self, obj):
         answer_str = str(obj.answer)
