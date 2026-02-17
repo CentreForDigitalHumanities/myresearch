@@ -24,8 +24,6 @@ const props = defineProps<Props>();
 const queried = computed(() => props.queriedForm);
 const { formObject, validationRules } = useFormState(queried);
 
-const emit = defineEmits(["formSaved"]);
-
 // Watch for changes in the form and mutate and refetch
 // This is just a proof-of-concept and our mutation/refetching strategy needs to
 // get refined.
@@ -59,20 +57,23 @@ const UPDATE_USER_FORM = graphql(`
     }
 `);
 
-const { mutate: mutateForm } =
-    useMutation<UpdateUserFormSubmission>(UPDATE_USER_FORM);
+const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
+    UPDATE_USER_FORM,
+    {
+        update: (cache) => {
+            cache.evict({ fieldName: "form" });
+            cache.gc();
+        },
+    },
+);
 
 function submitForm(): void {
     const formData = formObject.value;
     if (formData) {
         const inputData = formDataToMutationInput(formData);
-        mutateForm(inputData)
-            .then(() => {
-                emit("formSaved");
-            })
-            .catch((error: unknown) => {
-                console.error("Error updating form:", error);
-            });
+        mutateForm(inputData).catch((error: unknown) => {
+            console.error("Error updating form:", error);
+        });
     }
 }
 /**
