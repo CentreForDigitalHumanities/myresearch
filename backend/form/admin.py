@@ -88,11 +88,9 @@ class QuestionConditionInline(admin.StackedInline):
     verbose_name_plural = "Conditions Applied to This Question"
 
 
-class QuestionResponseInline(admin.StackedInline):
-    model = QuestionResponse
+class QuestionResponseInline(admin.TabularInline):
+    model = QuestionResponse.submissions.through
     extra = 0
-    fields = ("question", "answer", "repeat_index", "answered_at")
-    readonly_fields = ("answered_at",)
 
 
 class QuestionInline(admin.TabularInline):
