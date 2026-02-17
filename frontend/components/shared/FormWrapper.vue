@@ -12,9 +12,7 @@ import type {
     UserFormInput,
     ResponseInput,
     UpdateUserFormSubmission,
-    GetFormQuery,
 } from "~/generated/gql/graphql";
-import type { ApolloQueryResult } from "@apollo/client";
 import { useMutation } from "@vue/apollo-composable";
 
 interface Props {
@@ -25,8 +23,6 @@ const props = defineProps<Props>();
 
 const queried = computed(() => props.queriedForm);
 const { formObject, validationRules } = useFormState(queried);
-
-const emit = defineEmits(["formSaved"])
 
 // Watch for changes in the form and mutate and refetch
 // This is just a proof-of-concept and our mutation/refetching strategy needs to
@@ -61,27 +57,29 @@ const UPDATE_USER_FORM = graphql(`
     }
 `);
 
-const { mutate: mutateForm } =
-    useMutation<UpdateUserFormSubmission>(UPDATE_USER_FORM);
+const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
+    UPDATE_USER_FORM,
+    {
+        update: (cache) => {
+            cache.evict({ fieldName: "form" });
+            cache.gc();
+        },
+    },
+);
 
 function submitForm(): void {
     const formData = formObject.value;
     if (formData) {
         const inputData = formDataToMutationInput(formData);
-        mutateForm(inputData)
-            .then(() => {
-                emit("formSaved")
-            })
-            .catch((error: unknown) => {
-                console.error("Error updating form:", error);
-            });
+        mutateForm(inputData).catch((error: unknown) => {
+            console.error("Error updating form:", error);
+        });
     }
 }
 /**
  * Utility function to transform our form into the expected input for our mutation
  */
 function formDataToMutationInput(formData: FormWithValues): UserFormInput {
-
     const questions = formData.steps.flatMap(getAllQuestions);
 
     return {
