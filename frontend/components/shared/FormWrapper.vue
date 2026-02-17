@@ -12,9 +12,7 @@ import type {
     UserFormInput,
     ResponseInput,
     UpdateUserFormSubmission,
-    GetFormQuery,
 } from "~/generated/gql/graphql";
-import type { ApolloQueryResult } from "@apollo/client";
 import { useMutation } from "@vue/apollo-composable";
 
 interface Props {
@@ -26,7 +24,7 @@ const props = defineProps<Props>();
 const queried = computed(() => props.queriedForm);
 const { formObject, validationRules } = useFormState(queried);
 
-const emit = defineEmits(["formSaved"])
+const emit = defineEmits(["formSaved"]);
 
 // Watch for changes in the form and mutate and refetch
 // This is just a proof-of-concept and our mutation/refetching strategy needs to
@@ -52,11 +50,11 @@ const UPDATE_USER_FORM = graphql(`
                 responses: $responses
             }
         ) {
+            ok
             errors {
                 field
                 messages
             }
-            ok
         }
     }
 `);
@@ -70,7 +68,7 @@ function submitForm(): void {
         const inputData = formDataToMutationInput(formData);
         mutateForm(inputData)
             .then(() => {
-                emit("formSaved")
+                emit("formSaved");
             })
             .catch((error: unknown) => {
                 console.error("Error updating form:", error);
@@ -81,7 +79,6 @@ function submitForm(): void {
  * Utility function to transform our form into the expected input for our mutation
  */
 function formDataToMutationInput(formData: FormWithValues): UserFormInput {
-
     const questions = formData.steps.flatMap(getAllQuestions);
 
     return {
@@ -196,6 +193,16 @@ function getPreviousStepSlug(): string {
 
     return steps[currentIndex - 1].slug;
 }
+
+/**
+ * Funnel for navigation events from the stepper and navigation buttons.
+ * Submits the form as a side effect and then navigates to the provided slug.
+ * This is also where navigation can be blocked if there are validation errors.
+ */
+function navigateToSlug(slug: string) {
+    submitForm();
+    return navigateTo("/procreg/" + slug);
+}
 </script>
 
 <template>
@@ -204,32 +211,27 @@ function getPreviousStepSlug(): string {
             v-if="formStepperConfig"
             class="col-3 d-lg-block d-none pe-2"
             :stepper-config="formStepperConfig"
+            @step-clicked="navigateToSlug"
         />
         <div class="col-12 col-lg-9">
             <form class="uu-form">
                 <MRForm :step="selectedStep" :vuelidate="v$" />
             </form>
             <div class="btn-group">
-                <NuxtLink
-                    :to="{
-                        name: 'procreg-slug',
-                        params: { slug: getPreviousStepSlug() },
-                    }"
+                <BSButton
+                    variant="primary"
+                    class="btn-arrow-left"
+                    @click="navigateToSlug(getPreviousStepSlug())"
                 >
-                    <BSButton variant="primary" class="btn-arrow-left">
-                        {{ $t("Previous") }}
-                    </BSButton>
-                </NuxtLink>
-                <NuxtLink
-                    :to="{
-                        name: 'procreg-slug',
-                        params: { slug: getNextStepSlug() },
-                    }"
+                    {{ $t("Previous") }}
+                </BSButton>
+                <BSButton
+                    variant="primary"
+                    class="btn-arrow-right"
+                    @click="navigateToSlug(getNextStepSlug())"
                 >
-                    <BSButton variant="primary" class="btn-arrow-right">
-                        {{ $t("Next") }}
-                    </BSButton>
-                </NuxtLink>
+                    {{ $t("Next") }}
+                </BSButton>
             </div>
         </div>
     </div>

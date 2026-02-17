@@ -7,9 +7,12 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+const emit = defineEmits<{
+    (e: "step-clicked", slug: string): void;
+}>();
 
 function stepperItemClasses(step: FormStep): string {
-    const classes: string[] = ["stepper-item"];
+    const classes: string[] = ["stepper-item", "bg-transparent", "border-0"];
     if (step.active) {
         classes.push("active");
     }
@@ -31,22 +34,27 @@ function stepperItemClasses(step: FormStep): string {
                     v-for="(step, index) in props.stepperConfig.steps"
                     :key="`${step.slug}-${index}`"
                 >
-                    <NuxtLink :class="stepperItemClasses(step)" :to="step.slug">
+                    <button
+                        :class="stepperItemClasses(step)"
+                        :disabled="step.disabled"
+                        @click="emit('step-clicked', step.slug)"
+                    >
                         <span class="stepper-bubble stepper-bubble-largest">{{
                             index + 1
                         }}</span>
                         <span>{{
                             useTranslateableAttribute(step, "label")
                         }}</span>
-                    </NuxtLink>
+                    </button>
                     <ul v-if="step.substeps.length > 0">
                         <li
                             v-for="(child, childIndex) in step.substeps"
                             :key="`${child.slug}-${childIndex}`"
                         >
-                            <NuxtLink
+                            <button
                                 :class="stepperItemClasses(child)"
-                                :to="child.slug"
+                                :disabled="child.disabled"
+                                @click="emit('step-clicked', child.slug)"
                             >
                                 <span
                                     class="stepper-bubble stepper-bubble-medium"
@@ -54,7 +62,7 @@ function stepperItemClasses(step: FormStep): string {
                                 <span>{{
                                     useTranslateableAttribute(child, "label")
                                 }}</span>
-                            </NuxtLink>
+                            </button>
                         </li>
                     </ul>
                 </li>
