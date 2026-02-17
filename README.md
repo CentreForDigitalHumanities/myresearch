@@ -14,7 +14,7 @@ for the Faculty of Humanities and the Faculty of Law, Economics and Governance.
 MyResearch is currently in active development and is not ready for usage. When completed, it will
 contain the following parts:
 
-- A "roadmap" ("wegwijzer"), which helps the researcher to determine which administrative tasks they 
+- A "roadmap" (intake form), which helps the researcher to determine which administrative tasks they 
 have to perform
 - Forms to register a research project into the processing registry of the university and apply
 for approval from the side of one of the applicable ethics committee
