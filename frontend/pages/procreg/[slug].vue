@@ -131,7 +131,7 @@ function stepSlug(route: string | string[]): string {
                 v-if="form"
                 :queried-form="form"
                 :current-step-slug="stepSlug(route.params.slug)"
-                :refetch-form="refetch"
+                @form-saved="refetch()"
             />
         </div>
     </div>
