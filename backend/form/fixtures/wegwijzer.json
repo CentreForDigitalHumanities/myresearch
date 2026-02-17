@@ -7,7 +7,9 @@
             "name_en": "Roadmap",
             "name_nl": "Wegwijzer",
             "created_at": "2026-01-20T10:01:55.327Z",
-            "updated_at": "2026-01-20T10:01:55.327Z"
+            "updated_at": "2026-01-20T10:01:55.327Z",
+            "version": "1.0.0",
+            "study_name_question": 3
         }
     },
     {

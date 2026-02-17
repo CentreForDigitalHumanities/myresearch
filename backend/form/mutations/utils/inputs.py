@@ -1,4 +1,4 @@
-from graphene import InputObjectType, ID, List, NonNull, JSONString, Int
+from graphene import Boolean, InputObjectType, ID, List, NonNull, JSONString, Int
 
 
 class ResponseInput(InputObjectType):
@@ -9,9 +9,7 @@ class ResponseInput(InputObjectType):
 
 
 class UserFormInput(InputObjectType):
-
     id = ID()
-
     form_config_id = ID()
-
     responses = List(NonNull(ResponseInput), required=True)
+    create_study = Boolean(required=False, default_value=False)

@@ -1,11 +1,8 @@
-from django.db import transaction
-from django.utils import timezone
 from graphene import List, Mutation, ResolveInfo, String, Boolean
 from graphene_django.types import ErrorType
 
 from form.models import QuestionResponse, UserFormSubmission
 from form.mutations.utils.inputs import ResponseInput, UserFormInput
-from form.types.UserFormType import UserFormType
 from main.models import User
 from research.models import Study
 
@@ -22,12 +19,13 @@ class UpdateUserFormMutation(Mutation):
         cls,
         root: None,
         info: ResolveInfo,
-        user_form_input,
+        user_form_input: UserFormInput,
     ):
         user: User = info.context.user
         submission = get_or_create_submission(user, user_form_input)
 
-        responses = user_form_input.responses
+        responses = getattr(user_form_input, "responses", [])
+        create_study_flag = getattr(user_form_input, "create_study", False)
 
         try:
             save_responses(submission.pk, responses)
@@ -35,7 +33,8 @@ class UpdateUserFormMutation(Mutation):
             error = ErrorType(messages=[f"Answers could not be saved: {str(e)}"])
             return cls(ok=False, errors=[error])  # type: ignore
 
-        create_study(submission)
+        if create_study_flag:
+            create_study(submission)
 
         return cls(ok=True, errors=[])  # type: ignore
 
@@ -78,8 +77,13 @@ def save_responses(submission_id: str, responses: list[ResponseInput]):
             return cls(ok=False, errors=[error])  # type: ignore
 
 
-def create_study(submission: UserFormSubmission):
-    Study.objects.create(
+def create_study(submission: UserFormSubmission) -> None:
+    study, created = Study.objects.get_or_create(
         form=submission.form,
         created_by=submission.user,
     )
+
+    if created:
+        submission.study = study
+        submission.save()
+

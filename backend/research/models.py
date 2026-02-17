@@ -39,14 +39,14 @@ class Study(models.Model):
             submission = UserFormSubmission.objects.get(
                 user=self.created_by,
                 form=self.form,
-                study=self,
+                study_id=self.pk,
             )
             response = QuestionResponse.objects.filter(
                 submission=submission,
                 question_id=name_question.id,
             ).latest("answered_at")
-            return response.answer
-        except Exception:
+            return response.answer['value'] if response and response.answer else default_name
+        except Exception as e:
             return default_name
 
     @property

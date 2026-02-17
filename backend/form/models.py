@@ -15,10 +15,10 @@ class MRForm(models.Model):
     study_name_question = models.ForeignKey(
         "form.BaseQuestion",
         on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
         related_name="study_name_forms",
         help_text="If set, the answer to this question will be used as the study name.",
+        null=True,
+        blank=True,
     )
 
     class Meta:
