@@ -1,4 +1,10 @@
 import type { UserFormInput } from "~/generated/gql/graphql";
+import type {
+    StepWithValues,
+    SubstepWithValues,
+    QuestionWithValue,
+    FormWithValues,
+} from "~/composables/useProcessForm";
 
 /**
  * Recursively collects all questions from a step and its substeps, and puts them in a flat array.

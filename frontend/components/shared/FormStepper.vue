@@ -35,8 +35,10 @@ function stepperItemClasses(step: FormStep): string {
                     :key="`${step.slug}-${index}`"
                 >
                     <button
+                        type="button"
                         :class="stepperItemClasses(step)"
                         :disabled="step.disabled"
+                        :aria-label="useTranslateableAttribute(step, 'label')"
                         @click="emit('step-clicked', step.slug)"
                     >
                         <span class="stepper-bubble stepper-bubble-largest">{{
@@ -52,8 +54,12 @@ function stepperItemClasses(step: FormStep): string {
                             :key="`${child.slug}-${childIndex}`"
                         >
                             <button
+                                type="button"
                                 :class="stepperItemClasses(child)"
                                 :disabled="child.disabled"
+                                :aria-label="
+                                    useTranslateableAttribute(child, 'label')
+                                "
                                 @click="emit('step-clicked', child.slug)"
                             >
                                 <span

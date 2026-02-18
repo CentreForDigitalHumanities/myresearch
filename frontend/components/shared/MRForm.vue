@@ -8,13 +8,6 @@ import FileUploadQuestion from "./FileUploadQuestion.vue";
 import FormSideBar from "./FormSideBar.vue";
 import type { Component } from "vue";
 
-type QuestionTypeName = QuestionWithValue["__typename"];
-
-const DEBOUNCED_QUESTION_TYPES: readonly QuestionTypeName[] = [
-    "TextQuestionType",
-    "NumberQuestionType",
-] as const;
-
 // Imported components are treated as 'any', so the linter complains. There is
 // nothing we can do to change this, so we need to assert the type manually.
 const QUESTION_COMPONENT_MAP = {
@@ -25,8 +18,6 @@ const QUESTION_COMPONENT_MAP = {
     TrueFalseQuestionType: TrueFalseQuestion as Component,
     FileUploadQuestionType: FileUploadQuestion as Component,
 } as const;
-
-const DEBOUNCE_TIME_MS = 300;
 </script>
 
 <script lang="ts" setup>
@@ -52,47 +43,10 @@ const questionsWithConditions = computed(() =>
     props.step.questions.filter((question) => question.hasConditions),
 );
 
-// Track question values for questions with conditions
-const questionValuesSnapshot = ref<Map<string, unknown>>(new Map());
-const debounceTimerRef = ref<ReturnType<typeof setTimeout> | null>(null);
-
-// Updates with every props change and question.value change.
-watchEffect(() => {
-    const currentSnapshot = new Map<string, unknown>();
-
-    questionsWithConditions.value.forEach((question) => {
-        const key = `${question.questionId}-${question.repeatIndex.toString()}`;
-        const currentValue = question.value;
-        const questionType = question.__typename;
-        currentSnapshot.set(key, currentValue);
-
-        const previousValue = questionValuesSnapshot.value.get(key);
-
-        // Avoid duplicate submissions.
-        if (previousValue === currentValue) {
-            return;
-        }
-
-        if (DEBOUNCED_QUESTION_TYPES.includes(questionType)) {
-            debounceSubmit();
-        } else {
-            emit("submitForm");
-        }
-    });
-
-    // Update snapshot.
-    questionValuesSnapshot.value = currentSnapshot;
-});
-
-function debounceSubmit(): void {
-    if (debounceTimerRef.value) {
-        clearTimeout(debounceTimerRef.value);
-    }
-    debounceTimerRef.value = setTimeout(() => {
-        emit("submitForm");
-        debounceTimerRef.value = null;
-    }, DEBOUNCE_TIME_MS);
-}
+// Watch conditional questions and trigger form submission when they change
+useConditionalQuestionsWatcher(questionsWithConditions, () =>
+    emit("submitForm"),
+);
 
 function getErrors(question: QuestionWithValue): ErrorObject[] {
     return props.vuelidate.$errors.filter(
