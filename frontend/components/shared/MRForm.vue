@@ -68,6 +68,7 @@ watchEffect(() => {
 
         const previousValue = questionValuesSnapshot.value.get(key);
 
+        // Avoid duplicate submissions.
         if (previousValue === currentValue) {
             return;
         }

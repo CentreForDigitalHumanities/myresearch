@@ -7,9 +7,9 @@ import MRForm from "./MRForm.vue";
 import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConfig";
 import { useFormState } from "~/composables/useFormState";
 import useVuelidate from "@vuelidate/core";
-import { useMutation } from "@vue/apollo-composable";
-import type { UpdateUserFormSubmission } from "~/generated/gql/graphql";
 import { graphql } from "~/generated/gql";
+import type { UpdateUserFormSubmission } from "~/generated/gql/graphql";
+import { useMutation } from "@vue/apollo-composable";
 
 interface Props {
     queriedForm: QueriedForm;
