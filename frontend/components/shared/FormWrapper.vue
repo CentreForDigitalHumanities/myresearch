@@ -7,6 +7,9 @@ import MRForm from "./MRForm.vue";
 import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConfig";
 import { useFormState } from "~/composables/useFormState";
 import useVuelidate from "@vuelidate/core";
+import { useMutation } from "@vue/apollo-composable";
+import type { UpdateUserFormSubmission } from "~/generated/gql/graphql";
+import { graphql } from "~/generated/gql";
 
 interface Props {
     queriedForm: QueriedForm;
@@ -15,18 +18,56 @@ interface Props {
 const props = defineProps<Props>();
 
 const queried = computed(() => props.queriedForm);
-const { formObject, validationRules, submitForm } = useFormState(queried);
+const { formObject, validationRules } = useFormState(queried);
 
-// Watch for changes in the form and mutate and refetch
-// This is just a proof-of-concept and our mutation/refetching strategy needs to
-// get refined.
-watch(
-    formObject,
-    () => {
-        submitForm();
+const UPDATE_USER_FORM = graphql(`
+    mutation SaveFormSubmission(
+        $submissionId: ID
+        $formConfigId: ID
+        $responses: [ResponseInput!]!
+    ) {
+        updateFormSubmission(
+            userFormInput: {
+                submissionId: $submissionId
+                formConfigId: $formConfigId
+                responses: $responses
+            }
+        ) {
+            ok
+            errors {
+                field
+                messages
+            }
+        }
+    }
+`);
+
+const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
+    UPDATE_USER_FORM,
+    {
+        update: (cache) => {
+            cache.evict({ fieldName: "form" });
+            cache.gc();
+        },
     },
-    { deep: true },
 );
+
+function submitForm(): void {
+    const formData = formObject.value;
+    if (!formData) {
+        return;
+    }
+    console.log("Submitting form!");
+
+    const inputData = useFormDataToMutationInput(
+        formData,
+        props.queriedForm.submissionId ?? null,
+        props.queriedForm.formId,
+    );
+    mutateForm(inputData).catch((error: unknown) => {
+        console.error("Error updating form:", error);
+    });
+}
 
 const v$ = useVuelidate(
     validationRules,
