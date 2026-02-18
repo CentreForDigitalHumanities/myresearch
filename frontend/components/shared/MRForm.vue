@@ -1,14 +1,35 @@
-<script lang="ts" setup>
-import {
-    SharedDateQuestion,
-    SharedFileUploadQuestion,
-    SharedNumberQuestion,
-    SharedSelectQuestion,
-    SharedTextQuestion,
-    SharedTrueFalseQuestion,
-} from "#components";
+<script lang="ts">
+import TextQuestion from "./TextQuestion.vue";
+import SelectQuestion from "./SelectQuestion.vue";
+import DateQuestion from "./DateQuestion.vue";
+import NumberQuestion from "./NumberQuestion.vue";
+import TrueFalseQuestion from "./TrueFalseQuestion.vue";
+import FileUploadQuestion from "./FileUploadQuestion.vue";
 import FormSideBar from "./FormSideBar.vue";
 import type { Component } from "vue";
+
+type QuestionTypeName = QuestionWithValue["__typename"];
+
+const DEBOUNCED_QUESTION_TYPES: readonly QuestionTypeName[] = [
+    "TextQuestionType",
+    "NumberQuestionType",
+] as const;
+
+// Imported components are treated as 'any', so the linter complains. There is
+// nothing we can do to change this, so we need to assert the type manually.
+const QUESTION_COMPONENT_MAP = {
+    TextQuestionType: TextQuestion as Component,
+    SelectQuestionType: SelectQuestion as Component,
+    DateQuestionType: DateQuestion as Component,
+    NumberQuestionType: NumberQuestion as Component,
+    TrueFalseQuestionType: TrueFalseQuestion as Component,
+    FileUploadQuestionType: FileUploadQuestion as Component,
+} as const;
+
+const DEBOUNCE_TIME_MS = 300;
+</script>
+
+<script lang="ts" setup>
 import type {
     CombinedStepWithValues,
     QuestionWithValue,
@@ -19,18 +40,58 @@ interface Props {
     step: CombinedStepWithValues;
     vuelidate: Validation;
 }
-const props = defineProps<Props>();
 
-// Imported components are treated as 'any', so the linter complains, but there
-// is nothing we can do to change this, so we need to assert the type manually.
-const questionComponentMap = {
-    TextQuestionType: SharedTextQuestion as Component,
-    SelectQuestionType: SharedSelectQuestion as Component,
-    DateQuestionType: SharedDateQuestion as Component,
-    NumberQuestionType: SharedNumberQuestion as Component,
-    TrueFalseQuestionType: SharedTrueFalseQuestion as Component,
-    FileUploadQuestionType: SharedFileUploadQuestion as Component,
-};
+interface Emits {
+    (e: "submitForm"): void;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits<Emits>();
+
+const questionsWithConditions = computed(() =>
+    props.step.questions.filter((question) => question.hasConditions),
+);
+
+// Track question values for questions with conditions
+const questionValuesSnapshot = ref<Map<string, unknown>>(new Map());
+const debounceTimerRef = ref<ReturnType<typeof setTimeout> | null>(null);
+
+// Updates with every props change and question.value change.
+watchEffect(() => {
+    const currentSnapshot = new Map<string, unknown>();
+
+    questionsWithConditions.value.forEach((question) => {
+        const key = `${question.questionId}-${question.repeatIndex.toString()}`;
+        const currentValue = question.value;
+        const questionType = question.__typename;
+        currentSnapshot.set(key, currentValue);
+
+        const previousValue = questionValuesSnapshot.value.get(key);
+
+        if (previousValue === currentValue) {
+            return;
+        }
+
+        if (DEBOUNCED_QUESTION_TYPES.includes(questionType)) {
+            debounceSubmit();
+        } else {
+            emit("submitForm");
+        }
+    });
+
+    // Update snapshot.
+    questionValuesSnapshot.value = currentSnapshot;
+});
+
+function debounceSubmit(): void {
+    if (debounceTimerRef.value) {
+        clearTimeout(debounceTimerRef.value);
+    }
+    debounceTimerRef.value = setTimeout(() => {
+        emit("submitForm");
+        debounceTimerRef.value = null;
+    }, DEBOUNCE_TIME_MS);
+}
 
 function getErrors(question: QuestionWithValue): ErrorObject[] {
     return props.vuelidate.$errors.filter(
@@ -54,7 +115,7 @@ function hasErrors(question: QuestionWithValue): boolean {
                 class="uu-form-field"
             >
                 <component
-                    :is="questionComponentMap[question.__typename]"
+                    :is="QUESTION_COMPONENT_MAP[question.__typename]"
                     v-model="question.value"
                     :question="question"
                     :is-invalid="hasErrors(question)"

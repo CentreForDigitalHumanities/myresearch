@@ -57,13 +57,13 @@ function submitForm(): void {
     if (!formData) {
         return;
     }
-    console.log("Submitting form!");
 
     const inputData = useFormDataToMutationInput(
         formData,
         props.queriedForm.submissionId ?? null,
         props.queriedForm.formId,
     );
+
     mutateForm(inputData).catch((error: unknown) => {
         console.error("Error updating form:", error);
     });
@@ -171,7 +171,11 @@ function navigateToSlug(slug: string) {
         />
         <div class="col-12 col-lg-9">
             <form class="uu-form">
-                <MRForm :step="selectedStep" :vuelidate="v$" />
+                <MRForm
+                    :step="selectedStep"
+                    :vuelidate="v$"
+                    @submit-form="submitForm"
+                />
             </form>
             <div class="btn-group">
                 <BSButton

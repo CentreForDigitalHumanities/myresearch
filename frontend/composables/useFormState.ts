@@ -12,7 +12,6 @@ interface FormState {
     formId: string | null;
 }
 
-
 export function useFormState(queriedFormRef: Ref<QueriedForm>) {
     const formId = queriedFormRef.value.formId;
 
@@ -46,7 +45,6 @@ export function useFormState(queriedFormRef: Ref<QueriedForm>) {
         },
         { deep: true },
     );
-
 
     return {
         formObject: computed({
