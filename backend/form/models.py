@@ -200,7 +200,7 @@ class QuestionResponse(models.Model):
         unique_together = ["question", "repeat_index"]
 
     def __str__(self):
-        return f"Response to Q{self.question.pk} in Submission {self.submission.pk}"
+        return f"Response to Q{self.question.pk} in Submission {self.first_submission.pk}"
 
 
 # Conditional logic for questions and steps
