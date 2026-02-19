@@ -1,4 +1,6 @@
 import pytest
+from form.mutations.utils.inputs import ResponseInput, UserFormInput
+from main.models import User
 from form.models import MRForm, Step, TextQuestion
 
 
@@ -29,3 +31,20 @@ def target_question(step: Step) -> TextQuestion:
         text="Target Question",
         step=step,
     )
+@pytest.fixture
+def response_input(trigger_question: TextQuestion) -> ResponseInput:
+    """Create an empty ResponseInput"""
+    return {
+        "question_id": trigger_question.id,
+        "repeat_index": 0,
+        "answer": {'value': None}
+    }
+
+@pytest.fixture
+def user_form_input(form: MRForm, response_input: ResponseInput) -> UserFormInput:
+    """Create an empty UserFormInput"""
+    return {
+        "form_config_id": form.id,
+        "responses": [response_input]
+    }
+
