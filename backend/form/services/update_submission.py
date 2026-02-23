@@ -25,12 +25,12 @@ def update_or_create_submission(user: User, user_form_input: UserFormInput):
                     # Remove the old response from this submission
                     current_submission.responses.remove(qr)
                     # Create a new response
-                    QuestionResponse.objects.create(
-                        submission=current_submission,
+                    new_response = QuestionResponse.objects.create(
                         question_id=response["question_id"],
                         answer=response["answer"],
                         repeat_index=response["repeat_index"],
                     )
+                    new_response.submissions.add(current_submission)
                 else:
                     # If this is not a revision, just update the answer
                     qr.answer = response["answer"]
