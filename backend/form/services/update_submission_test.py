@@ -17,7 +17,7 @@ class TestUpdateSubmission:
 
         assert isinstance(submission, UserFormSubmission)
         assert submission.user == test_user
-        assert submission.responses.all()
+        assert submission.responses.count() > 1
 
     def test_update_response(self, test_user, user_form_input):
         """Test updating an aswer"""
