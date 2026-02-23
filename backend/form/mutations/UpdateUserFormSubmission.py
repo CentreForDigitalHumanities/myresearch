@@ -20,15 +20,18 @@ class UpdateUserFormSubmission(Mutation):
         info: ResolveInfo,
         user_form_input: UserFormInput,
     ):
-        
+
         try:
-            update_or_create_submission(info.context.user, user_form_input,)
+            update_or_create_submission(
+                info.context.user,
+                user_form_input,
+            )
         except Exception as e:
             error = ErrorType(
                 field="responses",
                 messages=[
                     f"Failed to save responses for UserFormSubmission with id: {getattr(user_form_input, 'id', None)}"
-                ]
+                ],
             )
             return cls(ok=False, errors=[error])
 

@@ -173,17 +173,17 @@ class UserFormSubmission(models.Model):
 class QuestionResponse(models.Model):
     """Stores a user's answer to a question."""
 
-    submissions = models.ManyToManyField(
-        UserFormSubmission, related_name="responses"
-    )
-    
+    submissions = models.ManyToManyField(UserFormSubmission, related_name="responses")
+
     @property
-    def first_submission(self,):
+    def first_submission(
+        self,
+    ):
         """
         Returns the submission where a response got introduced first
         """
         return self.submissions.order_by("started_at").first()
-    
+
     question = models.ForeignKey(BaseQuestion, on_delete=models.CASCADE)
 
     answer = models.JSONField()
@@ -197,7 +197,9 @@ class QuestionResponse(models.Model):
     answered_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Response to Q{self.question.pk} in Submission {self.first_submission.pk}"
+        return (
+            f"Response to Q{self.question.pk} in Submission {self.first_submission.pk}"
+        )
 
 
 # Conditional logic for questions and steps

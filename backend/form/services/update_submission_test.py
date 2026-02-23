@@ -4,13 +4,18 @@ from form.services.update_submission import update_or_create_submission
 from form.mutations.utils.inputs import UserFormInput
 from form.models import UserFormSubmission, QuestionResponse
 
+
 @pytest.mark.django_db
 class TestUpdateSubmission:
     """
     Tests for update_or_create_submission service
     """
 
-    def test_create_user_form(self, test_user, user_form_input,):
+    def test_create_user_form(
+        self,
+        test_user,
+        user_form_input,
+    ):
         """Test creation of UserFormSubmission"""
 
         submission = update_or_create_submission(test_user, user_form_input)

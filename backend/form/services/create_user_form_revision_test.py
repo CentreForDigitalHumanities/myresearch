@@ -5,13 +5,18 @@ from form.services.update_submission import update_or_create_submission
 from form.mutations.utils.inputs import UserFormInput
 from form.models import UserFormSubmission, QuestionResponse
 
+
 @pytest.mark.django_db
 class TestCreateRevision:
     """
     Tests for create_user_from_revision service
     """
 
-    def test_revise_user_form_input(self, test_user, user_form_input,):
+    def test_revise_user_form_input(
+        self,
+        test_user,
+        user_form_input,
+    ):
         """Test creation of revision of UserFormSubmission"""
 
         submission = update_or_create_submission(test_user, user_form_input)
@@ -19,7 +24,9 @@ class TestCreateRevision:
 
         assert submission_revision.user == test_user
         assert submission_revision != submission
-        assert set(submission.responses.all()) == set(submission_revision.responses.all())
+        assert set(submission.responses.all()) == set(
+            submission_revision.responses.all()
+        )
 
     def test_update_revision_response(self, test_user, user_form_input):
         """Test updating an aswer for revision"""
@@ -40,7 +47,9 @@ class TestCreateRevision:
         updated_revision = update_or_create_submission(test_user, user_form_input)
 
         assert updated_revision == submission_revision
-        assert set(updated_revision.responses.all()) == set(submission_revision.responses.all())
+        assert set(updated_revision.responses.all()) == set(
+            submission_revision.responses.all()
+        )
 
         # If we add a new answer, a new response should get made
         new_ans = {"value": "new_answer"}
@@ -49,7 +58,9 @@ class TestCreateRevision:
         old_ans = old_response.answer
 
         updated_revision = update_or_create_submission(test_user, user_form_input)
-        new_response = QuestionResponse.objects.filter(submissions=updated_revision).first()
+        new_response = QuestionResponse.objects.filter(
+            submissions=updated_revision
+        ).first()
 
         assert updated_revision.responses.count() == 1
         assert old_response not in updated_revision.responses.all()

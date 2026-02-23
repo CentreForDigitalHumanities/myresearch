@@ -7,7 +7,6 @@ from form.mutations.utils.inputs import UserFormInput
 
 
 class CreateUserFormRevision(Mutation):
-
     class Arguments:
         submission_id = NonNull(ID)
 
@@ -25,9 +24,7 @@ class CreateUserFormRevision(Mutation):
             create_user_form_revision(submission_id)
         except:
             error = ErrorType(
-                messages=[
-                    f"Failed to copy UserFormSubmission with id: {submission_id}"
-                ]
+                messages=[f"Failed to copy UserFormSubmission with id: {submission_id}"]
             )
             return cls(ok=False, errors=[error])
 

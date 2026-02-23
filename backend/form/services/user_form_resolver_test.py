@@ -259,13 +259,9 @@ class TestComplexConditionScenarios:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        qr1 = QuestionResponse.objects.create(
-            question=q1, answer={"value": SHOW_Q2}
-        )
+        qr1 = QuestionResponse.objects.create(question=q1, answer={"value": SHOW_Q2})
         qr1.submissions.add(submission)
-        qr2 = QuestionResponse.objects.create(
-            question=q2, answer={"value": SHOW_Q3}
-        )
+        qr2 = QuestionResponse.objects.create(question=q2, answer={"value": SHOW_Q3})
         qr2.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
