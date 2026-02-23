@@ -10,14 +10,14 @@ class TestUpdateSubmission:
     Tests for update_or_create_submission service
     """
 
-    def test_create_user_form_input(self, test_user, user_form_input,):
+    def test_create_user_form(self, test_user, user_form_input,):
         """Test creation of UserFormSubmission"""
 
         submission = update_or_create_submission(test_user, user_form_input)
 
         assert isinstance(submission, UserFormSubmission)
         assert submission.user == test_user
-        assert submission.responses.count() > 1
+        assert submission.responses.count() == 1
 
     def test_update_response(self, test_user, user_form_input):
         """Test updating an aswer"""
