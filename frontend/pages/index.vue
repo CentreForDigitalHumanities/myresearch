@@ -18,17 +18,17 @@ import FrequentQuestions from "~/components/frontpage/FrequentQuestions.vue";
                 <div class="uu-container">
                     {{
                         $t(
-                            "My Research is a website that helps researchers with submitting a request to register a research. On this website you can register your research at the processing registry. First, however, you should fill in the roadmap",
+                            "MyResearch is a website that helps researchers with submitting a request to register a research. On this website you can register your research at the processing registry. First, however, you should fill in the intake form",
                         )
                     }}
                 </div>
                 <h2 class="uu-sidebar-header-linked">
-                    {{ $t("Roadmap") }}
+                    {{ $t("Intake form") }}
                 </h2>
                 <div>
                     {{
                         $t(
-                            "The Roadmap is a questionnaire that helps researchers to find out what needs to happen before starting a research project. Do I need to register my research at processing registry at all or not? The Roadmap helps you answer this question.",
+                            "The intake form is a questionnaire that helps researchers to find out what needs to happen before starting a research project. Do I need to register my research at processing registry at all or not? The intake form helps you answer this question.",
                         )
                     }}
                     <div class="uu-container">
@@ -40,13 +40,13 @@ import FrequentQuestions from "~/components/frontpage/FrequentQuestions.vue";
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">
-                                        {{ $t("Start a new roadmap") }}
+                                        {{ $t("Start a new intake form") }}
                                     </h5>
                                     <p class="card-text">
                                         {{ $t("Also possible as orientation") }}
                                     </p>
                                     <a href="#" class="btn btn-primary">{{
-                                        $t("Start Roadmap")
+                                        $t("Start intake form")
                                     }}</a>
                                 </div>
                             </div>

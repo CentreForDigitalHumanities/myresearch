@@ -51,7 +51,7 @@ export const mockQuestions: MockQuestions = {
         },
     },
     other: {
-        "When will the Ethical Commission be added to to My Research?": {
+        "When will the Ethical Commission be added to to MyResearch?": {
             text: "After an estimated 2000 cups of coffee.",
             url: null,
             image: null,
