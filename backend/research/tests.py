@@ -43,13 +43,13 @@ def normal_user() -> User:
 
 
 @pytest.fixture
-def test_study(normal_user) -> Study:
-    return Study.objects.create(title="normal_user's study", created_by=normal_user)
+def test_study(normal_user, form) -> Study:
+    return Study.objects.create(created_by=normal_user, form=form)
 
 
 @pytest.fixture
-def test_po_study(po_user) -> Study:
-    return Study.objects.create(title="po_user's study", created_by=po_user)
+def test_po_study(po_user, form) -> Study:
+    return Study.objects.create(created_by=po_user, form=form)
 
 
 ####################
