@@ -658,9 +658,9 @@ class TestFormEvaluatorSubmission:
 
         evaluator = FormEvaluator(form, test_user)
 
-        assert evaluator.get_user_response(trigger_question, 0).answer == {
-            "value": "my answer"
-        }
+        response = evaluator.get_user_response(trigger_question, 0)
+        assert response is not None
+        assert response.answer == {"value": "my answer"}
         assert evaluator.get_user_response(trigger_question, 1) is None
 
     def test_get_user_answer_with_repeat_index(self, form, test_user, trigger_question):

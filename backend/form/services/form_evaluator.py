@@ -223,7 +223,7 @@ class FormEvaluator:
 
     def get_user_response(
         self, question: BaseQuestion, repeat_index: int = 0
-    ) -> dict | None:
+    ) -> QuestionResponse | None:
         """Get the user's response for a specific question instance."""
         responses = self.responses.get(question.pk, [])
         for response in responses:

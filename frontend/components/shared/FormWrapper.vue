@@ -11,16 +11,13 @@ import { graphql } from "~/generated/gql";
 import type {
     UserFormInput,
     ResponseInput,
-    UpdateUserFormMutation,
-    GetFormQuery,
+    UpdateUserFormSubmission,
 } from "~/generated/gql/graphql";
-import type { ApolloQueryResult } from "@apollo/client";
 import { useMutation } from "@vue/apollo-composable";
 
 interface Props {
     queriedForm: QueriedForm;
     currentStepSlug: string;
-    refetchForm: () => Promise<ApolloQueryResult<GetFormQuery>> | undefined;
 }
 const props = defineProps<Props>();
 
@@ -39,52 +36,54 @@ watch(
 );
 
 const UPDATE_USER_FORM = graphql(`
-    mutation SaveUserForm(
-        $id: ID
+    mutation SaveFormSubmission(
+        $submissionId: ID
         $formConfigId: ID
         $responses: [ResponseInput!]!
     ) {
-        updateUserForm(
+        updateFormSubmission(
             userFormInput: {
-                id: $id
+                submissionId: $submissionId
                 formConfigId: $formConfigId
                 responses: $responses
             }
         ) {
-            errors
+            errors {
+                field
+                messages
+            }
             ok
         }
     }
 `);
 
-const { mutate: mutateForm } =
-    useMutation<UpdateUserFormMutation>(UPDATE_USER_FORM);
+const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
+    UPDATE_USER_FORM,
+    {
+        update: (cache) => {
+            cache.evict({ fieldName: "form" });
+            cache.gc();
+        },
+    },
+);
 
 function submitForm(): void {
     const formData = formObject.value;
     if (formData) {
-        const inputData = FormDataToMutationInput(formData);
-        mutateForm(inputData)
-            .then(() => {
-                void props.refetchForm();
-            })
-            .catch((error: unknown) => {
-                console.error("Error updating form:", error);
-            });
+        const inputData = formDataToMutationInput(formData);
+        mutateForm(inputData).catch((error: unknown) => {
+            console.error("Error updating form:", error);
+        });
     }
 }
-
-function FormDataToMutationInput(
-    formData: FormWithValues,
-): UserFormInput {
-    // Utility function to transform our form into the expected input for our mutation
-
-    // First collect all questions
+/**
+ * Utility function to transform our form into the expected input for our mutation
+ */
+function formDataToMutationInput(formData: FormWithValues): UserFormInput {
     const questions = formData.steps.flatMap(getAllQuestions);
 
-    // Then return out object in its expected form
     return {
-        id: props.queriedForm.submissionId ?? null,
+        submissionId: props.queriedForm.submissionId ?? null,
         formConfigId: props.queriedForm.formId,
         responses: questions.map(
             (question: QuestionWithValue): ResponseInput => {
@@ -138,10 +137,12 @@ function getAllSteps(form: FormWithValues): CombinedStepWithValues[] {
     });
 }
 
+/**
+ * Returns all questions from a step in a flat list.
+ */
 function getAllQuestions(
     step: StepWithValues | SubstepWithValues,
 ): QuestionWithValue[] {
-    // helper function to get all questions as a flat list
     const ownQuestions = step.questions;
 
     const subStepQuestions =

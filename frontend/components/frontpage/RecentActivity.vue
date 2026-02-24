@@ -11,9 +11,9 @@ type Proposal = {
     dateSubmitted: string;
     lastEdited: string;
 };
-type Roadmap = {
+type Intake = {
     refNumber: number;
-    roadmapBody: string;
+    intakeBody: string;
     stepsCompleted: string;
 };
 
@@ -34,19 +34,19 @@ const staticSendToProposal: Proposal = {
     dateSubmitted: "2025-01-24",
     lastEdited: "2025-04-23",
 };
-const staticRoadmap: Roadmap = {
+const staticIntake: Intake = {
     refNumber: 3_2025,
-    roadmapBody: "body content of roadmap",
+    intakeBody: "body content of intake",
     stepsCompleted: "1/6",
 };
 
 const recentActivity: RecentActivity[] = [
     staticDraftProposal,
     staticSendToProposal,
-    staticRoadmap,
+    staticIntake,
 ];
 
-type RecentActivity = Proposal | Roadmap;
+type RecentActivity = Proposal | Intake;
 
 const isProposal = (
     recentActivity: RecentActivity,
@@ -54,10 +54,10 @@ const isProposal = (
     return recentActivity.hasOwnProperty("status");
 };
 
-const isRoadmap = (
+const isIntake = (
     recentActivity: RecentActivity,
-): recentActivity is Roadmap => {
-    return recentActivity.hasOwnProperty("roadmapBody");
+): recentActivity is Intake => {
+    return recentActivity.hasOwnProperty("intakeBody");
 };
 </script>
 
@@ -113,9 +113,9 @@ const isRoadmap = (
                     </NuxtLink>
                 </div>
             </template>
-            <template v-if="isRoadmap(activity)">
+            <template v-if="isIntake(activity)">
                 <h3 class="card-title">{{ activity.refNumber }}</h3>
-                <div>{{ activity.roadmapBody }}</div>
+                <div>{{ activity.intakeBody }}</div>
                 <div>
                     {{ $t("Steps completed") }}: {{ activity.stepsCompleted }}
                 </div>

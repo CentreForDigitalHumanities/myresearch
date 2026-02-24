@@ -221,14 +221,14 @@ For safety, the number of repeated instances is constrained to 1-10 (see `MAX_RE
 
 ## Updating form fixtures
 
-The application comes with a fixture with a very basic sample form for the Wegwijzer located at `form/fixtures/wegwijzer.json`. To use it, load it into your database with:
+The application comes with a fixture with a very basic sample form for the intake form located at `form/fixtures/intake.json`. To use it, load it into your database with:
 
 ```bash
-python manage.py loaddata form/fixtures/wegwijzer.json
+python manage.py loaddata form/fixtures/intake.json
 ```
 
 Update the form in Django Admin as you wish. Once you're satisfied, update the fixture by running:
 
 ```bash
-python manage.py dumpdata form --output form/fixtures/wegwijzer.json --indent 4
+python manage.py dumpdata form --output form/fixtures/intake.json --indent 4
 ```
