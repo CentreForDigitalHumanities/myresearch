@@ -45,7 +45,11 @@ class Study(models.Model):
                 submission=submission,
                 question_id=name_question.id,
             ).latest("answered_at")
-            return response.answer['value'] if response and response.answer else default_name
+            return (
+                response.answer["value"]
+                if response and response.answer
+                else default_name
+            )
         except Exception as e:
             return default_name
 
