@@ -35,17 +35,6 @@ const HEADER_TEXT_MAP: Record<NotificationColor, string> = {
     danger: t("Error"),
 };
 
-const header = computed(() => {
-    return (
-        props.notification.headerText ||
-        HEADER_TEXT_MAP[props.notification.color]
-    );
-});
-
-const headerClasses = computed(() => {
-    return `toast-header text-bg-${props.notification.color}`;
-});
-
 const timeoutSeconds = computed(() => {
     const creationTime = new Date(props.notification.creation).getTime();
     const dismissalTime = new Date(props.notification.timeout).getTime();
@@ -79,10 +68,13 @@ function dismiss(): void {
         aria-atomic="true"
         data-animation="true"
     >
-        <div :class="headerClasses">
+        <div :class="`toast-header text-bg-${notification.color}`">
             <div class="me-auto fw-bolder d-flex align-items-center gap-2">
                 <BSIcon :icon="ICON_MAP[notification.color]" />
-                <span>{{ header }}</span>
+                <span>{{
+                    notification.headerText ||
+                    HEADER_TEXT_MAP[notification.color]
+                }}</span>
             </div>
             <button
                 v-if="notification.dismissible"
