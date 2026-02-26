@@ -30,6 +30,7 @@ const GET_FORM = graphql(`
                     descriptionEn
                     descriptionNl
                     required
+                    hasConditions
                     ... on SelectQuestionType {
                         multiple
                         options {
@@ -76,6 +77,7 @@ const GET_FORM = graphql(`
                         descriptionEn
                         descriptionNl
                         required
+                        hasConditions
                         ... on SelectQuestionType {
                             multiple
                             options {

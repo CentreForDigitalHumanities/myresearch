@@ -39,6 +39,7 @@ describe("useProcessForm", () => {
         required,
         placeholderEn: "",
         placeholderNl: "",
+        hasConditions: false,
     });
 
     const createNumberQuestion = (
@@ -57,6 +58,7 @@ describe("useProcessForm", () => {
         descriptionNl: "Beschrijving nummer",
         required,
         positiveOnly,
+        hasConditions: false,
     });
 
     const createTrueFalseQuestion = (
@@ -75,6 +77,7 @@ describe("useProcessForm", () => {
         descriptionNl: "Beschrijving ja/nee",
         required,
         defaultValue,
+        hasConditions: false,
     });
 
     const createFileUploadQuestion = (
@@ -92,6 +95,7 @@ describe("useProcessForm", () => {
         descriptionNl: "Beschrijving bestandsupload",
         sizeLimit: 99999999,
         required,
+        hasConditions: false,
     });
 
     const createDateQuestion = (
@@ -110,6 +114,7 @@ describe("useProcessForm", () => {
         descriptionNl: "Beschrijving datum",
         futureOnly,
         required,
+        hasConditions: false,
     });
 
     const createSelectQuestion = (
@@ -128,6 +133,7 @@ describe("useProcessForm", () => {
         descriptionNl: "Beschrijving selectie",
         multiple,
         required,
+        hasConditions: false,
         options: [
             {
                 __typename: "SelectOptionType",
