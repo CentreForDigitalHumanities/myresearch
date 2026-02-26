@@ -94,8 +94,8 @@ class Command(BaseCommand):
         self._create_test_users(options)
 
         with transaction.atomic():
-            self._create_studies(options)
             form = self._generate_form(options)
+            self._create_studies(options, form)
             self._generate_steps(options, form)
             self._generate_questions(options, form)
 
@@ -306,7 +306,7 @@ class Command(BaseCommand):
         for fixture in fixtures:
             call_command("loaddata", fixture)
 
-    def _create_studies(self, options):
+    def _create_studies(self, options, form):
         """
         Create mock studies for each user
         """
@@ -320,7 +320,7 @@ class Command(BaseCommand):
             for _ in range(num_studies):
                 Study.objects.create(
                     created_by=user,
-                    title=self.faker_nl.sentence(nb_words=5),
+                    form=form,
                 )
 
     def _check_all_models_implemented(
