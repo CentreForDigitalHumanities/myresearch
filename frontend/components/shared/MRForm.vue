@@ -44,9 +44,9 @@ const questionsWithConditions = computed(() =>
 );
 
 // Watch conditional questions and trigger form submission when they change
-useConditionalQuestionsWatcher(questionsWithConditions, () =>
-    emit("submitForm"),
-);
+useConditionalQuestionsWatcher(questionsWithConditions, () => {
+    emit("submitForm");
+});
 
 function getErrors(question: QuestionWithValue): ErrorObject[] {
     return props.vuelidate.$errors.filter(
