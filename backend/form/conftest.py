@@ -1,6 +1,5 @@
 import pytest
 from form.mutations.utils.inputs import ResponseInput, UserFormInput
-from main.models import User
 from form.models import MRForm, Step, TextQuestion
 
 

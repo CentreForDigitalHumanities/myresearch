@@ -1,10 +1,7 @@
-from graphene import List, Mutation, NonNull, ResolveInfo, String, Boolean, ID
+from graphene import List, Mutation, NonNull, ResolveInfo, Boolean, ID
 from graphene_django.types import ErrorType
 
 from form.services.create_user_form_revision import create_user_form_revision
-from form.models import QuestionResponse, UserFormSubmission
-from form.mutations.utils.inputs import UserFormInput
-
 
 class CreateUserFormRevision(Mutation):
     class Arguments:
