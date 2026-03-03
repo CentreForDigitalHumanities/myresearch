@@ -12,7 +12,14 @@ const emit = defineEmits<{
 }>();
 
 function stepperItemClasses(step: FormStep): string {
-    const classes: string[] = ["stepper-item", "bg-transparent", "border-0"];
+    const classes: string[] = [
+        "stepper-item",
+        "bg-transparent",
+        "border-0",
+        "text-start",
+        "m-0",
+        "p-0",
+    ];
     if (step.active) {
         classes.push("active");
     }
