@@ -18,7 +18,7 @@ class CreateUserFormRevision(Mutation):
         cls,
         root: None,
         info: ResolveInfo,
-        submission_id: ID,
+        submission_id: str,
     ):
         try:
             create_user_form_revision(submission_id)
