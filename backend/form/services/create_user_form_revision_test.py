@@ -9,7 +9,7 @@ from form.models import UserFormSubmission, QuestionResponse
 @pytest.mark.django_db
 class TestCreateRevision:
     """
-    Tests for create_user_from_revision service
+    Tests for create_user_form_revision service
     """
 
     def test_revise_user_form_input(
@@ -29,7 +29,7 @@ class TestCreateRevision:
         )
 
     def test_update_revision_response(self, test_user, user_form_input):
-        """Test updating an aswer for revision"""
+        """Test updating an answer for revision"""
 
         submission = update_or_create_submission(test_user, user_form_input)
         old_response = QuestionResponse.objects.filter(submissions=submission).first()

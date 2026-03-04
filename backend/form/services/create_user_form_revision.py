@@ -1,7 +1,7 @@
 from form.models import UserFormSubmission
 
 
-def create_user_form_revision(submission_id: int):
+def create_user_form_revision(submission_id: str) -> UserFormSubmission:
     """
     Util function to copy a UserFormSubmission, used for revisions.
 

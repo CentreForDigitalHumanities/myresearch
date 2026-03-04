@@ -8,7 +8,7 @@ def update_or_create_submission(user: User, user_form_input: UserFormInput):
         current_submission = UserFormSubmission.objects.get(
             id=user_form_input["submission_id"]
         )
-    except Exception as e:
+    except UserFormSubmission.DoesNotExist:
         current_submission = UserFormSubmission.objects.create(
             user=user, form_id=user_form_input["form_config_id"]
         )
@@ -37,11 +37,11 @@ def update_or_create_submission(user: User, user_form_input: UserFormInput):
                     qr.answer = response["answer"]
                     qr.save()
         else:
-            new_reponse = QuestionResponse.objects.create(
+            new_response = QuestionResponse.objects.create(
                 question_id=response["question_id"],
                 answer=response["answer"],
                 repeat_index=response["repeat_index"],
             )
-            new_reponse.submissions.add(current_submission)
+            new_response.submissions.add(current_submission)
 
     return current_submission
