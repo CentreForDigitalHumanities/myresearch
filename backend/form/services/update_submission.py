@@ -14,7 +14,8 @@ def update_or_create_submission(user: User, user_form_input: UserFormInput):
         )
 
     for response in user_form_input["responses"]:
-        try:
+        response_id = response["id"] if "id" in response else None
+        if response_id:
             # See if the response already exists
             qr = QuestionResponse.objects.get(id=response["id"])
             # Check if new answer differs from the answer in the DB
@@ -35,7 +36,7 @@ def update_or_create_submission(user: User, user_form_input: UserFormInput):
                     # If this is not a revision, just update the answer
                     qr.answer = response["answer"]
                     qr.save()
-        except (QuestionResponse.DoesNotExist, KeyError) as e:
+        else:
             new_reponse = QuestionResponse.objects.create(
                 question_id=response["question_id"],
                 answer=response["answer"],
