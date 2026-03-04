@@ -1,12 +1,21 @@
+from django_filters import FilterSet, ModelMultipleChoiceFilter
 from graphene import ResolveInfo
-from graphene_django import DjangoObjectType
 
 from django.db.models import QuerySet
 
+from api.gql_list_object_type import GQLListObjectType
+from main.models import User
 from research.models import Study
 
 
-class StudyType(DjangoObjectType):
+class StudyFilter(FilterSet):
+
+    created_by_ids = ModelMultipleChoiceFilter(
+        field_name="created_by_id", queryset=User.objects.all()
+    )
+
+
+class StudyType(GQLListObjectType):
     class Meta:
         model = Study
         fields = [
@@ -14,6 +23,8 @@ class StudyType(DjangoObjectType):
             "title",
             "created_by",
         ]
+        filterset_class = StudyFilter
+        search_fields = ["title"]
 
     @classmethod
     def get_queryset(

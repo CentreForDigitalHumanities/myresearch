@@ -25,89 +25,115 @@ describe("useProcessForm", () => {
         id: string,
         required = false,
         lines = 1,
+        answer: string | null = null,
     ): TextQuestionType => ({
         __typename: "TextQuestionType",
-        id,
+        questionId: id,
+        repeatIndex: 0,
+        answer,
         textEn: "Text question",
         textNl: "Tekstvraag",
         descriptionEn: "Description text",
         descriptionNl: "Beschrijving tekst",
         lines,
         required,
+        placeholderEn: "",
+        placeholderNl: "",
+        hasConditions: false,
     });
 
     const createNumberQuestion = (
         id: string,
         required = false,
         positiveOnly = false,
+        answer: string | null = null,
     ): NumberQuestionType => ({
         __typename: "NumberQuestionType",
-        id,
+        questionId: id,
+        repeatIndex: 0,
+        answer,
         textEn: "Number question",
         textNl: "Nummervraag",
         descriptionEn: "Description number",
         descriptionNl: "Beschrijving nummer",
         required,
         positiveOnly,
+        hasConditions: false,
     });
 
     const createTrueFalseQuestion = (
         id: string,
         required = false,
         defaultValue = false,
+        answer: string | null = null,
     ): TrueFalseQuestionType => ({
         __typename: "TrueFalseQuestionType",
-        id,
+        questionId: id,
+        repeatIndex: 0,
+        answer,
         textEn: "True/False question",
         textNl: "Ja/nee-vraag",
         descriptionEn: "Description true/false",
         descriptionNl: "Beschrijving ja/nee",
         required,
         defaultValue,
+        hasConditions: false,
     });
 
     const createFileUploadQuestion = (
         id: string,
         required = false,
+        answer: string | null = null,
     ): FileUploadQuestionType => ({
         __typename: "FileUploadQuestionType",
-        id,
+        questionId: id,
+        repeatIndex: 0,
+        answer,
         textEn: "File upload question",
         textNl: "Bestandsuploadvraag",
         descriptionEn: "Description file upload",
         descriptionNl: "Beschrijving bestandsupload",
         sizeLimit: 99999999,
         required,
+        hasConditions: false,
     });
 
     const createDateQuestion = (
         id: string,
         required = false,
         futureOnly = false,
+        answer: string | null = null,
     ): DateQuestionType => ({
         __typename: "DateQuestionType",
-        id,
+        questionId: id,
+        repeatIndex: 0,
+        answer,
         textEn: "Date question",
         textNl: "Datumvraag",
         descriptionEn: "Description date",
         descriptionNl: "Beschrijving datum",
         futureOnly,
         required,
+        hasConditions: false,
     });
 
     const createSelectQuestion = (
         id: string,
         required = false,
         multiple = false,
+        answer: string | null = null,
     ): SelectQuestionType => ({
         __typename: "SelectQuestionType",
-        id,
+        questionId: id,
+        repeatIndex: 0,
+        answer,
         textEn: "Select question",
         textNl: "Selectievraag",
         descriptionEn: "Description select",
         descriptionNl: "Beschrijving selectie",
         multiple,
         required,
+        hasConditions: false,
         options: [
             {
                 __typename: "SelectOptionType",
@@ -127,14 +153,15 @@ describe("useProcessForm", () => {
     });
 
     const createQueriedForm = (): QueriedForm => ({
-        __typename: "MRFormType",
-        id: "form1",
+        __typename: "UserFormType",
+        formId: "form1",
         nameEn: "Test Form",
         nameNl: "Testformulier",
         steps: [
             {
                 __typename: "StepType",
-                id: "step1",
+                stepId: "step1",
+                repeatIndex: 0,
                 slug: "step1",
                 nameEn: "Step 1",
                 nameNl: "Step 1",
@@ -147,7 +174,8 @@ describe("useProcessForm", () => {
                 substeps: [
                     {
                         __typename: "StepType",
-                        id: "substep1",
+                        stepId: "substep1",
+                        repeatIndex: 0,
                         slug: "substep1",
                         nameEn: "Substep 1",
                         nameNl: "Substep 1",
@@ -162,7 +190,8 @@ describe("useProcessForm", () => {
             },
             {
                 __typename: "StepType",
-                id: "step2",
+                stepId: "step2",
+                repeatIndex: 0,
                 slug: "step2",
                 nameEn: "Step 2",
                 nameNl: "Step 2",
@@ -190,7 +219,7 @@ describe("useProcessForm", () => {
             const queriedForm = createQueriedForm();
             const { formWithValues } = useProcessForm(queriedForm);
 
-            expect(formWithValues.id).toBe("form1");
+            expect(formWithValues.formId).toBe("form1");
             expect(formWithValues.nameEn).toBe("Test Form");
         });
     });
@@ -222,7 +251,7 @@ describe("useProcessForm", () => {
     });
 
     describe("addValueAndLocationToQuestion", () => {
-        it("should add empty string value to TextQuestionType", () => {
+        it("should add empty string value to TextQuestionType when no answer is provided by the backend.", () => {
             const queriedForm = createQueriedForm();
             const { formWithValues } = useProcessForm(queriedForm);
 
@@ -231,7 +260,21 @@ describe("useProcessForm", () => {
             expect(textQuestion.value).toBe("");
         });
 
-        it("should add zero value to NumberQuestionType", () => {
+        it("should use answer value for TextQuestionType when answer exists", () => {
+            const form = createQueriedForm();
+            form.steps[0].questions[0] = createTextQuestion(
+                "q1",
+                true,
+                1,
+                JSON.stringify({ value: "prefilled text" }),
+            );
+            const { formWithValues } = useProcessForm(form);
+
+            const textQuestion = formWithValues.steps[0].questions[0];
+            expect(textQuestion.value).toBe("prefilled text");
+        });
+
+        it("should add zero value to NumberQuestionType when no answer is provided by the backend.", () => {
             const queriedForm = createQueriedForm();
             const { formWithValues } = useProcessForm(queriedForm);
 
@@ -240,15 +283,47 @@ describe("useProcessForm", () => {
             expect(numberQuestion.value).toBe(0);
         });
 
-        it("should add defaultValue to TrueFalseQuestionType", () => {
+        it("should use answer value for NumberQuestionType when answer exists", () => {
+            const form = createQueriedForm();
+            form.steps[0].questions[1] = createNumberQuestion(
+                "q2",
+                false,
+                true,
+                JSON.stringify({ value: 42 }),
+            );
+            const { formWithValues } = useProcessForm(form);
+
+            const numberQuestion = formWithValues.steps[0].questions[1];
+            expect(numberQuestion.value).toBe(42);
+        });
+
+        it("should add defaultValue to TrueFalseQuestionType when no answer is provided by the backend.", () => {
             const queriedForm = createQueriedForm();
             const { formWithValues } = useProcessForm(queriedForm);
 
             const trueFalseQuestion =
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 formWithValues.steps[0].substeps![0].questions[0];
-            expect(trueFalseQuestion.__typename).toBe("TrueFalseQuestionType");
+            expect(trueFalseQuestion.__typename).toBe(
+                "TrueFalseQuestionType",
+            );
             expect(trueFalseQuestion.value).toBe(true);
+        });
+
+        it("should use answer value for TrueFalseQuestionType when answer exists", () => {
+            const form = createQueriedForm();
+            form.steps[0].substeps[0].questions[0] = createTrueFalseQuestion(
+                "q3",
+                true,
+                true,
+                JSON.stringify({ value: false }),
+            );
+            const { formWithValues } = useProcessForm(form);
+
+            const trueFalseQuestion =
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                formWithValues.steps[0].substeps![0].questions[0];
+            expect(trueFalseQuestion.value).toBe(false);
         });
 
         it("should add null value to FileUploadQuestionType", () => {
@@ -264,7 +339,7 @@ describe("useProcessForm", () => {
             expect(fileUploadQuestion.value).toBe(null);
         });
 
-        it("should add empty string value to DateQuestionType", () => {
+        it("should add empty string value to DateQuestionType when no answer", () => {
             const queriedForm = createQueriedForm();
             const { formWithValues } = useProcessForm(queriedForm);
 
@@ -273,7 +348,7 @@ describe("useProcessForm", () => {
             expect(dateQuestion.value).toBe("");
         });
 
-        it("should add empty string value to SelectQuestionType", () => {
+        it("should add empty string value to SelectQuestionType when no answer", () => {
             const queriedForm = createQueriedForm();
             const { formWithValues } = useProcessForm(queriedForm);
 
@@ -362,14 +437,15 @@ describe("useProcessForm", () => {
 
         it("should not add positiveOnly validation when positiveOnly is false", () => {
             const form: QueriedForm = {
-                __typename: "MRFormType",
-                id: "form1",
+                __typename: "UserFormType",
+                formId: "form1",
                 nameEn: "Test Form",
                 nameNl: "Testformulier",
                 steps: [
                     {
                         __typename: "StepType",
-                        id: "step1",
+                        stepId: "step1",
+                        repeatIndex: 0,
                         slug: "step1",
                         nameEn: "Step 1",
                         nameNl: "Step 1",

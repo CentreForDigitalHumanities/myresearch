@@ -1,14 +1,26 @@
-<script lang="ts" setup>
-import {
-    SharedDateQuestion,
-    SharedFileUploadQuestion,
-    SharedNumberQuestion,
-    SharedSelectQuestion,
-    SharedTextQuestion,
-    SharedTrueFalseQuestion,
-} from "#components";
+<script lang="ts">
+import TextQuestion from "./TextQuestion.vue";
+import SelectQuestion from "./SelectQuestion.vue";
+import DateQuestion from "./DateQuestion.vue";
+import NumberQuestion from "./NumberQuestion.vue";
+import TrueFalseQuestion from "./TrueFalseQuestion.vue";
+import FileUploadQuestion from "./FileUploadQuestion.vue";
 import FormSideBar from "./FormSideBar.vue";
 import type { Component } from "vue";
+
+// Imported components are treated as 'any', so the linter complains. There is
+// nothing we can do to change this, so we need to assert the type manually.
+const QUESTION_COMPONENT_MAP = {
+    TextQuestionType: TextQuestion as Component,
+    SelectQuestionType: SelectQuestion as Component,
+    DateQuestionType: DateQuestion as Component,
+    NumberQuestionType: NumberQuestion as Component,
+    TrueFalseQuestionType: TrueFalseQuestion as Component,
+    FileUploadQuestionType: FileUploadQuestion as Component,
+} as const;
+</script>
+
+<script lang="ts" setup>
 import type {
     CombinedStepWithValues,
     QuestionWithValue,
@@ -19,18 +31,22 @@ interface Props {
     step: CombinedStepWithValues;
     vuelidate: Validation;
 }
-const props = defineProps<Props>();
 
-// Imported components are treated as 'any', so the linter complains, but there
-// is nothing we can do to change this, so we need to assert the type manually.
-const questionComponentMap = {
-    TextQuestionType: SharedTextQuestion as Component,
-    SelectQuestionType: SharedSelectQuestion as Component,
-    DateQuestionType: SharedDateQuestion as Component,
-    NumberQuestionType: SharedNumberQuestion as Component,
-    TrueFalseQuestionType: SharedTrueFalseQuestion as Component,
-    FileUploadQuestionType: SharedFileUploadQuestion as Component,
-};
+interface Emits {
+    (e: "submitForm"): void;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits<Emits>();
+
+const questionsWithConditions = computed(() =>
+    props.step.questions.filter((question) => question.hasConditions),
+);
+
+// Watch conditional questions and trigger form submission when they change
+useConditionalQuestionsWatcher(questionsWithConditions, () =>
+    emit("submitForm"),
+);
 
 function getErrors(question: QuestionWithValue): ErrorObject[] {
     return props.vuelidate.$errors.filter(
@@ -50,11 +66,11 @@ function hasErrors(question: QuestionWithValue): boolean {
         <div class="d-flex flex-column">
             <div
                 v-for="question in step.questions"
-                :key="question.id"
+                :key="`${question.questionId}-${question.repeatIndex}`"
                 class="uu-form-field"
             >
                 <component
-                    :is="questionComponentMap[question.__typename]"
+                    :is="QUESTION_COMPONENT_MAP[question.__typename]"
                     v-model="question.value"
                     :question="question"
                     :is-invalid="hasErrors(question)"

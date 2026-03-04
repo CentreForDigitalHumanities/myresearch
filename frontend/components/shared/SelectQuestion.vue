@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { SelectQuestionWithValue } from "~/composables/useProcessForm";
+import FormLabel from "./FormLabel.vue";
 
 interface Props {
     question: SelectQuestionWithValue;
@@ -13,9 +14,7 @@ const modelValue = defineModel<string>();
 
 <template>
     <div>
-        <label :for="question.id" class="form-label">
-            {{ useTranslateableAttribute(question, "text") }}
-        </label>
+        <FormLabel :question="question" />
         <p
             v-if="question.descriptionNl || question.descriptionEn"
             class="text-muted"
@@ -23,7 +22,7 @@ const modelValue = defineModel<string>();
             {{ useTranslateableAttribute(question, "description") }}
         </p>
         <select
-            :id="question.id"
+            :id="`${question.questionId}-${question.repeatIndex}`"
             v-model="modelValue"
             class="form-control"
             :class="{ 'is-invalid': isInvalid }"

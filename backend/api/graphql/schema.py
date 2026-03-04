@@ -1,6 +1,5 @@
 from graphene import Schema, ObjectType
 
-from form.types import StepType
 from form.types.QuestionType import (
     QuestionType,
     BaseQuestionInterface,
@@ -15,6 +14,7 @@ from form.queries import FormQueries
 from research.queries import StudyQuery
 from main.queries import UserQueries
 
+from form.mutations.UpdateUserFormSubmission import UpdateUserFormSubmission
 from research.mutations.CreateStudyMutation import CreateStudyMutation
 from research.mutations.UpdateStudyMutation import UpdateStudyMutation
 from research.mutations.DeleteStudyMutation import DeleteStudyMutation
@@ -25,17 +25,10 @@ class Query(FormQueries, UserQueries, StudyQuery, ObjectType):
 
 
 class Mutation(ObjectType):
-
     create_study = CreateStudyMutation.Field()
     update_study = UpdateStudyMutation.Field()
     delete_study = DeleteStudyMutation.Field()
-
-
-class Mutation(ObjectType):
-
-    create_study = CreateStudyMutation.Field()
-    update_study = UpdateStudyMutation.Field()
-    delete_study = DeleteStudyMutation.Field()
+    update_form_submission = UpdateUserFormSubmission.Field()
 
 
 schema = Schema(

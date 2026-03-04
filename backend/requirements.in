@@ -5,3 +5,6 @@ graphene-django
 django-cors-headers
 tqdm
 faker
+pytest<10
+pytest-django<5
+black
