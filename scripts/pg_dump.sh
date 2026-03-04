@@ -2,13 +2,15 @@
 
 
 if [[ -z $1 ]]; then
-    filepath=/mnt/dumps/$(date -Iminutes).sql
-    mkdir -p dumps
+    name=$(date -Iminutes)
 else
-   filepath=$1
+    name=$1
 fi
+
+filename=$name.sql
+filepath=/mnt/dumps/$filename
    
-echo Dumping to $filepath
+echo Dumping to dumps/$filename
 
 if docker compose --profile dev exec mr-postgres sh -c \
 	  "pg_dumpall -U postgres > $filepath"; then
