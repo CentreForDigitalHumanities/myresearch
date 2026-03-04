@@ -175,15 +175,6 @@ class QuestionResponse(models.Model):
 
     submissions = models.ManyToManyField(UserFormSubmission, related_name="responses")
 
-    @property
-    def first_submission(
-        self,
-    ):
-        """
-        Returns the submission where a response got introduced first
-        """
-        return self.submissions.order_by("started_at").first()
-
     question = models.ForeignKey(BaseQuestion, on_delete=models.CASCADE)
 
     answer = models.JSONField()
@@ -200,6 +191,15 @@ class QuestionResponse(models.Model):
         return (
             f"Response to Q{self.question.pk} in Submission {self.first_submission.pk}"
         )
+
+    @property
+    def first_submission(
+        self,
+    ):
+        """
+        Returns the submission where a response got introduced first
+        """
+        return self.submissions.order_by("started_at").first()
 
 
 # Conditional logic for questions and steps
