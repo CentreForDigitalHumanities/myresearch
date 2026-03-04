@@ -22,7 +22,7 @@ For the MVP of MyResearch, Permissions will look something like this:
 | 3.1 Submit decision                 | No access              | No access                  | No access         | Access            |
 | 3.1 Close review                    | No access              | No access                  | No access         | Access            |
 |                                     |                        |                            |                   |                   |
-| 4 Roadmap                           |                        |                            |                   |                   |
+| 4 Intake                            |                        |                            |                   |                   |
 | 4.1 Questionaire                    | Access                 | Access (not saved)         | Access            | Access            |
 
 # Possible future permissions in MyResearch
@@ -63,5 +63,5 @@ These permissions are based on the currently-in-production FETC Portal. Ideally,
 | 5.6 Change Chamber              | No access                    | No access                  | No access         | No access            | No access            | No access            | Access        |
 | 5.7 Assign reviewers            | No access                    | No access                  | No access         | No access            | No access            | No access            | Access        |
 |                                 |                              |                            |                   |                      |                      |                      |               |
-| 6 Roadmap                       |                              |                            |                   |                      |                      |                      |               |
+| 6 Intake                        |                              |                            |                   |                      |                      |                      |               |
 | 6.1 Questionaire                | Access                       | Access                     | Access            | Access               | Access               | Access               | Access        |

@@ -113,6 +113,17 @@ class BaseQuestion(models.Model):
     class Meta:
         order_with_respect_to = "step"
 
+    @property
+    def has_conditions(self) -> bool:
+        """
+        Returns True if there are any step or question conditions dependent on
+        this question.
+        """
+        return (
+            self.triggered_questioncondition.exists()  # type: ignore
+            or self.triggered_stepcondition.exists()  # type: ignore
+        )
+
     def __str__(self):
         return f"{self.text} ({self.pk})"
 
@@ -223,6 +234,7 @@ class BaseCondition(models.Model):
         BaseQuestion,
         on_delete=models.CASCADE,
         help_text="The question whose answer triggers this condition.",
+        related_name="triggered_%(class)s",
     )
 
     condition_type = models.CharField(
@@ -277,13 +289,6 @@ class StepCondition(BaseCondition):
         help_text="The step that this condition applies to.",
     )
 
-    trigger_question = models.ForeignKey(
-        BaseQuestion,
-        on_delete=models.CASCADE,
-        related_name="triggered_step_conditions",
-        help_text="The question whose answer triggers this condition.",
-    )
-
     class Meta:
         constraints = [
             BaseCondition.get_repeat_constraint("repeat_requires_count_or_dynamic_step")
@@ -301,13 +306,6 @@ class QuestionCondition(BaseCondition):
         on_delete=models.CASCADE,
         related_name="conditions",
         help_text="The question that this condition applies to.",
-    )
-
-    trigger_question = models.ForeignKey(
-        BaseQuestion,
-        on_delete=models.CASCADE,
-        related_name="triggered_conditions",
-        help_text="The question whose answer triggers this condition.",
     )
 
     class Meta:

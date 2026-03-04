@@ -32,7 +32,7 @@ class UserFormResolver:
             "question_id": question.pk,
             "repeat_index": repeat_index,
             "answer": response.answer if response else None,
-            "response_id": response.id if response else None,
+            "response_id": response.pk if response else None,
             # The 'question' field is used for BaseQuestionInterface.resolve_type.
             "question": question,
         }

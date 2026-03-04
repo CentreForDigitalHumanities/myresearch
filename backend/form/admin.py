@@ -396,7 +396,7 @@ class QuestionResponseAdmin(admin.ModelAdmin):
 
 TRIGGER_VALUE_HELP_TEXT = """
 JSON field defining when this condition triggers. 
-Examples: {'value': true}, {'option_ids': [1, 3]}, {'min': 5}. 
+Examples: {"value": true}, {"value": "foo"}, {"option_ids": [1, 3]}, {"min": 5}. 
 For a full explanation, see form/README.md.
 """
 

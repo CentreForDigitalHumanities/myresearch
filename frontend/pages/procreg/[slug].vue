@@ -30,6 +30,7 @@ const GET_FORM = graphql(`
                     descriptionEn
                     descriptionNl
                     required
+                    hasConditions
                     ... on SelectQuestionType {
                         multiple
                         options {
@@ -76,6 +77,7 @@ const GET_FORM = graphql(`
                         descriptionEn
                         descriptionNl
                         required
+                        hasConditions
                         ... on SelectQuestionType {
                             multiple
                             options {
@@ -109,7 +111,7 @@ const GET_FORM = graphql(`
     }
 `);
 
-const { result: formResult, refetch } = useQuery<GetFormQuery>(GET_FORM);
+const { result: formResult } = useQuery<GetFormQuery>(GET_FORM);
 
 const form = computed(() => formResult.value?.form ?? null);
 
@@ -131,7 +133,6 @@ function stepSlug(route: string | string[]): string {
                 v-if="form"
                 :queried-form="form"
                 :current-step-slug="stepSlug(route.params.slug)"
-                @form-saved="refetch()"
             />
         </div>
     </div>
