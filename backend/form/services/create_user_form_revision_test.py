@@ -9,7 +9,7 @@ from form.models import UserFormSubmission, QuestionResponse
 @pytest.mark.django_db
 class TestCreateRevision:
     """
-    Tests for create_user_from_revision service
+    Tests for create_user_form_revision service
     """
 
     def test_revise_user_form_input(
