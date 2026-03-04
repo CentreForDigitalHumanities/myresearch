@@ -55,8 +55,6 @@ class TestCreateRevision:
         new_ans = {"value": "new_answer"}
         user_form_input["responses"][0]["answer"] = new_ans
 
-        old_ans = old_response.answer
-
         updated_revision = update_or_create_submission(test_user, user_form_input)
         new_response = QuestionResponse.objects.filter(
             submissions=updated_revision
