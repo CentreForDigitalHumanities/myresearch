@@ -8,7 +8,7 @@ def update_or_create_submission(user: User, user_form_input: UserFormInput):
         current_submission = UserFormSubmission.objects.get(
             id=user_form_input["submission_id"]
         )
-    except Exception as e:
+    except UserFormSubmission.DoesNotExist:
         current_submission = UserFormSubmission.objects.create(
             user=user, form_id=user_form_input["form_config_id"]
         )
