@@ -5,6 +5,10 @@ def create_user_form_revision(submission_id: str) -> UserFormSubmission:
     """
     Util function to copy a UserFormSubmission, used for revisions.
 
+    In MyResearch, a revision is a copy of a UserFormSubmission, which initially
+    just has all the same responses as the original. If answers get changed,
+    the responses get replaced with new responses.
+
     :param submission_id: ID of the submission to be copied
     :type submission_id: int
     """
