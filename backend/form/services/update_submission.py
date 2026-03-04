@@ -36,7 +36,7 @@ def update_or_create_submission(user: User, user_form_input: UserFormInput):
                     qr.answer = response["answer"]
                     qr.save()
         except (QuestionResponse.DoesNotExist, KeyError) as e:
-            new_reponse = QuestionResponse.objects.create(
+            new_response = QuestionResponse.objects.create(
                 question_id=response["question_id"],
                 answer=response["answer"],
                 repeat_index=response["repeat_index"],
