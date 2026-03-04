@@ -19,9 +19,9 @@ class CreateUserFormRevision(Mutation):
     ):
         try:
             create_user_form_revision(submission_id)
-        except:
+        except Exception as e:
             error = ErrorType(
-                messages=[f"Failed to copy UserFormSubmission with id: {submission_id}"]
+                messages=[f"Copying UserFormSubmission with id: {submission_id} caused exception: {e}"]
             )
             return cls(ok=False, errors=[error])
 
