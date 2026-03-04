@@ -12,7 +12,7 @@ class TestCreateRevision:
     Tests for create_user_form_revision service
     """
 
-    def test_revise_user_form_input(
+    def test_revise_user_form_submission(
         self,
         test_user,
         user_form_input,
@@ -50,6 +50,19 @@ class TestCreateRevision:
         assert set(updated_revision.responses.all()) == set(
             submission_revision.responses.all()
         )
+        assert set(updated_revision.responses.all()) == set(
+            submission.responses.all()
+        )
+    
+    def test_update_revision_response_answer(self, test_user, user_form_input):
+
+        submission = update_or_create_submission(test_user, user_form_input)
+        old_response = QuestionResponse.objects.filter(submissions=submission).first()
+
+        submission_revision = create_user_form_revision(submission.id)
+
+        user_form_input["submission_id"] = submission_revision.id
+        user_form_input["responses"][0]["id"] = old_response.id
 
         # If we add a new answer, a new response should get made
         new_ans = {"value": "new_answer"}
@@ -62,6 +75,7 @@ class TestCreateRevision:
 
         assert updated_revision.responses.count() == 1
         assert old_response not in updated_revision.responses.all()
+        assert new_response in updated_revision.responses.all()
         assert new_response.id != old_response.id
         assert new_response.answer != old_response.answer
         assert new_response.answer == new_ans
