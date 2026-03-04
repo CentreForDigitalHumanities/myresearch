@@ -50,10 +50,8 @@ class TestCreateRevision:
         assert set(updated_revision.responses.all()) == set(
             submission_revision.responses.all()
         )
-        assert set(updated_revision.responses.all()) == set(
-            submission.responses.all()
-        )
-    
+        assert set(updated_revision.responses.all()) == set(submission.responses.all())
+
     def test_update_revision_response_answer(self, test_user, user_form_input):
 
         submission = update_or_create_submission(test_user, user_form_input)

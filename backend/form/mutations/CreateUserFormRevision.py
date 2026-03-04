@@ -3,6 +3,7 @@ from graphene_django.types import ErrorType
 
 from form.services.create_user_form_revision import create_user_form_revision
 
+
 class CreateUserFormRevision(Mutation):
     class Arguments:
         submission_id = NonNull(ID)
@@ -21,7 +22,9 @@ class CreateUserFormRevision(Mutation):
             create_user_form_revision(submission_id)
         except Exception as e:
             error = ErrorType(
-                messages=[f"Copying UserFormSubmission with id: {submission_id} caused exception: {e}"]
+                messages=[
+                    f"Copying UserFormSubmission with id: {submission_id} caused exception: {e}"
+                ]
             )
             return cls(ok=False, errors=[error])
 

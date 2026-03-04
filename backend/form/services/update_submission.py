@@ -5,11 +5,11 @@ from form.mutations.utils.inputs import UserFormInput
 
 def update_or_create_submission(user: User, user_form_input: UserFormInput):
 
-    submission_id = user_form_input["submission_id"] if "submission_id" in user_form_input else None
+    submission_id = (
+        user_form_input["submission_id"] if "submission_id" in user_form_input else None
+    )
     if submission_id:
-        current_submission = UserFormSubmission.objects.get(
-            id=submission_id
-        )
+        current_submission = UserFormSubmission.objects.get(id=submission_id)
     else:
         current_submission = UserFormSubmission.objects.create(
             user=user, form_id=user_form_input["form_config_id"]
