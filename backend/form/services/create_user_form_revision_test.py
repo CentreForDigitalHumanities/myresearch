@@ -29,7 +29,7 @@ class TestCreateRevision:
         )
 
     def test_update_revision_response(self, test_user, user_form_input):
-        """Test updating an aswer for revision"""
+        """Test updating an answer for revision"""
 
         submission = update_or_create_submission(test_user, user_form_input)
         old_response = QuestionResponse.objects.filter(submissions=submission).first()
