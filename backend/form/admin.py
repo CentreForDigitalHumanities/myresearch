@@ -383,7 +383,6 @@ class QuestionResponseAdmin(admin.ModelAdmin):
     search_fields = ("question__text",)
     readonly_fields = ("answered_at",)
 
-
     def answer_preview(self, obj):
         answer_str = str(obj.answer)
         return answer_str[:50] + "..." if len(answer_str) > 50 else answer_str
