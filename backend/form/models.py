@@ -87,14 +87,6 @@ class Step(models.Model):
         return f"{self.name} ({self.pk})"
 
 
-class StepInfoQuestion(models.Model):
-    step = models.ForeignKey(
-        Step, on_delete=models.CASCADE, related_name="info_questions"
-    )
-    text = models.CharField(max_length=200)
-    link = models.URLField(max_length=200)
-
-
 class StepInfoText(models.Model):
     step = models.OneToOneField(Step, on_delete=models.CASCADE, related_name="info_text")
     text = models.TextField()
@@ -213,7 +205,7 @@ class QuestionResponse(models.Model):
 
     def __str__(self):
         return (
-            f"Response to Q{self.question.pk} in Submission {self.first_submission_pk}"
+            f"Response to Q{self.question.pk} in Submission {self.first_submission.pk}"
         )
 
     @property

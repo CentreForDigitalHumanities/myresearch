@@ -7,7 +7,6 @@ from form.forms import StepAdminForm
 from .models import (
     MRForm,
     Step,
-    StepInfoQuestion,
     StepInfoText,
     BaseQuestion,
     SelectQuestion,
@@ -41,12 +40,6 @@ class SubstepInline(admin.StackedInline):
     fk_name = "parent"
     verbose_name = "Substep"
     verbose_name_plural = "Substeps"
-
-
-class StepInfoQuestionInline(admin.StackedInline):
-    model = StepInfoQuestion
-    extra = 0
-    fields = ("text", "link")
 
 
 class StepInfoTextInline(admin.StackedInline):
@@ -185,7 +178,6 @@ class StepAdmin(admin.ModelAdmin):
     )
     inlines = [
         SubstepInline,
-        StepInfoQuestionInline,
         StepInfoTextInline,
         QuestionInline,
         StepConditionInline,
@@ -198,12 +190,6 @@ class StepAdmin(admin.ModelAdmin):
 
     created_at_display.short_description = "Info"
 
-
-@admin.register(StepInfoQuestion)
-class StepInfoQuestionAdmin(admin.ModelAdmin):
-    list_display = ("text", "step", "link")
-    list_filter = ("step",)
-    search_fields = ("text",)
 
 
 @admin.register(StepInfoText)

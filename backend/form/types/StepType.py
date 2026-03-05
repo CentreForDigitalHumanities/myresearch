@@ -1,11 +1,10 @@
-from graphene import ID, Int, List, NonNull, ObjectType, ResolveInfo, String
+from graphene import ID, Field, Int, List, NonNull, ObjectType, ResolveInfo, String
 
 from django.db.models import QuerySet
 
-from form.models import StepInfoQuestion, StepInfoText
+from form.models import StepInfoText
 from form.types.StepInfoTextType import StepInfoTextType
 from form.types.QuestionType import BaseQuestionInterface
-from form.types.StepInfoQuestionType import StepInfoQuestionType
 
 
 class StepType(ObjectType):
@@ -27,17 +26,10 @@ class StepType(ObjectType):
         lambda: NonNull(StepType),
         required=True,
     )
-    info_questions = List(NonNull(StepInfoQuestionType), required=True)
-    info_texts = List(NonNull(StepInfoTextType), required=True)
+    info_text = Field(StepInfoTextType, required=True)
 
     @staticmethod
-    def resolve_info_questions(parent, info: ResolveInfo) -> QuerySet[StepInfoQuestion]:
-        if not parent.step_id:
-            return StepInfoQuestion.objects.none()
-        return StepInfoQuestion.objects.filter(step_id=parent.step_id)
-
-    @staticmethod
-    def resolve_info_texts(parent, info: ResolveInfo) -> QuerySet[StepInfoText]:
+    def resolve_info_text(parent, info: ResolveInfo) -> StepInfoText:
         if not parent.step_id:
             return StepInfoText.objects.none()
-        return StepInfoText.objects.filter(step_id=parent.step_id)
+        return StepInfoText.objects.get(step_id=parent.step_id)

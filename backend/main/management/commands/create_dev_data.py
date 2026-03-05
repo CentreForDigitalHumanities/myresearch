@@ -14,7 +14,6 @@ from form.models import (
     MRForm,
     Step,
     StepInfoText,
-    StepInfoQuestion,
     FileUploadQuestion,
     NumberQuestion,
     DateQuestion,
@@ -68,7 +67,6 @@ class Command(BaseCommand):
         TextQuestion,
         TrueFalseQuestion,
         StepInfoText,
-        StepInfoQuestion,
         BaseQuestion,
         Study,
     ]
@@ -175,24 +173,12 @@ class Command(BaseCommand):
                     text_en=self.faker_en.paragraph(),
                 )
 
-        def generate_form_info_questions() -> None:
-            for _ in range(self.faker.random_int(1, 3)):
-                StepInfoQuestion.objects.create(
-                    step=step,
-                    text_nl=self.faker_nl.sentence(),
-                    text_en=self.faker_en.sentence(),
-                    link=self.faker.url(),
-                )
-
         choice = self.faker.random_element(["text", "questions", "both"])
 
         if choice == "text":
             generate_form_info_text()
-        elif choice == "questions":
-            generate_form_info_questions()
         else:
             generate_form_info_text()
-            generate_form_info_questions()
 
     def _generate_questions(self, options, form: MRForm) -> None:
         def _base_question_fields(step: Step, order: int) -> dict:
