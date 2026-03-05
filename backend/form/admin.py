@@ -383,9 +383,6 @@ class QuestionResponseAdmin(admin.ModelAdmin):
     search_fields = ("question__text",)
     readonly_fields = ("answered_at",)
 
-    @admin.display(description="First submission")
-    def first_submission(self, obj):
-        return obj.first_submission
 
     def answer_preview(self, obj):
         answer_str = str(obj.answer)
