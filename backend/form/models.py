@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, Min
 from django.contrib.auth import get_user_model
 
 user_model = get_user_model()
@@ -180,9 +180,20 @@ class UserFormSubmission(models.Model):
     def __str__(self) -> str:
         return f"Submission {self.pk} by {self.user} started at {self.started_at.strftime('%Y-%m-%d %H:%M:%S')} (Form {self.form.pk})"
 
+class QuestionResponseManager(models.Manager):
+    """
+    Custom manager for QuestionResponses
+    """
+
+    def get_queryset(self):
+        base = super().get_queryset()
+        #Annotate the first submission where a response was added
+        return base.annotate(first_submission_pk=Min("submissions__pk"))
 
 class QuestionResponse(models.Model):
     """Stores a user's answer to a question."""
+
+    objects = QuestionResponseManager()
 
     submissions = models.ManyToManyField(UserFormSubmission, related_name="responses")
 
@@ -202,16 +213,6 @@ class QuestionResponse(models.Model):
         return (
             f"Response to Q{self.question.pk} in Submission {self.first_submission.pk}"
         )
-
-    @property
-    def first_submission(
-        self,
-    ):
-        """
-        Returns the submission where a response got introduced first
-        """
-        return self.submissions.order_by("started_at").first()
-
 
 # Conditional logic for questions and steps
 class BaseCondition(models.Model):
