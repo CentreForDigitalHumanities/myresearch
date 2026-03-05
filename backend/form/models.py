@@ -96,7 +96,7 @@ class StepInfoQuestion(models.Model):
 
 
 class StepInfoText(models.Model):
-    step = models.ForeignKey(Step, on_delete=models.CASCADE, related_name="info_texts")
+    step = models.OneToOneField(Step, on_delete=models.CASCADE, related_name="info_text")
     text = models.TextField()
 
 
