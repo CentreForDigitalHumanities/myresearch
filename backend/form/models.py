@@ -214,6 +214,16 @@ class QuestionResponse(models.Model):
             f"Response to Q{self.question.pk} in Submission {self.first_submission_pk}"
         )
 
+    @property
+    def first_submission(
+        self,
+    ):
+        """
+        Returns the submission where a response got introduced first
+        """
+        return self.submissions.order_by("started_at").first()
+
+
 # Conditional logic for questions and steps
 class BaseCondition(models.Model):
     """Abstract base class for conditions on steps or questions."""
