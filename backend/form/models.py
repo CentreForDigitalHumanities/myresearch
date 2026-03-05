@@ -211,7 +211,7 @@ class QuestionResponse(models.Model):
 
     def __str__(self):
         return (
-            f"Response to Q{self.question.pk} in Submission {self.first_submission.pk}"
+            f"Response to Q{self.question.pk} in Submission {self.first_submission_pk}"
         )
 
 # Conditional logic for questions and steps
