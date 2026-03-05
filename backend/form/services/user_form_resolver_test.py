@@ -67,11 +67,11 @@ class TestUserFormResolver:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": "show_me"},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
         resolver = UserFormResolver(evaluator)
@@ -126,11 +126,11 @@ class TestUserFormResolver:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": "trigger"},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
         resolver = UserFormResolver(evaluator)
@@ -170,11 +170,11 @@ class TestUserFormResolver:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_q,
             answer={"value": NUM_OF_REPEATS},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
         resolver = UserFormResolver(evaluator)
@@ -259,12 +259,10 @@ class TestComplexConditionScenarios:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission, question=q1, answer={"value": SHOW_Q2}
-        )
-        QuestionResponse.objects.create(
-            submission=submission, question=q2, answer={"value": SHOW_Q3}
-        )
+        qr1 = QuestionResponse.objects.create(question=q1, answer={"value": SHOW_Q2})
+        qr1.submissions.add(submission)
+        qr2 = QuestionResponse.objects.create(question=q2, answer={"value": SHOW_Q3})
+        qr2.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -298,12 +296,14 @@ class TestComplexConditionScenarios:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission, question=trigger_show, answer={"value": SHOW_VALUE}
+        qr1 = QuestionResponse.objects.create(
+            question=trigger_show, answer={"value": SHOW_VALUE}
         )
-        QuestionResponse.objects.create(
-            submission=submission, question=trigger_hide, answer={"value": HIDE_VALUE}
+        qr1.submissions.add(submission)
+        qr2 = QuestionResponse.objects.create(
+            question=trigger_hide, answer={"value": HIDE_VALUE}
         )
+        qr2.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -344,11 +344,11 @@ class TestComplexConditionScenarios:
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
 
         # User selects option 3 only.
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=select_question,
             answer={"option_ids": [option_3.pk]},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
         assert evaluator.is_question_visible(target) is False
@@ -391,11 +391,11 @@ class TestComplexConditionScenarios:
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
 
         # Answer does not meet condition.
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": MINIMAL_VALUE - 1},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
