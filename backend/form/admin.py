@@ -1,4 +1,7 @@
 from django.contrib import admin
+from django.db import models
+
+from cdh.core.forms import TinyMCEWidget
 
 from form.forms import StepAdminForm
 from .models import (
@@ -49,7 +52,30 @@ class StepInfoQuestionInline(admin.StackedInline):
 class StepInfoTextInline(admin.StackedInline):
     model = StepInfoText
     extra = 0
-    fields = ("text",)
+    fields = ("text_en", "text_nl")
+
+    class Media:
+        js = (
+            "cdh.core/js/jquery-3.6.1.min.js",
+            "cdh.core/js/tinymce/tinymce.min.js",
+            "cdh.core/js/tinymce/tinymce-jquery.min.js",
+            "cdh.core/js/tinymce/shim.js",
+        )
+
+    formfield_overrides = {
+        models.TextField: {
+            "widget": TinyMCEWidget(
+                plugins=[
+                    "link",
+                    "image",
+                    "visualblocks",
+                    "wordcount",
+                    "lists",
+                ]
+            )
+        },
+    }
+
 
 
 class SelectOptionInline(admin.TabularInline):
@@ -185,6 +211,28 @@ class StepInfoTextAdmin(admin.ModelAdmin):
     list_display = ("short_text", "step")
     list_filter = ("step",)
     search_fields = ("text",)
+
+    class Media:
+        js = (
+            "cdh.core/js/jquery-3.6.1.min.js",
+            "cdh.core/js/tinymce/tinymce.min.js",
+            "cdh.core/js/tinymce/tinymce-jquery.min.js",
+            "cdh.core/js/tinymce/shim.js",
+        )
+
+    formfield_overrides = {
+        models.TextField: {
+            "widget": TinyMCEWidget(
+                plugins=[
+                    "link",
+                    "image",
+                    "visualblocks",
+                    "wordcount",
+                    "lists",
+                ]
+            )
+        },
+    }
 
     def short_text(self, obj):
         return obj.text[:50] + "..." if len(obj.text) > 50 else obj.text

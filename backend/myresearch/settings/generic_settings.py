@@ -44,6 +44,8 @@ INSTALLED_APPS = (
         "graphene_django",
         "modeltranslation",
         "django_extensions",
+        # CDH-Django-core libraries
+        "cdh.core",
     ]
 )
 
