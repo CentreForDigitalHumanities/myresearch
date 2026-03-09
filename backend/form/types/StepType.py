@@ -1,7 +1,5 @@
 from graphene import ID, Field, Int, List, NonNull, ObjectType, ResolveInfo, String
 
-from django.db.models import QuerySet
-
 from form.models import StepInfoText
 from form.types.StepInfoTextType import StepInfoTextType
 from form.types.QuestionType import BaseQuestionInterface
