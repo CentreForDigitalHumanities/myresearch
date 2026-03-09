@@ -30,7 +30,7 @@
         "cdh-vue-lib": "git+https://github.com/CentreForDigitalHumanities/Vue-lib.git#0.6.0",
         "graphql": "^15.10.1",
         "graphql-tag": "^2.12.6",
-        "lodash": "^4.17.21",
+        "lodash": "^4.17.23",
         "lucide-vue-next": "^0.544.0",
         "nuxt": "^3.19.0",
         "pinia": "^3.0.3",

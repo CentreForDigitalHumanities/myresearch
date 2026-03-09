@@ -41,6 +41,7 @@ class BaseQuestionInterface(Interface):
     description_nl = String(required=True)
     description_en = String(required=True)
     required = Boolean(required=True)
+    has_conditions = Boolean(required=True)
 
     @classmethod
     def resolve_type(cls, instance, info):
@@ -76,6 +77,10 @@ class BaseQuestionMixin:
     @staticmethod
     def resolve_text_nl(parent, info: ResolveInfo):
         return parent.question.text_nl
+
+    @staticmethod
+    def resolve_has_conditions(parent, info: ResolveInfo):
+        return parent.question.has_conditions
 
     @staticmethod
     def resolve_text_en(parent, info: ResolveInfo):

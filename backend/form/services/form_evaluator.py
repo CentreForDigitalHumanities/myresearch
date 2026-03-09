@@ -70,7 +70,7 @@ class FormEvaluator:
             self._responses_cache = {}
             if self.submission:
                 responses = QuestionResponse.objects.filter(
-                    submission=self.submission
+                    submissions=self.submission
                 ).select_related("question")
                 for response in responses:
                     if response.question.pk not in self._responses_cache:

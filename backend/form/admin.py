@@ -88,11 +88,9 @@ class QuestionConditionInline(admin.StackedInline):
     verbose_name_plural = "Conditions Applied to This Question"
 
 
-class QuestionResponseInline(admin.StackedInline):
-    model = QuestionResponse
+class QuestionResponseInline(admin.TabularInline):
+    model = QuestionResponse.submissions.through
     extra = 0
-    fields = ("question", "answer", "repeat_index", "answered_at")
-    readonly_fields = ("answered_at",)
 
 
 class QuestionInline(admin.TabularInline):
@@ -375,14 +373,14 @@ class UserFormSubmissionAdmin(admin.ModelAdmin):
 @admin.register(QuestionResponse)
 class QuestionResponseAdmin(admin.ModelAdmin):
     list_display = (
-        "submission",
+        "first_submission",
         "question",
         "repeat_index",
         "answer_preview",
         "answered_at",
     )
-    list_filter = ("submission__form", "answered_at")
-    search_fields = ("submission__user__username", "question__text")
+    list_filter = ("answered_at",)
+    search_fields = ("question__text",)
     readonly_fields = ("answered_at",)
 
     def answer_preview(self, obj):
@@ -394,7 +392,7 @@ class QuestionResponseAdmin(admin.ModelAdmin):
 
 TRIGGER_VALUE_HELP_TEXT = """
 JSON field defining when this condition triggers. 
-Examples: {'value': true}, {'option_ids': [1, 3]}, {'min': 5}. 
+Examples: {"value": true}, {"value": "foo"}, {"option_ids": [1, 3]}, {"min": 5}. 
 For a full explanation, see form/README.md.
 """
 

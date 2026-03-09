@@ -1,7 +1,7 @@
-from graphene import List, Mutation, NonNull, ResolveInfo, String, Boolean
+from graphene import List, Mutation, NonNull, ResolveInfo, Boolean
 from graphene_django.types import ErrorType
 
-from form.models import QuestionResponse, UserFormSubmission
+from form.services.update_submission import update_or_create_submission
 from form.mutations.utils.inputs import UserFormInput
 
 
@@ -19,34 +19,19 @@ class UpdateUserFormSubmission(Mutation):
         info: ResolveInfo,
         user_form_input: UserFormInput,
     ):
-        if not getattr(user_form_input, "submission_id", None):
-            submission = UserFormSubmission.objects.create(
-                user=info.context.user, form_id=user_form_input["form_config_id"]
-            )
-        else:
-            submission = UserFormSubmission.objects.get(
-                id=user_form_input["submission_id"]
-            )
 
-        for response in getattr(user_form_input, "responses", []):
-            try:
-                qr = QuestionResponse.objects.get(id=response.id)
-                if qr.answer != response.answer:
-                    qr.answer = response.answer
-                    qr.save()
-            except QuestionResponse.DoesNotExist:
-                QuestionResponse.objects.create(
-                    submission=submission,
-                    question_id=response.question_id,
-                    answer=response.answer,
-                    repeat_index=response.repeat_index,
-                )
-            except:
-                error = ErrorType(
-                    messages=[
-                        f"Failed to save responses for UserFormSubmission with id: {getattr(user_form_input, 'id', None)}"
-                    ]
-                )
-                return cls(ok=False, errors=[error])
+        try:
+            update_or_create_submission(
+                info.context.user,
+                user_form_input,
+            )
+        except Exception as e:
+            error = ErrorType(
+                field="responses",
+                messages=[
+                    f"Failed to save responses for UserFormSubmission with id: {getattr(user_form_input, 'id', None)}"
+                ],
+            )
+            return cls(ok=False, errors=[error])
 
         return cls(ok=True, errors=[])

@@ -174,11 +174,11 @@ class TestFormEvaluatorQuestionConditions:
 
         # Create submission and response
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": SPECIFIC_ANSWER},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -212,11 +212,11 @@ class TestFormEvaluatorQuestionConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": "hide_me"},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -239,11 +239,11 @@ class TestFormEvaluatorQuestionConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=bool_trigger,
             answer={"value": True},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -269,11 +269,11 @@ class TestFormEvaluatorQuestionConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=select_trigger,
             answer={"option_ids": [option1.pk, option2.pk]},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -296,11 +296,11 @@ class TestFormEvaluatorQuestionConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=number_trigger,
             answer={"value": 7},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -322,11 +322,11 @@ class TestFormEvaluatorQuestionConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": "anything"},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -356,11 +356,11 @@ class TestFormEvaluatorQuestionConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=number_trigger,
             answer={"value": NUMBER_OF_REPEATS},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -387,11 +387,11 @@ class TestFormEvaluatorQuestionConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=number_trigger,
             answer={"value": 0},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -449,11 +449,11 @@ class TestFormEvaluatorStepConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_q,
             answer={"value": SPECIFIC_ANSWER},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -490,11 +490,11 @@ class TestFormEvaluatorStepConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": SPECIFIC_ANSWER},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -516,11 +516,11 @@ class TestFormEvaluatorStepConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": "trigger"},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -544,11 +544,11 @@ class TestFormEvaluatorStepConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=number_trigger,
             answer={"value": REPEAT_COUNT},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -570,11 +570,11 @@ class TestFormEvaluatorStepConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=number_trigger,
             answer={"value": -5},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -598,11 +598,11 @@ class TestFormEvaluatorStepConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=number_trigger,
             answer={"value": EXCESSIVE_COUNT},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -649,12 +649,12 @@ class TestFormEvaluatorSubmission:
     def test_get_user_answer(self, form, test_user, trigger_question):
         """Test get_user_answer retrieves correct answer."""
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": "my answer"},
             repeat_index=0,
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -670,18 +670,18 @@ class TestFormEvaluatorSubmission:
         SECOND_ANSWER = "second"
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": FIRST_ANSWER},
             repeat_index=0,
         )
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr.submissions.add(submission)
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": SECOND_ANSWER},
             repeat_index=1,
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
