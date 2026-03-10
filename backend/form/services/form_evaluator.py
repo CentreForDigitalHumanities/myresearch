@@ -196,7 +196,7 @@ class FormEvaluator:
             if condition.use_answer_as_count:
                 # Dynamic repeat based on answer value, constrained to reasonable limits.
                 input_value = trigger_answer.get("value")
-                return min(max(1, input_value), MAX_REPEAT_LIMIT)
+                return min(max(0, input_value), MAX_REPEAT_LIMIT)
             elif condition.repeat_count:
                 return condition.repeat_count
 
