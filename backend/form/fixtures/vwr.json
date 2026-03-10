@@ -798,7 +798,7 @@
             "step": 7,
             "description": "Do you process any of the special categories of personal data listed below?",
             "description_en": "Do you process any of the special categories of personal data listed below?",
-            "description_nl": "Verwerk je een van de onderstaande bijzondere categorieën van persoonsgegevens?",
+            "description_nl": "Verwerk je data in een of meerdere van de onderstaande bijzondere categorie�n persoonsgegevens?",
             "required": false,
             "_order": 2
         }
@@ -843,7 +843,7 @@
             "step": 7,
             "description": "If you do not have consent, on what exception is the processing of special personal data based? Please explain if necessary.",
             "description_en": "If you do not have consent, on what exception is the processing of special personal data based? Please explain if necessary.",
-            "description_nl": "Als je geen toestemming hebt, op welke uitzonderingsgrond is de verwerking van bijzondere persoonsgegevens dán gebaseerd? Geef uitleg waar nodig.",
+            "description_nl": "Als je geen toestemming hebt, op welke uitzonderingsgrond is de verwerking van bijzondere persoonsgegevens dan gebaseerd? Geef uitleg waar nodig.",
             "required": true,
             "_order": 5
         }
@@ -924,11 +924,33 @@
         }
     },
     {
-        "model": "form.selectquestion",
-        "pk": 10,
+        "model": "form.basequestion",
+        "pk": 48,
         "fields": {
-            "basequestion_ptr": 10,
-            "multiple": false
+            "text": "Explanation",
+            "text_en": "Explanation",
+            "text_nl": "Toelichting",
+            "step": 11,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 49,
+        "fields": {
+            "text": "Explanation",
+            "text_en": "Explanation",
+            "text_nl": "Toelichting",
+            "step": 11,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 3
         }
     },
     {
@@ -2479,6 +2501,34 @@
             "repeat_count": null,
             "use_answer_as_count": false,
             "target_question": 11
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 18,
+        "fields": {
+            "trigger_question": 33,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "96"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 48
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 19,
+        "fields": {
+            "trigger_question": 34,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "112"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 49
         }
     }
 ]
