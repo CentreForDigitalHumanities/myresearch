@@ -338,7 +338,7 @@ class TestComplexConditionScenarios:
             target_question=target,
             trigger_question=select_question,
             condition_type="show",
-            trigger_value={"value": f'{option_1.pk},{option_2.pk}'},
+            trigger_value={"value": f"{option_1.pk},{option_2.pk}"},
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
@@ -355,7 +355,7 @@ class TestComplexConditionScenarios:
 
         # All options in the condition are selected.
         QuestionResponse.objects.filter(question=select_question).update(
-            answer={"value": f'{option_1.pk},{option_2.pk}'}
+            answer={"value": f"{option_1.pk},{option_2.pk}"}
         )
         evaluator._responses_cache = None  # Clear cache
 
@@ -363,7 +363,7 @@ class TestComplexConditionScenarios:
 
         # User selects all options.
         QuestionResponse.objects.filter(question=select_question).update(
-            answer={"value": f'{option_1.pk},{option_2.pk},{option_3.pk}'}
+            answer={"value": f"{option_1.pk},{option_2.pk},{option_3.pk}"}
         )
         evaluator._responses_cache = None  # Clear cache
 
