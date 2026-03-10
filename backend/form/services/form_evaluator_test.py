@@ -1,3 +1,5 @@
+from django.utils import timezone
+from datetime import timedelta
 import pytest
 
 from form.models import (
@@ -637,8 +639,11 @@ class TestFormEvaluatorSubmission:
 
     def test_returns_latest_submission(self, form, test_user):
         """FormEvaluator should return the most recent submission."""
-        # Create older submission
-        UserFormSubmission.objects.create(user=test_user, form=form)
+        # Create older submission with a small delay for consistent testing.
+        older = UserFormSubmission.objects.create(user=test_user, form=form)
+        older.updated_at = timezone.now() - timedelta(days=1)
+        older.save()
+
         # Create newer submission
         newer = UserFormSubmission.objects.create(user=test_user, form=form)
 
