@@ -798,7 +798,7 @@
             "step": 7,
             "description": "Do you process any of the special categories of personal data listed below?",
             "description_en": "Do you process any of the special categories of personal data listed below?",
-            "description_nl": "Verwerk je data in een of meerdere van de onderstaande bijzondere categorie�n persoonsgegevens?",
+            "description_nl": "Verwerk je data in een of meerdere van de onderstaande bijzondere categorieën persoonsgegevens?",
             "required": false,
             "_order": 2
         }
@@ -951,6 +951,14 @@
             "description_nl": "",
             "required": false,
             "_order": 3
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 10,
+        "fields": {
+            "basequestion_ptr": 10,
+            "multiple": false
         }
     },
     {
