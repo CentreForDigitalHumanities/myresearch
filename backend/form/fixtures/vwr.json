@@ -1,0 +1,2484 @@
+[
+    {
+        "model": "form.mrform",
+        "pk": 2,
+        "fields": {
+            "name": "Processing Registry",
+            "name_en": "Processing Registry",
+            "name_nl": "Verwerkingsregister",
+            "created_at": "2026-03-09T14:15:25.526Z",
+            "updated_at": "2026-03-10T14:25:12.140Z"
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 1,
+        "fields": {
+            "name": "Study",
+            "name_en": "Study",
+            "name_nl": "Studie",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "study",
+            "form": 2,
+            "parent": null,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 2,
+        "fields": {
+            "name": "Involved UU researchers",
+            "name_en": "Involved UU researchers",
+            "name_nl": "Betrokken UU-onderzoekers",
+            "description": "Who holds final responsibility for the study within UU?",
+            "description_en": "Who holds final responsibility for the study within UU?",
+            "description_nl": "Wie is er binnen UU de eindverantwoordelijke voor de studie?",
+            "slug": "involved-researchers",
+            "form": 2,
+            "parent": null,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 3,
+        "fields": {
+            "name": "Faculty",
+            "name_en": "Faculty",
+            "name_nl": "Faculteit",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "faculty",
+            "form": 2,
+            "parent": null,
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 4,
+        "fields": {
+            "name": "Study period",
+            "name_en": "Study period",
+            "name_nl": "Studieperiode",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "study-period",
+            "form": 2,
+            "parent": null,
+            "_order": 3
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 5,
+        "fields": {
+            "name": "Research goal",
+            "name_en": "Research goal",
+            "name_nl": "Onderzoeksdoel",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "research-goal",
+            "form": 2,
+            "parent": null,
+            "_order": 4
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 6,
+        "fields": {
+            "name": "Data subjects",
+            "name_en": "Data subjects",
+            "name_nl": "Datasubjecten",
+            "description": "In this step you will be asked to indicate which categories of data subjects play a role in your research project.\r\n\r\nFor each category of data subjects, we ask two questions:\r\n1. Why is it necessary to collect personal data?\r\n2. Which specific categories of personal data you will be processing?\r\n\r\nIf you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.",
+            "description_en": "In this step you will be asked to indicate which categories of data subjects play a role in your research project.\r\n\r\nFor each category of data subjects, we ask two questions:\r\n1. Why is it necessary to collect personal data?\r\n2. Which specific categories of personal data you will be processing?\r\n\r\nIf you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.",
+            "description_nl": "In deze stap geef je op welke categorieën betrokken mensen een rol spelen in je onderzoeksproject. \r\n\r\nPer categorie betrokken mensen vragen we twee dingen:\r\n1. Waarom het noodzakelijk is om persoonsgegevens te verzamelen.\r\n2. Welke specifieke categorieën persoonsgegevens je gaat verwerken.\r\n\r\nAls je in de vorige vraag meerdere categorieën betrokkenen hebt opgegeven, wordt je dus gevraagd om voor élk van die categorieën informatie op te geven.",
+            "slug": "data-subjects",
+            "form": 2,
+            "parent": null,
+            "_order": 5
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 7,
+        "fields": {
+            "name": "Data subject group",
+            "name_en": "Data subject group",
+            "name_nl": "Datasubjectgroep",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "personal-data-group",
+            "form": null,
+            "parent": 6,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 8,
+        "fields": {
+            "name": "Retention period",
+            "name_en": "Retention period",
+            "name_nl": "Bewaartermijn",
+            "description": "What is the retention period and storage location of your data?",
+            "description_en": "What is the retention period and storage location of your data?",
+            "description_nl": "Wat is de bewaartermijn en opslaglocatie?",
+            "slug": "retention-period",
+            "form": 2,
+            "parent": null,
+            "_order": 6
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 9,
+        "fields": {
+            "name": "Recipients",
+            "name_en": "Recipients",
+            "name_nl": "Ontvangers",
+            "description": "By recipients, we mean: individuals or institutions outside Utrecht University with whom you share your previously provided personal data. This includes other universities, clients, data scientists, or other external institutions.",
+            "description_en": "By recipients, we mean: individuals or institutions outside Utrecht University with whom you share your previously provided personal data. This includes other universities, clients, data scientists, or other external institutions.",
+            "description_nl": "Onder ontvangers verstaan we: personen of instellingen buiten de Universiteit Utrecht met wie je de eerder opgegeven persoonsgegevens deelt. Denk aan andere universiteiten, aan opdrachtgevers, data scientists of andere externe instellingen.",
+            "slug": "recipients",
+            "form": 2,
+            "parent": null,
+            "_order": 7
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 10,
+        "fields": {
+            "name": "Software",
+            "name_en": "Software",
+            "name_nl": "Software",
+            "description": "Indicate which software packages and (cloud) applications you will be using. Standard office software you use from your local laptop (e.g., Excel, Word) does not need to be listed.",
+            "description_en": "Indicate which software packages and (cloud) applications you will be using. Standard office software you use from your local laptop (e.g., Excel, Word) does not need to be listed.",
+            "description_nl": "Geef aan welke softwarepakketten en (cloud)applicatie(s) je gaat gebruiken. Reguliere kantoorsoftware die je vanaf je lokale laptop gebruikt (bijv. Excel, Word) hoef je niet op te voeren.",
+            "slug": "software",
+            "form": 2,
+            "parent": null,
+            "_order": 8
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 11,
+        "fields": {
+            "name": "Security",
+            "name_en": "Security",
+            "name_nl": "Beveiliging",
+            "description": "In this step, you can indicate which technical and organizational measures you have taken or will take to protect the personal data in your study. You can add your own measures if necessary. Note: Not all measures below may be relevant to your study.",
+            "description_en": "In this step, you can indicate which technical and organizational measures you have taken or will take to protect the personal data in your study. You can add your own measures if necessary. Note: Not all measures below may be relevant to your study.",
+            "description_nl": "In deze stap kun je aangeven welke technische en organisatorische maatregelen je hebt genomen of gaat nemen om de persoonsgegevens binnen je studie te beveiligen. Indien nodig kun je zelf maatregelen toevoegen. Let op: Wellicht zijn niet alle onderstaande maatregelen relevant voor jouw studie.",
+            "slug": "security",
+            "form": 2,
+            "parent": null,
+            "_order": 9
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 12,
+        "fields": {
+            "name": "Documents",
+            "name_en": "Documents",
+            "name_nl": "Documenten",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "documents",
+            "form": 2,
+            "parent": null,
+            "_order": 10
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 13,
+        "fields": {
+            "name": "Overview",
+            "name_en": "Overview",
+            "name_nl": "Overzicht",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "overview",
+            "form": 2,
+            "parent": null,
+            "_order": 11
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 1,
+        "fields": {
+            "text": "Study name",
+            "text_en": "Study name",
+            "text_nl": "Studienaam",
+            "step": 1,
+            "description": "The title of your study. (This title will be used in all formal correspondence.)",
+            "description_en": "The title of your study. (This title will be used in all formal correspondence.)",
+            "description_nl": "De titel van je studie. (Deze titel zal worden gebruikt in alle formele correspondentie.)",
+            "required": true,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 2,
+        "fields": {
+            "text": "I hold final responsibility.",
+            "text_en": "I hold final responsibility.",
+            "text_nl": "Ik ben zelf de eindverantwoordelijke.",
+            "step": 2,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 3,
+        "fields": {
+            "text": "Responsible researcher",
+            "text_en": "Responsible researcher",
+            "text_nl": "Eindverantwoordelijke",
+            "step": 2,
+            "description": "Who holds final responsibility for the study within UU?",
+            "description_en": "Who holds final responsibility for the study within UU?",
+            "description_nl": "Wie is er binnen UU de eindverantwoordelijke voor de studie?",
+            "required": false,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 4,
+        "fields": {
+            "text": "Other UU researchers",
+            "text_en": "Other UU researchers",
+            "text_nl": "Andere UU-onderzoekers",
+            "step": 2,
+            "description": "Who else is responsible for the study within UU?",
+            "description_en": "Who else is responsible for the study within UU?",
+            "description_nl": "Wie werkt er binnen de UU nog meer mee aan de studie?",
+            "required": false,
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 5,
+        "fields": {
+            "text": "Faculty",
+            "text_en": "Faculty",
+            "text_nl": "Faculteit",
+            "step": 3,
+            "description": "Please select the faculty that hosts or coordinates the research.",
+            "description_en": "Please select the faculty that hosts or coordinates the research.",
+            "description_nl": "Selecteer de faculteit waarbinnen het onderzoek plaatsvindt, of de faculteit die optreedt als penvoerder.",
+            "required": true,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 6,
+        "fields": {
+            "text": "Department",
+            "text_en": "Department",
+            "text_nl": "Departement",
+            "step": 3,
+            "description": "For TLC, also indicate with which institute you are affiliated (ILS or ICON).",
+            "description_en": "For TLC, also indicate with which institute you are affiliated (ILS or ICON).",
+            "description_nl": "Geef voor TLC ook aan aan welk onderzoeksinstituut je bent verbonden (ILS of ICON).",
+            "required": true,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 7,
+        "fields": {
+            "text": "Start date",
+            "text_en": "Start date",
+            "text_nl": "Begindatum",
+            "step": 4,
+            "description": "You start collecting personal data on this date.\r\n\r\nNote: you must submit this application no later than 4 weeks before the starting date if a review by the FETC is required.",
+            "description_en": "You start collecting personal data on this date.\r\n\r\nNote: you must submit this application no later than 4 weeks before the starting date if a review by the FETC is required.",
+            "description_nl": "Dit is de datum waarop je begint met het verzamelen van persoonsgegevens.\r\n\r\nLet op: deze aanvraag moet minstens 4 weken voor de begindatum ingediend worden als toetsing door de FETC vereist is.",
+            "required": true,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 8,
+        "fields": {
+            "text": "End date",
+            "text_en": "End date",
+            "text_nl": "Einddatum",
+            "step": 4,
+            "description": "This is the date on which the research results are expected to be published and the archival term for the research data starts.",
+            "description_en": "This is the date on which the research results are expected to be published and the archival term for the research data starts.",
+            "description_nl": "Dit is de verwachte publicatiedatum van de onderzoeksresultaten. Op deze datum gaat de archiveringstermijn van de onderzoeksdata in.",
+            "required": true,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 9,
+        "fields": {
+            "text": "Research goal",
+            "text_en": "Research goal",
+            "text_nl": "Onderzoeksdoel",
+            "step": 5,
+            "description": "What is the central question you wish to answer in this study?",
+            "description_en": "What is the central question you wish to answer in this study?",
+            "description_nl": "Wat is de centrale vraag die je met je studie wilt beantwoorden?",
+            "required": true,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 10,
+        "fields": {
+            "text": "To which category does this group of data subjects belong?",
+            "text_en": "To which category does this group of data subjects belong?",
+            "text_nl": "Tot welke categorie behoort deze groep datasubjecten?",
+            "step": 7,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 11,
+        "fields": {
+            "text": "How many groups of data subjects are there?",
+            "text_en": "How many groups of data subjects are there?",
+            "text_nl": "Hoeveel groepen datasubjecten zijn er?",
+            "step": 6,
+            "description": "Distinguish all groups of people whose personal data you will process.",
+            "description_en": "Distinguish all groups of people whose personal data you will process.",
+            "description_nl": "Onderscheid alle groepen van wie er persoonsgegevens verzameld worden.",
+            "required": true,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 12,
+        "fields": {
+            "text": "I understand the above.",
+            "text_en": "I understand the above.",
+            "text_nl": "Ik heb het bovenstaande begrepen.",
+            "step": 6,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 13,
+        "fields": {
+            "text": "Why is it necessary to process personal data of this group of data subjects?",
+            "text_en": "Why is it necessary to process personal data of this group of data subjects?",
+            "text_nl": "Waarom is het noodzakelijk om persoonsgegevens van deze groep datasubjecten te verwerken?",
+            "step": 7,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 14,
+        "fields": {
+            "text": "On which system or systems will you store your raw research data, from collection to archiving?",
+            "text_en": "On which system or systems will you store your raw research data, from collection to archiving?",
+            "text_nl": "Op welk systeem of systemen ga je jouw ruwe onderzoeksdata opslaan, van verzamelen tot archiveren?",
+            "step": 8,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 15,
+        "fields": {
+            "text": "Specify for how long the raw research data will be retained.",
+            "text_en": "Specify for how long the raw research data will be retained.",
+            "text_nl": "Leg uit hoe lang de ruwe onderzoeksdata bewaard worden.",
+            "step": 8,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 16,
+        "fields": {
+            "text": "Where are your consent forms stored?",
+            "text_en": "Where are your consent forms stored?",
+            "text_nl": "Wat is de opslaglocatie van jouw toestemmingsverklaringen?",
+            "step": 8,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 3
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 17,
+        "fields": {
+            "text": "Specify for how long the consent forms will be retained.",
+            "text_en": "Specify for how long the consent forms will be retained.",
+            "text_nl": "Leg uit hoe lang de toestemmingsverklaringen bewaard worden.",
+            "step": 8,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 5
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 18,
+        "fields": {
+            "text": "Raw research data will be kept until at least 10 years after publication.",
+            "text_en": "Raw research data will be kept until at least 10 years after publication.",
+            "text_nl": "Ruwe onderzoeksdata worden tot minimaal 10 jaar na publicatie bewaard.",
+            "step": 8,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 19,
+        "fields": {
+            "text": "Consent forms will be kept until at least 10 years after publication.",
+            "text_en": "Consent forms will be kept until at least 10 years after publication.",
+            "text_nl": "Toestemmingsverklaringen worden tot minimaal 10 jaar na publicatie bewaard.",
+            "step": 8,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 4
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 20,
+        "fields": {
+            "text": "Audio and video files will be kept after transcribing them.",
+            "text_en": "Audio and video files will be kept after transcribing them.",
+            "text_nl": "Audio- en video-opnamen worden na het transcriberen bewaard.",
+            "step": 8,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 6
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 21,
+        "fields": {
+            "text": "Personal data are shared with external recipients.",
+            "text_en": "Personal data are shared with external recipients.",
+            "text_nl": "Persoonsgegevens worden gedeeld met externe ontvangers,",
+            "step": 9,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 22,
+        "fields": {
+            "text": "Persons, group or organisation",
+            "text_en": "Persons, group or organisation",
+            "text_nl": "Personen, groep of instantie",
+            "step": 9,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 23,
+        "fields": {
+            "text": "This recipient is NOT based in the EU, Norway, Iceland or Liechtenstein.",
+            "text_en": "This recipient is NOT based in the EU, Norway, Iceland or Liechtenstein.",
+            "text_nl": "Deze ontvanger is NIET gevestigd in de EU, Noorwegen, IJsland of Liechtenstein.",
+            "step": 9,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 24,
+        "fields": {
+            "text": "Basis for transmission",
+            "text_en": "Basis for transmission",
+            "text_nl": "Basis voor doorgifte",
+            "step": 9,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 3
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 25,
+        "fields": {
+            "text": "Explanation",
+            "text_en": "Explanation",
+            "text_nl": "Toelichting",
+            "step": 9,
+            "description": "Please state at least the country and provide a specification or clarification if requested.",
+            "description_en": "Please state at least the country and provide a specification or clarification if requested.",
+            "description_nl": "Noem minimaal het land en geef desgevraagd een specificatie of verduidelijking op.",
+            "required": true,
+            "_order": 4
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 26,
+        "fields": {
+            "text": "Audio/video recordings",
+            "text_en": "Audio/video recordings",
+            "text_nl": "Audio-/video-opnames",
+            "step": 10,
+            "description": "E.g. Audacity, MS Teams, Adobe Audition",
+            "description_en": "E.g. Audacity, MS Teams, Adobe Audition",
+            "description_nl": "Bijv. Audacity, MS Teams, Adobe Audition",
+            "required": false,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 27,
+        "fields": {
+            "text": "Transcription",
+            "text_en": "Transcription",
+            "text_nl": "Transcriptie",
+            "step": 10,
+            "description": "E.g. Amberscript, Transkriptor, Sonix",
+            "description_en": "E.g. Amberscript, Transkriptor, Sonix",
+            "description_nl": "Bijv. Amberscript, Transkriptor, Sonix",
+            "required": false,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 28,
+        "fields": {
+            "text": "Questionnaire",
+            "text_en": "Questionnaire",
+            "text_nl": "Vragenlijst",
+            "step": 10,
+            "description": "E.g. Qualtrics",
+            "description_en": "E.g. Qualtrics",
+            "description_nl": "Bijv. Qualtrics",
+            "required": false,
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 29,
+        "fields": {
+            "text": "Transport and communication",
+            "text_en": "Transport and communication",
+            "text_nl": "Transport en communicatie",
+            "step": 10,
+            "description": "E.g. SURF File Sender, MS Teams, Cisco Anyconnect",
+            "description_en": "E.g. SURF File Sender, MS Teams, Cisco Anyconnect",
+            "description_nl": "Bijv. SURF File Sender, MS Teams, Cisco Anyconnect",
+            "required": false,
+            "_order": 3
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 30,
+        "fields": {
+            "text": "Analysis",
+            "text_en": "Analysis",
+            "text_nl": "Analyse",
+            "step": 10,
+            "description": "E.g. MatLab, RStudio, SPSS, Nvivo (SHTTP)",
+            "description_en": "E.g. MatLab, RStudio, SPSS, Nvivo (SHTTP)",
+            "description_nl": "Bijv. MatLab, RStudio, SPSS, Nvivo (SHTTP)",
+            "required": false,
+            "_order": 4
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 31,
+        "fields": {
+            "text": "Storage",
+            "text_en": "Storage",
+            "text_nl": "Opslag",
+            "step": 10,
+            "description": "E.g. Yoda, OneDrive, MS Teams/Sharepoint, Google Drive",
+            "description_en": "E.g. Yoda, OneDrive, MS Teams/Sharepoint, Google Drive",
+            "description_nl": "Bijv. Yoda, OneDrive, MS Teams/Sharepoint, Google Drive",
+            "required": false,
+            "_order": 5
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 32,
+        "fields": {
+            "text": "Miscellaneous",
+            "text_en": "Miscellaneous",
+            "text_nl": "Diversen",
+            "step": 10,
+            "description": "E.g. OTree, Textcavator",
+            "description_en": "E.g. OTree, Textcavator",
+            "description_nl": "Bijv. OTree, Textcavator",
+            "required": false,
+            "_order": 6
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 33,
+        "fields": {
+            "text": "Technical security measures",
+            "text_en": "Technical security measures",
+            "text_nl": "Technische beveiligingsmaatregelen",
+            "step": 11,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 34,
+        "fields": {
+            "text": "Organisational security measures",
+            "text_en": "Organisational security measures",
+            "text_nl": "Organisatorische beveiligingsmaatregelen",
+            "step": 11,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 35,
+        "fields": {
+            "text": "Upload documents",
+            "text_en": "Upload documents",
+            "text_nl": "Documenten uploaden",
+            "step": 12,
+            "description": "- DPIA (Data Protection Impact Assessment\r\n- Privacy scan, pre-GBEB, DPIA Light, Privacy review, or other abbreviated risk assessment\r\n- Other relevant privacy-related documents, data management plan (DMP)\r\n- Privacy statement",
+            "description_en": "- DPIA (Data Protection Impact Assessment\r\n- Privacy scan, pre-GBEB, DPIA Light, Privacy review, or other abbreviated risk assessment\r\n- Other relevant privacy-related documents, data management plan (DMP)\r\n- Privacy statement",
+            "description_nl": "-     DPIA (Data Protection Impact Assessment, ook wel GBEB genoemd)\r\n-     Privacy scan, pre-GBEB, DPIA Light, Privacy review of andere verkorte risico-inventarisatie\r\n-     Andere relevante, privacy-gerelateerde documenten, datamanagementplan (DMP)\r\n-     Privacyverklaring",
+            "required": false,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 36,
+        "fields": {
+            "text": "Questions",
+            "text_en": "Questions",
+            "text_nl": "Vragen",
+            "step": 13,
+            "description": "Do you have a question for the privacy officer? Ask it here and, if relevant, use the step number (the circles on the left).",
+            "description_en": "Do you have a question for the privacy officer? Ask it here and, if relevant, use the step number (the circles on the left).",
+            "description_nl": "Heb je een vraag voor de privacy officer? Stel die dan hier en gebruik - indien relevant - het nummer van de stap in de registratie (bolletjes aan de linkerkant).",
+            "required": false,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 37,
+        "fields": {
+            "text": "The information I have entered is correct and complete, and is ready to be submitted.",
+            "text_en": "The information I have entered is correct and complete, and is ready to be submitted.",
+            "text_nl": "De informatie die ik heb ingevuld is correct en volledig, en is klaar om verstuurd te worden.",
+            "step": 13,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 38,
+        "fields": {
+            "text": "Specify why recordings are kept after transcribing.",
+            "text_en": "Specify why recordings are kept after transcribing.",
+            "text_nl": "Leg uit waarom opnames worden bewaard na het transcriberen.",
+            "step": 8,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 8
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 39,
+        "fields": {
+            "text": "Special categories of personal data",
+            "text_en": "Special categories of personal data",
+            "text_nl": "Bijzondere persoonsgegevens",
+            "step": 7,
+            "description": "Do you process any of the special categories of personal data listed below?",
+            "description_en": "Do you process any of the special categories of personal data listed below?",
+            "description_nl": "Verwerk je een van de onderstaande bijzondere categorieën van persoonsgegevens?",
+            "required": false,
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 40,
+        "fields": {
+            "text": "I can demonstrate that I have the explicit consent of all participants whose special personal data I process.",
+            "text_en": "I can demonstrate that I have the explicit consent of all participants whose special personal data I process.",
+            "text_nl": "Ik kan aantonen dat ik de uitdrukkelijke toestemming heb van alle deelnemers van wie ik bijzondere persoonsgegevens verwerk.",
+            "step": 7,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 3
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 41,
+        "fields": {
+            "text": "Please explain what explicit and demonstrable consent entails.",
+            "text_en": "Please explain what explicit and demonstrable consent entails.",
+            "text_nl": "Licht toe waar deze uitdrukkelijke en aantoonbare toestemming uit bestaat.",
+            "step": 7,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 4
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 42,
+        "fields": {
+            "text": "Grounds for exclusion",
+            "text_en": "Grounds for exclusion",
+            "text_nl": "Uitsluitingsgronden",
+            "step": 7,
+            "description": "If you do not have consent, on what exception is the processing of special personal data based? Please explain if necessary.",
+            "description_en": "If you do not have consent, on what exception is the processing of special personal data based? Please explain if necessary.",
+            "description_nl": "Als je geen toestemming hebt, op welke uitzonderingsgrond is de verwerking van bijzondere persoonsgegevens dán gebaseerd? Geef uitleg waar nodig.",
+            "required": true,
+            "_order": 5
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 43,
+        "fields": {
+            "text": "Explanation",
+            "text_en": "Explanation",
+            "text_nl": "Toelichting",
+            "step": 7,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 6
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 44,
+        "fields": {
+            "text": "Sensitive personal data",
+            "text_en": "Sensitive personal data",
+            "text_nl": "Gevoelige persoonsgegevens",
+            "step": 7,
+            "description": "Which sensitive personal data do you process as part of your research?",
+            "description_en": "Which sensitive personal data do you process as part of your research?",
+            "description_nl": "Welke gevoelige persoonsgegevens van deelnemers verwerk binnen je onderzoek?",
+            "required": true,
+            "_order": 7
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 45,
+        "fields": {
+            "text": "Categories of personal data",
+            "text_en": "Categories of personal data",
+            "text_nl": "Categorieën persoonsgegevens",
+            "step": 7,
+            "description": "",
+            "description_en": "",
+            "description_nl": "Selecteer alle categorieën persoonsgegevens die je van deelnemers verzamelt/verwerkt.",
+            "required": false,
+            "_order": 8
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 46,
+        "fields": {
+            "text": "Explanation",
+            "text_en": "Explanation",
+            "text_nl": "Toelichting",
+            "step": 7,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 9
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 47,
+        "fields": {
+            "text": "Department",
+            "text_en": "Department",
+            "text_nl": "Departement",
+            "step": 3,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 10,
+        "fields": {
+            "basequestion_ptr": 10,
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 33,
+        "fields": {
+            "basequestion_ptr": 33,
+            "multiple": true
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 5,
+        "fields": {
+            "basequestion_ptr": 5,
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 34,
+        "fields": {
+            "basequestion_ptr": 34,
+            "multiple": true
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 6,
+        "fields": {
+            "basequestion_ptr": 6,
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 39,
+        "fields": {
+            "basequestion_ptr": 39,
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 47,
+        "fields": {
+            "basequestion_ptr": 47,
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 24,
+        "fields": {
+            "basequestion_ptr": 24,
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 42,
+        "fields": {
+            "basequestion_ptr": 42,
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 44,
+        "fields": {
+            "basequestion_ptr": 44,
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 45,
+        "fields": {
+            "basequestion_ptr": 45,
+            "multiple": true
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 67,
+        "fields": {
+            "label": "Faculty of Humanities",
+            "label_en": "Faculty of Humanities",
+            "label_nl": "Faculteit Geesteswetenschappen",
+            "default_selected": true,
+            "question": 5
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 70,
+        "fields": {
+            "label": "Faculty of Law, Economics and Governance",
+            "label_en": "Faculty of Law, Economics and Governance",
+            "label_nl": "Faculteit Recht, Economie, Bestuur en Organisatie",
+            "default_selected": false,
+            "question": 5
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 72,
+        "fields": {
+            "label": "TLC - ILS",
+            "label_en": "TLC - ILS",
+            "label_nl": "TLC - ILS",
+            "default_selected": false,
+            "question": 6
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 73,
+        "fields": {
+            "label": "TLC - ICON",
+            "label_en": "TLC - ICON",
+            "label_nl": "TLC - ICON",
+            "default_selected": false,
+            "question": 6
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 74,
+        "fields": {
+            "label": "Participants, i.e. people who consciously take part in the study.",
+            "label_en": "Participants, i.e. people who consciously take part in the study.",
+            "label_nl": "Deelnemers, d.w.z. personen die bewust deelnemen aan het onderzoek.",
+            "default_selected": false,
+            "question": 10
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 75,
+        "fields": {
+            "label": "People who do not necessarily know that they are being studied.",
+            "label_en": "People who do not necessarily know that they are being studied.",
+            "label_nl": "Personen die niet (noodzakelijkerwijs) weten dat er onderzoek naar hen wordt gedaan.",
+            "default_selected": false,
+            "question": 10
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 76,
+        "fields": {
+            "label": "Parents or guardians who are not involved themselves.",
+            "label_en": "Parents or guardians who are not involved themselves.",
+            "label_nl": "Ouders of voogden die zelf niet deelnemen.",
+            "default_selected": false,
+            "question": 10
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 77,
+        "fields": {
+            "label": "People who are otherwise involved.",
+            "label_en": "People who are otherwise involved.",
+            "label_nl": "Personen die anderszins betrokken zijn.",
+            "default_selected": false,
+            "question": 10
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 84,
+        "fields": {
+            "label": "EC adequacy decision",
+            "label_en": "EC adequacy decision",
+            "label_nl": "Adequaatheidsbesluit van de EC",
+            "default_selected": false,
+            "question": 24
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 85,
+        "fields": {
+            "label": "Standard contractual stipulations",
+            "label_en": "Standard contractual stipulations",
+            "label_nl": "Standaard contractuele bepalingen",
+            "default_selected": false,
+            "question": 24
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 86,
+        "fields": {
+            "label": "Explicit consent",
+            "label_en": "Explicit consent",
+            "label_nl": "Uitdrukkelijke toestemming",
+            "default_selected": false,
+            "question": 24
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 87,
+        "fields": {
+            "label": "Other abnormal situation (please specify)",
+            "label_en": "Other abnormal situation (please specify)",
+            "label_nl": "Andere afwijkende situatie (specificeren a.u.b.)",
+            "default_selected": false,
+            "question": 24
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 88,
+        "fields": {
+            "label": "No basis for transmission (please specify)",
+            "label_en": "No basis for transmission (please specify)",
+            "label_nl": "Geen basis voor doorgifte (verduidelijken a.u.b.)",
+            "default_selected": false,
+            "question": 24
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 89,
+        "fields": {
+            "label": "Two-factor authentication",
+            "label_en": "Two-factor authentication",
+            "label_nl": "Twee-factor-authenticatie (2FA)",
+            "default_selected": false,
+            "question": 33
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 90,
+        "fields": {
+            "label": "Use of passwords",
+            "label_en": "Use of passwords",
+            "label_nl": "Gebruik van wachtwoorden",
+            "default_selected": false,
+            "question": 33
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 91,
+        "fields": {
+            "label": "Storage on encrypted UU servers (Yoda etc.)",
+            "label_en": "Storage on encrypted UU servers (Yoda etc.)",
+            "label_nl": "Opslag op beveiligde servers van de UU (Yoda etc.)",
+            "default_selected": false,
+            "question": 33
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 92,
+        "fields": {
+            "label": "Encryption",
+            "label_en": "Encryption",
+            "label_nl": "Versleuteling (encryptie)",
+            "default_selected": false,
+            "question": 33
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 93,
+        "fields": {
+            "label": "File exchange via VPN",
+            "label_en": "File exchange via VPN",
+            "label_nl": "Bestandsuitwisseling via VPN",
+            "default_selected": false,
+            "question": 33
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 94,
+        "fields": {
+            "label": "Blurring of video recordings",
+            "label_en": "Blurring of video recordings",
+            "label_nl": "Blurring van video-opnamen",
+            "default_selected": false,
+            "question": 33
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 95,
+        "fields": {
+            "label": "Voice distortion in audio recordings",
+            "label_en": "Voice distortion in audio recordings",
+            "label_nl": "Stemvervorming van audio-opnamen",
+            "default_selected": false,
+            "question": 33
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 96,
+        "fields": {
+            "label": "Other (please specify)",
+            "label_en": "Other (please specify)",
+            "label_nl": "Anders, namelijk:",
+            "default_selected": false,
+            "question": 33
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 97,
+        "fields": {
+            "label": "Anonymisation of personal data",
+            "label_en": "Anonymisation of personal data",
+            "label_nl": "Anonimisering van persoonsgegevens",
+            "default_selected": false,
+            "question": 34
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 98,
+        "fields": {
+            "label": "Pseudonymisation of personal data",
+            "label_en": "Pseudonymisation of personal data",
+            "label_nl": "Pseudonimisering van persoonsgegevens",
+            "default_selected": false,
+            "question": 34
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 99,
+        "fields": {
+            "label": "Separate storage of pseudonymised personal data and decryption files",
+            "label_en": "Separate storage of pseudonymised personal data and decryption files",
+            "label_nl": "Gescheiden opslag van gepseudonimiseerde persoonsgegevens en sleutelbestanden",
+            "default_selected": false,
+            "question": 34
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 100,
+        "fields": {
+            "label": "Deletion of recordings after transcription",
+            "label_en": "Deletion of recordings after transcription",
+            "label_nl": "Verwijdering van opnames na transcriptie",
+            "default_selected": false,
+            "question": 34
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 101,
+        "fields": {
+            "label": "Password protocol",
+            "label_en": "Password protocol",
+            "label_nl": "Wachtwoordprotocol",
+            "default_selected": false,
+            "question": 34
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 102,
+        "fields": {
+            "label": "Conversation or interview protocol",
+            "label_en": "Conversation or interview protocol",
+            "label_nl": "Gespreks- of interviewprotocol",
+            "default_selected": false,
+            "question": 34
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 103,
+        "fields": {
+            "label": "Security protocol signed by project members",
+            "label_en": "Security protocol signed by project members",
+            "label_nl": "Door projectmedewerkers ondertekend beveiligingsprotocol",
+            "default_selected": false,
+            "question": 34
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 104,
+        "fields": {
+            "label": "Processing agreement with external processors",
+            "label_en": "Processing agreement with external processors",
+            "label_nl": "Verwerkersovereenkomsten met externe verwerkers",
+            "default_selected": false,
+            "question": 34
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 105,
+        "fields": {
+            "label": "Data supply agreements between external suppliers and/or data recipients",
+            "label_en": "Data supply agreements between external suppliers and/or data recipients",
+            "label_nl": "Dataleveringsovereenkomsten met externe leveranciers en/of ontvangers van data",
+            "default_selected": false,
+            "question": 34
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 106,
+        "fields": {
+            "label": "Co-responsibility agreements between project partners",
+            "label_en": "Co-responsibility agreements between project partners",
+            "label_nl": "Gezamenlijk-verantwoordelijken overeenkomsten met projectpartners",
+            "default_selected": false,
+            "question": 34
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 107,
+        "fields": {
+            "label": "\"Chinese wall\" between parts of the organisation",
+            "label_en": "\"Chinese wall\" between parts of the organisation",
+            "label_nl": "\"Chinese wall\" tussen verschillende delen van de organisatie",
+            "default_selected": false,
+            "question": 34
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 108,
+        "fields": {
+            "label": "\"No access to source data\" arrangement with client or subsidy provider",
+            "label_en": "\"No access to source data\" arrangement with client or subsidy provider",
+            "label_nl": "Regeling \"geen inzage in brondata\" met opdrachtgever of subsidieverstrekker",
+            "default_selected": false,
+            "question": 34
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 109,
+        "fields": {
+            "label": "Back-up policy for research data",
+            "label_en": "Back-up policy for research data",
+            "label_nl": "Backupbeleid voor data",
+            "default_selected": false,
+            "question": 34
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 110,
+        "fields": {
+            "label": "Physical access control",
+            "label_en": "Physical access control",
+            "label_nl": "Controle van fysieke toegang tot bepaalde ruimtes",
+            "default_selected": false,
+            "question": 34
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 111,
+        "fields": {
+            "label": "Processing of sensitive data according to the \"four-eyes principle\"",
+            "label_en": "Processing of sensitive data according to the \"four-eyes principle\"",
+            "label_nl": "Verwerking van gevoelige gegevens volgens het \"vier-ogen-principe\"",
+            "default_selected": false,
+            "question": 34
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 112,
+        "fields": {
+            "label": "Other (please specify)",
+            "label_en": "Other (please specify)",
+            "label_nl": "Anders, namelijk:",
+            "default_selected": false,
+            "question": 34
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 113,
+        "fields": {
+            "label": "Data about someone's race, racial identity or ethnicity",
+            "label_en": "Data about someone's race, racial identity or ethnicity",
+            "label_nl": "Gegevens over ras, raciale identiteit of etnische afkomst",
+            "default_selected": false,
+            "question": 39
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 114,
+        "fields": {
+            "label": "Data about someone's political opinions",
+            "label_en": "Data about someone's political opinions",
+            "label_nl": "Gegevens over politieke opvattingen",
+            "default_selected": false,
+            "question": 39
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 115,
+        "fields": {
+            "label": "Data about someone's religious or philosophical convictions",
+            "label_en": "Data about someone's religious or philosophical convictions",
+            "label_nl": "Gegevens over religieuze of levensbeschouwelijke overtuigingen",
+            "default_selected": false,
+            "question": 39
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 116,
+        "fields": {
+            "label": "Biometrical data (intended for the unique identification of a person)",
+            "label_en": "Biometrical data (intended for the unique identification of a person)",
+            "label_nl": "Biometrische gegevens (met het oog op de unieke identificatie van een persoon)",
+            "default_selected": false,
+            "question": 39
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 117,
+        "fields": {
+            "label": "Data about someone's trade union membership",
+            "label_en": "Data about someone's trade union membership",
+            "label_nl": "Gegevens over vakbondslidmaatschap",
+            "default_selected": false,
+            "question": 39
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 118,
+        "fields": {
+            "label": "Genetic data",
+            "label_en": "Genetic data",
+            "label_nl": "Genetische gegevens",
+            "default_selected": false,
+            "question": 39
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 119,
+        "fields": {
+            "label": "Data about someone's health",
+            "label_en": "Data about someone's health",
+            "label_nl": "Gegevens over gezondheid",
+            "default_selected": false,
+            "question": 39
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 120,
+        "fields": {
+            "label": "Data about someone's sexual behaviour or orientation",
+            "label_en": "Data about someone's sexual behaviour or orientation",
+            "label_nl": "Gegevens over iemands seksueel gedrag of seksuele geaardheid",
+            "default_selected": false,
+            "question": 39
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 121,
+        "fields": {
+            "label": "The special personal data have clearly been made public by the data subjects themselves.",
+            "label_en": "The special personal data have clearly been made public by the data subjects themselves.",
+            "label_nl": "De bijzondere persoonsgegevens zijn overduidelijk openbaar gemaakt door de betrokkenen zelf.",
+            "default_selected": false,
+            "question": 42
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 122,
+        "fields": {
+            "label": "Asking for consent is so difficult and/or time-consuming that it would jeopardize the entire study. (Please explain.)",
+            "label_en": "Asking for consent is so difficult and/or time-consuming that it would jeopardize the entire study. (Please explain.)",
+            "label_nl": "Het vragen om toestemming is zo moeilijk en/of tijdrovend dat het hele onderzoek erdoor in gevaar zou komen.",
+            "default_selected": false,
+            "question": 42
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 123,
+        "fields": {
+            "label": "The processing of special personal data is necessary for an important public interest stated in the law, namely. (Please explain.)",
+            "label_en": "The processing of special personal data is necessary for an important public interest stated in the law, namely. (Please explain.)",
+            "label_nl": "De verwerking van de bijzondere persoonsgegevens is noodzakelijk voor een zwaarwegend algemeen belang dat in de wet wordt genoemd, te weten:",
+            "default_selected": false,
+            "question": 42
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 124,
+        "fields": {
+            "label": "Financial data of identified/identifiable participants.",
+            "label_en": "Financial data of identified/identifiable participants.",
+            "label_nl": "Financiële gegevens van geïdentificeerde of identificeerbare deelnemers.",
+            "default_selected": false,
+            "question": 44
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 125,
+        "fields": {
+            "label": "Criminal history data (criminal convictions or offences).",
+            "label_en": "Criminal history data (criminal convictions or offences).",
+            "label_nl": "Gegevens over het strafrechtelijk verleden (strafrechtelijke veroordelingen of strafbare feiten) van deelnemers.",
+            "default_selected": false,
+            "question": 44
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 126,
+        "fields": {
+            "label": "All or some participants are children aged 0-15.",
+            "label_en": "All or some participants are children aged 0-15.",
+            "label_nl": "Alle deelnemers, of een aantal van hen, zijn kinderen van 0 t/m 15 jaar.",
+            "default_selected": false,
+            "question": 44
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 127,
+        "fields": {
+            "label": "None.",
+            "label_en": "None.",
+            "label_nl": "Geen.",
+            "default_selected": false,
+            "question": 44
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 128,
+        "fields": {
+            "label": "Name",
+            "label_en": "Name",
+            "label_nl": "Naam",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 129,
+        "fields": {
+            "label": "Address details",
+            "label_en": "Address details",
+            "label_nl": "Adresgegevens",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 130,
+        "fields": {
+            "label": "Email address",
+            "label_en": "Email address",
+            "label_nl": "E-mailadres",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 131,
+        "fields": {
+            "label": "Age / date of birth / year of birth",
+            "label_en": "Age / date of birth / year of birth",
+            "label_nl": "Leeftijd / geboortedatum / geboortejaar",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 132,
+        "fields": {
+            "label": "Age over/under 16",
+            "label_en": "Age over/under 16",
+            "label_nl": "Ouder/jonger dan 16",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 133,
+        "fields": {
+            "label": "Place/country of birth",
+            "label_en": "Place/country of birth",
+            "label_nl": "Geboorteplaats/-land",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 134,
+        "fields": {
+            "label": "Sex",
+            "label_en": "Sex",
+            "label_nl": "Geslacht",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 135,
+        "fields": {
+            "label": "Education level",
+            "label_en": "Education level",
+            "label_nl": "Opleiding",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 136,
+        "fields": {
+            "label": "Occupation",
+            "label_en": "Occupation",
+            "label_nl": "Functie",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 137,
+        "fields": {
+            "label": "IP address",
+            "label_en": "IP address",
+            "label_nl": "IP-adres",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 138,
+        "fields": {
+            "label": "Answers provided by the participant",
+            "label_en": "Answers provided by the participant",
+            "label_nl": "Door de deelnemer zelf ingevulde antwoorden op vragen",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 139,
+        "fields": {
+            "label": "Notes written by the researcher",
+            "label_en": "Notes written by the researcher",
+            "label_nl": "Door de onderzoeker gemaakte notities",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 140,
+        "fields": {
+            "label": "Photos",
+            "label_en": "Photos",
+            "label_nl": "Foto's",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 141,
+        "fields": {
+            "label": "Video recordings of conversations/interviews",
+            "label_en": "Video recordings of conversations/interviews",
+            "label_nl": "Video-opnamen van gesprekken/interviews",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 142,
+        "fields": {
+            "label": "Audio recordings of conversations/interviews",
+            "label_en": "Audio recordings of conversations/interviews",
+            "label_nl": "Geluidsopnamen van gesprekken/interviews",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 143,
+        "fields": {
+            "label": "Other video recordings",
+            "label_en": "Other video recordings",
+            "label_nl": "Overige video-opnamen",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 144,
+        "fields": {
+            "label": "Other audio recordings",
+            "label_en": "Other audio recordings",
+            "label_nl": "Overige geluidsopnamen",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 145,
+        "fields": {
+            "label": "Behavioural data",
+            "label_en": "Behavioural data",
+            "label_nl": "Gedrag of gedragingen",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 146,
+        "fields": {
+            "label": "Test results",
+            "label_en": "Test results",
+            "label_nl": "Resultaten van tests",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 147,
+        "fields": {
+            "label": "School, study programme or course results",
+            "label_en": "School, study programme or course results",
+            "label_nl": "School-, opleidings- of cursusresultaten",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 148,
+        "fields": {
+            "label": "Social media data",
+            "label_en": "Social media data",
+            "label_nl": "Gegevens op social media",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 149,
+        "fields": {
+            "label": "Consent forms (signed or not)",
+            "label_en": "Consent forms (signed or not)",
+            "label_nl": "Al dan niet ondertekende toestemmingsverklaringen",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 150,
+        "fields": {
+            "label": "Other (please specify)",
+            "label_en": "Other (please specify)",
+            "label_nl": "Anders, namelijk:",
+            "default_selected": false,
+            "question": 45
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 151,
+        "fields": {
+            "label": "GKG",
+            "label_en": "GKG",
+            "label_nl": "GKG",
+            "default_selected": false,
+            "question": 6
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 152,
+        "fields": {
+            "label": "F&R",
+            "label_en": "F&R",
+            "label_nl": "F&R",
+            "default_selected": false,
+            "question": 6
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 153,
+        "fields": {
+            "label": "MCW",
+            "label_en": "MCW",
+            "label_nl": "MCW",
+            "default_selected": false,
+            "question": 6
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 154,
+        "fields": {
+            "label": "School of Law",
+            "label_en": "School of Law",
+            "label_nl": "Rechtsgeleerdheid",
+            "default_selected": false,
+            "question": 47
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 155,
+        "fields": {
+            "label": "School of Economics (U.S.E.)",
+            "label_en": "School of Economics (U.S.E.)",
+            "label_nl": "Economie (U.S.E.)",
+            "default_selected": false,
+            "question": 47
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 156,
+        "fields": {
+            "label": "School of Governance (USG)",
+            "label_en": "School of Governance (USG)",
+            "label_nl": "Bestuurs- en Organisatiewetenschap (USG)",
+            "default_selected": false,
+            "question": 47
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
+        "pk": 12,
+        "fields": {
+            "basequestion_ptr": 12,
+            "default_value": false
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
+        "pk": 21,
+        "fields": {
+            "basequestion_ptr": 21,
+            "default_value": false
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
+        "pk": 2,
+        "fields": {
+            "basequestion_ptr": 2,
+            "default_value": false
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
+        "pk": 37,
+        "fields": {
+            "basequestion_ptr": 37,
+            "default_value": false
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
+        "pk": 18,
+        "fields": {
+            "basequestion_ptr": 18,
+            "default_value": true
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
+        "pk": 23,
+        "fields": {
+            "basequestion_ptr": 23,
+            "default_value": false
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
+        "pk": 40,
+        "fields": {
+            "basequestion_ptr": 40,
+            "default_value": true
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
+        "pk": 19,
+        "fields": {
+            "basequestion_ptr": 19,
+            "default_value": true
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
+        "pk": 20,
+        "fields": {
+            "basequestion_ptr": 20,
+            "default_value": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 36,
+        "fields": {
+            "basequestion_ptr": 36,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 9,
+        "fields": {
+            "basequestion_ptr": 9,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 14,
+        "fields": {
+            "basequestion_ptr": 14,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 26,
+        "fields": {
+            "basequestion_ptr": 26,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 1,
+        "fields": {
+            "basequestion_ptr": 1,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 3,
+        "fields": {
+            "basequestion_ptr": 3,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 22,
+        "fields": {
+            "basequestion_ptr": 22,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 27,
+        "fields": {
+            "basequestion_ptr": 27,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 13,
+        "fields": {
+            "basequestion_ptr": 13,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 15,
+        "fields": {
+            "basequestion_ptr": 15,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 4,
+        "fields": {
+            "basequestion_ptr": 4,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 28,
+        "fields": {
+            "basequestion_ptr": 28,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 29,
+        "fields": {
+            "basequestion_ptr": 29,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 16,
+        "fields": {
+            "basequestion_ptr": 16,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 30,
+        "fields": {
+            "basequestion_ptr": 30,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 25,
+        "fields": {
+            "basequestion_ptr": 25,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 41,
+        "fields": {
+            "basequestion_ptr": 41,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 17,
+        "fields": {
+            "basequestion_ptr": 17,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 31,
+        "fields": {
+            "basequestion_ptr": 31,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 43,
+        "fields": {
+            "basequestion_ptr": 43,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 32,
+        "fields": {
+            "basequestion_ptr": 32,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 38,
+        "fields": {
+            "basequestion_ptr": 38,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 46,
+        "fields": {
+            "basequestion_ptr": 46,
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.numberquestion",
+        "pk": 11,
+        "fields": {
+            "basequestion_ptr": 11,
+            "positive_only": true
+        }
+    },
+    {
+        "model": "form.datequestion",
+        "pk": 7,
+        "fields": {
+            "basequestion_ptr": 7,
+            "future_only": false
+        }
+    },
+    {
+        "model": "form.datequestion",
+        "pk": 8,
+        "fields": {
+            "basequestion_ptr": 8,
+            "future_only": false
+        }
+    },
+    {
+        "model": "form.fileuploadquestion",
+        "pk": 35,
+        "fields": {
+            "basequestion_ptr": 35,
+            "size_limit": 500
+        }
+    },
+    {
+        "model": "form.stepcondition",
+        "pk": 2,
+        "fields": {
+            "trigger_question": 11,
+            "condition_type": "repeat_dynamic",
+            "trigger_value": {},
+            "repeat_count": null,
+            "use_answer_as_count": true,
+            "target_step": 7
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 1,
+        "fields": {
+            "trigger_question": 2,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": false
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 3
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 3,
+        "fields": {
+            "trigger_question": 5,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "67"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 6
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 4,
+        "fields": {
+            "trigger_question": 18,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": false
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 15
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 5,
+        "fields": {
+            "trigger_question": 19,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": false
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 17
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 6,
+        "fields": {
+            "trigger_question": 20,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": true
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 38
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 7,
+        "fields": {
+            "trigger_question": 21,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": true
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 22
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 8,
+        "fields": {
+            "trigger_question": 23,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": true
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 25
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 9,
+        "fields": {
+            "trigger_question": 23,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": true
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 24
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 10,
+        "fields": {
+            "trigger_question": 21,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": true
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 23
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 11,
+        "fields": {
+            "trigger_question": 40,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": true
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 41
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 12,
+        "fields": {
+            "trigger_question": 40,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": false
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 42
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 13,
+        "fields": {
+            "trigger_question": 40,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": false
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 43
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 14,
+        "fields": {
+            "trigger_question": 45,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "150"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 46
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 15,
+        "fields": {
+            "trigger_question": 5,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "70"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 47
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 17,
+        "fields": {
+            "trigger_question": 12,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": true
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 11
+        }
+    }
+]
