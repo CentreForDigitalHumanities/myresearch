@@ -55,7 +55,7 @@ class StepInfoTextInline(admin.StackedInline):
 class SelectOptionInline(admin.TabularInline):
     model = SelectOption
     extra = 0
-    fields = ("label", "default_selected")
+    fields = ("label", "label_nl", "label_en", "default_selected")
 
 
 class StepConditionInline(admin.StackedInline):
@@ -96,8 +96,8 @@ class QuestionResponseInline(admin.TabularInline):
 class QuestionInline(admin.TabularInline):
     model = BaseQuestion
     extra = 0
-    fields = ("id", "text", "required", "description")
-    readonly_fields = ("id", "text", "required", "description")
+    fields = ("id", "text_nl", "text_en", "required", "description_nl", "description_en")
+    readonly_fields = ("id", "text_nl", "text_en", "required", "description_nl", "description_en")
     can_delete = False
     show_change_link = True
     verbose_name = "Question"
