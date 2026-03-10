@@ -253,6 +253,7 @@ class BaseCondition(models.Model):
     )
 
     # Check out form/README.md for more information on how to format this field.
+    # blank=True is necessary to ensure {} is correctly accepted as valid JSON.
     trigger_value = models.JSONField(blank=True)
 
     # For (static) 'repeat' type: how many times should the target be repeated.
