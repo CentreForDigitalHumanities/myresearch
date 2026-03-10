@@ -924,36 +924,6 @@
         }
     },
     {
-        "model": "form.basequestion",
-        "pk": 48,
-        "fields": {
-            "text": "Explanation",
-            "text_en": "Explanation",
-            "text_nl": "Toelichting",
-            "step": 11,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": false,
-            "_order": 1
-        }
-    },
-    {
-        "model": "form.basequestion",
-        "pk": 49,
-        "fields": {
-            "text": "Explanation",
-            "text_en": "Explanation",
-            "text_nl": "Toelichting",
-            "step": 11,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": false,
-            "_order": 3
-        }
-    },
-    {
         "model": "form.selectquestion",
         "pk": 10,
         "fields": {
@@ -2509,34 +2479,6 @@
             "repeat_count": null,
             "use_answer_as_count": false,
             "target_question": 11
-        }
-    },
-    {
-        "model": "form.questioncondition",
-        "pk": 18,
-        "fields": {
-            "trigger_question": 33,
-            "condition_type": "show",
-            "trigger_value": {
-                "value": "96"
-            },
-            "repeat_count": null,
-            "use_answer_as_count": false,
-            "target_question": 48
-        }
-    },
-    {
-        "model": "form.questioncondition",
-        "pk": 19,
-        "fields": {
-            "trigger_question": 34,
-            "condition_type": "show",
-            "trigger_value": {
-                "value": "112"
-            },
-            "repeat_count": null,
-            "use_answer_as_count": false,
-            "target_question": 49
         }
     }
 ]
