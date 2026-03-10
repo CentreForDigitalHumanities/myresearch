@@ -99,7 +99,7 @@
             "name_nl": "Datasubjecten",
             "description": "In this step you will be asked to indicate which categories of data subjects play a role in your research project.\r\n\r\nFor each category of data subjects, we ask two questions:\r\n1. Why is it necessary to collect personal data?\r\n2. Which specific categories of personal data you will be processing?\r\n\r\nIf you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.",
             "description_en": "In this step you will be asked to indicate which categories of data subjects play a role in your research project.\r\n\r\nFor each category of data subjects, we ask two questions:\r\n1. Why is it necessary to collect personal data?\r\n2. Which specific categories of personal data you will be processing?\r\n\r\nIf you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.",
-            "description_nl": "In deze stap geef je op welke categorieën betrokken mensen een rol spelen in je onderzoeksproject. \r\n\r\nPer categorie betrokken mensen vragen we twee dingen:\r\n1. Waarom het noodzakelijk is om persoonsgegevens te verzamelen.\r\n2. Welke specifieke categorieën persoonsgegevens je gaat verwerken.\r\n\r\nAls je in de vorige vraag meerdere categorieën betrokkenen hebt opgegeven, wordt je dus gevraagd om voor élk van die categorieën informatie op te geven.",
+            "description_nl": "In deze stap geef je op welke categorieën betrokken mensen een rol spelen in je onderzoeksproject. \r\n\r\nPer categorie betrokken mensen vragen we twee dingen:\r\n1. Waarom het noodzakelijk is om persoonsgegevens te verzamelen.\r\n2. Welke specifieke categorieën persoonsgegevens je gaat verwerken.\r\n\r\nAls je in de vorige vraag meerdere categorieën betrokkenen hebt opgegeven, wordt je dus gevraagd om voor elk van die categorieën informatie op te geven.",
             "slug": "data-subjects",
             "form": 2,
             "parent": null,
@@ -725,7 +725,7 @@
             "description_en": "",
             "description_nl": "",
             "required": false,
-            "_order": 1
+            "_order": 2
         }
     },
     {
@@ -785,7 +785,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 8
+            "_order": 7
         }
     },
     {
@@ -924,26 +924,60 @@
         }
     },
     {
-        "model": "form.selectquestion",
-        "pk": 10,
+        "model": "form.basequestion",
+        "pk": 48,
         "fields": {
-            "basequestion_ptr": 10,
-            "multiple": false
+            "text": "Explanation",
+            "text_en": "Explanation",
+            "text_nl": "Toelichting",
+            "step": 11,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 49,
+        "fields": {
+            "text": "Explanation",
+            "text_en": "Explanation",
+            "text_nl": "Toelichting",
+            "step": 11,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 3
         }
     },
     {
         "model": "form.selectquestion",
         "pk": 33,
         "fields": {
-            "basequestion_ptr": 33,
             "multiple": true
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 10,
+        "fields": {
+            "multiple": false
         }
     },
     {
         "model": "form.selectquestion",
         "pk": 5,
         "fields": {
-            "basequestion_ptr": 5,
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 6,
+        "fields": {
             "multiple": false
         }
     },
@@ -951,23 +985,13 @@
         "model": "form.selectquestion",
         "pk": 34,
         "fields": {
-            "basequestion_ptr": 34,
             "multiple": true
-        }
-    },
-    {
-        "model": "form.selectquestion",
-        "pk": 6,
-        "fields": {
-            "basequestion_ptr": 6,
-            "multiple": false
         }
     },
     {
         "model": "form.selectquestion",
         "pk": 39,
         "fields": {
-            "basequestion_ptr": 39,
             "multiple": false
         }
     },
@@ -975,7 +999,6 @@
         "model": "form.selectquestion",
         "pk": 47,
         "fields": {
-            "basequestion_ptr": 47,
             "multiple": false
         }
     },
@@ -983,7 +1006,6 @@
         "model": "form.selectquestion",
         "pk": 24,
         "fields": {
-            "basequestion_ptr": 24,
             "multiple": false
         }
     },
@@ -991,7 +1013,6 @@
         "model": "form.selectquestion",
         "pk": 42,
         "fields": {
-            "basequestion_ptr": 42,
             "multiple": false
         }
     },
@@ -999,7 +1020,6 @@
         "model": "form.selectquestion",
         "pk": 44,
         "fields": {
-            "basequestion_ptr": 44,
             "multiple": false
         }
     },
@@ -1007,7 +1027,6 @@
         "model": "form.selectquestion",
         "pk": 45,
         "fields": {
-            "basequestion_ptr": 45,
             "multiple": true
         }
     },
@@ -1906,15 +1925,6 @@
         "model": "form.truefalsequestion",
         "pk": 12,
         "fields": {
-            "basequestion_ptr": 12,
-            "default_value": false
-        }
-    },
-    {
-        "model": "form.truefalsequestion",
-        "pk": 21,
-        "fields": {
-            "basequestion_ptr": 21,
             "default_value": false
         }
     },
@@ -1922,15 +1932,13 @@
         "model": "form.truefalsequestion",
         "pk": 2,
         "fields": {
-            "basequestion_ptr": 2,
             "default_value": false
         }
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 37,
+        "pk": 21,
         "fields": {
-            "basequestion_ptr": 37,
             "default_value": false
         }
     },
@@ -1938,15 +1946,20 @@
         "model": "form.truefalsequestion",
         "pk": 18,
         "fields": {
-            "basequestion_ptr": 18,
             "default_value": true
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
+        "pk": 37,
+        "fields": {
+            "default_value": false
         }
     },
     {
         "model": "form.truefalsequestion",
         "pk": 23,
         "fields": {
-            "basequestion_ptr": 23,
             "default_value": false
         }
     },
@@ -1954,7 +1967,6 @@
         "model": "form.truefalsequestion",
         "pk": 40,
         "fields": {
-            "basequestion_ptr": 40,
             "default_value": true
         }
     },
@@ -1962,7 +1974,6 @@
         "model": "form.truefalsequestion",
         "pk": 19,
         "fields": {
-            "basequestion_ptr": 19,
             "default_value": true
         }
     },
@@ -1970,37 +1981,23 @@
         "model": "form.truefalsequestion",
         "pk": 20,
         "fields": {
-            "basequestion_ptr": 20,
             "default_value": false
         }
     },
     {
         "model": "form.textquestion",
-        "pk": 36,
+        "pk": 1,
         "fields": {
-            "basequestion_ptr": 36,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5
+            "lines": 1
         }
     },
     {
         "model": "form.textquestion",
         "pk": 9,
         "fields": {
-            "basequestion_ptr": 9,
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 14,
-        "fields": {
-            "basequestion_ptr": 14,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
@@ -2011,7 +2008,6 @@
         "model": "form.textquestion",
         "pk": 26,
         "fields": {
-            "basequestion_ptr": 26,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
@@ -2020,42 +2016,28 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 1,
+        "pk": 14,
         "fields": {
-            "basequestion_ptr": 1,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 36,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
         }
     },
     {
         "model": "form.textquestion",
         "pk": 3,
         "fields": {
-            "basequestion_ptr": 3,
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 22,
-        "fields": {
-            "basequestion_ptr": 22,
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 27,
-        "fields": {
-            "basequestion_ptr": 27,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
@@ -2066,7 +2048,6 @@
         "model": "form.textquestion",
         "pk": 13,
         "fields": {
-            "basequestion_ptr": 13,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
@@ -2075,9 +2056,38 @@
     },
     {
         "model": "form.textquestion",
+        "pk": 22,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 48,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 27,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
         "pk": 15,
         "fields": {
-            "basequestion_ptr": 15,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
@@ -2088,7 +2098,6 @@
         "model": "form.textquestion",
         "pk": 4,
         "fields": {
-            "basequestion_ptr": 4,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
@@ -2099,18 +2108,6 @@
         "model": "form.textquestion",
         "pk": 28,
         "fields": {
-            "basequestion_ptr": 28,
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 29,
-        "fields": {
-            "basequestion_ptr": 29,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
@@ -2121,7 +2118,6 @@
         "model": "form.textquestion",
         "pk": 16,
         "fields": {
-            "basequestion_ptr": 16,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
@@ -2130,9 +2126,28 @@
     },
     {
         "model": "form.textquestion",
+        "pk": 29,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 49,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
         "pk": 30,
         "fields": {
-            "basequestion_ptr": 30,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
@@ -2143,7 +2158,6 @@
         "model": "form.textquestion",
         "pk": 25,
         "fields": {
-            "basequestion_ptr": 25,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
@@ -2154,7 +2168,6 @@
         "model": "form.textquestion",
         "pk": 41,
         "fields": {
-            "basequestion_ptr": 41,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
@@ -2165,7 +2178,6 @@
         "model": "form.textquestion",
         "pk": 17,
         "fields": {
-            "basequestion_ptr": 17,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
@@ -2176,7 +2188,6 @@
         "model": "form.textquestion",
         "pk": 31,
         "fields": {
-            "basequestion_ptr": 31,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
@@ -2187,7 +2198,6 @@
         "model": "form.textquestion",
         "pk": 43,
         "fields": {
-            "basequestion_ptr": 43,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
@@ -2198,7 +2208,6 @@
         "model": "form.textquestion",
         "pk": 32,
         "fields": {
-            "basequestion_ptr": 32,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
@@ -2209,7 +2218,6 @@
         "model": "form.textquestion",
         "pk": 38,
         "fields": {
-            "basequestion_ptr": 38,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
@@ -2220,7 +2228,6 @@
         "model": "form.textquestion",
         "pk": 46,
         "fields": {
-            "basequestion_ptr": 46,
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
@@ -2231,7 +2238,6 @@
         "model": "form.numberquestion",
         "pk": 11,
         "fields": {
-            "basequestion_ptr": 11,
             "positive_only": true
         }
     },
@@ -2239,7 +2245,6 @@
         "model": "form.datequestion",
         "pk": 7,
         "fields": {
-            "basequestion_ptr": 7,
             "future_only": false
         }
     },
@@ -2247,7 +2252,6 @@
         "model": "form.datequestion",
         "pk": 8,
         "fields": {
-            "basequestion_ptr": 8,
             "future_only": false
         }
     },
@@ -2255,7 +2259,6 @@
         "model": "form.fileuploadquestion",
         "pk": 35,
         "fields": {
-            "basequestion_ptr": 35,
             "size_limit": 500
         }
     },
@@ -2479,6 +2482,34 @@
             "repeat_count": null,
             "use_answer_as_count": false,
             "target_question": 11
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 18,
+        "fields": {
+            "trigger_question": 33,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "96"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 48
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 19,
+        "fields": {
+            "trigger_question": 34,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "112"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 49
         }
     }
 ]
