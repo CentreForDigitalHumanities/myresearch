@@ -63,34 +63,34 @@ class TestFormEvaluatorCheckTriggerValue:
             is True
         )
 
-    def test_option_ids_with_single_option(self, form, test_user):
-        """Test option_ids matching with single select."""
+    def test_value_matching_with_single_option(self, form, test_user):
+        """Test value matching with single select."""
         evaluator = FormEvaluator(form, test_user)
 
         assert (
             evaluator.check_trigger_value(
-                answer={"option_ids": [1]},
-                trigger_value={"option_ids": [1]},
+                answer={"value": [1]},
+                trigger_value={"value": [1]},
             )
             is True
         )
         assert (
             evaluator.check_trigger_value(
-                answer={"option_ids": [5]},
-                trigger_value={"option_ids": [1]},
+                answer={"value": [5]},
+                trigger_value={"value": [1]},
             )
             is False
         )
 
-    def test_option_ids_with_multiple_options(self, form, test_user):
-        """Test option_ids matching with multiple select."""
+    def test_value_matching_with_multiple_options(self, form, test_user):
+        """Test value matching with multiple select."""
         evaluator = FormEvaluator(form, test_user)
 
         # Complete match
         assert (
             evaluator.check_trigger_value(
-                answer={"option_ids": [1, 2, 3]},
-                trigger_value={"option_ids": [1, 2, 3]},
+                answer={"value": [1, 2, 3]},
+                trigger_value={"value": [1, 2, 3]},
             )
             is True
         )
@@ -98,8 +98,8 @@ class TestFormEvaluatorCheckTriggerValue:
         # Answer has extra value: condition is met.
         assert (
             evaluator.check_trigger_value(
-                answer={"option_ids": [1, 2, 3]},
-                trigger_value={"option_ids": [1, 2]},
+                answer={"value": [1, 2, 3]},
+                trigger_value={"value": [1, 2]},
             )
             is True
         )
@@ -107,8 +107,8 @@ class TestFormEvaluatorCheckTriggerValue:
         # Answer lacks one value: condition is not met.
         assert (
             evaluator.check_trigger_value(
-                answer={"option_ids": [1, 2]},
-                trigger_value={"option_ids": [1, 2, 3]},
+                answer={"value": [1, 2]},
+                trigger_value={"value": [1, 2, 3]},
             )
             is False
         )
@@ -265,13 +265,13 @@ class TestFormEvaluatorQuestionConditions:
             target_question=target_question,
             trigger_question=select_trigger,
             condition_type="show",
-            trigger_value={"option_ids": [option1.pk, option2.pk]},
+            trigger_value={"value": [option1.pk, option2.pk]},
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
         qr = QuestionResponse.objects.create(
             question=select_trigger,
-            answer={"option_ids": [option1.pk, option2.pk]},
+            answer={"value": [option1.pk, option2.pk]},
         )
         qr.submissions.add(submission)
 

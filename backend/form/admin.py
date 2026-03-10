@@ -156,6 +156,13 @@ class StepAdmin(admin.ModelAdmin):
                 "description": "Set the display order of questions. Use the question IDs shown in the Questions inline below.",
             },
         ),
+        (
+            "Substep Order",
+            {
+                "fields": ("substep_order",),
+                "description": "Set the display order of substeps. Use the substep IDs shown in the Substeps inline below.",
+            },
+        ),
     )
     inlines = [
         SubstepInline,

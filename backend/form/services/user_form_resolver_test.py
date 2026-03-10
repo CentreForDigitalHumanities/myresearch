@@ -338,7 +338,7 @@ class TestComplexConditionScenarios:
             target_question=target,
             trigger_question=select_question,
             condition_type="show",
-            trigger_value={"option_ids": [option_1.pk, option_2.pk]},
+            trigger_value={"value": [option_1.pk, option_2.pk]},
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
@@ -346,7 +346,7 @@ class TestComplexConditionScenarios:
         # User selects option 3 only.
         qr = QuestionResponse.objects.create(
             question=select_question,
-            answer={"option_ids": [option_3.pk]},
+            answer={"value": [option_3.pk]},
         )
         qr.submissions.add(submission)
 
@@ -355,7 +355,7 @@ class TestComplexConditionScenarios:
 
         # All options in the condition are selected.
         QuestionResponse.objects.filter(question=select_question).update(
-            answer={"option_ids": [option_1.pk, option_2.pk]}
+            answer={"value": [option_1.pk, option_2.pk]}
         )
         evaluator._responses_cache = None  # Clear cache
 
@@ -363,7 +363,7 @@ class TestComplexConditionScenarios:
 
         # User selects all options.
         QuestionResponse.objects.filter(question=select_question).update(
-            answer={"option_ids": [option_1.pk, option_2.pk, option_3.pk]}
+            answer={"value": [option_1.pk, option_2.pk, option_3.pk]}
         )
         evaluator._responses_cache = None  # Clear cache
 

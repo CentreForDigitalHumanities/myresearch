@@ -16,7 +16,7 @@ User = get_user_model()
 
 UserType = type[User]
 
-# How often we will allow a question or step to be repeated
+# How often we will allow a question or step to be repeated.
 MAX_REPEAT_LIMIT = 10
 
 
@@ -94,15 +94,22 @@ class FormEvaluator:
             return answer.get("value", 0) <= trigger_value[VK.MAX]
         if VK.EXACT in trigger_value:
             return answer.get("value") == trigger_value[VK.EXACT]
-        # Select option checks -- currently: the check passes if *all* of the
-        # trigger_value's ids are in the list of ids in the answer.
-        if VK.OPTION_IDS in trigger_value:
-            user_option_ids = answer.get(VK.OPTION_IDS, [])
-            return all(opt in user_option_ids for opt in trigger_value[VK.OPTION_IDS])
 
         # Direct value match (for booleans, strings, etc.)
         if VK.VALUE in trigger_value:
-            return answer.get("value") == trigger_value[VK.VALUE]
+            match_value = trigger_value[VK.VALUE]
+            user_answer = answer.get("value")
+
+            # Convert to strings for comparison
+            match_value_str = str(match_value)
+            if user_answer is None:
+                return False
+            user_answer_str = str(user_answer)
+
+            match_value_list = [v.strip() for v in match_value_str.split(",")]
+            user_answer_list = [v.strip() for v in user_answer_str.split(",")]
+
+            return all(val in user_answer_list for val in match_value_list)
 
         return False
 
