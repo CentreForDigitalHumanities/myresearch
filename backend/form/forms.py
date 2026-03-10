@@ -37,10 +37,12 @@ class StepAdminForm(ModelForm):
             current_order = self.instance.get_basequestion_order()
             if current_order:
                 self.initial["question_order"] = ",".join(map(str, current_order))
-            
+
             current_substep_order = self.instance.get_step_order()
             if current_substep_order:
-                self.initial["substep_order"] = ",".join(map(str, current_substep_order))
+                self.initial["substep_order"] = ",".join(
+                    map(str, current_substep_order)
+                )
 
     def clean_question_order(self):
         """

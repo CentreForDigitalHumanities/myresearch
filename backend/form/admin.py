@@ -96,8 +96,22 @@ class QuestionResponseInline(admin.TabularInline):
 class QuestionInline(admin.TabularInline):
     model = BaseQuestion
     extra = 0
-    fields = ("id", "text_nl", "text_en", "required", "description_nl", "description_en")
-    readonly_fields = ("id", "text_nl", "text_en", "required", "description_nl", "description_en")
+    fields = (
+        "id",
+        "text_nl",
+        "text_en",
+        "required",
+        "description_nl",
+        "description_en",
+    )
+    readonly_fields = (
+        "id",
+        "text_nl",
+        "text_en",
+        "required",
+        "description_nl",
+        "description_en",
+    )
     can_delete = False
     show_change_link = True
     verbose_name = "Question"

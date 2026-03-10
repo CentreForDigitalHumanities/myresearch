@@ -272,7 +272,7 @@ class BaseCondition(models.Model):
         Returns a constraint to be used by subclasses.
 
         If the condition is a repeat type (either REPEAT or REPEAT_DYNAMIC),
-        a repeat count should be provided or use_answer_as_count should be 
+        a repeat count should be provided or use_answer_as_count should be
         marked as true.
         """
         return models.CheckConstraint(
