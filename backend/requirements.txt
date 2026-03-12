@@ -4,13 +4,11 @@
 #
 #    pip-compile
 #
-ansicon==1.89.0
-    # via jinxed
 asgiref==3.11.0
     # via
     #   django
     #   django-cors-headers
-black==26.1.0
+black==26.3.1
     # via -r requirements.in
 blessed==1.27.0
     # via curtsies
@@ -28,11 +26,6 @@ click==8.3.1
     # via black
 closure==20191111
     # via cdh-django-core
-colorama==0.4.6
-    # via
-    #   click
-    #   pytest
-    #   tqdm
 cryptography==43.0.3
     # via
     #   cdh-django-core
@@ -110,8 +103,6 @@ idna==3.11
     # via requests
 iniconfig==2.3.0
     # via pytest
-jinxed==1.3.0
-    # via blessed
 lesscpy==0.15.1
     # via cdh-django-core
 mypy-extensions==1.1.0
@@ -192,11 +183,6 @@ typing-extensions==4.15.0
     #   graphene
     #   psycopg
     #   psycopg-pool
-tzdata==2025.3
-    # via
-    #   django
-    #   faker
-    #   psycopg
 urllib3==2.6.3
     # via requests
 vbuild==0.8.2
