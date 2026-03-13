@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { TextQuestionWithValue } from "~/composables/useProcessForm";
+import FormLabel from "./FormLabel.vue";
 
 interface Props {
     question: TextQuestionWithValue;
@@ -13,9 +14,7 @@ const modelValue = defineModel<string>();
 
 <template>
     <div>
-        <label :for="`${question.questionId}-${question.repeatIndex}`" class="form-label"
-            >{{ useTranslateableAttribute(question, "text") }}
-        </label>
+        <FormLabel :question="question" />
         <p
             v-if="question.descriptionNl || question.descriptionEn"
             class="text-muted"

@@ -1,3 +1,5 @@
+from django.utils import timezone
+from datetime import timedelta
 import pytest
 
 from form.models import (
@@ -63,34 +65,34 @@ class TestFormEvaluatorCheckTriggerValue:
             is True
         )
 
-    def test_option_ids_with_single_option(self, form, test_user):
-        """Test option_ids matching with single select."""
+    def test_value_matching_with_single_option(self, form, test_user):
+        """Test value matching with single select."""
         evaluator = FormEvaluator(form, test_user)
 
         assert (
             evaluator.check_trigger_value(
-                answer={"option_ids": [1]},
-                trigger_value={"option_ids": [1]},
+                answer={"value": [1]},
+                trigger_value={"value": [1]},
             )
             is True
         )
         assert (
             evaluator.check_trigger_value(
-                answer={"option_ids": [5]},
-                trigger_value={"option_ids": [1]},
+                answer={"value": [5]},
+                trigger_value={"value": [1]},
             )
             is False
         )
 
-    def test_option_ids_with_multiple_options(self, form, test_user):
-        """Test option_ids matching with multiple select."""
+    def test_value_matching_with_multiple_options(self, form, test_user):
+        """Test value matching with multiple select."""
         evaluator = FormEvaluator(form, test_user)
 
         # Complete match
         assert (
             evaluator.check_trigger_value(
-                answer={"option_ids": [1, 2, 3]},
-                trigger_value={"option_ids": [1, 2, 3]},
+                answer={"value": "1,2,3"},
+                trigger_value={"value": "1,2,3"},
             )
             is True
         )
@@ -98,8 +100,8 @@ class TestFormEvaluatorCheckTriggerValue:
         # Answer has extra value: condition is met.
         assert (
             evaluator.check_trigger_value(
-                answer={"option_ids": [1, 2, 3]},
-                trigger_value={"option_ids": [1, 2]},
+                answer={"value": "1,2,3"},
+                trigger_value={"value": "1,2"},
             )
             is True
         )
@@ -107,8 +109,8 @@ class TestFormEvaluatorCheckTriggerValue:
         # Answer lacks one value: condition is not met.
         assert (
             evaluator.check_trigger_value(
-                answer={"option_ids": [1, 2]},
-                trigger_value={"option_ids": [1, 2, 3]},
+                answer={"value": "1,2"},
+                trigger_value={"value": "1,2,3"},
             )
             is False
         )
@@ -174,11 +176,11 @@ class TestFormEvaluatorQuestionConditions:
 
         # Create submission and response
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": SPECIFIC_ANSWER},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -212,11 +214,11 @@ class TestFormEvaluatorQuestionConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": "hide_me"},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -239,11 +241,11 @@ class TestFormEvaluatorQuestionConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=bool_trigger,
             answer={"value": True},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -265,15 +267,15 @@ class TestFormEvaluatorQuestionConditions:
             target_question=target_question,
             trigger_question=select_trigger,
             condition_type="show",
-            trigger_value={"option_ids": [option1.pk, option2.pk]},
+            trigger_value={"value": [option1.pk, option2.pk]},
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=select_trigger,
-            answer={"option_ids": [option1.pk, option2.pk]},
+            answer={"value": [option1.pk, option2.pk]},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -296,11 +298,11 @@ class TestFormEvaluatorQuestionConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=number_trigger,
             answer={"value": 7},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -322,11 +324,11 @@ class TestFormEvaluatorQuestionConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": "anything"},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -356,11 +358,11 @@ class TestFormEvaluatorQuestionConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=number_trigger,
             answer={"value": NUMBER_OF_REPEATS},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -369,10 +371,10 @@ class TestFormEvaluatorQuestionConditions:
             == NUMBER_OF_REPEATS
         )
 
-    def test_repeat_dynamic_minimum_is_one(
+    def test_repeat_dynamic_minimum_is_zero(
         self, form, step, test_user, target_question
     ):
-        """Repeat count should be at least 1 even with 0 or negative answer."""
+        """Repeat count should be at least 0 even with a negative answer."""
         number_trigger = NumberQuestion.objects.create(
             text="How many times?",
             step=step,
@@ -387,15 +389,15 @@ class TestFormEvaluatorQuestionConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=number_trigger,
-            answer={"value": 0},
+            answer={"value": -99},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
-        assert evaluator.get_repeat_count_for_question(target_question) == 1
+        assert evaluator.get_repeat_count_for_question(target_question) == 0
 
     def test_no_repeat_condition_returns_one(self, form, test_user, target_question):
         """Question without repeat condition should have repeat count of 1."""
@@ -449,11 +451,11 @@ class TestFormEvaluatorStepConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_q,
             answer={"value": SPECIFIC_ANSWER},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -490,11 +492,11 @@ class TestFormEvaluatorStepConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": SPECIFIC_ANSWER},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -516,11 +518,11 @@ class TestFormEvaluatorStepConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": "trigger"},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -544,18 +546,18 @@ class TestFormEvaluatorStepConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=number_trigger,
             answer={"value": REPEAT_COUNT},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
         assert evaluator.get_repeat_count_for_step(step) == REPEAT_COUNT
 
-    def test_step_repeat_dynamic_minimum_is_one(self, form, step, test_user):
-        """Step repeat count should be at least 1."""
+    def test_step_repeat_dynamic_minimum_is_zero(self, form, step, test_user):
+        """Step repeat count should be at least 0."""
         number_trigger = NumberQuestion.objects.create(
             text="How many steps?",
             step=step,
@@ -570,15 +572,15 @@ class TestFormEvaluatorStepConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=number_trigger,
             answer={"value": -5},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
-        assert evaluator.get_repeat_count_for_step(step) == 1
+        assert evaluator.get_repeat_count_for_step(step) == 0
 
     def test_step_repeate_dynamic_maximum_limit(self, form, step, test_user):
         """Step repeat count should not exceed maximum limit."""
@@ -598,11 +600,11 @@ class TestFormEvaluatorStepConditions:
         )
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=number_trigger,
             answer={"value": EXCESSIVE_COUNT},
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
@@ -637,8 +639,11 @@ class TestFormEvaluatorSubmission:
 
     def test_returns_latest_submission(self, form, test_user):
         """FormEvaluator should return the most recent submission."""
-        # Create older submission
-        UserFormSubmission.objects.create(user=test_user, form=form)
+        # Create older submission with a small delay for consistent testing.
+        older = UserFormSubmission.objects.create(user=test_user, form=form)
+        older.updated_at = timezone.now() - timedelta(days=1)
+        older.save()
+
         # Create newer submission
         newer = UserFormSubmission.objects.create(user=test_user, form=form)
 
@@ -649,17 +654,19 @@ class TestFormEvaluatorSubmission:
     def test_get_user_answer(self, form, test_user, trigger_question):
         """Test get_user_answer retrieves correct answer."""
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": "my answer"},
             repeat_index=0,
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
-        assert evaluator.get_user_answer(trigger_question, 0) == {"value": "my answer"}
-        assert evaluator.get_user_answer(trigger_question, 1) is None
+        response = evaluator.get_user_response(trigger_question, 0)
+        assert response is not None
+        assert response.answer == {"value": "my answer"}
+        assert evaluator.get_user_response(trigger_question, 1) is None
 
     def test_get_user_answer_with_repeat_index(self, form, test_user, trigger_question):
         """Test get_user_answer with different repeat indices."""
@@ -668,22 +675,24 @@ class TestFormEvaluatorSubmission:
         SECOND_ANSWER = "second"
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": FIRST_ANSWER},
             repeat_index=0,
         )
-        QuestionResponse.objects.create(
-            submission=submission,
+        qr.submissions.add(submission)
+        qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": SECOND_ANSWER},
             repeat_index=1,
         )
+        qr.submissions.add(submission)
 
         evaluator = FormEvaluator(form, test_user)
 
-        assert evaluator.get_user_answer(trigger_question, 0) == {"value": FIRST_ANSWER}
-        assert evaluator.get_user_answer(trigger_question, 1) == {
+        assert evaluator.get_user_response(trigger_question, 0).answer == {
+            "value": FIRST_ANSWER
+        }
+        assert evaluator.get_user_response(trigger_question, 1).answer == {
             "value": SECOND_ANSWER
         }

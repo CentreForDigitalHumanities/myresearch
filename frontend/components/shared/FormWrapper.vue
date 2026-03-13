@@ -7,6 +7,9 @@ import MRForm from "./MRForm.vue";
 import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConfig";
 import { useFormState } from "~/composables/useFormState";
 import useVuelidate from "@vuelidate/core";
+import { graphql } from "~/generated/gql";
+import type { UpdateUserFormSubmission } from "~/generated/gql/graphql";
+import { useMutation } from "@vue/apollo-composable";
 
 interface Props {
     queriedForm: QueriedForm;
@@ -14,7 +17,57 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-const { formObject, validationRules } = useFormState(props.queriedForm);
+const queried = computed(() => props.queriedForm);
+const { formObject, validationRules } = useFormState(queried);
+
+const UPDATE_USER_FORM = graphql(`
+    mutation SaveFormSubmission(
+        $submissionId: ID
+        $formConfigId: ID
+        $responses: [ResponseInput!]!
+    ) {
+        updateFormSubmission(
+            userFormInput: {
+                submissionId: $submissionId
+                formConfigId: $formConfigId
+                responses: $responses
+            }
+        ) {
+            ok
+            errors {
+                field
+                messages
+            }
+        }
+    }
+`);
+
+const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
+    UPDATE_USER_FORM,
+    {
+        update: (cache) => {
+            cache.evict({ fieldName: "form" });
+            cache.gc();
+        },
+    },
+);
+
+function submitForm(): void {
+    const formData = formObject.value;
+    if (!formData) {
+        return;
+    }
+
+    const inputData = useFormDataToMutationInput(
+        formData,
+        props.queriedForm.submissionId ?? null,
+        props.queriedForm.formId,
+    );
+
+    mutateForm(inputData).catch((error: unknown) => {
+        console.error("Error updating form:", error);
+    });
+}
 
 const v$ = useVuelidate(
     validationRules,
@@ -96,6 +149,16 @@ function getPreviousStepSlug(): string {
 
     return steps[currentIndex - 1].slug;
 }
+
+/**
+ * Funnel for navigation events from the stepper and navigation buttons.
+ * Submits the form as a side effect and then navigates to the provided slug.
+ * This is also where navigation can be blocked if there are validation errors.
+ */
+function navigateToSlug(slug: string) {
+    submitForm();
+    return navigateTo("/procreg/" + slug);
+}
 </script>
 
 <template>
@@ -104,32 +167,31 @@ function getPreviousStepSlug(): string {
             v-if="formStepperConfig"
             class="col-3 d-lg-block d-none pe-2"
             :stepper-config="formStepperConfig"
+            @step-clicked="navigateToSlug"
         />
         <div class="col-12 col-lg-9">
             <form class="uu-form">
-                <MRForm :step="selectedStep" :vuelidate="v$" />
+                <MRForm
+                    :step="selectedStep"
+                    :vuelidate="v$"
+                    @submit-form="submitForm"
+                />
             </form>
             <div class="btn-group">
-                <NuxtLink
-                    :to="{
-                        name: 'procreg-slug',
-                        params: { slug: getPreviousStepSlug() },
-                    }"
+                <BSButton
+                    variant="primary"
+                    class="btn-arrow-left"
+                    @click="navigateToSlug(getPreviousStepSlug())"
                 >
-                    <BSButton variant="primary" class="btn-arrow-left">
-                        {{ $t("Previous") }}
-                    </BSButton>
-                </NuxtLink>
-                <NuxtLink
-                    :to="{
-                        name: 'procreg-slug',
-                        params: { slug: getNextStepSlug() },
-                    }"
+                    {{ $t("Previous") }}
+                </BSButton>
+                <BSButton
+                    variant="primary"
+                    class="btn-arrow-right"
+                    @click="navigateToSlug(getNextStepSlug())"
                 >
-                    <BSButton variant="primary" class="btn-arrow-right">
-                        {{ $t("Next") }}
-                    </BSButton>
-                </NuxtLink>
+                    {{ $t("Next") }}
+                </BSButton>
             </div>
         </div>
     </div>

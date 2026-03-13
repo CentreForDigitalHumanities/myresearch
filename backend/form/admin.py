@@ -1,9 +1,12 @@
 from django.contrib import admin
+
+from form.forms import StepAdminForm
 from .models import (
     MRForm,
     Step,
     StepInfoQuestion,
     StepInfoText,
+    BaseQuestion,
     SelectQuestion,
     SelectOption,
     TrueFalseQuestion,
@@ -52,7 +55,7 @@ class StepInfoTextInline(admin.StackedInline):
 class SelectOptionInline(admin.TabularInline):
     model = SelectOption
     extra = 0
-    fields = ("label", "default_selected")
+    fields = ("label", "label_nl", "label_en", "default_selected")
 
 
 class StepConditionInline(admin.StackedInline):
@@ -85,11 +88,37 @@ class QuestionConditionInline(admin.StackedInline):
     verbose_name_plural = "Conditions Applied to This Question"
 
 
-class QuestionResponseInline(admin.StackedInline):
-    model = QuestionResponse
+class QuestionResponseInline(admin.TabularInline):
+    model = QuestionResponse.submissions.through
     extra = 0
-    fields = ("question", "answer", "repeat_index", "answered_at")
-    readonly_fields = ("answered_at",)
+
+
+class QuestionInline(admin.TabularInline):
+    model = BaseQuestion
+    extra = 0
+    fields = (
+        "id",
+        "text_nl",
+        "text_en",
+        "required",
+        "description_nl",
+        "description_en",
+    )
+    readonly_fields = (
+        "id",
+        "text_nl",
+        "text_en",
+        "required",
+        "description_nl",
+        "description_en",
+    )
+    can_delete = False
+    show_change_link = True
+    verbose_name = "Question"
+    verbose_name_plural = "Questions in This Step"
+
+    def has_add_permission(self, request, obj=None):
+        return False
 
 
 # Main model admins
@@ -115,7 +144,18 @@ class StepAdmin(admin.ModelAdmin):
     search_fields = ("name_nl", "name_en", "slug", "description_nl", "description_en")
     prepopulated_fields = {"slug": ("name_nl", "name_en")}
     fieldsets = (
-        (None, {"fields": ("name_nl", "name_en", "slug", "description")}),
+        (
+            None,
+            {
+                "fields": (
+                    "name_nl",
+                    "name_en",
+                    "slug",
+                    "description_nl",
+                    "description_en",
+                )
+            },
+        ),
         (
             "Hierarchy",
             {
@@ -123,13 +163,29 @@ class StepAdmin(admin.ModelAdmin):
                 "description": "Set either 'form' (for top-level steps) OR 'parent' (for substeps), not both.",
             },
         ),
+        (
+            "Question Order",
+            {
+                "fields": ("question_order",),
+                "description": "Set the display order of questions. Use the question IDs shown in the Questions inline below.",
+            },
+        ),
+        (
+            "Substep Order",
+            {
+                "fields": ("substep_order",),
+                "description": "Set the display order of substeps. Use the substep IDs shown in the Substeps inline below.",
+            },
+        ),
     )
     inlines = [
         SubstepInline,
         StepInfoQuestionInline,
         StepInfoTextInline,
+        QuestionInline,
         StepConditionInline,
     ]
+    form = StepAdminForm
 
     def created_at_display(self, obj):
         # Steps don't have created_at, but showing placeholder for structure
@@ -338,14 +394,14 @@ class UserFormSubmissionAdmin(admin.ModelAdmin):
 @admin.register(QuestionResponse)
 class QuestionResponseAdmin(admin.ModelAdmin):
     list_display = (
-        "submission",
+        "first_submission",
         "question",
         "repeat_index",
         "answer_preview",
         "answered_at",
     )
-    list_filter = ("submission__form", "answered_at")
-    search_fields = ("submission__user__username", "question__text")
+    list_filter = ("answered_at",)
+    search_fields = ("question__text",)
     readonly_fields = ("answered_at",)
 
     def answer_preview(self, obj):
@@ -357,7 +413,7 @@ class QuestionResponseAdmin(admin.ModelAdmin):
 
 TRIGGER_VALUE_HELP_TEXT = """
 JSON field defining when this condition triggers. 
-Examples: {'value': true}, {'option_ids': [1, 3]}, {'min': 5}. 
+Examples: {"value": true}, {"value": "foo"}, {"value": [1, 3]}, {"min": 5}. 
 For a full explanation, see form/README.md.
 """
 

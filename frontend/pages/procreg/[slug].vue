@@ -10,6 +10,7 @@ const GET_FORM = graphql(`
             formId
             nameEn
             nameNl
+            submissionId
             steps {
                 stepId
                 slug
@@ -23,11 +24,13 @@ const GET_FORM = graphql(`
                     questionId
                     repeatIndex
                     answer
+                    responseId
                     textEn
                     textNl
                     descriptionEn
                     descriptionNl
                     required
+                    hasConditions
                     ... on SelectQuestionType {
                         multiple
                         options {
@@ -68,11 +71,13 @@ const GET_FORM = graphql(`
                         questionId
                         repeatIndex
                         answer
+                        responseId
                         textEn
                         textNl
                         descriptionEn
                         descriptionNl
                         required
+                        hasConditions
                         ... on SelectQuestionType {
                             multiple
                             options {
