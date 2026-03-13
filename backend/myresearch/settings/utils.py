@@ -17,7 +17,7 @@ def discover_list(key, default):
     raw = discover(key, "")
     out = [
         item for item in raw.split(",") if item != ""
-    [
+    ]
     return out
 
 
