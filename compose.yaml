@@ -74,6 +74,11 @@ services:
       DJANGO_SETTINGS_MODULE: myresearch.settings.dev
       SAML_BASE_URL: ${SAML_BASE_URL}
       IDP_METADATA_URL: ${IDP_METADATA_URL}
+      PRIVATE_KEY_PATH: /run/secrets/private_key
+      PUBLIC_KEY_PATH: /run/secrets/public_cert
+    secrets:
+      - private_key
+      - public_cert
 
   django-prod:
     <<: *django-dev
@@ -96,6 +101,8 @@ services:
       DJANGO_LOG_LEVEL: ${DJANGO_LOG_LEVEL}
       DJANGO_LOGFILE: /var/log/django/mr-django-prod.log
       DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
+      PRIVATE_KEY_PATH: /run/secrets/private_key
+      PUBLIC_KEY_PATH: /run/secrets/public_cert
       CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
       SAML_BASE_URL: ${SAML_BASE_URL}
       IDP_METADATA_URL: ${IDP_METADATA_URL}
