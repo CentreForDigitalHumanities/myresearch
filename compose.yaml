@@ -83,6 +83,7 @@ services:
     ports: []
     volumes:
       - backend_static:/var/www/backend_static/
+      - ${LOG_DIR:-./backend/logs/}:/var/log/django/
     command: sh -c "
       python manage.py migrate &&
       python manage.py collectstatic --no-input &&
@@ -93,6 +94,7 @@ services:
       DJANGO_SETTINGS_MODULE: myresearch.settings.prod
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
       DJANGO_LOG_LEVEL: ${DJANGO_LOG_LEVEL}
+      DJANGO_LOGFILE: /var/log/django/mr-django-prod.log
       DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
       CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
       SAML_BASE_URL: ${SAML_BASE_URL}

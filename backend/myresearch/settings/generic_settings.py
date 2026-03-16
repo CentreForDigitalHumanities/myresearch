@@ -157,6 +157,7 @@ GRAPHENE = {
 # Logging
 
 DJANGO_LOG_LEVEL = discover("DJANGO_LOG_LEVEL", "WARNING")
+DJANGO_LOGFILE = discover("DJANGO_LOGFILE", "logs/django.log")
 
 LOGGING = {
     "version": 1,
