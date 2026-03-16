@@ -1,4 +1,7 @@
+import logging
 from .utils import discover, discover_list
+
+logger = logging.getLogger(__name__)
 
 DEBUG = True
 SECRET_KEY = "django-insecure-s8e=1!*6dzct5!vn$0%qdc!x4$_vhd895g0a1#e$_v+oqbvvyq"
@@ -26,7 +29,7 @@ from .generic_settings import *
 try:
     from .local_settings import *
 except ImportError:
-    print(
+    logger.info(
         "No local settings found. You can put local Django settings "
         "in myresearch/settings/local_settings.py and Django will "
         "load them when running the dev profile."
@@ -43,5 +46,6 @@ try:
     LOGOUT_REDIRECT_URL = "http://localhost:5000/"
     LOGIN_REDIRECT_URL = "http://localhost:5000/"
 
-except ImportError:
-    print("Proceeding without SAML")
+except Exception as e:
+    logger.warn("Exception loading SAML settings:", e)
+    logger.warn("Proceeding without SAML")

@@ -1,4 +1,7 @@
+import logging
 from .utils import discover_or_fail
+
+logger = logging.getLogger(__name__)
 
 DEBUG = False
 SECRET_KEY = discover_or_fail("DJANGO_SECRET_KEY")
@@ -23,5 +26,5 @@ try:
     LOGOUT_URL = "/saml/logout/"
 
 except Exception as e:
-    print("Proceeding without SAML")
-    print("Exception:", e)
+    logger.warn("Exception:", e)
+    logger.warn("Proceeding without SAML")

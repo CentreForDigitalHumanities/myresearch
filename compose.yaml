@@ -70,6 +70,7 @@ services:
       - "8000:8000"
     environment:
       DB_HOST: 'mr-postgres'
+      DJANGO_LOG_LEVEL: ${DJANGO_LOG_LEVEL}
       DJANGO_SETTINGS_MODULE: myresearch.settings.dev
       SAML_BASE_URL: ${SAML_BASE_URL}
       IDP_METADATA_URL: ${IDP_METADATA_URL}
@@ -91,6 +92,7 @@ services:
       DB_HOST: 'mr-postgres'
       DJANGO_SETTINGS_MODULE: myresearch.settings.prod
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      DJANGO_LOG_LEVEL: ${DJANGO_LOG_LEVEL}
       DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
       CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
       SAML_BASE_URL: ${SAML_BASE_URL}
