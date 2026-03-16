@@ -7,7 +7,10 @@ def discover(key, default):
     """
     Get a key from os.env with a mandatory default value.
     """
-    return os.getenv(key, default)
+    value = os.getenv(key, default)
+    if value == "":
+        return default
+    return value
 
 def discover_list(key, default):
     """
