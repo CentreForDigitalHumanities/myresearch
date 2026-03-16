@@ -12,6 +12,7 @@ def discover(key, default):
         return default
     return value
 
+
 def discover_list(key, default):
     """
     Get a comma-separated list from os.env with a
@@ -29,7 +30,7 @@ def discover_or_fail(key):
     Get a key from os.env or raise an exception if it's missing.
     """
     value = os.getenv(key)
-    if value is None:
+    if value in [None, ""]:
         raise ImproperlyConfigured(
             f"Couldn't find key {key} in environment.",
         )
