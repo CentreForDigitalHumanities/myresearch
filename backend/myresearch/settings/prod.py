@@ -19,6 +19,9 @@ try:
     LOGOUT_REDIRECT_URL = "/"
     LOGIN_REDIRECT_URL = "/"
 
+    LOGIN_URL = "/saml/login/"
+    LOGOUT_URL = "/saml/logout/"
+
 except Exception as e:
     print("Proceeding without SAML")
     print("Exception:", e)
