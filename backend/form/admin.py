@@ -22,30 +22,12 @@ from .models import (
     QuestionCondition,
 )
 
+# Utils
 
-# Inline admins for related models
-class StepInline(admin.StackedInline):
-    model = Step
-    extra = 0
-    fields = ("name_nl", "name_en", "slug", "description_nl", "description_en")
-    show_change_link = True
-    fk_name = "form"
-
-
-class SubstepInline(admin.StackedInline):
-    model = Step
-    extra = 0
-    fields = ("name_nl", "name_en", "slug", "description_nl", "description_en")
-    show_change_link = True
-    fk_name = "parent"
-    verbose_name = "Substep"
-    verbose_name_plural = "Substeps"
-
-
-class StepInfoTextInline(admin.StackedInline):
-    model = StepInfoText
-    extra = 0
-    fields = ("text_en", "text_nl")
+class TinyMCETextFieldMixin:
+    """
+    A mixin for replacing all textfields with a TinyMCEWidget
+    """
 
     class Media:
         js = (
@@ -70,6 +52,29 @@ class StepInfoTextInline(admin.StackedInline):
     }
 
 
+# Inline admins for related models
+class StepInline(admin.StackedInline):
+    model = Step
+    extra = 0
+    fields = ("name_nl", "name_en", "slug", "description_nl", "description_en")
+    show_change_link = True
+    fk_name = "form"
+
+
+class SubstepInline(admin.StackedInline):
+    model = Step
+    extra = 0
+    fields = ("name_nl", "name_en", "slug", "description_nl", "description_en")
+    show_change_link = True
+    fk_name = "parent"
+    verbose_name = "Substep"
+    verbose_name_plural = "Substeps"
+
+
+class StepInfoTextInline(TinyMCETextFieldMixin, admin.StackedInline,):
+    model = StepInfoText
+    extra = 0
+    fields = ("text_en", "text_nl")
 
 class SelectOptionInline(admin.TabularInline):
     model = SelectOption
@@ -193,32 +198,10 @@ class StepAdmin(admin.ModelAdmin):
 
 
 @admin.register(StepInfoText)
-class StepInfoTextAdmin(admin.ModelAdmin):
+class StepInfoTextAdmin(TinyMCETextFieldMixin, admin.ModelAdmin,):
     list_display = ("short_text", "step")
     list_filter = ("step",)
     search_fields = ("text",)
-
-    class Media:
-        js = (
-            "cdh.core/js/jquery-3.6.1.min.js",
-            "cdh.core/js/tinymce/tinymce.min.js",
-            "cdh.core/js/tinymce/tinymce-jquery.min.js",
-            "cdh.core/js/tinymce/shim.js",
-        )
-
-    formfield_overrides = {
-        models.TextField: {
-            "widget": TinyMCEWidget(
-                plugins=[
-                    "link",
-                    "image",
-                    "visualblocks",
-                    "wordcount",
-                    "lists",
-                ]
-            )
-        },
-    }
 
     def short_text(self, obj):
         return obj.text[:50] + "..." if len(obj.text) > 50 else obj.text
