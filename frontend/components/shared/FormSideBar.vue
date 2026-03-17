@@ -21,7 +21,7 @@ const stepInfo = computed(() => useFragment(FormInfoFragment, props.step));
 <template>
     <div class="uu-form-help">
         <div class="help-item">
-            <div v-if="stepInfo">
+            <div v-if="stepInfo.infoText">
             <strong>{{ $t("Additional Information") }}</strong>
                 <div v-html="useTranslateableAttribute(stepInfo.infoText, 'text')"></div>
             </div>
