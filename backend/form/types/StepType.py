@@ -26,7 +26,7 @@ class StepType(ObjectType):
         lambda: NonNull(StepType),
         required=True,
     )
-    info_text = Field(StepInfoTextType, required=True)
+    info_text = Field(StepInfoTextType)
 
     @staticmethod
     def resolve_info_text(parent, info: ResolveInfo) -> StepInfoText:
