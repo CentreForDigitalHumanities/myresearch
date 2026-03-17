@@ -24,6 +24,7 @@ from .models import (
 
 # Utils
 
+
 class TinyMCETextFieldMixin:
     """
     A mixin for replacing all textfields with a TinyMCEWidget
@@ -71,10 +72,14 @@ class SubstepInline(admin.StackedInline):
     verbose_name_plural = "Substeps"
 
 
-class StepInfoTextInline(TinyMCETextFieldMixin, admin.StackedInline,):
+class StepInfoTextInline(
+    TinyMCETextFieldMixin,
+    admin.StackedInline,
+):
     model = StepInfoText
     extra = 0
     fields = ("text_en", "text_nl")
+
 
 class SelectOptionInline(admin.TabularInline):
     model = SelectOption
@@ -217,9 +222,11 @@ class StepAdmin(admin.ModelAdmin):
     created_at_display.short_description = "Info"
 
 
-
 @admin.register(StepInfoText)
-class StepInfoTextAdmin(TinyMCETextFieldMixin, admin.ModelAdmin,):
+class StepInfoTextAdmin(
+    TinyMCETextFieldMixin,
+    admin.ModelAdmin,
+):
     list_display = ("short_text", "step")
     list_filter = ("step",)
     search_fields = ("text",)
