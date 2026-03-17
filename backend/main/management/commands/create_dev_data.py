@@ -173,11 +173,7 @@ class Command(BaseCommand):
                     text_en=self.faker_en.paragraph(),
                 )
 
-        choice = self.faker.random_element(["text", "questions", "both"])
-
-        if choice == "text":
-            generate_form_info_text()
-        else:
+        if self.faker.pybool():
             generate_form_info_text()
 
     def _generate_questions(self, options, form: MRForm) -> None:
