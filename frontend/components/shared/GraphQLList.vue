@@ -1,18 +1,27 @@
 <script
     lang="ts"
     setup
-    generic="PageData extends GraphQLListData<UUListTypes.Data<string>>, TResult, Variables extends GraphQLListVariables"
+    generic="
+        PageData extends GraphQLListData<UUListTypes.Data<string>>,
+        TResult,
+        Variables extends GraphQLListVariables
+    "
 >
 import _ from "lodash";
 import { UUList, type UUListTypes } from "cdh-vue-lib";
 import type { UnwrapNestedRefs } from "vue";
-import type { ApolloError, TypedDocumentNode, WatchQueryFetchPolicy } from "@apollo/client";
+import type {
+    ApolloError,
+    TypedDocumentNode,
+    WatchQueryFetchPolicy,
+} from "@apollo/client";
 import { usePerformQuery } from "~/composables/usePerformQuery";
 import type {
     GraphQLListData,
     GraphQLListVariables,
 } from "~/components/shared/types";
-// This component has (mostly) been copied from DIAPP! 
+import { useI18n } from "vue-i18n";
+// This component has (mostly) been copied from DIAPP!
 // See: https://github.com/CentreForDigitalHumanities/DIAPP
 //
 // Component defs
@@ -27,7 +36,7 @@ interface Props {
     showFilters?: boolean;
     filters?: UUListTypes.FilterDefinition[];
     fetchPolicy?: WatchQueryFetchPolicy;
-    pageSizeOptions?: number[]
+    pageSizeOptions?: number[];
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -37,19 +46,18 @@ const props = withDefaults(defineProps<Props>(), {
     showFilters: true,
     filters: undefined,
     fetchPolicy: "cache-first",
-    pageSizeOptions: () => [25, 50, 100]
+    pageSizeOptions: () => [25, 50, 100],
 });
 
 const emits = defineEmits<{
     (
         e: "update:variables",
-        value: UnwrapNestedRefs<GraphQLListVariables>
+        value: UnwrapNestedRefs<GraphQLListVariables>,
     ): void;
-    (
-        e: "error",
-        value: UnwrapNestedRefs<ApolloError>
-    ): void;
+    (e: "error", value: UnwrapNestedRefs<ApolloError>): void;
 }>();
+
+const { t } = useI18n();
 
 // Constants
 const DEFAULT_PAGE_SIZE = 50;
@@ -85,14 +93,18 @@ const initialVars = (function (): GraphQLListVariables {
     return vars;
 })();
 
-const { result, loading, variables } = usePerformQuery({
-    queryDocument: props.queryDocument,
-    variables: initialVars as Variables,
-    options: {
-        fetchPolicy: props.fetchPolicy,
+const { result, loading, variables } = usePerformQuery(
+    {
+        queryDocument: props.queryDocument,
+        variables: initialVars,
+        options: {
+            fetchPolicy: props.fetchPolicy,
+        },
     },
-  }, 
-  (e: ApolloError) => emits("error", e)
+    (e) => {
+        useNotification(t("List could not be fetched"), "danger");
+        emits("error", e);
+    },
 );
 
 watch(
@@ -104,7 +116,7 @@ watch(
         }
         emits("update:variables", value);
     },
-    { immediate: true }
+    { immediate: true },
 );
 
 //
@@ -240,7 +252,9 @@ const filterValues = computed(() => {
     const values: UUListTypes.FilterValues = {};
 
     for (const filter of props.filters) {
-        values[filter.field] = variables.value[filter.field];
+        values[filter.field] = variables.value[
+            filter.field
+        ] as UUListTypes.FilterValue;
     }
 
     return values;
@@ -280,7 +294,9 @@ function updateFilterValues(newFilterValues: UUListTypes.FilterValues) {
         @update:current-page="(value: number) => switchPage(value)"
         @update:page-size="(value: number) => switchPageSize(value)"
         @update:search="(value: string) => setSearchQuery(value)"
-        @update:filter-values="(value: UUListTypes.FilterValues) => updateFilterValues(value)"
+        @update:filter-values="
+            (value: UUListTypes.FilterValues) => updateFilterValues(value)
+        "
         @update:current-sort="(value: string) => setOrdering(value)"
     >
         <template #data="{ data, isLoading }">

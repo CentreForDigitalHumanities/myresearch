@@ -79,7 +79,7 @@ class StepInfoTextInline(TinyMCETextFieldMixin, admin.StackedInline,):
 class SelectOptionInline(admin.TabularInline):
     model = SelectOption
     extra = 0
-    fields = ("label", "default_selected")
+    fields = ("label", "label_nl", "label_en", "default_selected")
 
 
 class StepConditionInline(admin.StackedInline):
@@ -120,8 +120,22 @@ class QuestionResponseInline(admin.TabularInline):
 class QuestionInline(admin.TabularInline):
     model = BaseQuestion
     extra = 0
-    fields = ("id", "text", "required", "description")
-    readonly_fields = ("id", "text", "required", "description")
+    fields = (
+        "id",
+        "text_nl",
+        "text_en",
+        "required",
+        "description_nl",
+        "description_en",
+    )
+    readonly_fields = (
+        "id",
+        "text_nl",
+        "text_en",
+        "required",
+        "description_nl",
+        "description_en",
+    )
     can_delete = False
     show_change_link = True
     verbose_name = "Question"
@@ -178,6 +192,13 @@ class StepAdmin(admin.ModelAdmin):
             {
                 "fields": ("question_order",),
                 "description": "Set the display order of questions. Use the question IDs shown in the Questions inline below.",
+            },
+        ),
+        (
+            "Substep Order",
+            {
+                "fields": ("substep_order",),
+                "description": "Set the display order of substeps. Use the substep IDs shown in the Substeps inline below.",
             },
         ),
     )
@@ -409,7 +430,7 @@ class QuestionResponseAdmin(admin.ModelAdmin):
 
 TRIGGER_VALUE_HELP_TEXT = """
 JSON field defining when this condition triggers. 
-Examples: {"value": true}, {"value": "foo"}, {"option_ids": [1, 3]}, {"min": 5}. 
+Examples: {"value": true}, {"value": "foo"}, {"value": [1, 3]}, {"min": 5}. 
 For a full explanation, see form/README.md.
 """
 

@@ -62,7 +62,7 @@ TextQuestion:       {"value": "user text"}
 NumberQuestion:     {"value": 42}
 TrueFalseQuestion:  {"value": true}
 DateQuestion:       {"value": "2025-12-31"}
-SelectQuestion:     {"option_ids": [1, 3]}
+SelectQuestion:     {"value": [1, 3]}
 FileUploadQuestion: {"file_url": "/path/to/file"}
 ```
 
@@ -160,7 +160,7 @@ The `trigger_value` field is a JSON object defining when a condition activates. 
 5. SelectQuestion: option ID matching
 
 ```json
-{ "option_ids": [1, 3] }
+{ "value": [1, 3] }
 ```
 
 If multiple option IDs are provided in the same condition, **all** must be present in the user's answer for the condition to be met. If the user selects additional options beyond those specified, the condition is still considered met.
