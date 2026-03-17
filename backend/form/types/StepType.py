@@ -27,7 +27,10 @@ class StepType(ObjectType):
     info_text = Field(StepInfoTextType, required=True)
 
     @staticmethod
-    def resolve_info_text(parent, info: ResolveInfo) -> StepInfoText:
+    def resolve_info_text(parent, info: ResolveInfo) -> StepInfoText | None:
         if not parent.step_id:
-            return StepInfoText.objects.none()
-        return StepInfoText.objects.get(step_id=parent.step_id)
+            return None
+        try:
+            return StepInfoText.objects.get(step_id=parent.step_id)
+        except StepInfoText.DoesNotExist:
+            return None
