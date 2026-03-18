@@ -19,6 +19,7 @@ const GET_STUDY = graphql(`
             }
             id
             title
+            reference
         }
     }
 `);
@@ -91,7 +92,7 @@ const studyStatus = computed(() =>
                         <!-- Main Content -->
                         <div class="col me-5">
                             <h1>
-                                2025-{{ randomNumber100to1000() }} -
+                                {{ study?.reference }} -
                                 <em>{{ study?.title }}</em>
                             </h1>
                             <p>
