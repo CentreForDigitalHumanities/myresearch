@@ -16,14 +16,16 @@ class StudyManager(BaseMRManager):
 
 
 class Study(models.Model):
-    form = models.ForeignKey(MRForm, on_delete=models.PROTECT)
-
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     @staticmethod
     def can_be_created_by(user):
         return user.is_authenticated
+
+    @property
+    def form(self) -> MRForm:
+        return MRForm.objects.filter(submissions__study=self).distinct().get()
 
     @property
     def name(self) -> str:
@@ -39,7 +41,7 @@ class Study(models.Model):
             submission = UserFormSubmission.objects.get(
                 user=self.created_by,
                 form=self.form,
-                study_id=self.pk,
+                study=self,
             )
             response = QuestionResponse.objects.filter(
                 submission=submission,
