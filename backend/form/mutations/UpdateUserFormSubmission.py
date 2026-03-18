@@ -24,13 +24,11 @@ class UpdateUserFormSubmission(Mutation):
         user_form_input: UserFormInput,
     ):
         user: User = info.context.user
-        submission = get_or_create_submission(user, user_form_input)
-
         responses = getattr(user_form_input, "responses", [])
         create_study_flag = getattr(user_form_input, "create_study", False)
 
         try:
-            update_or_create_submission(
+             submission = update_or_create_submission(
                 user,
                 user_form_input,
             )
