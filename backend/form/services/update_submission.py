@@ -6,8 +6,11 @@ from form.mutations.utils.inputs import UserFormInput
 def update_or_create_submission(
     user: User, user_form_input: UserFormInput
 ) -> UserFormSubmission:
-    submission_id = getattr(user_form_input, "submission_id", None)
-    form_config_id = getattr(user_form_input, "form_config_id", None)
+    # Usually we can use user_form_input.form_config_id or getattr(user_form_input, "form_config_id"). 
+    # This breaks the tests, however, where user_form_input is mocked as a dict. 
+    # That is why we use .get() here, which handles both cases.
+    submission_id = user_form_input.get("submission_id", None) # type: ignore
+    form_config_id = user_form_input.get("form_config_id", None) # type: ignore
 
     if submission_id:
         current_submission = UserFormSubmission.objects.get(id=submission_id)
@@ -16,7 +19,7 @@ def update_or_create_submission(
             user=user, form_id=form_config_id
         )
 
-    for response in getattr(user_form_input, "responses", []):
+    for response in user_form_input.get("responses", []): # type: ignore
         response_id = response["id"] if "id" in response else None
         if response_id:
             # See if the response already exists

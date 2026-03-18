@@ -25,6 +25,8 @@ class Study(models.Model):
 
     @property
     def form(self) -> MRForm:
+        # There should only ever be one form associated with a study.
+        # If there are none or more than one, we will want to know about it.
         return MRForm.objects.filter(submissions__study=self).distinct().get()
 
     @property
