@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class YearCounter(models.Model):
     """
     A helper model for generating reference numbers for studies. Keeps a counter
