@@ -44,7 +44,12 @@ class UpdateUserFormSubmission(Mutation):
         try:
             save_responses(submission.pk, responses)
         except Exception as e:
-            error = ErrorType(messages=[f"Answers could not be saved: {str(e)}"])
+            error = ErrorType(
+                field="responses",
+                messages=[
+                    "Failed to save responses for UserFormSubmission with id: {submission_id}"
+                ],
+            )
             return cls(ok=False, errors=[error])  # type: ignore
 
         if create_study_flag:
@@ -78,10 +83,3 @@ def save_responses(submission_id: str, responses: list[ResponseInput]):
                 answer=response.answer,
                 repeat_index=response.repeat_index,
             )
-        except:
-            error = ErrorType(
-                messages=[
-                    f"Failed to save responses for UserFormSubmission with id: {submission_id}"
-                ]
-            )
-            return cls(ok=False, errors=[error])  # type: ignore
