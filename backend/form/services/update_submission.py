@@ -3,19 +3,20 @@ from form.models import UserFormSubmission, QuestionResponse
 from form.mutations.utils.inputs import UserFormInput
 
 
-def update_or_create_submission(user: User, user_form_input: UserFormInput):
+def update_or_create_submission(
+    user: User, user_form_input: UserFormInput
+) -> UserFormSubmission:
+    submission_id = getattr(user_form_input, "submission_id", None)
+    form_config_id = getattr(user_form_input, "form_config_id", None)
 
-    submission_id = (
-        user_form_input["submission_id"] if "submission_id" in user_form_input else None
-    )
     if submission_id:
         current_submission = UserFormSubmission.objects.get(id=submission_id)
     else:
         current_submission = UserFormSubmission.objects.create(
-            user=user, form_id=user_form_input["form_config_id"]
+            user=user, form_id=form_config_id
         )
 
-    for response in user_form_input["responses"]:
+    for response in getattr(user_form_input, "responses", []):
         response_id = response["id"] if "id" in response else None
         if response_id:
             # See if the response already exists

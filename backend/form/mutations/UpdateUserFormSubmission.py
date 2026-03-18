@@ -28,7 +28,7 @@ class UpdateUserFormSubmission(Mutation):
         create_study_flag = getattr(user_form_input, "create_study", False)
 
         try:
-             submission = update_or_create_submission(
+            submission = update_or_create_submission(
                 user,
                 user_form_input,
             )
