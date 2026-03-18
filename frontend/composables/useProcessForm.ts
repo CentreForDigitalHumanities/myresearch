@@ -190,10 +190,10 @@ function parseAnswer<ReturnType>(
             if (
                 parsed &&
                 typeof parsed === "object" &&
-                "option_ids" in parsed &&
-                Array.isArray(parsed.option_ids)
+                "value" in parsed &&
+                Array.isArray(parsed.value)
             ) {
-                return parsed.option_ids.join(", ") as ReturnType;
+                return parsed.value.join(", ") as ReturnType;
             }
             // Unexpected format, return type-appropriate default
             return getDefaultAnswer(typename, defaultValue) as ReturnType;

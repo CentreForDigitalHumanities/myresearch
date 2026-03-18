@@ -102,5 +102,10 @@
   "Creator": "Aanvrager",
   "Title": "Titel",
   "No results found": "Geen resultaten gevonden.",
-  "Loading": "Aan het laden"
+  "Loading": "Aan het laden",
+  "Info": "Info",
+  "Success": "Succes",
+  "Warning": "Waarschuwing",
+  "Error": "Fout",
+  "List could not be fetched": "Lijst kon niet worden opgehaald"
 }

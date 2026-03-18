@@ -5,6 +5,8 @@ from form.models import QuestionResponse, UserFormSubmission
 from form.mutations.utils.inputs import ResponseInput, UserFormInput
 from main.models import User
 from research.models import Study
+from form.services.update_submission import update_or_create_submission
+from form.mutations.utils.inputs import UserFormInput
 
 
 class UpdateUserFormSubmission(Mutation):
@@ -28,6 +30,20 @@ class UpdateUserFormSubmission(Mutation):
         create_study_flag = getattr(user_form_input, "create_study", False)
 
         try:
+            update_or_create_submission(
+                user,
+                user_form_input,
+            )
+        except Exception as e:
+            error = ErrorType(
+                field="responses",
+                messages=[
+                    f"Failed to save responses for UserFormSubmission with id: {getattr(user_form_input, 'id', None)}"
+                ],
+            )
+            return cls(ok=False, errors=[error])
+
+        try:
             save_responses(submission.pk, responses)
         except Exception as e:
             error = ErrorType(messages=[f"Answers could not be saved: {str(e)}"])
@@ -48,17 +64,6 @@ def create_study(submission: UserFormSubmission) -> None:
     if created:
         submission.study = study
         submission.save()
-
-
-def get_or_create_submission(
-    user: User, user_form_input: UserFormInput
-) -> UserFormSubmission:
-    submission_id = user_form_input.submission_id
-    if not submission_id:
-        form_config_id = user_form_input.form_config_id
-        return UserFormSubmission.objects.create(user=user, form_id=form_config_id)
-    else:
-        return UserFormSubmission.objects.get(id=submission_id)
 
 
 def save_responses(submission_id: str, responses: list[ResponseInput]):

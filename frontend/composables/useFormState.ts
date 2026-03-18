@@ -1,6 +1,9 @@
 import type { QueriedForm } from "~/components/shared/FormWrapper";
 import { useProcessForm } from "~/composables/useProcessForm";
-import type { FormValidationRules, FormWithValues } from "~/composables/useProcessForm";
+import type {
+    FormValidationRules,
+    FormWithValues,
+} from "~/composables/useProcessForm";
 import type { Ref } from "vue";
 
 interface FormState {

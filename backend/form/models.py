@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, Min
 from django.contrib.auth import get_user_model
 
 user_model = get_user_model()
@@ -123,6 +123,17 @@ class BaseQuestion(models.Model):
     class Meta:
         order_with_respect_to = "step"
 
+    @property
+    def has_conditions(self) -> bool:
+        """
+        Returns True if there are any step or question conditions dependent on
+        this question.
+        """
+        return (
+            self.triggered_questioncondition.exists()  # type: ignore
+            or self.triggered_stepcondition.exists()  # type: ignore
+        )
+
     def __str__(self):
         return f"{self.text} ({self.pk})"
 
@@ -180,12 +191,24 @@ class UserFormSubmission(models.Model):
         return f"Submission {self.pk} by {self.user} started at {self.started_at.strftime('%Y-%m-%d %H:%M:%S')} (Form {self.form.pk})"
 
 
+class QuestionResponseManager(models.Manager):
+    """
+    Custom manager for QuestionResponses
+    """
+
+    def get_queryset(self):
+        base = super().get_queryset()
+        # Annotate the first submission where a response was added
+        return base.annotate(first_submission_pk=Min("submissions__pk"))
+
+
 class QuestionResponse(models.Model):
     """Stores a user's answer to a question."""
 
-    submission = models.ForeignKey(
-        UserFormSubmission, on_delete=models.CASCADE, related_name="responses"
-    )
+    objects = QuestionResponseManager()
+
+    submissions = models.ManyToManyField(UserFormSubmission, related_name="responses")
+
     question = models.ForeignKey(BaseQuestion, on_delete=models.CASCADE)
 
     answer = models.JSONField()
@@ -198,11 +221,17 @@ class QuestionResponse(models.Model):
 
     answered_at = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        unique_together = ["submission", "question", "repeat_index"]
-
     def __str__(self):
-        return f"Response to Q{self.question.pk} in Submission {self.submission.pk}"
+        return f"Response to Q{self.question.pk} in Submission {self.first_submission.pk if self.first_submission else 'unknown'}: {self.answer}"
+
+    @property
+    def first_submission(
+        self,
+    ):
+        """
+        Returns the submission where a response got introduced first
+        """
+        return self.submissions.order_by("started_at").first()
 
 
 # Conditional logic for questions and steps
@@ -217,7 +246,6 @@ class BaseCondition(models.Model):
 
     class TriggerValueKeys(models.TextChoices):
         VALUE = "value", "Value"
-        OPTION_IDS = "option_ids", "Option IDs"
         MIN = "min", "Minimum"
         MAX = "max", "Maximum"
         EXACT = "exact", "Exact"
@@ -226,6 +254,7 @@ class BaseCondition(models.Model):
         BaseQuestion,
         on_delete=models.CASCADE,
         help_text="The question whose answer triggers this condition.",
+        related_name="triggered_%(class)s",
     )
 
     condition_type = models.CharField(
@@ -234,7 +263,8 @@ class BaseCondition(models.Model):
     )
 
     # Check out form/README.md for more information on how to format this field.
-    trigger_value = models.JSONField()
+    # blank=True is necessary to ensure {} is correctly accepted as valid JSON.
+    trigger_value = models.JSONField(blank=True)
 
     # For (static) 'repeat' type: how many times should the target be repeated.
     repeat_count = models.PositiveIntegerField(null=True, blank=True)
@@ -251,9 +281,9 @@ class BaseCondition(models.Model):
         """
         Returns a constraint to be used by subclasses.
 
-        You cannot define constraints on abstract base classes, so
-        subclasses should call this method to get the constraint to add
-        to their Meta.constraints.
+        If the condition is a repeat type (either REPEAT or REPEAT_DYNAMIC),
+        a repeat count should be provided or use_answer_as_count should be
+        marked as true.
         """
         return models.CheckConstraint(
             check=(
@@ -280,13 +310,6 @@ class StepCondition(BaseCondition):
         help_text="The step that this condition applies to.",
     )
 
-    trigger_question = models.ForeignKey(
-        BaseQuestion,
-        on_delete=models.CASCADE,
-        related_name="triggered_step_conditions",
-        help_text="The question whose answer triggers this condition.",
-    )
-
     class Meta:
         constraints = [
             BaseCondition.get_repeat_constraint("repeat_requires_count_or_dynamic_step")
@@ -304,13 +327,6 @@ class QuestionCondition(BaseCondition):
         on_delete=models.CASCADE,
         related_name="conditions",
         help_text="The question that this condition applies to.",
-    )
-
-    trigger_question = models.ForeignKey(
-        BaseQuestion,
-        on_delete=models.CASCADE,
-        related_name="triggered_conditions",
-        help_text="The question whose answer triggers this condition.",
     )
 
     class Meta:
