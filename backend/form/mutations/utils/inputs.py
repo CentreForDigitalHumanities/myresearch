@@ -10,6 +10,6 @@ class ResponseInput(InputObjectType):
 
 class UserFormInput(InputObjectType):
     submission_id = ID()
-    form_config_id = ID()
+    form_config_id = ID(required=True)
     responses = List(NonNull(ResponseInput), required=True)
     create_study = Boolean(required=False, default_value=False)

@@ -28,7 +28,7 @@ function getAllQuestions(
 function useFormDataToMutationInput(
     formData: FormWithValues,
     submissionId: string | null,
-    formId: string | null,
+    formId: string,
 ): UserFormInput {
     const questions = formData.steps.flatMap(getAllQuestions);
 
