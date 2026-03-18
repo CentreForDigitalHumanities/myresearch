@@ -107,5 +107,10 @@
   "Success": "Succes",
   "Warning": "Waarschuwing",
   "Error": "Fout",
-  "List could not be fetched": "Lijst kon niet worden opgehaald"
+  "List could not be fetched": "Lijst kon niet worden opgehaald",
+  "Ref": {
+    " number ascending": "Ref. nummer oplopend",
+    " number descending": "Ref. nummer aflopend",
+    " number": "Ref. nummer"
+  }
 }
