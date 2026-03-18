@@ -178,10 +178,10 @@ class FileUploadQuestion(BaseQuestion):
 class UserFormSubmission(models.Model):
     """Tracks a user's progress through a form."""
 
-    user = models.ForeignKey(user_model, on_delete=models.CASCADE)
-    form = models.ForeignKey(MRForm, on_delete=models.CASCADE)
+    user = models.ForeignKey(user_model, on_delete=models.CASCADE, related_name="submissions")
+    form = models.ForeignKey(MRForm, on_delete=models.CASCADE, related_name="submissions")
     study = models.ForeignKey(
-        "research.Study", on_delete=models.CASCADE, related_name="forms", null=True
+        "research.Study", on_delete=models.CASCADE, related_name="submissions", null=True
     )
     started_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
