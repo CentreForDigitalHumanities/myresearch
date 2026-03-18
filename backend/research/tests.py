@@ -1,6 +1,4 @@
 import pytest
-from django.test import TestCase
-from django.db import IntegrityError, transaction
 from django.contrib.auth.models import AnonymousUser, Group
 
 from main.models import MRGroups, MRPermission, User
@@ -44,12 +42,12 @@ def normal_user() -> User:
 
 @pytest.fixture
 def test_study(normal_user, form) -> Study:
-    return Study.objects.create(created_by=normal_user, form=form)
+    return Study.objects.create(created_by=normal_user)
 
 
 @pytest.fixture
 def test_po_study(po_user, form) -> Study:
-    return Study.objects.create(created_by=po_user, form=form)
+    return Study.objects.create(created_by=po_user)
 
 
 ####################
