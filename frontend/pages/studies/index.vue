@@ -59,7 +59,8 @@ const orderingOptions = computed(() => {
         {
             field: "-reference",
             label: t("Ref. number descending"),
-        },        {
+        },
+        {
             field: "title",
             label: t("title ascending"),
         },
