@@ -1,6 +1,11 @@
 #!/bin/bash
+# Don't continue if we encounter an error
+set -e
 
-
+echo
+echo @@@ Warning @@@
+echo Do not run in production!
+echo
 echo This will destroy your current database. You may want to run pg_dump.sh to make a backup first.
 echo Continue? [y/N]
 read y

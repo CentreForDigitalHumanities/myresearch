@@ -1,4 +1,6 @@
 #!/bin/bash
+# Don't continue if we encounter an error
+set -e
 
 if [[ -z $1 ]]; then
     echo Argument required
