@@ -7,6 +7,10 @@ if [[ -z $1 ]]; then
     exit 1
 fi
 
+echo
+echo @@@ Warning @@@
+echo Do not run in production!
+echo
 echo This will destroy your current database. Continue? [y/N]
 read y
 
