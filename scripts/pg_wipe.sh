@@ -8,8 +8,8 @@ echo Do not run in production!
 echo
 echo This will destroy your current database. You may want to run pg_dump.sh to make a backup first.
 echo Continue? [y/N]
-read y
 
+read y
 if [[ $y != y && $y != Y ]]; then
     echo Aborting
     exit 1
