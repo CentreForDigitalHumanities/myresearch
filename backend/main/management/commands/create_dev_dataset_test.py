@@ -1,4 +1,5 @@
 import pytest
+from typing import Type
 from django.apps import apps
 from django.conf import settings
 from django.db.models import Model
@@ -12,12 +13,10 @@ from form.models import (
     StepInfoText,
 )
 
-type ModelType = type[Model]
-
 # Add models here that should be excluded from the completeness check. These
 # are models that are not essential for the dev dataset or are difficult to
 # generate automatically.
-EXCLUDED_MODELS_FOR_COMPLETENESS_CHECK: list[ModelType] = [
+EXCLUDED_MODELS_FOR_COMPLETENESS_CHECK: list[Type[Model]] = [
     StepInfoQuestion,
     StepInfoText,
     QuestionResponse,
