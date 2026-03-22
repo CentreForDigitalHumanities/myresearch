@@ -47,7 +47,7 @@ class UpdateUserFormSubmission(Mutation):
             error = ErrorType(
                 field="responses",
                 messages=[
-                    "Failed to save responses for UserFormSubmission with id: {submission_id}"
+                    f"Failed to save responses for UserFormSubmission with id: {submission.pk}"
                 ],
             )
             return cls(ok=False, errors=[error])  # type: ignore
@@ -59,14 +59,12 @@ class UpdateUserFormSubmission(Mutation):
 
 
 def create_study(submission: UserFormSubmission) -> None:
-    study, created = Study.objects.get_or_create(
+    study = Study.objects.create(
         form=submission.form,
         created_by=submission.user,
     )
-
-    if created:
-        submission.study = study
-        submission.save()
+    submission.study = study
+    submission.save()
 
 
 def save_responses(submission_id: str, responses: list[ResponseInput]):
