@@ -173,7 +173,6 @@ class Command(BaseCommand):
                     text_en=self.faker_en.paragraph(),
                 )
 
-        breakpoint()
         if self.faker.pybool():
             generate_form_info_text()
 
