@@ -271,7 +271,6 @@ class Command(BaseCommand):
                     case "file_upload":
                         _create_file_upload_question(step, question_index)
 
-
     def _create_studies(self, options):
         """
         Create mock studies for each user

@@ -5,7 +5,6 @@ from django.conf import settings
 
 
 class Command(BaseCommand):
-
     def add_arguments(self, parser):
         parser.add_argument("--force", action="store_true")
         parser.add_argument("--silent", action="store_true")
@@ -22,7 +21,6 @@ class Command(BaseCommand):
 
         self._load_test_users(options)
         self._load_vwr_form(options)
-
 
     def _load_test_users(self, options):
         """
@@ -44,9 +42,7 @@ class Command(BaseCommand):
         Loads the vwr form from a fixture
         """
 
-        fixtures = [
-            "form/fixtures/vwr.json"
-        ]
+        fixtures = ["form/fixtures/vwr.json"]
 
         for fixture in fixtures:
             call_command("loaddata", fixture)
