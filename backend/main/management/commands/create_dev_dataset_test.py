@@ -9,7 +9,6 @@ from form.models import (
     QuestionCondition,
     QuestionResponse,
     StepCondition,
-    StepInfoQuestion,
     StepInfoText,
 )
 
@@ -17,7 +16,6 @@ from form.models import (
 # are models that are not essential for the dev dataset or are difficult to
 # generate automatically.
 EXCLUDED_MODELS_FOR_COMPLETENESS_CHECK: list[Type[Model]] = [
-    StepInfoQuestion,
     StepInfoText,
     QuestionResponse,
     StepCondition,
