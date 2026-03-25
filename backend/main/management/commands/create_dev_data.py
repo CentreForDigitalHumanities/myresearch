@@ -4,7 +4,6 @@ from faker import Faker
 from django.apps import apps
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
-from django.core.management import call_command
 from django.db import transaction
 
 from main.models import User
@@ -89,7 +88,7 @@ class Command(BaseCommand):
         if not options["ignore_missing_models"]:
             self._check_all_models_implemented()
 
-        self._create_test_users(options)
+        self._load_test_users(options)
 
         with transaction.atomic():
             self._create_studies(options)
@@ -272,21 +271,6 @@ class Command(BaseCommand):
                     case "file_upload":
                         _create_file_upload_question(step, question_index)
 
-    def _create_test_users(self, options):
-        """
-        Create mock users for test purposes from fixtures.
-
-        NOTE: These users are the same as the ones provided by the
-        Dev-IDP and must be kept the same!
-
-        TODO: Find a way to just import them directly from the Dev-IDP
-        """
-        fixtures = [
-            "main/management/commands/dev_fixtures/dev_users.json",
-        ]
-
-        for fixture in fixtures:
-            call_command("loaddata", fixture)
 
     def _create_studies(self, options):
         """
