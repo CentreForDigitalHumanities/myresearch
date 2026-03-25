@@ -41,17 +41,6 @@ class UpdateUserFormSubmission(Mutation):
             )
             return cls(ok=False, errors=[error])
 
-        try:
-            save_responses(submission.pk, responses)
-        except Exception as e:
-            error = ErrorType(
-                field="responses",
-                messages=[
-                    f"Failed to save responses for UserFormSubmission with id: {submission.pk}"
-                ],
-            )
-            return cls(ok=False, errors=[error])  # type: ignore
-
         if create_study_flag:
             create_study(submission)
 
@@ -64,19 +53,3 @@ def create_study(submission: UserFormSubmission) -> None:
     )
     submission.study = study
     submission.save()
-
-
-def save_responses(submission_id: str, responses: list[ResponseInput]):
-    for response in responses:
-        try:
-            qr = QuestionResponse.objects.get(id=response.id)
-            if qr.answer != response.answer:
-                qr.answer = response.answer
-                qr.save()
-        except QuestionResponse.DoesNotExist:
-            QuestionResponse.objects.create(
-                submission_id=submission_id,
-                question_id=response.question_id,
-                answer=response.answer,
-                repeat_index=response.repeat_index,
-            )

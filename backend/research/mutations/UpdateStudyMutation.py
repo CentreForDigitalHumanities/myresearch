@@ -7,7 +7,6 @@ from graphene_django.types import ErrorType
 
 
 class UpdateStudyMutation(Mutation):
-
     study = Field(StudyType)
     errors = List(ErrorType)
 
