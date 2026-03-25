@@ -60,7 +60,6 @@ class UpdateUserFormSubmission(Mutation):
 
 def create_study(submission: UserFormSubmission) -> None:
     study = Study.objects.create(
-        form=submission.form,
         created_by=submission.user,
     )
     submission.study = study
