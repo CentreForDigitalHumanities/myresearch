@@ -2,8 +2,7 @@ import pytest
 
 from form.services.create_user_form_revision import create_user_form_revision
 from form.services.update_submission import update_or_create_submission
-from form.mutations.utils.inputs import UserFormInput
-from form.models import UserFormSubmission, QuestionResponse
+from form.models import QuestionResponse
 
 
 @pytest.mark.django_db

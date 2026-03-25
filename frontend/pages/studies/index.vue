@@ -45,7 +45,7 @@ const GET_STUDY_PAGES = graphql(`
 
 const variables = ref<GraphQLListVariables>({
     search: "",
-    ordering: "title",
+    ordering: "created_at",
     createdByIds: [],
 });
 

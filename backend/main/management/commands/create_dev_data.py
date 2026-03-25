@@ -1,7 +1,6 @@
 from tqdm import tqdm
 from faker import Faker
 
-from django.apps import apps
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.core.management import call_command
@@ -10,7 +9,6 @@ from django.db import transaction
 from main.models import User
 from research.models import Study
 from form.models import (
-    BaseQuestion,
     MRForm,
     Step,
     StepInfoText,
@@ -21,6 +19,7 @@ from form.models import (
     SelectQuestion,
     TextQuestion,
     TrueFalseQuestion,
+    UserFormSubmission,
 )
 
 # Min/max number of steps for the (top-level) form.
@@ -53,28 +52,9 @@ class Command(BaseCommand):
     faker_nl = faker["nl_NL"]
     faker_en = faker["en_GB"]
 
-    # All models for which dev data has been implemented. Add the model to
-    # this list when dev data creation has been implemented for this model.
-    dev_data_models = [
-        User,
-        MRForm,
-        Step,
-        DateQuestion,
-        FileUploadQuestion,
-        NumberQuestion,
-        SelectOption,
-        SelectQuestion,
-        TextQuestion,
-        TrueFalseQuestion,
-        StepInfoText,
-        BaseQuestion,
-        Study,
-    ]
-
     def add_arguments(self, parser):
         parser.add_argument("--force", action="store_true")
         parser.add_argument("--silent", action="store_true")
-        parser.add_argument("--ignore-missing-models", action="store_true")
 
     def print(self, options, *args, **kwargs):
         if not options["silent"]:
@@ -86,30 +66,29 @@ class Command(BaseCommand):
                 "Refusing to execute command unless DEBUG = True in settings.py"
             )
 
-        if not options["ignore_missing_models"]:
-            self._check_all_models_implemented()
-
         self._create_test_users(options)
 
         with transaction.atomic():
-            self._create_studies(options)
             form = self._generate_form(options)
+            self._create_submissions_and_studies(options, form)
             self._generate_steps(options, form)
             self._generate_questions(options, form)
+
+        self.print(options, "Dev data generation complete!")
 
     def _generate_form(self, options) -> MRForm:
         """
         Generate a root MRForm with top-level steps.
         """
 
-        print("Generating root form with top-level steps...")
+        self.print(options, "Generating root form with top-level steps...")
 
         form = MRForm.objects.create(
             name_nl=self.faker_nl.sentence(nb_words=5),
             name_en=self.faker_en.sentence(nb_words=5),
         )
 
-        print("Done!")
+        self.print(options, "Done!")
 
         return form
 
@@ -133,6 +112,7 @@ class Command(BaseCommand):
             for _ in tqdm(
                 range(num_substeps),
                 desc=f"Generating substeps for step {step.name[:10]} (depth: {depth})",
+                disable=options["silent"],
             ):
                 substep = Step.objects.create(
                     parent=step,
@@ -151,7 +131,11 @@ class Command(BaseCommand):
             MIN_STEPS_IN_ROOT_FORM, MAX_STEPS_IN_ROOT_FORM
         )
 
-        for _ in tqdm(range(num_steps), desc="Generating top-level steps..."):
+        for _ in tqdm(
+            range(num_steps),
+            desc="Generating top-level steps...",
+            disable=options["silent"],
+        ):
             step = Step.objects.create(
                 form=form,
                 name_nl=self.faker_nl.sentence(nb_words=5),
@@ -251,7 +235,9 @@ class Command(BaseCommand):
 
         all_steps = _get_all_steps(form)
 
-        for step in tqdm(all_steps, desc="Generating questions..."):
+        for step in tqdm(
+            all_steps, desc="Generating questions...", disable=options["silent"]
+        ):
             number_of_questions = self.faker.random_int(
                 MIN_QUESTIONS_IN_STEP, MAX_QUESTIONS_IN_STEP
             )
@@ -288,40 +274,27 @@ class Command(BaseCommand):
         for fixture in fixtures:
             call_command("loaddata", fixture)
 
-    def _create_studies(self, options):
+    def _create_submissions_and_studies(self, options, form):
         """
         Create mock studies for each user
         """
 
-        for user in tqdm(User.objects.all(), "Generating studies ..."):
+        for user in tqdm(
+            User.objects.all(), "Generating studies ...", disable=options["silent"]
+        ):
 
             num_studies = self.faker.random_int(
                 MIN_STUDIES_PER_USER, MAX_STUDIES_PER_USER
             )
 
+            submission = UserFormSubmission.objects.create(
+                user=user,
+                form=form,
+            )
+
             for _ in range(num_studies):
-                Study.objects.create(
+                study = Study.objects.create(
                     created_by=user,
-                    title=self.faker_nl.sentence(nb_words=5),
                 )
-
-    def _check_all_models_implemented(
-        self,
-    ):
-        """
-        Gather all models from LOCAL_APPS and check if they are all present in
-        dev_data_models.
-        """
-
-        all_mr_models = []
-
-        for app in settings.LOCAL_APPS:
-            for mr_model in apps.get_app_config(app).get_models():
-                all_mr_models.append(mr_model)
-
-        for mr_model in all_mr_models:
-            if mr_model not in self.dev_data_models:
-                raise CommandError(
-                    f"The model {mr_model} is not yet represented in the dev "
-                    "data creation."
-                )
+                submission.study = study  # type: ignore
+                submission.save()
