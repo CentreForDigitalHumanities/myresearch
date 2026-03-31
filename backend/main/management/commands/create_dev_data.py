@@ -4,6 +4,7 @@ from faker import Faker
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
+from django.core.management import call_command
 
 from main.models import User
 from research.models import Study
@@ -64,6 +65,10 @@ class Command(BaseCommand):
             raise CommandError(
                 "Refusing to execute command unless DEBUG = True in settings.py"
             )
+
+        # As we loop over users for generating certain objects, we'll need
+        # to ensure we have some users.
+        call_command("load_fixtures", "--users-only", "--force")
 
         with transaction.atomic():
             form = self._generate_form(options)
