@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db.models import Model
 from django.core.management import call_command
 
+from main.models import User
 from form.models import (
     QuestionCondition,
     QuestionResponse,
@@ -20,6 +21,7 @@ EXCLUDED_MODELS_FOR_COMPLETENESS_CHECK: list[Type[Model]] = [
     QuestionResponse,
     StepCondition,
     QuestionCondition,
+    User
 ]
 
 
