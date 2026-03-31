@@ -7,6 +7,7 @@ from django.conf import settings
 class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("--force", action="store_true")
+        parser.add_argument("--users-only", action="store_true")
 
     def handle(self, *args, **options):
         if not settings.DEBUG and not options["force"]:
@@ -15,7 +16,9 @@ class Command(BaseCommand):
             )
 
         self._load_test_users(options)
-        self._load_vwr_form(options)
+
+        if not options["users_only"]:
+            self._load_vwr_form(options)
 
     def _load_test_users(self, options):
         """
