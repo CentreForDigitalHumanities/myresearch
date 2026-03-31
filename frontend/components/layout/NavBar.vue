@@ -1,28 +1,8 @@
 <script lang="ts" setup>
-import { useQuery } from "@vue/apollo-composable";
 import { BSIcon } from "cdh-vue-lib";
 import useStaticFile from "~/composables/useStaticFile";
-import { graphql } from "~/generated/gql";
-import type { GetFirstSlugQuery } from "~/generated/gql/graphql";
 
-// We only need to know the slug of the top-level form so we can link to it.
-const GET_FIRST_SLUG = graphql(`
-    query GetFirstSlug {
-        form {
-            formId
-            steps {
-                stepId
-                slug
-            }
-        }
-    }
-`);
-
-const { result } = useQuery<GetFirstSlugQuery>(GET_FIRST_SLUG);
-const slug = computed<string | null>(() => {
-    const firstStep = result.value?.form?.steps[0];
-    return firstStep?.slug || null;
-});
+const currentUser = computed(() => useCurrentUserStore().currentUser)
 </script>
 
 <template>
@@ -56,21 +36,11 @@ const slug = computed<string | null>(() => {
                         </NuxtLink>
                     </li>
                     <li>
+                        <NuxtLink v-if="currentUser" to="/procreg/start" class="nav-link" active-class="active">{{ $t("New study") }}</NuxtLink>
+                    </li>
+                    <li v-if="currentUser">
                         <NuxtLink to="/studies/" class="nav-link" active-class="active">
                             {{ $t("Studies") }}
-                        </NuxtLink>
-                    </li>
-                    <li>
-                        <NuxtLink
-                            v-if="slug"
-                            :to="{
-                                name: 'procreg-slug',
-                                params: { slug },
-                            }"
-                            class="nav-link"
-                            active-class="active"
-                        >
-                            {{ $t("Processing Registry") }}
                         </NuxtLink>
                     </li>
                 </ul>
@@ -81,27 +51,3 @@ const slug = computed<string | null>(() => {
         </div>
     </nav>
 </template>
-
-<style scoped lang="scss">
-@use "node_modules/uu-bootstrap/scss/configuration";
-
-.year-select {
-    .dropdown-item {
-        display: flex;
-        align-items: center;
-        line-height: 2rem;
-    }
-    .year-color-box {
-        width: 1.5rem;
-        height: 1.5rem;
-        display: inline-block;
-        margin-right: 0.5rem;
-
-        @each $name, $color in configuration.$theme-colors {
-            &.bg-#{$name} {
-                background: $color;
-            }
-        }
-    }
-}
-</style>
