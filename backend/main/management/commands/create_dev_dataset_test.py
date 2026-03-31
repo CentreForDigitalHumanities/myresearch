@@ -21,7 +21,6 @@ EXCLUDED_MODELS_FOR_COMPLETENESS_CHECK: list[Type[Model]] = [
     QuestionResponse,
     StepCondition,
     QuestionCondition,
-    User,
 ]
 
 
