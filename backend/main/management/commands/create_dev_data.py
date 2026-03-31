@@ -3,8 +3,8 @@ from faker import Faker
 
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
-from django.core.management import call_command
 from django.db import transaction
+from django.core.management import call_command
 
 from main.models import User
 from research.models import Study
@@ -66,7 +66,9 @@ class Command(BaseCommand):
                 "Refusing to execute command unless DEBUG = True in settings.py"
             )
 
-        self._create_test_users(options)
+        # As we loop over users for generating certain objects, we'll need
+        # to ensure we have some users.
+        call_command("load_fixtures", "--users-only", "--force")
 
         with transaction.atomic():
             form = self._generate_form(options)
@@ -257,22 +259,6 @@ class Command(BaseCommand):
                         _create_number_question(step, question_index)
                     case "file_upload":
                         _create_file_upload_question(step, question_index)
-
-    def _create_test_users(self, options):
-        """
-        Create mock users for test purposes from fixtures.
-
-        NOTE: These users are the same as the ones provided by the
-        Dev-IDP and must be kept the same!
-
-        TODO: Find a way to just import them directly from the Dev-IDP
-        """
-        fixtures = [
-            "main/management/commands/dev_fixtures/dev_users.json",
-        ]
-
-        for fixture in fixtures:
-            call_command("loaddata", fixture)
 
     def _create_submissions_and_studies(self, options, form):
         """
