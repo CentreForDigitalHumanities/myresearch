@@ -7,11 +7,6 @@ from django.conf import settings
 class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("--force", action="store_true")
-        parser.add_argument("--silent", action="store_true")
-
-    def print(self, options, *args, **kwargs):
-        if not options["silent"]:
-            print(*args, **kwargs)
 
     def handle(self, *args, **options):
         if not settings.DEBUG and not options["force"]:
