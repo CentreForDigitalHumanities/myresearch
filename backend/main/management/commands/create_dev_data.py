@@ -65,7 +65,6 @@ class Command(BaseCommand):
                 "Refusing to execute command unless DEBUG = True in settings.py"
             )
 
-
         with transaction.atomic():
             form = self._generate_form(options)
             self._create_submissions_and_studies(options, form)
