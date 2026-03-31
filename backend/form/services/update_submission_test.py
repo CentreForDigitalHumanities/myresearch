@@ -1,7 +1,6 @@
 import pytest
 
 from form.services.update_submission import update_or_create_submission
-from form.mutations.utils.inputs import UserFormInput
 from form.models import UserFormSubmission, QuestionResponse
 
 
@@ -25,7 +24,7 @@ class TestUpdateSubmission:
         assert submission.responses.count() == 1
 
     def test_update_response(self, test_user, user_form_input):
-        """Test updating an aswer"""
+        """Test updating an answer"""
 
         submission = update_or_create_submission(test_user, user_form_input)
         response = QuestionResponse.objects.filter(submissions=submission).first()

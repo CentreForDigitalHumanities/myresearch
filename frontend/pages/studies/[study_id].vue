@@ -12,13 +12,13 @@ import StudyProgessBar from "../../components/study_detail/StudyProgessBar.vue";
 const GET_STUDY = graphql(`
     query GetStudy($id: ID!) {
         study(id: $id, mrPermission: "View") {
+            id
+            title
             createdBy {
                 fullName
                 id
                 email
             }
-            id
-            title
         }
     }
 `);
