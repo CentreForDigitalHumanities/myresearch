@@ -27,8 +27,7 @@ const modelValue = defineModel<boolean>();
         <p
             v-if="question.descriptionNl || question.descriptionEn"
             class="text-muted"
-        >
-            {{ useTranslateableAttribute(question, "description") }}
-        </p>
+            v-html="useTranslateableAttribute(question, 'description')"
+        />
     </div>
 </template>

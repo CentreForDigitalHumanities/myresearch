@@ -61,7 +61,7 @@ function hasErrors(question: QuestionWithValue): boolean {
 
 <template>
     <h2>{{ useTranslateableAttribute(step, "name") }}</h2>
-    <p>{{ useTranslateableAttribute(step, "description") }}</p>
+    <div v-html="useTranslateableAttribute(step, 'description')" />
     <div class="uu-form-row">
         <div class="d-flex flex-column">
             <div

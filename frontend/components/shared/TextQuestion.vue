@@ -18,9 +18,8 @@ const modelValue = defineModel<string>();
         <p
             v-if="question.descriptionNl || question.descriptionEn"
             class="text-muted"
-        >
-            {{ useTranslateableAttribute(question, "description") }}
-        </p>
+            v-html="useTranslateableAttribute(question, 'description')"
+        />
         <input
             v-if="!question.lines || question.lines < 2"
             :id="`${question.questionId}-${question.repeatIndex}`"

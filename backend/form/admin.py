@@ -28,6 +28,7 @@ from .models import (
 class TinyMCETextFieldMixin:
     """
     A mixin for replacing all textfields with a TinyMCEWidget
+    If used together with "admin.ModelAdmin" then this mixin needs to be called first.
     """
 
     class Media:
@@ -54,7 +55,7 @@ class TinyMCETextFieldMixin:
 
 
 # Inline admins for related models
-class StepInline(admin.StackedInline):
+class StepInline(TinyMCETextFieldMixin, admin.StackedInline):
     model = Step
     extra = 0
     fields = ("name_nl", "name_en", "slug", "description_nl", "description_en")
@@ -62,7 +63,7 @@ class StepInline(admin.StackedInline):
     fk_name = "form"
 
 
-class SubstepInline(admin.StackedInline):
+class SubstepInline(TinyMCETextFieldMixin, admin.StackedInline):
     model = Step
     extra = 0
     fields = ("name_nl", "name_en", "slug", "description_nl", "description_en")
@@ -122,7 +123,7 @@ class QuestionResponseInline(admin.TabularInline):
     extra = 0
 
 
-class QuestionInline(admin.TabularInline):
+class QuestionInline(TinyMCETextFieldMixin, admin.TabularInline):
     model = BaseQuestion
     extra = 0
     fields = (
@@ -160,7 +161,7 @@ class MRFormAdmin(admin.ModelAdmin):
 
 
 @admin.register(Step)
-class StepAdmin(admin.ModelAdmin):
+class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     list_display = (
         "name_nl",
         "name_en",
@@ -239,7 +240,7 @@ class StepInfoTextAdmin(
 
 # Question admins
 @admin.register(SelectQuestion)
-class SelectQuestionAdmin(admin.ModelAdmin):
+class SelectQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     list_display = ("text_nl", "text_en", "step", "required", "multiple")
     list_filter = ("step", "required", "multiple")
     search_fields = ("text_nl", "text_en", "description_nl", "description_en")
@@ -263,7 +264,7 @@ class SelectQuestionAdmin(admin.ModelAdmin):
 
 
 @admin.register(TrueFalseQuestion)
-class TrueFalseQuestionAdmin(admin.ModelAdmin):
+class TrueFalseQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     list_display = ("text_nl", "text_en", "step", "required", "default_value")
     list_filter = ("step", "required", "default_value")
     search_fields = ("text_nl", "text_en", "description_nl", "description_en")
@@ -287,7 +288,7 @@ class TrueFalseQuestionAdmin(admin.ModelAdmin):
 
 
 @admin.register(TextQuestion)
-class TextQuestionAdmin(admin.ModelAdmin):
+class TextQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     list_display = ("text_nl", "text_en", "step", "required", "lines", "placeholder")
     list_filter = ("step", "required", "lines")
     search_fields = ("text_nl", "text_en", "description_nl", "description_en")
@@ -311,7 +312,7 @@ class TextQuestionAdmin(admin.ModelAdmin):
 
 
 @admin.register(NumberQuestion)
-class NumberQuestionAdmin(admin.ModelAdmin):
+class NumberQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     list_display = ("text_nl", "text_en", "step", "required", "positive_only")
     list_filter = ("step", "required", "positive_only")
     search_fields = ("text_nl", "text_en", "description_nl", "description_en")
@@ -335,7 +336,7 @@ class NumberQuestionAdmin(admin.ModelAdmin):
 
 
 @admin.register(DateQuestion)
-class DateQuestionAdmin(admin.ModelAdmin):
+class DateQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     list_display = ("text_nl", "text_en", "step", "required", "future_only")
     list_filter = ("step", "required", "future_only")
     search_fields = ("text_nl", "text_en", "description_nl", "description_en")
@@ -359,7 +360,7 @@ class DateQuestionAdmin(admin.ModelAdmin):
 
 
 @admin.register(FileUploadQuestion)
-class FileUploadQuestionAdmin(admin.ModelAdmin):
+class FileUploadQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     list_display = ("text_nl", "text_en", "step", "required", "size_limit")
     list_filter = ("step", "required")
     search_fields = ("text_nl", "text_en", "description_nl", "description_en")

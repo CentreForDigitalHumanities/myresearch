@@ -44,9 +44,8 @@ const options = computed<[string, string][]>(() => {
         <p
             v-if="question.descriptionNl || question.descriptionEn"
             class="text-muted"
-        >
-            {{ useTranslateableAttribute(question, "description") }}
-        </p>
+            v-html="useTranslateableAttribute(question, 'description')"
+        />
         <BSMultiSelect
             v-if="question.multiple"
             v-model="multiSelectValue"
