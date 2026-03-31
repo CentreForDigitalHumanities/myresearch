@@ -9,7 +9,6 @@ from .models import (
     Step,
     NumberQuestion,
     SelectOption,
-    StepInfoQuestion,
     TextQuestion,
     SelectQuestion,
     TrueFalseQuestion,
@@ -24,11 +23,6 @@ class MRFormTranslationOptions(TranslationOptions):
 @register(Step)
 class StepTranslationOptions(TranslationOptions):
     fields = ["name", "description"]
-
-
-@register(StepInfoQuestion)
-class FormInfoQuestionTranslationOptions(TranslationOptions):
-    fields = ["text"]
 
 
 @register(StepInfoText)

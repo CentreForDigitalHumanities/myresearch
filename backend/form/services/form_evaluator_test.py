@@ -648,8 +648,8 @@ class TestFormEvaluatorSubmission:
         newer = UserFormSubmission.objects.create(user=test_user, form=form)
 
         evaluator = FormEvaluator(form, test_user)
-
-        assert evaluator.submission == newer
+        assert evaluator.submission
+        assert evaluator.submission.pk == newer.pk
 
     def test_get_user_answer(self, form, test_user, trigger_question):
         """Test get_user_answer retrieves correct answer."""

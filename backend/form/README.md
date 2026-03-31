@@ -21,7 +21,7 @@ MRForm (top-level form)
 ```
 
 -   **MRForm**: the root object for a form, identified by name. This will be versioned in the future so we can create new versions of the same form over time without affecting existing submissions.
--   **Step**: a section within a form, can be top-level or nested as substeps. In addition to questions, steps may contain `StepInfoQuestion` and `StepInfoText` objects for displaying information to users.
+-   **Step**: a section within a form, can be top-level or nested as substeps. In addition to questions, steps may link to a `StepInfoText` object for displaying information to users.
 -   **Question**: represents a single question within a step, of various types (text, number, select, etc).
 
 In principle, there is no limit to the depth of step nesting, but in practice we usually keep it to 1-2 levels for usability. GraphQL enforces a practical limit on nesting depth, as you cannot query infinitely deep structures.

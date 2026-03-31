@@ -1,5 +1,5 @@
 from django_filters import FilterSet, ModelMultipleChoiceFilter
-from graphene import ResolveInfo
+from graphene import ResolveInfo, String
 
 from django.db.models import QuerySet
 
@@ -16,11 +16,12 @@ class StudyFilter(FilterSet):
 
 
 class StudyType(GQLListObjectType):
+    title = String(required=True)
+
     class Meta:
         model = Study
         fields = [
             "id",
-            "title",
             "created_by",
         ]
         filterset_class = StudyFilter
@@ -33,3 +34,7 @@ class StudyType(GQLListObjectType):
         info: ResolveInfo,
     ) -> QuerySet[Study]:
         return queryset
+
+    @staticmethod
+    def resolve_title(parent: Study, info: ResolveInfo) -> str:
+        return parent.name

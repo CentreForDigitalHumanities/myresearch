@@ -23,7 +23,7 @@ const { formObject, validationRules } = useFormState(queried);
 const UPDATE_USER_FORM = graphql(`
     mutation SaveFormSubmission(
         $submissionId: ID
-        $formConfigId: ID
+        $formConfigId: ID!
         $responses: [ResponseInput!]!
     ) {
         updateFormSubmission(
