@@ -384,7 +384,7 @@ class Command(BaseCommand):
                 continue
 
             answer_data = self._generate_answer_for_question(question)
-            
+
             response = QuestionResponse.objects.create(
                 question=question,
                 answer=answer_data,
