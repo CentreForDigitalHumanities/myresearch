@@ -25,7 +25,6 @@ class UpdateUserFormSubmission(Mutation):
     ):
         user: User = info.context.user
         responses = getattr(user_form_input, "responses", [])
-        create_study_flag = getattr(user_form_input, "create_study", False)
 
         try:
             submission = update_submission(
@@ -41,15 +40,4 @@ class UpdateUserFormSubmission(Mutation):
             )
             return cls(ok=False, errors=[error])
 
-        if create_study_flag:
-            create_study(submission)
-
         return cls(ok=True, errors=[])  # type: ignore
-
-
-def create_study(submission: UserFormSubmission) -> None:
-    study = Study.objects.create(
-        created_by=submission.user,
-    )
-    submission.study = study
-    submission.save()
