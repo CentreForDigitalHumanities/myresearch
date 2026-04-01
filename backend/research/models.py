@@ -61,4 +61,7 @@ class Study(models.Model):
     def status(self):
         return self.status_changes.last()
 
+    class Meta:
+        verbose_name_plural = "Studies"
+
     objects = StudyManager()
