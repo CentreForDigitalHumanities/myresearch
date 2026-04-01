@@ -2,7 +2,7 @@
 import { BSIcon } from "cdh-vue-lib";
 import useStaticFile from "~/composables/useStaticFile";
 
-const currentUser = computed(() => useCurrentUserStore().currentUser)
+const currentUser = computed(() => useCurrentUserStore().currentUser);
 </script>
 
 <template>
@@ -36,10 +36,20 @@ const currentUser = computed(() => useCurrentUserStore().currentUser)
                         </NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink v-if="currentUser" to="/procreg/start" class="nav-link" active-class="active">{{ $t("New study") }}</NuxtLink>
+                        <NuxtLink
+                            v-if="currentUser"
+                            to="/procreg/start"
+                            class="nav-link"
+                            active-class="active"
+                            >{{ $t("New study") }}</NuxtLink
+                        >
                     </li>
                     <li v-if="currentUser">
-                        <NuxtLink to="/studies/" class="nav-link" active-class="active">
+                        <NuxtLink
+                            to="/studies/"
+                            class="nav-link"
+                            active-class="active"
+                        >
                             {{ $t("Studies") }}
                         </NuxtLink>
                     </li>

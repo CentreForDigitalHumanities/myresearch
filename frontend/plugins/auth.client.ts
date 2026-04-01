@@ -1,8 +1,7 @@
 export default defineNuxtPlugin(() => {
     addRouteMiddleware(
-        'global-auth',
+        "global-auth",
         async (to, from) => {
-            
             // Check if page is marked as public
             if (to.meta.public) {
                 return;
@@ -16,7 +15,7 @@ export default defineNuxtPlugin(() => {
             };
 
             const currentUserStore = useCurrentUserStore();
-            
+
             // If currentUser is not loaded, try to load it
             if (!currentUserStore.currentUser) {
                 try {
@@ -30,7 +29,7 @@ export default defineNuxtPlugin(() => {
                     return;
                 }
             }
-            
+
             // Additional check: verify user has an ID (is authenticated)
             if (!currentUserStore.currentUser?.id) {
                 if (process.client) {
@@ -40,8 +39,7 @@ export default defineNuxtPlugin(() => {
                     return false;
                 }
             }
-            
         },
-        { global: true }
+        { global: true },
     );
 });
