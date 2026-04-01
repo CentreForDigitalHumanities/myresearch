@@ -40,7 +40,7 @@ class StudyType(GQLListObjectType):
     @staticmethod
     def resolve_title(parent: Study, info: ResolveInfo) -> str:
         return parent.name
-    
+
     @staticmethod
     def resolve_latest_submission_id(parent: Study, info: ResolveInfo) -> int:
         return UserFormSubmission.objects.filter(study=parent).last().pk

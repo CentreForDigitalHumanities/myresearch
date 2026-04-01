@@ -3,14 +3,14 @@ from form.models import UserFormSubmission, QuestionResponse
 from form.mutations.utils.inputs import UserFormInput
 
 
-def update_submission(
-    user: User, user_form_input: UserFormInput
-) -> UserFormSubmission:
+def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSubmission:
     # Usually we can use user_form_input.submission_id or getattr(user_form_input, "submission_id").
     # This breaks the tests, however, where user_form_input is mocked as a dict.
     # That is why we use .get() here, which handles both cases.
 
-    current_submission = UserFormSubmission.objects.get(id=user_form_input.get("submission_id"))
+    current_submission = UserFormSubmission.objects.get(
+        id=user_form_input.get("submission_id")
+    )
 
     for response in user_form_input.get("responses", []):  # type: ignore
         response_id = response["id"] if "id" in response else None

@@ -22,14 +22,13 @@ class CreateStudyMutation(Mutation):
 
         user: User = info.context.user
 
-
         # Check if the user has Create permission
         if Study.can_be_created_by(user):
             # We first make a submission using the latest form
             latest_form = MRForm.objects.all().last()
             submission = UserFormSubmission.objects.create(
-                user = user,
-                form = latest_form,
+                user=user,
+                form=latest_form,
             )
             submission.save()
             # Then create a study
@@ -37,9 +36,7 @@ class CreateStudyMutation(Mutation):
             study.save()
             # Create a StatusChange
             status_change = StatusChange.objects.create(
-                status = SubmissionStatus.DRAFT,
-                created_by = user,
-                study = study
+                status=SubmissionStatus.DRAFT, created_by=user, study=study
             )
             status_change.save()
             # link the study to the submission
