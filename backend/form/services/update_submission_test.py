@@ -1,6 +1,6 @@
 import pytest
 
-from form.services.update_submission import update_or_create_submission
+from form.services.update_submission import update_submission
 from form.models import UserFormSubmission, QuestionResponse
 
 
@@ -17,7 +17,7 @@ class TestUpdateSubmission:
     ):
         """Test creation of UserFormSubmission"""
 
-        submission = update_or_create_submission(test_user, user_form_input)
+        submission = update_submission(test_user, user_form_input)
 
         assert isinstance(submission, UserFormSubmission)
         assert submission.user == test_user
@@ -26,7 +26,7 @@ class TestUpdateSubmission:
     def test_update_response(self, test_user, user_form_input):
         """Test updating an answer"""
 
-        submission = update_or_create_submission(test_user, user_form_input)
+        submission = update_submission(test_user, user_form_input)
         response = QuestionResponse.objects.filter(submissions=submission).first()
 
         new_ans = {"value": "new_answer"}
@@ -38,7 +38,7 @@ class TestUpdateSubmission:
         old_ans = response.answer
         old_response_id = response.id
 
-        submission = update_or_create_submission(test_user, user_form_input)
+        submission = update_submission(test_user, user_form_input)
         response = QuestionResponse.objects.filter(submissions=submission).first()
 
         assert submission.responses.count() == 1

@@ -3,7 +3,7 @@ from form.models import UserFormSubmission, QuestionResponse
 from form.mutations.utils.inputs import UserFormInput
 
 
-def update_or_create_submission(
+def update_submission(
     user: User, user_form_input: UserFormInput
 ) -> UserFormSubmission:
     # Usually we can use user_form_input.form_config_id or getattr(user_form_input, "form_config_id").

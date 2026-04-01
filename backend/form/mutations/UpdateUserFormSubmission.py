@@ -5,7 +5,7 @@ from form.models import QuestionResponse, UserFormSubmission
 from form.mutations.utils.inputs import ResponseInput, UserFormInput
 from main.models import User
 from research.models import Study
-from form.services.update_submission import update_or_create_submission
+from form.services.update_submission import update_submission
 from form.mutations.utils.inputs import UserFormInput
 
 
@@ -28,7 +28,7 @@ class UpdateUserFormSubmission(Mutation):
         create_study_flag = getattr(user_form_input, "create_study", False)
 
         try:
-            submission = update_or_create_submission(
+            submission = update_submission(
                 user,
                 user_form_input,
             )
