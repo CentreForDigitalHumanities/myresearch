@@ -16,11 +16,10 @@ class StatusChangeInline(admin.TabularInline):
 class UserFormSubmissionInline(admin.TabularInline):
     """Inline admin for viewing form submissions"""
     model = UserFormSubmission
-    extra = 0
-    readonly_fields = ('user', 'form', 'started_at', 'updated_at', 'completed_at')
+    readonly_fields = ('user', 'form', 'started_at', 'updated_at')
     can_delete = False
     editable = False
-    fields = ('user', 'form', 'started_at', 'updated_at', 'completed_at')
+    fields = ('user', 'form', 'started_at', 'updated_at')
     verbose_name = "Form Submission"
     verbose_name_plural = "Form Submissions"
     
@@ -58,10 +57,4 @@ class StatusChangeAdmin(admin.ModelAdmin):
     list_filter = ('status', 'created_at', 'created_by')
     search_fields = ('study__id', 'created_by__full_name')
     readonly_fields = ('created_at',)
-    
-    fieldsets = (
-        ('Change Information', {
-            'fields': ('study', 'status', 'created_by', 'created_at')
-        }),
-    )
-
+    fields = ('study', 'status', 'created_by', 'created_at')
