@@ -1,3 +1,4 @@
+from research.other_models.reviews import StatusChange, SubmissionStatus
 from form.models import MRForm, UserFormSubmission
 from main.models import User
 from research.models import Study
@@ -21,17 +22,28 @@ class CreateStudyMutation(Mutation):
 
         user: User = info.context.user
 
+
         # Check if the user has Create permission
         if Study.can_be_created_by(user):
-            study = Study(created_by=user)
-            study.save()
-            # We make a submission using the latest form
-            latest_form = MRForm.objects.last()
+            # We first make a submission using the latest form
+            latest_form = MRForm.objects.all().last()
             submission = UserFormSubmission.objects.create(
                 user = user,
                 form = latest_form,
-                study = study,
             )
+            submission.save()
+            # Then create a study
+            study = Study(created_by=user)
+            study.save()
+            # Create a StatusChange
+            status_change = StatusChange.objects.create(
+                status = SubmissionStatus.DRAFT,
+                created_by = user,
+                study = study
+            )
+            status_change.save()
+            # link the study to the submission
+            submission.study = study
             submission.save()
             return cls(study=study)
         else:
