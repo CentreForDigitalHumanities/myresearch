@@ -59,6 +59,6 @@ class Study(models.Model):
 
     @property
     def status(self):
-        return self.status_changes.last().status
+        return self.status_changes.last()
 
     objects = StudyManager()
