@@ -59,13 +59,14 @@ const handleCreateStudy = async () => {
 <template>
     <div class="uu-content">
         <div class="uu-hero">
-            <h1>{{ $t("Register new study") }}</h1>
+            <h1>{{ $t("Start new registration") }}</h1>
         </div>
         <div class="uu-container">
             <p>
                 {{
-                    $t(`You are about to register a new study.
-                If you click on the button below, a new study will be created and you will be able to fill in a form.`)
+                    $t(
+                        `You are about to register a new study. If you click on the button below, a new study will be created and you will be able to fill in a form.`,
+                    )
                 }}
             </p>
             <div class="w-100"></div>

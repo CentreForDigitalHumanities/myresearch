@@ -41,7 +41,7 @@ const currentUser = computed(() => useCurrentUserStore().currentUser);
                             to="/procreg/start"
                             class="nav-link"
                             active-class="active"
-                            >{{ $t("New study") }}</NuxtLink
+                            >{{ $t("New registration") }}</NuxtLink
                         >
                     </li>
                     <li v-if="currentUser">
