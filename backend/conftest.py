@@ -16,7 +16,8 @@ def test_user():
         password="testpass123",
     )
 
-
-@pytest.fixture
-def form() -> MRForm:
+# autouse=True ensures that the Form is saved to the test db.
+# This is required for create_study_test.py
+@pytest.fixture(autouse=True)
+def form(db) -> MRForm:
     return MRForm.objects.create(name="Test Form")
