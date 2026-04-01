@@ -16,6 +16,7 @@ def test_user():
         password="testpass123",
     )
 
+
 # autouse=True ensures that the Form is saved to the test db.
 # This is required for create_study_test.py
 @pytest.fixture(autouse=True)
