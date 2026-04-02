@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useMutation } from "@vue/apollo-composable";
-import gql from "graphql-tag";
+import { graphql } from "~/generated/gql";
 
 const router = useRouter();
 
 // Define the CreateStudy mutation
-const createStudyMutation = gql`
-    mutation CreateStudy {
+const createStudyMutation = graphql(`
+    mutation CreateNewStudy {
         createStudy {
             study {
                 id
@@ -18,7 +18,7 @@ const createStudyMutation = gql`
             }
         }
     }
-`;
+`);
 
 // Setup the mutation
 const { mutate: createStudy, loading } = useMutation(createStudyMutation);
