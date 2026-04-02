@@ -38,8 +38,7 @@ const handleCreateStudy = async () => {
             result.data.createStudy.errors.length > 0
         ) {
             useNotification(
-                result.data.createStudy.errors[0].messages?.[0] ||
-                    "Failed to create study",
+                "Failed to create study",
                 "danger",
             );
             return;
@@ -51,7 +50,6 @@ const handleCreateStudy = async () => {
             router.push(`/studies/${result.data.createStudy.study.id}`);
         }
     } catch (error) {
-        console.error("Error creating study:", error);
         useNotification("Failed to create study. Please try again.", "danger");
     }
 };
