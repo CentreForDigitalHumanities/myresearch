@@ -1,3 +1,5 @@
+from django.db import transaction
+
 from main.models import User
 from form.models import MRForm, UserFormSubmission
 from research.models import Study
@@ -17,24 +19,23 @@ def create_study(user: User) -> Study:
         raise ValueError(
             "No MRForm instances exist; cannot create UserFormSubmission without a form."
         )
-    submission = UserFormSubmission.objects.create(
-        user=user,
-        form=latest_form,
-    )
-    submission.save()
+    # Ensure no partial data gets left behind
+    with transaction.atomic():
+        # Create a study
+        study = Study(created_by=user)
+        study.save()
 
-    # Create a study
-    study = Study(created_by=user)
-    study.save()
+        submission = UserFormSubmission.objects.create(
+            user=user,
+            form=latest_form,
+            study=study,
+        )
+        submission.save()
 
-    # Create a StatusChange
-    status_change = StatusChange.objects.create(
-        status=SubmissionStatus.DRAFT, created_by=user, study=study
-    )
-    status_change.save()
-
-    # Link the study to the submission
-    submission.study = study
-    submission.save()
+        # Create a StatusChange
+        status_change = StatusChange.objects.create(
+            status=SubmissionStatus.DRAFT, created_by=user, study=study
+        )
+        status_change.save()
 
     return study
