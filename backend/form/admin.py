@@ -85,9 +85,6 @@ class SelectOptionInline(admin.TabularInline):
     model = SelectOption
     extra = 0
     fields = ("label", "label_nl", "label_en", "default_selected")
-    fk_name = "question"
-    verbose_name = "Option"
-    verbose_name_plural = "Options"
 
 
 class StepConditionInline(admin.StackedInline):
@@ -264,7 +261,7 @@ class SelectQuestionAdmin(admin.ModelAdmin):
         (
             "Select Options order",
             {
-                "fields": ("select_options_order",),
+                "fields": ("options_order",),
                 "description": "Order",
             },
         ),

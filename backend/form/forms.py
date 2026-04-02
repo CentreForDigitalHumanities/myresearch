@@ -2,7 +2,7 @@ from django.forms import ModelForm, CharField, ValidationError, Textarea
 from form.models import Step
 
 class SelectQuestionAdminForm(ModelForm):
-    select_options_order = CharField(
+    options_order = CharField(
         max_length=255,
         help_text="Comma-separated list of question IDs in desired order, e.g. '3,1,2'.",
         label="Select Option order",
@@ -15,13 +15,13 @@ class SelectQuestionAdminForm(ModelForm):
         if self.instance.pk:
             current_order = self.instance.get_selectoption_order()
             if current_order:
-                self.initial["select_options_order"] = ",".join(map(str, current_order))
+                self.initial["options_order"] = ",".join(map(str, current_order))
 
-    def clean_select_options_order(self):
+    def clean_options_order(self):
         """
         Make sure that the provided question IDs are valid and exist.
         """
-        order: str = self.cleaned_data.get("select_options_order", "")
+        order: str = self.cleaned_data.get("options_order", "")
         if not order:
             return order
 
@@ -38,12 +38,12 @@ class SelectQuestionAdminForm(ModelForm):
             requested_order.append(int(id_str))
 
         # Validate that the provided IDs exist.
-        available_ids = [question.id for question in self.instance.select_options.all()]
-        #in instance.NAME.all(), NAME is the verbose name
+        available_ids = [question.id for question in self.instance.options.all()]
+        # In instance.NAME.all(), NAME is the verbose name.
         invalid_ids = [
-            question_id
-            for question_id in requested_order
-            if question_id not in available_ids
+            id
+            for id in requested_order
+            if id not in available_ids
         ]
 
         if invalid_ids:
@@ -64,7 +64,7 @@ class SelectQuestionAdminForm(ModelForm):
 
     def save(self, commit=True):
         instance = super().save(commit=False)
-        order = self.cleaned_data.get("select_options_order", "")
+        order = self.cleaned_data.get("options_order", "")
 
         if order:
             requested_order = [
