@@ -13,6 +13,10 @@ def create_study(user: User) -> Study:
     """
     # Create a submission using the latest form
     latest_form = MRForm.objects.all().last()
+    if latest_form is None:
+        raise ValueError(
+            "No MRForm instances exist; cannot create UserFormSubmission without a form."
+        )
     submission = UserFormSubmission.objects.create(
         user=user,
         form=latest_form,
