@@ -9,10 +9,13 @@ export default defineNuxtPlugin(() => {
 
             const config = useRuntimeConfig();
 
-            const getLoginUrl = () => {
+            async function rerouteToLogin(): Promise<void> {
+                // Using the Dev-IDP the redirect seems to get overriden
+                // Maybe this can be fixed on PROD
                 const redirect = encodeURIComponent(window.location.href);
-                return `${config.public.SAML_URL}/login/?next=${redirect}`;
-            };
+                const loginUrl = `${config.public.SAML_URL}/login/?next=${redirect}`;
+                await navigateTo(loginUrl, { external: true });
+            }
 
             const currentUserStore = useCurrentUserStore();
 
@@ -21,23 +24,15 @@ export default defineNuxtPlugin(() => {
                 try {
                     await currentUserStore.loadData();
                 } catch (error) {
-                    // If loading fails, redirect to login
-                    if (process.client) {
-                        const loginUrl = getLoginUrl();
-                        window.location.href = loginUrl;
-                    }
-                    return;
+                    await rerouteToLogin();
+                    return false;
                 }
             }
 
             // Additional check: verify user has an ID (is authenticated)
             if (!currentUserStore.currentUser?.id) {
-                if (process.client) {
-                    const loginUrl = getLoginUrl();
-                    window.location.href = loginUrl;
-                    // Prevent page render while redirecting
-                    return false;
-                }
+                await rerouteToLogin();
+                return false;
             }
         },
         { global: true },
