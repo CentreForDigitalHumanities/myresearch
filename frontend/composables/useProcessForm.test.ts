@@ -157,6 +157,7 @@ describe("useProcessForm", () => {
         formId: "form1",
         nameEn: "Test Form",
         nameNl: "Testformulier",
+        submissionId: "sub1",
         steps: [
             {
                 __typename: "StepType",
@@ -441,6 +442,7 @@ describe("useProcessForm", () => {
                 formId: "form1",
                 nameEn: "Test Form",
                 nameNl: "Testformulier",
+                submissionId: "sub1",
                 steps: [
                     {
                         __typename: "StepType",

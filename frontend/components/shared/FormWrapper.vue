@@ -22,14 +22,12 @@ const { formObject, validationRules } = useFormState(queried);
 
 const UPDATE_USER_FORM = graphql(`
     mutation SaveFormSubmission(
-        $submissionId: ID
-        $formConfigId: ID!
+        $submissionId: ID!
         $responses: [ResponseInput!]!
     ) {
         updateFormSubmission(
             userFormInput: {
                 submissionId: $submissionId
-                formConfigId: $formConfigId
                 responses: $responses
             }
         ) {
@@ -60,8 +58,7 @@ function submitForm(): void {
 
     const inputData = useFormDataToMutationInput(
         formData,
-        props.queriedForm.submissionId ?? null,
-        props.queriedForm.formId,
+        props.queriedForm.submissionId,
     );
 
     mutateForm(inputData).catch((error: unknown) => {

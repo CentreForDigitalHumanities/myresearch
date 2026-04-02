@@ -13,6 +13,6 @@ class UserFormType(ObjectType):
         NonNull(StepType),
         required=True,
     )
-    submission_id = ID()
+    submission_id = ID(required=True)
     started_at = DateTime()
     completed_at = DateTime()
