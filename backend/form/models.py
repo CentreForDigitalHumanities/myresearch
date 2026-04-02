@@ -143,9 +143,10 @@ class SelectOption(models.Model):
     label = models.CharField(max_length=200)
     default_selected = models.BooleanField(default=False)
     question = models.ForeignKey(
-        SelectQuestion, on_delete=models.CASCADE, related_name="options"
+        SelectQuestion, on_delete=models.CASCADE, related_name="select_options"
     )
-
+    class Meta:
+        order_with_respect_to = "question"
 
 class TrueFalseQuestion(BaseQuestion):
     default_value = models.BooleanField(default=False)

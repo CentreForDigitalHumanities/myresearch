@@ -3,7 +3,7 @@ from django.db import models
 
 from cdh.core.forms import TinyMCEWidget
 
-from form.forms import StepAdminForm
+from form.forms import StepAdminForm, SelectQuestionAdminForm
 from .models import (
     MRForm,
     Step,
@@ -85,6 +85,9 @@ class SelectOptionInline(admin.TabularInline):
     model = SelectOption
     extra = 0
     fields = ("label", "label_nl", "label_en", "default_selected")
+    fk_name = "question"
+    verbose_name = "Option"
+    verbose_name_plural = "Options"
 
 
 class StepConditionInline(admin.StackedInline):
@@ -258,8 +261,16 @@ class SelectQuestionAdmin(admin.ModelAdmin):
             },
         ),
         ("Select Options", {"fields": ("multiple",)}),
+        (
+            "Select Options order",
+            {
+                "fields": ("select_options_order",),
+                "description": "Order",
+            },
+        ),
     )
     inlines = [SelectOptionInline, QuestionConditionInline]
+    form = SelectQuestionAdminForm
 
 
 @admin.register(TrueFalseQuestion)
