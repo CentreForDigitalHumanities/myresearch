@@ -7,7 +7,7 @@ from form.models import UserFormSubmission, QuestionResponse
 @pytest.mark.django_db
 class TestUpdateSubmission:
     """
-    Tests for update_or_create_submission service
+    Tests for update_submission service
     """
 
     def test_update_response(self, test_user, user_form_input):
