@@ -1,6 +1,7 @@
 from django.forms import ModelForm, CharField, ValidationError, Textarea
 from form.models import Step
 
+
 class SelectQuestionAdminForm(ModelForm):
     options_order = CharField(
         max_length=255,
@@ -40,11 +41,7 @@ class SelectQuestionAdminForm(ModelForm):
         # Validate that the provided IDs exist.
         available_ids = [question.id for question in self.instance.options.all()]
         # In instance.NAME.all(), NAME is the verbose name.
-        invalid_ids = [
-            id
-            for id in requested_order
-            if id not in available_ids
-        ]
+        invalid_ids = [id for id in requested_order if id not in available_ids]
 
         if invalid_ids:
             raise ValidationError(
@@ -68,14 +65,13 @@ class SelectQuestionAdminForm(ModelForm):
 
         if order:
             requested_order = [
-                int(id_str)
-                for id_str in order.split(",")
-                if id_str.strip().isdigit()
+                int(id_str) for id_str in order.split(",") if id_str.strip().isdigit()
             ]
             instance.set_selectoption_order(requested_order)
         if commit:
             instance.save()
         return instance
+
 
 class StepAdminForm(ModelForm):
     """
