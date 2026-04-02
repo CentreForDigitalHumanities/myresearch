@@ -38,7 +38,7 @@ const handleCreateStudy = async () => {
             result.data.createStudy.errors.length > 0
         ) {
             useNotification(
-                result.data.createStudy.errors[0].message ||
+                result.data.createStudy.errors[0].messages?.[0] ||
                     "Failed to create study",
                 "danger",
             );
