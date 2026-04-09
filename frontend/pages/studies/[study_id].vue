@@ -14,6 +14,7 @@ const GET_STUDY = graphql(`
         study(id: $id, mrPermission: "View") {
             id
             title
+            latestSubmissionId
             createdBy {
                 fullName
                 id
@@ -103,7 +104,7 @@ const studyStatus = computed(() =>
                                 <em>{{ study?.title }}</em
                                 >.
                             </p>
-                            <AvailableActions :study-status="studyStatus" />
+                            <AvailableActions :study-status="studyStatus" :submission-id="study?.latestSubmissionId"/>
                         </div>
                         <!-- Progess bar -->
                         <div class="col-2">
