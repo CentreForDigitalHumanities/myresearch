@@ -22,41 +22,41 @@ from form.services.form_evaluator import MAX_REPEAT_LIMIT, FormEvaluator
 class TestFormEvaluatorCheckTriggerValue:
     """Tests for FormEvaluator.check_trigger_value method."""
 
-    def test_empty_trigger_value_returns_true_for_any_answer(self, form, test_user):
+    def test_empty_trigger_value_returns_true_for_any_answer(self, submission):
         """Empty trigger_value dict should match any non-empty answer."""
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.check_trigger_value({"value": "anything"}, {}) is True
         assert evaluator.check_trigger_value({"value": 123}, {}) is True
         assert evaluator.check_trigger_value({"value": True}, {}) is True
 
-    def test_empty_trigger_value_returns_false_for_empty_answer(self, form, test_user):
+    def test_empty_trigger_value_returns_false_for_empty_answer(self, submission):
         """Empty trigger_value dict should match any answer, including empty/falsy ones."""
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.check_trigger_value({}, {}) is True
         assert evaluator.check_trigger_value({"value": ""}, {}) is True
         assert evaluator.check_trigger_value({"value": 0}, {}) is True
 
-    def test_min_comparison(self, form, test_user):
+    def test_min_comparison(self, submission):
         """Test minimum value comparison."""
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.check_trigger_value({"value": 10}, {"min": 5}) is True
         assert evaluator.check_trigger_value({"value": 5}, {"min": 5}) is True
         assert evaluator.check_trigger_value({"value": 3}, {"min": 5}) is False
 
-    def test_max_comparison(self, form, test_user):
+    def test_max_comparison(self, submission):
         """Test maximum value comparison."""
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.check_trigger_value({"value": 3}, {"max": 5}) is True
         assert evaluator.check_trigger_value({"value": 5}, {"max": 5}) is True
         assert evaluator.check_trigger_value({"value": 10}, {"max": 5}) is False
 
-    def test_exact_comparison(self, form, test_user):
+    def test_exact_comparison(self, submission):
         """Test exact value comparison."""
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.check_trigger_value({"value": 5}, {"exact": 5}) is True
         assert evaluator.check_trigger_value({"value": 10}, {"exact": 5}) is False
@@ -65,9 +65,9 @@ class TestFormEvaluatorCheckTriggerValue:
             is True
         )
 
-    def test_value_matching_with_single_option(self, form, test_user):
+    def test_value_matching_with_single_option(self, submission):
         """Test value matching with single select."""
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert (
             evaluator.check_trigger_value(
@@ -84,9 +84,9 @@ class TestFormEvaluatorCheckTriggerValue:
             is False
         )
 
-    def test_value_matching_with_multiple_options(self, form, test_user):
+    def test_value_matching_with_multiple_options(self, submission):
         """Test value matching with multiple select."""
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         # Complete match
         assert (
@@ -115,17 +115,17 @@ class TestFormEvaluatorCheckTriggerValue:
             is False
         )
 
-    def test_value_comparison_for_booleans(self, form, test_user):
+    def test_value_comparison_for_booleans(self, submission):
         """Test direct value matching for booleans."""
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.check_trigger_value({"value": True}, {"value": True}) is True
         assert evaluator.check_trigger_value({"value": False}, {"value": True}) is False
         assert evaluator.check_trigger_value({"value": False}, {"value": False}) is True
 
-    def test_value_comparison_for_strings(self, form, test_user):
+    def test_value_comparison_for_strings(self, submission):
         """Test direct value matching for strings."""
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.check_trigger_value({"value": "yes"}, {"value": "yes"}) is True
         assert evaluator.check_trigger_value({"value": "no"}, {"value": "yes"}) is False
@@ -136,10 +136,10 @@ class TestFormEvaluatorQuestionConditions:
     """Tests for QuestionCondition evaluation in FormEvaluator."""
 
     def test_question_visible_by_default_without_conditions(
-        self, form, test_user, target_question
+        self, submission, target_question
     ):
         """Question without conditions should be visible by default."""
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.is_question_visible(target_question) is True
 
@@ -155,7 +155,8 @@ class TestFormEvaluatorQuestionConditions:
             trigger_value={"value": "specific_answer"},
         )
 
-        evaluator = FormEvaluator(form, test_user)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
+        evaluator = FormEvaluator(submission)
 
         # No submission/response means condition not met
         assert evaluator.is_question_visible(target_question) is False
@@ -182,12 +183,12 @@ class TestFormEvaluatorQuestionConditions:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.is_question_visible(target_question) is True
 
     def test_hide_condition_shows_question_when_not_met(
-        self, form, test_user, trigger_question, target_question
+        self, submission, trigger_question, target_question
     ):
         """Question with hide condition should be visible when condition is not met."""
         QuestionCondition.objects.create(
@@ -197,7 +198,7 @@ class TestFormEvaluatorQuestionConditions:
             trigger_value={"value": "hide_me"},
         )
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         # No response means the hide condition is not met, so question is shown.
         assert evaluator.is_question_visible(target_question) is True
@@ -220,7 +221,7 @@ class TestFormEvaluatorQuestionConditions:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.is_question_visible(target_question) is False
 
@@ -247,7 +248,7 @@ class TestFormEvaluatorQuestionConditions:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.is_question_visible(target_question) is True
 
@@ -277,7 +278,7 @@ class TestFormEvaluatorQuestionConditions:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.is_question_visible(target_question) is True
 
@@ -304,7 +305,7 @@ class TestFormEvaluatorQuestionConditions:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.is_question_visible(target_question) is True
 
@@ -330,7 +331,7 @@ class TestFormEvaluatorQuestionConditions:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert (
             evaluator.get_repeat_count_for_question(target_question)
@@ -364,7 +365,7 @@ class TestFormEvaluatorQuestionConditions:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert (
             evaluator.get_repeat_count_for_question(target_question)
@@ -395,13 +396,13 @@ class TestFormEvaluatorQuestionConditions:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.get_repeat_count_for_question(target_question) == 0
 
-    def test_no_repeat_condition_returns_one(self, form, test_user, target_question):
+    def test_no_repeat_condition_returns_one(self, submission, target_question):
         """Question without repeat condition should have repeat count of 1."""
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.get_repeat_count_for_question(target_question) == 1
 
@@ -410,14 +411,14 @@ class TestFormEvaluatorQuestionConditions:
 class TestFormEvaluatorStepConditions:
     """Tests for StepCondition evaluation in FormEvaluator."""
 
-    def test_step_visible_by_default_without_conditions(self, form, step, test_user):
+    def test_step_visible_by_default_without_conditions(self, submission, step):
         """Step without conditions should be visible by default."""
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.is_step_visible(step) is True
 
     def test_show_condition_hides_step_when_not_met(
-        self, form, step, test_user, trigger_question
+        self, submission, step, trigger_question
     ):
         """Step with show condition should be hidden when condition is not met."""
         StepCondition.objects.create(
@@ -427,7 +428,7 @@ class TestFormEvaluatorStepConditions:
             trigger_value={"value": "show_step"},
         )
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.is_step_visible(step) is False
 
@@ -457,12 +458,12 @@ class TestFormEvaluatorStepConditions:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.is_step_visible(step) is True
 
     def test_hide_condition_shows_step_when_not_met(
-        self, form, step, test_user, trigger_question
+        self, submission, step, trigger_question
     ):
         """Step with hide condition should be visible when condition is not met."""
         StepCondition.objects.create(
@@ -472,7 +473,7 @@ class TestFormEvaluatorStepConditions:
             trigger_value={"value": "hide_step"},
         )
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         # No response: hide condition is not met, so the step is visible.
         assert evaluator.is_step_visible(step) is True
@@ -498,7 +499,7 @@ class TestFormEvaluatorStepConditions:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.is_step_visible(step) is False
 
@@ -524,7 +525,7 @@ class TestFormEvaluatorStepConditions:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.get_repeat_count_for_step(step) == REPEAT_COUNT
 
@@ -552,7 +553,7 @@ class TestFormEvaluatorStepConditions:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.get_repeat_count_for_step(step) == REPEAT_COUNT
 
@@ -578,7 +579,7 @@ class TestFormEvaluatorStepConditions:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.get_repeat_count_for_step(step) == 0
 
@@ -606,13 +607,13 @@ class TestFormEvaluatorStepConditions:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.get_repeat_count_for_step(step) == MAX_REPEAT_LIMIT
 
-    def test_no_step_repeat_condition_returns_one(self, form, step, test_user):
+    def test_no_step_repeat_condition_returns_one(self, submission, step):
         """Step without repeat condition should have repeat count of 1."""
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.get_repeat_count_for_step(step) == 1
 
@@ -621,38 +622,20 @@ class TestFormEvaluatorStepConditions:
 class TestFormEvaluatorSubmission:
     """Tests for FormEvaluator submission handling."""
 
-    def test_creates_submission_when_flag_set(self, form, test_user):
-        """FormEvaluator should create submission when create_submission=True."""
-        evaluator = FormEvaluator(form, test_user, create_submission=True)
+    def test_submission_access(self, submission):
+        """FormEvaluator should give access to the submission."""
+        evaluator = FormEvaluator(submission)
 
-        submission = evaluator.submission
+        assert evaluator.submission == submission
 
-        assert submission is not None
-        assert submission.user == test_user
-        assert submission.form == form
+    def test_form_access_from_submission(self, form, submission):
+        """FormEvaluator should provide access to form via submission."""
+        evaluator = FormEvaluator(submission)
 
-    def test_returns_none_when_no_submission_exists(self, form, test_user):
-        """FormEvaluator should return None when no submission exists."""
-        evaluator = FormEvaluator(form, test_user, create_submission=False)
+        assert evaluator.form == form
 
-        assert evaluator.submission is None
-
-    def test_returns_latest_submission(self, form, test_user):
-        """FormEvaluator should return the most recent submission."""
-        # Create older submission with a small delay for consistent testing.
-        older = UserFormSubmission.objects.create(user=test_user, form=form)
-        older.updated_at = timezone.now() - timedelta(days=1)
-        older.save()
-
-        # Create newer submission
-        newer = UserFormSubmission.objects.create(user=test_user, form=form)
-
-        evaluator = FormEvaluator(form, test_user)
-        assert evaluator.submission
-        assert evaluator.submission.pk == newer.pk
-
-    def test_get_user_answer(self, form, test_user, trigger_question):
-        """Test get_user_answer retrieves correct answer."""
+    def test_get_user_response(self, form, test_user, trigger_question):
+        """Test get_user_response retrieves correct answer."""
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
         qr = QuestionResponse.objects.create(
             question=trigger_question,
@@ -661,15 +644,15 @@ class TestFormEvaluatorSubmission:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         response = evaluator.get_user_response(trigger_question, 0)
         assert response is not None
         assert response.answer == {"value": "my answer"}
         assert evaluator.get_user_response(trigger_question, 1) is None
 
-    def test_get_user_answer_with_repeat_index(self, form, test_user, trigger_question):
-        """Test get_user_answer with different repeat indices."""
+    def test_get_user_response_with_repeat_index(self, form, test_user, trigger_question):
+        """Test get_user_response with different repeat indices."""
 
         FIRST_ANSWER = "first"
         SECOND_ANSWER = "second"
@@ -688,7 +671,7 @@ class TestFormEvaluatorSubmission:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.get_user_response(trigger_question, 0).answer == {
             "value": FIRST_ANSWER
