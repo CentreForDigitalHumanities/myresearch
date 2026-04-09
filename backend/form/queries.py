@@ -1,33 +1,31 @@
 from typing import Optional
-from graphene import Field, ObjectType, ResolveInfo
+from graphene import ID, Field, ObjectType, ResolveInfo
 
 
 from main.models import User
 from form.services.form_evaluator import FormEvaluator
 from form.services.user_form_resolver import UserFormResolver
 from form.types.UserFormType import UserFormType
-from form.models import MRForm
+from form.models import UserFormSubmission
 
 
 class FormQueries(ObjectType):
     form = Field(
         UserFormType,
+        submission_id=ID(required=True),
         description="Retrieves the user's submission for a specific form.",
     )
 
     @staticmethod
-    def resolve_form(root, info: ResolveInfo) -> Optional[UserFormType]:
+    def resolve_form(root, info: ResolveInfo, submission_id: int) -> Optional[UserFormType]:
         user: User = info.context.user
         if not user.is_authenticated:
             return None
+        
+        # TODO: implement permissions
+        submission = UserFormSubmission.objects.get(id=submission_id)
 
-        # Get the latest form config/template (for dev purposes only)
-        form_config = MRForm.objects.order_by("-created_at").first()
-
-        if not form_config:
-            return None
-
-        evaluator = FormEvaluator(form_config, user)
+        evaluator = FormEvaluator(submission)
         resolver = UserFormResolver(evaluator)
 
         return resolver.resolve()
