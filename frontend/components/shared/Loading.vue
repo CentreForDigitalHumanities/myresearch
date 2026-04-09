@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 interface Props {
-    inline?: boolean;
+  inline?: boolean;
 }
 const props = withDefaults(defineProps<Props>(), {
-    inline: false,
+  inline: false,
 });
 </script>
 
 <template>
-    <span class="text-center" :class="inline ? '' : 'mt-5 mb-5'">
-        <div class="spinner-border spinner-border-sm" role="status" />
-        {{ $t("Loading") }} ...
-    </span>
+  <span class="text-center" :class="inline ? '' : 'mt-5 mb-5'">
+    <div class="spinner-border spinner-border-sm" role="status" />
+    {{ $t("Loading") }} ...
+  </span>
 </template>

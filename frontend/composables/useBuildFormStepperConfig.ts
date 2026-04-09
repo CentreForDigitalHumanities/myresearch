@@ -10,29 +10,29 @@ import type { QueriedForm } from "~/components/shared/FormWrapper";
  * @returns The FormStepper configuration.
  */
 function useBuildFormStepperConfig(
-    queriedForm: QueriedForm,
-    currentStepSlug: string,
+  queriedForm: QueriedForm,
+  currentStepSlug: string,
 ): FormStepperConfig {
-    return {
-        steps: queriedForm.steps.map((step) => ({
-            slug: step.slug,
-            labelNl: step.nameNl ?? "",
-            labelEn: step.nameEn ?? "",
-            completed: false,
-            active: step.slug === currentStepSlug,
-            disabled: false,
-            substeps: step.substeps.map((substep) => ({
-                slug: substep.slug,
-                labelNl: substep.nameNl ?? "",
-                labelEn: substep.nameEn ?? "",
-                completed: false,
-                active: substep.slug === currentStepSlug,
-                disabled: false,
-                // Let's only go 2 levels deep for now.
-                substeps: [],
-            })),
-        })),
-    };
+  return {
+    steps: queriedForm.steps.map((step) => ({
+      slug: step.slug,
+      labelNl: step.nameNl ?? "",
+      labelEn: step.nameEn ?? "",
+      completed: false,
+      active: step.slug === currentStepSlug,
+      disabled: false,
+      substeps: step.substeps.map((substep) => ({
+        slug: substep.slug,
+        labelNl: substep.nameNl ?? "",
+        labelEn: substep.nameEn ?? "",
+        completed: false,
+        active: substep.slug === currentStepSlug,
+        disabled: false,
+        // Let's only go 2 levels deep for now.
+        substeps: [],
+      })),
+    })),
+  };
 }
 
 export { useBuildFormStepperConfig };
