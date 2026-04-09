@@ -154,7 +154,7 @@ function getPreviousStepSlug(): string {
  */
 function navigateToSlug(slug: string) {
     submitForm();
-    return navigateTo("/procreg/" + slug);
+    return navigateTo("/procreg/" + props.queriedForm.submissionId + "/" + slug);
 }
 </script>
 
