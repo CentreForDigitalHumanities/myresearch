@@ -1,7 +1,11 @@
 from graphene import List, Mutation, NonNull, ResolveInfo, Boolean
 from graphene_django.types import ErrorType
 
-from form.services.update_submission import update_or_create_submission
+from form.models import QuestionResponse, UserFormSubmission
+from form.mutations.utils.inputs import ResponseInput, UserFormInput
+from main.models import User
+from research.models import Study
+from form.services.update_submission import update_submission
 from form.mutations.utils.inputs import UserFormInput
 
 
@@ -19,19 +23,18 @@ class UpdateUserFormSubmission(Mutation):
         info: ResolveInfo,
         user_form_input: UserFormInput,
     ):
+        user: User = info.context.user
 
         try:
-            update_or_create_submission(
-                info.context.user,
+            update_submission(
+                user,
                 user_form_input,
             )
         except Exception as e:
             error = ErrorType(
                 field="responses",
-                messages=[
-                    f"Failed to save responses for UserFormSubmission with id: {getattr(user_form_input, 'id', None)}"
-                ],
+                messages=[str(e)],
             )
             return cls(ok=False, errors=[error])
 
-        return cls(ok=True, errors=[])
+        return cls(ok=True, errors=[])  # type: ignore

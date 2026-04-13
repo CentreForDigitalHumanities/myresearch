@@ -9,6 +9,5 @@ class ResponseInput(InputObjectType):
 
 
 class UserFormInput(InputObjectType):
-    submission_id = ID()
-    form_config_id = ID()
+    submission_id = ID(required=True)
     responses = List(NonNull(ResponseInput), required=True)

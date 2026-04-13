@@ -2,14 +2,27 @@ from django.db import models
 from django.db.models import Q, Min
 from django.contrib.auth import get_user_model
 
+from main.models import User
+from main.utils.permission_utils import BaseMRManager
+
 user_model = get_user_model()
 
 
 class MRForm(models.Model):
     name = models.CharField(max_length=200)
+    version = models.CharField(max_length=10, help_text="E.g. 1.0.0, 2.15.3")
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    study_name_question = models.ForeignKey(
+        "form.BaseQuestion",
+        on_delete=models.SET_NULL,
+        related_name="study_name_forms",
+        help_text="If set, the answer to this question will be used as the study name.",
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         verbose_name = "Form"
@@ -87,16 +100,10 @@ class Step(models.Model):
         return f"{self.name} ({self.pk})"
 
 
-class StepInfoQuestion(models.Model):
-    step = models.ForeignKey(
-        Step, on_delete=models.CASCADE, related_name="info_questions"
-    )
-    text = models.CharField(max_length=200)
-    link = models.URLField(max_length=200)
-
-
 class StepInfoText(models.Model):
-    step = models.ForeignKey(Step, on_delete=models.CASCADE, related_name="info_texts")
+    step = models.OneToOneField(
+        Step, on_delete=models.CASCADE, related_name="info_text"
+    )
     text = models.TextField()
 
 
@@ -164,14 +171,31 @@ class FileUploadQuestion(BaseQuestion):
     size_limit = models.PositiveIntegerField()
 
 
+class SubmissionManager(BaseMRManager):
+    def _viewable_objects(self, user: User):
+        if user.is_privacy_officer or user.is_fetc_member:
+            return self.all()
+        return self.filter(user=user)
+
+    def _editable_objects(self, user: User):
+        return self.filter(user=user)
+
+
 # User responses / answers
 class UserFormSubmission(models.Model):
     """Tracks a user's progress through a form."""
 
-    user = models.ForeignKey(user_model, on_delete=models.CASCADE)
-    form = models.ForeignKey(MRForm, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        user_model, on_delete=models.CASCADE, related_name="submissions"
+    )
+    form = models.ForeignKey(
+        MRForm, on_delete=models.CASCADE, related_name="submissions"
+    )
     study = models.ForeignKey(
-        "research.Study", on_delete=models.CASCADE, related_name="forms", null=True
+        "research.Study",
+        on_delete=models.CASCADE,
+        related_name="submissions",
+        null=True,
     )
     started_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -179,6 +203,8 @@ class UserFormSubmission(models.Model):
 
     def __str__(self) -> str:
         return f"Submission {self.pk} by {self.user} started at {self.started_at.strftime('%Y-%m-%d %H:%M:%S')} (Form {self.form.pk})"
+
+    objects = SubmissionManager()
 
 
 class QuestionResponseManager(models.Manager):

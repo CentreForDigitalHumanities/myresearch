@@ -1,0 +1,15 @@
+Run these scripts as root from the same directory as the compose file, with the postgres container running.
+
+Example backup:
+
+  michael@localhost:~/projects/MyResearch > sudo docker compose up -d
+  michael@localhost:~/projects/MyResearch > sudo scripts/pg_dump.sh my_backup
+  Dumping to dumps/my_backup.sql
+  Success!
+  michael@localhost:~/projects/MyResearch > 
+
+You can then wipe your DB using pg_wipe.sh or restore a backup as follows:
+
+  michael@localhost:~/projects/MyResearch > sudo scripts/pg_restore.sh scripts/dumps/my_backup.sql
+
+You will be asked for confirmation before destructive operations. Inspect the scripts for further details.

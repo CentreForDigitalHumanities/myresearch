@@ -1,11 +1,5 @@
 import pytest
-from form.mutations.utils.inputs import ResponseInput, UserFormInput
-from form.models import MRForm, Step, TextQuestion
-
-
-@pytest.fixture
-def form() -> MRForm:
-    return MRForm.objects.create(name="Test Form")
+from form.models import MRForm, Step, TextQuestion, UserFormSubmission
 
 
 @pytest.fixture
@@ -33,16 +27,25 @@ def target_question(step: Step) -> TextQuestion:
 
 
 @pytest.fixture
-def response_input(trigger_question: TextQuestion) -> ResponseInput:
+def submission(test_user, form: MRForm) -> UserFormSubmission:
+    """Create a UserFormSubmission for testing."""
+    return UserFormSubmission.objects.create(
+        form=form,
+        user=test_user,
+    )
+
+
+@pytest.fixture
+def response_input(trigger_question: TextQuestion) -> dict:
     """Create an empty ResponseInput"""
     return {
-        "question_id": trigger_question.id,
+        "question_id": trigger_question.pk,
         "repeat_index": 0,
         "answer": {"value": None},
     }
 
 
 @pytest.fixture
-def user_form_input(form: MRForm, response_input: ResponseInput) -> UserFormInput:
+def user_form_input(submission: UserFormSubmission, response_input: dict) -> dict:
     """Create an empty UserFormInput"""
-    return {"form_config_id": form.id, "responses": [response_input]}
+    return {"submission_id": submission.pk, "responses": [response_input]}

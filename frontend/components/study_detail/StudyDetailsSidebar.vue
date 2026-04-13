@@ -2,7 +2,7 @@
 import type { GetStudyQuery } from "~/generated/gql/graphql";
 
 defineProps<{
-    study: GetStudyQuery["study"] | null;
+    study: NonNullable<GetStudyQuery["study"]>;
     randomDatePastYear: string;
 }>();
 </script>
@@ -23,11 +23,11 @@ defineProps<{
             <ul>
                 <li class="mt-2">
                     {{ $t("Created by") }}:
-                    {{ study?.createdBy.fullName }}
+                    {{ study.createdBy.fullName }}
                 </li>
                 <li class="mt-2">
                     {{ $t("Creator email") }}:
-                    {{ study?.createdBy.email }}
+                    {{ study.createdBy.email }}
                 </li>
             </ul>
             <h3>{{ $t("Study details") }}</h3>

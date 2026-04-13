@@ -1,10 +1,12 @@
 from django.contrib import admin
+from django.db import models
+
+from cdh.core.forms import TinyMCEWidget
 
 from form.forms import StepAdminForm
 from .models import (
     MRForm,
     Step,
-    StepInfoQuestion,
     StepInfoText,
     BaseQuestion,
     SelectQuestion,
@@ -19,6 +21,36 @@ from .models import (
     StepCondition,
     QuestionCondition,
 )
+
+# Utils
+
+
+class TinyMCETextFieldMixin:
+    """
+    A mixin for replacing all textfields with a TinyMCEWidget
+    """
+
+    class Media:
+        js = (
+            "cdh.core/js/jquery-3.6.1.min.js",
+            "cdh.core/js/tinymce/tinymce.min.js",
+            "cdh.core/js/tinymce/tinymce-jquery.min.js",
+            "cdh.core/js/tinymce/shim.js",
+        )
+
+    formfield_overrides = {
+        models.TextField: {
+            "widget": TinyMCEWidget(
+                plugins=[
+                    "link",
+                    "image",
+                    "visualblocks",
+                    "wordcount",
+                    "lists",
+                ]
+            )
+        },
+    }
 
 
 # Inline admins for related models
@@ -40,16 +72,13 @@ class SubstepInline(admin.StackedInline):
     verbose_name_plural = "Substeps"
 
 
-class StepInfoQuestionInline(admin.StackedInline):
-    model = StepInfoQuestion
-    extra = 0
-    fields = ("text", "link")
-
-
-class StepInfoTextInline(admin.StackedInline):
+class StepInfoTextInline(
+    TinyMCETextFieldMixin,
+    admin.StackedInline,
+):
     model = StepInfoText
     extra = 0
-    fields = ("text",)
+    fields = ("text_en", "text_nl")
 
 
 class SelectOptionInline(admin.TabularInline):
@@ -180,7 +209,6 @@ class StepAdmin(admin.ModelAdmin):
     )
     inlines = [
         SubstepInline,
-        StepInfoQuestionInline,
         StepInfoTextInline,
         QuestionInline,
         StepConditionInline,
@@ -194,15 +222,11 @@ class StepAdmin(admin.ModelAdmin):
     created_at_display.short_description = "Info"
 
 
-@admin.register(StepInfoQuestion)
-class StepInfoQuestionAdmin(admin.ModelAdmin):
-    list_display = ("text", "step", "link")
-    list_filter = ("step",)
-    search_fields = ("text",)
-
-
 @admin.register(StepInfoText)
-class StepInfoTextAdmin(admin.ModelAdmin):
+class StepInfoTextAdmin(
+    TinyMCETextFieldMixin,
+    admin.ModelAdmin,
+):
     list_display = ("short_text", "step")
     list_filter = ("step",)
     search_fields = ("text",)
