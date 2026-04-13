@@ -1,7 +1,6 @@
 from research.other_models.utils import YearCounter
-from research.other_models.reviews import SubmissionStatus
 from form.models import UserFormSubmission
-from main.models import User, MRPermission
+from main.models import User
 from form.models import MRForm, QuestionResponse, UserFormSubmission
 from main.models import User
 from main.utils.permission_utils import BaseMRManager
