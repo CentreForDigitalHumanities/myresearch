@@ -7,8 +7,6 @@ import StudyDetailsSidebar from "../../components/study_detail/StudyDetailsSideb
 import AvailableActions from "../../components/study_detail/AvailableActions.vue";
 import StudyProgessBar from "../../components/study_detail/StudyProgessBar.vue";
 
-// retrieve study
-
 const GET_STUDY = graphql(`
   query GetStudy($id: ID!) {
     study(id: $id, mrPermission: "View") {
