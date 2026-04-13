@@ -6,6 +6,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from django.core.management import call_command
 
+from research.other_models.reviews import StatusChange, SubmissionStatus
 from main.models import User
 from research.models import Study
 from form.models import (
@@ -281,6 +282,10 @@ class Command(BaseCommand):
             for _ in range(num_studies):
                 study = Study.objects.create(
                     created_by=user,
+                )
+                # Create a StatusChange
+                StatusChange.objects.create(
+                    status=SubmissionStatus.DRAFT, created_by=user, study=study
                 )
                 submission.study = study  # type: ignore
                 submission.save()

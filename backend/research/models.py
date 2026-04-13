@@ -46,7 +46,7 @@ class Study(models.Model):
                 study=self,
             )
             response = QuestionResponse.objects.filter(
-                submission=submission,
+                submissions=submission,
                 question_id=name_question.id,
             ).latest("answered_at")
             return (
@@ -59,6 +59,9 @@ class Study(models.Model):
 
     @property
     def status(self):
-        return self.status_changes.last().status
+        return self.status_changes.last()
+
+    class Meta:
+        verbose_name_plural = "Studies"
 
     objects = StudyManager()
