@@ -26,8 +26,6 @@ const route = useRoute();
 
 const {
   result: studyResult,
-  loading,
-  error,
 } = useQuery<GetStudyQuery>(GET_STUDY, { id: route.params.study_id });
 
 const study = computed(() => studyResult.value?.study ?? null);
