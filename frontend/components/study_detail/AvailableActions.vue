@@ -8,7 +8,7 @@ import type { GetFirstSlugQuery } from "~/generated/gql/graphql";
 
 const props = defineProps<{
   studyStatus: string;
-  submissionId: string | undefined;
+  submissionId: string;
 }>();
 
 // We only need to know the slug of the top-level form so we can link to it.
@@ -24,11 +24,9 @@ const GET_FIRST_SLUG = graphql(`
   }
 `);
 
-const queryVariables = computed(() =>
-  props.submissionId ? { submissionId: props.submissionId } : null,
-);
-
-const { result } = useQuery<GetFirstSlugQuery>(GET_FIRST_SLUG, queryVariables);
+const { result } = useQuery<GetFirstSlugQuery>(GET_FIRST_SLUG, () => ({
+  submissionId: props.submissionId,
+}));
 
 const slug = computed<string | null>(() => {
   const firstStep = result.value?.form?.steps[0];
