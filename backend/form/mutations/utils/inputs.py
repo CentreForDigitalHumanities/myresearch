@@ -1,4 +1,4 @@
-from graphene import Boolean, InputObjectType, ID, List, NonNull, JSONString, Int
+from graphene import InputObjectType, ID, List, NonNull, JSONString, Int
 
 
 class ResponseInput(InputObjectType):
