@@ -73,7 +73,7 @@ const studyStatus = computed(() =>
     <div v-if="study" class="uu-sidebar-container">
       <StudyDetailsSidebar
         :study="study"
-        :randomDatePastYear="randomDatePastYear()"
+        :random-date-past-year="randomDatePastYear()"
       />
       <!-- Content -->
       <div class="uu-sidebar-content">
