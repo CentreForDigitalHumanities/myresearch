@@ -66,9 +66,9 @@ const handleCreateStudy = async () => {
       </p>
       <div class="w-100"></div>
       <button
-        @click="handleCreateStudy"
         :disabled="loading"
         class="btn btn-primary btn-lg"
+        @click="handleCreateStudy"
       >
         <span
           v-if="loading"
