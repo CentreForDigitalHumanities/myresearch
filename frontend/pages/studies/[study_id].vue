@@ -34,16 +34,6 @@ const {
 
 const study = computed(() => studyResult.value?.study ?? null);
 
-// Give 404 if the study does not exist
-
-watchEffect(() => {
-  if (!loading.value && studyResult.value && !study.value) {
-    showError(
-      createError({ statusCode: 404, statusMessage: "Study not found" }),
-    );
-  }
-});
-
 // Some functions to generate mockdata
 
 function randomDatePastYear(): string {
@@ -75,12 +65,12 @@ const studyStatus = computed(() =>
 
 <template>
   <div class="uu-content">
-    <Title>{{ $t("Study") }}: {{ study?.title }}</Title>
+    <Title>{{ $t("Study") }}: {{ study?.title ?? $t("Unknown study") }}</Title>
     <div class="uu-hero">
       <h1>{{ $t("Study overview") }}</h1>
     </div>
     <!-- Sidebar -->
-    <div class="uu-sidebar-container">
+    <div v-if="study" class="uu-sidebar-container">
       <StudyDetailsSidebar
         :study="study"
         :randomDatePastYear="randomDatePastYear()"
@@ -93,7 +83,7 @@ const studyStatus = computed(() =>
             <div class="col me-5">
               <h1>
                 2025-{{ randomNumber100to1000() }} -
-                <em>{{ study?.title }}</em>
+                <em>{{ study.title }}</em>
               </h1>
               <p>
                 {{
@@ -101,12 +91,12 @@ const studyStatus = computed(() =>
                     "This page shows and overview of the status and available actions for the study",
                   )
                 }}
-                <em>{{ study?.title }}</em
+                <em>{{ study.title }}</em
                 >.
               </p>
               <AvailableActions
                 :study-status="studyStatus"
-                :submission-id="study?.latestSubmissionId"
+                :submission-id="study.latestSubmissionId"
               />
             </div>
             <!-- Progess bar -->
@@ -116,6 +106,9 @@ const studyStatus = computed(() =>
           </div>
         </div>
       </div>
+    </div>
+    <div class="uu-container">
+      <h3>{{ $t("Oops ... The study you are looking for could not be found.") }}</h3>
     </div>
   </div>
 </template>
