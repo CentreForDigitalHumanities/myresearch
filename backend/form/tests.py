@@ -81,11 +81,11 @@ class TestAllStepsAllQuestions:
     def test_all_steps_returns_all_steps(self, form: MRForm):
         """Test that all_steps returns all steps in the form."""
         step1 = Step.objects.create(name="Step 1", slug="step1", form=form)
-        step2 = Step.objects.create(name="Step 2", slug="step2", parent=form)
-        step3 = Step.objects.create(name="Step 3", slug="step3", parent=form)
-        step4 = Step.objects.create(name="Step 4", slug="step4", parent=step1)
-        step5 = Step.objects.create(name="Step 5", slug="step5", parent=step2)
-        step6 = Step.objects.create(name="Step 6", slug="step6", form=step2)
+        step2 = Step.objects.create(name="Step 2", slug="step2", parent=step1)
+        step3 = Step.objects.create(name="Step 3", slug="step3", parent=step1)
+        step4 = Step.objects.create(name="Step 4", slug="step4", parent=step2)
+        step5 = Step.objects.create(name="Step 5", slug="step5", parent=step3)
+        step6 = Step.objects.create(name="Step 6", slug="step6", parent=step4)
 
         all_steps = form.all_steps()
 
