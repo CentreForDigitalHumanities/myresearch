@@ -8,13 +8,17 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
     # This breaks the tests, however, where user_form_input is mocked as a dict.
     # That is why we use .get() here, which handles both cases.
     try:
-        # first filter for editable objects, and then try to get the specific submission 
-        current_submission = UserFormSubmission.objects.accessible_objects(user, MRPermission.EDIT).get(
+        # first filter for editable objects, and then try to get the specific submission
+        current_submission = UserFormSubmission.objects.accessible_objects(
+            user, MRPermission.EDIT
+        ).get(
             id=user_form_input.get("submission_id"),
         )
     except UserFormSubmission.DoesNotExist:
-        raise Exception(f"Submission with id {user_form_input.get('submission_id')} "
-                        f"belonging to user {user} does not exist.")
+        raise Exception(
+            f"Submission with id {user_form_input.get('submission_id')} "
+            f"belonging to user {user} does not exist."
+        )
 
     for response in user_form_input.get("responses", []):  # type: ignore
         response_id = response["id"] if "id" in response else None

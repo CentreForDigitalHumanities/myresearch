@@ -19,7 +19,10 @@ class FormQueries(ObjectType):
 
     @staticmethod
     def resolve_form(
-        root, info: ResolveInfo, submission_id: str, mr_permission: str,
+        root,
+        info: ResolveInfo,
+        submission_id: str,
+        mr_permission: str,
     ) -> Optional[UserFormType]:
         user: User = info.context.user
         if not user.is_authenticated:

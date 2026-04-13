@@ -33,9 +33,7 @@ class UpdateUserFormSubmission(Mutation):
         except Exception as e:
             error = ErrorType(
                 field="responses",
-                messages=[
-                    str(e)
-                ],
+                messages=[str(e)],
             )
             return cls(ok=False, errors=[error])
 
