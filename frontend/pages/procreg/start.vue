@@ -44,7 +44,7 @@ const handleCreateStudy = async () => {
     if (result.data.createStudy?.study?.id) {
       useNotification("Study created successfully", "success");
       // Redirect to the study detail page
-      router.push(`/studies/${result.data.createStudy.study.id}`);
+      void router.push(`/studies/${result.data.createStudy.study.id}`);
     }
   } catch (error) {
     useNotification("Failed to create study. Please try again.", "danger");
