@@ -35,11 +35,9 @@ const slug = computed<string | null>(() => {
   return firstStep?.slug || null;
 });
 
-const continue_url = computed(() =>
+const continueUrl = computed(() =>
   slug.value ? `/procreg/${props.submissionId}/${slug.value}` : "",
 );
-
-console.log(continue_url.value)
 
 const { t } = useI18n();
 
@@ -56,7 +54,7 @@ type AvailableAction = {
 const draftActions = computed<AvailableAction[]>(() => [
   {
     label: t("Continue editing"),
-    href: continue_url.value,
+    href: continueUrl.value,
     icon: PencilLine,
   },
   {
@@ -71,7 +69,7 @@ const draftActions = computed<AvailableAction[]>(() => [
 const POActions = computed<AvailableAction[]>(() => [
   {
     label: t("Continue editing"),
-    href: continue_url.value,
+    href: continueUrl.value,
     icon: PencilLine,
   },
   {
