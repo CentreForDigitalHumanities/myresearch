@@ -74,6 +74,7 @@ services:
       DJANGO_SETTINGS_MODULE: "myresearch.settings.dev"
       SAML_BASE_URL: ${SAML_BASE_URL}
       IDP_METADATA_URL: ${IDP_METADATA_URL}
+      OVERVIEW_STEP_SLUG: ${OVERVIEW_STEP_SLUG}
 
   django-prod:
     <<: *django-dev
@@ -94,7 +95,7 @@ services:
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
       DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
       CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
-
+      OVERVIEW_STEP_SLUG: ${OVERVIEW_STEP_SLUG}
   vue-dev:
     image: mr-vue-dev
     container_name: ${NAME_PREFIX}mr-vue-dev
@@ -123,6 +124,7 @@ services:
       - CODEGEN_SCHEMA=http://mr-django:8000/api/graphql
       - NUXT_PUBLIC_API_URL=${BASE_URL}/api
       - NUXT_PUBLIC_SAML_URL=${BASE_URL}/saml
+      - OVERVIEW_STEP_SLUG=${OVERVIEW_STEP_SLUG}
 
   vue-prod:
     image: mr-vue-prod
@@ -139,6 +141,7 @@ services:
       args:
         - NUXT_PUBLIC_API_URL=${BASE_URL}/api
         - CODEGEN_SCHEMA=schema.json
+        - OVERVIEW_STEP_SLUG=${OVERVIEW_STEP_SLUG}
 
   dev-idp:
     image: ghcr.io/centrefordigitalhumanities/development-idp/development-idp:latest
@@ -162,8 +165,7 @@ services:
       - DJANGO_IDP_PUBLIC_CERT=/run/secrets/public_cert
     volumes:
       - ./db:/run/db
-    profiles:
-      ["dev"]
+    profiles: ["dev"]
     stdin_open: true
     tty: true
     restart: unless-stopped

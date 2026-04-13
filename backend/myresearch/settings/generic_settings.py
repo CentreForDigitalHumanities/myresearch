@@ -153,3 +153,7 @@ AUTH_USER_MODEL = "main.User"
 GRAPHENE = {
     "SCHEMA": "api.graphql.schema.schema",
 }
+
+# Application constants
+
+OVERVIEW_STEP_SLUG = os.getenv("OVERVIEW_STEP_SLUG", "overview")

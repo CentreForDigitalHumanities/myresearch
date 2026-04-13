@@ -123,7 +123,7 @@ class Command(BaseCommand):
                     name_en=self.faker_en.sentence(nb_words=5),
                     description_nl=self.faker_nl.paragraph(),
                     description_en=self.faker_en.paragraph(),
-                    slug=self.faker.unique.slug(),
+                    slug=self._generate_unique_slug(),
                 )
 
                 _generate_substeps(substep, depth + 1)
@@ -144,9 +144,17 @@ class Command(BaseCommand):
                 name_en=self.faker_en.sentence(nb_words=5),
                 description_nl=self.faker_nl.paragraph(),
                 description_en=self.faker_en.paragraph(),
-                slug=self.faker.unique.slug(),
+                slug=self._generate_unique_slug(),
             )
             _generate_substeps(step, 1)
+
+    def _generate_unique_slug(self) -> str:
+        """Generate a slug that is not the reserved overview slug."""
+        reserved_slug = settings.OVERVIEW_STEP_SLUG.lower()
+        new_slug = self.faker.unique.slug()
+        while new_slug.lower() == reserved_slug:
+            new_slug = self.faker.unique.slug()
+        return new_slug
 
     def _create_step_info(self, step: Step) -> None:
         """Generates side information for a given step."""

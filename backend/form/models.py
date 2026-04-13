@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models import Q, Min
 from django.contrib.auth import get_user_model
 
+from form.validators import validate_slug_not_overview
+
 user_model = get_user_model()
 
 
@@ -36,6 +38,7 @@ class Step(models.Model):
         max_length=200,
         unique=True,
         help_text="Used in the URL.",
+        validators=[validate_slug_not_overview],
     )
 
     # Only for the top-level steps.

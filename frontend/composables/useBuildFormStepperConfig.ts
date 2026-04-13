@@ -1,4 +1,4 @@
-import type { FormStepperConfig } from "~/components/shared/FormStepper";
+import type { FormStep, FormStepperConfig } from "~/components/shared/FormStepper";
 import type { QueriedForm } from "~/components/shared/FormWrapper";
 
 /**
@@ -13,26 +13,38 @@ function useBuildFormStepperConfig(
     queriedForm: QueriedForm,
     currentStepSlug: string,
 ): FormStepperConfig {
-    return {
-        steps: queriedForm.steps.map((step) => ({
-            slug: step.slug,
-            labelNl: step.nameNl ?? "",
-            labelEn: step.nameEn ?? "",
+    const steps: FormStep[] = queriedForm.steps.map((step) => ({
+        slug: step.slug,
+        labelNl: step.nameNl,
+        labelEn: step.nameEn,
+        completed: false,
+        active: step.slug === currentStepSlug,
+        disabled: false,
+        substeps: step.substeps.map((substep) => ({
+            slug: substep.slug,
+            labelNl: substep.nameNl,
+            labelEn: substep.nameEn,
             completed: false,
-            active: step.slug === currentStepSlug,
+            active: substep.slug === currentStepSlug,
             disabled: false,
-            substeps: step.substeps.map((substep) => ({
-                slug: substep.slug,
-                labelNl: substep.nameNl ?? "",
-                labelEn: substep.nameEn ?? "",
-                completed: false,
-                active: substep.slug === currentStepSlug,
-                disabled: false,
-                // Let's only go 2 levels deep for now.
-                substeps: [],
-            })),
+            // Let's only go 2 levels deep for now.
+            substeps: [],
         })),
-    };
+    }));
+
+    const overviewStepSlug = useOverviewStepSlug();
+
+    steps.push({
+        slug: overviewStepSlug,
+        labelNl: "Overzicht",
+        labelEn: "Overview",
+        completed: false,
+        active: currentStepSlug === overviewStepSlug,
+        disabled: false,
+        substeps: [],
+    });
+
+    return { steps };
 }
 
 export { useBuildFormStepperConfig };

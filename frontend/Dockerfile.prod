@@ -17,11 +17,14 @@ COPY . /app
 
 # Get static graphql schema
 ARG CODEGEN_SCHEMA
-env CODEGEN_SCHEMA=${CODEGEN_SCHEMA}
+ENV CODEGEN_SCHEMA=${CODEGEN_SCHEMA}
 
 # Make sure the API URL is available at generate time
 ARG NUXT_PUBLIC_API_URL
 ENV NUXT_PUBLIC_API_URL=${NUXT_PUBLIC_API_URL}
+
+ARG OVERVIEW_STEP_SLUG
+ENV OVERVIEW_STEP_SLUG=${OVERVIEW_STEP_SLUG}
 
 # Build the application in production mode.
 RUN npm run generate

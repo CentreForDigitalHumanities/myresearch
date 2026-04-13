@@ -15,6 +15,7 @@ export default defineNuxtConfig({
             buildDate: "",
             version: "",
             static_dir: "",
+            overviewStepSlug: process.env.OVERVIEW_STEP_SLUG || "overview",
             SAML_URL: "",
             API_URL: "",
             IMPERSONATE_URL: "",
