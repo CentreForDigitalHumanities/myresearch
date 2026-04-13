@@ -43,7 +43,6 @@ class Study(models.Model):
     objects = StudyManager()
 
     def save(self, *args, **kwargs):
-
         if not self.reference:
             with transaction.atomic():
                 year = timezone.now().year % 100  # 2026 -> 26
