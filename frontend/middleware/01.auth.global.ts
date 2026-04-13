@@ -1,7 +1,4 @@
-export default defineNuxtPlugin(() => {
-  addRouteMiddleware(
-    "global-auth",
-    async (to, from) => {
+export default defineNuxtRouteMiddleware(async (to, from) => {
       // Check if page is marked as public
       if (to.meta.public) {
         return;
@@ -35,6 +32,4 @@ export default defineNuxtPlugin(() => {
         return false;
       }
     },
-    { global: true },
-  );
-});
+);
