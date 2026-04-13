@@ -34,7 +34,7 @@ class UpdateUserFormSubmission(Mutation):
             error = ErrorType(
                 field="responses",
                 messages=[
-                    f"Failed to save responses for UserFormSubmission with id: {getattr(user_form_input, 'id')}"
+                    str(e)
                 ],
             )
             return cls(ok=False, errors=[error])
