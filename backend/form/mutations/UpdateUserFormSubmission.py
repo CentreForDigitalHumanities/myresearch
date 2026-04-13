@@ -24,10 +24,9 @@ class UpdateUserFormSubmission(Mutation):
         user_form_input: UserFormInput,
     ):
         user: User = info.context.user
-        responses = getattr(user_form_input, "responses", [])
 
         try:
-            submission = update_submission(
+            update_submission(
                 user,
                 user_form_input,
             )
