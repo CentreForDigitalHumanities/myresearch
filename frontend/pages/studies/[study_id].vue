@@ -107,7 +107,7 @@ const studyStatus = computed(() =>
         </div>
       </div>
     </div>
-    <div class="uu-container">
+    <div class="uu-container" v-else>
       <h3>{{ $t("Oops ... The study you are looking for could not be found.") }}</h3>
     </div>
   </div>
