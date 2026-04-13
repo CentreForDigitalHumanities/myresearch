@@ -23,45 +23,20 @@ MAX_REPEAT_LIMIT = 10
 class FormEvaluator:
     """
     Creates a user-specific view of a form, with conditional logic and repeats
-    applied, based on a user's last submission.
+    applied, based on a user's submission.
 
     Args:
-        form: The MRForm config/template being evaluated.
-        user: The user for whom the form is being evaluated.
-        create_submission: Whether to create a UserFormSubmission if one doesn't exist.
+        submission: The submission to be evaluated.
     """
 
-    def __init__(self, form: MRForm, user: UserType, create_submission: bool = False):
-        self.form = form
-        self.user = user
-        self.create_submission = create_submission
-        self._submission = None
+    def __init__(self, submission: UserFormSubmission):
+        self.submission = submission
         self._responses_cache = None
 
     @property
-    def submission(self) -> UserFormSubmission | None:
-        """
-        Get or optionally create the user's submission.
-
-        For now, this fetches the latest submission; in the future, we will
-        want to support multiple submissions per user.
-        """
-        if self._submission is None:
-            if self.create_submission:
-                self._submission = UserFormSubmission.objects.create(
-                    user=self.user, form=self.form
-                )
-            else:
-                self._submission = (
-                    UserFormSubmission.objects.filter(
-                        user=self.user,
-                        form=self.form,
-                    )
-                    .order_by("-updated_at")
-                    .first()
-                )
-
-        return self._submission
+    def form(self) -> MRForm:
+        """Get the form associated with this submission."""
+        return self.submission.form
 
     @property
     def responses(self) -> dict[int, list[QuestionResponse]]:

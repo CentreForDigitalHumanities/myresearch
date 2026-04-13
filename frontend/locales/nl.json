@@ -107,5 +107,12 @@
   "Success": "Succes",
   "Warning": "Waarschuwing",
   "Error": "Fout",
-  "List could not be fetched": "Lijst kon niet worden opgehaald"
+  "List could not be fetched": "Lijst kon niet worden opgehaald",
+  "New registration": "Nieuwe registratie",
+  "Start new registration": "Start nieuwe registratie",
+  "You are about to register a new study. If you click on the button below, a new study will be created and you will be able to fill in a form.": "Je staat op het punt een nieuwe studie te registreren. Als je op de knop hieronder klikt, wordt een nieuwe studie gemaakt en kun je een formulier invullen.",
+  "Creating...": "Aan het aanmaken...",
+  "Register new study": "Registreer een nieuwe studie",
+  "Unknown study": "Onbekende studie",
+  "Oops ... The study you are looking for could not be found.": "Oeps ... De studie die u zocht kon niet worden gevonden."
 }

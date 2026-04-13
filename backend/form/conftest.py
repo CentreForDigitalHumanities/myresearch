@@ -1,5 +1,5 @@
 import pytest
-from form.models import MRForm, Step, TextQuestion
+from form.models import MRForm, Step, TextQuestion, UserFormSubmission
 
 
 @pytest.fixture
@@ -27,6 +27,15 @@ def target_question(step: Step) -> TextQuestion:
 
 
 @pytest.fixture
+def submission(test_user, form: MRForm) -> UserFormSubmission:
+    """Create a UserFormSubmission for testing."""
+    return UserFormSubmission.objects.create(
+        form=form,
+        user=test_user,
+    )
+
+
+@pytest.fixture
 def response_input(trigger_question: TextQuestion) -> dict:
     """Create an empty ResponseInput"""
     return {
@@ -37,6 +46,6 @@ def response_input(trigger_question: TextQuestion) -> dict:
 
 
 @pytest.fixture
-def user_form_input(form: MRForm, response_input: dict) -> dict:
+def user_form_input(submission: UserFormSubmission, response_input: dict) -> dict:
     """Create an empty UserFormInput"""
-    return {"form_config_id": form.pk, "responses": [response_input]}
+    return {"submission_id": submission.pk, "responses": [response_input]}

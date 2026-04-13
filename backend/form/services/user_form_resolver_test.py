@@ -20,15 +20,15 @@ from form.services.user_form_resolver import UserFormResolver
 class TestUserFormResolver:
     """Tests for UserFormResolver."""
 
-    def test_resolve_returns_user_form_type(self, form, test_user):
+    def test_resolve_returns_user_form_type(self, submission):
         """UserFormResolver.resolve() should return a UserFormType."""
-        evaluator = FormEvaluator(form, test_user, create_submission=True)
+        evaluator = FormEvaluator(submission)
         resolver = UserFormResolver(evaluator)
 
         result = resolver.resolve()
 
-        assert result.form_id == form.pk
-        assert result.submission_id is not None
+        assert result.form_id == submission.form.pk
+        assert result.submission_id == submission.pk
 
     def test_resolve_excludes_hidden_questions(
         self, form, test_user, trigger_question, target_question
@@ -42,7 +42,8 @@ class TestUserFormResolver:
         )
 
         # No response matching the condition
-        evaluator = FormEvaluator(form, test_user, create_submission=True)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
+        evaluator = FormEvaluator(submission)
         resolver = UserFormResolver(evaluator)
 
         result = resolver.resolve()
@@ -73,7 +74,7 @@ class TestUserFormResolver:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
         resolver = UserFormResolver(evaluator)
 
         result = resolver.resolve()
@@ -101,7 +102,8 @@ class TestUserFormResolver:
         )
 
         # No matching response
-        evaluator = FormEvaluator(form, test_user, create_submission=True)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
+        evaluator = FormEvaluator(submission)
         resolver = UserFormResolver(evaluator)
 
         result = resolver.resolve()
@@ -132,7 +134,7 @@ class TestUserFormResolver:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
         resolver = UserFormResolver(evaluator)
 
         result = resolver.resolve()
@@ -176,7 +178,7 @@ class TestUserFormResolver:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
         resolver = UserFormResolver(evaluator)
 
         result = resolver.resolve()
@@ -195,19 +197,21 @@ class TestUserFormResolver:
         """Resolver should work without a submission."""
         TextQuestion.objects.create(text="Question 1", step=step)
 
-        evaluator = FormEvaluator(form, test_user, create_submission=False)
+        # Create submission but pass it to evaluator (it's now required)
+        submission = UserFormSubmission.objects.create(user=test_user, form=form)
+        evaluator = FormEvaluator(submission)
         resolver = UserFormResolver(evaluator)
 
         result = resolver.resolve()
 
         assert result.form_id == form.pk
-        assert result.submission_id is None
+        assert result.submission_id == submission.pk
         assert len(result.steps) > 0  # type: ignore
 
-    def test_resolve_substeps(self, form, test_user):
+    def test_resolve_substeps(self, submission):
         """Resolver should include substeps in the resolved form."""
         parent_step = Step.objects.create(
-            name="Parent Step", slug="parent-step", form=form
+            name="Parent Step", slug="parent-step", form=submission.form
         )
         substep = Step.objects.create(
             name="Substep", slug="sub-step", parent=parent_step
@@ -216,7 +220,7 @@ class TestUserFormResolver:
         TextQuestion.objects.create(text="Parent Question", step=parent_step)
         TextQuestion.objects.create(text="Sub Question", step=substep)
 
-        evaluator = FormEvaluator(form, test_user, create_submission=True)
+        evaluator = FormEvaluator(submission)
         resolver = UserFormResolver(evaluator)
 
         result = resolver.resolve()
@@ -264,7 +268,7 @@ class TestComplexConditionScenarios:
         qr2 = QuestionResponse.objects.create(question=q2, answer={"value": SHOW_Q3})
         qr2.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         assert evaluator.is_question_visible(q1) is True
         assert evaluator.is_question_visible(q2) is True
@@ -305,7 +309,7 @@ class TestComplexConditionScenarios:
         )
         qr2.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         # Show conditions take precedence over hide, so if both are met, the
         # question should be visible.
@@ -350,7 +354,7 @@ class TestComplexConditionScenarios:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
         assert evaluator.is_question_visible(target) is False
 
         # All options in the condition are selected.
@@ -397,7 +401,7 @@ class TestComplexConditionScenarios:
         )
         qr.submissions.add(submission)
 
-        evaluator = FormEvaluator(form, test_user)
+        evaluator = FormEvaluator(submission)
 
         # Should default to 1, as the condition is not met.
         assert evaluator.get_repeat_count_for_question(target_question) == 1

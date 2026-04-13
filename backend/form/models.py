@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models import Q, Min
 from django.contrib.auth import get_user_model
 
+from main.models import User
+from main.utils.permission_utils import BaseMRManager
 from form.validators import validate_slug_not_overview
 
 user_model = get_user_model()
@@ -171,6 +173,16 @@ class FileUploadQuestion(BaseQuestion):
     size_limit = models.PositiveIntegerField()
 
 
+class SubmissionManager(BaseMRManager):
+    def _viewable_objects(self, user: User):
+        if user.is_privacy_officer or user.is_fetc_member:
+            return self.all()
+        return self.filter(user=user)
+
+    def _editable_objects(self, user: User):
+        return self.filter(user=user)
+
+
 # User responses / answers
 class UserFormSubmission(models.Model):
     """Tracks a user's progress through a form."""
@@ -193,6 +205,8 @@ class UserFormSubmission(models.Model):
 
     def __str__(self) -> str:
         return f"Submission {self.pk} by {self.user} started at {self.started_at.strftime('%Y-%m-%d %H:%M:%S')} (Form {self.form.pk})"
+
+    objects = SubmissionManager()
 
 
 class QuestionResponseManager(models.Manager):

@@ -157,6 +157,7 @@ describe("useProcessForm", () => {
         formId: "form1",
         nameEn: "Test Form",
         nameNl: "Testformulier",
+        submissionId: "sub1",
         steps: [
             {
                 __typename: "StepType",
@@ -304,9 +305,7 @@ describe("useProcessForm", () => {
             const trueFalseQuestion =
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 formWithValues.steps[0].substeps![0].questions[0];
-            expect(trueFalseQuestion.__typename).toBe(
-                "TrueFalseQuestionType",
-            );
+            expect(trueFalseQuestion.__typename).toBe("TrueFalseQuestionType");
             expect(trueFalseQuestion.value).toBe(true);
         });
 
@@ -441,6 +440,7 @@ describe("useProcessForm", () => {
                 formId: "form1",
                 nameEn: "Test Form",
                 nameNl: "Testformulier",
+                submissionId: "sub1",
                 steps: [
                     {
                         __typename: "StepType",
