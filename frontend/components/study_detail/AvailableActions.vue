@@ -14,7 +14,7 @@ const props = defineProps<{
 // We only need to know the slug of the top-level form so we can link to it.
 const GET_FIRST_SLUG = graphql(`
   query GetFirstSlug($submissionId: ID!) {
-    form(submissionId: $submissionId) {
+    form(submissionId: $submissionId, mrPermission: "Edit") {
       formId
       steps {
         stepId
@@ -38,6 +38,8 @@ const slug = computed<string | null>(() => {
 const continue_url = computed(() =>
   slug.value ? `/procreg/${props.submissionId}/${slug.value}` : "",
 );
+
+console.log(continue_url.value)
 
 const { t } = useI18n();
 

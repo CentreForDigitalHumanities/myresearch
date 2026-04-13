@@ -6,7 +6,7 @@ import FormWrapper from "~/components/shared/FormWrapper.vue";
 
 const GET_FORM = graphql(`
   query GetForm($submissionId: ID!) {
-    form(submissionId: $submissionId) {
+    form(submissionId: $submissionId, mrPermission: "Edit") {
       formId
       nameEn
       nameNl
