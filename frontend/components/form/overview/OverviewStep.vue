@@ -40,8 +40,11 @@ function formatAnswer(question: QuestionWithValue): string {
         class="row mb-2"
     >
         <div class="col-md-6 fst-italic">
-            {{ useTranslateableAttribute(question, "text") }}
-            <span v-if="question.required" class="text-danger">*</span>
+            {{ useTranslateableAttribute(question, "text") }}&nbsp;<span
+                v-if="question.required"
+                class="text-danger"
+                >*</span
+            >
         </div>
         <div class="col-md-6">
             {{ formatAnswer(question) }}
