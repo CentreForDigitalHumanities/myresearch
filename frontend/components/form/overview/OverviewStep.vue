@@ -5,12 +5,14 @@ import type {
     QuestionWithValue,
     SelectQuestionWithValue,
 } from "~/composables/useProcessForm";
+import type { Validation } from "@vuelidate/core";
 
 interface Props {
     step: CombinedStepWithValues;
+    vuelidate: Validation;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const { t } = useI18n();
 
@@ -64,7 +66,12 @@ function formatAnswer(question: QuestionWithValue): string {
                 >*</span
             >
         </div>
-        <div class="col-md-6 preserve-white-space">
+        <div
+            class="col-md-6 preserve-white-space"
+            :class="{
+                'text-danger': useQuestionHasErrors(vuelidate, question),
+            }"
+        >
             {{ formatAnswer(question) }}
         </div>
     </div>

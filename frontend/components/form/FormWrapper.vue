@@ -214,6 +214,7 @@ function navigateToSlug(slug: string) {
                 <SubmissionOverview
                     v-if="selectedStep.isOverview && formObject"
                     :form="formObject"
+                    :vuelidate="v$"
                 />
                 <MRForm
                     v-else
