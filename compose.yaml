@@ -71,7 +71,8 @@ services:
       - "8000:8000"
     environment:
       DB_HOST: 'mr-postgres'
-      DJANGO_SETTINGS_MODULE: "myresearch.settings.dev"
+      DJANGO_LOG_LEVEL: ${DJANGO_LOG_LEVEL}
+      DJANGO_SETTINGS_MODULE: myresearch.settings.dev
       SAML_BASE_URL: ${SAML_BASE_URL}
       IDP_METADATA_URL: ${IDP_METADATA_URL}
 
@@ -83,6 +84,7 @@ services:
     ports: []
     volumes:
       - backend_static:/var/www/backend_static/
+      - ${LOG_DIR:-./backend/logs/}:/var/log/django/
     command: sh -c "
       python manage.py migrate &&
       python manage.py collectstatic --no-input &&
@@ -90,10 +92,19 @@ services:
       "
     environment:
       DB_HOST: 'mr-postgres'
-      DJANGO_SETTINGS_MODULE: "myresearch.settings.prod"
+      DJANGO_SETTINGS_MODULE: myresearch.settings.prod
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      DJANGO_LOG_LEVEL: ${DJANGO_LOG_LEVEL}
+      DJANGO_LOGFILE: /var/log/django/mr-django-prod.log
       DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
+      PRIVATE_KEY_PATH: /run/secrets/private_key
+      PUBLIC_CERT_PATH: /run/secrets/public_cert
       CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
+      SAML_BASE_URL: ${SAML_BASE_URL}
+      IDP_METADATA_URL: ${IDP_METADATA_URL}
+    secrets:
+      - private_key
+      - public_cert
 
   vue-dev:
     image: mr-vue-dev
@@ -149,7 +160,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
-      - DJANGO_SECRET_KEY=django-insecure-lb=q@u4df-x0th(5u%$eye_ti#etst+5z+%2=lrh$$le3&v_y$
+      - DJANGO_SECRET_KEY=django-insecure-wa2AengahShofo8tieR6
       - DJANGO_DEBUG=False
       - DJANGO_DEBUG_TOOLBAR=True
       - DJANGO_HOST=localhost:7000
@@ -183,6 +194,6 @@ networks:
 
 secrets:
   private_key:
-    file: ./certificates/private.key
+    file: ./secrets/private.key
   public_cert:
-    file: ./certificates/public.cert
+    file: ./secrets/public.cert
