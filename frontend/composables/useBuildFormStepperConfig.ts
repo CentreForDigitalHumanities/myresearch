@@ -1,5 +1,5 @@
-import type { FormStep, FormStepperConfig } from "~/components/shared/FormStepper";
-import type { QueriedForm } from "~/components/shared/FormWrapper";
+import type { FormStep, FormStepperConfig } from "~/components/form/FormStepper";
+import type { QueriedForm } from "~/components/form/FormWrapper";
 
 /**
  * Build the configuration object required by the FormStepper component, based

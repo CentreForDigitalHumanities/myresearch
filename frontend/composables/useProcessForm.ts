@@ -3,7 +3,7 @@ import type {
     Substep,
     QueriedForm,
     Step,
-} from "~/components/shared/FormWrapper";
+} from "~/components/form/FormWrapper";
 import type {
     TextQuestionType,
     NumberQuestionType,

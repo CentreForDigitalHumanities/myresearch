@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { useProcessForm } from "./useProcessForm";
-import type { QueriedForm } from "~/components/shared/FormWrapper";
+import type { QueriedForm } from "~/components/form/FormWrapper";
 import type {
     TextQuestionType,
     NumberQuestionType,

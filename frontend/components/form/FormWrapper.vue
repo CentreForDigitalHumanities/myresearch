@@ -3,13 +3,14 @@ import { computed } from "vue";
 import { BSButton } from "cdh-vue-lib";
 import type { QueriedForm } from "./FormWrapper";
 import FormStepper, { type FormStepperConfig } from "./FormStepper";
-import MRForm from "./MRForm.vue";
+import MRForm from "~/components/form/MRForm.vue";
 import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConfig";
 import { useFormState } from "~/composables/useFormState";
 import useVuelidate from "@vuelidate/core";
 import { graphql } from "~/generated/gql";
 import type { UpdateUserFormSubmission } from "~/generated/gql/graphql";
 import { useMutation } from "@vue/apollo-composable";
+import SubmissionOverview from "~/components/form/overview/OverviewForm.vue";
 
 interface Props {
     queriedForm: QueriedForm;
@@ -19,6 +20,11 @@ const props = defineProps<Props>();
 
 const queried = computed(() => props.queriedForm);
 const { formObject, validationRules } = useFormState(queried);
+
+const overviewStepSlug = useOverviewStepSlug();
+const overviewSelected = computed(
+    () => props.currentStepSlug === overviewStepSlug,
+);
 
 const UPDATE_USER_FORM = graphql(`
     mutation SaveFormSubmission(
@@ -50,7 +56,7 @@ const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
     },
 );
 
-function submitForm(): void {
+function submitForm(options = { finalSubmission: false }): void {
     const formData = formObject.value;
     if (!formData) {
         return;
@@ -61,9 +67,16 @@ function submitForm(): void {
         props.queriedForm.submissionId,
     );
 
-    mutateForm(inputData).catch((error: unknown) => {
-        console.error("Error updating form:", error);
-    });
+    void mutateForm(inputData)
+        .catch((error: unknown) => {
+            console.error("Error updating form:", error);
+        })
+        .then(() => {
+            if (options.finalSubmission) {
+                // TODO: navigate sashay away
+                console.log("Final form submission completed.");
+            }
+        });
 }
 
 const v$ = useVuelidate(
@@ -170,7 +183,12 @@ function navigateToSlug(slug: string) {
         />
         <div class="col-12 col-lg-9">
             <form class="uu-form">
+                <SubmissionOverview
+                    v-if="overviewSelected && formObject"
+                    :form="formObject"
+                />
                 <MRForm
+                    v-else
                     :step="selectedStep"
                     :vuelidate="v$"
                     @submit-form="submitForm"
@@ -185,6 +203,14 @@ function navigateToSlug(slug: string) {
                     {{ $t("Previous") }}
                 </BSButton>
                 <BSButton
+                    v-if="overviewSelected"
+                    variant="success"
+                    @click="submitForm({ finalSubmission: true })"
+                >
+                    {{ $t("Submit") }}
+                </BSButton>
+                <BSButton
+                    v-else
                     variant="primary"
                     class="btn-arrow-right"
                     @click="navigateToSlug(getNextStepSlug())"
