@@ -4,13 +4,32 @@ from django.db import migrations, models
 
 
 def generate_references(apps, schema_editor):
-    # Run save for all studies to generate ref numbers
+    # Generate ref num's for all pre-existing studies using the same logic as
+    # Study.save()
+    # Note: This should never happen in production
+    from django.utils import timezone
+    from django.db import transaction
+    
     Study = apps.get_model("research", "Study")
+    YearCounter = apps.get_model("research", "YearCounter")
+    
     for study in Study.objects.all():
-        Study.save()
+        if not study.reference:
+            with transaction.atomic():
+                year = timezone.now().year % 100
+                
+                counter_obj, _ = YearCounter.objects.select_for_update().get_or_create(
+                    year=year
+                )
+                
+                counter_obj.counter += 1
+                counter_obj.save()
+                
+                study.reference = f"MR-{year:02d}-{counter_obj.counter:04d}"
+                study.save()
 
 
-def reverse_func(apss, schema_editor):
+def reverse_func(apps, schema_editor):
     pass
 
 
