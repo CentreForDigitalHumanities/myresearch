@@ -4,7 +4,7 @@ from django.db import models
 class YearCounter(models.Model):
     """
     A helper model for generating reference numbers for studies. Keeps a counter
-    for each year, that get incremented when a new Study is created.
+    for each year that gets incremented when a new Study is created.
     """
 
     year = models.IntegerField(unique=True)
