@@ -2,14 +2,18 @@
 
 from django.db import migrations, models
 
+
 def generate_references(apps, schema_editor):
     # Run save for all studies to generate ref numbers
     Study = apps.get_model("research", "Study")
     for study in Study.objects.all():
         Study.save()
 
+
 def reverse_func(apss, schema_editor):
     pass
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -44,8 +48,8 @@ class Migration(migrations.Migration):
         migrations.RunPython(generate_references, reverse_func),
         # Remove null=True
         migrations.AlterField(
-            model_name='study',
-            name='reference',
+            model_name="study",
+            name="reference",
             field=models.CharField(max_length=10, unique=True),
         ),
     ]
