@@ -114,5 +114,10 @@
   "Creating...": "Aan het aanmaken...",
   "Register new study": "Registreer een nieuwe studie",
   "Unknown study": "Onbekende studie",
-  "Oops ... The study you are looking for could not be found.": "Oeps ... De studie die u zocht kon niet worden gevonden."
+  "Oops ... The study you are looking for could not be found.": "Oeps ... De studie die u zocht kon niet worden gevonden.",
+  "Yes": "Ja",
+  "No": "Nee",
+  "Not answered": "Niet beantwoord",
+  "Submission overview": "Overzicht van inzending",
+  "Please review your answers below and return to previous steps to make any necessary changes. When you are ready to submit, click the 'Submit' button.": "Bekijk hieronder uw antwoorden en ga terug naar eerdere stappen om eventuele wijzigingen aan te brengen. Klik op de knop 'Indienen' om uw inzending te versturen."
 }
