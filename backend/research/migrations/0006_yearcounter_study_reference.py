@@ -9,22 +9,22 @@ def generate_references(apps, schema_editor):
     # Note: This should never happen in production
     from django.utils import timezone
     from django.db import transaction
-    
+
     Study = apps.get_model("research", "Study")
     YearCounter = apps.get_model("research", "YearCounter")
-    
+
     for study in Study.objects.all():
         if not study.reference:
             with transaction.atomic():
                 year = timezone.now().year % 100
-                
+
                 counter_obj, _ = YearCounter.objects.select_for_update().get_or_create(
                     year=year
                 )
-                
+
                 counter_obj.counter += 1
                 counter_obj.save()
-                
+
                 study.reference = f"MR-{year:02d}-{counter_obj.counter:04d}"
                 study.save()
 

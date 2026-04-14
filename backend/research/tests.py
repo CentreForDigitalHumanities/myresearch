@@ -145,9 +145,7 @@ class TestStudyReferenceGeneration:
         study.save()
         assert study.reference != ""
 
-    def test_reference_not_regenerated_on_subsequent_saves(
-        self, normal_user: User
-    ):
+    def test_reference_not_regenerated_on_subsequent_saves(self, normal_user: User):
         """Test that the reference is not regenerated when saving existing Study."""
         study = Study.objects.create(created_by=normal_user)
         original_reference = study.reference

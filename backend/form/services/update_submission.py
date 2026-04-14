@@ -48,7 +48,7 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
                 question_id=response["question_id"],
                 answer=response["answer"],
                 repeat_index=response["repeat_index"],
-        )
+            )
             new_response.submissions.add(current_submission)
 
     return current_submission
