@@ -119,5 +119,8 @@
   "No": "Nee",
   "Not answered": "Niet beantwoord",
   "Submission overview": "Overzicht van inzending",
-  "Please review your answers below and return to previous steps to make any necessary changes. When you are ready to submit, click the 'Submit' button.": "Bekijk hieronder uw antwoorden en ga terug naar eerdere stappen om eventuele wijzigingen aan te brengen. Klik op de knop 'Indienen' om uw inzending te versturen."
+  "Please review your answers below and return to previous steps to make any necessary changes. When you are ready to submit, click the 'Submit' button.": "Bekijk hieronder uw antwoorden en ga terug naar eerdere stappen om eventuele wijzigingen aan te brengen. Klik op de knop 'Indienen' om uw inzending te versturen.",
+  "An error occurred while saving the form. Please try again.": "Er is een fout opgetreden bij het opslaan van het formulier. Probeer het opnieuw.",
+  "Registration submitted successfully.": "Registratie succesvol ingediend.",
+  "Your form contains errors. Please review and resubmit.": "Het formulier bevat fouten. Bekijk deze en probeer het opnieuw in te dienen."
 }
