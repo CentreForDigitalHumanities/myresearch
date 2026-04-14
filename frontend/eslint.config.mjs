@@ -60,7 +60,7 @@ export default defineConfigWithVueTs([
                 {
                     // Allow single-word component names in Nuxt file names and
                     // parametrized pages.
-                    ignores: ["index", "default", "error", "slug", "overview"],
+                    ignores: ["index", "default", "error", "slug"],
                 },
             ],
             "vue/no-unused-vars": "warn",
