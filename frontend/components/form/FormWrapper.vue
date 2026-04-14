@@ -12,7 +12,7 @@ import type { UpdateUserFormSubmission } from "~/generated/gql/graphql";
 import { useMutation } from "@vue/apollo-composable";
 import SubmissionOverview from "~/components/form/overview/OverviewForm.vue";
 import { useI18n } from "vue-i18n";
-import { Send } from "lucide-vue-next";
+import { Send, TriangleAlert } from "lucide-vue-next";
 
 interface Props {
     queriedForm: QueriedForm;
@@ -70,9 +70,10 @@ function submitForm(options = { submit: false }): void {
 
     if (options.submit) {
         void v$.value.$validate();
-        const invalid = v$.value.$invalid;
-        showSubmissionWarning.value = invalid;
-        return;
+        if (v$.value.$invalid) {
+            showSubmissionWarning.value = true;
+            return;
+        }
     }
 
     const inputData = useFormDataToMutationInput(
@@ -89,11 +90,11 @@ function submitForm(options = { submit: false }): void {
         })
         .then(() => {
             if (options.submit) {
+                // TODO: navigate to the study detail page.
                 useNotification(
                     t("Registration submitted successfully."),
                     "success",
                 );
-                void navigateTo("/studies/");
             }
         });
 }
@@ -214,14 +215,23 @@ function navigateToSlug(slug: string) {
                 />
             </form>
 
-            <div
-                v-if="showSubmissionWarning"
-                class="alert alert-warning"
-                role="alert"
-            >
-                {{
-                    t("Your form contains errors. Please review and resubmit.")
-                }}
+            <div class="mb-3">
+                <Transition name="fade">
+                    <div
+                        v-if="showSubmissionWarning"
+                        class="alert alert-warning d-inline-flex align-items-center gap-2"
+                        role="alert"
+                    >
+                        <TriangleAlert class="icon" />
+                        <span>
+                            {{
+                                t(
+                                    "Your form contains errors. Please review and resubmit.",
+                                )
+                            }}
+                        </span>
+                    </div>
+                </Transition>
             </div>
 
             <div class="btn-group">
@@ -257,5 +267,15 @@ function navigateToSlug(slug: string) {
 .icon {
     height: 1em;
     width: 1em;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
 }
 </style>
