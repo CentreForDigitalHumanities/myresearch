@@ -117,9 +117,8 @@ function useProcessForm(queriedForm: QueriedForm): FormAndValidation {
 }
 
 function buildFormWithValues(queriedForm: QueriedForm): FormWithValues {
-    return {
-        ...queriedForm,
-        steps: queriedForm.steps.map((step, stepIndex) => ({
+    const steps: StepWithValues[] = queriedForm.steps.map(
+        (step, stepIndex) => ({
             ...step,
             questions: step.questions.map((question, questionIndex) =>
                 addValueAndLocationToQuestion(
@@ -139,7 +138,27 @@ function buildFormWithValues(queriedForm: QueriedForm): FormWithValues {
                     ),
                 ),
             })),
-        })),
+        }),
+    );
+
+    const overviewStepSlug = useOverviewStepSlug();
+
+    steps.push({
+        __typename: "StepType",
+        stepId: "overview-step-id",
+        slug: overviewStepSlug,
+        nameNl: "Overzicht",
+        nameEn: "Overview",
+        descriptionNl: "",
+        descriptionEn: "",
+        questions: [],
+        substeps: null,
+        repeatIndex: 0,
+    });
+
+    return {
+        ...queriedForm,
+        steps,
     };
 }
 
