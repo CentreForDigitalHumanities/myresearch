@@ -11,6 +11,8 @@ import { graphql } from "~/generated/gql";
 import type { UpdateUserFormSubmission } from "~/generated/gql/graphql";
 import { useMutation } from "@vue/apollo-composable";
 import SubmissionOverview from "~/components/form/overview/OverviewForm.vue";
+import { useI18n } from "vue-i18n";
+import { Send } from "lucide-vue-next";
 
 interface Props {
     queriedForm: QueriedForm;
@@ -21,10 +23,14 @@ const props = defineProps<Props>();
 const queried = computed(() => props.queriedForm);
 const { formObject, validationRules } = useFormState(queried);
 
+const { t } = useI18n();
+
 const overviewStepSlug = useOverviewStepSlug();
 const overviewSelected = computed(
     () => props.currentStepSlug === overviewStepSlug,
 );
+
+const showSubmissionWarning = ref(false);
 
 const UPDATE_USER_FORM = graphql(`
     mutation SaveFormSubmission(
@@ -56,9 +62,16 @@ const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
     },
 );
 
-function submitForm(options = { finalSubmission: false }): void {
+function submitForm(options = { submit: false }): void {
     const formData = formObject.value;
     if (!formData) {
+        return;
+    }
+
+    if (options.submit) {
+        void v$.value.$validate();
+        const invalid = v$.value.$invalid;
+        showSubmissionWarning.value = invalid;
         return;
     }
 
@@ -68,13 +81,19 @@ function submitForm(options = { finalSubmission: false }): void {
     );
 
     void mutateForm(inputData)
-        .catch((error: unknown) => {
-            console.error("Error updating form:", error);
+        .catch(() => {
+            useNotification(
+                t("An error occurred while saving the form. Please try again."),
+                "danger",
+            );
         })
         .then(() => {
-            if (options.finalSubmission) {
-                // TODO: navigate sashay away
-                console.log("Final form submission completed.");
+            if (options.submit) {
+                useNotification(
+                    t("Registration submitted successfully."),
+                    "success",
+                );
+                void navigateTo("/studies/");
             }
         });
 }
@@ -194,6 +213,15 @@ function navigateToSlug(slug: string) {
                     @submit-form="submitForm"
                 />
             </form>
+
+            <div
+                v-if="showSubmissionWarning"
+                class="alert alert-warning"
+                role="alert"
+            >
+                {{ t("Your form contains errors. Please review and resubmit.") }}
+            </div>
+
             <div class="btn-group">
                 <BSButton
                     variant="primary"
@@ -205,9 +233,10 @@ function navigateToSlug(slug: string) {
                 <BSButton
                     v-if="overviewSelected"
                     variant="success"
-                    @click="submitForm({ finalSubmission: true })"
+                    @click="submitForm({ submit: true })"
                 >
                     {{ $t("Submit") }}
+                    <Send class="icon ms-2" />
                 </BSButton>
                 <BSButton
                     v-else
@@ -221,3 +250,10 @@ function navigateToSlug(slug: string) {
         </div>
     </div>
 </template>
+
+<style lang="scss" scoped>
+.icon {
+    height: 1em;
+    width: 1em;
+}
+</style>
