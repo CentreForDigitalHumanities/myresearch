@@ -19,9 +19,7 @@ def discover_list(key, default):
     mandatory default value.
     """
     raw = discover(key, "")
-    out = [
-        item for item in raw.split(",") if item != ""
-    ]
+    out = [item for item in raw.split(",") if item != ""]
     return out
 
 

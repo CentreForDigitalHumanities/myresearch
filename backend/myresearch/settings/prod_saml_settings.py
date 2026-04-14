@@ -10,11 +10,12 @@ PRIVATE_KEY_PATH = discover_or_fail("PRIVATE_KEY_PATH")
 PUBLIC_CERT_PATH = discover_or_fail("PUBLIC_CERT_PATH")
 
 SAML_CONFIG = create_saml_config(
-    base_url=discover_or_fail("SAML_BASE_URL",),
+    base_url=discover_or_fail(
+        "SAML_BASE_URL",
+    ),
     name="myresearch",
     key_file=PRIVATE_KEY_PATH,
     cert_file=PUBLIC_CERT_PATH,
-
     # Don't fall back on dev IDP in production, that would be BAD
     idp_metadata=discover_or_fail(
         "IDP_METADATA_URL",
