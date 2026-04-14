@@ -49,10 +49,6 @@ function randomDatePastYear(): string {
     return randomDate.toISOString().split("T")[0];
 }
 
-function randomNumber100to1000(): number {
-    return Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
-}
-
 // If study is even, it is a draft. If it is odd, it is in the review phase
 
 const studyStatus = computed(() =>
