@@ -114,5 +114,10 @@
   "Creating...": "Aan het aanmaken...",
   "Register new study": "Registreer een nieuwe studie",
   "Unknown study": "Onbekende studie",
-  "Oops ... The study you are looking for could not be found.": "Oeps ... De studie die u zocht kon niet worden gevonden."
+  "Oops ... The study you are looking for could not be found.": "Oeps ... De studie die u zocht kon niet worden gevonden.",
+  "Ref": {
+    " number ascending": "Ref. nummer oplopend",
+    " number descending": "Ref. nummer aflopend",
+    " number": "Ref. nummer"
+  }
 }
