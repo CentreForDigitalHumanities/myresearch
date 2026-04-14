@@ -21,7 +21,8 @@ class StudyManager(BaseMRManager):
 
 class Study(models.Model):
 
-    reference = models.CharField(max_length=10, unique=True, blank=True)
+    # A unique reference number will be created for a study upon first save()
+    reference = models.CharField(max_length=10, unique=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
