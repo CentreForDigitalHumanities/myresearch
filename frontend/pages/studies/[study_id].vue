@@ -2,7 +2,6 @@
 import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
 import type { GetStudyQuery } from "~/generated/gql/graphql";
-import { showError, createError } from "#app";
 import StudyDetailsSidebar from "../../components/study_detail/StudyDetailsSidebar.vue";
 import AvailableActions from "../../components/study_detail/AvailableActions.vue";
 import StudyProgessBar from "../../components/study_detail/StudyProgessBar.vue";
@@ -31,7 +30,6 @@ const { result: studyResult } = useQuery<GetStudyQuery>(GET_STUDY, {
 const study = computed(() => studyResult.value?.study ?? null);
 
 // Some functions to generate mockdata
-
 function randomDatePastYear(): string {
     const today = new Date();
     const oneYearAgo = new Date();
@@ -53,7 +51,6 @@ function randomNumber100to1000(): number {
 }
 
 // If study is even, it is a draft. If it is odd, it is in the review phase
-
 const studyStatus = computed(() =>
     Number(study.value?.id) % 2 === 0 ? "draft" : "review",
 );
@@ -105,7 +102,7 @@ const studyStatus = computed(() =>
                 </div>
             </div>
         </div>
-        <div class="uu-container" v-else>
+        <div v-else class="uu-container">
             <h3>
                 {{
                     $t(
