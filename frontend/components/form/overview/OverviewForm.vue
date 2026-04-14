@@ -10,7 +10,7 @@ const props = defineProps<Props>();
 
 // Filter out the overview step itself.
 const contentSteps = computed(() =>
-    props.form.steps.filter((step) => step.stepId !== "overview-step-id"),
+    props.form.steps.filter((step) => step.slug !== useOverviewStepSlug()),
 );
 </script>
 

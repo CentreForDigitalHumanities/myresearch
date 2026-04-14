@@ -219,7 +219,9 @@ function navigateToSlug(slug: string) {
                 class="alert alert-warning"
                 role="alert"
             >
-                {{ t("Your form contains errors. Please review and resubmit.") }}
+                {{
+                    t("Your form contains errors. Please review and resubmit.")
+                }}
             </div>
 
             <div class="btn-group">
