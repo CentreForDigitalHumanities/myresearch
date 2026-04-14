@@ -78,7 +78,7 @@ const studyStatus = computed(() =>
                         <div class="col me-5">
                             <h1>
                                 {{ study.reference }} -
-                                <em>{{ study?.title }}</em>
+                                <em>{{ study.title }}</em>
                             </h1>
                             <p>
                                 {{
