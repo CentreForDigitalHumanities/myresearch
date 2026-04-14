@@ -25,10 +25,10 @@ const { formObject, validationRules } = useFormState(queried);
 
 const { t } = useI18n();
 
-const overviewStepSlug = useOverviewStepSlug();
-const overviewSelected = computed(
-    () => props.currentStepSlug === overviewStepSlug,
-);
+const overviewSelected = computed(() => {
+    const overviewStepSlug = useOverviewStepSlug();
+    return props.currentStepSlug === overviewStepSlug;
+});
 
 const showSubmissionWarning = ref(false);
 
@@ -248,7 +248,7 @@ function navigateToSlug(slug: string) {
                     @click="submitForm({ submit: true })"
                 >
                     {{ $t("Submit") }}
-                    <Send class="icon ms-2" />
+                    <Send class="ms-2" :size="16" />
                 </BSButton>
                 <BSButton
                     v-else
@@ -264,11 +264,6 @@ function navigateToSlug(slug: string) {
 </template>
 
 <style lang="scss" scoped>
-.icon {
-    height: 1em;
-    width: 1em;
-}
-
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.3s ease;
