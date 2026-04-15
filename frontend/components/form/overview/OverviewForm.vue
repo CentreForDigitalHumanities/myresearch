@@ -3,6 +3,7 @@ import type { FormWithValues } from "~/composables/useProcessForm";
 import OverviewStep from "./OverviewStep.vue";
 import { AlertTriangle } from "lucide-vue-next";
 import type { Validation } from "@vuelidate/core";
+import { useStepHasErrors } from "~/composables/useFormErrors";
 
 interface Props {
     form: FormWithValues;

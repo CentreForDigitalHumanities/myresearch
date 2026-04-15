@@ -6,13 +6,14 @@ import type {
     SelectQuestionWithValue,
 } from "~/composables/useProcessForm";
 import type { Validation } from "@vuelidate/core";
+import { useQuestionHasErrors } from "~/composables/useFormErrors";
 
 interface Props {
     step: CombinedStepWithValues;
     vuelidate: Validation;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 
 const { t } = useI18n();
 
