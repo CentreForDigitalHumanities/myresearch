@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+from .utils import discover
 
 from django.utils.translation import gettext_lazy as _
 
@@ -152,6 +153,38 @@ AUTH_USER_MODEL = "main.User"
 
 GRAPHENE = {
     "SCHEMA": "api.graphql.schema.schema",
+}
+
+# Logging
+
+DJANGO_LOG_LEVEL = discover("DJANGO_LOG_LEVEL", "WARNING")
+DJANGO_LOGFILE = discover("DJANGO_LOGFILE", "logs/django.log")
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+        "logfile": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "logs/django.log",
+            "maxBytes": 50000,
+            "backupCount": 9,
+        },
+    },
+    "root": {
+        "handlers": ["console", "logfile"],
+        "level": DJANGO_LOG_LEVEL,
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": DJANGO_LOG_LEVEL,
+            "propagate": False,
+        },
+    },
 }
 
 # Application constants

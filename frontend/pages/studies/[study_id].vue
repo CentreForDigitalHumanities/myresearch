@@ -11,6 +11,7 @@ const GET_STUDY = graphql(`
         study(id: $id, mrPermission: "View") {
             id
             title
+            reference
             latestSubmissionId
             createdBy {
                 fullName
@@ -46,10 +47,6 @@ function randomDatePastYear(): string {
     return randomDate.toISOString().split("T")[0];
 }
 
-function randomNumber100to1000(): number {
-    return Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
-}
-
 // If study is even, it is a draft. If it is odd, it is in the review phase
 const studyStatus = computed(() =>
     Number(study.value?.id) % 2 === 0 ? "draft" : "review",
@@ -77,7 +74,7 @@ const studyStatus = computed(() =>
                         <!-- Main Content -->
                         <div class="col me-5">
                             <h1>
-                                2025-{{ randomNumber100to1000() }} -
+                                {{ study.reference }} -
                                 <em>{{ study.title }}</em>
                             </h1>
                             <p>

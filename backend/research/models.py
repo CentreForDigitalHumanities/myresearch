@@ -1,8 +1,12 @@
+from research.other_models.utils import YearCounter
+from form.models import UserFormSubmission
+from main.models import User
 from form.models import MRForm, QuestionResponse, UserFormSubmission
 from main.models import User
 from main.utils.permission_utils import BaseMRManager
 
-from django.db import models
+from django.db import models, transaction
+from django.utils import timezone
 
 
 class StudyManager(BaseMRManager):
@@ -16,6 +20,10 @@ class StudyManager(BaseMRManager):
 
 
 class Study(models.Model):
+
+    # A unique reference number will be created for a study upon first save()
+    reference = models.CharField(max_length=10, unique=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -65,3 +73,19 @@ class Study(models.Model):
         verbose_name_plural = "Studies"
 
     objects = StudyManager()
+
+    def save(self, *args, **kwargs):
+        if not self.reference:
+            with transaction.atomic():
+                year = timezone.now().year % 100  # 2026 -> 26
+
+                counter_obj, _ = YearCounter.objects.select_for_update().get_or_create(
+                    year=year
+                )
+
+                counter_obj.counter += 1
+                counter_obj.save()
+
+                self.reference = f"MR-{year:02d}-{counter_obj.counter:04d}"
+
+        super().save(*args, **kwargs)

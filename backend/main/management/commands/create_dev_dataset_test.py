@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db.models import Model
 from django.core.management import call_command
 
+from research.other_models.utils import YearCounter
 from research.other_models.reviews import Review, ReviewRound
 from main.models import User
 from form.models import (
@@ -24,6 +25,7 @@ EXCLUDED_MODELS_FOR_COMPLETENESS_CHECK: list[Type[Model]] = [
     QuestionCondition,
     Review,
     ReviewRound,
+    YearCounter,
 ]
 
 

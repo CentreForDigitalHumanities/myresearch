@@ -118,6 +118,11 @@
   "Yes": "Ja",
   "No": "Nee",
   "Not answered": "Niet beantwoord",
+  "Ref": {
+    " number ascending": "Ref. nummer oplopend",
+    " number descending": "Ref. nummer aflopend",
+    " number": "Ref. nummer"
+  },
   "Submission overview": "Overzicht van inzending",
   "Please review your answers below and return to previous steps to make any necessary changes. When you are ready to submit, click the 'Submit' button.": "Bekijk hieronder uw antwoorden en ga terug naar eerdere stappen om eventuele wijzigingen aan te brengen. Klik op de knop 'Indienen' om uw inzending te versturen.",
   "An error occurred while saving the form. Please try again.": "Er is een fout opgetreden bij het opslaan van het formulier. Probeer het opnieuw.",

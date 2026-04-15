@@ -25,9 +25,10 @@ class StudyType(GQLListObjectType):
         fields = [
             "id",
             "created_by",
+            "reference",
         ]
         filterset_class = StudyFilter
-        search_fields = ["title"]
+        search_fields = ["title", "reference"]
 
     @classmethod
     def get_queryset(
