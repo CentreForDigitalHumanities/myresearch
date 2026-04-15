@@ -12,6 +12,11 @@ import type {
 import { i18n } from "@/plugins/i18n";
 import type { ValidationRuleWithParams } from "@vuelidate/core";
 
+// Mock useOverviewStepSlug for portability reasons.
+function useOverviewStepSlug(): string {
+    return "overview";
+}
+
 // Augmented question types
 interface LocatedQuestion {
     location: string; // Should be something like "steps.0.substeps.1.questions.2"

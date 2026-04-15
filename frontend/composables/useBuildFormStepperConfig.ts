@@ -1,5 +1,6 @@
 import type { FormStep, FormStepperConfig } from "~/components/form/FormStepper";
 import type { QueriedForm } from "~/components/form/FormWrapper";
+import { useOverviewStepSlug } from "./useOverviewStepSlug";
 
 /**
  * Build the configuration object required by the FormStepper component, based
