@@ -1,27 +1,24 @@
 from django.urls import reverse_lazy
 from os import path
 from cdh.federated_auth.saml.settings import *
-from .utils import discover
+from .utils import discover_or_fail
 import os
 
 _BASE_DIR = path.dirname(os.path.dirname(__file__))
 
-PRIVATE_KEY_PATH = discover(
-    "PRIVATE_KEY_PATH",
-    path.join(_BASE_DIR, "certs/private.key"),
-)
-PUBLIC_CERT_PATH = discover(
-    "PUBLIC_CERT_PATH",
-    path.join(_BASE_DIR, "certs/public.cert"),
-)
+PRIVATE_KEY_PATH = discover_or_fail("PRIVATE_KEY_PATH")
+PUBLIC_CERT_PATH = discover_or_fail("PUBLIC_CERT_PATH")
 
 SAML_CONFIG = create_saml_config(
-    base_url=discover("SAML_BASE_URL", "http://localhost:5000/"),
+    base_url=discover_or_fail(
+        "SAML_BASE_URL",
+    ),
     name="myresearch",
     key_file=PRIVATE_KEY_PATH,
     cert_file=PUBLIC_CERT_PATH,
-    idp_metadata=discover(
-        "IDP_METADATA_URL", "http://mr-dev-idp:7000/saml/idp/metadata/"
+    # Don't fall back on dev IDP in production, that would be BAD
+    idp_metadata=discover_or_fail(
+        "IDP_METADATA_URL",
     ),
     contact_given_name="Humanities IT Portal Development",
     contact_email="portaldev.gw@uu.nl",
