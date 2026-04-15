@@ -282,11 +282,6 @@ class Command(BaseCommand):
                 MIN_STUDIES_PER_USER, MAX_STUDIES_PER_USER
             )
 
-            submission = UserFormSubmission.objects.create(
-                user=user,
-                form=form,
-            )
-
             for _ in range(num_studies):
                 study = Study.objects.create(
                     created_by=user,
@@ -295,5 +290,9 @@ class Command(BaseCommand):
                 StatusChange.objects.create(
                     status=SubmissionStatus.DRAFT, created_by=user, study=study
                 )
-                submission.study = study  # type: ignore
-                submission.save()
+
+                UserFormSubmission.objects.create(
+                    user=user,
+                    form=form,
+                    study=study,
+                )
