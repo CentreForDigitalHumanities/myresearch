@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { FormWithValues } from "~/composables/useProcessForm";
 import OverviewStep from "./OverviewStep.vue";
+import { useOverviewStepSlug } from "~/composables/useOverviewStepSlug";
 
 interface Props {
     form: FormWithValues;

@@ -13,6 +13,7 @@ import { useMutation } from "@vue/apollo-composable";
 import SubmissionOverview from "~/components/form/overview/OverviewForm.vue";
 import { useI18n } from "vue-i18n";
 import { Send, TriangleAlert } from "lucide-vue-next";
+import { useOverviewStepSlug } from "~/composables/useOverviewStepSlug";
 
 interface Props {
     queriedForm: QueriedForm;
