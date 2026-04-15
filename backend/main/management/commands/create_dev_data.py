@@ -398,8 +398,8 @@ class Command(BaseCommand):
             )
             response.submissions.add(submission)
 
-        # Evaluate the form
-        evaluator = FormEvaluator(form, user, create_submission=False)  # type: ignore
+        # Evaluate the submission
+        evaluator = FormEvaluator(submission)
 
         # Remove responses for questions that are not visible based on the generated answers.
         for question in form_questions:
