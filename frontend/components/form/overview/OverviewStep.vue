@@ -1,5 +1,9 @@
 <script lang="ts" setup>
 import { useI18n } from "vue-i18n";
+import type {
+    CombinedStepWithValues,
+    QuestionWithValue,
+} from "~/composables/useProcessForm";
 
 interface Props {
     step: CombinedStepWithValues;
@@ -9,7 +13,7 @@ defineProps<Props>();
 
 const { t } = useI18n();
 
-const notAnswered = t("Not answered");
+const notAnswered = computed(() => t("Not answered"));
 
 function formatAnswer(question: QuestionWithValue): string {
     const value = question.value;
@@ -18,17 +22,19 @@ function formatAnswer(question: QuestionWithValue): string {
         case "TrueFalseQuestionType":
             return value ? t("Yes") : t("No");
         case "FileUploadQuestionType":
-            return value instanceof File ? value.name : notAnswered;
+            return value instanceof File ? value.name : notAnswered.value;
         case "SelectQuestionType":
         case "TextQuestionType":
         case "DateQuestionType":
             return typeof value === "string" && value.trim()
                 ? value
-                : notAnswered;
+                : notAnswered.value;
         case "NumberQuestionType":
-            return typeof value === "number" ? String(value) : notAnswered;
+            return typeof value === "number"
+                ? value.toString()
+                : notAnswered.value;
         default:
-            return notAnswered;
+            return notAnswered.value;
     }
 }
 </script>
