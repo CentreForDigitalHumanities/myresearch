@@ -1,6 +1,6 @@
 from graphene import ObjectType
 
-from form.models import BaseQuestion, Step
+from form.models import BaseQuestion, Step, QuestionResponse
 from form.services.form_evaluator import FormEvaluator
 from form.types.StepType import StepType
 from form.types.UserFormType import UserFormType
@@ -114,13 +114,38 @@ class UserFormResolver:
         return instances
 
     def _resolve_question_instances(self, question: BaseQuestion) -> list:
-        """Resolve all instances of a question (considering repeats)."""
-        if not self.evaluator.is_question_visible(question):
-            return []
+        """Resolve all instances of a question (considering repeats).
+        Also, deletes hidden response."""
 
+        # If a response is hidden and is not already deleted than it should be deleted.
+        responses_exist = question.pk in self.evaluator.responses
+        # TODO currently incoming responses can be non-existing or empty with value: '' for example. This method
+        # TODO either needs to handle that or the empty responses do not need to be created in the first place.
+        if responses_exist:
+            if not self.evaluator.is_question_visible(question):
+                question_responses = self.evaluator.responses[question.pk]
+                for response in question_responses:
+                    print("deleting response: "+response.__str__()+" in question: "+question.__str__())
+                    response.delete()
+                return []
+
+        # Remove responses for questions that are not visible based on the generated answers.
+        # QuestionResponse.objects.filter(
+        #     submissions__in=[self.evaluator.submission],
+        #     question=question,
+        # ).delete()
+
+        # question_responses = self.evaluator.responses[question.pk]
         repeat_count = self.evaluator.get_repeat_count_for_question(question)
-        instances = []
+        # if len(question_responses) > repeat_count:
+        #      for response in question_responses:
+        #          if (response.repeat_index + 1) > repeat_count:
+        #              print("deleting response: " + response.__str__() + " in question: " + question.__str__())
+        #              response.delete()
 
+        instances = []
+        # question_responses = self.evaluator.responses[question.pk]
+        # print(len(question_responses))
         for repeat_index in range(repeat_count):
             instance = self._create_question_instance(question, repeat_index)
             instances.append(instance)
