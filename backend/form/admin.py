@@ -161,13 +161,11 @@ class QuestionResponseInline(admin.TabularInline):
     answer_preview.short_description = "Answer"
 
     def repeat_index(self, obj):
-        """Show the repeat index."""
         return obj.questionresponse.repeat_index if obj.questionresponse else "-"
 
     repeat_index.short_description = "Repeat Index"
 
     def answered_at(self, obj):
-        """Show when answered."""
         return obj.questionresponse.answered_at if obj.questionresponse else "-"
 
     answered_at.short_description = "Answered At"
