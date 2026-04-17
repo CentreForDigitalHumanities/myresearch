@@ -60,8 +60,6 @@ function hasErrors(question: QuestionWithValue): boolean {
 </script>
 
 <template>
-    <h2>{{ useTranslateableAttribute(step, "name") }}</h2>
-    <p>{{ useTranslateableAttribute(step, "description") }}</p>
     <div class="uu-form-row">
         <div class="d-flex flex-column">
             <div

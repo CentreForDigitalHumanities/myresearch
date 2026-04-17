@@ -157,7 +157,7 @@ class Command(BaseCommand):
                 name_en="Overview",
                 description_nl=self.faker_nl.paragraph(),
                 description_en=self.faker_en.paragraph(),
-                slug="overview",
+                slug=f'overview-{self.faker.unique.slug()}',
                 is_overview=True,
             )
 
