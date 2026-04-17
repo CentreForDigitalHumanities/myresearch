@@ -13,7 +13,6 @@ import { useMutation } from "@vue/apollo-composable";
 import SubmissionOverview from "~/components/form/overview/OverviewForm.vue";
 import { useI18n } from "vue-i18n";
 import { Send, TriangleAlert } from "lucide-vue-next";
-import { useOverviewStepSlug } from "~/composables/useOverviewStepSlug";
 
 interface Props {
     queriedForm: QueriedForm;
@@ -25,11 +24,6 @@ const queried = computed(() => props.queriedForm);
 const { formObject, validationRules } = useFormState(queried);
 
 const { t } = useI18n();
-
-const overviewSelected = computed(() => {
-    const overviewStepSlug = useOverviewStepSlug();
-    return props.currentStepSlug === overviewStepSlug;
-});
 
 const showSubmissionWarning = ref(false);
 
@@ -129,6 +123,15 @@ const selectedStep = computed(() => {
     return steps.find(({ slug }) => slug === props.currentStepSlug) ?? null;
 });
 
+const firstStepSelected = computed(() => {
+    const selected = selectedStep.value;
+    if (!selected) {
+        return false;
+    }
+    const steps = allSteps.value;
+    return steps[0].slug === selected.slug;
+});
+
 function getAllSteps(form: FormWithValues): CombinedStepWithValues[] {
     return form.steps.flatMap((step) => {
         const steps: CombinedStepWithValues[] = [step];
@@ -205,7 +208,7 @@ function navigateToSlug(slug: string) {
         <div class="col-12 col-lg-9">
             <form class="uu-form">
                 <SubmissionOverview
-                    v-if="overviewSelected && formObject"
+                    v-if="selectedStep.isOverview && formObject"
                     :form="formObject"
                 />
                 <MRForm
@@ -237,6 +240,7 @@ function navigateToSlug(slug: string) {
 
             <div class="btn-group">
                 <BSButton
+                    v-if="!firstStepSelected"
                     variant="primary"
                     class="btn-arrow-left"
                     @click="navigateToSlug(getPreviousStepSlug())"
@@ -244,7 +248,7 @@ function navigateToSlug(slug: string) {
                     {{ $t("Previous") }}
                 </BSButton>
                 <BSButton
-                    v-if="overviewSelected"
+                    v-if="selectedStep.isOverview"
                     variant="success"
                     @click="submitForm({ submit: true })"
                 >

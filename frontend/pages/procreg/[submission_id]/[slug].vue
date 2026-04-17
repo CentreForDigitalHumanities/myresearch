@@ -19,6 +19,7 @@ const GET_FORM = graphql(`
                 nameNl
                 descriptionEn
                 descriptionNl
+                isOverview
                 ...FormInfoFragment
                 questions {
                     questionId
@@ -66,6 +67,7 @@ const GET_FORM = graphql(`
                     nameNl
                     descriptionEn
                     descriptionNl
+                    isOverview
                     ...FormInfoFragment
                     questions {
                         questionId

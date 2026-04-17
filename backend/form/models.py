@@ -78,12 +78,14 @@ class Step(models.Model):
             )
         ]
 
-    def clean(self):
+    def clean(self) -> None:
         """Validate that overview steps don't have questions."""
         super().clean()
         if self.is_overview and self.pk and self.questions.exists():  # type: ignore
             raise ValidationError(
-                "Overview steps cannot have questions attached to them."
+                {
+                    "is_overview": "Cannot mark as overview step when questions are attached."
+                }
             )
 
     @property
@@ -144,6 +146,14 @@ class BaseQuestion(models.Model):
             self.triggered_questioncondition.exists()  # type: ignore
             or self.triggered_stepcondition.exists()  # type: ignore
         )
+
+    def clean(self) -> None:
+        """Validate that questions are not attached to overview steps."""
+        super().clean()
+        if self.pk and self.step.is_overview:
+            raise ValidationError(
+                {"step": "Questions cannot be attached to overview steps."}
+            )
 
     def __str__(self):
         return f"{self.text} ({self.pk})"

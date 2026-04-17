@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { FormWithValues } from "~/composables/useProcessForm";
 import OverviewStep from "./OverviewStep.vue";
-import { useOverviewStepSlug } from "~/composables/useOverviewStepSlug";
 
 interface Props {
     form: FormWithValues;
@@ -11,7 +10,7 @@ const props = defineProps<Props>();
 
 // Filter out the overview step itself.
 const contentSteps = computed(() =>
-    props.form.steps.filter((step) => step.slug !== useOverviewStepSlug()),
+    props.form.steps.filter((step) => !step.isOverview),
 );
 </script>
 
