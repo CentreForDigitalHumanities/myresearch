@@ -1,10 +1,10 @@
 from django.db import models
 from django.db.models import Q, Min
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 
 from main.models import User
 from main.utils.permission_utils import BaseMRManager
-from form.validators import validate_slug_not_overview
 
 user_model = get_user_model()
 
@@ -40,7 +40,6 @@ class Step(models.Model):
         max_length=200,
         unique=True,
         help_text="Used in the URL.",
-        validators=[validate_slug_not_overview],
     )
 
     # Only for the top-level steps.
@@ -61,6 +60,11 @@ class Step(models.Model):
         blank=True,
     )
 
+    is_overview = models.BooleanField(
+        default=False,
+        help_text="If true, this step serves as an overview step for the entire form. It should not have any questions attached to it.",
+    )
+
     class Meta:
         order_with_respect_to = "parent"
         constraints = [
@@ -73,6 +77,14 @@ class Step(models.Model):
                 name="step_parent_xor_form",
             )
         ]
+
+    def clean(self):
+        """Validate that overview steps don't have questions."""
+        super().clean()
+        if self.is_overview and self.pk and self.questions.exists():  # type: ignore
+            raise ValidationError(
+                "Overview steps cannot have questions attached to them."
+            )
 
     @property
     def top_form(self) -> MRForm:

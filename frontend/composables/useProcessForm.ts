@@ -12,11 +12,6 @@ import type {
 import { i18n } from "@/plugins/i18n";
 import type { ValidationRuleWithParams } from "@vuelidate/core";
 
-// Mock useOverviewStepSlug for portability reasons.
-function useOverviewStepSlug(): string {
-    return "overview";
-}
-
 // Augmented question types
 interface LocatedQuestion {
     location: string; // Should be something like "steps.0.substeps.1.questions.2"
@@ -122,8 +117,9 @@ function useProcessForm(queriedForm: QueriedForm): FormAndValidation {
 }
 
 function buildFormWithValues(queriedForm: QueriedForm): FormWithValues {
-    const steps: StepWithValues[] = queriedForm.steps.map(
-        (step, stepIndex) => ({
+    return {
+        ...queriedForm,
+        steps: queriedForm.steps.map((step, stepIndex) => ({
             ...step,
             questions: step.questions.map((question, questionIndex) =>
                 addValueAndLocationToQuestion(
@@ -143,27 +139,7 @@ function buildFormWithValues(queriedForm: QueriedForm): FormWithValues {
                     ),
                 ),
             })),
-        }),
-    );
-
-    const overviewStepSlug = useOverviewStepSlug();
-
-    steps.push({
-        __typename: "StepType",
-        stepId: "overview-step-id",
-        slug: overviewStepSlug,
-        nameNl: "Overzicht",
-        nameEn: "Overview",
-        descriptionNl: "",
-        descriptionEn: "",
-        questions: [],
-        substeps: null,
-        repeatIndex: 0,
-    });
-
-    return {
-        ...queriedForm,
-        steps,
+        })),
     };
 }
 

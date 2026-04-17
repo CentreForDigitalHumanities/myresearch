@@ -186,7 +186,3 @@ LOGGING = {
         },
     },
 }
-
-# Application constants
-
-OVERVIEW_STEP_SLUG = os.getenv("OVERVIEW_STEP_SLUG", "overview")
