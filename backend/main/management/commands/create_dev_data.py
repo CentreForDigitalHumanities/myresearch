@@ -347,7 +347,7 @@ class Command(BaseCommand):
         start_date = "today" if question.future_only else "-5y"
         end_date = "+5y" if question.future_only else "today"
         return {
-            "date": self.faker.date_between(
+            "value": self.faker.date_between(
                 start_date=start_date, end_date=end_date
             ).isoformat()
         }
