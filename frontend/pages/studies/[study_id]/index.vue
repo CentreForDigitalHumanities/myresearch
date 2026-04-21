@@ -1,11 +1,14 @@
 <script lang="ts" setup>
 import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
-import type { GetStudyQuery } from "~/generated/gql/graphql";
-import { showError, createError } from "#app";
-import StudyDetailsSidebar from "../../components/study_detail/StudyDetailsSidebar.vue";
-import AvailableActions from "../../components/study_detail/AvailableActions.vue";
-import StudyProgessBar from "../../components/study_detail/StudyProgessBar.vue";
+import type {
+    GetStudyQuery,
+    GetStudyQueryVariables,
+} from "~/generated/gql/graphql";
+import StudyDetailsSidebar from "~/components/study_detail/StudyDetailsSidebar.vue";
+import AvailableActions from "~/components/study_detail/AvailableActions.vue";
+import StudyProgessBar from "~/components/study_detail/StudyProgessBar.vue";
+import { useStudyId } from "~/composables/useRouteParams";
 
 const GET_STUDY = graphql(`
     query GetStudy($id: ID!) {
@@ -23,11 +26,13 @@ const GET_STUDY = graphql(`
     }
 `);
 
-const route = useRoute();
+const studyId = useStudyId();
 
-const { result: studyResult } = useQuery<GetStudyQuery>(GET_STUDY, {
-    id: route.params.study_id,
-});
+const { result: studyResult } = useQuery<GetStudyQuery>(
+    GET_STUDY,
+    () => ({ id: studyId.value }),
+    () => ({ enabled: !!studyId.value }),
+);
 
 const study = computed(() => studyResult.value?.study ?? null);
 
@@ -94,7 +99,7 @@ const studyStatus = computed(() =>
                                 :submission-id="study.latestSubmissionId"
                             />
                         </div>
-                        <!-- Progess bar -->
+                        <!-- Progress bar -->
                         <div class="col-2">
                             <StudyProgessBar :study-status="studyStatus" />
                         </div>
@@ -102,7 +107,7 @@ const studyStatus = computed(() =>
                 </div>
             </div>
         </div>
-        <div class="uu-container" v-else>
+        <div v-else class="uu-container">
             <h3>
                 {{
                     $t(

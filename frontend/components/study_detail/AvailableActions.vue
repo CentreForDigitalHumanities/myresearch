@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { useQuery } from "@vue/apollo-composable";
-import { FileText, PencilLine, Send, Paperclip, Scale } from "lucide-vue-next";
+import { PencilLine, Send, Paperclip, Scale } from "lucide-vue-next";
 import type { Component } from "vue";
 import { graphql } from "~/generated/gql";
 import type { GetFirstSlugQuery } from "~/generated/gql/graphql";
+import { useStudyId } from "~/composables/useRouteParams";
 
 const props = defineProps<{
     studyStatus: string;
@@ -33,9 +34,19 @@ const slug = computed<string | null>(() => {
     return firstStep?.slug || null;
 });
 
-const continueUrl = computed(() =>
-    slug.value ? `/procreg/${props.submissionId}/${slug.value}` : "",
-);
+const studyId = useStudyId();
+
+const continueUrl = computed(() => {
+    const formSlug = slug.value;
+    const submissionId = props.submissionId;
+    const studyIdValue = studyId.value;
+
+    // TODO: disable/hide the button if the slug is not available (yet).
+    if (!formSlug || !submissionId || !studyIdValue) {
+        return "#";
+    }
+    return `/studies/${studyIdValue}/${submissionId}/${formSlug}`;
+});
 
 const { t } = useI18n();
 
@@ -90,14 +101,14 @@ const availableActions = computed(() =>
 <template>
     <h3 class="mb-3">{{ $t("Available actions") }}:</h3>
     <div class="tiles">
-        <a
+        <NuxtLink
             v-for="(action, index) in availableActions"
             :key="index"
-            :href="action.href"
+            :to="action.href"
             class="tile h-100 justify-content-around"
         >
             <strong class="text-center">{{ $t(action.label) }}</strong>
             <component :is="action.icon"> </component>
-        </a>
+        </NuxtLink>
     </div>
 </template>

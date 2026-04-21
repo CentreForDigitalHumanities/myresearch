@@ -3,6 +3,7 @@ import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
 import type { GetFormQuery } from "~/generated/gql/graphql";
 import FormWrapper from "~/components/shared/FormWrapper.vue";
+import { useStepSlug, useSubmissionId } from "~/composables/useRouteParams";
 
 const GET_FORM = graphql(`
     query GetForm($submissionId: ID!) {
@@ -111,28 +112,16 @@ const GET_FORM = graphql(`
     }
 `);
 
-const route = useRoute();
-
-const submissionId = computed(() => {
-    const id = route.params.submission_id;
-    return Array.isArray(id) ? id[0] : id;
-});
+const submissionId = useSubmissionId();
+const slug = useStepSlug();
 
 const { result: formResult } = useQuery<GetFormQuery>(
     GET_FORM,
-    () => ({
-        submissionId: submissionId.value,
-    }),
-    () => ({
-        enabled: !!submissionId.value,
-    }),
+    () => ({ submissionId: submissionId.value }),
+    () => ({ enabled: !!submissionId.value }),
 );
 
 const form = computed(() => formResult.value?.form ?? null);
-
-function stepSlug(route: string | string[]): string {
-    return Array.isArray(route) ? route[0] : route;
-}
 </script>
 
 <template>
@@ -143,9 +132,9 @@ function stepSlug(route: string | string[]): string {
         </div>
         <div class="uu-container">
             <FormWrapper
-                v-if="form"
+                v-if="form && slug"
                 :queried-form="form"
-                :current-step-slug="stepSlug(route.params.slug)"
+                :current-step-slug="slug"
             />
         </div>
     </div>

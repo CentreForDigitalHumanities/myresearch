@@ -10,6 +10,7 @@ import useVuelidate from "@vuelidate/core";
 import { graphql } from "~/generated/gql";
 import type { UpdateUserFormSubmission } from "~/generated/gql/graphql";
 import { useMutation } from "@vue/apollo-composable";
+import { useStudyId } from "~/composables/useRouteParams";
 
 interface Props {
     queriedForm: QueriedForm;
@@ -19,6 +20,8 @@ const props = defineProps<Props>();
 
 const queried = computed(() => props.queriedForm);
 const { formObject, validationRules } = useFormState(queried);
+
+const studyId = useStudyId();
 
 const UPDATE_USER_FORM = graphql(`
     mutation SaveFormSubmission(
@@ -154,8 +157,13 @@ function getPreviousStepSlug(): string {
  */
 function navigateToSlug(slug: string) {
     submitForm();
+
+    const id = studyId.value;
+    if (!id) {
+        return;
+    }
     return navigateTo(
-        "/procreg/" + props.queriedForm.submissionId + "/" + slug,
+        `/studies/${id}/${props.queriedForm.submissionId}/${slug}`,
     );
 }
 </script>
