@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Q, Min
+from django.db.models import Q, Min, QuerySet
 from django.contrib.auth import get_user_model
 
 from main.models import User
@@ -27,6 +27,33 @@ class MRForm(models.Model):
     class Meta:
         verbose_name = "Form"
         verbose_name_plural = "Forms"
+
+    def all_steps(self) -> list["Step"]:
+        """
+        Get all steps and substeps from a form as a flat list, up to an arbitrary depth.
+        """
+        all_steps_list = []
+        stack: list["Step"] = list(self.steps.all())  # type: ignore
+
+        while stack:
+            step = stack.pop()
+            all_steps_list.append(step)
+            # Add substeps to the stack to process them
+            stack.extend(step.substeps.all())  # type: ignore
+
+        return all_steps_list
+
+    def all_questions(self) -> list:
+        """
+        Get all questions from a form as a flat list, up to an arbitrary depth.
+        Returns specific question subclass instances (TextQuestion, SelectQuestion, etc.)
+        """
+        all_questions_list = []
+        for step in self.all_steps():
+            questions: QuerySet[BaseQuestion] = step.questions.all()  # type: ignore
+            for question in questions:
+                all_questions_list.append(question.get_subclass())
+        return all_questions_list
 
     def __str__(self):
         return f"{self.name} ({self.pk})"
@@ -131,6 +158,23 @@ class BaseQuestion(models.Model):
             or self.triggered_stepcondition.exists()  # type: ignore
         )
 
+    def get_subclass(self):
+        """
+        Returns the actual subclass instance (TextQuestion, SelectQuestion, etc.).
+        BaseQuestion is used as a fallback.
+        """
+        for subclass_name in [
+            "selectquestion",
+            "truefalsequestion",
+            "textquestion",
+            "numberquestion",
+            "datequestion",
+            "fileuploadquestion",
+        ]:
+            if hasattr(self, subclass_name):
+                return getattr(self, subclass_name)
+        return self
+
     def __str__(self):
         return f"{self.text} ({self.pk})"
 
@@ -196,6 +240,7 @@ class UserFormSubmission(models.Model):
         on_delete=models.CASCADE,
         related_name="submissions",
         null=True,
+        blank=True,
     )
     started_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
