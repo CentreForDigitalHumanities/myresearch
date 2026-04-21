@@ -1,103 +1,94 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { useQuery } from "@vue/apollo-composable";
-import { FileText, PencilLine, Send, Paperclip, Scale } from "lucide-vue-next";
+import { PencilLine, Delete } from "lucide-vue-next";
 import type { Component } from "vue";
 import { graphql } from "~/generated/gql";
 import type { GetFirstSlugQuery } from "~/generated/gql/graphql";
 
 const props = defineProps<{
-    studyStatus: string;
-    submissionId: string;
+  studyId: string;
+  submissionId: string;
+  actions: string[];
 }>();
 
-// We only need to know the slug of the top-level form so we can link to it.
+// We need to know the slug of the top-level form so we can link to it.
 const GET_FIRST_SLUG = graphql(`
-    query GetFirstSlug($submissionId: ID!) {
-        form(submissionId: $submissionId, mrPermission: "Edit") {
-            formId
-            steps {
-                stepId
-                slug
-            }
-        }
+  query GetFirstSlug($submissionId: ID!) {
+    form(submissionId: $submissionId, mrPermission: "Edit") {
+      formId
+      steps {
+        stepId
+        slug
+      }
     }
+  }
 `);
 
 const { result } = useQuery<GetFirstSlugQuery>(GET_FIRST_SLUG, () => ({
-    submissionId: props.submissionId,
+  submissionId: props.submissionId,
 }));
 
 const slug = computed<string | null>(() => {
-    const firstStep = result.value?.form?.steps[0];
-    return firstStep?.slug || null;
+  const firstStep = result.value?.form?.steps[0];
+  return firstStep?.slug || null;
 });
-
-const continueUrl = computed(() =>
-    slug.value ? `/procreg/${props.submissionId}/${slug.value}` : "",
-);
 
 const { t } = useI18n();
 
 type AvailableAction = {
-    label: string;
-    href: string;
-    icon: Component;
+  label: string;
+  name: string;
+  params: Record<string, any>;
+  icon?: Component;
+  style?: Record<string, string>;
 };
 
-// Some mock actions ...
+const handleActionClick = (action: AvailableAction) => {
+  navigateTo({ name: action.name, params: action.params });
+};
 
-// Draft actions
+// NOTE: ensure that the strings used as keys here correspond with
+// the strings we receive from the backend
+const actionMap = computed<Record<string, AvailableAction>>(() => ({
+  edit_action: {
+    label: t("Continue editing"),
+    name: "procreg-submissionId-slug",
+    params: { submissionId: props.submissionId, slug: slug.value },
+    icon: PencilLine,
+  },
+  delete_action: {
+    label: t("Delete"),
+    name: "studies-studyId-delete",
+    params: { studyId: props.studyId },
+    icon: Delete,
+    style: {
+      "--bs-tiles-hover-bg": "var(--bs-danger)",
+      "--bs-tiles-hover-color": "var(--bs-white)",
+    },
+  },
+}));
 
-const draftActions = computed<AvailableAction[]>(() => [
-    {
-        label: t("Continue editing"),
-        href: continueUrl.value,
-        icon: PencilLine,
-    },
-    {
-        label: t("Submit"),
-        href: "#",
-        icon: Send,
-    },
-]);
-
-// Actions for the PO
-
-const POActions = computed<AvailableAction[]>(() => [
-    {
-        label: t("Continue editing"),
-        href: continueUrl.value,
-        icon: PencilLine,
-    },
-    {
-        label: t("View attachments"),
-        href: "#",
-        icon: Paperclip,
-    },
-    {
-        label: t("Submit decision"),
-        href: "#",
-        icon: Scale,
-    },
-]);
-
-const availableActions = computed(() =>
-    props.studyStatus === "draft" ? draftActions.value : POActions.value,
+const availableActions = computed<AvailableAction[]>(() =>
+  props.actions.map((actionString) => actionMap.value[actionString]),
 );
 </script>
 
 <template>
+  <div v-if="availableActions.length > 0">
     <h3 class="mb-3">{{ $t("Available actions") }}:</h3>
     <div class="tiles">
-        <a
-            v-for="(action, index) in availableActions"
-            :key="index"
-            :href="action.href"
-            class="tile h-100 justify-content-around"
-        >
-            <strong class="text-center">{{ $t(action.label) }}</strong>
-            <component :is="action.icon"> </component>
-        </a>
+      <a
+        v-for="(action, index) in availableActions"
+        :key="index"
+        @click.prevent="handleActionClick(action)"
+        :style="action.style"
+        class="tile h-100 justify-content-around"
+      >
+        <strong class="text-center">{{ $t(action.label) }}</strong>
+        <component :is="action.icon"> </component>
+      </a>
     </div>
+  </div>
+  <h3 v-else>{{ $t("No actions available") }}</h3>
 </template>
