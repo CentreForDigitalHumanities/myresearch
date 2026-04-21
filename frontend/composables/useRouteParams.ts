@@ -1,3 +1,5 @@
+import type { ComputedRef } from 'vue';
+
 function useStudyId(): ComputedRef<string | undefined> {
     const route = useRoute();
     return computed(() => coerceArrayToString(route.params.study_id));
@@ -10,8 +12,7 @@ function useSubmissionId(): ComputedRef<string | undefined> {
 
 function useStepSlug(): ComputedRef<string | undefined> {
     const route = useRoute();
-    const slug = route.params.slug;
-    return computed(() => coerceArrayToString(slug));
+    return computed(() => coerceArrayToString(route.params.slug));
 }
 
 /**
