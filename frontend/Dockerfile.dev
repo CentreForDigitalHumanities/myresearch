@@ -1,16 +1,34 @@
-FROM node:22.16.0-alpine
+ARG NODE_VERSION=22.16.0-alpine
+
+FROM node:${NODE_VERSION} AS dev
+
+ENV NODE_ENV=development
 
 # Add git.
 RUN apk add --no-cache git
 
-# Add python because of the i18n-check script
+# Install Python for the i18n-check script.
 RUN apk add python3
 
 # Set the working directory in the container.
 WORKDIR /app
 
-# Source is not copied because it is mounted as a volume
+COPY package.json package-lock.json ./
+
+# Install with mount to cache node_modules.
+RUN --mount=type=cache,target=/root/.npm npm install
+
+COPY . .
+
+# Change ownership of the app directory to the node user.
+# This is necessary for watch mode.
+RUN chown -R node:node /app
+
+USER node
 
 # Nuxt 3 default port is 3000.
 # Does not actually expose the port but documents it.
 EXPOSE 3000
+
+# Run the development server and codegen in parallel.
+CMD ["npm", "run", "dev", "&", "npm", "run", "codegen"]
