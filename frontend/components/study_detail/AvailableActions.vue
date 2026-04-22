@@ -5,6 +5,7 @@ import { PencilLine, Delete } from "lucide-vue-next";
 import type { Component } from "vue";
 import { graphql } from "~/generated/gql";
 import type { GetFirstSlugQuery } from "~/generated/gql/graphql";
+import Loading from "~/components/shared/Loading.vue";
 
 const props = defineProps<{
   studyId: string;
@@ -33,6 +34,8 @@ const slug = computed<string | null>(() => {
   const firstStep = result.value?.form?.steps[0];
   return firstStep?.slug || null;
 });
+
+const isSlugLoaded = computed(() => slug.value !== null);
 
 const { t } = useI18n();
 
@@ -75,7 +78,10 @@ const availableActions = computed<AvailableAction[]>(() =>
 </script>
 
 <template>
-  <div v-if="availableActions.length > 0">
+  <div v-if="!isSlugLoaded">
+    <loading />
+  </div>
+  <div v-else-if="availableActions.length > 0">
     <h3 class="mb-3">{{ $t("Available actions") }}:</h3>
     <div class="tiles">
       <a
