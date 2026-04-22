@@ -131,27 +131,3 @@ class StepInfoText(models.Model):
         Step, on_delete=models.CASCADE, related_name="info_text"
     )
     text = models.TextField()
-
-
-class RepeatIndex(models.Model):
-    """
-    A marker for various repeatable items to be connected
-    to a UserFormSubmission through a single foreign
-    relationship.
-    """
-
-    submission = models.ForeignKey(
-        to=UserFormSubmission,
-        null=False,
-        on_delete=models.CASCADE,
-        related_name="repeats",
-    )
-
-
-class Repeatable(models.Model):
-
-    repeat_indices = models.ManyToManyField(
-        to=RepeatIndex,
-        null=True,
-        default=None,
-    )
