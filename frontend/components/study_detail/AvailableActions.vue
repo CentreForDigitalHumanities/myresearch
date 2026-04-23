@@ -7,6 +7,7 @@ import { graphql } from "~/generated/gql";
 import type { GetFirstSlugQuery } from "~/generated/gql/graphql";
 import Loading from "~/components/shared/Loading.vue";
 import { StudyActionEnum } from "~/generated/gql/graphql";
+import { NuxtLink } from "#components";
 
 const props = defineProps<{
   studyId: string;
@@ -85,7 +86,7 @@ const availableActions = computed<AvailableAction[]>(() =>
   <div v-else-if="availableActions.length > 0">
     <h3 class="mb-3">{{ $t("Available actions") }}:</h3>
     <div class="tiles">
-      <a
+      <NuxtLink
         v-for="(action, index) in availableActions"
         :key="index"
         @click.prevent="handleActionClick(action)"
@@ -93,8 +94,8 @@ const availableActions = computed<AvailableAction[]>(() =>
         class="tile h-100 justify-content-around"
       >
         <strong class="text-center">{{ $t(action.label) }}</strong>
-        <component :is="action.icon"> </component>
-      </a>
+        <component v-if="action.icon" :is="action.icon"> </component>
+      </NuxtLink>
     </div>
   </div>
   <h3 v-else>{{ $t("No actions available") }}</h3>
