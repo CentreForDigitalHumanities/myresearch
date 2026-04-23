@@ -2,7 +2,6 @@
 import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
 import type { GetStudyQuery } from "~/generated/gql/graphql";
-import { showError, createError } from "#app";
 import StudyDetailsSidebar from "../../../components/study_detail/StudyDetailsSidebar.vue";
 import AvailableActions from "../../../components/study_detail/AvailableActions.vue";
 import StudyProgessBar from "../../../components/study_detail/StudyProgessBar.vue";
