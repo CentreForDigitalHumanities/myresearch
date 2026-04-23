@@ -6,11 +6,12 @@ import type { Component } from "vue";
 import { graphql } from "~/generated/gql";
 import type { GetFirstSlugQuery } from "~/generated/gql/graphql";
 import Loading from "~/components/shared/Loading.vue";
+import { StudyActionEnum } from "~/generated/gql/graphql";
 
 const props = defineProps<{
   studyId: string;
   submissionId: string;
-  actions: string[];
+  actions: StudyActionEnum[];
 }>();
 
 // We need to know the slug of the top-level form so we can link to it.
@@ -53,14 +54,14 @@ const handleActionClick = (action: AvailableAction) => {
 
 // NOTE: ensure that the strings used as keys here correspond with
 // the strings we receive from the backend
-const actionMap = computed<Record<string, AvailableAction>>(() => ({
-  edit_action: {
+const actionMap = computed<Record<StudyActionEnum, AvailableAction>>(() => ({
+  [StudyActionEnum.EditAction]: {
     label: t("Continue editing"),
     name: "procreg-submissionId-slug",
     params: { submissionId: props.submissionId, slug: slug.value },
     icon: PencilLine,
   },
-  delete_action: {
+  [StudyActionEnum.DeleteAction]: {
     label: t("Delete"),
     name: "studies-studyId-delete",
     params: { studyId: props.studyId },
@@ -73,7 +74,7 @@ const actionMap = computed<Record<string, AvailableAction>>(() => ({
 }));
 
 const availableActions = computed<AvailableAction[]>(() =>
-  props.actions.map((actionString) => actionMap.value[actionString]),
+  props.actions.map((actionEnum) => actionMap.value[actionEnum]),
 );
 </script>
 

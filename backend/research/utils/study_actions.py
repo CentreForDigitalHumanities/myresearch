@@ -1,6 +1,14 @@
+from graphene import Enum
+
 from research.other_models.reviews import SubmissionStatus
 from main.models import MRPermission, User
 from research.models import Study
+
+
+class StudyActionEnum(Enum):
+    EDIT_ACTION = "edit_action"
+    DELETE_ACTION = "delete_action"
+
 
 #################################
 # Base classes for StudyActions #
@@ -17,19 +25,19 @@ class StudyActions:
         self.user = user
         self.all_actions = [EditAction(study, user), DeleteAction(study, user)]
 
-    def get_available_actions(self) -> list[str]:
-        return [a.action_string for a in self.all_actions if a.is_available()]
+    def get_available_actions(self) -> list[StudyActionEnum]:
+        return [a.action for a in self.all_actions if a.is_available()]
 
 
 class StudyAction:
     """
     An object containing the logic for making a specific action available and
-    an action_string that gets passed to the frontend.
+    an action that gets passed to the frontend.
 
     Should be subclassed and not used directly.
     """
 
-    action_string = ""
+    action: StudyActionEnum
 
     def __init__(self, study, user):
         self.study = study
@@ -51,7 +59,7 @@ class StudyAction:
 
 class EditAction(StudyAction):
 
-    action_string = "edit_action"
+    action = StudyActionEnum.EDIT_ACTION
 
     def is_available(
         self,
@@ -68,7 +76,7 @@ class EditAction(StudyAction):
 
 class DeleteAction(StudyAction):
 
-    action_string = "delete_action"
+    action = StudyActionEnum.DELETE_ACTION
 
     def is_available(
         self,
