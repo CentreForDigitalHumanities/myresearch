@@ -27,14 +27,12 @@ function getAllQuestions(
  */
 function useFormDataToMutationInput(
     formData: FormWithValues,
-    submissionId: string | null,
-    formId: string | null,
+    submissionId: string,
 ): UserFormInput {
     const questions = formData.steps.flatMap(getAllQuestions);
 
     return {
         submissionId: submissionId,
-        formConfigId: formId,
         responses: questions.map((question) => ({
             answer: JSON.stringify({ value: question.value }),
             id: question.responseId,

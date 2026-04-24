@@ -29,6 +29,7 @@ const GET_STUDY_PAGES = graphql(`
             results {
                 id
                 title
+                reference
                 createdBy {
                     id
                     fullName
@@ -45,12 +46,20 @@ const GET_STUDY_PAGES = graphql(`
 
 const variables = ref<GraphQLListVariables>({
     search: "",
-    ordering: "title",
+    ordering: "-reference",
     createdByIds: [],
 });
 
 const orderingOptions = computed(() => {
     return [
+        {
+            field: "reference",
+            label: t("Ref. number ascending"),
+        },
+        {
+            field: "-reference",
+            label: t("Ref. number descending"),
+        },
         {
             field: "title",
             label: t("title ascending"),
@@ -111,6 +120,9 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
                 <thead>
                     <tr>
                         <th>
+                            {{ $t("Ref. number") }}
+                        </th>
+                        <th>
                             {{ $t("Title") }}
                         </th>
                         <th>
@@ -120,6 +132,9 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
                 </thead>
                 <tbody>
                     <tr v-for="row in data" :key="row.id">
+                        <td>
+                            {{ row.reference }}
+                        </td>
                         <td class="align-middle">
                             <NuxtLink
                                 :to="{
