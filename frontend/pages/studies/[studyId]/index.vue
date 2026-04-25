@@ -1,13 +1,10 @@
 <script lang="ts" setup>
 import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
-import type {
-    GetStudyQuery,
-    GetStudyQueryVariables,
-} from "~/generated/gql/graphql";
-import StudyDetailsSidebar from "~/components/study_detail/StudyDetailsSidebar.vue";
-import AvailableActions from "~/components/study_detail/AvailableActions.vue";
-import StudyProgessBar from "~/components/study_detail/StudyProgessBar.vue";
+import type { GetStudyQuery } from "~/generated/gql/graphql";
+import StudyDetailsSidebar from "~/components/studyDetail/StudyDetailsSidebar.vue";
+import AvailableActions from "~/components/studyDetail/AvailableActions.vue";
+import StudyProgessBar from "~/components/studyDetail/StudyProgessBar.vue";
 import { useStudyId } from "~/composables/useRouteParams";
 
 const GET_STUDY = graphql(`
