@@ -2,12 +2,12 @@ import type { ComputedRef } from 'vue';
 
 function useStudyId(): ComputedRef<string | undefined> {
     const route = useRoute();
-    return computed(() => coerceArrayToString(route.params.study_id));
+    return computed(() => coerceArrayToString(route.params.studyId));
 }
 
 function useSubmissionId(): ComputedRef<string | undefined> {
     const route = useRoute();
-    return computed(() => coerceArrayToString(route.params.submission_id));
+    return computed(() => coerceArrayToString(route.params.submissionId));
 }
 
 function useStepSlug(): ComputedRef<string | undefined> {
