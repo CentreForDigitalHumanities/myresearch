@@ -1,4 +1,14 @@
-from graphene import ID, Field, Int, List, NonNull, ObjectType, ResolveInfo, String
+from graphene import (
+    ID,
+    Boolean,
+    Field,
+    Int,
+    List,
+    NonNull,
+    ObjectType,
+    ResolveInfo,
+    String,
+)
 
 from form.models import StepInfoText
 from form.types.StepInfoTextType import StepInfoTextType
@@ -15,6 +25,7 @@ class StepType(ObjectType):
     description_en = String()
     slug = String(required=True)
     repeat_index = Int(required=True)
+    is_overview = Boolean(required=True)
 
     questions = List(
         NonNull(BaseQuestionInterface),

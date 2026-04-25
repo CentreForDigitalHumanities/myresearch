@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { useQuery } from "@vue/apollo-composable";
-import { FileText, PencilLine, Send, Paperclip, Scale } from "lucide-vue-next";
+import { PencilLine, Send, Paperclip, Scale } from "lucide-vue-next";
 import type { Component } from "vue";
 import { graphql } from "~/generated/gql";
 import type { GetFirstSlugQuery } from "~/generated/gql/graphql";

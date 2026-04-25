@@ -2,7 +2,7 @@
 import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
 import type { GetFormQuery } from "~/generated/gql/graphql";
-import FormWrapper from "~/components/shared/FormWrapper.vue";
+import FormWrapper from "~/components/form/FormWrapper.vue";
 
 const GET_FORM = graphql(`
     query GetForm($submissionId: ID!) {
@@ -19,6 +19,7 @@ const GET_FORM = graphql(`
                 nameNl
                 descriptionEn
                 descriptionNl
+                isOverview
                 ...FormInfoFragment
                 questions {
                     questionId
@@ -66,6 +67,7 @@ const GET_FORM = graphql(`
                     nameNl
                     descriptionEn
                     descriptionNl
+                    isOverview
                     ...FormInfoFragment
                     questions {
                         questionId

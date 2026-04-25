@@ -102,6 +102,7 @@ class UserFormResolver:
                     name_en=step.name_en,  # type: ignore
                     description_nl=step.description_nl,  # type: ignore
                     description_en=step.description_en,  # type: ignore
+                    is_overview=step.is_overview,  # type: ignore
                     slug=(  # type: ignore
                         f"{step.slug}-{repeat_index}" if repeat_index > 0 else step.slug
                     ),
