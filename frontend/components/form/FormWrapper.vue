@@ -198,12 +198,13 @@ function navigateToSlug(slug: string) {
     if (!id) {
         return;
     }
+
     return navigateTo({
-        name: "studies-studyId-submissionId-stepSlug",
+        name: "studies-studyId-submissionId-slug",
         params: {
             studyId: id,
             submissionId: props.queriedForm.submissionId,
-            stepSlug: slug,
+            slug: slug,
         },
     });
 }
