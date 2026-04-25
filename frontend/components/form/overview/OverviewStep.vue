@@ -26,7 +26,8 @@ function formatAnswer(question: QuestionWithValue): string {
         case "SelectQuestionType":
         case "TextQuestionType":
         case "DateQuestionType":
-            return typeof value === "string" && value.trim()
+            console.log("Text question value:", value);
+            return typeof value === "string" && value.trim() !== ""
                 ? value
                 : notAnswered.value;
         case "NumberQuestionType":
@@ -52,8 +53,14 @@ function formatAnswer(question: QuestionWithValue): string {
                 >*</span
             >
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 preserve-white-space">
             {{ formatAnswer(question) }}
         </div>
     </div>
 </template>
+
+<style scoped>
+.preserve-white-space {
+    white-space: pre-wrap;
+}
+</style>
