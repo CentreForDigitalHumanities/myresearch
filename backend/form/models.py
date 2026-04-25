@@ -181,7 +181,7 @@ class BaseQuestion(models.Model):
             raise ValidationError(
                 {"step": "Questions cannot be attached to overview steps."}
             )
-    
+
     def get_subclass(self):
         """
         Returns the actual subclass instance (TextQuestion, SelectQuestion, etc.).
