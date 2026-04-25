@@ -18,19 +18,15 @@ const contentSteps = computed(() =>
     <div v-for="step in contentSteps" :key="step.stepId" class="mb-4 p-2">
         <h3>{{ useTranslateableAttribute(step, "name") }}</h3>
 
-        <div v-if="!step.substeps || step.substeps.length === 0">
-            <OverviewStep :step="step" />
-        </div>
+        <OverviewStep :step="step" />
 
-        <div v-else>
-            <div
-                v-for="substep in step.substeps"
-                :key="substep.stepId"
-                class="ms-3 mb-3"
-            >
-                <h4>{{ useTranslateableAttribute(substep, "name") }}</h4>
-                <OverviewStep :step="substep" />
-            </div>
+        <div
+            v-for="substep in step.substeps"
+            :key="substep.stepId"
+            class="ms-3 mb-3"
+        >
+            <h4>{{ useTranslateableAttribute(substep, "name") }}</h4>
+            <OverviewStep :step="substep" />
         </div>
     </div>
 </template>
