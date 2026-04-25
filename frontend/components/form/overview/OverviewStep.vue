@@ -3,6 +3,7 @@ import { useI18n } from "vue-i18n";
 import type {
     CombinedStepWithValues,
     QuestionWithValue,
+    SelectQuestionWithValue,
 } from "~/composables/useProcessForm";
 
 interface Props {
@@ -15,6 +16,16 @@ const { t } = useI18n();
 
 const notAnswered = computed(() => t("Not answered"));
 
+function getSelectLabel(question: SelectQuestionWithValue): string {
+    const options = question.options;
+    const selectedOption = options.find(
+        (option) => option.id === question.value,
+    );
+    return selectedOption
+        ? useTranslateableAttribute(selectedOption, "label")
+        : notAnswered.value;
+}
+
 function formatAnswer(question: QuestionWithValue): string {
     const value = question.value;
 
@@ -24,9 +35,9 @@ function formatAnswer(question: QuestionWithValue): string {
         case "FileUploadQuestionType":
             return value instanceof File ? value.name : notAnswered.value;
         case "SelectQuestionType":
+            return getSelectLabel(question);
         case "TextQuestionType":
         case "DateQuestionType":
-            console.log("Text question value:", value);
             return typeof value === "string" && value.trim() !== ""
                 ? value
                 : notAnswered.value;
