@@ -1,9 +1,5 @@
 import { helpers, required } from "@vuelidate/validators";
-import type {
-    Substep,
-    QueriedForm,
-    Step,
-} from "~/components/shared/FormWrapper";
+import type { Substep, QueriedForm, Step } from "~/components/form/FormWrapper";
 import type {
     TextQuestionType,
     NumberQuestionType,

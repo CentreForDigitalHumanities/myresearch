@@ -1,11 +1,11 @@
 <script lang="ts">
 import TextQuestion from "./TextQuestion.vue";
 import SelectQuestion from "./SelectQuestion.vue";
-import DateQuestion from "./DateQuestion.vue";
+import DateQuestion from "../form/DateQuestion.vue";
 import NumberQuestion from "./NumberQuestion.vue";
 import TrueFalseQuestion from "./TrueFalseQuestion.vue";
-import FileUploadQuestion from "./FileUploadQuestion.vue";
-import FormSideBar from "./FormSideBar.vue";
+import FileUploadQuestion from "../form/FileUploadQuestion.vue";
+import FormSideBar from "../form/FormSideBar.vue";
 import type { Component } from "vue";
 
 // Imported components are treated as 'any', so the linter complains. There is
@@ -60,8 +60,6 @@ function hasErrors(question: QuestionWithValue): boolean {
 </script>
 
 <template>
-    <h2>{{ useTranslateableAttribute(step, "name") }}</h2>
-    <p>{{ useTranslateableAttribute(step, "description") }}</p>
     <div class="uu-form-row">
         <div class="d-flex flex-column">
             <div

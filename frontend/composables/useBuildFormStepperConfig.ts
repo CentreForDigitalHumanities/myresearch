@@ -1,5 +1,5 @@
-import type { FormStepperConfig } from "~/components/shared/FormStepper";
-import type { QueriedForm } from "~/components/shared/FormWrapper";
+import type { FormStepperConfig } from "~/components/form/FormStepper";
+import type { QueriedForm } from "~/components/form/FormWrapper";
 
 /**
  * Build the configuration object required by the FormStepper component, based
@@ -16,15 +16,15 @@ function useBuildFormStepperConfig(
     return {
         steps: queriedForm.steps.map((step) => ({
             slug: step.slug,
-            labelNl: step.nameNl ?? "",
-            labelEn: step.nameEn ?? "",
+            labelNl: step.nameNl,
+            labelEn: step.nameEn,
             completed: false,
             active: step.slug === currentStepSlug,
             disabled: false,
             substeps: step.substeps.map((substep) => ({
                 slug: substep.slug,
-                labelNl: substep.nameNl ?? "",
-                labelEn: substep.nameEn ?? "",
+                labelNl: substep.nameNl,
+                labelEn: substep.nameEn,
                 completed: false,
                 active: substep.slug === currentStepSlug,
                 disabled: false,

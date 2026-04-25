@@ -120,6 +120,59 @@ class QuestionConditionInline(admin.StackedInline):
 class QuestionResponseInline(admin.TabularInline):
     model = QuestionResponse.submissions.through
     extra = 0
+    can_delete = False
+    fields = (
+        "questionresponse",
+        "question_text",
+        "answer_preview",
+        "repeat_index",
+        "answered_at",
+    )
+    readonly_fields = (
+        "questionresponse",
+        "question_text",
+        "answer_preview",
+        "repeat_index",
+        "answered_at",
+    )
+
+    def get_queryset(self, request):
+        """Optimize query with select_related to avoid N+1 queries."""
+        return (
+            super()
+            .get_queryset(request)
+            .select_related(
+                "questionresponse", "questionresponse__question", "userformsubmission"
+            )
+        )
+
+    def question_text(self, obj):
+        return obj.questionresponse.question.text if obj.questionresponse else "-"
+
+    question_text.short_description = "Question"
+
+    def answer_preview(self, obj):
+        """Show a shortened version of the answer."""
+        if not obj.questionresponse:
+            return "-"
+        answer_str = str(obj.questionresponse.answer)
+        return answer_str[:100] + "..." if len(answer_str) > 100 else answer_str
+
+    answer_preview.short_description = "Answer"
+
+    def repeat_index(self, obj):
+        return obj.questionresponse.repeat_index if obj.questionresponse else "-"
+
+    repeat_index.short_description = "Repeat Index"
+
+    def answered_at(self, obj):
+        return obj.questionresponse.answered_at if obj.questionresponse else "-"
+
+    answered_at.short_description = "Answered At"
+
+    # The user shouldn't be able to add new responses in this inline.
+    def has_add_permission(self, request, obj=None):
+        return False
 
 
 class QuestionInline(admin.TabularInline):
@@ -167,7 +220,7 @@ class StepAdmin(admin.ModelAdmin):
         "slug",
         "form",
         "parent",
-        "created_at_display",
+        "is_overview",
     )
     list_filter = ("form", "parent")
     search_fields = ("name_nl", "name_en", "slug", "description_nl", "description_en")
@@ -182,6 +235,7 @@ class StepAdmin(admin.ModelAdmin):
                     "slug",
                     "description_nl",
                     "description_en",
+                    "is_overview",
                 )
             },
         ),
@@ -404,6 +458,9 @@ class UserFormSubmissionAdmin(admin.ModelAdmin):
     search_fields = ("user__username", "user__email")
     readonly_fields = ("started_at", "updated_at")
     inlines = [QuestionResponseInline]
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related("responses")
 
     def is_complete(self, obj):
         return obj.completed_at is not None
