@@ -24,10 +24,10 @@ const modelValue = defineModel<boolean>();
             />
             <FormLabel :question="question" label-class="form-check-label" />
         </div>
-        <p
+        <div
             v-if="question.descriptionNl || question.descriptionEn"
             class="text-muted"
             v-html="useTranslateableAttribute(question, 'description')"
-        />
+        ></div>
     </div>
 </template>

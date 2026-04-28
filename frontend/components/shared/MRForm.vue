@@ -5,7 +5,6 @@ import DateQuestion from "./DateQuestion.vue";
 import NumberQuestion from "./NumberQuestion.vue";
 import TrueFalseQuestion from "./TrueFalseQuestion.vue";
 import FileUploadQuestion from "./FileUploadQuestion.vue";
-import FormSideBar from "./FormSideBar.vue";
 import type { Component } from "vue";
 
 // Imported components are treated as 'any', so the linter complains. There is
@@ -26,6 +25,7 @@ import type {
     QuestionWithValue,
 } from "~/composables/useProcessForm";
 import type { ErrorObject, Validation } from "@vuelidate/core";
+import FormSideBar from "~/components/shared/FormSideBar.vue";
 
 interface Props {
     step: CombinedStepWithValues;
@@ -61,7 +61,7 @@ function hasErrors(question: QuestionWithValue): boolean {
 
 <template>
     <h2>{{ useTranslateableAttribute(step, "name") }}</h2>
-    <div v-html="useTranslateableAttribute(step, 'description')" />
+    <div v-html="useTranslateableAttribute(step, 'description')"></div>
     <div class="uu-form-row">
         <div class="d-flex flex-column">
             <div

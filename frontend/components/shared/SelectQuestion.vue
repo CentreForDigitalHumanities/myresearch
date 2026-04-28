@@ -41,11 +41,11 @@ const options = computed<[string, string][]>(() => {
 <template>
     <div>
         <FormLabel :question="question" />
-        <p
+        <div
             v-if="question.descriptionNl || question.descriptionEn"
             class="text-muted"
             v-html="useTranslateableAttribute(question, 'description')"
-        />
+        ></div>
         <BSMultiSelect
             v-if="question.multiple"
             v-model="multiSelectValue"
