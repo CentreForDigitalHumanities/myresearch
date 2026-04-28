@@ -20,39 +20,31 @@ const contentSteps = computed(() =>
 
 <template>
     <div v-for="step in contentSteps" :key="step.stepId" class="mb-4 p-2">
-        <h3>{{ useTranslateableAttribute(step, "name") }}</h3>
+        <h3 class="d-flex align-items-center">
+            {{ useTranslateableAttribute(step, "name") }}
+            <AlertTriangle
+                v-if="useStepHasErrors(vuelidate, step)"
+                class="text-danger ms-2"
+                :size="20"
+            />
+        </h3>
 
-        <div v-for="step in contentSteps" :key="step.stepId" class="mb-4 p-2">
-            <h3>
-                {{ useTranslateableAttribute(step, "name") }}
+        <OverviewStep :step="step" :vuelidate="vuelidate" />
+
+        <div
+            v-for="substep in step.substeps"
+            :key="substep.stepId"
+            class="ms-3 mb-3"
+        >
+            <h4 class="d-flex align-items-center">
+                {{ useTranslateableAttribute(substep, "name") }}
                 <AlertTriangle
-                    v-if="useStepHasErrors(vuelidate, step)"
-                    class="warning-icon text-danger ms-2"
-                    :size="20"
+                    v-if="useStepHasErrors(vuelidate, substep)"
+                    class="text-danger ms-2"
+                    :size="18"
                 />
-            </h3>
-
-            <div v-if="!step.substeps || step.substeps.length === 0">
-                <OverviewStep :step="step" :vuelidate="vuelidate" />
-            </div>
-
-            <div v-else>
-                <div
-                    v-for="substep in step.substeps"
-                    :key="substep.stepId"
-                    class="ms-3 mb-3"
-                >
-                    <h4>
-                        {{ useTranslateableAttribute(substep, "name") }}
-                        <AlertTriangle
-                            v-if="useStepHasErrors(vuelidate, substep)"
-                            class="text-danger ms-2"
-                            :size="18"
-                        />
-                    </h4>
-                    <OverviewStep :step="substep" :vuelidate="vuelidate" />
-                </div>
-            </div>
+            </h4>
+            <OverviewStep :step="substep" :vuelidate="vuelidate" />
         </div>
     </div>
 </template>

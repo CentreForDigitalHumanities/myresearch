@@ -23,14 +23,13 @@ export function useQuestionHasErrors(
 }
 
 /**
- * Check if a step or any of its substeps have any invalid questions
- * Uses trampolining (iteration instead of recursion) to process nested substeps
+ * Check if a step or any of its substeps have any invalid questions.
  */
 export function useStepHasErrors(
     vuelidate: Validation,
     step: CombinedStepWithValues,
 ): boolean {
-    // Trampolining approach: use a stack to iteratively process steps and substeps
+    // Trampolining approach: use a stack to iteratively process steps and substeps.
     const stepsToCheck: CombinedStepWithValues[] = [step];
 
     while (stepsToCheck.length > 0) {
