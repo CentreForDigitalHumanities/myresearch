@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import type { TextQuestionWithValue } from "~/composables/useProcessForm";
-import FormLabel from "./FormLabel.vue";
+import type { NumberQuestionWithValue } from "~/composables/useProcessForm";
+import FormLabel from "../form/FormLabel.vue";
 
 interface Props {
-    question: TextQuestionWithValue;
+    question: NumberQuestionWithValue;
     isInvalid: boolean;
 }
 
 defineProps<Props>();
 
-const modelValue = defineModel<string>();
+const modelValue = defineModel<number>();
 </script>
 
 <template>
@@ -21,20 +21,12 @@ const modelValue = defineModel<string>();
             v-html="useTranslateableAttribute(question, 'description')"
         ></div>
         <input
-            v-if="!question.lines || question.lines < 2"
             :id="`${question.questionId}-${question.repeatIndex}`"
             v-model="modelValue"
-            type="text"
+            type="number"
             class="form-control"
             :class="{ 'is-invalid': isInvalid }"
+            :min="question.positiveOnly ? 0 : undefined"
         />
-        <textarea
-            v-if="question.lines && question.lines >= 2"
-            :id="`${question.questionId}-${question.repeatIndex}`"
-            v-model="modelValue"
-            class="form-control"
-            :class="{ 'is-invalid': isInvalid }"
-            :rows="question.lines"
-        ></textarea>
     </div>
 </template>

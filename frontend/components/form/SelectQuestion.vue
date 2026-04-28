@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { SelectQuestionWithValue } from "~/composables/useProcessForm";
-import FormLabel from "./FormLabel.vue";
+import FormLabel from "../form/FormLabel.vue";
 import { BSMultiSelect } from "cdh-vue-lib";
 
 interface Props {

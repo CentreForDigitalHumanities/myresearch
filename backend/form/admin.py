@@ -221,7 +221,7 @@ class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
         "slug",
         "form",
         "parent",
-        "created_at_display",
+        "is_overview",
     )
     list_filter = ("form", "parent")
     search_fields = ("name_nl", "name_en", "slug", "description_nl", "description_en")
@@ -236,6 +236,7 @@ class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                     "slug",
                     "description_nl",
                     "description_en",
+                    "is_overview",
                 )
             },
         ),

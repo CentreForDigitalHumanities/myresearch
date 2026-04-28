@@ -14,7 +14,7 @@ import type {
 // See: https://github.com/CentreForDigitalHumanities/DIAPP
 interface PerformQueryInputWithVariables<
     Query,
-    Variables extends OperationVariables
+    Variables extends OperationVariables,
 > {
     queryDocument: TypedDocumentNode<Query, Variables>;
     errorMessage?: string;
@@ -47,7 +47,7 @@ interface PerformQueryReturn<Query, Variables extends OperationVariables> {
  */
 function usePerformQuery<Query, Variables extends OperationVariables>(
     input: PerformQueryInput<Query, Variables>,
-    onError: (e: ApolloError) => void | undefined
+    onError: (e: ApolloError) => void | undefined,
 ): PerformQueryReturn<Query, Variables> {
     const { queryDocument, errorMessage } = input;
 
@@ -69,7 +69,7 @@ function usePerformQuery<Query, Variables extends OperationVariables>(
         const { result, error, loading } = useQuery<Query>(
             queryDocument,
             null,
-            input.options ?? {}
+            input.options ?? {},
         );
         queryResult = result;
         queryError = error;
@@ -78,7 +78,7 @@ function usePerformQuery<Query, Variables extends OperationVariables>(
 
     watch(queryError, () => {
         if (queryError?.value) {
-            onError(queryError.value)
+            onError(queryError.value);
         }
     });
     return {

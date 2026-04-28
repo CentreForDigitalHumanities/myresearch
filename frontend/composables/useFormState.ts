@@ -1,4 +1,4 @@
-import type { QueriedForm } from "~/components/shared/FormWrapper";
+import type { QueriedForm } from "~/components/form/FormWrapper";
 import { useProcessForm } from "~/composables/useProcessForm";
 import type {
     FormValidationRules,

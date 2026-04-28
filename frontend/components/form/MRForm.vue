@@ -1,10 +1,11 @@
 <script lang="ts">
 import TextQuestion from "./TextQuestion.vue";
 import SelectQuestion from "./SelectQuestion.vue";
-import DateQuestion from "./DateQuestion.vue";
+import DateQuestion from "../form/DateQuestion.vue";
 import NumberQuestion from "./NumberQuestion.vue";
 import TrueFalseQuestion from "./TrueFalseQuestion.vue";
-import FileUploadQuestion from "./FileUploadQuestion.vue";
+import FileUploadQuestion from "../form/FileUploadQuestion.vue";
+import FormSideBar from "../form/FormSideBar.vue";
 import type { Component } from "vue";
 
 // Imported components are treated as 'any', so the linter complains. There is
@@ -25,7 +26,6 @@ import type {
     QuestionWithValue,
 } from "~/composables/useProcessForm";
 import type { ErrorObject, Validation } from "@vuelidate/core";
-import FormSideBar from "~/components/shared/FormSideBar.vue";
 
 interface Props {
     step: CombinedStepWithValues;

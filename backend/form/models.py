@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Q, Min, QuerySet
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 
 from main.models import User
 from main.utils.permission_utils import BaseMRManager
@@ -86,6 +87,11 @@ class Step(models.Model):
         blank=True,
     )
 
+    is_overview = models.BooleanField(
+        default=False,
+        help_text="If true, this step serves as an overview step for the entire form. It should not have any questions attached to it.",
+    )
+
     class Meta:
         order_with_respect_to = "parent"
         constraints = [
@@ -98,6 +104,16 @@ class Step(models.Model):
                 name="step_parent_xor_form",
             )
         ]
+
+    def clean(self) -> None:
+        """Validate that overview steps don't have questions."""
+        super().clean()
+        if self.is_overview and self.pk and self.questions.exists():  # type: ignore
+            raise ValidationError(
+                {
+                    "is_overview": "Cannot mark as overview step when questions are attached."
+                }
+            )
 
     @property
     def top_form(self) -> MRForm:
@@ -157,6 +173,14 @@ class BaseQuestion(models.Model):
             self.triggered_questioncondition.exists()  # type: ignore
             or self.triggered_stepcondition.exists()  # type: ignore
         )
+
+    def clean(self) -> None:
+        """Validate that questions are not attached to overview steps."""
+        super().clean()
+        if self.pk and self.step.is_overview:
+            raise ValidationError(
+                {"step": "Questions cannot be attached to overview steps."}
+            )
 
     def get_subclass(self):
         """

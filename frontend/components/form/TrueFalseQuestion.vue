@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { TrueFalseQuestionWithValue } from "~/composables/useProcessForm";
-import FormLabel from "./FormLabel.vue";
+import FormLabel from "../form/FormLabel.vue";
 
 interface Props {
     question: TrueFalseQuestionWithValue;
