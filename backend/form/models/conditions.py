@@ -2,7 +2,6 @@ from django.db import models
 from . import *
 
 
-# Conditional logic for questions and steps
 class BaseCondition(models.Model):
     """Abstract base class for conditions on steps or questions."""
 

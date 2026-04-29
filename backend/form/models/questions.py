@@ -1,7 +1,6 @@
 from django.db import models
 
 
-# Questions
 class BaseQuestion(models.Model):
     text = models.CharField(max_length=200)
     step = models.ForeignKey(
