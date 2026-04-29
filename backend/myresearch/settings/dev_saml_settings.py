@@ -6,11 +6,20 @@ import os
 
 _BASE_DIR = path.dirname(os.path.dirname(__file__))
 
+PRIVATE_KEY_PATH = discover(
+    "PRIVATE_KEY_PATH",
+    path.join(_BASE_DIR, "certs/private.key"),
+)
+PUBLIC_CERT_PATH = discover(
+    "PUBLIC_CERT_PATH",
+    path.join(_BASE_DIR, "certs/public.cert"),
+)
+
 SAML_CONFIG = create_saml_config(
     base_url=discover("SAML_BASE_URL", "http://localhost:5000/"),
     name="myresearch",
-    key_file=path.join(_BASE_DIR, "certs/private.key"),
-    cert_file=path.join(_BASE_DIR, "certs/public.cert"),
+    key_file=PRIVATE_KEY_PATH,
+    cert_file=PUBLIC_CERT_PATH,
     idp_metadata=discover(
         "IDP_METADATA_URL", "http://mr-dev-idp:7000/saml/idp/metadata/"
     ),

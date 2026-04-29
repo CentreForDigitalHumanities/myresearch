@@ -1,11 +1,41 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { FileText, PencilLine, Send, Paperclip, Scale } from "lucide-vue-next";
+import { useQuery } from "@vue/apollo-composable";
+import { PencilLine, Send, Paperclip, Scale } from "lucide-vue-next";
 import type { Component } from "vue";
+import { graphql } from "~/generated/gql";
+import type { GetFirstSlugQuery } from "~/generated/gql/graphql";
 
 const props = defineProps<{
     studyStatus: string;
+    submissionId: string;
 }>();
+
+// We only need to know the slug of the top-level form so we can link to it.
+const GET_FIRST_SLUG = graphql(`
+    query GetFirstSlug($submissionId: ID!) {
+        form(submissionId: $submissionId, mrPermission: "Edit") {
+            formId
+            steps {
+                stepId
+                slug
+            }
+        }
+    }
+`);
+
+const { result } = useQuery<GetFirstSlugQuery>(GET_FIRST_SLUG, () => ({
+    submissionId: props.submissionId,
+}));
+
+const slug = computed<string | null>(() => {
+    const firstStep = result.value?.form?.steps[0];
+    return firstStep?.slug || null;
+});
+
+const continueUrl = computed(() =>
+    slug.value ? `/procreg/${props.submissionId}/${slug.value}` : "",
+);
 
 const { t } = useI18n();
 
@@ -19,41 +49,41 @@ type AvailableAction = {
 
 // Draft actions
 
-const draftActions: AvailableAction[] = [
-  {
-    label: t("Continue editing"),
-    href: "#",
-    icon: PencilLine,
-  },
-  {
-    label: t("Submit"),
-    href: "#",
-    icon: Send,
-  }
-];
+const draftActions = computed<AvailableAction[]>(() => [
+    {
+        label: t("Continue editing"),
+        href: continueUrl.value,
+        icon: PencilLine,
+    },
+    {
+        label: t("Submit"),
+        href: "#",
+        icon: Send,
+    },
+]);
 
 // Actions for the PO
 
-const POActions: AvailableAction[] = [
+const POActions = computed<AvailableAction[]>(() => [
     {
-    label: t("View PDF"),
-    href: "#",
-    icon: FileText,
+        label: t("Continue editing"),
+        href: continueUrl.value,
+        icon: PencilLine,
     },
     {
-    label: t("View attachments"),
-    href: "#",
-    icon: Paperclip,
+        label: t("View attachments"),
+        href: "#",
+        icon: Paperclip,
     },
     {
-    label: t("Submit decision"),
-    href: "#",
-    icon: Scale,
-    }
-];
+        label: t("Submit decision"),
+        href: "#",
+        icon: Scale,
+    },
+]);
 
 const availableActions = computed(() =>
-    props.studyStatus === "draft" ? draftActions : POActions,
+    props.studyStatus === "draft" ? draftActions.value : POActions.value,
 );
 </script>
 
@@ -67,8 +97,7 @@ const availableActions = computed(() =>
             class="tile h-100 justify-content-around"
         >
             <strong class="text-center">{{ $t(action.label) }}</strong>
-            <component :is="action.icon">            
-            </component>
+            <component :is="action.icon"> </component>
         </a>
     </div>
 </template>

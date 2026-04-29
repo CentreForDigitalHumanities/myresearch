@@ -2,11 +2,11 @@
 import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
 import type { GetFormQuery } from "~/generated/gql/graphql";
-import FormWrapper from "~/components/shared/FormWrapper.vue";
+import FormWrapper from "~/components/form/FormWrapper.vue";
 
 const GET_FORM = graphql(`
-    query GetForm {
-        form {
+    query GetForm($submissionId: ID!) {
+        form(submissionId: $submissionId, mrPermission: "Edit") {
             formId
             nameEn
             nameNl
@@ -19,6 +19,7 @@ const GET_FORM = graphql(`
                 nameNl
                 descriptionEn
                 descriptionNl
+                isOverview
                 ...FormInfoFragment
                 questions {
                     questionId
@@ -66,6 +67,7 @@ const GET_FORM = graphql(`
                     nameNl
                     descriptionEn
                     descriptionNl
+                    isOverview
                     ...FormInfoFragment
                     questions {
                         questionId
@@ -111,11 +113,24 @@ const GET_FORM = graphql(`
     }
 `);
 
-const { result: formResult } = useQuery<GetFormQuery>(GET_FORM);
+const route = useRoute();
+
+const submissionId = computed(() => {
+    const id = route.params.submission_id;
+    return Array.isArray(id) ? id[0] : id;
+});
+
+const { result: formResult } = useQuery<GetFormQuery>(
+    GET_FORM,
+    () => ({
+        submissionId: submissionId.value,
+    }),
+    () => ({
+        enabled: !!submissionId.value,
+    }),
+);
 
 const form = computed(() => formResult.value?.form ?? null);
-
-const route = useRoute();
 
 function stepSlug(route: string | string[]): string {
     return Array.isArray(route) ? route[0] : route;

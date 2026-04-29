@@ -98,7 +98,7 @@ class StepAdminForm(ModelForm):
 
     class Meta:
         model = Step
-        fields = []
+        fields = "__all__"
 
     # Prepopulate question_order and substep_order with current order if editing a step.
     def __init__(self, *args, **kwargs):

@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { Scale } from "lucide-vue-next";
-import { Pencil } from "lucide-vue-next";
+import { Scale, Pencil } from "lucide-vue-next";
 
 type Status = "DRAFT" | "SUBMITTED_TO_SUPERVISOR";
 type Proposal = {
-    refNumber: number; //refNumber doesn't show the _, waiting for backend to decide what it should be.
+    refNumber: number; // refNumber doesn't show the _, waiting for backend to decide what it should be.
     title: string;
     type: string;
     status: Status;
@@ -54,9 +53,7 @@ const isProposal = (
     return recentActivity.hasOwnProperty("status");
 };
 
-const isIntake = (
-    recentActivity: RecentActivity,
-): recentActivity is Intake => {
+const isIntake = (recentActivity: RecentActivity): recentActivity is Intake => {
     return recentActivity.hasOwnProperty("intakeBody");
 };
 </script>

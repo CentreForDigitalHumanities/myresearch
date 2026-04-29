@@ -1,15 +1,19 @@
+from typing import TypeAlias
+
 from tqdm import tqdm
 from faker import Faker
-
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from django.core.management import call_command
 
+from form.services.form_evaluator import FormEvaluator
+from research.other_models.reviews import StatusChange, SubmissionStatus
 from main.models import User
 from research.models import Study
 from form.models import (
     MRForm,
+    QuestionResponse,
     Step,
     StepInfoText,
     FileUploadQuestion,
@@ -21,6 +25,16 @@ from form.models import (
     TrueFalseQuestion,
     UserFormSubmission,
 )
+
+AnyQuestion: TypeAlias = (
+    SelectQuestion
+    | TrueFalseQuestion
+    | TextQuestion
+    | NumberQuestion
+    | DateQuestion
+    | FileUploadQuestion
+)
+
 
 # Min/max number of steps for the (top-level) form.
 MIN_STEPS_IN_ROOT_FORM = 3
@@ -53,8 +67,21 @@ class Command(BaseCommand):
     faker_en = faker["en_GB"]
 
     def add_arguments(self, parser):
-        parser.add_argument("--force", action="store_true")
-        parser.add_argument("--silent", action="store_true")
+        parser.add_argument(
+            "--force",
+            action="store_true",
+            help="Force execution even if DEBUG = False in settings.py",
+        )
+        parser.add_argument(
+            "--silent",
+            action="store_true",
+            help="Suppress output during data generation.",
+        )
+        parser.add_argument(
+            "--vwr",
+            action="store_true",
+            help="Use the VWR fixture for the form instead of generating a random one.",
+        )
 
     def print(self, options, *args, **kwargs):
         if not options["silent"]:
@@ -71,10 +98,17 @@ class Command(BaseCommand):
         call_command("load_fixtures", "--users-only", "--force")
 
         with transaction.atomic():
-            form = self._generate_form(options)
-            self._create_submissions_and_studies(options, form)
-            self._generate_steps(options, form)
-            self._generate_questions(options, form)
+            if options["vwr"]:
+                self.print(options, "Loading VWR fixture for form...")
+                call_command("loaddata", "form/fixtures/vwr.json")
+                form = MRForm.objects.get(name_en="Processing Registry")
+            else:
+                self.print(options, "Generating random form and associated data...")
+                form = self._generate_form(options)
+                self._generate_steps(options, form)
+                self._generate_questions(options, form)
+
+        self._create_submissions_and_studies(options, form)
 
         self.print(options, "Dev data generation complete!")
 
@@ -148,19 +182,30 @@ class Command(BaseCommand):
             )
             _generate_substeps(step, 1)
 
+        # Add an overview substep (in about 80% of cases)
+        if self.faker.pybool(truth_probability=80):
+            Step.objects.create(
+                form=form,
+                name_nl="Overzicht",
+                name_en="Overview",
+                description_nl=self.faker_nl.paragraph(),
+                description_en=self.faker_en.paragraph(),
+                slug=f"overview-{self.faker.unique.slug()}",
+                is_overview=True,
+            )
+
     def _create_step_info(self, step: Step) -> None:
         """Generates side information for a given step."""
 
-        def generate_form_info_text() -> None:
-            for _ in range(self.faker.random_int(1, 3)):
-                StepInfoText.objects.create(
-                    step=step,
-                    text_nl=self.faker_nl.paragraph(),
-                    text_en=self.faker_en.paragraph(),
-                )
+        if not self.faker.pybool():
+            return
 
-        if self.faker.pybool():
-            generate_form_info_text()
+        for _ in range(self.faker.random_int(1, 3)):
+            StepInfoText.objects.create(
+                step=step,
+                text_nl=self.faker_nl.paragraph(),
+                text_en=self.faker_en.paragraph(),
+            )
 
     def _generate_questions(self, options, form: MRForm) -> None:
         def _base_question_fields(step: Step, order: int) -> dict:
@@ -262,25 +307,115 @@ class Command(BaseCommand):
 
     def _create_submissions_and_studies(self, options, form):
         """
-        Create mock studies for each user
+        Mock UserFormSubmissions and create studies for each user.
+
+        For now, we only create one submission per study.
         """
 
         for user in tqdm(
-            User.objects.all(), "Generating studies ...", disable=options["silent"]
+            User.objects.all(),
+            "Generating studies and submissions...",
+            disable=options["silent"],
         ):
-
             num_studies = self.faker.random_int(
                 MIN_STUDIES_PER_USER, MAX_STUDIES_PER_USER
-            )
-
-            submission = UserFormSubmission.objects.create(
-                user=user,
-                form=form,
             )
 
             for _ in range(num_studies):
                 study = Study.objects.create(
                     created_by=user,
                 )
-                submission.study = study  # type: ignore
-                submission.save()
+
+                # Create a StatusChange
+                StatusChange.objects.create(
+                    status=SubmissionStatus.DRAFT, created_by=user, study=study
+                )
+                # Create one submission per study (for now).
+                self._create_user_form_submission(user, form, study)
+
+    def _generate_text_answer(self, question: TextQuestion) -> dict:
+        return {"value": self.faker.sentence()}
+
+    def _generate_number_answer(self, question: NumberQuestion) -> dict:
+        min = 1 if question.positive_only else -100
+        return {"value": self.faker.random_int(min=min, max=100)}
+
+    def _generate_select_answer(self, question: SelectQuestion) -> dict:
+        options = list(SelectOption.objects.filter(question=question))
+        if not options:
+            return {"value": []}
+        max_selected = len(options) if question.multiple else 1
+        num_selected = self.faker.random_int(min=0, max=max_selected)
+        selected_options = self.faker.random_elements(
+            elements=options, length=num_selected, unique=True
+        )
+        return {"value": [option.pk for option in selected_options]}
+
+    def _generate_true_false_answer(self, question: TrueFalseQuestion) -> dict:
+        return {"value": self.faker.pybool()}
+
+    def _generate_date_answer(self, question: DateQuestion) -> dict:
+        start_date = "today" if question.future_only else "-5y"
+        end_date = "+5y" if question.future_only else "today"
+        return {
+            "value": self.faker.date_between(
+                start_date=start_date, end_date=end_date
+            ).isoformat()
+        }
+
+    def _generate_file_upload_answer(self, question: FileUploadQuestion) -> dict:
+        filename = f"{self.faker.word()}_{self.faker.word()}.pdf"
+        file_url = f"/uploads/{self.faker.uuid4()}/{filename}"
+        return {"value": file_url}
+
+    def _generate_answer_for_question(self, question: AnyQuestion) -> dict:
+        if isinstance(question, TextQuestion):
+            return self._generate_text_answer(question)
+        if isinstance(question, SelectQuestion):
+            return self._generate_select_answer(question)
+        if isinstance(question, TrueFalseQuestion):
+            return self._generate_true_false_answer(question)
+        if isinstance(question, DateQuestion):
+            return self._generate_date_answer(question)
+        if isinstance(question, NumberQuestion):
+            return self._generate_number_answer(question)
+        if isinstance(question, FileUploadQuestion):
+            return self._generate_file_upload_answer(question)
+
+        raise ValueError(f"Unsupported question type: {type(question)}")
+
+    def _create_user_form_submission(
+        self, user: User, form: MRForm, study: Study
+    ) -> None:
+        submission = UserFormSubmission.objects.create(
+            user=user,
+            form=form,
+            study=study,
+        )
+
+        form_questions = form.all_questions()
+
+        # First generate answers for all questions, regardless of visibility.
+        for question in form_questions:
+            if self.faker.random_element([True, False, False, False]):
+                # 25% chance to leave the question unanswered.
+                continue
+
+            answer_data = self._generate_answer_for_question(question)
+
+            response = QuestionResponse.objects.create(
+                question=question,
+                answer=answer_data,
+            )
+            response.submissions.add(submission)
+
+        # Evaluate the submission
+        evaluator = FormEvaluator(submission)
+
+        # Remove responses for questions that are not visible based on the generated answers.
+        for question in form_questions:
+            if not evaluator.is_question_visible(question):
+                QuestionResponse.objects.filter(
+                    submissions__in=[submission],
+                    question=question,
+                ).delete()

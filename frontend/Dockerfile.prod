@@ -17,7 +17,7 @@ COPY . /app
 
 # Get static graphql schema
 ARG CODEGEN_SCHEMA
-env CODEGEN_SCHEMA=${CODEGEN_SCHEMA}
+ENV CODEGEN_SCHEMA=${CODEGEN_SCHEMA}
 
 # Make sure the API URL is available at generate time
 ARG NUXT_PUBLIC_API_URL

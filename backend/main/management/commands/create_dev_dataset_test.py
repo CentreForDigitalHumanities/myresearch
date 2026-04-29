@@ -5,10 +5,10 @@ from django.conf import settings
 from django.db.models import Model
 from django.core.management import call_command
 
-from main.models import User
+from research.other_models.utils import YearCounter
+from research.other_models.reviews import Review, ReviewRound
 from form.models import (
     QuestionCondition,
-    QuestionResponse,
     StepCondition,
     StepInfoText,
 )
@@ -18,9 +18,11 @@ from form.models import (
 # generate automatically.
 EXCLUDED_MODELS_FOR_COMPLETENESS_CHECK: list[Type[Model]] = [
     StepInfoText,
-    QuestionResponse,
     StepCondition,
     QuestionCondition,
+    Review,
+    ReviewRound,
+    YearCounter,
 ]
 
 

@@ -1,6 +1,10 @@
 from django.db import models
-from django.db.models import Q, Min
+from django.db.models import Q, Min, QuerySet
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+
+from main.models import User
+from main.utils.permission_utils import BaseMRManager
 
 user_model = get_user_model()
 
@@ -24,6 +28,33 @@ class MRForm(models.Model):
     class Meta:
         verbose_name = "Form"
         verbose_name_plural = "Forms"
+
+    def all_steps(self) -> list["Step"]:
+        """
+        Get all steps and substeps from a form as a flat list, up to an arbitrary depth.
+        """
+        all_steps_list = []
+        stack: list["Step"] = list(self.steps.all())  # type: ignore
+
+        while stack:
+            step = stack.pop()
+            all_steps_list.append(step)
+            # Add substeps to the stack to process them
+            stack.extend(step.substeps.all())  # type: ignore
+
+        return all_steps_list
+
+    def all_questions(self) -> list:
+        """
+        Get all questions from a form as a flat list, up to an arbitrary depth.
+        Returns specific question subclass instances (TextQuestion, SelectQuestion, etc.)
+        """
+        all_questions_list = []
+        for step in self.all_steps():
+            questions: QuerySet[BaseQuestion] = step.questions.all()  # type: ignore
+            for question in questions:
+                all_questions_list.append(question.get_subclass())
+        return all_questions_list
 
     def __str__(self):
         return f"{self.name} ({self.pk})"
@@ -56,6 +87,11 @@ class Step(models.Model):
         blank=True,
     )
 
+    is_overview = models.BooleanField(
+        default=False,
+        help_text="If true, this step serves as an overview step for the entire form. It should not have any questions attached to it.",
+    )
+
     class Meta:
         order_with_respect_to = "parent"
         constraints = [
@@ -68,6 +104,16 @@ class Step(models.Model):
                 name="step_parent_xor_form",
             )
         ]
+
+    def clean(self) -> None:
+        """Validate that overview steps don't have questions."""
+        super().clean()
+        if self.is_overview and self.pk and self.questions.exists():  # type: ignore
+            raise ValidationError(
+                {
+                    "is_overview": "Cannot mark as overview step when questions are attached."
+                }
+            )
 
     @property
     def top_form(self) -> MRForm:
@@ -128,6 +174,31 @@ class BaseQuestion(models.Model):
             or self.triggered_stepcondition.exists()  # type: ignore
         )
 
+    def clean(self) -> None:
+        """Validate that questions are not attached to overview steps."""
+        super().clean()
+        if self.pk and self.step.is_overview:
+            raise ValidationError(
+                {"step": "Questions cannot be attached to overview steps."}
+            )
+
+    def get_subclass(self):
+        """
+        Returns the actual subclass instance (TextQuestion, SelectQuestion, etc.).
+        BaseQuestion is used as a fallback.
+        """
+        for subclass_name in [
+            "selectquestion",
+            "truefalsequestion",
+            "textquestion",
+            "numberquestion",
+            "datequestion",
+            "fileuploadquestion",
+        ]:
+            if hasattr(self, subclass_name):
+                return getattr(self, subclass_name)
+        return self
+
     def __str__(self):
         return f"{self.text} ({self.pk})"
 
@@ -171,6 +242,16 @@ class FileUploadQuestion(BaseQuestion):
     size_limit = models.PositiveIntegerField()
 
 
+class SubmissionManager(BaseMRManager):
+    def _viewable_objects(self, user: User):
+        if user.is_privacy_officer or user.is_fetc_member:
+            return self.all()
+        return self.filter(user=user)
+
+    def _editable_objects(self, user: User):
+        return self.filter(user=user)
+
+
 # User responses / answers
 class UserFormSubmission(models.Model):
     """Tracks a user's progress through a form."""
@@ -186,6 +267,7 @@ class UserFormSubmission(models.Model):
         on_delete=models.CASCADE,
         related_name="submissions",
         null=True,
+        blank=True,
     )
     started_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -193,6 +275,8 @@ class UserFormSubmission(models.Model):
 
     def __str__(self) -> str:
         return f"Submission {self.pk} by {self.user} started at {self.started_at.strftime('%Y-%m-%d %H:%M:%S')} (Form {self.form.pk})"
+
+    objects = SubmissionManager()
 
 
 class QuestionResponseManager(models.Manager):

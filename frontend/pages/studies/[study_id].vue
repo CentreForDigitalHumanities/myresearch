@@ -2,18 +2,17 @@
 import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
 import type { GetStudyQuery } from "~/generated/gql/graphql";
-import { showError, createError } from "#app";
 import StudyDetailsSidebar from "../../components/study_detail/StudyDetailsSidebar.vue";
 import AvailableActions from "../../components/study_detail/AvailableActions.vue";
 import StudyProgessBar from "../../components/study_detail/StudyProgessBar.vue";
-
-// retrieve study
 
 const GET_STUDY = graphql(`
     query GetStudy($id: ID!) {
         study(id: $id, mrPermission: "View") {
             id
             title
+            reference
+            latestSubmissionId
             createdBy {
                 fullName
                 id
@@ -25,26 +24,13 @@ const GET_STUDY = graphql(`
 
 const route = useRoute();
 
-const {
-    result: studyResult,
-    loading,
-    error,
-} = useQuery<GetStudyQuery>(GET_STUDY, { id: route.params.study_id });
+const { result: studyResult } = useQuery<GetStudyQuery>(GET_STUDY, {
+    id: route.params.study_id,
+});
 
 const study = computed(() => studyResult.value?.study ?? null);
 
-// Give 404 if the study does not exist
-
-watchEffect(() => {
-    if (!loading.value && studyResult.value && !study.value) {
-        showError(
-            createError({ statusCode: 404, statusMessage: "Study not found" }),
-        );
-    }
-});
-
 // Some functions to generate mockdata
-
 function randomDatePastYear(): string {
     const today = new Date();
     const oneYearAgo = new Date();
@@ -61,12 +47,7 @@ function randomDatePastYear(): string {
     return randomDate.toISOString().split("T")[0];
 }
 
-function randomNumber100to1000(): number {
-    return Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
-}
-
 // If study is even, it is a draft. If it is odd, it is in the review phase
-
 const studyStatus = computed(() =>
     Number(study.value?.id) % 2 === 0 ? "draft" : "review",
 );
@@ -74,15 +55,17 @@ const studyStatus = computed(() =>
 
 <template>
     <div class="uu-content">
-        <Title>{{ $t("Study") }}: {{ study?.title }}</Title>
+        <Title
+            >{{ $t("Study") }}: {{ study?.title ?? $t("Unknown study") }}</Title
+        >
         <div class="uu-hero">
             <h1>{{ $t("Study overview") }}</h1>
         </div>
         <!-- Sidebar -->
-        <div class="uu-sidebar-container">
+        <div v-if="study" class="uu-sidebar-container">
             <StudyDetailsSidebar
                 :study="study"
-                :randomDatePastYear="randomDatePastYear()"
+                :random-date-past-year="randomDatePastYear()"
             />
             <!-- Content -->
             <div class="uu-sidebar-content">
@@ -91,8 +74,8 @@ const studyStatus = computed(() =>
                         <!-- Main Content -->
                         <div class="col me-5">
                             <h1>
-                                2025-{{ randomNumber100to1000() }} -
-                                <em>{{ study?.title }}</em>
+                                {{ study.reference }} -
+                                <em>{{ study.title }}</em>
                             </h1>
                             <p>
                                 {{
@@ -100,10 +83,13 @@ const studyStatus = computed(() =>
                                         "This page shows and overview of the status and available actions for the study",
                                     )
                                 }}
-                                <em>{{ study?.title }}</em
+                                <em>{{ study.title }}</em
                                 >.
                             </p>
-                            <AvailableActions :study-status="studyStatus" />
+                            <AvailableActions
+                                :study-status="studyStatus"
+                                :submission-id="study.latestSubmissionId"
+                            />
                         </div>
                         <!-- Progess bar -->
                         <div class="col-2">
@@ -112,6 +98,15 @@ const studyStatus = computed(() =>
                     </div>
                 </div>
             </div>
+        </div>
+        <div v-else class="uu-container">
+            <h3>
+                {{
+                    $t(
+                        "Oops ... The study you are looking for could not be found.",
+                    )
+                }}
+            </h3>
         </div>
     </div>
 </template>
