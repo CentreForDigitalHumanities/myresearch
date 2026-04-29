@@ -208,9 +208,11 @@ function navigateToSlug(slug: string) {
         <div class="col-12 col-lg-9">
             <form class="uu-form">
                 <h2>{{ useTranslateableAttribute(selectedStep, "name") }}</h2>
-                <p>
-                    {{ useTranslateableAttribute(selectedStep, "description") }}
-                </p>
+                <div
+                    v-html="
+                        useTranslateableAttribute(selectedStep, 'description')
+                    "
+                ></div>
                 <SubmissionOverview
                     v-if="selectedStep.isOverview && formObject"
                     :form="formObject"
