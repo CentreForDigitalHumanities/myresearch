@@ -85,6 +85,11 @@ class Step(models.Model):
         blank=True,
     )
 
+    is_overview = models.BooleanField(
+        default=False,
+        help_text="If true, this step serves as an overview step for the entire form. It should not have any questions attached to it.",
+    )
+
     class Meta:
         order_with_respect_to = "parent"
         constraints = [
@@ -97,6 +102,16 @@ class Step(models.Model):
                 name="step_parent_xor_form",
             )
         ]
+
+    def clean(self) -> None:
+        """Validate that overview steps don't have questions."""
+        super().clean()
+        if self.is_overview and self.pk and self.questions.exists():  # type: ignore
+            raise ValidationError(
+                {
+                    "is_overview": "Cannot mark as overview step when questions are attached."
+                }
+            )
 
     @property
     def top_form(self) -> MRForm:

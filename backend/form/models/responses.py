@@ -18,7 +18,6 @@ class SubmissionManager(BaseMRManager):
         return self.filter(user=user)
 
 
-# User responses / answers
 class UserFormSubmission(models.Model):
     """Tracks a user's progress through a form."""
 

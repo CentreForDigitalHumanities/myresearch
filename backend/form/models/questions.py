@@ -26,6 +26,14 @@ class BaseQuestion(models.Model):
             or self.triggered_stepcondition.exists()  # type: ignore
         )
 
+    def clean(self) -> None:
+        """Validate that questions are not attached to overview steps."""
+        super().clean()
+        if self.pk and self.step.is_overview:
+            raise ValidationError(
+                {"step": "Questions cannot be attached to overview steps."}
+            )
+
     def get_subclass(self):
         """
         Returns the actual subclass instance (TextQuestion, SelectQuestion, etc.).

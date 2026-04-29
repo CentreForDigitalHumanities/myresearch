@@ -8,5 +8,5 @@ export interface FormStep {
     disabled: boolean;
 }
 export interface FormStepperConfig {
-    steps: Array<FormStep>;
+    steps: FormStep[];
 }

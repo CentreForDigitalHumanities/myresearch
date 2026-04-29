@@ -173,8 +173,7 @@ services:
       - DJANGO_IDP_PUBLIC_CERT=/run/secrets/public_cert
     volumes:
       - ./db:/run/db
-    profiles:
-      ["dev"]
+    profiles: ["dev"]
     stdin_open: true
     tty: true
     restart: unless-stopped

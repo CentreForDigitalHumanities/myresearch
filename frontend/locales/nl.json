@@ -115,9 +115,15 @@
   "Register new study": "Registreer een nieuwe studie",
   "Unknown study": "Onbekende studie",
   "Oops ... The study you are looking for could not be found.": "Oeps ... De studie die u zocht kon niet worden gevonden.",
+  "Yes": "Ja",
+  "No": "Nee",
+  "Not answered": "Niet beantwoord",
   "Ref": {
     " number ascending": "Ref. nummer oplopend",
     " number descending": "Ref. nummer aflopend",
     " number": "Ref. nummer"
-  }
+  },
+  "An error occurred while saving the form. Please try again.": "Er is een fout opgetreden bij het opslaan van het formulier. Probeer het opnieuw.",
+  "Registration submitted successfully.": "Registratie succesvol ingediend.",
+  "Your form contains errors. Please review and resubmit.": "Het formulier bevat fouten. Bekijk deze en probeer het opnieuw in te dienen."
 }
