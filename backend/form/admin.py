@@ -315,7 +315,7 @@ class SelectQuestionAdmin(admin.ModelAdmin):
         (
             "Select Options order",
             {
-                "fields": ("options_order",),
+                "fields": ("option_order",),
                 "description": "Order",
             },
         ),
