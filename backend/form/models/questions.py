@@ -69,6 +69,9 @@ class SelectOption(models.Model):
         SelectQuestion, on_delete=models.CASCADE, related_name="options"
     )
 
+    class Meta:
+        order_with_respect_to = "question"
+
 
 class TrueFalseQuestion(BaseQuestion):
     default_value = models.BooleanField(default=False)
