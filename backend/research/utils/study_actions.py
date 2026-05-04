@@ -63,13 +63,10 @@ class EditAction(StudyAction):
 
     def is_available(self):
 
-        if (
+        return (
             self.study in Study.objects.accessible_objects(self.user, MRPermission.EDIT)
             and self.study.status.status == SubmissionStatus.DRAFT
-        ):
-            return True
-
-        return False
+        )
 
 
 class DeleteAction(StudyAction):
