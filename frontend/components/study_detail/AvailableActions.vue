@@ -53,8 +53,6 @@ const handleActionClick = (action: AvailableAction) => {
   navigateTo({ name: action.name, params: action.params });
 };
 
-// NOTE: ensure that the strings used as keys here correspond with
-// the strings we receive from the backend
 const actionMap = computed<Record<StudyActionEnum, AvailableAction>>(() => ({
   [StudyActionEnum.EditAction]: {
     label: t("Continue editing"),
