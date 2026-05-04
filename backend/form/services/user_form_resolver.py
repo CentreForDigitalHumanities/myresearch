@@ -121,7 +121,8 @@ class UserFormResolver:
         # non-repeating questions have a repeat count as well
         repeat_count = self.evaluator.get_repeat_count_for_question(question)
 
-        # If a response is hidden it should be removed to prevent errors triggering on invisible questions.
+        # If a response is hidden it should be removed to prevent possible
+        # form filled in wrong errors triggering on invisible questions.
         if not self.evaluator.is_question_visible(question):
             QuestionResponse.objects.filter(
                 submissions__in=[self.evaluator.submission],
@@ -129,11 +130,29 @@ class UserFormResolver:
             ).delete()
             return []
 
-        # if len(question_responses) > repeat_count:
-        #      for response in question_responses:
-        #          if (response.repeat_index + 1) > repeat_count:
-        #              print("deleting response: " + response.__str__() + " in question: " + question.__str__())
-        #              response.delete()
+        # TODO: repeat count can be 0 for repeating questions, but question_response might crash otherwise.
+        if repeat_count > 1:
+            # If a question is visible but has a lower repeat count than responses.
+            question_responses = self.evaluator.responses[question.pk]
+            # TODO: Sometimes more repeating question responses come with the same repeat_index
+
+
+            if len(question_responses) > repeat_count:
+                print(question)
+                for response in question_responses:
+                    print(response.repeat_index)
+                print("deleting responses: "+ " in question: "+ question.__str__())
+
+                response_object = QuestionResponse.objects.filter(
+                    submissions__in=[self.evaluator.submission],
+                    question=question,
+                ) # TODO: this query can handle .filter(repeat_index=x or gt) but this won't work so long the incoming indexes are wrong
+                print(f"We should be deleting the responses: {response_object[repeat_count:]}")
+                print(f"We should be deleting: {response_object[repeat_count:].count()}") # this is what we want but [x:] makes it non-queryable
+                print(f"Total QuerySet: {response_object}")
+                print(f"Total Count: {response_object.count()}")
+                print(f"Actually found to delete: {response_object.filter(repeat_index__gt=repeat_count).count()}")
+                response_object.filter(repeat_index__gt=repeat_count).delete()
 
         instances = []
         for repeat_index in range(repeat_count):
