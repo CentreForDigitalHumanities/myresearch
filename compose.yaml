@@ -123,17 +123,27 @@ services:
       - "3000"
     ports:
       - "3000:3000"
-    volumes:
-      # Enable live-reloading of frontend code.
-      - ./frontend:/app
-      # Use container's node_modules.
-      - frontend-node-modules:/app/node_modules
     environment:
       # Allows Nuxt to be accessible from the outside.
       - HOST=0.0.0.0
       - CODEGEN_SCHEMA=http://mr-django:8000/api/graphql
       - NUXT_PUBLIC_API_URL=${BASE_URL}/api
       - NUXT_PUBLIC_SAML_URL=${BASE_URL}/saml
+    develop:
+      watch:
+        - path: ./frontend
+          target: /app
+          action: sync
+          ignore:
+            - node_modules
+            - .nuxt
+            - dist
+        - path: ./frontend/package.json
+          target: /app/package.json
+          action: restart
+        - path: ./frontend/vite.config.js
+          target: /app/vite.config.js
+          action: restart
 
   vue-prod:
     image: mr-vue-prod
@@ -173,8 +183,7 @@ services:
       - DJANGO_IDP_PUBLIC_CERT=/run/secrets/public_cert
     volumes:
       - ./db:/run/db
-    profiles:
-      ["dev"]
+    profiles: ["dev"]
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -183,7 +192,6 @@ services:
       - public_cert
 
 volumes:
-  frontend-node-modules:
   pgdata:
   bapyca:
   backend_static:

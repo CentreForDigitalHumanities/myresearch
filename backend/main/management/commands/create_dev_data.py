@@ -182,19 +182,30 @@ class Command(BaseCommand):
             )
             _generate_substeps(step, 1)
 
+        # Add an overview substep (in about 80% of cases)
+        if self.faker.pybool(truth_probability=80):
+            Step.objects.create(
+                form=form,
+                name_nl="Overzicht",
+                name_en="Overview",
+                description_nl=self.faker_nl.paragraph(),
+                description_en=self.faker_en.paragraph(),
+                slug=f"overview-{self.faker.unique.slug()}",
+                is_overview=True,
+            )
+
     def _create_step_info(self, step: Step) -> None:
         """Generates side information for a given step."""
 
-        def generate_form_info_text() -> None:
-            for _ in range(self.faker.random_int(1, 3)):
-                StepInfoText.objects.create(
-                    step=step,
-                    text_nl=self.faker_nl.paragraph(),
-                    text_en=self.faker_en.paragraph(),
-                )
+        if not self.faker.pybool():
+            return
 
-        if self.faker.pybool():
-            generate_form_info_text()
+        for _ in range(self.faker.random_int(1, 3)):
+            StepInfoText.objects.create(
+                step=step,
+                text_nl=self.faker_nl.paragraph(),
+                text_en=self.faker_en.paragraph(),
+            )
 
     def _generate_questions(self, options, form: MRForm) -> None:
         def _base_question_fields(step: Step, order: int) -> dict:
@@ -319,7 +330,7 @@ class Command(BaseCommand):
                 StatusChange.objects.create(
                     status=SubmissionStatus.DRAFT, created_by=user, study=study
                 )
-                # # Create one submission per study (for now).
+                # Create one submission per study (for now).
                 self._create_user_form_submission(user, form, study)
 
     def _generate_text_answer(self, question: TextQuestion) -> dict:
