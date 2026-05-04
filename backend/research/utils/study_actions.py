@@ -61,9 +61,7 @@ class EditAction(StudyAction):
 
     action = StudyActionEnum.EDIT_ACTION
 
-    def is_available(
-        self,
-    ):
+    def is_available(self):
 
         if (
             self.study in Study.objects.accessible_objects(self.user, MRPermission.EDIT)
