@@ -129,14 +129,11 @@ class UserFormResolver:
             ).delete()
             return []
 
-
         # if len(question_responses) > repeat_count:
         #      for response in question_responses:
         #          if (response.repeat_index + 1) > repeat_count:
         #              print("deleting response: " + response.__str__() + " in question: " + question.__str__())
         #              response.delete()
-
-
 
         instances = []
         for repeat_index in range(repeat_count):
