@@ -87,9 +87,9 @@ const availableActions = computed<AvailableAction[]>(() =>
       <NuxtLink
         v-for="(action, index) in availableActions"
         :key="index"
-        @click.prevent="handleActionClick(action)"
         :style="action.style"
         class="tile h-100 justify-content-around"
+        @click.prevent="handleActionClick(action)"
       >
         <strong class="text-center">{{ $t(action.label) }}</strong>
         <component v-if="action.icon" :is="action.icon"> </component>
