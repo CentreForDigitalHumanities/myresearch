@@ -6,7 +6,7 @@ import type { Component } from "vue";
 import { graphql } from "~/generated/gql";
 import type { GetFirstSlugAndActionsQuery } from "~/generated/gql/graphql";
 import Loading from "~/components/shared/Loading.vue";
-import { StudyActionEnum } from "~/generated/gql/graphql";
+import { ActionEnum } from "~/generated/gql/graphql";
 import { NuxtLink } from "#components";
 import type { RouteParamsRawGeneric } from "vue-router";
 
@@ -34,8 +34,8 @@ const GET_FIRST_SLUG_AND_ACTIONS = graphql(`
 const { result } = useQuery<GetFirstSlugAndActionsQuery>(
     GET_FIRST_SLUG_AND_ACTIONS,
     () => ({
-      submissionId: props.submissionId,
-      studyId: props.studyId,
+        submissionId: props.submissionId,
+        studyId: props.studyId,
     }),
 );
 
@@ -60,14 +60,14 @@ const handleActionClick = (action: AvailableAction) => {
     void navigateTo({ name: action.name, params: action.params });
 };
 
-const actionMap = computed<Record<StudyActionEnum, AvailableAction>>(() => ({
-    [StudyActionEnum.EditAction]: {
+const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
+    [ActionEnum.EditAction]: {
         label: t("Continue editing"),
         name: "procreg-submissionId-slug",
         params: { submissionId: props.submissionId, slug: slug.value },
         icon: PencilLine,
     },
-    [StudyActionEnum.DeleteAction]: {
+    [ActionEnum.DeleteAction]: {
         label: t("Delete"),
         name: "studies-studyId-delete",
         params: { studyId: props.studyId },
@@ -83,7 +83,7 @@ const availableActions = computed<AvailableAction[]>(() => {
     const studyActions = result.value?.study?.actions;
     if (studyActions) {
         return studyActions.map(
-            (actionEnum: StudyActionEnum) => actionMap.value[actionEnum],
+            (actionEnum: ActionEnum) => actionMap.value[actionEnum],
         );
     }
     return [];

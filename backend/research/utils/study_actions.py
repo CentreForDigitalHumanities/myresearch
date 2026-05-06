@@ -5,7 +5,7 @@ from main.models import MRPermission, User
 from research.models import Study
 
 
-class StudyActionEnum(Enum):
+class ActionEnum(Enum):
     EDIT_ACTION = "edit_action"
     DELETE_ACTION = "delete_action"
 
@@ -23,9 +23,9 @@ class StudyActions:
     def __init__(self, study: Study, user: User):
         self.study = study
         self.user = user
-        self.all_actions = [EditAction(study, user), DeleteAction(study, user)]
+        self.all_actions = [StudyEditAction(study, user), StudyDeleteAction(study, user)]
 
-    def get_available_actions(self) -> list[StudyActionEnum]:
+    def get_available_actions(self) -> list[ActionEnum]:
         return [a.action for a in self.all_actions if a.is_available()]
 
 
@@ -37,7 +37,7 @@ class StudyAction:
     Should be subclassed and not used directly.
     """
 
-    action: StudyActionEnum
+    action: ActionEnum
 
     def __init__(self, study, user):
         self.study = study
@@ -57,9 +57,9 @@ class StudyAction:
 #################
 
 
-class EditAction(StudyAction):
+class StudyEditAction(StudyAction):
 
-    action = StudyActionEnum.EDIT_ACTION
+    action = ActionEnum.EDIT_ACTION
 
     def is_available(
         self,
@@ -74,9 +74,9 @@ class EditAction(StudyAction):
         return False
 
 
-class DeleteAction(StudyAction):
+class StudyDeleteAction(StudyAction):
 
-    action = StudyActionEnum.DELETE_ACTION
+    action = ActionEnum.DELETE_ACTION
 
     def is_available(
         self,
