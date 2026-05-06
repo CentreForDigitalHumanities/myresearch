@@ -10,8 +10,17 @@ import { ActionEnum } from "~/generated/gql/graphql";
 import { NuxtLink } from "#components";
 import type { RouteParamsRawGeneric } from "vue-router";
 
+
+type AvailableAction = {
+    label: string;
+    name: string;
+    params: RouteParamsRawGeneric;
+    icon?: Component;
+    style?: Record<string, string>;
+};
+
 const props = defineProps<{
-    studyId: string;
+  studyId: string;
     submissionId: string;
 }>();
 
@@ -47,14 +56,6 @@ const slug = computed<string | null>(() => {
 const isSlugLoaded = computed(() => slug.value !== null);
 
 const { t } = useI18n();
-
-type AvailableAction = {
-    label: string;
-    name: string;
-    params: RouteParamsRawGeneric;
-    icon?: Component;
-    style?: Record<string, string>;
-};
 
 const handleActionClick = (action: AvailableAction) => {
     void navigateTo({ name: action.name, params: action.params });
