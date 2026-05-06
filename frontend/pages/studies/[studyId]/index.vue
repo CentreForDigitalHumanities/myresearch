@@ -90,7 +90,6 @@ const studyStatus = computed(() =>
               <AvailableActions
                 :study-id="study.id"
                 :submission-id="study.latestSubmissionId"
-                :actions="study.actions"
               />
             </div>
             <!-- Progess bar -->
