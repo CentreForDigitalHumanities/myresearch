@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { useQuery } from "@vue/apollo-composable";
-import { PencilLine, Delete } from "lucide-vue-next";
+import { PencilLine, Trash2 } from "lucide-vue-next";
 import type { Component } from "vue";
 import { graphql } from "~/generated/gql";
 import type { GetFirstSlugAndActionsQuery } from "~/generated/gql/graphql";
@@ -72,7 +72,7 @@ const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
         label: t("Delete"),
         name: "studies-studyId-delete",
         params: { studyId: props.studyId },
-        icon: Delete,
+        icon: Trash2,
         style: {
             "--bs-tiles-hover-bg": "var(--bs-danger)",
             "--bs-tiles-hover-color": "var(--bs-white)",
