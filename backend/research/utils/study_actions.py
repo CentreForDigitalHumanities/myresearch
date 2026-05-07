@@ -66,13 +66,10 @@ class StudyEditAction(StudyAction):
         cls, study, user
     ):
 
-        if (
-            study in Study.objects.accessible_objects(user, MRPermission.EDIT)
-            and study.status.status == SubmissionStatus.DRAFT
-        ):
-            return True
-
-        return False
+        return (
+            self.study in Study.objects.accessible_objects(self.user, MRPermission.EDIT)
+            and self.study.status.status == SubmissionStatus.DRAFT
+        )
 
 
 class StudyDeleteAction(StudyAction):
@@ -84,7 +81,4 @@ class StudyDeleteAction(StudyAction):
         cls, study, user
     ):
 
-        if study in Study.objects.accessible_objects(user, MRPermission.EDIT):
-            return True
-
-        return False
+        return study in Study.objects.accessible_objects(user, MRPermission.EDIT)
