@@ -133,8 +133,7 @@ class UserFormResolver:
 
         # With repeating questions only the responses over the repeat_count
         # are considered hidden so only those responses need to go
-        if response_object.count() > repeat_count:
-            response_object.filter(repeat_index__gte=repeat_count).delete()
+        response_object.filter(repeat_index__gte=repeat_count).delete()
 
         instances = []
         for repeat_index in range(repeat_count):
