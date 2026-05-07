@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 from graphene import Enum
 
 from research.other_models.reviews import SubmissionStatus
@@ -23,13 +25,13 @@ class StudyActions:
     def __init__(self, study: Study, user: User):
         self.study = study
         self.user = user
-        self.all_actions = [StudyEditAction(study, user), StudyDeleteAction(study, user)]
+        self.all_actions = [StudyEditAction, StudyDeleteAction]
 
     def get_available_actions(self) -> list[ActionEnum]:
-        return [a.action for a in self.all_actions if a.is_available()]
+        return [a.action for a in self.all_actions if a.is_available(self.study, self.user)]
 
 
-class StudyAction:
+class StudyAction(ABC):
     """
     An object containing the logic for making a specific action available and
     an action that gets passed to the frontend.
@@ -39,12 +41,10 @@ class StudyAction:
 
     action: ActionEnum
 
-    def __init__(self, study, user):
-        self.study = study
-        self.user = user
-
+    @classmethod
+    @abstractmethod
     def is_available(
-        self,
+        cls, study, user
     ) -> bool:
         """Returns true if this action is available to the specified
         user given the current review."""
@@ -61,13 +61,14 @@ class StudyEditAction(StudyAction):
 
     action = ActionEnum.EDIT_ACTION
 
+    @classmethod
     def is_available(
-        self,
+        cls, study, user
     ):
 
         if (
-            self.study in Study.objects.accessible_objects(self.user, MRPermission.EDIT)
-            and self.study.status.status == SubmissionStatus.DRAFT
+            study in Study.objects.accessible_objects(user, MRPermission.EDIT)
+            and study.status.status == SubmissionStatus.DRAFT
         ):
             return True
 
@@ -78,11 +79,12 @@ class StudyDeleteAction(StudyAction):
 
     action = ActionEnum.DELETE_ACTION
 
+    @classmethod
     def is_available(
-        self,
+        cls, study, user
     ):
 
-        if self.study in Study.objects.accessible_objects(self.user, MRPermission.EDIT):
+        if study in Study.objects.accessible_objects(user, MRPermission.EDIT):
             return True
 
         return False
