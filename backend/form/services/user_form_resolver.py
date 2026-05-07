@@ -121,19 +121,19 @@ class UserFormResolver:
         # non-repeating questions have a repeat count as well
         repeat_count = self.evaluator.get_repeat_count_for_question(question)
 
-        response_object = QuestionResponse.objects.filter(
+        response_objects = QuestionResponse.objects.filter(
             submissions__in=[self.evaluator.submission],
             question=question,
         )
 
         # Hidden responses should be removed to prevent invisible form errors.
         if not self.evaluator.is_question_visible(question):
-            response_object.delete()
+            response_objects.delete()
             return []
 
         # With repeating questions only the responses over the repeat_count
         # are considered hidden so only those responses need to go
-        response_object.filter(repeat_index__gte=repeat_count).delete()
+        response_objects.filter(repeat_index__gte=repeat_count).delete()
 
         instances = []
         for repeat_index in range(repeat_count):
