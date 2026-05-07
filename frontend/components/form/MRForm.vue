@@ -22,11 +22,9 @@ const QUESTION_COMPONENT_MAP = {
 
 <script lang="ts" setup>
 import type { CombinedStepWithValues } from "~/composables/useProcessForm";
-import type { Validation } from "@vuelidate/core";
 
 interface Props {
     step: CombinedStepWithValues;
-    vuelidate: Validation;
 }
 
 interface Emits {
@@ -58,15 +56,10 @@ useConditionalQuestionsWatcher(questionsWithConditions, () => {
                     :is="QUESTION_COMPONENT_MAP[question.__typename]"
                     v-model="question.value"
                     :question="question"
-                    :is-invalid="
-                        useQuestionHasErrors(props.vuelidate, question)
-                    "
+                    :is-invalid="(question.errors?.length ?? 0) > 0"
                 />
                 <div
-                    v-for="error of useGetQuestionErrors(
-                        props.vuelidate,
-                        question,
-                    )"
+                    v-for="error of question.errors ?? []"
                     :key="error.$uid"
                     class="invalid-feedback"
                 >

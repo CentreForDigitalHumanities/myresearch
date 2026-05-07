@@ -2,12 +2,9 @@
 import type { FormWithValues } from "~/composables/useProcessForm";
 import OverviewStep from "./OverviewStep.vue";
 import { AlertTriangle } from "lucide-vue-next";
-import type { Validation } from "@vuelidate/core";
-import { useStepHasErrors } from "~/composables/useFormErrors";
 
 interface Props {
     form: FormWithValues;
-    vuelidate: Validation;
 }
 
 const props = defineProps<Props>();
@@ -23,13 +20,13 @@ const contentSteps = computed(() =>
         <h3 class="d-flex align-items-center">
             {{ useTranslateableAttribute(step, "name") }}
             <AlertTriangle
-                v-if="useStepHasErrors(vuelidate, step)"
+                v-if="step.hasErrors"
                 class="text-danger ms-2"
                 :size="20"
             />
         </h3>
 
-        <OverviewStep :step="step" :vuelidate="vuelidate" />
+        <OverviewStep :step="step" />
 
         <div
             v-for="substep in step.substeps"
@@ -39,12 +36,12 @@ const contentSteps = computed(() =>
             <h4 class="d-flex align-items-center">
                 {{ useTranslateableAttribute(substep, "name") }}
                 <AlertTriangle
-                    v-if="useStepHasErrors(vuelidate, substep)"
+                    v-if="substep.hasErrors"
                     class="text-danger ms-2"
                     :size="18"
                 />
             </h4>
-            <OverviewStep :step="substep" :vuelidate="vuelidate" />
+            <OverviewStep :step="substep" />
         </div>
     </div>
 </template>

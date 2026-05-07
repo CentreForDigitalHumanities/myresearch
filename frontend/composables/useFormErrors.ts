@@ -1,58 +1,43 @@
 import type { ErrorObject, Validation } from "@vuelidate/core";
 
 /**
- * Get validation errors for a specific question.
+ * Creates a flat map of form questions and errors, and then marks the steps
+ * and substeps that contain questions with errors as such.
+ *
+ * This only traverses the form once.
  */
-export function useGetQuestionErrors(
+export function useAnnotateErrors(
     vuelidate: Validation,
-    question: QuestionWithValue,
-): ErrorObject[] {
-    return vuelidate.$errors.filter(
-        (error) => error.$propertyPath === question.location,
-    );
-}
-
-/**
- * Check if a specific question has validation errors.
- */
-export function useQuestionHasErrors(
-    vuelidate: Validation,
-    question: QuestionWithValue,
-): boolean {
-    return useGetQuestionErrors(vuelidate, question).length > 0;
-}
-
-/**
- * Check if a step or any of its substeps have any invalid questions.
- */
-export function useStepHasErrors(
-    vuelidate: Validation,
-    step: CombinedStepWithValues,
-): boolean {
-    // Trampolining approach: use a stack to iteratively process steps and substeps.
-    const stepsToCheck: CombinedStepWithValues[] = [step];
-
-    while (stepsToCheck.length > 0) {
-        const currentStep = stepsToCheck.pop();
-
-        // This is just to satisfy the type checker.
-        if (!currentStep) {
-            continue;
+    form: FormWithValues,
+): void {
+    const errorsByPath = new Map<string, ErrorObject[]>();
+    vuelidate.$errors.forEach((error) => {
+        const existing = errorsByPath.get(error.$propertyPath);
+        if (existing) {
+            existing.push(error);
+        } else {
+            errorsByPath.set(error.$propertyPath, [error]);
         }
+    });
 
-        if (
-            currentStep.questions.some((question) =>
-                useQuestionHasErrors(vuelidate, question),
-            )
-        ) {
-            return true;
-        }
+    form.steps.forEach((step) => {
+        let stepHasErrors = false;
 
-        // Add substeps to the stack if they exist.
-        if ("substeps" in currentStep && currentStep.substeps) {
-            stepsToCheck.push(...currentStep.substeps);
-        }
-    }
+        step.questions.forEach((question) => {
+            question.errors = errorsByPath.get(question.location) ?? [];
+            stepHasErrors = stepHasErrors || question.errors.length > 0;
+        });
 
-    return false;
+        step.substeps?.forEach((subStep) => {
+            subStep.questions.forEach((question) => {
+                question.errors = errorsByPath.get(question.location) ?? [];
+            });
+            subStep.hasErrors = subStep.questions.some(
+                (q) => (q.errors?.length ?? 0) > 0,
+            );
+            stepHasErrors = stepHasErrors || subStep.hasErrors;
+        });
+
+        step.hasErrors = stepHasErrors;
+    });
 }
