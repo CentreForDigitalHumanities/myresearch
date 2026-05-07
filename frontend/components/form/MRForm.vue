@@ -1,11 +1,11 @@
 <script lang="ts">
 import TextQuestion from "./TextQuestion.vue";
 import SelectQuestion from "./SelectQuestion.vue";
-import DateQuestion from "./DateQuestion.vue";
+import DateQuestion from "../form/DateQuestion.vue";
 import NumberQuestion from "./NumberQuestion.vue";
 import TrueFalseQuestion from "./TrueFalseQuestion.vue";
-import FileUploadQuestion from "./FileUploadQuestion.vue";
-import FormSideBar from "./FormSideBar.vue";
+import FileUploadQuestion from "../form/FileUploadQuestion.vue";
+import FormSideBar from "../form/FormSideBar.vue";
 import type { Component } from "vue";
 
 // Imported components are treated as 'any', so the linter complains. There is
@@ -21,15 +21,10 @@ const QUESTION_COMPONENT_MAP = {
 </script>
 
 <script lang="ts" setup>
-import type {
-    CombinedStepWithValues,
-    QuestionWithValue,
-} from "~/composables/useProcessForm";
-import type { ErrorObject, Validation } from "@vuelidate/core";
+import type { CombinedStepWithValues } from "~/composables/useProcessForm";
 
 interface Props {
     step: CombinedStepWithValues;
-    vuelidate: Validation;
 }
 
 interface Emits {
@@ -47,21 +42,9 @@ const questionsWithConditions = computed(() =>
 useConditionalQuestionsWatcher(questionsWithConditions, () => {
     emit("submitForm");
 });
-
-function getErrors(question: QuestionWithValue): ErrorObject[] {
-    return props.vuelidate.$errors.filter(
-        (error) => error.$propertyPath === question.location,
-    );
-}
-
-function hasErrors(question: QuestionWithValue): boolean {
-    return getErrors(question).length > 0;
-}
 </script>
 
 <template>
-    <h2>{{ useTranslateableAttribute(step, "name") }}</h2>
-    <p>{{ useTranslateableAttribute(step, "description") }}</p>
     <div class="uu-form-row">
         <div class="d-flex flex-column">
             <div
@@ -73,10 +56,10 @@ function hasErrors(question: QuestionWithValue): boolean {
                     :is="QUESTION_COMPONENT_MAP[question.__typename]"
                     v-model="question.value"
                     :question="question"
-                    :is-invalid="hasErrors(question)"
+                    :is-invalid="(question.errors?.length ?? 0) > 0"
                 />
                 <div
-                    v-for="error of getErrors(question)"
+                    v-for="error of question.errors ?? []"
                     :key="error.$uid"
                     class="invalid-feedback"
                 >

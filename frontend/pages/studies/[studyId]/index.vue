@@ -32,7 +32,6 @@ const { result: studyResult } = useQuery<GetStudyQuery>(GET_STUDY, {
 const study = computed(() => studyResult.value?.study ?? null);
 
 // Some functions to generate mockdata
-
 function randomDatePastYear(): string {
     const today = new Date();
     const oneYearAgo = new Date();
@@ -50,7 +49,6 @@ function randomDatePastYear(): string {
 }
 
 // If study is even, it is a draft. If it is odd, it is in the review phase
-
 const studyStatus = computed(() =>
     Number(study.value?.id) % 2 === 0 ? "draft" : "review",
 );

@@ -3,13 +3,17 @@ import { computed } from "vue";
 import { BSButton } from "cdh-vue-lib";
 import type { QueriedForm } from "./FormWrapper";
 import FormStepper, { type FormStepperConfig } from "./FormStepper";
-import MRForm from "./MRForm.vue";
+import MRForm from "~/components/form/MRForm.vue";
 import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConfig";
 import { useFormState } from "~/composables/useFormState";
 import useVuelidate from "@vuelidate/core";
 import { graphql } from "~/generated/gql";
 import type { UpdateUserFormSubmission } from "~/generated/gql/graphql";
 import { useMutation } from "@vue/apollo-composable";
+import SubmissionOverview from "~/components/form/overview/OverviewForm.vue";
+import { useI18n } from "vue-i18n";
+import { Send, TriangleAlert } from "lucide-vue-next";
+import { useAnnotateErrors } from "~/composables/useAnnotateErrors";
 
 interface Props {
     queriedForm: QueriedForm;
@@ -19,6 +23,10 @@ const props = defineProps<Props>();
 
 const queried = computed(() => props.queriedForm);
 const { formObject, validationRules } = useFormState(queried);
+
+const { t } = useI18n();
+
+const showSubmissionWarning = ref(false);
 
 const UPDATE_USER_FORM = graphql(`
     mutation SaveFormSubmission(
@@ -50,10 +58,18 @@ const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
     },
 );
 
-function submitForm(): void {
+function submitForm(options = { submit: false }): void {
     const formData = formObject.value;
     if (!formData) {
         return;
+    }
+
+    if (options.submit) {
+        void v$.value.$validate();
+        if (v$.value.$invalid) {
+            showSubmissionWarning.value = true;
+            return;
+        }
     }
 
     const inputData = useFormDataToMutationInput(
@@ -61,9 +77,22 @@ function submitForm(): void {
         props.queriedForm.submissionId,
     );
 
-    mutateForm(inputData).catch((error: unknown) => {
-        console.error("Error updating form:", error);
-    });
+    void mutateForm(inputData)
+        .catch(() => {
+            useNotification(
+                t("An error occurred while saving the form. Please try again."),
+                "danger",
+            );
+        })
+        .then(() => {
+            if (options.submit) {
+                // TODO: navigate to the study detail page.
+                useNotification(
+                    t("Registration submitted successfully."),
+                    "success",
+                );
+            }
+        });
 }
 
 const v$ = useVuelidate(
@@ -73,6 +102,13 @@ const v$ = useVuelidate(
         $autoDirty: true,
     },
 );
+
+// Annotate form objects with validation errors whenever they change.
+watchEffect(() => {
+    if (formObject.value) {
+        useAnnotateErrors(v$.value, formObject.value);
+    }
+});
 
 // Stepper configuration
 const formStepperConfig = computed<FormStepperConfig | null>(() =>
@@ -93,6 +129,15 @@ const selectedStep = computed(() => {
         return null;
     }
     return steps.find(({ slug }) => slug === props.currentStepSlug) ?? null;
+});
+
+const firstStepSelected = computed(() => {
+    const selected = selectedStep.value;
+    if (!selected) {
+        return false;
+    }
+    const steps = allSteps.value;
+    return steps[0].slug === selected.slug;
 });
 
 function getAllSteps(form: FormWithValues): CombinedStepWithValues[] {
@@ -170,14 +215,43 @@ function navigateToSlug(slug: string) {
         />
         <div class="col-12 col-lg-9">
             <form class="uu-form">
+                <h2>{{ useTranslateableAttribute(selectedStep, "name") }}</h2>
+                <p>
+                    {{ useTranslateableAttribute(selectedStep, "description") }}
+                </p>
+                <SubmissionOverview
+                    v-if="selectedStep.isOverview && formObject"
+                    :form="formObject"
+                />
                 <MRForm
+                    v-else
                     :step="selectedStep"
-                    :vuelidate="v$"
                     @submit-form="submitForm"
                 />
             </form>
+
+            <div class="mb-3">
+                <Transition name="fade">
+                    <div
+                        v-if="showSubmissionWarning"
+                        class="alert alert-warning d-inline-flex align-items-center gap-2"
+                        role="alert"
+                    >
+                        <TriangleAlert class="icon" />
+                        <span>
+                            {{
+                                t(
+                                    "Your form contains errors. Please review and resubmit.",
+                                )
+                            }}
+                        </span>
+                    </div>
+                </Transition>
+            </div>
+
             <div class="btn-group">
                 <BSButton
+                    v-if="!firstStepSelected"
                     variant="primary"
                     class="btn-arrow-left"
                     @click="navigateToSlug(getPreviousStepSlug())"
@@ -185,6 +259,15 @@ function navigateToSlug(slug: string) {
                     {{ $t("Previous") }}
                 </BSButton>
                 <BSButton
+                    v-if="selectedStep.isOverview"
+                    variant="success"
+                    @click="submitForm({ submit: true })"
+                >
+                    {{ $t("Submit") }}
+                    <Send class="ms-2" :size="16" />
+                </BSButton>
+                <BSButton
+                    v-else
                     variant="primary"
                     class="btn-arrow-right"
                     @click="navigateToSlug(getNextStepSlug())"
@@ -195,3 +278,15 @@ function navigateToSlug(slug: string) {
         </div>
     </div>
 </template>
+
+<style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+</style>

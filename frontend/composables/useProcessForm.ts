@@ -1,9 +1,6 @@
 import { helpers, required } from "@vuelidate/validators";
-import type {
-    Substep,
-    QueriedForm,
-    Step,
-} from "~/components/shared/FormWrapper";
+import type { Substep, QueriedForm, Step } from "~/components/form/FormWrapper";
+import type { ErrorObject } from "@vuelidate/core";
 import type {
     TextQuestionType,
     NumberQuestionType,
@@ -19,6 +16,7 @@ import type { ValidationRuleWithParams } from "@vuelidate/core";
 // Augmented question types
 interface LocatedQuestion {
     location: string; // Should be something like "steps.0.substeps.1.questions.2"
+    errors?: ErrorObject[];
 }
 
 export type TextQuestionWithValue = TextQuestionType &
@@ -56,11 +54,13 @@ export type QuestionWithValue =
 
 export type SubstepWithValues = Omit<Substep, "questions"> & {
     questions: QuestionWithValue[];
+    hasErrors?: boolean;
 };
 
 export type StepWithValues = Omit<Step, "questions" | "substeps"> & {
     questions: QuestionWithValue[];
     substeps: SubstepWithValues[] | null;
+    hasErrors?: boolean;
 };
 
 export type CombinedStepWithValues = StepWithValues | SubstepWithValues;

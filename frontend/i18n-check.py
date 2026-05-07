@@ -8,7 +8,7 @@ translation_files = translation_path.glob("*.json")
 
 
 def check_empty_value(dictionary: dict) -> bool:
-    for (key, value) in dictionary.items():
+    for key, value in dictionary.items():
         if value == "":
             print(f"Translation for '{key}' is missing.")
             return True
