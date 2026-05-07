@@ -67,8 +67,8 @@ class StudyEditAction(StudyAction):
     ):
 
         return (
-            self.study in Study.objects.accessible_objects(self.user, MRPermission.EDIT)
-            and self.study.status.status == SubmissionStatus.DRAFT
+            study in Study.objects.accessible_objects(user, MRPermission.EDIT)
+            and study.status.status == SubmissionStatus.DRAFT
         )
 
 
