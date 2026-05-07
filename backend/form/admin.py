@@ -3,7 +3,7 @@ from django.db import models
 
 from cdh.core.forms import TinyMCEWidget
 
-from form.forms import StepAdminForm
+from form.forms import StepAdminForm, SelectQuestionAdminForm
 from .models import (
     MRForm,
     Step,
@@ -312,8 +312,16 @@ class SelectQuestionAdmin(admin.ModelAdmin):
             },
         ),
         ("Select Options", {"fields": ("multiple",)}),
+        (
+            "Select Options order",
+            {
+                "fields": ("option_order",),
+                "description": "Order",
+            },
+        ),
     )
     inlines = [SelectOptionInline, QuestionConditionInline]
+    form = SelectQuestionAdminForm
 
 
 @admin.register(TrueFalseQuestion)
