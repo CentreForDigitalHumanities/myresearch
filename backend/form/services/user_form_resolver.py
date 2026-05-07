@@ -116,7 +116,7 @@ class UserFormResolver:
 
     def _resolve_question_instances(self, question: BaseQuestion) -> list:
         """Resolve all instances of a question (considering repeats).
-        Also deletes hidden responses as a side-effect."""
+        Also deletes hidden responses as a side effect."""
 
         # non-repeating questions have a repeat count as well
         repeat_count = self.evaluator.get_repeat_count_for_question(question)
