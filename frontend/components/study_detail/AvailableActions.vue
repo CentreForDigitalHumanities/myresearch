@@ -40,7 +40,7 @@ const GET_FIRST_SLUG_AND_ACTIONS = graphql(`
     }
 `);
 
-const { result } = useQuery<GetFirstSlugAndActionsQuery>(
+const { result, loading } = useQuery<GetFirstSlugAndActionsQuery>(
     GET_FIRST_SLUG_AND_ACTIONS,
     () => ({
         submissionId: props.submissionId,
@@ -92,10 +92,10 @@ const availableActions = computed<AvailableAction[]>(() => {
 </script>
 
 <template>
-    <div v-if="!isSlugLoaded">
+    <div v-if="loading">
         <loading />
     </div>
-    <div v-else-if="availableActions.length > 0">
+    <div v-else-if="isSlugLoaded && availableActions.length > 0">
         <h3 class="mb-3">{{ $t("Available actions") }}:</h3>
         <div class="tiles">
             <NuxtLink
