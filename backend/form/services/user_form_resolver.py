@@ -126,8 +126,7 @@ class UserFormResolver:
             question=question,
         )
 
-        # If a response is hidden it should be removed to prevent possible
-        # form filled in wrong errors triggering on invisible questions.
+        # Hidden responses should be removed to prevent invisible form errors.
         if not self.evaluator.is_question_visible(question):
             response_object.delete()
             return []
