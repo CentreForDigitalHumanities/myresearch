@@ -13,6 +13,7 @@ import { useMutation } from "@vue/apollo-composable";
 import SubmissionOverview from "~/components/form/overview/OverviewForm.vue";
 import { useI18n } from "vue-i18n";
 import { Send, TriangleAlert } from "lucide-vue-next";
+import { useAnnotateErrors } from "~/composables/useAnnotateErrors";
 
 interface Props {
     queriedForm: QueriedForm;
@@ -101,6 +102,13 @@ const v$ = useVuelidate(
         $autoDirty: true,
     },
 );
+
+// Annotate form objects with validation errors whenever they change.
+watchEffect(() => {
+    if (formObject.value) {
+        useAnnotateErrors(v$.value, formObject.value);
+    }
+});
 
 // Stepper configuration
 const formStepperConfig = computed<FormStepperConfig | null>(() =>
@@ -218,7 +226,6 @@ function navigateToSlug(slug: string) {
                 <MRForm
                     v-else
                     :step="selectedStep"
-                    :vuelidate="v$"
                     @submit-form="submitForm"
                 />
             </form>

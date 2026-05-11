@@ -64,7 +64,12 @@ function formatAnswer(question: QuestionWithValue): string {
                 >*</span
             >
         </div>
-        <div class="col-md-6 preserve-white-space">
+        <div
+            class="col-md-6 preserve-white-space"
+            :class="{
+                'text-danger': (question.errors?.length ?? 0) > 0,
+            }"
+        >
             {{ formatAnswer(question) }}
         </div>
     </div>
