@@ -42,7 +42,6 @@ const handleCreateStudy = async () => {
 
         if (result.data.createStudy?.study?.id) {
             useNotification("Study created successfully", "success");
-            // Redirect to the study detail page
             void navigateTo(`/studies/${result.data.createStudy.study.id}`);
         }
     } catch {
@@ -52,7 +51,7 @@ const handleCreateStudy = async () => {
 
 function newRegistration(): void {
     useConfirm({
-        text: t("Are you sure you want to start a new registration?"),
+        text: t("Are you sure you want to register a new study?"),
         callback: () => {
             void handleCreateStudy();
         },
