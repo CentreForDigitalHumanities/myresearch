@@ -28,7 +28,9 @@ class StudyActions:
         self.all_actions = [StudyEditAction, StudyDeleteAction]
 
     def get_available_actions(self) -> list[ActionEnum]:
-        return [a.action for a in self.all_actions if a.is_available(self.study, self.user)]
+        return [
+            a.action for a in self.all_actions if a.is_available(self.study, self.user)
+        ]
 
 
 class StudyAction(ABC):
@@ -43,9 +45,7 @@ class StudyAction(ABC):
 
     @classmethod
     @abstractmethod
-    def is_available(
-        cls, study, user
-    ) -> bool:
+    def is_available(cls, study, user) -> bool:
         """Returns true if this action is available to the specified
         user given the current review."""
 
@@ -62,9 +62,7 @@ class StudyEditAction(StudyAction):
     action = ActionEnum.EDIT_ACTION
 
     @classmethod
-    def is_available(
-        cls, study, user
-    ):
+    def is_available(cls, study, user):
 
         return (
             study in Study.objects.accessible_objects(user, MRPermission.EDIT)
@@ -77,8 +75,6 @@ class StudyDeleteAction(StudyAction):
     action = ActionEnum.DELETE_ACTION
 
     @classmethod
-    def is_available(
-        cls, study, user
-    ):
+    def is_available(cls, study, user):
 
         return study in Study.objects.accessible_objects(user, MRPermission.EDIT)
