@@ -1,10 +1,8 @@
+from datetime import datetime
 from research.other_models.utils import YearCounter
-from form.models import UserFormSubmission
-from main.models import User
 from form.models import MRForm, QuestionResponse, UserFormSubmission
 from main.models import User
 from main.utils.permission_utils import BaseMRManager
-
 from django.db import models, transaction
 from django.utils import timezone
 
@@ -26,6 +24,9 @@ class Study(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def updated_at(self) -> datetime:
+        return UserFormSubmission.objects.filter(study=self).last().updated_at
 
     @staticmethod
     def can_be_created_by(user):

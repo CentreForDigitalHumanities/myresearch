@@ -3,8 +3,11 @@ import type { GetStudyQuery } from "~/generated/gql/graphql";
 
 defineProps<{
     study: NonNullable<GetStudyQuery["study"]>;
-    randomDatePastYear: string;
 }>();
+
+function formatDate(date: Date) {
+    return date.toISOString().split("T")[0];
+}
 </script>
 
 <template>
@@ -33,10 +36,12 @@ defineProps<{
             <h3>{{ $t("Study details") }}</h3>
             <ul>
                 <li class="mt-2">
-                    {{ $t("Created on") }}: {{ randomDatePastYear }}
+                    {{ $t("Created on") }}:
+                    {{ study.createdAt }}
                 </li>
                 <li class="mt-2">
-                    {{ $t("Submitted on") }}: {{ randomDatePastYear }}
+                    {{ $t("Submitted on") }}:
+                    {{ formatDate(study.updatedAt) }}
                 </li>
             </ul>
         </div>

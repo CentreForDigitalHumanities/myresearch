@@ -1,8 +1,7 @@
+from datetime import datetime
 from django_filters import FilterSet, ModelMultipleChoiceFilter
-from graphene import ID, ResolveInfo, String
-
+from graphene import ID, ResolveInfo, String, DateTime
 from django.db.models import QuerySet
-
 from api.gql_list_object_type import GQLListObjectType
 from form.models import UserFormSubmission
 from main.models import User
@@ -19,12 +18,14 @@ class StudyFilter(FilterSet):
 class StudyType(GQLListObjectType):
     title = String(required=True)
     latest_submission_id = ID(required=True)
+    updated_at = DateTime(required=True)
 
     class Meta:
         model = Study
         fields = [
             "id",
             "created_by",
+            "created_at",
             "reference",
         ]
         filterset_class = StudyFilter
@@ -45,3 +46,7 @@ class StudyType(GQLListObjectType):
     @staticmethod
     def resolve_latest_submission_id(parent: Study, info: ResolveInfo) -> int:
         return UserFormSubmission.objects.filter(study=parent).last().pk
+
+    @staticmethod
+    def resolve_updated_at(parent: Study, info: ResolveInfo) -> datetime:
+        return parent.updated_at()

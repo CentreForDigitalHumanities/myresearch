@@ -1,6 +1,7 @@
 from main.models import MRPermission, User
 from form.models import UserFormSubmission, QuestionResponse
 from form.mutations.utils.inputs import UserFormInput
+from django.utils import timezone
 
 
 def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSubmission:
@@ -9,7 +10,7 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
     # That is why we use .get() here, which handles both cases.
     try:
         # first filter for editable objects, and then try to get the specific submission
-        current_submission = UserFormSubmission.objects.accessible_objects(
+        current_submission: UserFormSubmission = UserFormSubmission.objects.accessible_objects(
             user, MRPermission.EDIT
         ).get(
             id=user_form_input.get("submission_id"),
@@ -50,5 +51,6 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
                 repeat_index=response["repeat_index"],
             )
             new_response.submissions.add(current_submission)
-
+    current_submission.updated_at = timezone.now()
+    current_submission.save()
     return current_submission
