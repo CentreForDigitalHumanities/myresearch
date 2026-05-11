@@ -5,11 +5,9 @@ import { PencilLine, Trash2 } from "lucide-vue-next";
 import type { Component } from "vue";
 import { graphql } from "~/generated/gql";
 import type { GetFirstSlugAndActionsQuery } from "~/generated/gql/graphql";
-import Loading from "~/components/shared/Loading.vue";
 import { ActionEnum } from "~/generated/gql/graphql";
 import { NuxtLink } from "#components";
 import type { RouteParamsRawGeneric } from "vue-router";
-
 
 type AvailableAction = {
     label: string;
@@ -20,7 +18,7 @@ type AvailableAction = {
 };
 
 const props = defineProps<{
-  studyId: string;
+    studyId: string;
     submissionId: string;
 }>();
 
