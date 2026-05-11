@@ -223,11 +223,7 @@ function navigateToSlug(slug: string) {
                     v-if="selectedStep.isOverview && formObject"
                     :form="formObject"
                 />
-                <MRForm
-                    v-else
-                    :step="selectedStep"
-                    @submit-form="submitForm"
-                />
+                <MRForm v-else :step="selectedStep" @submit-form="submitForm" />
             </form>
 
             <div class="mb-3">

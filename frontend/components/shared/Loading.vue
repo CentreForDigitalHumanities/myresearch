@@ -2,7 +2,7 @@
 interface Props {
     inline?: boolean;
 }
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
     inline: false,
 });
 </script>
