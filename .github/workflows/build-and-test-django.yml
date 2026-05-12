@@ -14,7 +14,8 @@ jobs:
       - name: Copy test environment and secrets
         run: |
           cp .env.example .env
-          cp -r certificates secrets
+          cp certificates/private.key secrets/
+          cp certificates/public.cert secrets/
       - name: Build django-prod container
         run: docker compose build django-prod
       - name: Check for missing migrations

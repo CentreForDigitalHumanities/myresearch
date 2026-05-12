@@ -157,6 +157,7 @@ This will start a Docker Compose network with the following containers:
 ### Prerequisites
 
 - Docker and Docker Compose installed on your machine.
+- Adding a public.cert and private.key file to the `secrets` directory for the SAML authentication. For development, you may copy the ones in found in `certificates`. For production, you should generate your own certificates and keep them secret.
 
 ### Steps
 1. Clone the repository:

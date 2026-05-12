@@ -93,7 +93,11 @@ function newRegistration(): void {
                         </NuxtLink>
                     </li>
                     <li>
-                        <button class="nav-link" @click="newRegistration">
+                        <button
+                            v-if="currentUser"
+                            class="nav-link"
+                            @click="newRegistration"
+                        >
                             {{ $t("New registration") }}
                         </button>
                     </li>

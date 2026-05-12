@@ -127,5 +127,7 @@
   "Registration submitted successfully.": "Registratie succesvol ingediend.",
   "Your form contains errors. Please review and resubmit.": "Het formulier bevat fouten. Bekijk deze en probeer het opnieuw in te dienen.",
   "Confirm new registration": "Bevestig nieuwe registratie",
-  "Are you sure you want to register a new study?": "Weet je zeker dat je een nieuwe studie wilt registreren?"
+  "Are you sure you want to register a new study?": "Weet je zeker dat je een nieuwe studie wilt registreren?",
+  "Delete": "Verwijderen",
+  "No actions available": "Geen acties beschikbaar"
 }
