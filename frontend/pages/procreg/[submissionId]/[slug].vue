@@ -116,7 +116,7 @@ const GET_FORM = graphql(`
 const route = useRoute();
 
 const submissionId = computed(() => {
-    const id = route.params.submission_id;
+    const id = route.params.submissionId;
     return Array.isArray(id) ? id[0] : id;
 });
 

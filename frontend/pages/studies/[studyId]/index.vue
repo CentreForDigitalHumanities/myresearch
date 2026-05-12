@@ -2,9 +2,9 @@
 import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
 import type { GetStudyQuery } from "~/generated/gql/graphql";
-import StudyDetailsSidebar from "../../components/study_detail/StudyDetailsSidebar.vue";
-import AvailableActions from "../../components/study_detail/AvailableActions.vue";
-import StudyProgessBar from "../../components/study_detail/StudyProgessBar.vue";
+import StudyDetailsSidebar from "~/components/study_detail/StudyDetailsSidebar.vue";
+import AvailableActions from "~/components/study_detail/AvailableActions.vue";
+import StudyProgessBar from "~/components/study_detail/StudyProgessBar.vue";
 
 const GET_STUDY = graphql(`
     query GetStudy($id: ID!) {
@@ -13,6 +13,7 @@ const GET_STUDY = graphql(`
             title
             reference
             latestSubmissionId
+            actions
             createdBy {
                 fullName
                 id
@@ -25,7 +26,7 @@ const GET_STUDY = graphql(`
 const route = useRoute();
 
 const { result: studyResult } = useQuery<GetStudyQuery>(GET_STUDY, {
-    id: route.params.study_id,
+    id: route.params.studyId,
 });
 
 const study = computed(() => studyResult.value?.study ?? null);
@@ -87,7 +88,7 @@ const studyStatus = computed(() =>
                                 >.
                             </p>
                             <AvailableActions
-                                :study-status="studyStatus"
+                                :study-id="study.id"
                                 :submission-id="study.latestSubmissionId"
                             />
                         </div>
