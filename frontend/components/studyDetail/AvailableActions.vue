@@ -62,8 +62,12 @@ const handleActionClick = (action: AvailableAction) => {
 const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
     [ActionEnum.EditAction]: {
         label: t("Continue editing"),
-        name: "procreg-submissionId-slug",
-        params: { submissionId: props.submissionId, slug: slug.value },
+        name: "studies-studyId-submissionId-slug",
+        params: {
+            studyId: props.studyId,
+            submissionId: props.submissionId,
+            slug: slug.value,
+        },
         icon: PencilLine,
     },
     [ActionEnum.DeleteAction]: {
