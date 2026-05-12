@@ -3,10 +3,6 @@ from django.db import models
 from main.models import User
 from main.utils.permission_utils import BaseMRManager
 
-########################
-# Status Change Object #
-########################
-
 
 class SubmissionStatus(models.TextChoices):
     DRAFT = "DRA"
@@ -38,11 +34,6 @@ class StatusChange(models.Model):
 
     def __str__(self) -> str:
         return f"{SubmissionStatus(self.status).label}: {self.created_at.strftime('%d-%m-%Y, %H:%M')}"
-
-
-##################
-# Review objects #
-##################
 
 
 class ReviewRoundManager(BaseMRManager):

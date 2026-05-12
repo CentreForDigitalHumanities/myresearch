@@ -1,8 +1,8 @@
 import pytest
 
 from research.services.create_study import create_study
-from research.models import Study
-from research.other_models.reviews import StatusChange, SubmissionStatus
+from research.models.study import Study
+from research.models.reviews import StatusChange, SubmissionStatus
 from form.models import UserFormSubmission
 
 
