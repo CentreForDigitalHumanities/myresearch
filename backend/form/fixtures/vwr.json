@@ -1,254 +1,5 @@
 [
     {
-        "model": "form.mrform",
-        "pk": 2,
-        "fields": {
-            "name": "Processing Registry",
-            "name_en": "Processing Registry",
-            "name_nl": "Verwerkingsregister",
-            "created_at": "2026-03-09T14:15:25.526Z",
-            "updated_at": "2026-03-10T14:25:12.140Z"
-        }
-    },
-    {
-        "model": "form.step",
-        "pk": 1,
-        "fields": {
-            "name": "Study",
-            "name_en": "Study",
-            "name_nl": "Studie",
-            "description": null,
-            "description_en": null,
-            "description_nl": null,
-            "is_overview": false,
-            "slug": "study",
-            "form": 2,
-            "parent": null,
-            "_order": 0
-        }
-    },
-    {
-        "model": "form.step",
-        "pk": 2,
-        "fields": {
-            "name": "Involved UU researchers",
-            "name_en": "Involved UU researchers",
-            "name_nl": "Betrokken UU-onderzoekers",
-            "description": "Who holds final responsibility for the study within UU?",
-            "description_en": "Who holds final responsibility for the study within UU?",
-            "description_nl": "Wie is er binnen UU de eindverantwoordelijke voor de studie?",
-            "is_overview": false,
-            "slug": "involved-researchers",
-            "form": 2,
-            "parent": null,
-            "_order": 1
-        }
-    },
-    {
-        "model": "form.step",
-        "pk": 3,
-        "fields": {
-            "name": "Faculty",
-            "name_en": "Faculty",
-            "name_nl": "Faculteit",
-            "description": null,
-            "description_en": null,
-            "description_nl": null,
-            "is_overview": false,
-            "slug": "faculty",
-            "form": 2,
-            "parent": null,
-            "_order": 2
-        }
-    },
-    {
-        "model": "form.step",
-        "pk": 4,
-        "fields": {
-            "name": "Study period",
-            "name_en": "Study period",
-            "name_nl": "Studieperiode",
-            "description": null,
-            "description_en": null,
-            "description_nl": null,
-            "is_overview": false,
-            "slug": "study-period",
-            "form": 2,
-            "parent": null,
-            "_order": 3
-        }
-    },
-    {
-        "model": "form.step",
-        "pk": 5,
-        "fields": {
-            "name": "Research goal",
-            "name_en": "Research goal",
-            "name_nl": "Onderzoeksdoel",
-            "description": null,
-            "description_en": null,
-            "description_nl": null,
-            "is_overview": false,
-            "slug": "research-goal",
-            "form": 2,
-            "parent": null,
-            "_order": 4
-        }
-    },
-    {
-        "model": "form.step",
-        "pk": 6,
-        "fields": {
-            "name": "Data subjects",
-            "name_en": "Data subjects",
-            "name_nl": "Datasubjecten",
-            "description": "In this step you will be asked to indicate which categories of data subjects play a role in your research project.\r\n\r\nFor each category of data subjects, we ask two questions:\r\n1. Why is it necessary to collect personal data?\r\n2. Which specific categories of personal data you will be processing?\r\n\r\nIf you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.",
-            "description_en": "In this step you will be asked to indicate which categories of data subjects play a role in your research project.\r\n\r\nFor each category of data subjects, we ask two questions:\r\n1. Why is it necessary to collect personal data?\r\n2. Which specific categories of personal data you will be processing?\r\n\r\nIf you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.",
-            "description_nl": "In deze stap geef je op welke categorieën betrokken mensen een rol spelen in je onderzoeksproject. \r\n\r\nPer categorie betrokken mensen vragen we twee dingen:\r\n1. Waarom het noodzakelijk is om persoonsgegevens te verzamelen.\r\n2. Welke specifieke categorieën persoonsgegevens je gaat verwerken.\r\n\r\nAls je in de vorige vraag meerdere categorieën betrokkenen hebt opgegeven, wordt je dus gevraagd om voor elk van die categorieën informatie op te geven.",
-            "is_overview": false,
-            "slug": "data-subjects",
-            "form": 2,
-            "parent": null,
-            "_order": 5
-        }
-    },
-    {
-        "model": "form.step",
-        "pk": 7,
-        "fields": {
-            "name": "Data subject group",
-            "name_en": "Data subject group",
-            "name_nl": "Datasubjectgroep",
-            "description": null,
-            "description_en": null,
-            "description_nl": null,
-            "is_overview": false,
-            "slug": "personal-data-group",
-            "form": null,
-            "parent": 6,
-            "_order": 0
-        }
-    },
-    {
-        "model": "form.step",
-        "pk": 8,
-        "fields": {
-            "name": "Retention period",
-            "name_en": "Retention period",
-            "name_nl": "Bewaartermijn",
-            "description": "What is the retention period and storage location of your data?",
-            "description_en": "What is the retention period and storage location of your data?",
-            "description_nl": "Wat is de bewaartermijn en opslaglocatie?",
-            "is_overview": false,
-            "slug": "retention-period",
-            "form": 2,
-            "parent": null,
-            "_order": 6
-        }
-    },
-    {
-        "model": "form.step",
-        "pk": 9,
-        "fields": {
-            "name": "Recipients",
-            "name_en": "Recipients",
-            "name_nl": "Ontvangers",
-            "description": "By recipients, we mean: individuals or institutions outside Utrecht University with whom you share your previously provided personal data. This includes other universities, clients, data scientists, or other external institutions.",
-            "description_en": "By recipients, we mean: individuals or institutions outside Utrecht University with whom you share your previously provided personal data. This includes other universities, clients, data scientists, or other external institutions.",
-            "description_nl": "Onder ontvangers verstaan we: personen of instellingen buiten de Universiteit Utrecht met wie je de eerder opgegeven persoonsgegevens deelt. Denk aan andere universiteiten, aan opdrachtgevers, data scientists of andere externe instellingen.",
-            "is_overview": false,
-            "slug": "recipients",
-            "form": 2,
-            "parent": null,
-            "_order": 7
-        }
-    },
-    {
-        "model": "form.step",
-        "pk": 10,
-        "fields": {
-            "name": "Software",
-            "name_en": "Software",
-            "name_nl": "Software",
-            "description": "Indicate which software packages and (cloud) applications you will be using. Standard office software you use from your local laptop (e.g., Excel, Word) does not need to be listed.",
-            "description_en": "Indicate which software packages and (cloud) applications you will be using. Standard office software you use from your local laptop (e.g., Excel, Word) does not need to be listed.",
-            "description_nl": "Geef aan welke softwarepakketten en (cloud)applicatie(s) je gaat gebruiken. Reguliere kantoorsoftware die je vanaf je lokale laptop gebruikt (bijv. Excel, Word) hoef je niet op te voeren.",
-            "is_overview": false,
-            "slug": "software",
-            "form": 2,
-            "parent": null,
-            "_order": 8
-        }
-    },
-    {
-        "model": "form.step",
-        "pk": 11,
-        "fields": {
-            "name": "Security",
-            "name_en": "Security",
-            "name_nl": "Beveiliging",
-            "description": "In this step, you can indicate which technical and organizational measures you have taken or will take to protect the personal data in your study. You can add your own measures if necessary. Note: Not all measures below may be relevant to your study.",
-            "description_en": "In this step, you can indicate which technical and organizational measures you have taken or will take to protect the personal data in your study. You can add your own measures if necessary. Note: Not all measures below may be relevant to your study.",
-            "description_nl": "In deze stap kun je aangeven welke technische en organisatorische maatregelen je hebt genomen of gaat nemen om de persoonsgegevens binnen je studie te beveiligen. Indien nodig kun je zelf maatregelen toevoegen. Let op: Wellicht zijn niet alle onderstaande maatregelen relevant voor jouw studie.",
-            "is_overview": false,
-            "slug": "security",
-            "form": 2,
-            "parent": null,
-            "_order": 9
-        }
-    },
-    {
-        "model": "form.step",
-        "pk": 12,
-        "fields": {
-            "name": "Documents",
-            "name_en": "Documents",
-            "name_nl": "Documenten",
-            "description": null,
-            "description_en": null,
-            "description_nl": null,
-            "is_overview": false,
-            "slug": "documents",
-            "form": 2,
-            "parent": null,
-            "_order": 10
-        }
-    },
-    {
-        "model": "form.step",
-        "pk": 13,
-        "fields": {
-            "name": "Confirmation",
-            "name_en": "Confirmation",
-            "name_nl": "Bevestiging",
-            "description": null,
-            "description_en": null,
-            "description_nl": null,
-            "is_overview": false,
-            "slug": "confirmation",
-            "form": 2,
-            "parent": null,
-            "_order": 11
-        }
-    },
-    {
-        "model": "form.step",
-        "pk": 14,
-        "fields": {
-            "name": "Overview",
-            "name_en": "Overview",
-            "name_nl": "Overzicht",
-            "description": "Please review your answers below and return to previous steps to make any necessary changes. When you are ready to submit, click the 'Submit' button.",
-            "description_en": "Please review your answers below and return to previous steps to make any necessary changes. When you are ready to submit, click the 'Submit' button.",
-            "description_nl": "Bekijk hieronder je antwoorden en ga terug naar eerdere stappen om eventuele wijzigingen aan te brengen. Klik op de knop 'Indienen' om je inzending te versturen.",
-            "is_overview": true,
-            "slug": "overview",
-            "form": 2,
-            "parent": null,
-            "_order": 12
-        }
-    },
-    {
         "model": "form.basequestion",
         "pk": 1,
         "fields": {
@@ -400,21 +151,6 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 12,
-        "fields": {
-            "text": "I understand the above.",
-            "text_en": "I understand the above.",
-            "text_nl": "Ik heb het bovenstaande begrepen.",
-            "step": 6,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": true,
-            "_order": 0
-        }
-    },
-    {
-        "model": "form.basequestion",
         "pk": 11,
         "fields": {
             "text": "How many groups of data subjects are there?",
@@ -426,6 +162,21 @@
             "description_nl": "Onderscheid alle groepen van wie er persoonsgegevens verzameld worden.",
             "required": true,
             "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 12,
+        "fields": {
+            "text": "I understand the above.",
+            "text_en": "I understand the above.",
+            "text_nl": "Ik heb het bovenstaande begrepen.",
+            "step": 6,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 0
         }
     },
     {
@@ -460,21 +211,6 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 18,
-        "fields": {
-            "text": "Raw research data will be kept until at least 10 years after publication.",
-            "text_en": "Raw research data will be kept until at least 10 years after publication.",
-            "text_nl": "Ruwe onderzoeksdata worden tot minimaal 10 jaar na publicatie bewaard.",
-            "step": 8,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": false,
-            "_order": 1
-        }
-    },
-    {
-        "model": "form.basequestion",
         "pk": 15,
         "fields": {
             "text": "Specify for how long the raw research data will be retained.",
@@ -505,21 +241,6 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 19,
-        "fields": {
-            "text": "Consent forms will be kept until at least 10 years after publication.",
-            "text_en": "Consent forms will be kept until at least 10 years after publication.",
-            "text_nl": "Toestemmingsverklaringen worden tot minimaal 10 jaar na publicatie bewaard.",
-            "step": 8,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": false,
-            "_order": 4
-        }
-    },
-    {
-        "model": "form.basequestion",
         "pk": 17,
         "fields": {
             "text": "Specify for how long the consent forms will be retained.",
@@ -531,6 +252,36 @@
             "description_nl": "",
             "required": true,
             "_order": 5
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 18,
+        "fields": {
+            "text": "Raw research data will be kept until at least 10 years after publication.",
+            "text_en": "Raw research data will be kept until at least 10 years after publication.",
+            "text_nl": "Ruwe onderzoeksdata worden tot minimaal 10 jaar na publicatie bewaard.",
+            "step": 8,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 19,
+        "fields": {
+            "text": "Consent forms will be kept until at least 10 years after publication.",
+            "text_en": "Consent forms will be kept until at least 10 years after publication.",
+            "text_nl": "Toestemmingsverklaringen worden tot minimaal 10 jaar na publicatie bewaard.",
+            "step": 8,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 4
         }
     },
     {
@@ -745,21 +496,6 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 48,
-        "fields": {
-            "text": "Explanation",
-            "text_en": "Explanation",
-            "text_nl": "Toelichting",
-            "step": 11,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": true,
-            "_order": 1
-        }
-    },
-    {
-        "model": "form.basequestion",
         "pk": 34,
         "fields": {
             "text": "Organisational security measures",
@@ -970,6 +706,21 @@
     },
     {
         "model": "form.basequestion",
+        "pk": 48,
+        "fields": {
+            "text": "Explanation",
+            "text_en": "Explanation",
+            "text_nl": "Toelichting",
+            "step": 11,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
         "pk": 49,
         "fields": {
             "text": "Explanation",
@@ -1068,7 +819,8 @@
             "label_en": "Faculty of Humanities",
             "label_nl": "Faculteit Geesteswetenschappen",
             "default_selected": true,
-            "question": 5
+            "question": 5,
+            "_order": 0
         }
     },
     {
@@ -1079,7 +831,8 @@
             "label_en": "Faculty of Law, Economics and Governance",
             "label_nl": "Faculteit Recht, Economie, Bestuur en Organisatie",
             "default_selected": false,
-            "question": 5
+            "question": 5,
+            "_order": 1
         }
     },
     {
@@ -1090,7 +843,8 @@
             "label_en": "TLC - ILS",
             "label_nl": "TLC - ILS",
             "default_selected": false,
-            "question": 6
+            "question": 6,
+            "_order": 0
         }
     },
     {
@@ -1101,7 +855,8 @@
             "label_en": "TLC - ICON",
             "label_nl": "TLC - ICON",
             "default_selected": false,
-            "question": 6
+            "question": 6,
+            "_order": 1
         }
     },
     {
@@ -1112,7 +867,8 @@
             "label_en": "Participants, i.e. people who consciously take part in the study.",
             "label_nl": "Deelnemers, d.w.z. personen die bewust deelnemen aan het onderzoek.",
             "default_selected": false,
-            "question": 10
+            "question": 10,
+            "_order": 0
         }
     },
     {
@@ -1123,7 +879,8 @@
             "label_en": "People who do not necessarily know that they are being studied.",
             "label_nl": "Personen die niet (noodzakelijkerwijs) weten dat er onderzoek naar hen wordt gedaan.",
             "default_selected": false,
-            "question": 10
+            "question": 10,
+            "_order": 1
         }
     },
     {
@@ -1134,7 +891,8 @@
             "label_en": "Parents or guardians who are not involved themselves.",
             "label_nl": "Ouders of voogden die zelf niet deelnemen.",
             "default_selected": false,
-            "question": 10
+            "question": 10,
+            "_order": 2
         }
     },
     {
@@ -1145,7 +903,8 @@
             "label_en": "People who are otherwise involved.",
             "label_nl": "Personen die anderszins betrokken zijn.",
             "default_selected": false,
-            "question": 10
+            "question": 10,
+            "_order": 3
         }
     },
     {
@@ -1156,7 +915,8 @@
             "label_en": "EC adequacy decision",
             "label_nl": "Adequaatheidsbesluit van de EC",
             "default_selected": false,
-            "question": 24
+            "question": 24,
+            "_order": 0
         }
     },
     {
@@ -1167,7 +927,8 @@
             "label_en": "Standard contractual stipulations",
             "label_nl": "Standaard contractuele bepalingen",
             "default_selected": false,
-            "question": 24
+            "question": 24,
+            "_order": 1
         }
     },
     {
@@ -1178,7 +939,8 @@
             "label_en": "Explicit consent",
             "label_nl": "Uitdrukkelijke toestemming",
             "default_selected": false,
-            "question": 24
+            "question": 24,
+            "_order": 2
         }
     },
     {
@@ -1189,7 +951,8 @@
             "label_en": "Other abnormal situation (please specify)",
             "label_nl": "Andere afwijkende situatie (specificeren a.u.b.)",
             "default_selected": false,
-            "question": 24
+            "question": 24,
+            "_order": 3
         }
     },
     {
@@ -1200,7 +963,8 @@
             "label_en": "No basis for transmission (please specify)",
             "label_nl": "Geen basis voor doorgifte (verduidelijken a.u.b.)",
             "default_selected": false,
-            "question": 24
+            "question": 24,
+            "_order": 4
         }
     },
     {
@@ -1211,7 +975,8 @@
             "label_en": "Two-factor authentication",
             "label_nl": "Twee-factor-authenticatie (2FA)",
             "default_selected": false,
-            "question": 33
+            "question": 33,
+            "_order": 0
         }
     },
     {
@@ -1222,7 +987,8 @@
             "label_en": "Use of passwords",
             "label_nl": "Gebruik van wachtwoorden",
             "default_selected": false,
-            "question": 33
+            "question": 33,
+            "_order": 1
         }
     },
     {
@@ -1233,7 +999,8 @@
             "label_en": "Storage on encrypted UU servers (Yoda etc.)",
             "label_nl": "Opslag op beveiligde servers van de UU (Yoda etc.)",
             "default_selected": false,
-            "question": 33
+            "question": 33,
+            "_order": 2
         }
     },
     {
@@ -1244,7 +1011,8 @@
             "label_en": "Encryption",
             "label_nl": "Versleuteling (encryptie)",
             "default_selected": false,
-            "question": 33
+            "question": 33,
+            "_order": 3
         }
     },
     {
@@ -1255,7 +1023,8 @@
             "label_en": "File exchange via VPN",
             "label_nl": "Bestandsuitwisseling via VPN",
             "default_selected": false,
-            "question": 33
+            "question": 33,
+            "_order": 4
         }
     },
     {
@@ -1266,7 +1035,8 @@
             "label_en": "Blurring of video recordings",
             "label_nl": "Blurring van video-opnamen",
             "default_selected": false,
-            "question": 33
+            "question": 33,
+            "_order": 5
         }
     },
     {
@@ -1277,7 +1047,8 @@
             "label_en": "Voice distortion in audio recordings",
             "label_nl": "Stemvervorming van audio-opnamen",
             "default_selected": false,
-            "question": 33
+            "question": 33,
+            "_order": 6
         }
     },
     {
@@ -1288,7 +1059,8 @@
             "label_en": "Other (please specify)",
             "label_nl": "Anders, namelijk:",
             "default_selected": false,
-            "question": 33
+            "question": 33,
+            "_order": 7
         }
     },
     {
@@ -1299,7 +1071,8 @@
             "label_en": "Anonymisation of personal data",
             "label_nl": "Anonimisering van persoonsgegevens",
             "default_selected": false,
-            "question": 34
+            "question": 34,
+            "_order": 0
         }
     },
     {
@@ -1310,7 +1083,8 @@
             "label_en": "Pseudonymisation of personal data",
             "label_nl": "Pseudonimisering van persoonsgegevens",
             "default_selected": false,
-            "question": 34
+            "question": 34,
+            "_order": 1
         }
     },
     {
@@ -1321,7 +1095,8 @@
             "label_en": "Separate storage of pseudonymised personal data and decryption files",
             "label_nl": "Gescheiden opslag van gepseudonimiseerde persoonsgegevens en sleutelbestanden",
             "default_selected": false,
-            "question": 34
+            "question": 34,
+            "_order": 2
         }
     },
     {
@@ -1332,7 +1107,8 @@
             "label_en": "Deletion of recordings after transcription",
             "label_nl": "Verwijdering van opnames na transcriptie",
             "default_selected": false,
-            "question": 34
+            "question": 34,
+            "_order": 3
         }
     },
     {
@@ -1343,7 +1119,8 @@
             "label_en": "Password protocol",
             "label_nl": "Wachtwoordprotocol",
             "default_selected": false,
-            "question": 34
+            "question": 34,
+            "_order": 4
         }
     },
     {
@@ -1354,7 +1131,8 @@
             "label_en": "Conversation or interview protocol",
             "label_nl": "Gespreks- of interviewprotocol",
             "default_selected": false,
-            "question": 34
+            "question": 34,
+            "_order": 5
         }
     },
     {
@@ -1365,7 +1143,8 @@
             "label_en": "Security protocol signed by project members",
             "label_nl": "Door projectmedewerkers ondertekend beveiligingsprotocol",
             "default_selected": false,
-            "question": 34
+            "question": 34,
+            "_order": 6
         }
     },
     {
@@ -1376,7 +1155,8 @@
             "label_en": "Processing agreement with external processors",
             "label_nl": "Verwerkersovereenkomsten met externe verwerkers",
             "default_selected": false,
-            "question": 34
+            "question": 34,
+            "_order": 7
         }
     },
     {
@@ -1387,7 +1167,8 @@
             "label_en": "Data supply agreements between external suppliers and/or data recipients",
             "label_nl": "Dataleveringsovereenkomsten met externe leveranciers en/of ontvangers van data",
             "default_selected": false,
-            "question": 34
+            "question": 34,
+            "_order": 8
         }
     },
     {
@@ -1398,7 +1179,8 @@
             "label_en": "Co-responsibility agreements between project partners",
             "label_nl": "Gezamenlijk-verantwoordelijken overeenkomsten met projectpartners",
             "default_selected": false,
-            "question": 34
+            "question": 34,
+            "_order": 9
         }
     },
     {
@@ -1409,7 +1191,8 @@
             "label_en": "\"Chinese wall\" between parts of the organisation",
             "label_nl": "\"Chinese wall\" tussen verschillende delen van de organisatie",
             "default_selected": false,
-            "question": 34
+            "question": 34,
+            "_order": 10
         }
     },
     {
@@ -1420,7 +1203,8 @@
             "label_en": "\"No access to source data\" arrangement with client or subsidy provider",
             "label_nl": "Regeling \"geen inzage in brondata\" met opdrachtgever of subsidieverstrekker",
             "default_selected": false,
-            "question": 34
+            "question": 34,
+            "_order": 11
         }
     },
     {
@@ -1431,7 +1215,8 @@
             "label_en": "Back-up policy for research data",
             "label_nl": "Backupbeleid voor data",
             "default_selected": false,
-            "question": 34
+            "question": 34,
+            "_order": 12
         }
     },
     {
@@ -1442,7 +1227,8 @@
             "label_en": "Physical access control",
             "label_nl": "Controle van fysieke toegang tot bepaalde ruimtes",
             "default_selected": false,
-            "question": 34
+            "question": 34,
+            "_order": 13
         }
     },
     {
@@ -1453,7 +1239,8 @@
             "label_en": "Processing of sensitive data according to the \"four-eyes principle\"",
             "label_nl": "Verwerking van gevoelige gegevens volgens het \"vier-ogen-principe\"",
             "default_selected": false,
-            "question": 34
+            "question": 34,
+            "_order": 14
         }
     },
     {
@@ -1464,7 +1251,8 @@
             "label_en": "Other (please specify)",
             "label_nl": "Anders, namelijk:",
             "default_selected": false,
-            "question": 34
+            "question": 34,
+            "_order": 15
         }
     },
     {
@@ -1475,7 +1263,8 @@
             "label_en": "Data about someone's race, racial identity or ethnicity",
             "label_nl": "Gegevens over ras, raciale identiteit of etnische afkomst",
             "default_selected": false,
-            "question": 39
+            "question": 39,
+            "_order": 0
         }
     },
     {
@@ -1486,7 +1275,8 @@
             "label_en": "Data about someone's political opinions",
             "label_nl": "Gegevens over politieke opvattingen",
             "default_selected": false,
-            "question": 39
+            "question": 39,
+            "_order": 1
         }
     },
     {
@@ -1497,7 +1287,8 @@
             "label_en": "Data about someone's religious or philosophical convictions",
             "label_nl": "Gegevens over religieuze of levensbeschouwelijke overtuigingen",
             "default_selected": false,
-            "question": 39
+            "question": 39,
+            "_order": 2
         }
     },
     {
@@ -1508,7 +1299,8 @@
             "label_en": "Biometrical data (intended for the unique identification of a person)",
             "label_nl": "Biometrische gegevens (met het oog op de unieke identificatie van een persoon)",
             "default_selected": false,
-            "question": 39
+            "question": 39,
+            "_order": 3
         }
     },
     {
@@ -1519,7 +1311,8 @@
             "label_en": "Data about someone's trade union membership",
             "label_nl": "Gegevens over vakbondslidmaatschap",
             "default_selected": false,
-            "question": 39
+            "question": 39,
+            "_order": 4
         }
     },
     {
@@ -1530,7 +1323,8 @@
             "label_en": "Genetic data",
             "label_nl": "Genetische gegevens",
             "default_selected": false,
-            "question": 39
+            "question": 39,
+            "_order": 5
         }
     },
     {
@@ -1541,7 +1335,8 @@
             "label_en": "Data about someone's health",
             "label_nl": "Gegevens over gezondheid",
             "default_selected": false,
-            "question": 39
+            "question": 39,
+            "_order": 6
         }
     },
     {
@@ -1552,7 +1347,8 @@
             "label_en": "Data about someone's sexual behaviour or orientation",
             "label_nl": "Gegevens over iemands seksueel gedrag of seksuele geaardheid",
             "default_selected": false,
-            "question": 39
+            "question": 39,
+            "_order": 7
         }
     },
     {
@@ -1563,7 +1359,8 @@
             "label_en": "The special personal data have clearly been made public by the data subjects themselves.",
             "label_nl": "De bijzondere persoonsgegevens zijn overduidelijk openbaar gemaakt door de betrokkenen zelf.",
             "default_selected": false,
-            "question": 42
+            "question": 42,
+            "_order": 0
         }
     },
     {
@@ -1574,7 +1371,8 @@
             "label_en": "Asking for consent is so difficult and/or time-consuming that it would jeopardize the entire study. (Please explain.)",
             "label_nl": "Het vragen om toestemming is zo moeilijk en/of tijdrovend dat het hele onderzoek erdoor in gevaar zou komen.",
             "default_selected": false,
-            "question": 42
+            "question": 42,
+            "_order": 1
         }
     },
     {
@@ -1585,7 +1383,8 @@
             "label_en": "The processing of special personal data is necessary for an important public interest stated in the law, namely. (Please explain.)",
             "label_nl": "De verwerking van de bijzondere persoonsgegevens is noodzakelijk voor een zwaarwegend algemeen belang dat in de wet wordt genoemd, te weten:",
             "default_selected": false,
-            "question": 42
+            "question": 42,
+            "_order": 2
         }
     },
     {
@@ -1596,7 +1395,8 @@
             "label_en": "Financial data of identified/identifiable participants.",
             "label_nl": "Financiële gegevens van geïdentificeerde of identificeerbare deelnemers.",
             "default_selected": false,
-            "question": 44
+            "question": 44,
+            "_order": 0
         }
     },
     {
@@ -1607,7 +1407,8 @@
             "label_en": "Criminal history data (criminal convictions or offences).",
             "label_nl": "Gegevens over het strafrechtelijk verleden (strafrechtelijke veroordelingen of strafbare feiten) van deelnemers.",
             "default_selected": false,
-            "question": 44
+            "question": 44,
+            "_order": 1
         }
     },
     {
@@ -1618,7 +1419,8 @@
             "label_en": "All or some participants are children aged 0-15.",
             "label_nl": "Alle deelnemers, of een aantal van hen, zijn kinderen van 0 t/m 15 jaar.",
             "default_selected": false,
-            "question": 44
+            "question": 44,
+            "_order": 2
         }
     },
     {
@@ -1629,7 +1431,8 @@
             "label_en": "None.",
             "label_nl": "Geen.",
             "default_selected": false,
-            "question": 44
+            "question": 44,
+            "_order": 3
         }
     },
     {
@@ -1640,7 +1443,8 @@
             "label_en": "Name",
             "label_nl": "Naam",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 0
         }
     },
     {
@@ -1651,7 +1455,8 @@
             "label_en": "Address details",
             "label_nl": "Adresgegevens",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 1
         }
     },
     {
@@ -1662,7 +1467,8 @@
             "label_en": "Email address",
             "label_nl": "E-mailadres",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 2
         }
     },
     {
@@ -1673,7 +1479,8 @@
             "label_en": "Age / date of birth / year of birth",
             "label_nl": "Leeftijd / geboortedatum / geboortejaar",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 3
         }
     },
     {
@@ -1684,7 +1491,8 @@
             "label_en": "Age over/under 16",
             "label_nl": "Ouder/jonger dan 16",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 4
         }
     },
     {
@@ -1695,7 +1503,8 @@
             "label_en": "Place/country of birth",
             "label_nl": "Geboorteplaats/-land",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 5
         }
     },
     {
@@ -1706,7 +1515,8 @@
             "label_en": "Sex",
             "label_nl": "Geslacht",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 6
         }
     },
     {
@@ -1717,7 +1527,8 @@
             "label_en": "Education level",
             "label_nl": "Opleiding",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 7
         }
     },
     {
@@ -1728,7 +1539,8 @@
             "label_en": "Occupation",
             "label_nl": "Functie",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 8
         }
     },
     {
@@ -1739,7 +1551,8 @@
             "label_en": "IP address",
             "label_nl": "IP-adres",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 9
         }
     },
     {
@@ -1750,7 +1563,8 @@
             "label_en": "Answers provided by the participant",
             "label_nl": "Door de deelnemer zelf ingevulde antwoorden op vragen",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 10
         }
     },
     {
@@ -1761,7 +1575,8 @@
             "label_en": "Notes written by the researcher",
             "label_nl": "Door de onderzoeker gemaakte notities",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 11
         }
     },
     {
@@ -1772,7 +1587,8 @@
             "label_en": "Photos",
             "label_nl": "Foto's",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 12
         }
     },
     {
@@ -1783,7 +1599,8 @@
             "label_en": "Video recordings of conversations/interviews",
             "label_nl": "Video-opnamen van gesprekken/interviews",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 13
         }
     },
     {
@@ -1794,7 +1611,8 @@
             "label_en": "Audio recordings of conversations/interviews",
             "label_nl": "Geluidsopnamen van gesprekken/interviews",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 14
         }
     },
     {
@@ -1805,7 +1623,8 @@
             "label_en": "Other video recordings",
             "label_nl": "Overige video-opnamen",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 15
         }
     },
     {
@@ -1816,7 +1635,8 @@
             "label_en": "Other audio recordings",
             "label_nl": "Overige geluidsopnamen",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 16
         }
     },
     {
@@ -1827,7 +1647,8 @@
             "label_en": "Behavioural data",
             "label_nl": "Gedrag of gedragingen",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 17
         }
     },
     {
@@ -1838,7 +1659,8 @@
             "label_en": "Test results",
             "label_nl": "Resultaten van tests",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 18
         }
     },
     {
@@ -1849,7 +1671,8 @@
             "label_en": "School, study programme or course results",
             "label_nl": "School-, opleidings- of cursusresultaten",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 19
         }
     },
     {
@@ -1860,7 +1683,8 @@
             "label_en": "Social media data",
             "label_nl": "Gegevens op social media",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 20
         }
     },
     {
@@ -1871,7 +1695,8 @@
             "label_en": "Consent forms (signed or not)",
             "label_nl": "Al dan niet ondertekende toestemmingsverklaringen",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 21
         }
     },
     {
@@ -1882,7 +1707,8 @@
             "label_en": "Other (please specify)",
             "label_nl": "Anders, namelijk:",
             "default_selected": false,
-            "question": 45
+            "question": 45,
+            "_order": 22
         }
     },
     {
@@ -1893,7 +1719,8 @@
             "label_en": "GKG",
             "label_nl": "GKG",
             "default_selected": false,
-            "question": 6
+            "question": 6,
+            "_order": 2
         }
     },
     {
@@ -1904,7 +1731,8 @@
             "label_en": "F&R",
             "label_nl": "F&R",
             "default_selected": false,
-            "question": 6
+            "question": 6,
+            "_order": 3
         }
     },
     {
@@ -1915,7 +1743,8 @@
             "label_en": "MCW",
             "label_nl": "MCW",
             "default_selected": false,
-            "question": 6
+            "question": 6,
+            "_order": 4
         }
     },
     {
@@ -1926,7 +1755,8 @@
             "label_en": "School of Law",
             "label_nl": "Rechtsgeleerdheid",
             "default_selected": false,
-            "question": 47
+            "question": 47,
+            "_order": 0
         }
     },
     {
@@ -1937,7 +1767,8 @@
             "label_en": "School of Economics (U.S.E.)",
             "label_nl": "Economie (U.S.E.)",
             "default_selected": false,
-            "question": 47
+            "question": 47,
+            "_order": 1
         }
     },
     {
@@ -1948,7 +1779,8 @@
             "label_en": "School of Governance (USG)",
             "label_nl": "Bestuurs- en Organisatiewetenschap (USG)",
             "default_selected": false,
-            "question": 47
+            "question": 47,
+            "_order": 2
         }
     },
     {
@@ -2290,6 +2122,257 @@
         "pk": 35,
         "fields": {
             "size_limit": 500
+        }
+    },
+    {
+        "model": "form.mrform",
+        "pk": 2,
+        "fields": {
+            "name": "Processing Registry",
+            "name_en": "Processing Registry",
+            "name_nl": "Verwerkingsregister",
+            "version": "",
+            "created_at": "2026-03-09T14:15:25.526Z",
+            "updated_at": "2026-03-10T14:25:12.140Z",
+            "study_name_question": null
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 1,
+        "fields": {
+            "name": "Study",
+            "name_en": "Study",
+            "name_nl": "Studie",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "study",
+            "form": 2,
+            "parent": null,
+            "is_overview": false,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 2,
+        "fields": {
+            "name": "Involved UU researchers",
+            "name_en": "Involved UU researchers",
+            "name_nl": "Betrokken UU-onderzoekers",
+            "description": "Who holds final responsibility for the study within UU?",
+            "description_en": "Who holds final responsibility for the study within UU?",
+            "description_nl": "Wie is er binnen UU de eindverantwoordelijke voor de studie?",
+            "slug": "involved-researchers",
+            "form": 2,
+            "parent": null,
+            "is_overview": false,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 3,
+        "fields": {
+            "name": "Faculty",
+            "name_en": "Faculty",
+            "name_nl": "Faculteit",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "faculty",
+            "form": 2,
+            "parent": null,
+            "is_overview": false,
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 4,
+        "fields": {
+            "name": "Study period",
+            "name_en": "Study period",
+            "name_nl": "Studieperiode",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "study-period",
+            "form": 2,
+            "parent": null,
+            "is_overview": false,
+            "_order": 3
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 5,
+        "fields": {
+            "name": "Research goal",
+            "name_en": "Research goal",
+            "name_nl": "Onderzoeksdoel",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "research-goal",
+            "form": 2,
+            "parent": null,
+            "is_overview": false,
+            "_order": 4
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 6,
+        "fields": {
+            "name": "Data subjects",
+            "name_en": "Data subjects",
+            "name_nl": "Datasubjecten",
+            "description": "In this step you will be asked to indicate which categories of data subjects play a role in your research project.\r\n\r\nFor each category of data subjects, we ask two questions:\r\n1. Why is it necessary to collect personal data?\r\n2. Which specific categories of personal data you will be processing?\r\n\r\nIf you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.",
+            "description_en": "In this step you will be asked to indicate which categories of data subjects play a role in your research project.\r\n\r\nFor each category of data subjects, we ask two questions:\r\n1. Why is it necessary to collect personal data?\r\n2. Which specific categories of personal data you will be processing?\r\n\r\nIf you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.",
+            "description_nl": "In deze stap geef je op welke categorieën betrokken mensen een rol spelen in je onderzoeksproject. \r\n\r\nPer categorie betrokken mensen vragen we twee dingen:\r\n1. Waarom het noodzakelijk is om persoonsgegevens te verzamelen.\r\n2. Welke specifieke categorieën persoonsgegevens je gaat verwerken.\r\n\r\nAls je in de vorige vraag meerdere categorieën betrokkenen hebt opgegeven, wordt je dus gevraagd om voor elk van die categorieën informatie op te geven.",
+            "slug": "data-subjects",
+            "form": 2,
+            "parent": null,
+            "is_overview": false,
+            "_order": 5
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 7,
+        "fields": {
+            "name": "Data subject group",
+            "name_en": "Data subject group",
+            "name_nl": "Datasubjectgroep",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "personal-data-group",
+            "form": null,
+            "parent": 6,
+            "is_overview": false,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 8,
+        "fields": {
+            "name": "Retention period",
+            "name_en": "Retention period",
+            "name_nl": "Bewaartermijn",
+            "description": "What is the retention period and storage location of your data?",
+            "description_en": "What is the retention period and storage location of your data?",
+            "description_nl": "Wat is de bewaartermijn en opslaglocatie?",
+            "slug": "retention-period",
+            "form": 2,
+            "parent": null,
+            "is_overview": false,
+            "_order": 6
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 9,
+        "fields": {
+            "name": "Recipients",
+            "name_en": "Recipients",
+            "name_nl": "Ontvangers",
+            "description": "By recipients, we mean: individuals or institutions outside Utrecht University with whom you share your previously provided personal data. This includes other universities, clients, data scientists, or other external institutions.",
+            "description_en": "By recipients, we mean: individuals or institutions outside Utrecht University with whom you share your previously provided personal data. This includes other universities, clients, data scientists, or other external institutions.",
+            "description_nl": "Onder ontvangers verstaan we: personen of instellingen buiten de Universiteit Utrecht met wie je de eerder opgegeven persoonsgegevens deelt. Denk aan andere universiteiten, aan opdrachtgevers, data scientists of andere externe instellingen.",
+            "slug": "recipients",
+            "form": 2,
+            "parent": null,
+            "is_overview": false,
+            "_order": 7
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 10,
+        "fields": {
+            "name": "Software",
+            "name_en": "Software",
+            "name_nl": "Software",
+            "description": "Indicate which software packages and (cloud) applications you will be using. Standard office software you use from your local laptop (e.g., Excel, Word) does not need to be listed.",
+            "description_en": "Indicate which software packages and (cloud) applications you will be using. Standard office software you use from your local laptop (e.g., Excel, Word) does not need to be listed.",
+            "description_nl": "Geef aan welke softwarepakketten en (cloud)applicatie(s) je gaat gebruiken. Reguliere kantoorsoftware die je vanaf je lokale laptop gebruikt (bijv. Excel, Word) hoef je niet op te voeren.",
+            "slug": "software",
+            "form": 2,
+            "parent": null,
+            "is_overview": false,
+            "_order": 8
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 11,
+        "fields": {
+            "name": "Security",
+            "name_en": "Security",
+            "name_nl": "Beveiliging",
+            "description": "In this step, you can indicate which technical and organizational measures you have taken or will take to protect the personal data in your study. You can add your own measures if necessary. Note: Not all measures below may be relevant to your study.",
+            "description_en": "In this step, you can indicate which technical and organizational measures you have taken or will take to protect the personal data in your study. You can add your own measures if necessary. Note: Not all measures below may be relevant to your study.",
+            "description_nl": "In deze stap kun je aangeven welke technische en organisatorische maatregelen je hebt genomen of gaat nemen om de persoonsgegevens binnen je studie te beveiligen. Indien nodig kun je zelf maatregelen toevoegen. Let op: Wellicht zijn niet alle onderstaande maatregelen relevant voor jouw studie.",
+            "slug": "security",
+            "form": 2,
+            "parent": null,
+            "is_overview": false,
+            "_order": 9
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 12,
+        "fields": {
+            "name": "Documents",
+            "name_en": "Documents",
+            "name_nl": "Documenten",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "documents",
+            "form": 2,
+            "parent": null,
+            "is_overview": false,
+            "_order": 10
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 13,
+        "fields": {
+            "name": "Confirmation",
+            "name_en": "Confirmation",
+            "name_nl": "Bevestiging",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "confirmation",
+            "form": 2,
+            "parent": null,
+            "is_overview": false,
+            "_order": 11
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 14,
+        "fields": {
+            "name": "Overview",
+            "name_en": "Overview",
+            "name_nl": "Overzicht",
+            "description": "Please review your answers below and return to previous steps to make any necessary changes. When you are ready to submit, click the 'Submit' button.",
+            "description_en": "Please review your answers below and return to previous steps to make any necessary changes. When you are ready to submit, click the 'Submit' button.",
+            "description_nl": "Bekijk hieronder je antwoorden en ga terug naar eerdere stappen om eventuele wijzigingen aan te brengen. Klik op de knop 'Indienen' om je inzending te versturen.",
+            "slug": "overview",
+            "form": 2,
+            "parent": null,
+            "is_overview": true,
+            "_order": 12
         }
     },
     {

@@ -1,4 +1,4 @@
-import type { ComputedRef } from 'vue';
+import type { ComputedRef } from "vue";
 
 function useStudyId(): ComputedRef<string | undefined> {
     const route = useRoute();
@@ -18,7 +18,7 @@ function useStepSlug(): ComputedRef<string | undefined> {
 /**
  * Helper function to make sure we always get a string from the route params if
  * the param is defined, even if it is an array.
- * 
+ *
  * For some reason the type checker does not think undefined is a possible
  * value for the param, so we explicitly add it here.
  */

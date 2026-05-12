@@ -1,20 +1,29 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { useQuery } from "@vue/apollo-composable";
-import { PencilLine, Send, Paperclip, Scale } from "lucide-vue-next";
+import { PencilLine, Trash2 } from "lucide-vue-next";
 import type { Component } from "vue";
 import { graphql } from "~/generated/gql";
-import type { GetFirstSlugQuery } from "~/generated/gql/graphql";
-import { useStudyId } from "~/composables/useRouteParams";
+import type { GetFirstSlugAndActionsQuery } from "~/generated/gql/graphql";
+import { ActionEnum } from "~/generated/gql/graphql";
+import { NuxtLink } from "#components";
+import type { RouteParamsRawGeneric } from "vue-router";
+
+type AvailableAction = {
+    label: string;
+    name: string;
+    params: RouteParamsRawGeneric;
+    icon?: Component;
+    style?: Record<string, string>;
+};
 
 const props = defineProps<{
-    studyStatus: string;
+    studyId: string;
     submissionId: string;
 }>();
 
-// We only need to know the slug of the top-level form so we can link to it.
-const GET_FIRST_SLUG = graphql(`
-    query GetFirstSlug($submissionId: ID!) {
+const GET_FIRST_SLUG_AND_ACTIONS = graphql(`
+    query GetFirstSlugAndActions($studyId: ID!, $submissionId: ID!) {
         form(submissionId: $submissionId, mrPermission: "Edit") {
             formId
             steps {
@@ -22,93 +31,82 @@ const GET_FIRST_SLUG = graphql(`
                 slug
             }
         }
+        study(id: $studyId, mrPermission: "Edit") {
+            id
+            actions
+        }
     }
 `);
 
-const { result } = useQuery<GetFirstSlugQuery>(GET_FIRST_SLUG, () => ({
-    submissionId: props.submissionId,
-}));
+const { result, loading } = useQuery<GetFirstSlugAndActionsQuery>(
+    GET_FIRST_SLUG_AND_ACTIONS,
+    () => ({
+        submissionId: props.submissionId,
+        studyId: props.studyId,
+    }),
+);
 
 const slug = computed<string | null>(() => {
     const firstStep = result.value?.form?.steps[0];
     return firstStep?.slug || null;
 });
 
-const studyId = useStudyId();
-
-const continueUrl = computed(() => {
-    const formSlug = slug.value;
-    const submissionId = props.submissionId;
-    const studyIdValue = studyId.value;
-
-    // TODO: disable/hide the button if the slug is not available (yet).
-    if (!formSlug || !submissionId || !studyIdValue) {
-        return "#";
-    }
-    return `/studies/${studyIdValue}/${submissionId}/${formSlug}`;
-});
+const isSlugLoaded = computed(() => slug.value !== null);
 
 const { t } = useI18n();
 
-type AvailableAction = {
-    label: string;
-    href: string;
-    icon: Component;
+const handleActionClick = (action: AvailableAction) => {
+    void navigateTo({ name: action.name, params: action.params });
 };
 
-// Some mock actions ...
-
-// Draft actions
-
-const draftActions = computed<AvailableAction[]>(() => [
-    {
+const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
+    [ActionEnum.EditAction]: {
         label: t("Continue editing"),
-        href: continueUrl.value,
+        name: "procreg-submissionId-slug",
+        params: { submissionId: props.submissionId, slug: slug.value },
         icon: PencilLine,
     },
-    {
-        label: t("Submit"),
-        href: "#",
-        icon: Send,
+    [ActionEnum.DeleteAction]: {
+        label: t("Delete"),
+        name: "studies-studyId-delete",
+        params: { studyId: props.studyId },
+        icon: Trash2,
+        style: {
+            "--bs-tiles-hover-bg": "var(--bs-danger)",
+            "--bs-tiles-hover-color": "var(--bs-white)",
+        },
     },
-]);
+}));
 
-// Actions for the PO
-
-const POActions = computed<AvailableAction[]>(() => [
-    {
-        label: t("Continue editing"),
-        href: continueUrl.value,
-        icon: PencilLine,
-    },
-    {
-        label: t("View attachments"),
-        href: "#",
-        icon: Paperclip,
-    },
-    {
-        label: t("Submit decision"),
-        href: "#",
-        icon: Scale,
-    },
-]);
-
-const availableActions = computed(() =>
-    props.studyStatus === "draft" ? draftActions.value : POActions.value,
-);
+const availableActions = computed<AvailableAction[]>(() => {
+    const studyActions = result.value?.study?.actions;
+    if (studyActions) {
+        return studyActions.map(
+            (actionEnum: ActionEnum) => actionMap.value[actionEnum],
+        );
+    }
+    return [];
+});
 </script>
 
 <template>
-    <h3 class="mb-3">{{ $t("Available actions") }}:</h3>
-    <div class="tiles">
-        <NuxtLink
-            v-for="(action, index) in availableActions"
-            :key="index"
-            :to="action.href"
-            class="tile h-100 justify-content-around"
-        >
-            <strong class="text-center">{{ $t(action.label) }}</strong>
-            <component :is="action.icon"> </component>
-        </NuxtLink>
+    <div v-if="loading">
+        <loading />
     </div>
+    <div v-else-if="isSlugLoaded && availableActions.length > 0">
+        <h3 class="mb-3">{{ $t("Available actions") }}:</h3>
+        <div class="tiles">
+            <NuxtLink
+                v-for="(action, index) in availableActions"
+                :key="index"
+                :style="action.style"
+                class="tile h-100 justify-content-around"
+                @click.prevent="handleActionClick(action)"
+            >
+                <strong class="text-center">{{ $t(action.label) }}</strong>
+                <component :is="action.icon" v-if="action.icon"> </component>
+            </NuxtLink>
+        </div>
+    </div>
+    <h3 v-else>{{ $t("No actions available") }}</h3>
 </template>

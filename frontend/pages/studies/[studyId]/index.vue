@@ -14,6 +14,7 @@ const GET_STUDY = graphql(`
             title
             reference
             latestSubmissionId
+            actions
             createdBy {
                 fullName
                 id
@@ -92,7 +93,7 @@ const studyStatus = computed(() =>
                                 >.
                             </p>
                             <AvailableActions
-                                :study-status="studyStatus"
+                                :study-id="study.id"
                                 :submission-id="study.latestSubmissionId"
                             />
                         </div>
