@@ -87,9 +87,8 @@ function submitForm(options = { submit: false }): void {
                 "danger",
             );
         })
-        .then((results) => {
+        .then(() => {
             if (options.submit) {
-                console.log('Results:', results);
                 useNotification(
                     t("Registration submitted successfully."),
                     "success",
