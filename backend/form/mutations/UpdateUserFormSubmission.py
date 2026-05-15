@@ -41,7 +41,7 @@ class UpdateUserFormSubmission(Mutation):
                 messages=[str(e)],
             )
             return cls(ok=False, errors=[error])
-        
+
         study: Study = submission.study  # type: ignore
 
         if finalize:
