@@ -106,6 +106,7 @@ function submitForm(options = { submit: false }): void {
 
 function finalSubmit(): void {
     useConfirm({
+        headerText: t("Confirm submission"),
         text: t(
             "Are you sure you want to submit the form? Once submitted, you will not be able to make changes.",
         ),
