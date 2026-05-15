@@ -61,23 +61,20 @@ const studyStatus = computed(() =>
 
 <template>
     <div class="uu-content">
-        <Title
-            >{{ $t("Study") }}: {{ study?.title ?? $t("Unknown study") }}</Title
-        >
+        <Title>
+            {{ $t("Study") }}: {{ study?.title ?? $t("Unknown study") }}
+        </Title>
         <div class="uu-hero">
             <h1>{{ $t("Study overview") }}</h1>
         </div>
-        <!-- Sidebar -->
         <div v-if="study" class="uu-sidebar-container">
             <StudyDetailsSidebar
                 :study="study"
                 :random-date-past-year="randomDatePastYear()"
             />
-            <!-- Content -->
             <div class="uu-sidebar-content">
                 <div class="uu-container">
                     <div class="row">
-                        <!-- Main Content -->
                         <div class="col me-5">
                             <h1>
                                 {{ study.reference }} -
@@ -97,7 +94,6 @@ const studyStatus = computed(() =>
                                 :submission-id="study.latestSubmissionId"
                             />
                         </div>
-                        <!-- Progress bar -->
                         <div class="col-2">
                             <StudyProgessBar :study-status="studyStatus" />
                         </div>
@@ -107,11 +103,7 @@ const studyStatus = computed(() =>
         </div>
         <div v-else class="uu-container">
             <h3>
-                {{
-                    $t(
-                        "Oops ... The study you are looking for could not be found.",
-                    )
-                }}
+                {{ $t("The study you are looking for could not be found.") }}
             </h3>
         </div>
     </div>
