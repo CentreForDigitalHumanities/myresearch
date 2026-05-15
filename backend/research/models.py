@@ -1,3 +1,4 @@
+from research.other_models.reviews import StatusChange, SubmissionStatus
 from research.other_models.utils import YearCounter
 from form.models import UserFormSubmission
 from main.models import User
@@ -66,8 +67,19 @@ class Study(models.Model):
             return default_name
 
     @property
-    def status(self):
-        return self.status_changes.last()
+    def status(self) -> SubmissionStatus:
+        """
+        Returns the current status of the study, as determined by the latest
+        StatusChange. If none can be found, DRAFT is used as a default.
+        """
+        last_status_change = (
+            StatusChange.objects.filter(study=self).order_by("created_at").last()
+        )
+        return (
+            SubmissionStatus(last_status_change.status)
+            if last_status_change
+            else SubmissionStatus.DRAFT
+        )
 
     class Meta:
         verbose_name_plural = "Studies"
