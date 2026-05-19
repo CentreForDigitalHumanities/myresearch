@@ -33,7 +33,7 @@ export type TrueFalseQuestionWithValue = TrueFalseQuestionType &
     };
 export type FileUploadQuestionWithValue = FileUploadQuestionType &
     LocatedQuestion & {
-        value: File | null;
+        value: number | null;
     };
 export type DateQuestionWithValue = DateQuestionType &
     LocatedQuestion & {
@@ -275,7 +275,10 @@ function addValueAndLocationToQuestion(
             return {
                 ...question,
                 location,
-                value: parseAnswer<null>(question.answer, question.__typename),
+                value: parseAnswer<number | null>(
+                    question.answer,
+                    question.__typename,
+                ),
             };
     }
 }

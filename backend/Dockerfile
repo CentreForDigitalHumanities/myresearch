@@ -3,7 +3,7 @@ FROM python:3.11-alpine
 # Add git to install some requirements
 # Add curl to use for container healthcheck
 # Add xmlsec for saml
-RUN apk add --no-cache git curl xmlsec
+RUN apk add --no-cache git curl xmlsec libmagic
 
 # Set up directories
 RUN mkdir -p /var/www/backend-static/

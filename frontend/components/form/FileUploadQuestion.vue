@@ -7,39 +7,67 @@ interface Props {
     isInvalid: boolean;
 }
 
-interface Emits {
-    (e: "update:modelValue", value: File | null): void;
-}
+defineProps<Props>();
 
-const props = defineProps<Props>();
-const emit = defineEmits<Emits>();
+const modelValue = defineModel<number | null>();
 
-const currentFile = ref<File | null>(props.question.value);
-const fileInput = ref<HTMLInputElement | null>(null);
+const config = useRuntimeConfig();
+const uploadUrl = `${config.public.API_URL}/form/upload/`;
 
-function onFileChanged(event: Event) {
-    const target = event.target as HTMLInputElement;
-    if (target.files) {
-        currentFile.value = target.files[0];
-    } else {
+// Local state for display purposes (file name, size) and for building the download URL
+const currentFile = ref<{ name: string; size: number } | null>(null);
+const fileUuid = ref<string | null>(null);
+
+const isUploading = ref(false);
+const uploadError = ref<string | null>(null);
+
+async function onFileChanged(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) {
+        return;
+    }
+
+    isUploading.value = true;
+    uploadError.value = null;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+        const response = await $fetch<{ value: number; uuid: string }>(
+            uploadUrl,
+            {
+                method: "POST",
+                body: formData,
+                credentials: "include",
+            },
+        );
+        modelValue.value = response.value;
+        fileUuid.value = response.uuid;
+        currentFile.value = { name: file.name, size: file.size };
+    } catch {
+        uploadError.value = "Upload failed. Please try again.";
+        modelValue.value = null;
+        fileUuid.value = null;
         currentFile.value = null;
+    } finally {
+        isUploading.value = false;
     }
-    updateModelValue();
 }
 
-function removeFile(): void {
+function removeFile() {
+    modelValue.value = null;
+    fileUuid.value = null;
     currentFile.value = null;
-    updateModelValue();
-
-    // Update the input control to reflect the removal.
-    if (fileInput.value) {
-        fileInput.value.value = "";
-    }
+    uploadError.value = null;
 }
 
-function updateModelValue(): void {
-    emit("update:modelValue", currentFile.value);
-}
+const downloadUrl = computed(() =>
+    fileUuid.value
+        ? `${config.public.API_URL}/form/files/${fileUuid.value}/`
+        : null,
+);
 </script>
 
 <template>
@@ -57,14 +85,29 @@ function updateModelValue(): void {
             type="file"
             class="form-control"
             :class="{ 'is-invalid': isInvalid }"
+            :disabled="isUploading"
             @change="onFileChanged($event)"
         />
+        <div v-if="isUploading" class="mt-2 text-muted">
+            {{ $t("Uploading…") }}
+        </div>
+        <div v-if="uploadError" class="mt-2 text-danger">
+            {{ uploadError }}
+        </div>
         <div v-if="currentFile" class="mt-2">
             <strong>{{ $t("Selected file") }}:</strong>
             {{ currentFile.name }} ({{
                 (currentFile.size / (1024 * 1024)).toFixed(1)
             }}
-            KB)
+            MB)
+            <a
+                v-if="downloadUrl"
+                :href="downloadUrl"
+                class="btn btn-outline-primary btn-sm ms-2"
+                target="_blank"
+            >
+                {{ $t("Download") }}
+            </a>
             <button
                 type="button"
                 class="btn btn-outline-secondary btn-sm ms-2"
