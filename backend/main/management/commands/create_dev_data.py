@@ -54,6 +54,10 @@ MAX_STEP_DEPTH = 3
 
 ALL_QUESTIONS = ["select", "text", "true_false", "date", "number", "file_upload"]
 
+# These are the question annotation_keys that are used in the app
+TEXT_ANNOTATION_KEYS = ["title"]
+SELECT_ANNOTATION_KEYS = ["faculty"]
+
 # Min/max number of studies per user
 MIN_STUDIES_PER_USER = 1
 MAX_STUDIES_PER_USER = 4
@@ -224,6 +228,10 @@ class Command(BaseCommand):
                 multiple=self.faker.pybool(),
             )
 
+            if SELECT_ANNOTATION_KEYS:
+                select_question.annotation_key = SELECT_ANNOTATION_KEYS.pop()
+                select_question.save()
+
             for _ in range(self.faker.random_int(2, 5)):
                 SelectOption.objects.create(
                     label_nl=self.faker_nl.word(),
@@ -232,12 +240,15 @@ class Command(BaseCommand):
                 )
 
         def _create_text_question(form: Step, index: int) -> None:
-            TextQuestion.objects.create(
+            tq = TextQuestion.objects.create(
                 **_base_question_fields(form, index),
                 placeholder_nl=self.faker_nl.sentence(),
                 placeholder_en=self.faker_en.sentence(),
                 lines=self.faker.random_int(1, 5),
             )
+            if TEXT_ANNOTATION_KEYS:
+                tq.annotation_key = TEXT_ANNOTATION_KEYS.pop()
+                tq.save()
 
         def _create_true_false_question(form: Step, index: int) -> None:
             TrueFalseQuestion.objects.create(
@@ -393,10 +404,11 @@ class Command(BaseCommand):
             study=study,
         )
 
-        form_questions = form.all_questions()
+        form_questions = form.all_questions.all()
 
         # First generate answers for all questions, regardless of visibility.
         for question in form_questions:
+            question = question.get_subclass()
             if self.faker.random_element([True, False, False, False]):
                 # 25% chance to leave the question unanswered.
                 continue
