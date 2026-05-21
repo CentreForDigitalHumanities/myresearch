@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Q, Min, QuerySet
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from .responses import UserFormSubmission
 from .questions import BaseQuestion
 
@@ -26,33 +27,6 @@ class MRForm(models.Model):
     class Meta:
         verbose_name = "Form"
         verbose_name_plural = "Forms"
-
-    def all_steps(self) -> list["Step"]:
-        """
-        Get all steps and substeps from a form as a flat list, up to an arbitrary depth.
-        """
-        all_steps_list = []
-        stack: list["Step"] = list(self.steps.all())  # type: ignore
-
-        while stack:
-            step = stack.pop()
-            all_steps_list.append(step)
-            # Add substeps to the stack to process them
-            stack.extend(step.substeps.all())  # type: ignore
-
-        return all_steps_list
-
-    def all_questions(self) -> list:
-        """
-        Get all questions from a form as a flat list, up to an arbitrary depth.
-        Returns specific question subclass instances (TextQuestion, SelectQuestion, etc.)
-        """
-        all_questions_list = []
-        for step in self.all_steps():
-            questions: QuerySet[BaseQuestion] = step.questions.all()  # type: ignore
-            for question in questions:
-                all_questions_list.append(question.get_subclass())
-        return all_questions_list
 
     def __str__(self):
         return f"{self.name} ({self.pk})"
@@ -85,6 +59,16 @@ class Step(models.Model):
         blank=True,
     )
 
+    # Automatically set to the top-level form this step belongs to
+    top_form = models.ForeignKey(
+        MRForm,
+        on_delete=models.CASCADE,
+        related_name="all_steps",
+        null=True,
+        blank=True,
+        editable=False,
+    )
+
     is_overview = models.BooleanField(
         default=False,
         help_text="If true, this step serves as an overview step for the entire form. It should not have any questions attached to it.",
@@ -92,16 +76,6 @@ class Step(models.Model):
 
     class Meta:
         order_with_respect_to = "parent"
-        constraints = [
-            models.CheckConstraint(
-                # Parent and form cannot both be set, but one of them must be.
-                check=(
-                    Q(parent__isnull=True, form__isnull=False)
-                    | Q(parent__isnull=False, form__isnull=True)
-                ),
-                name="step_parent_xor_form",
-            )
-        ]
 
     def clean(self) -> None:
         """Validate that overview steps don't have questions."""
@@ -113,29 +87,25 @@ class Step(models.Model):
                 }
             )
 
-    @property
-    def top_form(self) -> MRForm:
-        """Returns the MRForm this step belongs to, whether directly or indirectly."""
+    def save(self, *args, **kwargs):
+        """Automatically set the top_form based on the form or parent relationship."""
+        # Validate the constraint: either form or parent must be set, but not both
+        if (self.form is None and self.parent is None) or (
+            self.form is not None and self.parent is not None
+        ):
+            raise ValueError(
+                "Step must have either 'form' (for top-level steps) or 'parent' (for substeps), but not both."
+            )
 
-        def _get_form_recursive(step: Step, visited: set[int]) -> MRForm:
-            """Helper method to recursively find the MRForm, tracking visited steps to avoid infinite loops."""
+        if self.form:
+            self.top_form = self.form
+        else:
+            parent = self.parent
+            while not parent.form_id:
+                parent = parent.parent
+            self.top_form_id = parent.form_id
 
-            if step.pk is None:
-                raise ValueError("Step must be saved before calling get_form.")
-
-            if step.pk in visited:
-                raise ValueError("Circular reference detected in step hierarchy.")
-            visited.add(step.pk)
-
-            if step.form:
-                return step.form
-            elif step.parent:
-                return _get_form_recursive(step.parent, visited)
-            else:
-                # This should never happen.
-                raise ValueError("Step is neither a top-level step nor a substep.")
-
-        return _get_form_recursive(self, set())
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.name} ({self.pk})"
