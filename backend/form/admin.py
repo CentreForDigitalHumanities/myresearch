@@ -304,6 +304,7 @@ class SelectQuestionAdmin(admin.ModelAdmin):
                 "fields": (
                     "text_nl",
                     "text_en",
+                    "annotation_key",
                     "step",
                     "description_nl",
                     "description_en",
@@ -326,7 +327,7 @@ class SelectQuestionAdmin(admin.ModelAdmin):
 
 @admin.register(TrueFalseQuestion)
 class TrueFalseQuestionAdmin(admin.ModelAdmin):
-    list_display = ("text_nl", "text_en", "step", "required", "default_value")
+    list_display = ("text_nl", "annotation_key", "step", "required", "default_value")
     list_filter = ("step", "required", "default_value")
     search_fields = ("text_nl", "text_en", "description_nl", "description_en")
     fieldsets = (
@@ -336,6 +337,7 @@ class TrueFalseQuestionAdmin(admin.ModelAdmin):
                 "fields": (
                     "text_nl",
                     "text_en",
+                    "annotation_key",
                     "step",
                     "description_nl",
                     "description_en",
@@ -360,6 +362,7 @@ class TextQuestionAdmin(admin.ModelAdmin):
                 "fields": (
                     "text_nl",
                     "text_en",
+                    "annotation_key",
                     "step",
                     "description_nl",
                     "description_en",
@@ -384,6 +387,7 @@ class NumberQuestionAdmin(admin.ModelAdmin):
                 "fields": (
                     "text_nl",
                     "text_en",
+                    "annotation_key",
                     "step",
                     "description_nl",
                     "description_en",
@@ -408,6 +412,7 @@ class DateQuestionAdmin(admin.ModelAdmin):
                 "fields": (
                     "text_nl",
                     "text_en",
+                    "annotation_key",
                     "step",
                     "description_nl",
                     "description_en",
@@ -432,6 +437,7 @@ class FileUploadQuestionAdmin(admin.ModelAdmin):
                 "fields": (
                     "text_nl",
                     "text_en",
+                    "annotation_key",
                     "step",
                     "description_nl",
                     "description_en",
