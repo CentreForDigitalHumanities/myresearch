@@ -6,6 +6,9 @@ import { useI18n } from "vue-i18n";
 import type { UUListTypes } from "cdh-vue-lib";
 import Loading from "~/components/shared/Loading.vue";
 import { useQuery } from "@vue/apollo-composable";
+import { SubmissionStatus } from "~/generated/gql/graphql";
+import type { GetFacultyQuestionQuery } from "~/generated/gql/graphql";
+import { useTranslatedStatus } from "~/composables/useTranslatedStatus";
 
 const { t } = useI18n();
 
@@ -16,7 +19,8 @@ const GET_STUDY_PAGES = graphql(`
         $offset: Int
         $ordering: String
         $search: String
-        $createdByIds: [ID]
+        $statuses: [String]
+        $faculties: [ID]
     ) {
         studyPages(
             mrPermission: "View"
@@ -24,7 +28,8 @@ const GET_STUDY_PAGES = graphql(`
             offset: $offset
             ordering: $ordering
             search: $search
-            createdByIds: $createdByIds
+            statuses: $statuses
+            faculties: $faculties
         ) {
             results {
                 id
@@ -47,7 +52,8 @@ const GET_STUDY_PAGES = graphql(`
 const variables = ref<GraphQLListVariables>({
     search: "",
     ordering: "-reference",
-    createdByIds: [],
+    statuses: [],
+    faculties: [],
 });
 
 const orderingOptions = computed(() => {
@@ -79,34 +85,51 @@ const orderingOptions = computed(() => {
     ];
 });
 
-// Secondary Query to derive filter options from
-const GET_USERS = graphql(`
-    query getUsers {
-        users {
-            id
-            fullName
+const GET_FACULTY_QUESTION = graphql(`
+    query GetFacultyQuestion {
+        selectQuestion(annotationKey: "faculty") {
+            options {
+                id
+                labelEn
+                labelNl
+            }
         }
     }
 `);
 
-const { result } = useQuery(GET_USERS);
+const { result: facultyResult } =
+    useQuery<GetFacultyQuestionQuery>(GET_FACULTY_QUESTION);
 
-const users = computed(() => result.value?.users ?? []);
+const facultyOptions = computed(
+    () => facultyResult.value?.selectQuestion?.options ?? [],
+);
 
 const filters = computed<UUListTypes.FilterDefinition[]>(() => {
-    const userFilter: UUListTypes.FilterDefinition = {
-        field: "createdByIds",
-        label: t("Creator"),
-        options: users.value.map((user) => [user.id, user.fullName]),
+    const statusFilter: UUListTypes.FilterDefinition = {
+        field: "statuses",
+        label: t("Status"),
+        options: Object.values(SubmissionStatus).map((status) => [
+            status,
+            useTranslatedStatus(status),
+        ]),
         type: "checkbox",
         initial: [],
     };
-    return [userFilter];
+    const facultyFilter: UUListTypes.FilterDefinition = {
+        field: "faculties",
+        label: t("Faculty"),
+        options: facultyOptions.value.map((faculty) => [
+            faculty.id,
+            useTranslateableAttribute(faculty, "label"),
+        ]),
+        type: "checkbox",
+        initial: [],
+    };
+    return [facultyFilter, statusFilter];
 });
 </script>
 
 <template>
-    <h4>Note: This page is a proof-of-concept for future lists.</h4>
     <SharedGraphQLList
         v-model:variables="variables"
         :query-document="GET_STUDY_PAGES"
