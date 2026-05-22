@@ -131,7 +131,6 @@ services:
       - NUXT_PUBLIC_SAML_URL=${BASE_URL}/saml
     volumes:
       - ./frontend/generated:/app/generated
-    user: "${UID}:${GID}"
     develop:
       watch:
         - path: ./frontend
