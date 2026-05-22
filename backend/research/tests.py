@@ -7,6 +7,7 @@ from django.db import transaction
 
 from main.models import MRGroups, MRPermission, User
 from research.other_models.utils import YearCounter
+from form.models import Step, TextQuestion, QuestionResponse, UserFormSubmission
 from .models import Study
 
 #################
@@ -206,3 +207,164 @@ class TestStudyReferenceGeneration:
 
         # All references should be unique
         assert len(references) == 10, "Duplicate references found in concurrent saves"
+
+
+###########################
+# StudyManager Annotations #
+###########################
+
+
+@pytest.mark.django_db(transaction=True)
+class TestStudyManagerAnnotations:
+    """Tests for StudyManager annotation methods."""
+
+    def test_annotation_key_creates_study_attributes(self, form, normal_user):
+        """Test that questions with annotation_key become attributes on Study."""
+        step = Step.objects.create(name="Step", slug="step", form=form)
+
+        # Create questions with annotation keys
+        q1 = TextQuestion.objects.create(
+            text="Study Name",
+            step=step,
+            annotation_key="study_name",
+        )
+        q2 = TextQuestion.objects.create(
+            text="Location",
+            step=step,
+            annotation_key="location",
+        )
+
+        # Create a study and submission
+        study = Study.objects.create(created_by=normal_user)
+        submission = UserFormSubmission.objects.create(
+            user=normal_user,
+            form=form,
+            study=study,
+        )
+
+        # Create responses for both questions
+        response1 = QuestionResponse.objects.create(
+            question=q1,
+            answer={"value": "My Study"},
+        )
+        response1.submissions.add(submission)
+
+        response2 = QuestionResponse.objects.create(
+            question=q2,
+            answer={"value": "Berlin"},
+        )
+        response2.submissions.add(submission)
+
+        # Retrieve study from queryset with annotations
+        study_with_annotations = Study.objects.get(pk=study.pk)
+
+        # Check that annotations are present
+        assert hasattr(study_with_annotations, "study_name")
+        assert hasattr(study_with_annotations, "location")
+        assert study_with_annotations.study_name == "My Study"
+        assert study_with_annotations.location == "Berlin"
+
+    def test_empty_annotation_key_excluded(self, form, normal_user):
+        """Test that questions with empty annotation_key are not annotated."""
+        step = Step.objects.create(name="Step", slug="step", form=form)
+
+        # Create question with empty annotation_key
+        q1 = TextQuestion.objects.create(
+            text="Question without key",
+            step=step,
+            annotation_key="",
+        )
+
+        study = Study.objects.create(created_by=normal_user)
+        submission = UserFormSubmission.objects.create(
+            user=normal_user,
+            form=form,
+            study=study,
+        )
+
+        response = QuestionResponse.objects.create(
+            question=q1,
+            answer={"value": "Some answer"},
+        )
+        response.submissions.add(submission)
+
+        study_with_annotations = Study.objects.get(pk=study.pk)
+
+        # Empty annotation_key should not create an attribute
+        assert not hasattr(study_with_annotations, "")
+
+    def test_latest_answer_retrieved(self, form, normal_user):
+        """Test that the latest answer is retrieved for each annotation_key."""
+        step = Step.objects.create(name="Step", slug="step", form=form)
+
+        q1 = TextQuestion.objects.create(
+            text="Name",
+            step=step,
+            annotation_key="name",
+        )
+
+        study = Study.objects.create(created_by=normal_user)
+        submission = UserFormSubmission.objects.create(
+            user=normal_user,
+            form=form,
+            study=study,
+        )
+
+        # Create multiple responses for the same question
+        response1 = QuestionResponse.objects.create(
+            question=q1,
+            answer={"value": "First Name"},
+        )
+        response1.submissions.add(submission)
+
+        response2 = QuestionResponse.objects.create(
+            question=q1,
+            answer={"value": "Latest Name"},
+        )
+        response2.submissions.add(submission)
+
+        study_with_annotations = Study.objects.get(pk=study.pk)
+
+        # Should get the latest answer
+        assert study_with_annotations.name == "Latest Name"
+
+    def test_default_title_annotation(self, form, normal_user):
+        """Test that default title is provided when no title annotation exists."""
+
+        study = Study.objects.create(created_by=normal_user)
+
+        study_with_annotations = Study.objects.get(pk=study.pk)
+
+        # Should have a default title
+        assert hasattr(study_with_annotations, "title")
+        assert study_with_annotations.title is not None
+        assert "Study created on" in study_with_annotations.title
+
+    def test_title_annotation_overrides_default(self, form, normal_user):
+        """Test that explicit title annotation overrides default."""
+        # Set the form's study_name_question to a question with annotation_key 'title'
+        step = Step.objects.create(name="Step", slug="step", form=form)
+
+        title_q = TextQuestion.objects.create(
+            text="Study Title",
+            step=step,
+            annotation_key="title",
+        )
+
+        study = Study.objects.create(created_by=normal_user)
+        submission = UserFormSubmission.objects.create(
+            user=normal_user,
+            form=form,
+            study=study,
+        )
+
+        response = QuestionResponse.objects.create(
+            question=title_q,
+            answer={"value": "Custom Title"},
+        )
+        response.submissions.add(submission)
+
+        study_with_annotations = Study.objects.get(pk=study.pk)
+
+        # Should have custom title
+        assert study_with_annotations.title == "Custom Title"

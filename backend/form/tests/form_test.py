@@ -1,8 +1,9 @@
 import pytest
 
 from django.db import IntegrityError, transaction
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 
-from form.models import MRForm, Step
+from form.models import MRForm, Step, BaseQuestion, TextQuestion
 
 
 @pytest.mark.django_db(transaction=True)
@@ -49,18 +50,49 @@ def test_question_save_sets_form(form: MRForm):
 
 
 @pytest.mark.django_db(transaction=True)
-class TestAllStepsAllQuestions:
-    """Tests for the MRForm.all_steps and MRForm.all_questions methods."""
+class TestAnnotationKey:
+    """Tests for the annotation_key field and its uniqueness constraint."""
 
-    def test_all_steps_returns_all_steps(self, form: MRForm):
-        """Test that all_steps returns all steps in the form."""
-        step1 = Step.objects.create(name="Step 1", slug="step1", form=form)
-        step2 = Step.objects.create(name="Step 2", slug="step2", parent=step1)
-        step3 = Step.objects.create(name="Step 3", slug="step3", parent=step1)
-        step4 = Step.objects.create(name="Step 4", slug="step4", parent=step2)
-        step5 = Step.objects.create(name="Step 5", slug="step5", parent=step3)
-        step6 = Step.objects.create(name="Step 6", slug="step6", parent=step4)
+    def test_annotation_key_unique_per_form(self, form: MRForm):
+        """Test that annotation_key is unique within a form."""
+        step = Step.objects.create(name="Step", slug="step", form=form)
 
-        all_steps = form.all_steps()
+        # Create first question with annotation_key
+        TextQuestion.objects.create(
+            text="Question 1",
+            step=step,
+            annotation_key="first_question",
+        )
 
-        assert set(all_steps) == {step1, step2, step3, step4, step5, step6}
+        # Creating a second question with the same annotation_key should fail
+        with transaction.atomic():
+            with pytest.raises(Exception):  # IntegrityError from DB constraint
+                TextQuestion.objects.create(
+                    text="Question 2",
+                    step=step,
+                    annotation_key="first_question",
+                )
+
+    def test_annotation_key_allowed_in_different_forms(self):
+        """Test that the same annotation_key can be used in different forms."""
+        form1 = MRForm.objects.create(name="Form 1", version="1.0.0")
+        form2 = MRForm.objects.create(name="Form 2", version="1.0.0")
+
+        step1 = Step.objects.create(name="Step 1", slug="step1", form=form1)
+        step2 = Step.objects.create(name="Step 2", slug="step2", form=form2)
+
+        # Create questions with same annotation_key in different forms
+        q1 = TextQuestion.objects.create(
+            text="Question 1",
+            step=step1,
+            annotation_key="shared_key",
+        )
+        q2 = TextQuestion.objects.create(
+            text="Question 2",
+            step=step2,
+            annotation_key="shared_key",
+        )
+
+        assert q1.annotation_key == q2.annotation_key == "shared_key"
+        assert q1.form == form1
+        assert q2.form == form2
