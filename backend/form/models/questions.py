@@ -29,12 +29,12 @@ class BaseQuestion(models.Model):
     step = models.ForeignKey(
         "form.Step", on_delete=models.CASCADE, related_name="questions"
     )
-    # synced from step.top_form on save
+    # synced from step.form on save
     form = models.ForeignKey(
         "form.MRForm",
         on_delete=models.CASCADE,
-        related_name="all_questions",
-        null=True,
+        related_name="questions",
+        null=False,
         blank=True,
         editable=False,
     )
@@ -76,8 +76,8 @@ class BaseQuestion(models.Model):
     def save(self, *args, **kwargs):
         """Run full clean and sync top_form from step, to ensure validators get run."""
         # Sync form from the step's top_form
-        if self.step and self.step.top_form:
-            self.form = self.step.top_form
+        if self.step and self.step.form:
+            self.form = self.step.form
         self.full_clean()
         super().save(*args, **kwargs)
 

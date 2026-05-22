@@ -156,7 +156,7 @@ class Command(BaseCommand):
             ):
                 substep = Step.objects.create(
                     parent=step,
-                    form=None,
+                    form=step.form,
                     name_nl=self.faker_nl.sentence(nb_words=5),
                     name_en=self.faker_en.sentence(nb_words=5),
                     description_nl=self.faker_nl.paragraph(),
@@ -270,31 +270,8 @@ class Command(BaseCommand):
                 **_base_question_fields(form, index), size_limit=1024
             )
 
-        def _get_all_steps(form: MRForm) -> list[Step]:
-            """Recursively gather all steps and substeps of a given form."""
-
-            def _get_all_substeps(step: Step) -> list[Step]:
-                """Recursively gather all substeps of a given step."""
-                all_substeps: list[Step] = []
-                substeps = Step.objects.filter(parent=step)
-                for substep in substeps:
-                    all_substeps.append(substep)
-                    all_substeps.extend(_get_all_substeps(substep))
-                return all_substeps
-
-            all_steps: list[Step] = []
-
-            steps = Step.objects.filter(form=form)
-            for step in steps:
-                all_steps.append(step)
-                all_steps.extend(_get_all_substeps(step))
-
-            return all_steps
-
-        all_steps = _get_all_steps(form)
-
         for step in tqdm(
-            all_steps, desc="Generating questions...", disable=options["silent"]
+            form.steps.all(), desc="Generating questions...", disable=options["silent"]
         ):
             number_of_questions = self.faker.random_int(
                 MIN_QUESTIONS_IN_STEP, MAX_QUESTIONS_IN_STEP
@@ -404,7 +381,7 @@ class Command(BaseCommand):
             study=study,
         )
 
-        form_questions = form.all_questions.all()
+        form_questions = form.questions.all()
 
         # First generate answers for all questions, regardless of visibility.
         for question in form_questions:

@@ -15,15 +15,6 @@ class MRForm(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    study_name_question = models.ForeignKey(
-        "form.BaseQuestion",
-        on_delete=models.SET_NULL,
-        related_name="study_name_forms",
-        help_text="If set, the answer to this question will be used as the study name.",
-        null=True,
-        blank=True,
-    )
-
     class Meta:
         verbose_name = "Form"
         verbose_name_plural = "Forms"
@@ -41,13 +32,12 @@ class Step(models.Model):
         help_text="Used in the URL.",
     )
 
-    # Only for the top-level steps.
     form = models.ForeignKey(
         MRForm,
         on_delete=models.CASCADE,
         related_name="steps",
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
     )
 
     # Only for substeps.
@@ -57,16 +47,6 @@ class Step(models.Model):
         related_name="substeps",
         null=True,
         blank=True,
-    )
-
-    # Automatically set to the top-level form this step belongs to
-    top_form = models.ForeignKey(
-        MRForm,
-        on_delete=models.CASCADE,
-        related_name="all_steps",
-        null=True,
-        blank=True,
-        editable=False,
     )
 
     is_overview = models.BooleanField(
@@ -86,26 +66,6 @@ class Step(models.Model):
                     "is_overview": "Cannot mark as overview step when questions are attached."
                 }
             )
-
-    def save(self, *args, **kwargs):
-        """Automatically set the top_form based on the form or parent relationship."""
-        # Validate the constraint: either form or parent must be set, but not both
-        if (self.form is None and self.parent is None) or (
-            self.form is not None and self.parent is not None
-        ):
-            raise ValueError(
-                "Step must have either 'form' (for top-level steps) or 'parent' (for substeps), but not both."
-            )
-
-        if self.form:
-            self.top_form = self.form
-        else:
-            parent = self.parent
-            while not parent.form_id:
-                parent = parent.parent
-            self.top_form_id = parent.form_id
-
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.name} ({self.pk})"

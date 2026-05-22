@@ -221,8 +221,8 @@ class Migration(migrations.Migration):
                 (
                     "form",
                     models.ForeignKey(
-                        blank=True,
-                        null=True,
+                        blank=False,
+                        null=False,
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="steps",
                         to="form.mrform",

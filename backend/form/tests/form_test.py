@@ -13,65 +13,39 @@ def test_database_constraint_prevents_invalid_steps(form: MRForm):
 
     # Transactions are needed to avoid TransactionManagementError in tests.
     with transaction.atomic():
-        # The user should not be able to create a step with both parent and form.
+        # The user should not be able to create a step with just a parent.
         with pytest.raises(IntegrityError):
             Step.objects.create(
                 name="Invalid Step",
                 slug="invalid",
                 parent=parent_step,
-                form=form,
-            )
-
-    # The user should not be able to create a step with neither parent nor form.
-    with transaction.atomic():
-        with pytest.raises(IntegrityError):
-            Step.objects.create(
-                name="Invalid Step 2",
-                slug="invalid2",
-                # Neither parent nor form specified
             )
 
 
 @pytest.mark.django_db(transaction=True)
-class TestStepTopForm:
-    """Tests for the Step.top_form property."""
+def test_question_save_sets_form(form: MRForm):
+    """Test that the database constraint prevents creating invalid steps."""
 
-    def test_top_level_step_returns_own_form(self, form: MRForm):
-        """Test that a top-level step returns its own form."""
-        step = Step.objects.create(name="Top Level Step", slug="top-level", form=form)
+    step = Step.objects.create(name="Step", slug="Step", form=form)
 
-        assert step.top_form == form
+    # create will call save()
+    tq = TextQuestion.objects.create(
+        step=step,
+        text="Text 1",
+    )
 
-    def test_substep_returns_parent_form(self, form: MRForm):
-        """Test that a substep returns its parent's form."""
-        parent_step = Step.objects.create(name="Parent Step", slug="parent", form=form)
+    assert tq.form == step.form
 
-        substep = Step.objects.create(
-            name="Substep", slug="substep", parent=parent_step
-        )
+    # Creating a question without saving should allow for no form to be set
+    tq2 = TextQuestion(step=step, text="Text 2")
 
-        assert substep.top_form == form
+    with pytest.raises(ObjectDoesNotExist):
+        _ = tq2.form
 
-    def test_multi_level_nesting_returns_top_form(self, form: MRForm):
-        """Test that deeply nested steps return the top-level form."""
-        # Create hierarchy: form -> step1 -> step2 -> step3
-        step1 = Step.objects.create(name="Step 1", slug="step1", form=form)
+    # But it should be set after save()
+    tq2.save()
 
-        step2 = Step.objects.create(name="Step 2", slug="step2", parent=step1)
-
-        step3 = Step.objects.create(name="Step 3", slug="step3", parent=step2)
-
-        # All steps should return the same top-level form
-        assert step1.top_form == step2.top_form == step3.top_form == form
-
-    def test_unsaved_step_raises_error(self, form: MRForm):
-        """Test that calling top_form on an unsaved step raises ValueError."""
-        step = Step(name="Unsaved Step", slug="unsaved", form=form)
-
-        with pytest.raises(ValueError) as cm:
-            _ = step.top_form
-
-        assert "Step must be saved before calling get_form" in str(cm.value)
+    assert tq2.form == step.form
 
 
 @pytest.mark.django_db(transaction=True)
