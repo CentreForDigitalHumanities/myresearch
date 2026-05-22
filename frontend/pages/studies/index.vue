@@ -138,8 +138,8 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
                         <td class="align-middle">
                             <NuxtLink
                                 :to="{
-                                    name: 'studies-study_id',
-                                    params: { study_id: row.id },
+                                    name: 'studies-studyId',
+                                    params: { studyId: row.id },
                                 }"
                             >
                                 {{ row.title }}
