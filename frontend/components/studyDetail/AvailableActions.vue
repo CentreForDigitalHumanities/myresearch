@@ -8,6 +8,7 @@ import type { GetFirstSlugAndActionsQuery } from "~/generated/gql/graphql";
 import { ActionEnum } from "~/generated/gql/graphql";
 import { NuxtLink } from "#components";
 import type { RouteParamsRawGeneric } from "vue-router";
+import Loading from "~/components/shared/Loading.vue";
 
 type AvailableAction = {
     label: string;
@@ -95,7 +96,7 @@ const availableActions = computed<AvailableAction[]>(() => {
 
 <template>
     <div v-if="loading">
-        <loading />
+        <Loading />
     </div>
     <div v-else-if="isSlugLoaded && availableActions.length > 0">
         <h3 class="mb-3">{{ $t("Available actions") }}:</h3>

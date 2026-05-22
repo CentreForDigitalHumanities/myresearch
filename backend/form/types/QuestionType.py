@@ -21,6 +21,7 @@ from form.models import (
     SelectQuestion,
     TextQuestion,
 )
+from form.models.responses import MRDocument
 from form.types.SelectOptionType import SelectOptionType
 
 
@@ -215,6 +216,20 @@ class FileUploadQuestionType(BaseQuestionMixin, ObjectType):
     def __init__(self, question=None, **kwargs):
         super().__init__(**kwargs)
         self.question = question
+
+    @staticmethod
+    def resolve_answer(parent, info: ResolveInfo):
+        # For file upload questions, the answer is stored as the UUID of the uploaded file.
+        # We need to convert the stored file ID to its corresponding UUID for the frontend.
+        if parent.answer is None:
+            return None
+
+        try:
+            document_id = int(parent.answer)
+            document = MRDocument.objects.get(pk=document_id)
+            return f"{{'uuid': '{str(document.file.uuid)}}}"
+        except (ValueError, MRDocument.DoesNotExist):
+            return None
 
     @staticmethod
     def resolve_size_limit(parent, info: ResolveInfo):

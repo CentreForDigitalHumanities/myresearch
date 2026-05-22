@@ -7,17 +7,15 @@ interface Props {
     isInvalid: boolean;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
-const modelValue = defineModel<number | null>();
+const modelValue = defineModel<string | null>();
 
 const config = useRuntimeConfig();
 const uploadUrl = `${config.public.API_URL}/form/upload/`;
 
 // Local state for display purposes (file name, size) and for building the download URL
 const currentFile = ref<{ name: string; size: number } | null>(null);
-const fileUuid = ref<string | null>(null);
-
 const isUploading = ref(false);
 const uploadError = ref<string | null>(null);
 
@@ -35,21 +33,21 @@ async function onFileChanged(event: Event) {
     formData.append("file", file);
 
     try {
+        const csrfToken = useCookie("csrftoken").value ?? "";
         const response = await $fetch<{ value: number; uuid: string }>(
             uploadUrl,
             {
                 method: "POST",
                 body: formData,
                 credentials: "include",
+                headers: { "X-CSRFToken": csrfToken },
             },
         );
-        modelValue.value = response.value;
-        fileUuid.value = response.uuid;
+        modelValue.value = response.uuid;
         currentFile.value = { name: file.name, size: file.size };
     } catch {
         uploadError.value = "Upload failed. Please try again.";
         modelValue.value = null;
-        fileUuid.value = null;
         currentFile.value = null;
     } finally {
         isUploading.value = false;
@@ -58,14 +56,13 @@ async function onFileChanged(event: Event) {
 
 function removeFile() {
     modelValue.value = null;
-    fileUuid.value = null;
     currentFile.value = null;
     uploadError.value = null;
 }
 
 const downloadUrl = computed(() =>
-    fileUuid.value
-        ? `${config.public.API_URL}/form/files/${fileUuid.value}/`
+    modelValue.value
+        ? `${config.public.API_URL}/form/files/${modelValue.value}/`
         : null,
 );
 </script>
