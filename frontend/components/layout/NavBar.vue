@@ -38,7 +38,7 @@ const currentUser = computed(() => useCurrentUserStore().currentUser);
                     <li>
                         <NuxtLink
                             v-if="currentUser"
-                            to="/procreg/start"
+                            to="/start"
                             class="nav-link"
                             active-class="active"
                             >{{ $t("New registration") }}

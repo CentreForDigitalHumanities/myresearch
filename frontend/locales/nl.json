@@ -126,8 +126,10 @@
     "An error occurred while saving the form. Please try again.": "Er is een fout opgetreden bij het opslaan van het formulier. Probeer het opnieuw.",
     "Registration submitted successfully.": "Registratie succesvol ingediend.",
     "Your form contains errors. Please review and resubmit.": "Het formulier bevat fouten. Bekijk deze en probeer het opnieuw in te dienen.",
+    "Delete": "Verwijderen",
+    "No actions available": "Geen acties beschikbaar",
     "Approved": "Goedgekeurd",
     "Draft": "Concept",
-    "Rejected": "Afgekeurd",
+    "Rejected": "Afgewezen",
     "Faculty": "Faculteit"
 }
