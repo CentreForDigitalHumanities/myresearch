@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import type { GetStudyQuery } from "~/generated/gql/graphql";
+import { i18n } from "~/plugins/i18n";
 
-defineProps<{
+interface Props {
     study: NonNullable<GetStudyQuery["study"]>;
-}>();
-
-function formatDate(date: string) {
-    const split = date.split(/[T.]/);
-    return split[0] + ", " + split[1]
 }
+const props = defineProps<Props>();
+
+const timeFormat: Intl.DateTimeFormatOptions = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'}
+function toLocalDate(isoString: string) {
+    return new Date(isoString).toLocaleTimeString(i18n.global.locale.value, timeFormat)
+}
+const createdAt = computed(() => toLocalDate(props.study.createdAt));
+const updatedAt = computed(() => toLocalDate(props.study.updatedAt));
 </script>
 
 <template>
@@ -38,11 +42,11 @@ function formatDate(date: string) {
             <ul>
                 <li class="mt-2">
                     {{ $t("Created on") }}:
-                    {{ formatDate(study.createdAt) }}
+                    {{ createdAt }}
                 </li>
                 <li class="mt-2">
                     {{ $t("Submitted on") }}:
-                    {{ formatDate(study.updatedAt) }}
+                    {{ updatedAt }}
                 </li>
             </ul>
         </div>
