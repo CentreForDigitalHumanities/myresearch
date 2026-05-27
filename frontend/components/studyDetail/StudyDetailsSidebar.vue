@@ -1,18 +1,14 @@
 <script setup lang="ts">
 import type { GetStudyQuery } from "~/generated/gql/graphql";
-import { i18n } from "~/plugins/i18n";
+import {localDateTime} from "../../composables/useTranslation";
 
 interface Props {
     study: NonNullable<GetStudyQuery["study"]>;
 }
 const props = defineProps<Props>();
 
-const timeFormat: Intl.DateTimeFormatOptions = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'}
-function toLocalDate(isoString: string) {
-    return new Date(isoString).toLocaleTimeString(i18n.global.locale.value, timeFormat)
-}
-const createdAt = computed(() => toLocalDate(props.study.createdAt));
-const updatedAt = computed(() => toLocalDate(props.study.updatedAt));
+const createdAt = computed(() => localDateTime(props.study.createdAt));
+const updatedAt = computed(() => localDateTime(props.study.updatedAt));
 </script>
 
 <template>

@@ -20,3 +20,10 @@ function useTranslateableAttribute<Key extends string>(
 }
 
 export { useTranslateableAttribute };
+
+const timeFormat: Intl.DateTimeFormatOptions = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'}
+function localDateTime(isoString: string) {
+    // localizes the isoString (from for example UTC time) into local datetime and handles translation
+    return new Date(isoString).toLocaleTimeString(i18n.global.locale.value, timeFormat)
+}
+export { localDateTime };
