@@ -5,8 +5,9 @@ defineProps<{
     study: NonNullable<GetStudyQuery["study"]>;
 }>();
 
-function formatDate(date: Date) {
-    return date.toISOString().split("T")[0];
+function formatDate(date: string) {
+    const split = date.split(/[T.]/);
+    return split[0] + ", " + split[1]
 }
 </script>
 
@@ -37,7 +38,7 @@ function formatDate(date: Date) {
             <ul>
                 <li class="mt-2">
                     {{ $t("Created on") }}:
-                    {{ study.createdAt }}
+                    {{ formatDate(study.createdAt) }}
                 </li>
                 <li class="mt-2">
                     {{ $t("Submitted on") }}:
