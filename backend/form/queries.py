@@ -58,15 +58,10 @@ class QuestionQueries(ObjectType):
         id: str = None,
         annotation_key: str = None,
     ) -> Optional[SelectQuestionType]:
-        """Retrieve a SelectQuestion by id or annotation_key.
+        user: User = info.context.user
+        if not user.is_authenticated:
+            return None
 
-        Args:
-            id: The ID of the SelectQuestion
-            annotation_key: The annotation_key of the question
-
-        Returns:
-            SelectQuestionType with options, or None if not found.
-        """
         if not id and not annotation_key:
             return None
 
