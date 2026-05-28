@@ -126,6 +126,8 @@
   "An error occurred while saving the form. Please try again.": "Er is een fout opgetreden bij het opslaan van het formulier. Probeer het opnieuw.",
   "Registration submitted successfully.": "Registratie succesvol ingediend.",
   "Your form contains errors. Please review and resubmit.": "Het formulier bevat fouten. Bekijk deze en probeer het opnieuw in te dienen.",
+  "Confirm new registration": "Bevestig nieuwe registratie",
+  "Are you sure you want to register a new study?": "Weet je zeker dat je een nieuwe studie wilt registreren?",
   "Delete": "Verwijderen",
   "No actions available": "Geen acties beschikbaar"
 }
