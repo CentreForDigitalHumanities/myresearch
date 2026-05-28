@@ -219,16 +219,17 @@ class FileUploadQuestionType(BaseQuestionMixin, ObjectType):
 
     @staticmethod
     def resolve_answer(parent, info: ResolveInfo):
-        # For file upload questions, the answer is stored as the UUID of the uploaded file.
-        # We need to convert the stored file ID to its corresponding UUID for the frontend.
+        # The answer is stored as {"value": "<uuid>"} (the cdh File UUID of the uploaded file).
         if parent.answer is None:
             return None
 
         try:
-            document_id = int(parent.answer)
-            document = MRDocument.objects.get(pk=document_id)
-            return f"{{'uuid': '{str(document.file.uuid)}}}"
-        except (ValueError, MRDocument.DoesNotExist):
+            uuid = parent.answer["value"]
+            if not uuid:
+                return None
+            MRDocument.objects.get(file__uuid=uuid)
+            return parent.answer
+        except (KeyError, TypeError, MRDocument.DoesNotExist):
             return None
 
     @staticmethod

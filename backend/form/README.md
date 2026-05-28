@@ -63,7 +63,7 @@ NumberQuestion:     {"value": 42}
 TrueFalseQuestion:  {"value": true}
 DateQuestion:       {"value": "2025-12-31"}
 SelectQuestion:     {"value": [1, 3]}
-FileUploadQuestion: {"file_url": "/path/to/file"}
+FileUploadQuestion: {"value": "<file_uuid>", "name": "<file_name>", "size": "<file_size>"}
 ```
 
 ### User-specific form structure
@@ -217,7 +217,6 @@ Result: The "Collaborator Information" step repeats 3 times
 ```
 
 For safety, the number of repeated instances is constrained to 1-10 (see `MAX_REPEAT_LIMIT`).
-
 
 ## Updating form fixtures
 

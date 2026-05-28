@@ -12,8 +12,8 @@ User = user_model
 class MRDocument(models.Model):
     """An uploaded file attached to a file upload question response.
 
-    QuestionResponse.answer references this model by PK:
-        {"value": <mrdocument_pk>}
+    QuestionResponse.answer references this model by its CDH File UUID:
+        {"value": "<uuid>"}
     """
 
     file = CDHFileField(on_delete=models.CASCADE)

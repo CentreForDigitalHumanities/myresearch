@@ -1,5 +1,8 @@
 <script lang="ts" setup>
-import type { FileUploadQuestionWithValue } from "~/composables/useProcessForm";
+import type {
+    FileUploadAnswer,
+    FileUploadQuestionWithValue,
+} from "~/composables/useProcessForm";
 import FormLabel from "./FormLabel.vue";
 
 interface Props {
@@ -9,15 +12,19 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const modelValue = defineModel<string | null>();
+const modelValue = defineModel<FileUploadAnswer | null>();
 
 const config = useRuntimeConfig();
 const uploadUrl = `${config.public.API_URL}/form/upload/`;
 
-// Local state for display purposes (file name, size) and for building the download URL
-const currentFile = ref<{ name: string; size: number } | null>(null);
 const isUploading = ref(false);
 const uploadError = ref<string | null>(null);
+
+const downloadUrl = computed(() =>
+    modelValue.value
+        ? `${config.public.API_URL}/form/files/${modelValue.value.value}/`
+        : null,
+);
 
 async function onFileChanged(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -34,21 +41,16 @@ async function onFileChanged(event: Event) {
 
     try {
         const csrfToken = useCookie("csrftoken").value ?? "";
-        const response = await $fetch<{ value: number; uuid: string }>(
-            uploadUrl,
-            {
-                method: "POST",
-                body: formData,
-                credentials: "include",
-                headers: { "X-CSRFToken": csrfToken },
-            },
-        );
-        modelValue.value = response.uuid;
-        currentFile.value = { name: file.name, size: file.size };
+        const response = await $fetch<FileUploadAnswer>(uploadUrl, {
+            method: "POST",
+            body: formData,
+            credentials: "include",
+            headers: { "X-CSRFToken": csrfToken },
+        });
+        modelValue.value = response;
     } catch {
         uploadError.value = "Upload failed. Please try again.";
         modelValue.value = null;
-        currentFile.value = null;
     } finally {
         isUploading.value = false;
     }
@@ -56,15 +58,8 @@ async function onFileChanged(event: Event) {
 
 function removeFile() {
     modelValue.value = null;
-    currentFile.value = null;
     uploadError.value = null;
 }
-
-const downloadUrl = computed(() =>
-    modelValue.value
-        ? `${config.public.API_URL}/form/files/${modelValue.value}/`
-        : null,
-);
 </script>
 
 <template>
@@ -91,17 +86,17 @@ const downloadUrl = computed(() =>
         <div v-if="uploadError" class="mt-2 text-danger">
             {{ uploadError }}
         </div>
-        <div v-if="currentFile" class="mt-2">
+        <div v-if="modelValue" class="mt-2">
             <strong>{{ $t("Selected file") }}:</strong>
-            {{ currentFile.name }} ({{
-                (currentFile.size / (1024 * 1024)).toFixed(1)
+            {{ modelValue.name }} ({{
+                (modelValue.size / (1024 * 1024)).toFixed(1)
             }}
             MB)
             <a
                 v-if="downloadUrl"
                 :href="downloadUrl"
                 class="btn btn-outline-primary btn-sm ms-2"
-                target="_blank"
+                download
             >
                 {{ $t("Download") }}
             </a>

@@ -32,10 +32,9 @@ function formatAnswer(question: QuestionWithValue): string {
     switch (question.__typename) {
         case "TrueFalseQuestionType":
             return value ? t("Yes") : t("No");
-        case "FileUploadQuestionType":
-            return value instanceof File ? value.name : notAnswered.value;
         case "SelectQuestionType":
             return getSelectLabel(question);
+        case "FileUploadQuestionType":
         case "TextQuestionType":
         case "DateQuestionType":
             return typeof value === "string" && value.trim() !== ""

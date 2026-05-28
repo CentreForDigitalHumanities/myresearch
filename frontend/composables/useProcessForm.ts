@@ -23,22 +23,33 @@ export type TextQuestionWithValue = TextQuestionType &
     LocatedQuestion & {
         value: string;
     };
+
 export type NumberQuestionWithValue = NumberQuestionType &
     LocatedQuestion & {
         value: number;
     };
+
 export type TrueFalseQuestionWithValue = TrueFalseQuestionType &
     LocatedQuestion & {
         value: boolean;
     };
+
+export type FileUploadAnswer = {
+    value: string;
+    name: string;
+    size: number;
+};
+
 export type FileUploadQuestionWithValue = FileUploadQuestionType &
     LocatedQuestion & {
-        value: number | null;
+        value: FileUploadAnswer | null;
     };
+
 export type DateQuestionWithValue = DateQuestionType &
     LocatedQuestion & {
         value: string;
     };
+
 export type SelectQuestionWithValue = SelectQuestionType &
     LocatedQuestion & {
         value: string;
@@ -271,15 +282,32 @@ function addValueAndLocationToQuestion(
                     question.defaultValue,
                 ),
             };
-        case "FileUploadQuestionType":
+        case "FileUploadQuestionType": {
+            let fileValue: FileUploadAnswer | null = null;
+            if (question.answer) {
+                try {
+                    const parsed: unknown = JSON.parse(question.answer);
+                    if (
+                        parsed &&
+                        typeof parsed === "object" &&
+                        "value" in parsed &&
+                        "name" in parsed &&
+                        "size" in parsed &&
+                        typeof (parsed as FileUploadAnswer).value ===
+                            "string" &&
+                        typeof (parsed as FileUploadAnswer).name === "string" &&
+                        typeof (parsed as FileUploadAnswer).size === "number"
+                    ) {
+                        fileValue = parsed as FileUploadAnswer;
+                    }
+                } catch {}
+            }
             return {
                 ...question,
                 location,
-                value: parseAnswer<number | null>(
-                    question.answer,
-                    question.__typename,
-                ),
+                value: fileValue,
             };
+        }
     }
 }
 

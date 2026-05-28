@@ -7,7 +7,7 @@ from .models.responses import MRDocument, QuestionResponse
 
 
 class FileUploadView(LoginRequiredMixin, View):
-    """Accept a file upload and return the MRDocument PK for use in answers."""
+    """Accept a file upload and return the answer payload for use in QuestionResponse.answer."""
 
     def post(self, request, *args, **kwargs):
         uploaded_file = request.FILES.get("file")
@@ -19,7 +19,12 @@ class FileUploadView(LoginRequiredMixin, View):
         document.save()
 
         return JsonResponse(
-            {"value": document.pk, "uuid": str(document.file.uuid)}, status=201
+            {
+                "value": str(document.file.uuid),
+                "name": uploaded_file.name,
+                "size": uploaded_file.size,
+            },
+            status=201,
         )
 
 
@@ -42,7 +47,7 @@ class FileDownloadView(LoginRequiredMixin, BaseFileView):
         user = request.user
         if not (user.is_privacy_officer or user.is_fetc_member):
             has_access = QuestionResponse.objects.filter(
-                answer__value=document.pk,
+                answer__value=str(document.file.uuid),
                 submissions__user=user,
             ).exists()
             if not has_access:
