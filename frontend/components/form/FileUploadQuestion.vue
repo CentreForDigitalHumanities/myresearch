@@ -4,6 +4,7 @@ import type {
     FileUploadQuestionWithValue,
 } from "~/composables/useProcessForm";
 import FormLabel from "./FormLabel.vue";
+import { useDisplayFileSize } from "~/composables/useDisplayFileSize.js";
 
 interface Props {
     question: FileUploadQuestionWithValue;
@@ -12,7 +13,12 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const modelValue = defineModel<FileUploadAnswer | null>();
+const modelValue = defineModel<FileUploadAnswer | null>({
+    default: null,
+});
+
+// Initialize modelValue with an existing answer.
+onMounted(() => (modelValue.value = props.question.value ?? null));
 
 const config = useRuntimeConfig();
 const uploadUrl = `${config.public.API_URL}/form/upload/`;
@@ -88,10 +94,7 @@ function removeFile() {
         </div>
         <div v-if="modelValue" class="mt-2">
             <strong>{{ $t("Selected file") }}:</strong>
-            {{ modelValue.name }} ({{
-                (modelValue.size / (1024 * 1024)).toFixed(1)
-            }}
-            MB)
+            {{ modelValue.name }} ({{ useDisplayFileSize(modelValue.size) }})
             <a
                 v-if="downloadUrl"
                 :href="downloadUrl"
