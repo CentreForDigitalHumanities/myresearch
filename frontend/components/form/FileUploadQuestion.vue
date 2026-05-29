@@ -5,6 +5,7 @@ import type {
 } from "~/composables/useProcessForm";
 import FormLabel from "./FormLabel.vue";
 import { useDisplayFileSize } from "~/composables/useDisplayFileSize.js";
+import { useI18n } from "vue-i18n";
 
 interface Props {
     question: FileUploadQuestionWithValue;
@@ -19,6 +20,8 @@ const modelValue = defineModel<FileUploadAnswer | null>({
 
 // Initialize modelValue with an existing answer.
 onMounted(() => (modelValue.value = props.question.value ?? null));
+
+const { t } = useI18n();
 
 const config = useRuntimeConfig();
 const uploadUrl = `${config.public.API_URL}/form/upload/`;
@@ -55,7 +58,7 @@ async function onFileChanged(event: Event) {
         });
         modelValue.value = response;
     } catch {
-        uploadError.value = "Upload failed. Please try again.";
+        uploadError.value = t("Upload failed. Please try again.");
         modelValue.value = null;
     } finally {
         isUploading.value = false;
@@ -78,6 +81,7 @@ function removeFile() {
             {{ useTranslateableAttribute(question, "description") }}
         </p>
         <input
+            v-show="!modelValue"
             :id="`${question.questionId}-${question.repeatIndex}`"
             ref="fileInput"
             type="file"
@@ -95,21 +99,25 @@ function removeFile() {
         <div v-if="modelValue" class="mt-2">
             <strong>{{ $t("Selected file") }}:</strong>
             {{ modelValue.name }} ({{ useDisplayFileSize(modelValue.size) }})
-            <a
-                v-if="downloadUrl"
-                :href="downloadUrl"
-                class="btn btn-outline-primary btn-sm ms-2"
-                download
-            >
-                {{ $t("Download") }}
-            </a>
-            <button
-                type="button"
-                class="btn btn-outline-secondary btn-sm ms-2"
-                @click="removeFile"
-            >
-                {{ $t("Remove") }}
-            </button>
+            <div class="d-flex">
+                <button class="btn btn-primary btn-sm ms-2" role="button">
+                    <a
+                        v-if="downloadUrl"
+                        class="text-decoration-none text-reset"
+                        :href="downloadUrl"
+                        download
+                    >
+                        {{ $t("Download") }}
+                    </a>
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-outline-secondary btn-sm ms-2"
+                    @click="removeFile"
+                >
+                    {{ $t("Remove") }}
+                </button>
+            </div>
         </div>
     </div>
 </template>

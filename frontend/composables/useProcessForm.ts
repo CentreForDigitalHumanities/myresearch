@@ -12,6 +12,7 @@ import type {
 } from "~/generated/gql/graphql";
 import { i18n } from "@/plugins/i18n";
 import type { ValidationRuleWithParams } from "@vuelidate/core";
+import { useDisplayFileSize } from "./useDisplayFileSize";
 
 // Augmented question types
 interface LocatedQuestion {
@@ -102,6 +103,10 @@ interface FormAndValidation {
     formWithValues: FormWithValues;
     validationRules: FormValidationRules;
 }
+
+// Type for the t object from Vue-I18n.
+type TranslateFn = (key: string, interpolations?: Record<string, unknown>) => string;
+
 
 /**
  * Processes a queried form (QueriedForm) to produce two derived structures:
@@ -294,13 +299,13 @@ function addValueAndLocationToQuestion(
                         "name" in parsed &&
                         "size" in parsed &&
                         typeof (parsed as FileUploadAnswer).value ===
-                            "string" &&
+                        "string" &&
                         typeof (parsed as FileUploadAnswer).name === "string" &&
                         typeof (parsed as FileUploadAnswer).size === "number"
                     ) {
                         fileValue = parsed as FileUploadAnswer;
                     }
-                } catch {}
+                } catch { }
             }
             return {
                 ...question,
@@ -313,7 +318,7 @@ function addValueAndLocationToQuestion(
 
 function buildValidationRules(
     queriedForm: QueriedForm,
-    t: (key: string) => string,
+    t: TranslateFn,
 ): FormValidationRules {
     return {
         steps: queriedForm.steps.map((step) => ({
@@ -331,7 +336,7 @@ function buildValidationRules(
 
 function addValidationRule(
     question: QuestionType,
-    t: (key: string) => string,
+    t: TranslateFn,
 ): ValidationRule {
     const rules: Record<string, ValidationRuleWithParams> = {};
 
@@ -343,16 +348,25 @@ function addValidationRule(
         );
     }
 
-    // Question-type specific rules. This is an example. Add more as needed.
+    // Question-type specific rules.
     switch (question.__typename) {
         case "NumberQuestionType":
-            // Example: Add min/max value validation if needed
             if (question.positiveOnly) {
                 rules.positiveOnly = helpers.withMessage(
                     t("The number must be positive"),
                     (value: number) => value >= 0,
                 );
             }
+            break;
+        case "FileUploadQuestionType":
+            rules.fileSizeLimit = helpers.withMessage(
+                t("File exceeds maximum size: {size}", {
+                    size: useDisplayFileSize(question.sizeLimit),
+                }),
+                (value: FileUploadAnswer | null) =>
+                    value === null || value.size <= question.sizeLimit,
+            );
+            break;
     }
 
     return {

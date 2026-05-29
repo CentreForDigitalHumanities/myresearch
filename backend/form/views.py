@@ -16,6 +16,7 @@ class FileUploadView(LoginRequiredMixin, View):
 
         document = MRDocument()
         document.file = uploaded_file
+        document.file.file_instance.created_by = request.user
         document.save()
 
         return JsonResponse(
@@ -46,7 +47,10 @@ class FileDownloadView(LoginRequiredMixin, BaseFileView):
 
         user = request.user
         if not (user.is_privacy_officer or user.is_fetc_member):
-            has_access = QuestionResponse.objects.filter(
+            # We cannot rely on merely the user of the QuestionResponse,
+            # because no submission may have been created yet.
+            is_uploader = document.file.file_instance.created_by_id == user.pk
+            has_access = is_uploader or QuestionResponse.objects.filter(
                 answer__value=str(document.file.uuid),
                 submissions__user=user,
             ).exists()

@@ -52,10 +52,6 @@ INSTALLED_APPS = (
 
 CDH_FILES_FILE_ROOT = BASE_DIR / "uploads"
 
-# Silence the warning about cdh.files not being able to keep track of who
-# created uploaded files. We keep track of this on the QuestionResponse model.
-SILENCED_SYSTEM_CHECKS = ["cdh.files.W001"]
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
