@@ -4,7 +4,7 @@ import { graphql } from "~/generated/gql";
 import type { GetStudyQuery } from "~/generated/gql/graphql";
 import StudyDetailsSidebar from "~/components/studyDetail/StudyDetailsSidebar.vue";
 import AvailableActions from "~/components/studyDetail/AvailableActions.vue";
-import StudyProgessBar from "~/components/studyDetail/StudyProgessBar.vue";
+import StudyProgressBar from "~/components/studyDetail/StudyProgressBar.vue";
 import { useStudyId } from "~/composables/useRouteParams";
 
 const GET_STUDY = graphql(`
@@ -95,7 +95,7 @@ const studyStatus = computed(() =>
                             />
                         </div>
                         <div class="col-2">
-                            <StudyProgessBar :study-status="studyStatus" />
+                            <StudyProgressBar :study-status="studyStatus" />
                         </div>
                     </div>
                 </div>
