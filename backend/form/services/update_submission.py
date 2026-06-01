@@ -5,7 +5,8 @@ from form.mutations.utils.inputs import UserFormInput
 
 
 def _delete_document_if_cleared(old_answer: dict, new_answer: dict) -> None:
-    """Delete the MRDocument when a FileUpload answer is cleared.
+    """
+    Delete the MRDocument when a FileUpload answer is cleared.
 
     Called only when the response is not shared across submissions (non-revision),
     so deleting the document won't orphan another submission's reference.

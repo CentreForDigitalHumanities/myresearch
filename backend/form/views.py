@@ -16,6 +16,9 @@ class FileUploadView(LoginRequiredMixin, View):
 
         document = MRDocument()
         document.file = uploaded_file
+        # Ownership is also registered on the QuestionResponse model, but when
+        # the file is uploaded, no response may have been created yet, so we
+        # set it here as well so the user can download their own files.
         document.file.file_instance.created_by = request.user
         document.save()
 
@@ -30,7 +33,8 @@ class FileUploadView(LoginRequiredMixin, View):
 
 
 class FileDownloadView(LoginRequiredMixin, BaseFileView):
-    """Serve a file identified by its cdh File UUID.
+    """
+    Serve a file identified by its UUID.
 
     Access is granted to the submitting user, privacy officers and FETC members.
     """
@@ -47,8 +51,6 @@ class FileDownloadView(LoginRequiredMixin, BaseFileView):
 
         user = request.user
         if not (user.is_privacy_officer or user.is_fetc_member):
-            # We cannot rely on merely the user of the QuestionResponse,
-            # because no submission may have been created yet.
             is_uploader = document.file.file_instance.created_by_id == user.pk
             has_access = is_uploader or QuestionResponse.objects.filter(
                 answer__value=str(document.file.uuid),
