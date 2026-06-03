@@ -330,7 +330,7 @@ function addValidationRule(
                     t("This is not a valid email"),
                     (value: string) => validator.isEmail(value),
                     // This is not the exact same email validator als in the backend
-                    // JavaScript and Python regex are not compatible
+                    // JavaScript and Python email regex are not compatible
                 );
             }
     }
