@@ -735,21 +735,6 @@
     }
 },
 {
-    "model": "form.basequestion",
-    "pk": 50,
-    "fields": {
-        "text": "Wat is je email?",
-        "text_en": "Wat is je email?",
-        "text_nl": "Wat is je email?",
-        "step": 1,
-        "description": "",
-        "description_en": "",
-        "description_nl": "",
-        "required": false,
-        "_order": 1
-    }
-},
-{
     "model": "form.selectquestion",
     "pk": 33,
     "fields": {
