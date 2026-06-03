@@ -106,6 +106,7 @@ class TextQuestionType(BaseQuestionMixin, ObjectType):
     placeholder_nl = String()
     placeholder_en = String()
     lines = Int(required=True)
+    is_email = Boolean(required=False)
 
     def __init__(self, question=None, **kwargs):
         super().__init__(**kwargs)
@@ -129,6 +130,11 @@ class TextQuestionType(BaseQuestionMixin, ObjectType):
             return parent.question.textquestion.lines
         return parent.question.lines
 
+    @staticmethod
+    def resolve_is_email(parent, info: ResolveInfo):
+        if hasattr(parent.question, "textquestion"):
+            return parent.question.textquestion.is_email
+        return parent.question.is_email
 
 class NumberQuestionType(BaseQuestionMixin, ObjectType):
     class Meta:

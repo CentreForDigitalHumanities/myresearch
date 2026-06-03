@@ -1,17 +1,17 @@
 import { helpers, required } from "@vuelidate/validators";
-import type { Substep, QueriedForm, Step } from "~/components/form/FormWrapper";
-import type { ErrorObject } from "@vuelidate/core";
+import type { QueriedForm, Step, Substep } from "~/components/form/FormWrapper";
+import type { ErrorObject, ValidationRuleWithParams } from "@vuelidate/core";
 import type {
-    TextQuestionType,
-    NumberQuestionType,
-    TrueFalseQuestionType,
-    FileUploadQuestionType,
     DateQuestionType,
-    SelectQuestionType,
+    FileUploadQuestionType,
+    NumberQuestionType,
     QuestionType,
+    SelectQuestionType,
+    TextQuestionType,
+    TrueFalseQuestionType,
 } from "~/generated/gql/graphql";
 import { i18n } from "@/plugins/i18n";
-import type { ValidationRuleWithParams } from "@vuelidate/core";
+import validator from "validator";
 
 // Augmented question types
 interface LocatedQuestion {
@@ -320,6 +320,17 @@ function addValidationRule(
                 rules.positiveOnly = helpers.withMessage(
                     t("The number must be positive"),
                     (value: number) => value >= 0,
+                );
+            }
+    }
+    switch (question.__typename) {
+        case "TextQuestionType":
+            if (question.isEmail) {
+                rules.isEmail = helpers.withMessage(
+                    t("The text must be an email"),
+                    (value: string) => validator.isEmail(value),
+                    // This is not the exact same email validator als in the backend
+                    // JavaScript and Python regex are not compatible
                 );
             }
     }
