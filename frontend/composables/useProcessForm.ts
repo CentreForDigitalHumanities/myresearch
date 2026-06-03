@@ -327,7 +327,7 @@ function addValidationRule(
         case "TextQuestionType":
             if (question.isEmail) {
                 rules.isEmail = helpers.withMessage(
-                    t("The text must be an email"),
+                    t("This is not a valid email"),
                     (value: string) => validator.isEmail(value),
                     // This is not the exact same email validator als in the backend
                     // JavaScript and Python regex are not compatible
