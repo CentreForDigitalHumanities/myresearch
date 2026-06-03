@@ -364,7 +364,7 @@ class TextQuestionAdmin(admin.ModelAdmin):
                     "description_nl",
                     "description_en",
                     "required",
-                    "is_email"
+                    "is_email",
                 )
             },
         ),

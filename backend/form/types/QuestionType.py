@@ -136,6 +136,7 @@ class TextQuestionType(BaseQuestionMixin, ObjectType):
             return parent.question.textquestion.is_email
         return parent.question.is_email
 
+
 class NumberQuestionType(BaseQuestionMixin, ObjectType):
     class Meta:
         interfaces = [BaseQuestionInterface]

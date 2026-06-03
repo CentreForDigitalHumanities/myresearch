@@ -87,6 +87,7 @@ class TextQuestion(BaseQuestion):
     lines = models.PositiveIntegerField(default=1)
     is_email = models.BooleanField(default=False)
 
+
 class NumberQuestion(BaseQuestion):
     positive_only = models.BooleanField(default=False)
 
