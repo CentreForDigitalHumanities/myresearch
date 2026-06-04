@@ -28,6 +28,7 @@ LOCAL_APPS = [
     "main",
     "form",
     "research",
+    "notes"
 ]
 
 INSTALLED_APPS = (
