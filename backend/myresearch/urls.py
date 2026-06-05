@@ -35,5 +35,4 @@ urlpatterns = [
     # handle local accounts as well.
     path("saml/logout/", LogoutInitView.as_view(), name="logout"),
     path("saml/", include("djangosaml2.urls")),
-    path("notes/", include("notes.urls")),
 ]

@@ -8,9 +8,11 @@ from cdh.core.forms import TinyMCEWidget
 from .models import Note
 
 class NoteAdmin(admin.ModelAdmin):
+
     """
-    A bit of a copy of the admin interface for cdh.core.systemmessages
+    A bit of a copy of the Grand-Tool which is a bit of a copy of the admin interface for cdh.core.systemmessages
     """
+
     class Media:
         js = (
             'cdh.core/js/jquery-3.6.1.min.js',
@@ -33,7 +35,7 @@ class NoteAdmin(admin.ModelAdmin):
             )
         )
 
-    list_display = ('title', 'note_link', 'id')
-    search_fields = ('title', 'content',)
+    list_display = ('slug',)
+    search_fields = ('title', 'slug', 'content',)
 
 admin.site.register(Note, NoteAdmin)

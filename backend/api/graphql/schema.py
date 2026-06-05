@@ -13,6 +13,7 @@ from form.types.QuestionType import (
 from form.queries import FormQueries
 from research.queries import StudyQuery
 from main.queries import UserQueries
+from notes.queries import NoteQueries
 
 from form.mutations.CreateUserFormRevision import CreateUserFormRevision
 from form.mutations.UpdateUserFormSubmission import UpdateUserFormSubmission
@@ -21,7 +22,7 @@ from research.mutations.UpdateStudyMutation import UpdateStudyMutation
 from research.mutations.DeleteStudyMutation import DeleteStudyMutation
 
 
-class Query(FormQueries, UserQueries, StudyQuery, ObjectType):
+class Query(FormQueries, UserQueries, StudyQuery, NoteQueries, ObjectType):
     pass
 
 
