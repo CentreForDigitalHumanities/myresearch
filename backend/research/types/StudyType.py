@@ -7,7 +7,7 @@ from api.gql_list_object_type import GQLListObjectType
 from research.utils.study_actions import ActionEnum
 from form.models import UserFormSubmission
 from main.models import User
-from research.models import Study
+from research.models.study import Study
 from research.utils.study_actions import StudyActions
 
 
