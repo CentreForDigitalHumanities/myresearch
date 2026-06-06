@@ -7,7 +7,7 @@ from research.other_models.reviews import SubmissionStatus
 from research.utils.study_actions import ActionEnum
 from form.models import UserFormSubmission
 from main.models import User
-from research.models import Study
+from research.models.study import Study
 from research.utils.study_actions import StudyActions
 
 GQLSubmissionStatus = Enum.from_enum(SubmissionStatus)

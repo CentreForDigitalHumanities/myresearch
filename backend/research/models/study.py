@@ -1,13 +1,11 @@
-from research.other_models.reviews import StatusChange, SubmissionStatus
-from research.other_models.utils import YearCounter
-from form.models import UserFormSubmission
-from main.models import User
 from form.models import MRForm, QuestionResponse, UserFormSubmission
 from main.models import User
 from main.utils.permission_utils import BaseMRManager
 
 from django.db import models, transaction
 from django.utils import timezone
+
+from research.models.reviews import StatusChange, SubmissionStatus
 
 
 class StudyManager(BaseMRManager):
@@ -101,3 +99,16 @@ class Study(models.Model):
                 self.reference = f"MR-{year:02d}-{counter_obj.counter:04d}"
 
         super().save(*args, **kwargs)
+
+
+class YearCounter(models.Model):
+    """
+    A helper model for generating reference numbers for studies. Keeps a counter
+    for each year that gets incremented when a new Study is created.
+    """
+
+    year = models.IntegerField(unique=True)
+    counter = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.year}-{self.counter}"

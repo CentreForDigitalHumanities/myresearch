@@ -1,6 +1,6 @@
 from django.contrib import admin
-from research.models import Study
-from research.other_models.reviews import StatusChange
+from research.models.study import Study
+from research.models.reviews import StatusChange
 from form.models import UserFormSubmission
 
 

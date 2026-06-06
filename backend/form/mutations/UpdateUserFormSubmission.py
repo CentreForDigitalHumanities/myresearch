@@ -5,8 +5,8 @@ from form.mutations.utils.inputs import UserFormInput
 from main.models import User
 from form.services.update_submission import update_submission
 from form.mutations.utils.inputs import UserFormInput
-from research.models import Study
-from research.other_models.reviews import StatusChange, SubmissionStatus
+from research.models.study import Study
+from research.models.reviews import StatusChange, SubmissionStatus
 
 
 class UpdateUserFormSubmission(Mutation):
