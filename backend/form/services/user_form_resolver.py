@@ -1,6 +1,6 @@
 from graphene import ObjectType
 
-from form.models import BaseQuestion, Step
+from form.models import BaseQuestion, Step, QuestionResponse
 from form.services.form_evaluator import FormEvaluator
 from form.types.StepType import StepType
 from form.types.UserFormType import UserFormType
@@ -115,13 +115,27 @@ class UserFormResolver:
         return instances
 
     def _resolve_question_instances(self, question: BaseQuestion) -> list:
-        """Resolve all instances of a question (considering repeats)."""
+        """Resolve all instances of a question (considering repeats).
+        Also deletes hidden responses as a side effect."""
+
+        # non-repeating questions have a repeat count as well
+        repeat_count = self.evaluator.get_repeat_count_for_question(question)
+
+        response_objects = QuestionResponse.objects.filter(
+            submissions__in=[self.evaluator.submission],
+            question=question,
+        )
+
+        # Hidden responses should be removed to prevent invisible form errors.
         if not self.evaluator.is_question_visible(question):
+            response_objects.delete()
             return []
 
-        repeat_count = self.evaluator.get_repeat_count_for_question(question)
-        instances = []
+        # With repeating questions only the responses over the repeat_count
+        # are considered hidden so only those responses need to go
+        response_objects.filter(repeat_index__gte=repeat_count).delete()
 
+        instances = []
         for repeat_index in range(repeat_count):
             instance = self._create_question_instance(question, repeat_index)
             instances.append(instance)

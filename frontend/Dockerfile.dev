@@ -20,12 +20,6 @@ RUN --mount=type=cache,target=/root/.npm npm install
 
 COPY . .
 
-# Change ownership of the app directory to the node user.
-# This is necessary for watch mode.
-RUN chown -R node:node /app
-
-USER node
-
 # Nuxt 3 default port is 3000.
 # Does not actually expose the port but documents it.
 EXPOSE 3000

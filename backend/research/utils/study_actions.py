@@ -2,9 +2,9 @@ from abc import ABC, abstractmethod
 
 from graphene import Enum
 
-from research.other_models.reviews import SubmissionStatus
+from research.models.reviews import SubmissionStatus
 from main.models import MRPermission, User
-from research.models import Study
+from research.models.study import Study
 
 
 class ActionEnum(Enum):

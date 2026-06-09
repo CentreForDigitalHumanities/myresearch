@@ -1,10 +1,8 @@
 from graphene import List, Mutation, NonNull, ResolveInfo, Boolean
 from graphene_django.types import ErrorType
 
-from form.models import QuestionResponse, UserFormSubmission
-from form.mutations.utils.inputs import ResponseInput, UserFormInput
+from form.mutations.utils.inputs import UserFormInput
 from main.models import User
-from research.models import Study
 from form.services.update_submission import update_submission
 from form.mutations.utils.inputs import UserFormInput
 
