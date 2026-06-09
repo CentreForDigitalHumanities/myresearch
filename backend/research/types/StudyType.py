@@ -72,7 +72,7 @@ class StudyFilter(FilterSet):
 
 
 class StudyType(GQLListObjectType):
-    title = String(required=True)
+    title = String()
     latest_submission_id = ID(required=True)
     status = Field((GQLSubmissionStatus), required=True)
     actions = List(NonNull(ActionEnum), required=True)
