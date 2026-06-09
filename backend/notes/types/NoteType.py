@@ -10,10 +10,11 @@ class NoteType(DjangoObjectType):
     class Meta:
         model = Note
         fields = [
-            "pk",
             "slug",
-            "title",
-            "content",
+            "title_nl",
+            "title_en",
+            "content_nl",
+            "content_en",
         ]
 
     @classmethod
