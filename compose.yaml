@@ -162,6 +162,7 @@ services:
       dockerfile: Dockerfile.prod
       args:
         - NUXT_PUBLIC_API_URL=${BASE_URL}/api
+        - NUXT_PUBLIC_SAML_URL=${BASE_URL}/saml
         - CODEGEN_SCHEMA=schema.json
 
   dev-idp:

@@ -23,6 +23,10 @@ ENV CODEGEN_SCHEMA=${CODEGEN_SCHEMA}
 ARG NUXT_PUBLIC_API_URL
 ENV NUXT_PUBLIC_API_URL=${NUXT_PUBLIC_API_URL}
 
+# Make sure the SAML URL is available at generate time
+ARG NUXT_PUBLIC_SAML_URL
+ENV NUXT_PUBLIC_SAML_URL=${NUXT_PUBLIC_SAML_URL}
+
 # Build the application in production mode.
 RUN npm run generate
 
