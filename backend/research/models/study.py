@@ -46,7 +46,13 @@ class StudyManager(BaseMRManager):
             Value(" "),
             Cast(Extract("created_at", "hour"), CharField()),
             Value(":"),
-            Cast(Extract("created_at", "minute"), CharField()),
+            Func(
+                Cast(Extract("created_at", "minute"), CharField()),
+                Value(2),
+                Value("0"),
+                function="LPAD",
+                output_field=CharField(),
+            ),
             output_field=CharField(),
         )
 
