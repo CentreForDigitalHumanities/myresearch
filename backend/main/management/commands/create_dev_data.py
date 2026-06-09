@@ -8,6 +8,7 @@ from django.db import transaction
 from django.core.management import call_command
 
 from form.services.form_evaluator import FormEvaluator
+from notes.models import Note
 from research.other_models.reviews import StatusChange, SubmissionStatus
 from main.models import User
 from research.models import Study
@@ -109,6 +110,7 @@ class Command(BaseCommand):
                 self._generate_questions(options, form)
 
         self._create_submissions_and_studies(options, form)
+        self._create_notes(options)
 
         self.print(options, "Dev data generation complete!")
 
@@ -419,3 +421,17 @@ class Command(BaseCommand):
                     submissions__in=[submission],
                     question=question,
                 ).delete()
+
+    def _create_notes(self, options):
+        for _ in tqdm(
+                range(10),
+                desc="Generating notes...",
+                disable=options["silent"],
+        ):
+            note = Note.objects.create(
+                title_nl=self.faker_nl.sentence(nb_words=1),
+                title_en=self.faker_en.sentence(nb_words=1),
+                content_nl=self.faker_nl.paragraph(),
+                content_en=self.faker_en.paragraph(),
+            )
+            note.save()
