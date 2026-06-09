@@ -97,7 +97,7 @@ const GET_FACULTY_QUESTION = graphql(`
     }
 `);
 
-const { result: facultyResult } =
+const { result: facultyResult, loading: facultyLoading } =
     useQuery<GetFacultyQuestionQuery>(GET_FACULTY_QUESTION);
 
 const facultyOptions = computed(
@@ -131,6 +131,7 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
 
 <template>
     <SharedGraphQLList
+        v-if="!facultyLoading"
         v-model:variables="variables"
         :query-document="GET_STUDY_PAGES"
         :data-mapper="(result: any) => result?.studyPages ?? undefined"
