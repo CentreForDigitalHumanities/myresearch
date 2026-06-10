@@ -19,6 +19,9 @@ COPY . /app
 ARG CODEGEN_SCHEMA
 ENV CODEGEN_SCHEMA=${CODEGEN_SCHEMA}
 
+# Run codegen
+RUN npm run codegen-prod
+
 # Make sure the API URL is available at generate time
 ARG NUXT_PUBLIC_API_URL
 ENV NUXT_PUBLIC_API_URL=${NUXT_PUBLIC_API_URL}
