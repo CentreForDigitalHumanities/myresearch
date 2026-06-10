@@ -90,6 +90,9 @@
   "Continue editing": "Ga verder",
   "Submit": "Indienen",
   "Submitted": "Ingediend",
+  "Approved": "Goedgekeurd",
+  "Rejected": "Afgewezen",
+  "Draft": "In voorbereiding",
   "Revision Created": "Revisie aangemaakt",
   "Study details": "Studiedetails",
   "Available actions": "Beschikbare acties",
@@ -114,7 +117,7 @@
   "Creating...": "Aan het aanmaken...",
   "Register new study": "Registreer een nieuwe studie",
   "Unknown study": "Onbekende studie",
-  "Oops ... The study you are looking for could not be found.": "Oeps ... De studie die u zocht kon niet worden gevonden.",
+  "The study you are looking for could not be found.": "De studie die u zocht kon niet worden gevonden.",
   "Yes": "Ja",
   "No": "Nee",
   "Not answered": "Niet beantwoord",
@@ -129,5 +132,7 @@
   "Confirm new registration": "Bevestig nieuwe registratie",
   "Are you sure you want to register a new study?": "Weet je zeker dat je een nieuwe studie wilt registreren?",
   "Delete": "Verwijderen",
-  "No actions available": "Geen acties beschikbaar"
+  "No actions available": "Geen acties beschikbaar",
+  "Are you sure you want to submit the form? Once submitted, you will not be able to make changes.": "Weet je zeker dat je het formulier wilt indienen? Na indiening kun je geen wijzigingen meer aanbrengen.",
+  "Confirm submission": "Bevestig indiening"
 }

@@ -1,11 +1,11 @@
-from form.models import UserFormSubmission
-from main.models import User
 from form.models import MRForm, QuestionResponse, UserFormSubmission
 from main.models import User
 from main.utils.permission_utils import BaseMRManager
 
 from django.db import models, transaction
 from django.utils import timezone
+
+from research.models.reviews import StatusChange, SubmissionStatus
 
 
 class StudyManager(BaseMRManager):
@@ -65,8 +65,19 @@ class Study(models.Model):
             return default_name
 
     @property
-    def status(self):
-        return self.status_changes.last()
+    def status(self) -> SubmissionStatus:
+        """
+        Returns the current status of the study, as determined by the latest
+        StatusChange. If none can be found, DRAFT is used as a default.
+        """
+        last_status_change = (
+            StatusChange.objects.filter(study=self).order_by("created_at").last()
+        )
+        return (
+            SubmissionStatus(last_status_change.status)
+            if last_status_change
+            else SubmissionStatus.DRAFT
+        )
 
     class Meta:
         verbose_name_plural = "Studies"

@@ -1,14 +1,16 @@
-from django_filters import FilterSet, ModelMultipleChoiceFilter
-from graphene import ID, List, NonNull, ResolveInfo, String
-
 from django.db.models import QuerySet
+from graphene import ID, Enum, List, NonNull, ResolveInfo, String, Field
+from django_filters import FilterSet, ModelMultipleChoiceFilter
 
 from api.gql_list_object_type import GQLListObjectType
+from research.models.reviews import SubmissionStatus
 from research.utils.study_actions import ActionEnum
 from form.models import UserFormSubmission
 from main.models import User
 from research.models.study import Study
 from research.utils.study_actions import StudyActions
+
+GQLSubmissionStatus = Enum.from_enum(SubmissionStatus)
 
 
 class StudyFilter(FilterSet):
@@ -22,6 +24,7 @@ class StudyType(GQLListObjectType):
     title = String(required=True)
     latest_submission_id = ID(required=True)
     actions = List(NonNull(ActionEnum), required=True)
+    status = Field(GQLSubmissionStatus, required=True)
 
     class Meta:
         model = Study
@@ -48,6 +51,10 @@ class StudyType(GQLListObjectType):
     @staticmethod
     def resolve_latest_submission_id(parent: Study, info: ResolveInfo) -> int:
         return UserFormSubmission.objects.filter(study=parent).last().pk
+
+    @staticmethod
+    def resolve_status(parent: Study, info: ResolveInfo) -> SubmissionStatus:
+        return parent.status
 
     @staticmethod
     def resolve_actions(parent: Study, info: ResolveInfo) -> list[ActionEnum]:

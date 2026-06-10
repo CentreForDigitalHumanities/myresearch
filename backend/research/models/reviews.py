@@ -5,10 +5,10 @@ from main.utils.permission_utils import BaseMRManager
 
 
 class SubmissionStatus(models.TextChoices):
-    DRAFT = "DRA"
-    SUBMITTED = "SUB"
-    APPROVED = "APP"
-    REJECTED = "REJ"
+    DRAFT = "DRAFT"
+    SUBMITTED = "SUBMITTED"
+    APPROVED = "APPROVED"
+    REJECTED = "REJECTED"
 
 
 class StatusChange(models.Model):
