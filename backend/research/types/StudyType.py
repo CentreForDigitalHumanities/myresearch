@@ -3,7 +3,7 @@ from graphene import ID, Enum, List, NonNull, ResolveInfo, String, Field
 from django_filters import FilterSet, ModelMultipleChoiceFilter
 
 from api.gql_list_object_type import GQLListObjectType
-from research.other_models.reviews import SubmissionStatus
+from research.models.reviews import SubmissionStatus
 from research.utils.study_actions import ActionEnum
 from form.models import UserFormSubmission
 from main.models import User
