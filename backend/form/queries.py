@@ -55,8 +55,8 @@ class QuestionQueries(ObjectType):
     def resolve_select_question(
         root,
         info: ResolveInfo,
-        id: str = None,
-        annotation_key: str = None,
+        id: str | None = None,
+        annotation_key: str | None = None,
     ) -> Optional[SelectQuestionType]:
         user: User = info.context.user
         if not user.is_authenticated:
