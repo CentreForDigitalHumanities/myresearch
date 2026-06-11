@@ -1,10 +1,11 @@
-from datetime import datetime
-from research.other_models.utils import YearCounter
 from form.models import MRForm, QuestionResponse, UserFormSubmission
 from main.models import User
 from main.utils.permission_utils import BaseMRManager
 from django.db import models, transaction
 from django.utils import timezone
+from datetime import datetime
+
+from research.models.reviews import StatusChange, SubmissionStatus
 
 
 class StudyManager(BaseMRManager):
@@ -65,8 +66,19 @@ class Study(models.Model):
             return default_name
 
     @property
-    def status(self):
-        return self.status_changes.last()
+    def status(self) -> SubmissionStatus:
+        """
+        Returns the current status of the study, as determined by the latest
+        StatusChange. If none can be found, DRAFT is used as a default.
+        """
+        last_status_change = (
+            StatusChange.objects.filter(study=self).order_by("created_at").last()
+        )
+        return (
+            SubmissionStatus(last_status_change.status)
+            if last_status_change
+            else SubmissionStatus.DRAFT
+        )
 
     @property
     def updated_at(self) -> datetime:
@@ -91,3 +103,16 @@ class Study(models.Model):
                 self.reference = f"MR-{year:02d}-{counter_obj.counter:04d}"
 
         super().save(*args, **kwargs)
+
+
+class YearCounter(models.Model):
+    """
+    A helper model for generating reference numbers for studies. Keeps a counter
+    for each year that gets incremented when a new Study is created.
+    """
+
+    year = models.IntegerField(unique=True)
+    counter = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.year}-{self.counter}"
