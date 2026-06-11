@@ -1,9 +1,9 @@
 import pytest
 
 from django.db import IntegrityError, transaction
-from django.core.exceptions import ValidationError, ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist
 
-from form.models import MRForm, Step, BaseQuestion, TextQuestion
+from form.models import MRForm, Step, TextQuestion
 
 
 @pytest.mark.django_db(transaction=True)

@@ -1,9 +1,6 @@
 from django.db import models
-from django.db.models import Q, Min, QuerySet
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from .responses import UserFormSubmission
-from .questions import BaseQuestion
 
 user_model = get_user_model()
 

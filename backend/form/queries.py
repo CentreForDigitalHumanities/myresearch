@@ -7,7 +7,7 @@ from form.services.form_evaluator import FormEvaluator
 from form.services.user_form_resolver import UserFormResolver
 from form.types.UserFormType import UserFormType
 from form.types.QuestionType import SelectQuestionType
-from form.models import UserFormSubmission, BaseQuestion, SelectQuestion
+from form.models import UserFormSubmission, SelectQuestion
 
 
 class FormQueries(ObjectType):
