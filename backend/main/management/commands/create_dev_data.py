@@ -364,9 +364,7 @@ class Command(BaseCommand):
         }
 
     def _generate_file_upload_answer(self, question: FileUploadQuestion) -> dict:
-        filename = f"{self.faker.word()}_{self.faker.word()}.pdf"
-        file_url = f"/uploads/{self.faker.uuid4()}/{filename}"
-        return {"value": file_url}
+        return {"value": f"{self.faker.uuid4()}"}
 
     def _generate_answer_for_question(self, question: AnyQuestion) -> dict:
         if isinstance(question, TextQuestion):
