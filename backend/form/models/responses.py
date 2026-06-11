@@ -89,9 +89,7 @@ class QuestionResponse(models.Model):
         return f"Response to Q{self.question.pk} in Submission {self.first_submission.pk if self.first_submission else 'unknown'}: {self.answer}"
 
     @property
-    def first_submission(
-        self,
-    ):
+    def first_submission(self):
         """
         Returns the submission where a response got introduced first
         """
