@@ -7,9 +7,9 @@
             "text_en": "Study name",
             "text_nl": "Studienaam",
             "step": 1,
-            "description": "<p>The title of your study. (This title will be used in all formal correspondence.)</p>",
-            "description_en": "<p>The title of your study. (This title will be used in all formal correspondence.)</p>",
-            "description_nl": "<p>De titel van je studie. (Deze titel zal worden gebruikt in alle formele correspondentie.)</p>",
+            "description": "The title of your study. (This title will be used in all formal correspondence.)",
+            "description_en": "The title of your study. (This title will be used in all formal correspondence.)",
+            "description_nl": "De titel van je studie. (Deze titel zal worden gebruikt in alle formele correspondentie.)",
             "required": true,
             "_order": 0
         }
@@ -37,9 +37,9 @@
             "text_en": "Responsible researcher",
             "text_nl": "Eindverantwoordelijke",
             "step": 2,
-            "description": "<p>Who holds final responsibility for the study within UU?</p>",
-            "description_en": "<p>Who holds final responsibility for the study within UU?</p>",
-            "description_nl": "<p>Wie is er binnen UU de eindverantwoordelijke voor de studie?</p>",
+            "description": "Who holds final responsibility for the study within UU?",
+            "description_en": "Who holds final responsibility for the study within UU?",
+            "description_nl": "Wie is er binnen UU de eindverantwoordelijke voor de studie?",
             "required": false,
             "_order": 1
         }
@@ -52,9 +52,9 @@
             "text_en": "Other UU researchers",
             "text_nl": "Andere UU-onderzoekers",
             "step": 2,
-            "description": "<p>Who else is responsible for the study within UU?</p>",
-            "description_en": "<p>Who else is responsible for the study within UU?</p>",
-            "description_nl": "<p>Wie werkt er binnen de UU nog meer mee aan de studie?</p>",
+            "description": "Who else is responsible for the study within UU?",
+            "description_en": "Who else is responsible for the study within UU?",
+            "description_nl": "Wie werkt er binnen de UU nog meer mee aan de studie?",
             "required": false,
             "_order": 2
         }
@@ -67,9 +67,9 @@
             "text_en": "Faculty",
             "text_nl": "Faculteit",
             "step": 3,
-            "description": "<p>Please select the faculty that hosts or coordinates the research.</p>",
-            "description_en": "<p>Please select the faculty that hosts or coordinates the research.</p>",
-            "description_nl": "<p>Selecteer de faculteit waarbinnen het onderzoek plaatsvindt, of de faculteit die optreedt als penvoerder.</p>",
+            "description": "Please select the faculty that hosts or coordinates the research.",
+            "description_en": "Please select the faculty that hosts or coordinates the research.",
+            "description_nl": "Selecteer de faculteit waarbinnen het onderzoek plaatsvindt, of de faculteit die optreedt als penvoerder.",
             "required": true,
             "_order": 0
         }
@@ -82,9 +82,9 @@
             "text_en": "Department",
             "text_nl": "Departement",
             "step": 3,
-            "description": "<p>For TLC, also indicate with which institute you are affiliated (ILS or ICON).</p>",
-            "description_en": "<p>For TLC, also indicate with which institute you are affiliated (ILS or ICON).</p>",
-            "description_nl": "<p>Geef voor TLC ook aan aan welk onderzoeksinstituut je bent verbonden (ILS of ICON).</p>",
+            "description": "For TLC, also indicate with which institute you are affiliated (ILS or ICON).",
+            "description_en": "For TLC, also indicate with which institute you are affiliated (ILS or ICON).",
+            "description_nl": "Geef voor TLC ook aan aan welk onderzoeksinstituut je bent verbonden (ILS of ICON).",
             "required": true,
             "_order": 1
         }
@@ -97,9 +97,9 @@
             "text_en": "Start date",
             "text_nl": "Begindatum",
             "step": 4,
-            "description": "<p>You start collecting personal data on this date. Note: you must submit this application no later than 4 weeks before the starting date if a review by the FETC is required.</p>",
-            "description_en": "<p>You start collecting personal data on this date. Note: you must submit this application no later than 4 weeks before the starting date if a review by the FETC is required.</p>",
-            "description_nl": "<p>Dit is de datum waarop je begint met het verzamelen van persoonsgegevens. Let op: deze aanvraag moet minstens 4 weken voor de begindatum ingediend worden als toetsing door de FETC vereist is.</p>",
+            "description": "You start collecting personal data on this date.\r\n\r\nNote: you must submit this application no later than 4 weeks before the starting date if a review by the FETC is required.",
+            "description_en": "You start collecting personal data on this date.\r\n\r\nNote: you must submit this application no later than 4 weeks before the starting date if a review by the FETC is required.",
+            "description_nl": "Dit is de datum waarop je begint met het verzamelen van persoonsgegevens.\r\n\r\nLet op: deze aanvraag moet minstens 4 weken voor de begindatum ingediend worden als toetsing door de FETC vereist is.",
             "required": true,
             "_order": 0
         }
@@ -112,9 +112,9 @@
             "text_en": "End date",
             "text_nl": "Einddatum",
             "step": 4,
-            "description": "<p>This is the date on which the research results are expected to be published and the archival term for the research data starts.</p>",
-            "description_en": "<p>This is the date on which the research results are expected to be published and the archival term for the research data starts.</p>",
-            "description_nl": "<p>Dit is de verwachte publicatiedatum van de onderzoeksresultaten. Op deze datum gaat de archiveringstermijn van de onderzoeksdata in.</p>",
+            "description": "This is the date on which the research results are expected to be published and the archival term for the research data starts.",
+            "description_en": "This is the date on which the research results are expected to be published and the archival term for the research data starts.",
+            "description_nl": "Dit is de verwachte publicatiedatum van de onderzoeksresultaten. Op deze datum gaat de archiveringstermijn van de onderzoeksdata in.",
             "required": true,
             "_order": 1
         }
@@ -127,9 +127,9 @@
             "text_en": "Research goal",
             "text_nl": "Onderzoeksdoel",
             "step": 5,
-            "description": "<p>What is the central question you wish to answer in this study?</p>",
-            "description_en": "<p>What is the central question you wish to answer in this study?</p>",
-            "description_nl": "<p>Wat is de centrale vraag die je met je studie wilt beantwoorden?</p>",
+            "description": "What is the central question you wish to answer in this study?",
+            "description_en": "What is the central question you wish to answer in this study?",
+            "description_nl": "Wat is de centrale vraag die je met je studie wilt beantwoorden?",
             "required": true,
             "_order": 0
         }
@@ -157,11 +157,11 @@
             "text_en": "How many groups of data subjects are there?",
             "text_nl": "Hoeveel groepen datasubjecten zijn er?",
             "step": 6,
-            "description": "<p>Distinguish all groups of people whose personal data you will process.</p>",
-            "description_en": "<p>Distinguish all groups of people whose personal data you will process.</p>",
-            "description_nl": "<p>Onderscheid alle groepen van wie er persoonsgegevens verzameld worden.</p>",
+            "description": "Distinguish all groups of people whose personal data you will process.",
+            "description_en": "Distinguish all groups of people whose personal data you will process.",
+            "description_nl": "Onderscheid alle groepen van wie er persoonsgegevens verzameld worden.",
             "required": true,
-            "_order": 0
+            "_order": 1
         }
     },
     {
@@ -176,7 +176,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 1
+            "_order": 0
         }
     },
     {
@@ -221,7 +221,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 1
+            "_order": 2
         }
     },
     {
@@ -236,7 +236,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 2
+            "_order": 3
         }
     },
     {
@@ -251,7 +251,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 3
+            "_order": 5
         }
     },
     {
@@ -266,7 +266,7 @@
             "description_en": "",
             "description_nl": "",
             "required": false,
-            "_order": 4
+            "_order": 1
         }
     },
     {
@@ -281,7 +281,7 @@
             "description_en": "",
             "description_nl": "",
             "required": false,
-            "_order": 5
+            "_order": 4
         }
     },
     {
@@ -367,9 +367,9 @@
             "text_en": "Explanation",
             "text_nl": "Toelichting",
             "step": 9,
-            "description": "<p>Please state at least the country and provide a specification or clarification if requested.</p>",
-            "description_en": "<p>Please state at least the country and provide a specification or clarification if requested.</p>",
-            "description_nl": "<p>Noem minimaal het land en geef desgevraagd een specificatie of verduidelijking op.</p>",
+            "description": "Please state at least the country and provide a specification or clarification if requested.",
+            "description_en": "Please state at least the country and provide a specification or clarification if requested.",
+            "description_nl": "Noem minimaal het land en geef desgevraagd een specificatie of verduidelijking op.",
             "required": true,
             "_order": 4
         }
@@ -382,9 +382,9 @@
             "text_en": "Audio/video recordings",
             "text_nl": "Audio-/video-opnames",
             "step": 10,
-            "description": "<p>E.g. Audacity, MS Teams, Adobe Audition</p>",
-            "description_en": "<p>E.g. Audacity, MS Teams, Adobe Audition</p>",
-            "description_nl": "<p>Bijv. Audacity, MS Teams, Adobe Audition</p>",
+            "description": "E.g. Audacity, MS Teams, Adobe Audition",
+            "description_en": "E.g. Audacity, MS Teams, Adobe Audition",
+            "description_nl": "Bijv. Audacity, MS Teams, Adobe Audition",
             "required": false,
             "_order": 0
         }
@@ -397,9 +397,9 @@
             "text_en": "Transcription",
             "text_nl": "Transcriptie",
             "step": 10,
-            "description": "<p>E.g. Amberscript, Transkriptor, Sonix</p>",
-            "description_en": "<p>E.g. Amberscript, Transkriptor, Sonix</p>",
-            "description_nl": "<p>Bijv. Amberscript, Transkriptor, Sonix</p>",
+            "description": "E.g. Amberscript, Transkriptor, Sonix",
+            "description_en": "E.g. Amberscript, Transkriptor, Sonix",
+            "description_nl": "Bijv. Amberscript, Transkriptor, Sonix",
             "required": false,
             "_order": 1
         }
@@ -412,9 +412,9 @@
             "text_en": "Questionnaire",
             "text_nl": "Vragenlijst",
             "step": 10,
-            "description": "<p>E.g. Qualtrics</p>",
-            "description_en": "<p>E.g. Qualtrics</p>",
-            "description_nl": "<p>Bijv. Qualtrics</p>",
+            "description": "E.g. Qualtrics",
+            "description_en": "E.g. Qualtrics",
+            "description_nl": "Bijv. Qualtrics",
             "required": false,
             "_order": 2
         }
@@ -427,9 +427,9 @@
             "text_en": "Transport and communication",
             "text_nl": "Transport en communicatie",
             "step": 10,
-            "description": "<p>E.g. SURF File Sender, MS Teams, Cisco Anyconnect</p>",
-            "description_en": "<p>E.g. SURF File Sender, MS Teams, Cisco Anyconnect</p>",
-            "description_nl": "<p>Bijv. SURF File Sender, MS Teams, Cisco Anyconnect</p>",
+            "description": "E.g. SURF File Sender, MS Teams, Cisco Anyconnect",
+            "description_en": "E.g. SURF File Sender, MS Teams, Cisco Anyconnect",
+            "description_nl": "Bijv. SURF File Sender, MS Teams, Cisco Anyconnect",
             "required": false,
             "_order": 3
         }
@@ -442,9 +442,9 @@
             "text_en": "Analysis",
             "text_nl": "Analyse",
             "step": 10,
-            "description": "<p>E.g. MatLab, RStudio, SPSS, Nvivo (SHTTP)</p>",
-            "description_en": "<p>E.g. MatLab, RStudio, SPSS, Nvivo (SHTTP)</p>",
-            "description_nl": "<p>Bijv. MatLab, RStudio, SPSS, Nvivo (SHTTP)</p>",
+            "description": "E.g. MatLab, RStudio, SPSS, Nvivo (SHTTP)",
+            "description_en": "E.g. MatLab, RStudio, SPSS, Nvivo (SHTTP)",
+            "description_nl": "Bijv. MatLab, RStudio, SPSS, Nvivo (SHTTP)",
             "required": false,
             "_order": 4
         }
@@ -457,9 +457,9 @@
             "text_en": "Storage",
             "text_nl": "Opslag",
             "step": 10,
-            "description": "<p>E.g. Yoda, OneDrive, MS Teams/Sharepoint, Google Drive</p>",
-            "description_en": "<p>E.g. Yoda, OneDrive, MS Teams/Sharepoint, Google Drive</p>",
-            "description_nl": "<p>Bijv. Yoda, OneDrive, MS Teams/Sharepoint, Google Drive</p>",
+            "description": "E.g. Yoda, OneDrive, MS Teams/Sharepoint, Google Drive",
+            "description_en": "E.g. Yoda, OneDrive, MS Teams/Sharepoint, Google Drive",
+            "description_nl": "Bijv. Yoda, OneDrive, MS Teams/Sharepoint, Google Drive",
             "required": false,
             "_order": 5
         }
@@ -472,9 +472,9 @@
             "text_en": "Miscellaneous",
             "text_nl": "Diversen",
             "step": 10,
-            "description": "<p>E.g. OTree, Textcavator</p>",
-            "description_en": "<p>E.g. OTree, Textcavator</p>",
-            "description_nl": "<p>Bijv. OTree, Textcavator</p>",
+            "description": "E.g. OTree, Textcavator",
+            "description_en": "E.g. OTree, Textcavator",
+            "description_nl": "Bijv. OTree, Textcavator",
             "required": false,
             "_order": 6
         }
@@ -506,7 +506,7 @@
             "description_en": "",
             "description_nl": "",
             "required": false,
-            "_order": 1
+            "_order": 2
         }
     },
     {
@@ -517,9 +517,9 @@
             "text_en": "Upload documents",
             "text_nl": "Documenten uploaden",
             "step": 12,
-            "description": "<p>- DPIA (Data Protection Impact Assessment - Privacy scan, pre-GBEB, DPIA Light, Privacy review, or other abbreviated risk assessment - Other relevant privacy-related documents, data management plan (DMP) - Privacy statement</p>",
-            "description_en": "<p>- DPIA (Data Protection Impact Assessment - Privacy scan, pre-GBEB, DPIA Light, Privacy review, or other abbreviated risk assessment - Other relevant privacy-related documents, data management plan (DMP) - Privacy statement</p>",
-            "description_nl": "<p>- DPIA (Data Protection Impact Assessment, ook wel GBEB genoemd) - Privacy scan, pre-GBEB, DPIA Light, Privacy review of andere verkorte risico-inventarisatie - Andere relevante, privacy-gerelateerde documenten, datamanagementplan (DMP) - Privacyverklaring</p>",
+            "description": "- DPIA (Data Protection Impact Assessment\r\n- Privacy scan, pre-GBEB, DPIA Light, Privacy review, or other abbreviated risk assessment\r\n- Other relevant privacy-related documents, data management plan (DMP)\r\n- Privacy statement",
+            "description_en": "- DPIA (Data Protection Impact Assessment\r\n- Privacy scan, pre-GBEB, DPIA Light, Privacy review, or other abbreviated risk assessment\r\n- Other relevant privacy-related documents, data management plan (DMP)\r\n- Privacy statement",
+            "description_nl": "-     DPIA (Data Protection Impact Assessment, ook wel GBEB genoemd)\r\n-     Privacy scan, pre-GBEB, DPIA Light, Privacy review of andere verkorte risico-inventarisatie\r\n-     Andere relevante, privacy-gerelateerde documenten, datamanagementplan (DMP)\r\n-     Privacyverklaring",
             "required": false,
             "_order": 0
         }
@@ -532,9 +532,9 @@
             "text_en": "Questions",
             "text_nl": "Vragen",
             "step": 13,
-            "description": "<p>Do you have a question for the privacy officer? Ask it here and, if relevant, use the step number (the circles on the left).</p>",
-            "description_en": "<p>Do you have a question for the privacy officer? Ask it here and, if relevant, use the step number (the circles on the left).</p>",
-            "description_nl": "<p>Heb je een vraag voor de privacy officer? Stel die dan hier en gebruik - indien relevant - het nummer van de stap in de registratie (bolletjes aan de linkerkant).</p>",
+            "description": "Do you have a question for the privacy officer? Ask it here and, if relevant, use the step number (the circles on the left).",
+            "description_en": "Do you have a question for the privacy officer? Ask it here and, if relevant, use the step number (the circles on the left).",
+            "description_nl": "Heb je een vraag voor de privacy officer? Stel die dan hier en gebruik - indien relevant - het nummer van de stap in de registratie (bolletjes aan de linkerkant).",
             "required": false,
             "_order": 0
         }
@@ -577,9 +577,9 @@
             "text_en": "Special categories of personal data",
             "text_nl": "Bijzondere persoonsgegevens",
             "step": 7,
-            "description": "<p>Do you process any of the special categories of personal data listed below?</p>",
-            "description_en": "<p>Do you process any of the special categories of personal data listed below?</p>",
-            "description_nl": "<p>Verwerk je data in een of meerdere van de onderstaande bijzondere categorie&euml;n persoonsgegevens?</p>",
+            "description": "Do you process any of the special categories of personal data listed below?",
+            "description_en": "Do you process any of the special categories of personal data listed below?",
+            "description_nl": "Verwerk je data in een of meerdere van de onderstaande bijzondere categorieën persoonsgegevens?",
             "required": false,
             "_order": 2
         }
@@ -622,9 +622,9 @@
             "text_en": "Grounds for exclusion",
             "text_nl": "Uitsluitingsgronden",
             "step": 7,
-            "description": "<p>If you do not have consent, on what exception is the processing of special personal data based? Please explain if necessary.</p>",
-            "description_en": "<p>If you do not have consent, on what exception is the processing of special personal data based? Please explain if necessary.</p>",
-            "description_nl": "<p>Als je geen toestemming hebt, op welke uitzonderingsgrond is de verwerking van bijzondere persoonsgegevens dan gebaseerd? Geef uitleg waar nodig.</p>",
+            "description": "If you do not have consent, on what exception is the processing of special personal data based? Please explain if necessary.",
+            "description_en": "If you do not have consent, on what exception is the processing of special personal data based? Please explain if necessary.",
+            "description_nl": "Als je geen toestemming hebt, op welke uitzonderingsgrond is de verwerking van bijzondere persoonsgegevens dan gebaseerd? Geef uitleg waar nodig.",
             "required": true,
             "_order": 5
         }
@@ -652,9 +652,9 @@
             "text_en": "Sensitive personal data",
             "text_nl": "Gevoelige persoonsgegevens",
             "step": 7,
-            "description": "<p>Which sensitive personal data do you process as part of your research?</p>",
-            "description_en": "<p>Which sensitive personal data do you process as part of your research?</p>",
-            "description_nl": "<p>Welke gevoelige persoonsgegevens van deelnemers verwerk binnen je onderzoek?</p>",
+            "description": "Which sensitive personal data do you process as part of your research?",
+            "description_en": "Which sensitive personal data do you process as part of your research?",
+            "description_nl": "Welke gevoelige persoonsgegevens van deelnemers verwerk binnen je onderzoek?",
             "required": true,
             "_order": 7
         }
@@ -669,7 +669,7 @@
             "step": 7,
             "description": "",
             "description_en": "",
-            "description_nl": "<p>Selecteer alle categorie&euml;n persoonsgegevens die je van deelnemers verzamelt/verwerkt.</p>",
+            "description_nl": "Selecteer alle categorieën persoonsgegevens die je van deelnemers verzamelt/verwerkt.",
             "required": false,
             "_order": 8
         }
@@ -716,7 +716,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 2
+            "_order": 1
         }
     },
     {
@@ -757,13 +757,6 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 34,
-        "fields": {
-            "multiple": true
-        }
-    },
-    {
-        "model": "form.selectquestion",
         "pk": 6,
         "fields": {
             "multiple": false
@@ -771,14 +764,21 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 47,
+        "pk": 34,
+        "fields": {
+            "multiple": true
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 39,
         "fields": {
             "multiple": false
         }
     },
     {
         "model": "form.selectquestion",
-        "pk": 39,
+        "pk": 47,
         "fields": {
             "multiple": false
         }
@@ -1785,7 +1785,7 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 21,
+        "pk": 12,
         "fields": {
             "default_value": false
         }
@@ -1799,14 +1799,21 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 37,
+        "pk": 21,
         "fields": {
             "default_value": false
         }
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 12,
+        "pk": 18,
+        "fields": {
+            "default_value": true
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
+        "pk": 37,
         "fields": {
             "default_value": false
         }
@@ -1827,13 +1834,6 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 18,
-        "fields": {
-            "default_value": true
-        }
-    },
-    {
-        "model": "form.truefalsequestion",
         "pk": 19,
         "fields": {
             "default_value": true
@@ -1848,7 +1848,17 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 36,
+        "pk": 1,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 9,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -1878,57 +1888,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 9,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 1,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 27,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 22,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 15,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 13,
+        "pk": 36,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -1948,7 +1908,57 @@
     },
     {
         "model": "form.textquestion",
+        "pk": 13,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 22,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
         "pk": 48,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 27,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 15,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 4,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -1978,26 +1988,6 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 4,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 49,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 29,
         "fields": {
             "placeholder": "",
@@ -2008,17 +1998,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 17,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 41,
+        "pk": 49,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -2039,6 +2019,26 @@
     {
         "model": "form.textquestion",
         "pk": 25,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 41,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 17,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -2131,9 +2131,9 @@
             "name": "Processing Registry",
             "name_en": "Processing Registry",
             "name_nl": "Verwerkingsregister",
-            "version": "v0.1",
+            "version": "",
             "created_at": "2026-03-09T14:15:25.526Z",
-            "updated_at": "2026-06-01T11:12:58.486Z",
+            "updated_at": "2026-03-10T14:25:12.140Z",
             "study_name_question": null
         }
     },
@@ -2161,9 +2161,9 @@
             "name": "Involved UU researchers",
             "name_en": "Involved UU researchers",
             "name_nl": "Betrokken UU-onderzoekers",
-            "description": "<p>Who holds final responsibility for the study within UU?</p>",
-            "description_en": "<p>Who holds final responsibility for the study within UU?</p>",
-            "description_nl": "<p>Wie is er binnen UU de eindverantwoordelijke voor de studie?</p>",
+            "description": "Who holds final responsibility for the study within UU?",
+            "description_en": "Who holds final responsibility for the study within UU?",
+            "description_nl": "Wie is er binnen UU de eindverantwoordelijke voor de studie?",
             "slug": "involved-researchers",
             "form": 2,
             "parent": null,
@@ -2229,9 +2229,9 @@
             "name": "Data subjects",
             "name_en": "Data subjects",
             "name_nl": "Datasubjecten",
-            "description": "<p>In this step you will be asked to indicate which categories of data subjects play a role in your research project. For each category of data subjects, we ask two questions: 1. Why is it necessary to collect personal data? 2. Which specific categories of personal data you will be processing? If you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.</p>",
-            "description_en": "<p>In this step you will be asked to indicate which categories of data subjects play a role in your research project. For each category of data subjects, we ask two questions: 1. Why is it necessary to collect personal data? 2. Which specific categories of personal data you will be processing? If you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.</p>",
-            "description_nl": "<p>In deze stap geef je op welke categorie&euml;n betrokken mensen een rol spelen in je onderzoeksproject. Per categorie betrokken mensen vragen we twee dingen: 1. Waarom het noodzakelijk is om persoonsgegevens te verzamelen. 2. Welke specifieke categorie&euml;n persoonsgegevens je gaat verwerken. Als je in de vorige vraag meerdere categorie&euml;n betrokkenen hebt opgegeven, wordt je dus gevraagd om voor elk van die categorie&euml;n informatie op te geven.</p>",
+            "description": "In this step you will be asked to indicate which categories of data subjects play a role in your research project.\r\n\r\nFor each category of data subjects, we ask two questions:\r\n1. Why is it necessary to collect personal data?\r\n2. Which specific categories of personal data you will be processing?\r\n\r\nIf you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.",
+            "description_en": "In this step you will be asked to indicate which categories of data subjects play a role in your research project.\r\n\r\nFor each category of data subjects, we ask two questions:\r\n1. Why is it necessary to collect personal data?\r\n2. Which specific categories of personal data you will be processing?\r\n\r\nIf you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.",
+            "description_nl": "In deze stap geef je op welke categorieën betrokken mensen een rol spelen in je onderzoeksproject. \r\n\r\nPer categorie betrokken mensen vragen we twee dingen:\r\n1. Waarom het noodzakelijk is om persoonsgegevens te verzamelen.\r\n2. Welke specifieke categorieën persoonsgegevens je gaat verwerken.\r\n\r\nAls je in de vorige vraag meerdere categorieën betrokkenen hebt opgegeven, wordt je dus gevraagd om voor elk van die categorieën informatie op te geven.",
             "slug": "data-subjects",
             "form": 2,
             "parent": null,
@@ -2263,9 +2263,9 @@
             "name": "Retention period",
             "name_en": "Retention period",
             "name_nl": "Bewaartermijn",
-            "description": "<p>What is the retention period and storage location of your data?</p>",
-            "description_en": "<p>What is the retention period and storage location of your data?</p>",
-            "description_nl": "<p>Wat is de bewaartermijn en opslaglocatie?</p>",
+            "description": "What is the retention period and storage location of your data?",
+            "description_en": "What is the retention period and storage location of your data?",
+            "description_nl": "Wat is de bewaartermijn en opslaglocatie?",
             "slug": "retention-period",
             "form": 2,
             "parent": null,
@@ -2280,9 +2280,9 @@
             "name": "Recipients",
             "name_en": "Recipients",
             "name_nl": "Ontvangers",
-            "description": "<p>By recipients, we mean: individuals or institutions outside Utrecht University with whom you share your previously provided personal data. This includes other universities, clients, data scientists, or other external institutions.</p>",
-            "description_en": "<p>By recipients, we mean: individuals or institutions outside Utrecht University with whom you share your previously provided personal data. This includes other universities, clients, data scientists, or other external institutions.</p>",
-            "description_nl": "<p>Onder ontvangers verstaan we: personen of instellingen buiten de Universiteit Utrecht met wie je de eerder opgegeven persoonsgegevens deelt. Denk aan andere universiteiten, aan opdrachtgevers, data scientists of andere externe instellingen.</p>",
+            "description": "By recipients, we mean: individuals or institutions outside Utrecht University with whom you share your previously provided personal data. This includes other universities, clients, data scientists, or other external institutions.",
+            "description_en": "By recipients, we mean: individuals or institutions outside Utrecht University with whom you share your previously provided personal data. This includes other universities, clients, data scientists, or other external institutions.",
+            "description_nl": "Onder ontvangers verstaan we: personen of instellingen buiten de Universiteit Utrecht met wie je de eerder opgegeven persoonsgegevens deelt. Denk aan andere universiteiten, aan opdrachtgevers, data scientists of andere externe instellingen.",
             "slug": "recipients",
             "form": 2,
             "parent": null,
@@ -2297,9 +2297,9 @@
             "name": "Software",
             "name_en": "Software",
             "name_nl": "Software",
-            "description": "<p>Indicate which software packages and (cloud) applications you will be using. Standard office software you use from your local laptop (e.g., Excel, Word) does not need to be listed.</p>",
-            "description_en": "<p>Indicate which software packages and (cloud) applications you will be using. Standard office software you use from your local laptop (e.g., Excel, Word) does not need to be listed.</p>",
-            "description_nl": "<p>Geef aan welke softwarepakketten en (cloud)applicatie(s) je gaat gebruiken. Reguliere kantoorsoftware die je vanaf je lokale laptop gebruikt (bijv. Excel, Word) hoef je niet op te voeren.</p>",
+            "description": "Indicate which software packages and (cloud) applications you will be using. Standard office software you use from your local laptop (e.g., Excel, Word) does not need to be listed.",
+            "description_en": "Indicate which software packages and (cloud) applications you will be using. Standard office software you use from your local laptop (e.g., Excel, Word) does not need to be listed.",
+            "description_nl": "Geef aan welke softwarepakketten en (cloud)applicatie(s) je gaat gebruiken. Reguliere kantoorsoftware die je vanaf je lokale laptop gebruikt (bijv. Excel, Word) hoef je niet op te voeren.",
             "slug": "software",
             "form": 2,
             "parent": null,
@@ -2314,9 +2314,9 @@
             "name": "Security",
             "name_en": "Security",
             "name_nl": "Beveiliging",
-            "description": "<p>In this step, you can indicate which technical and organizational measures you have taken or will take to protect the personal data in your study. You can add your own measures if necessary. Note: Not all measures below may be relevant to your study.</p>",
-            "description_en": "<p>In this step, you can indicate which technical and organizational measures you have taken or will take to protect the personal data in your study. You can add your own measures if necessary. Note: Not all measures below may be relevant to your study.</p>",
-            "description_nl": "<p>In deze stap kun je aangeven welke technische en organisatorische maatregelen je hebt genomen of gaat nemen om de persoonsgegevens binnen je studie te beveiligen. Indien nodig kun je zelf maatregelen toevoegen. Let op: Wellicht zijn niet alle onderstaande maatregelen relevant voor jouw studie.</p>",
+            "description": "In this step, you can indicate which technical and organizational measures you have taken or will take to protect the personal data in your study. You can add your own measures if necessary. Note: Not all measures below may be relevant to your study.",
+            "description_en": "In this step, you can indicate which technical and organizational measures you have taken or will take to protect the personal data in your study. You can add your own measures if necessary. Note: Not all measures below may be relevant to your study.",
+            "description_nl": "In deze stap kun je aangeven welke technische en organisatorische maatregelen je hebt genomen of gaat nemen om de persoonsgegevens binnen je studie te beveiligen. Indien nodig kun je zelf maatregelen toevoegen. Let op: Wellicht zijn niet alle onderstaande maatregelen relevant voor jouw studie.",
             "slug": "security",
             "form": 2,
             "parent": null,
@@ -2365,9 +2365,9 @@
             "name": "Overview",
             "name_en": "Overview",
             "name_nl": "Overzicht",
-            "description": "<p>Please review your answers below and return to previous steps to make any necessary changes. When you are ready to submit, click the 'Submit' button.</p>",
-            "description_en": "<p>Please review your answers below and return to previous steps to make any necessary changes. When you are ready to submit, click the 'Submit' button.</p>",
-            "description_nl": "<p>Bekijk hieronder je antwoorden en ga terug naar eerdere stappen om eventuele wijzigingen aan te brengen. Klik op de knop 'Indienen' om je inzending te versturen.</p>",
+            "description": "Please review your answers below and return to previous steps to make any necessary changes. When you are ready to submit, click the 'Submit' button.",
+            "description_en": "Please review your answers below and return to previous steps to make any necessary changes. When you are ready to submit, click the 'Submit' button.",
+            "description_nl": "Bekijk hieronder je antwoorden en ga terug naar eerdere stappen om eventuele wijzigingen aan te brengen. Klik op de knop 'Indienen' om je inzending te versturen.",
             "slug": "overview",
             "form": 2,
             "parent": null,
