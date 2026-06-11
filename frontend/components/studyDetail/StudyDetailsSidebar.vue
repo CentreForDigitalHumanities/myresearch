@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import type { GetStudyQuery } from "~/generated/gql/graphql";
-import { localDateTime } from "../../composables/useLocalisation";
+import { useLocalDateTime } from "../../composables/useLocalisation";
 
 interface Props {
     study: NonNullable<GetStudyQuery["study"]>;
 }
 const props = defineProps<Props>();
 
-const createdAt = computed(() => localDateTime(props.study.createdAt));
-const updatedAt = computed(() => localDateTime(props.study.updatedAt));
+const createdAt = computed(() => useLocalDateTime(props.study.createdAt));
+const updatedAt = computed(() => useLocalDateTime(props.study.updatedAt));
 </script>
 
 <template>
