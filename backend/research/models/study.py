@@ -82,7 +82,11 @@ class Study(models.Model):
 
     @property
     def updated_at(self) -> datetime:
-        return UserFormSubmission.objects.filter(study=self).latest('updated_at').updated_at
+        return (
+            UserFormSubmission.objects.filter(study=self)
+            .latest("updated_at")
+            .updated_at
+        )
 
     @staticmethod
     def can_be_created_by(user):
