@@ -8,9 +8,9 @@ from django.db import transaction
 from django.core.management import call_command
 
 from form.services.form_evaluator import FormEvaluator
-from research.other_models.reviews import StatusChange, SubmissionStatus
+from research.models.reviews import StatusChange, SubmissionStatus
+from research.models.study import Study
 from main.models import User
-from research.models import Study
 from form.models import (
     MRForm,
     QuestionResponse,

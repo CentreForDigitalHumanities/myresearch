@@ -5,8 +5,8 @@ from django.conf import settings
 from django.db.models import Model
 from django.core.management import call_command
 
-from research.other_models.utils import YearCounter
-from research.other_models.reviews import Review, ReviewRound
+from research.models.reviews import Review, ReviewRound
+from research.models.study import YearCounter
 from form.models import (
     QuestionCondition,
     StepCondition,

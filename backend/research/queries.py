@@ -4,7 +4,7 @@ from graphene import Field, List, ObjectType, ResolveInfo, ID, String, NonNull
 from django.db.models import QuerySet
 
 from api.graphql.pagination_field import GQLListPaginationConnectionField
-from research.models import Study
+from research.models.study import Study
 from research.types.StudyType import StudyType
 
 

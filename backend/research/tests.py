@@ -1,13 +1,8 @@
 import pytest
-import re
-from datetime import datetime
-from unittest.mock import patch
 from django.contrib.auth.models import AnonymousUser, Group
-from django.db import transaction
 
 from main.models import MRGroups, MRPermission, User
-from research.other_models.utils import YearCounter
-from .models import Study
+from research.models.study import YearCounter, Study
 
 #################
 # User fixtures #
