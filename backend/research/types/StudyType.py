@@ -29,6 +29,7 @@ class StudyType(GQLListObjectType):
             "id",
             "created_by",
             "reference",
+            "is_seen",
         ]
         filterset_class = StudyFilter
         search_fields = ["title", "reference"]

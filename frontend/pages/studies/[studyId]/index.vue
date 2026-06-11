@@ -7,6 +7,9 @@ import AvailableActions from "~/components/studyDetail/AvailableActions.vue";
 import StudyProgessBar from "~/components/studyDetail/StudyProgessBar.vue";
 import { useStudyId } from "~/composables/useRouteParams";
 
+const currentUserStore = useCurrentUserStore();
+await callOnce("user", () => currentUserStore.loadData());
+
 const GET_STUDY = graphql(`
     query GetStudy($id: ID!) {
         study(id: $id, mrPermission: "View") {
@@ -15,6 +18,7 @@ const GET_STUDY = graphql(`
             reference
             latestSubmissionId
             actions
+            isSeen
             createdBy {
                 fullName
                 id
@@ -79,6 +83,14 @@ const studyStatus = computed(() =>
                     <div class="row">
                         <!-- Main Content -->
                         <div class="col me-5">
+                            <span
+                                v-if="
+                                    currentUserStore.currentUser
+                                        ?.isPrivacyOfficer && study.isSeen
+                                "
+                                class="badge rounded-pill text-bg-info mb-1 fs-6"
+                                >Seen</span
+                            >
                             <h1>
                                 {{ study.reference }} -
                                 <em>{{ study.title }}</em>
