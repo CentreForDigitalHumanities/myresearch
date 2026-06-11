@@ -4,8 +4,8 @@ import type {
     FileUploadQuestionWithValue,
 } from "~/composables/useProcessForm";
 import FormLabel from "./FormLabel.vue";
-import { useDisplayFileSize } from "~/composables/useDisplayFileSize.js";
 import { useI18n } from "vue-i18n";
+import { useDisplayFileSize } from "~/composables/useDisplayFileSize";
 
 interface Props {
     question: FileUploadQuestionWithValue;
