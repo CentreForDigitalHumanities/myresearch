@@ -18,7 +18,9 @@ class BaseQuestion(models.Model):
         help_text=mark_safe(
             "<strong>Only for important questions! When in doubt, leave this "
             "blank!</strong> If needed, provide a short, descriptive name in "
-            "snake_case, eg. 'recording_details'"
+            "snake_case, eg. 'recording_details'. This is used for annotating "
+            "the answers to certain question from a submission to the "
+            "corresponding Study, which can be useful for list filters."
         ),
         validators=[snake_case_validator],
     )
