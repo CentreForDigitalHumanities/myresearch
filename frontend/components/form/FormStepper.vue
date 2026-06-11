@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useTranslateableAttribute } from "../../composables/useLocalisation";
+import { useTranslateableAttribute } from "~/composables/useLocalisation";
 import type { FormStep, FormStepperConfig } from "./FormStepper";
 
 interface Props {
