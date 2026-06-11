@@ -72,5 +72,5 @@ class QuestionQueries(ObjectType):
                 question = SelectQuestion.objects.get(annotation_key=annotation_key)
 
             return SelectQuestionType(question=question)
-        except (SelectQuestion.DoesNotExist, AttributeError):
+        except SelectQuestion.DoesNotExist:
             return None
