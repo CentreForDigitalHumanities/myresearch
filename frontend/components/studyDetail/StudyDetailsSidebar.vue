@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { GetStudyQuery } from "~/generated/gql/graphql";
-import { useLocalDateTime } from "../../composables/useLocalisation";
+import { useLocalDateTime } from "~/composables/useLocalisation";
 
 interface Props {
     study: NonNullable<GetStudyQuery["study"]>;
