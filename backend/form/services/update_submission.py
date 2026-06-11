@@ -44,6 +44,8 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
                     # If this is not a revision, just update the answer
                     qr.answer = response["answer"]
                     qr.save()
+
+                current_submission.updated_at = timezone.now()
         else:
             new_response = QuestionResponse.objects.create(
                 question_id=response["question_id"],
@@ -51,6 +53,6 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
                 repeat_index=response["repeat_index"],
             )
             new_response.submissions.add(current_submission)
-    current_submission.updated_at = timezone.now()
+            current_submission.updated_at = timezone.now()
     current_submission.save()
     return current_submission
