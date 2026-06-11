@@ -161,7 +161,7 @@
             "description_en": "Distinguish all groups of people whose personal data you will process.",
             "description_nl": "Onderscheid alle groepen van wie er persoonsgegevens verzameld worden.",
             "required": true,
-            "_order": 1
+            "_order": 0
         }
     },
     {
@@ -176,7 +176,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 0
+            "_order": 1
         }
     },
     {
@@ -221,7 +221,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 2
+            "_order": 1
         }
     },
     {
@@ -236,7 +236,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 3
+            "_order": 2
         }
     },
     {
@@ -251,7 +251,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 5
+            "_order": 3
         }
     },
     {
@@ -266,7 +266,7 @@
             "description_en": "",
             "description_nl": "",
             "required": false,
-            "_order": 1
+            "_order": 4
         }
     },
     {
@@ -281,7 +281,7 @@
             "description_en": "",
             "description_nl": "",
             "required": false,
-            "_order": 4
+            "_order": 5
         }
     },
     {
@@ -506,7 +506,7 @@
             "description_en": "",
             "description_nl": "",
             "required": false,
-            "_order": 2
+            "_order": 1
         }
     },
     {
@@ -716,7 +716,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 1
+            "_order": 2
         }
     },
     {
@@ -1785,7 +1785,7 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 12,
+        "pk": 21,
         "fields": {
             "default_value": false
         }
@@ -1799,16 +1799,9 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 21,
+        "pk": 12,
         "fields": {
             "default_value": false
-        }
-    },
-    {
-        "model": "form.truefalsequestion",
-        "pk": 18,
-        "fields": {
-            "default_value": true
         }
     },
     {
@@ -1834,6 +1827,13 @@
     },
     {
         "model": "form.truefalsequestion",
+        "pk": 18,
+        "fields": {
+            "default_value": true
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
         "pk": 19,
         "fields": {
             "default_value": true
@@ -1848,7 +1848,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 1,
+        "pk": 26,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -1858,17 +1858,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 9,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 26,
+        "pk": 1,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -1888,12 +1878,32 @@
     },
     {
         "model": "form.textquestion",
+        "pk": 9,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
         "pk": 36,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 27,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
         }
     },
     {
@@ -1928,37 +1938,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 48,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 27,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 15,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 4,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -1974,6 +1954,26 @@
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 48,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 4,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
         }
     },
     {
@@ -2008,12 +2008,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 30,
+        "pk": 17,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1
+            "lines": 5
         }
     },
     {
@@ -2038,12 +2038,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 17,
+        "pk": 30,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5
+            "lines": 1
         }
     },
     {
