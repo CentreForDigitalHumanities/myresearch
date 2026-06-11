@@ -26,7 +26,7 @@ class Study(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def updated_at(self) -> datetime:
-        return UserFormSubmission.objects.filter(study=self).last().updated_at
+        return UserFormSubmission.objects.filter(study=self).latest('updated_at').updated_at
 
     @staticmethod
     def can_be_created_by(user):
