@@ -48,6 +48,5 @@ schema = Schema(
         SelectQuestionType,
         FileUploadQuestionType,
         NumberQuestionType,
-        GQLSubmissionStatus,
     ],
 )
