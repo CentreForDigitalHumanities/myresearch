@@ -10,6 +10,8 @@ from research.models.study import Study
 class ActionEnum(Enum):
     EDIT_ACTION = "edit_action"
     DELETE_ACTION = "delete_action"
+    MARK_SEEN_ACTION = "mark_seen_action"
+    MARK_UNSEEN_ACTION = "mark_unseen_action"
 
 
 #################################
@@ -25,7 +27,12 @@ class StudyActions:
     def __init__(self, study: Study, user: User):
         self.study = study
         self.user = user
-        self.all_actions = [StudyEditAction, StudyDeleteAction]
+        self.all_actions = [
+            StudyEditAction,
+            StudyDeleteAction,
+            MarkSeenAction,
+            MarkUnseenAction,
+        ]
 
     def get_available_actions(self) -> list[ActionEnum]:
         return [
@@ -78,3 +85,47 @@ class StudyDeleteAction(StudyAction):
     def is_available(cls, study, user):
 
         return study in Study.objects.accessible_objects(user, MRPermission.EDIT)
+
+
+class PrivacyOfficerStudyAction(StudyAction):
+    """Base class for actions that require privacy officer permission."""
+
+    @classmethod
+    def _can_perform_action(
+        cls,
+        study,
+        user,
+    ) -> bool:
+        if study.status.status == SubmissionStatus.DRAFT:
+            return False
+
+        if not user.is_privacy_officer:
+            return False
+
+        return True
+
+
+class MarkSeenAction(PrivacyOfficerStudyAction):
+
+    action = ActionEnum.MARK_SEEN_ACTION
+
+    @classmethod
+    def is_available(cls, study, user):
+
+        if study.is_seen:
+            return False
+
+        return cls._can_perform_action(study, user)
+
+
+class MarkUnseenAction(PrivacyOfficerStudyAction):
+
+    action = ActionEnum.MARK_UNSEEN_ACTION
+
+    @classmethod
+    def is_available(cls, study, user):
+
+        if not study.is_seen:
+            return False
+
+        return cls._can_perform_action(study, user)
