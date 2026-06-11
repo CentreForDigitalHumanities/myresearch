@@ -33,8 +33,6 @@ class Step(models.Model):
         MRForm,
         on_delete=models.CASCADE,
         related_name="steps",
-        null=False,
-        blank=False,
     )
 
     # Only for substeps.

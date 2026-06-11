@@ -34,8 +34,6 @@ class BaseQuestion(models.Model):
         "form.MRForm",
         on_delete=models.CASCADE,
         related_name="questions",
-        null=False,
-        blank=True,
         editable=False,
     )
     description = models.TextField(
