@@ -45,8 +45,6 @@ useConditionalQuestionsWatcher(questionsWithConditions, () => {
 </script>
 
 <template>
-    <h2>{{ useTranslateableAttribute(step, "name") }}</h2>
-    <div v-html="useTranslateableAttribute(step, 'description')"></div>
     <div class="uu-form-row">
         <div class="d-flex flex-column">
             <div
