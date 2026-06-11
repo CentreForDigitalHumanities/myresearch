@@ -271,7 +271,7 @@ class Command(BaseCommand):
             )
 
         for step in tqdm(
-            form.steps.all(), desc="Generating questions...", disable=options["silent"]
+            form.steps.all(), desc="Generating questions...", disable=options["silent"]  # type: ignore
         ):
             number_of_questions = self.faker.random_int(
                 MIN_QUESTIONS_IN_STEP, MAX_QUESTIONS_IN_STEP
@@ -381,7 +381,7 @@ class Command(BaseCommand):
             study=study,
         )
 
-        form_questions = form.questions.all()
+        form_questions = form.questions.all()  # type: ignore
 
         # First generate answers for all questions, regardless of visibility.
         for question in form_questions:
