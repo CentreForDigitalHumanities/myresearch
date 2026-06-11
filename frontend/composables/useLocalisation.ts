@@ -4,7 +4,7 @@ type TranslateableObject<Key extends string> = {
     [K in `${Key}Nl` | `${Key}En`]?: string | null;
 };
 
-function useTranslateableAttribute<Key extends string>(
+export function useTranslateableAttribute<Key extends string>(
     modelObject: TranslateableObject<Key>,
     key: Key,
 ): string {
@@ -19,8 +19,6 @@ function useTranslateableAttribute<Key extends string>(
     return value ?? "";
 }
 
-export { useTranslateableAttribute };
-
 const timeFormat: Intl.DateTimeFormatOptions = {
     month: "long",
     day: "numeric",
@@ -28,8 +26,12 @@ const timeFormat: Intl.DateTimeFormatOptions = {
     hour: "numeric",
     minute: "numeric",
 };
+
+/**
+ * localizes the isoString (from for example UTC time) into local datetime and handles translation
+ * @param isoString The local date time formatted, see https://en.wikipedia.org/wiki/ISO_8601 or our DB for examples.
+ */
 export function useLocalDateTime(isoString: string) {
-    // localizes the isoString (from for example UTC time) into local datetime and handles translation
     return new Date(isoString).toLocaleTimeString(
         i18n.global.locale.value,
         timeFormat,
