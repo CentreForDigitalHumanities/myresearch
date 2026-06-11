@@ -59,4 +59,4 @@ class StudyType(GQLListObjectType):
 
     @staticmethod
     def resolve_updated_at(parent: Study, info: ResolveInfo) -> datetime:
-        return parent.updated_at()
+        return parent.updated_at

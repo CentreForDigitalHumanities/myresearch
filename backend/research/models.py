@@ -25,12 +25,10 @@ class Study(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def updated_at(self) -> datetime:
-        return UserFormSubmission.objects.filter(study=self).latest('updated_at').updated_at
+    class Meta:
+        verbose_name_plural = "Studies"
 
-    @staticmethod
-    def can_be_created_by(user):
-        return user.is_authenticated
+    objects = StudyManager()
 
     @property
     def form(self) -> MRForm:
@@ -70,10 +68,13 @@ class Study(models.Model):
     def status(self):
         return self.status_changes.last()
 
-    class Meta:
-        verbose_name_plural = "Studies"
+    @property
+    def updated_at(self) -> datetime:
+        return UserFormSubmission.objects.filter(study=self).latest('updated_at').updated_at
 
-    objects = StudyManager()
+    @staticmethod
+    def can_be_created_by(user):
+        return user.is_authenticated
 
     def save(self, *args, **kwargs):
         if not self.reference:
