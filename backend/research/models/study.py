@@ -88,7 +88,6 @@ class StudyManager(BaseMRManager):
         # Build annotations dictionary
         annotations = {}
         for question in questions:
-
             answer = (
                 QuestionResponse.objects.filter(
                     submissions__study=OuterRef("id"),
