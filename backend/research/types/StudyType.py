@@ -17,7 +17,7 @@ class StudyFilter(FilterSet):
     statuses = MultipleChoiceFilter(
         field_name="status",
         method="filter_latest_status",
-        choices=SubmissionStatus.choices,
+        choices=SubmissionStatus.choices[:2],
     )
 
     faculties = ModelMultipleChoiceFilter(

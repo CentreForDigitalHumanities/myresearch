@@ -110,10 +110,13 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
     const statusFilter: UUListTypes.FilterDefinition = {
         field: "statuses",
         label: t("Status"),
-        options: Object.values(SubmissionStatus).map((status) => [
-            status,
-            useTranslatedStatus(status),
-        ]),
+        options: Object.values(SubmissionStatus)
+            .filter(
+                (status) =>
+                    status === SubmissionStatus.Draft ||
+                    status === SubmissionStatus.Submitted,
+            )
+            .map((status) => [status, useTranslatedStatus(status)]),
         type: "checkbox",
         initial: [],
     };
