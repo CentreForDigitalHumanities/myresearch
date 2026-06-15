@@ -134,6 +134,6 @@
     "Delete": "Verwijderen",
     "No actions available": "Geen acties beschikbaar",
     "Faculty": "Faculteit",
-    "Confirm submission": "",
-    "Are you sure you want to submit the form? Once submitted, you will not be able to make changes": "Weet je zeker dat het het formulier wilt indienen? Na indienen, is niet meer mogelijk om aanpassingen te maken."
+    "Are you sure you want to submit the form? Once submitted, you will not be able to make changes.": "Weet je zeker dat je het formulier wilt indienen? Na indiening kun je geen wijzigingen meer aanbrengen.",
+    "Confirm submission": "Indienen bevestigen"
 }
