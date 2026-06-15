@@ -219,7 +219,6 @@ class FileUploadQuestionType(BaseQuestionMixin, ObjectType):
 
     @staticmethod
     def resolve_answer(parent, info: ResolveInfo):
-        # The answer is stored as {"value": "<uuid>"} (the cdh File UUID of the uploaded file).
         if parent.answer is None:
             return None
 

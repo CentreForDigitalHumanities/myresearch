@@ -30,7 +30,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         credentials: "include", // This tells Apollo to send our auth cookies
         headers: {
             "X-CSRFToken": getCsrfToken() ?? "",
-        }
+        },
     });
     const linkChain = ApolloLink.from([removeTypenameLink, httpLink]);
 

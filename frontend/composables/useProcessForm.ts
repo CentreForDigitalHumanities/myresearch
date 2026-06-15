@@ -105,8 +105,10 @@ interface FormAndValidation {
 }
 
 // Type for the t object from Vue-I18n.
-type TranslateFn = (key: string, interpolations?: Record<string, unknown>) => string;
-
+type TranslateFn = (
+    key: string,
+    interpolations?: Record<string, unknown>,
+) => string;
 
 /**
  * Processes a queried form (QueriedForm) to produce two derived structures:
@@ -299,13 +301,13 @@ function addValueAndLocationToQuestion(
                         "name" in parsed &&
                         "size" in parsed &&
                         typeof (parsed as FileUploadAnswer).value ===
-                        "string" &&
+                            "string" &&
                         typeof (parsed as FileUploadAnswer).name === "string" &&
                         typeof (parsed as FileUploadAnswer).size === "number"
                     ) {
                         fileValue = parsed as FileUploadAnswer;
                     }
-                } catch { }
+                } catch {}
             }
             return {
                 ...question,

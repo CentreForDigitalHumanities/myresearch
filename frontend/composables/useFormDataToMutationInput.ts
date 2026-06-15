@@ -34,7 +34,7 @@ function useFormDataToMutationInput(
     return {
         submissionId: submissionId,
         responses: questions.map((question) => ({
-            // FileUploadQuestion answers are already the complete answer object {value, name, size}.
+            // FileUploadQuestion answers are already in the correct format.
             answer:
                 question.__typename === "FileUploadQuestionType"
                     ? JSON.stringify(question.value ?? { value: "" })
