@@ -39,11 +39,30 @@ class StudyManager(BaseMRManager):
             Value("Study created on "),
             Cast(Extract("created_at", "year"), CharField()),
             Value("-"),
-            Cast(Extract("created_at", "month"), CharField()),
+            # Pad with 0 on the left if month is single digit
+            Func(
+                Cast(Extract("created_at", "month"), CharField()),
+                Value(2),
+                Value("0"),
+                function="LPAD",
+                output_field=CharField(),
+            ),
             Value("-"),
-            Cast(Extract("created_at", "day"), CharField()),
+            Func(
+                Cast(Extract("created_at", "day"), CharField()),
+                Value(2),
+                Value("0"),
+                function="LPAD",
+                output_field=CharField(),
+            ),
             Value(" "),
-            Cast(Extract("created_at", "hour"), CharField()),
+            Func(
+                Cast(Extract("created_at", "hour"), CharField()),
+                Value(2),
+                Value("0"),
+                function="LPAD",
+                output_field=CharField(),
+            ),
             Value(":"),
             Func(
                 Cast(Extract("created_at", "minute"), CharField()),
