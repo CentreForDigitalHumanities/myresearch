@@ -48,6 +48,7 @@ class QuestionQueries(ObjectType):
         SelectQuestionType,
         id=ID(),
         annotation_key=String(),
+        form_id=ID(),
         description="Retrieves a SelectQuestion by id or annotation_key, including its options.",
     )
 
@@ -55,6 +56,7 @@ class QuestionQueries(ObjectType):
     def resolve_select_question(
         root,
         info: ResolveInfo,
+        form_id: str | None = None,
         id: str | None = None,
         annotation_key: str | None = None,
     ) -> Optional[SelectQuestionType]:
@@ -62,14 +64,18 @@ class QuestionQueries(ObjectType):
         if not user.is_authenticated:
             return None
 
-        if not id and not annotation_key:
+        if not id and not (annotation_key and form_id):
             return None
 
         try:
             if id:
-                question = SelectQuestion.objects.get(id=id)
+                question = SelectQuestion.objects.get(
+                    id=id,
+                )
             else:
-                question = SelectQuestion.objects.get(annotation_key=annotation_key)
+                question = SelectQuestion.objects.get(
+                    annotation_key=annotation_key, form_id=form_id
+                )
 
             return SelectQuestionType(question=question)
         except SelectQuestion.DoesNotExist:
