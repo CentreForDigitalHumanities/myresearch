@@ -31,6 +31,7 @@ class FileUploadView(LoginRequiredMixin, View):
             status=201,
         )
 
+
 class FileDownloadView(LoginRequiredMixin, BaseFileView):
     """
     Serve a file identified by its UUID.

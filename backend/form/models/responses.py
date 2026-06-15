@@ -10,8 +10,10 @@ User = user_model
 
 
 class MRDocument(models.Model):
-    """An uploaded file attached to a file upload question response.
     """
+    An uploaded file attached to a file upload question response.
+    """
+
     file = CDHFileField(on_delete=models.CASCADE)
 
 
