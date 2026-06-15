@@ -90,6 +90,9 @@
     "Continue editing": "Ga verder",
     "Submit": "Indienen",
     "Submitted": "Ingediend",
+    "Approved": "Goedgekeurd",
+    "Rejected": "Afgewezen",
+    "Draft": "In voorbereiding",
     "Revision Created": "Revisie aangemaakt",
     "Study details": "Studiedetails",
     "Available actions": "Beschikbare acties",
@@ -114,7 +117,7 @@
     "Creating...": "Aan het aanmaken...",
     "Register new study": "Registreer een nieuwe studie",
     "Unknown study": "Onbekende studie",
-    "Oops ... The study you are looking for could not be found.": "Oeps ... De studie die u zocht kon niet worden gevonden.",
+    "The study you are looking for could not be found.": "De studie die u zocht kon niet worden gevonden.",
     "Yes": "Ja",
     "No": "Nee",
     "Not answered": "Niet beantwoord",
@@ -126,13 +129,11 @@
     "An error occurred while saving the form. Please try again.": "Er is een fout opgetreden bij het opslaan van het formulier. Probeer het opnieuw.",
     "Registration submitted successfully.": "Registratie succesvol ingediend.",
     "Your form contains errors. Please review and resubmit.": "Het formulier bevat fouten. Bekijk deze en probeer het opnieuw in te dienen.",
-  "Confirm new registration": "Bevestig nieuwe registratie",
-  "Are you sure you want to register a new study?": "Weet je zeker dat je een nieuwe studie wilt registreren?",
+    "Confirm new registration": "Bevestig nieuwe registratie",
+    "Are you sure you want to register a new study?": "Weet je zeker dat je een nieuwe studie wilt registreren?",
     "Delete": "Verwijderen",
     "No actions available": "Geen acties beschikbaar",
-    "Approved": "Goedgekeurd",
-    "Draft": "Concept",
-    "Rejected": "Afgewezen",
-    "Faculty": "Faculteit"
+    "Faculty": "Faculteit",
+    "Confirm submission": "",
+    "Are you sure you want to submit the form? Once submitted, you will not be able to make changes": "Weet je zeker dat het het formulier wilt indienen? Na indienen, is niet meer mogelijk om aanpassingen te maken."
 }
-

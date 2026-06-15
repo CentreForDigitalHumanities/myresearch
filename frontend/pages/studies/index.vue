@@ -4,6 +4,7 @@ import type { GraphQLListVariables } from "~/components/shared/types";
 import { SharedGraphQLList } from "#components";
 import { useI18n } from "vue-i18n";
 import type { UUListTypes } from "cdh-vue-lib";
+import StatusBadge from "~/components/shared/StatusBadge.vue";
 import Loading from "~/components/shared/Loading.vue";
 import { useQuery } from "@vue/apollo-composable";
 import { SubmissionStatus } from "~/generated/gql/graphql";
@@ -35,6 +36,7 @@ const GET_STUDY_PAGES = graphql(`
                 id
                 title
                 reference
+                status
                 createdBy {
                     id
                     fullName
@@ -150,6 +152,9 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
                             {{ $t("Title") }}
                         </th>
                         <th>
+                            {{ $t("Status") }}
+                        </th>
+                        <th>
                             {{ $t("Creator") }}
                         </th>
                     </tr>
@@ -168,6 +173,9 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
                             >
                                 {{ row.title }}
                             </NuxtLink>
+                        </td>
+                        <td>
+                            <StatusBadge :status="row.status" />
                         </td>
                         <td>
                             {{ row.createdBy.fullName }}
