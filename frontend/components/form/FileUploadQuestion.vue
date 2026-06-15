@@ -17,6 +17,9 @@ const props = defineProps<Props>();
 const modelValue = defineModel<FileUploadAnswer | null>({
     default: null,
 });
+const fileInput = ref<HTMLInputElement | null>(null);
+const isUploading = ref(false);
+const uploadError = ref<string | null>(null);
 
 // Initialize modelValue with an existing answer.
 onMounted(() => (modelValue.value = props.question.value ?? null));
@@ -25,9 +28,6 @@ const { t } = useI18n();
 
 const config = useRuntimeConfig();
 const uploadUrl = `${config.public.API_URL}/form/upload/`;
-
-const isUploading = ref(false);
-const uploadError = ref<string | null>(null);
 
 const downloadUrl = computed(() =>
     modelValue.value
@@ -68,6 +68,10 @@ async function onFileChanged(event: Event) {
 function removeFile() {
     modelValue.value = null;
     uploadError.value = null;
+    // Empty the displayed value on the DOM input element.
+    if (fileInput.value) {
+        fileInput.value.value = "";
+    }
 }
 </script>
 
