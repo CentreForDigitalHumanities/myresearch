@@ -26,13 +26,11 @@ class StudyManager(BaseMRManager):
         queryset = self.with_default_title_annotation(queryset)
         return queryset
 
-    def with_default_title_annotation(self, queryset=None):
+    def with_default_title_annotation(self, queryset):
         """Override empty title values with a default based on creation date.
 
         Assumes title is already annotated by with_answers_by_annotation_key_annotation.
         """
-        if queryset is None:
-            queryset = super().get_queryset()
 
         # create a default title in case there is not yet an answer to the title question
         default_title_str = Concat(
@@ -82,19 +80,11 @@ class StudyManager(BaseMRManager):
             title=Coalesce(F("title"), default_title, output_field=models.JSONField())
         )
 
-    def with_answers_by_annotation_key(self, queryset=None):
+    def with_answers_by_annotation_key(self, queryset):
         """Annotate queryset with latest answers for all questions with annotation_key.
 
         This is used as a default when getting a queryset in get_queryset.
-
-        Args:
-            queryset: Optional queryset to annotate (defaults to all studies)
-
-        Returns:
-            Annotated queryset with dynamic fields named after question annotation_keys
         """
-        if queryset is None:
-            queryset = super().get_queryset()
 
         # Get all questions with annotation_key that belong to forms in studies
         questions = (
