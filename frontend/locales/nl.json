@@ -134,5 +134,9 @@
   "Delete": "Verwijderen",
   "No actions available": "Geen acties beschikbaar",
   "Are you sure you want to submit the form? Once submitted, you will not be able to make changes.": "Weet je zeker dat je het formulier wilt indienen? Na indiening kun je geen wijzigingen meer aanbrengen.",
-  "Confirm submission": "Bevestig indiening"
+  "Confirm submission": "Bevestig indiening",
+  "Upload failed. Please try again.": "Upload mislukt. Probeer het opnieuw.",
+  "Uploading…": "Uploaden...",
+  "Download": "Download",
+  "File exceeds maximum size: {size}": "Bestand is groter dan het maximaal toegestane formaat: {size}"
 }
