@@ -87,7 +87,7 @@ const orderingOptions = computed(() => {
 
 const GET_FACULTY_QUESTION = graphql(`
     query GetFacultyQuestion {
-        selectQuestion(annotationKey: "faculty") {
+        selectQuestion(annotationKey: "faculty", formId: 1) {
             options {
                 id
                 labelEn
