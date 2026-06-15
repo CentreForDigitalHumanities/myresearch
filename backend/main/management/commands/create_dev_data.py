@@ -370,7 +370,7 @@ class Command(BaseCommand):
             "value": f"{self.faker.uuid4()}",
             "name": self.faker.file_name(),
             "size": self.faker.random_int(min=1, max=question.size_limit),
-            }
+        }
 
     def _generate_answer_for_question(self, question: AnyQuestion) -> dict:
         if isinstance(question, TextQuestion):

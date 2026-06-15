@@ -52,10 +52,13 @@ class FileDownloadView(LoginRequiredMixin, BaseFileView):
         user = request.user
         if not (user.is_privacy_officer or user.is_fetc_member):
             is_uploader = document.file.file_instance.created_by_id == user.pk
-            has_access = is_uploader or QuestionResponse.objects.filter(
-                answer__value=str(document.file.uuid),
-                submissions__user=user,
-            ).exists()
+            has_access = (
+                is_uploader
+                or QuestionResponse.objects.filter(
+                    answer__value=str(document.file.uuid),
+                    submissions__user=user,
+                ).exists()
+            )
             if not has_access:
                 return HttpResponseForbidden()
 
