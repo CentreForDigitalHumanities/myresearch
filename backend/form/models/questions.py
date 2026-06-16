@@ -95,7 +95,7 @@ class NumberQuestion(BaseQuestion):
     def validate(self, answer: str):
         super().validate(answer)
         value = int(answer)
-        if value < 0:
+        if value < 0 and self.positive_only:
             raise ValueError("value in must be positive")
 
 class DateQuestion(BaseQuestion):
