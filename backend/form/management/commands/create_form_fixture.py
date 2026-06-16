@@ -16,10 +16,10 @@ class Command(BaseCommand):
     With this command, we ensure that our fixture gets dumped in the order of the
     _order attribute for the models where this is relevant.
 
-    This is done by running dumpdata to a temporary file, loading the json and
-    reordering it with custom logic and then writing that to a new json file.
+    This is done by running dumpdata, loading the json and
+    reordering it with custom logic and then writing that to the json file.
     It writes to our vwr.json fixture by default, but you can specify the
-    output path with the --output argument.
+    output path with the --output argument for testing.
     """
 
     help = "Dump form app data, excluding specified models, sorted by _order field"
