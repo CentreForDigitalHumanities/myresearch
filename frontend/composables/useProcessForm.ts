@@ -306,17 +306,16 @@ function addValidationRule(
 
     // General validation rules
     if (question.required) {
-        rules.required = helpers.withMessage(
-            t("This field is required"),
-            required,
-        );
-    }
+        // For TrueFalseQuestions, 'required' means True must be selected.
+        // For other question types, use the built-in `required` validator.
+        const requiredFn =
+            question.__typename === "TrueFalseQuestionType"
+                ? (value: boolean) => value
+                : required;
 
-    // For True/False questions, 'required' means True.
-    if (question.required && question.__typename === "TrueFalseQuestionType") {
         rules.required = helpers.withMessage(
             t("This field is required"),
-            (value: boolean) => value,
+            requiredFn,
         );
     }
 
