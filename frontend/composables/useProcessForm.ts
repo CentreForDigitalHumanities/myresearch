@@ -312,6 +312,14 @@ function addValidationRule(
         );
     }
 
+    // For True/False questions, 'required' means True.
+    if (question.required && question.__typename === "TrueFalseQuestionType") {
+        rules.required = helpers.withMessage(
+            t("This field is required"),
+            (value: boolean) => value,
+        );
+    }
+
     // Question-type specific rules. This is an example. Add more as needed.
     switch (question.__typename) {
         case "NumberQuestionType":
