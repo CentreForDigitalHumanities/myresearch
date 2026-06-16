@@ -64,12 +64,12 @@ class Command(BaseCommand):
                 models_by_name[model].append(item)
 
             # Define sorting keys for specific models
-            # models are sorted based on these keys in descending order
+            # models are sorted based on these keys
             # eg. basequestion gets sorted by step first, then by _order
             sort_keys = {
                 "form.basequestion": ("step", "_order"),
                 "form.selectoption": ("question", "_order"),
-                "form.step": ("form", "_order"),
+                "form.step": ("form", "parent", "_order"),
             }
 
             # Sort each model's objects
@@ -82,6 +82,7 @@ class Command(BaseCommand):
                         objects,
                         key=lambda x: tuple(
                             x.get("fields", {}).get(field, float("inf"))
+                            or float("-inf")
                             for field in sort_key_fields
                         ),
                     )

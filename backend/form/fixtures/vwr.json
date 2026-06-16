@@ -2178,23 +2178,6 @@
     },
     {
         "model": "form.step",
-        "pk": 7,
-        "fields": {
-            "name": "Data subject group",
-            "name_en": "Data subject group",
-            "name_nl": "Datasubjectgroep",
-            "description": null,
-            "description_en": null,
-            "description_nl": null,
-            "slug": "personal-data-group",
-            "form": 1,
-            "parent": 6,
-            "is_overview": false,
-            "_order": 0
-        }
-    },
-    {
-        "model": "form.step",
         "pk": 2,
         "fields": {
             "name": "Involved UU researchers",
@@ -2395,6 +2378,23 @@
             "parent": null,
             "is_overview": true,
             "_order": 12
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 7,
+        "fields": {
+            "name": "Data subject group",
+            "name_en": "Data subject group",
+            "name_nl": "Datasubjectgroep",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "personal-data-group",
+            "form": 1,
+            "parent": 6,
+            "is_overview": false,
+            "_order": 0
         }
     },
     {
