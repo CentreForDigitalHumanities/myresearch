@@ -37,23 +37,22 @@ class Command(BaseCommand):
 
         # Call dumpdata for the form app
         try:
-            # Dump to temp file first
-            temp_output = "/tmp/dumpdata_temp.json"
             exclude_args = []
             for model in EXCLUDED_MODELS:
                 exclude_args.extend(["--exclude", model])
 
+            # First create a default dump
             call_command(
                 "dumpdata",
                 "form",
-                output=temp_output,
+                output=output_path,
                 indent=4,
                 *exclude_args,
             )
 
             # Post-process to sort by _order field
             self.stdout.write("Sorting by _order attribute...")
-            with open(temp_output, "r") as f:
+            with open(output_path, "r") as f:
                 dumped_data = json.load(f)
 
             # Group objects by model in a dictionary
