@@ -58,8 +58,8 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
 
 def validate_response(response):
     """Backend validation incase malicious responses. Under normal circumstances all validations are already checked in the frontend"""
-    question_id = response["question_id"]  # 1
-    answer = response.answer["value"]  #value : x
+    question_id = response["question_id"]
+    answer = response.answer["value"]
     question = get_question(question_id)
     # validate will throw an error in case of wrong input.
     question.validate(answer)
