@@ -45,9 +45,9 @@ class Command(BaseCommand):
             call_command(
                 "dumpdata",
                 "form",
+                *exclude_args,
                 output=output_path,
                 indent=4,
-                *exclude_args,
             )
 
             # Post-process to sort by _order field
