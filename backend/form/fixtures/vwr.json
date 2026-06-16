@@ -171,23 +171,6 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 11,
-        "fields": {
-            "annotation_key": null,
-            "text": "How many groups of data subjects are there?",
-            "text_en": "How many groups of data subjects are there?",
-            "text_nl": "Hoeveel groepen datasubjecten zijn er?",
-            "step": 6,
-            "form": 1,
-            "description": "Distinguish all groups of people whose personal data you will process.",
-            "description_en": "Distinguish all groups of people whose personal data you will process.",
-            "description_nl": "Onderscheid alle groepen van wie er persoonsgegevens verzameld worden.",
-            "required": true,
-            "_order": 1
-        }
-    },
-    {
-        "model": "form.basequestion",
         "pk": 12,
         "fields": {
             "annotation_key": null,
@@ -201,6 +184,23 @@
             "description_nl": "",
             "required": true,
             "_order": 0
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 11,
+        "fields": {
+            "annotation_key": null,
+            "text": "How many groups of data subjects are there?",
+            "text_en": "How many groups of data subjects are there?",
+            "text_nl": "Hoeveel groepen datasubjecten zijn er?",
+            "step": 6,
+            "form": 1,
+            "description": "Distinguish all groups of people whose personal data you will process.",
+            "description_en": "Distinguish all groups of people whose personal data you will process.",
+            "description_nl": "Onderscheid alle groepen van wie er persoonsgegevens verzameld worden.",
+            "required": true,
+            "_order": 1
         }
     },
     {
@@ -239,6 +239,23 @@
     },
     {
         "model": "form.basequestion",
+        "pk": 18,
+        "fields": {
+            "annotation_key": null,
+            "text": "Raw research data will be kept until at least 10 years after publication.",
+            "text_en": "Raw research data will be kept until at least 10 years after publication.",
+            "text_nl": "Ruwe onderzoeksdata worden tot minimaal 10 jaar na publicatie bewaard.",
+            "step": 8,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
         "pk": 15,
         "fields": {
             "annotation_key": null,
@@ -273,40 +290,6 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 17,
-        "fields": {
-            "annotation_key": null,
-            "text": "Specify for how long the consent forms will be retained.",
-            "text_en": "Specify for how long the consent forms will be retained.",
-            "text_nl": "Leg uit hoe lang de toestemmingsverklaringen bewaard worden.",
-            "step": 8,
-            "form": 1,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": true,
-            "_order": 5
-        }
-    },
-    {
-        "model": "form.basequestion",
-        "pk": 18,
-        "fields": {
-            "annotation_key": null,
-            "text": "Raw research data will be kept until at least 10 years after publication.",
-            "text_en": "Raw research data will be kept until at least 10 years after publication.",
-            "text_nl": "Ruwe onderzoeksdata worden tot minimaal 10 jaar na publicatie bewaard.",
-            "step": 8,
-            "form": 1,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": false,
-            "_order": 1
-        }
-    },
-    {
-        "model": "form.basequestion",
         "pk": 19,
         "fields": {
             "annotation_key": null,
@@ -320,6 +303,23 @@
             "description_nl": "",
             "required": false,
             "_order": 4
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 17,
+        "fields": {
+            "annotation_key": null,
+            "text": "Specify for how long the consent forms will be retained.",
+            "text_en": "Specify for how long the consent forms will be retained.",
+            "text_nl": "Leg uit hoe lang de toestemmingsverklaringen bewaard worden.",
+            "step": 8,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 5
         }
     },
     {
@@ -562,6 +562,23 @@
     },
     {
         "model": "form.basequestion",
+        "pk": 48,
+        "fields": {
+            "annotation_key": null,
+            "text": "Explanation",
+            "text_en": "Explanation",
+            "text_nl": "Toelichting",
+            "step": 11,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
         "pk": 34,
         "fields": {
             "annotation_key": null,
@@ -575,6 +592,23 @@
             "description_nl": "",
             "required": false,
             "_order": 2
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 49,
+        "fields": {
+            "annotation_key": null,
+            "text": "Explanation",
+            "text_en": "Explanation",
+            "text_nl": "Toelichting",
+            "step": 11,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 3
         }
     },
     {
@@ -796,40 +830,6 @@
             "description_nl": "",
             "required": false,
             "_order": 2
-        }
-    },
-    {
-        "model": "form.basequestion",
-        "pk": 48,
-        "fields": {
-            "annotation_key": null,
-            "text": "Explanation",
-            "text_en": "Explanation",
-            "text_nl": "Toelichting",
-            "step": 11,
-            "form": 1,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": true,
-            "_order": 1
-        }
-    },
-    {
-        "model": "form.basequestion",
-        "pk": 49,
-        "fields": {
-            "annotation_key": null,
-            "text": "Explanation",
-            "text_en": "Explanation",
-            "text_nl": "Toelichting",
-            "step": 11,
-            "form": 1,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": false,
-            "_order": 3
         }
     },
     {
