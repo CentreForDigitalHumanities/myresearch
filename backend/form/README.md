@@ -230,5 +230,5 @@ python manage.py loaddata form/fixtures/intake.json
 Update the form in Django Admin as you wish. Once you're satisfied, update the fixture by running:
 
 ```bash
-python manage.py dumpdata form --output form/fixtures/intake.json --indent 4
+python manage.py create_form_fixture
 ```
