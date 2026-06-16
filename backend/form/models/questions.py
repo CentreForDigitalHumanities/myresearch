@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 class BaseQuestion(models.Model):
@@ -33,6 +34,9 @@ class BaseQuestion(models.Model):
             raise ValidationError(
                 {"step": "Questions cannot be attached to overview steps."}
             )
+
+    def validate(self, answer: str):
+        pass
 
     def get_subclass(self):
         """
@@ -81,10 +85,18 @@ class TextQuestion(BaseQuestion):
     placeholder = models.CharField(max_length=200, blank=True)
     lines = models.PositiveIntegerField(default=1)
 
+    def validate(self, answer: str):
+        super().validate(answer)
+
 
 class NumberQuestion(BaseQuestion):
     positive_only = models.BooleanField(default=False)
 
+    def validate(self, answer: str):
+        super().validate(answer)
+        value = int(answer)
+        if value < 0:
+            raise ValueError("value in must be positive")
 
 class DateQuestion(BaseQuestion):
     future_only = models.BooleanField(default=False)

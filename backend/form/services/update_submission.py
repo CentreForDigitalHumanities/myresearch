@@ -1,5 +1,5 @@
 from main.models import MRPermission, User
-from form.models import UserFormSubmission, QuestionResponse
+from form.models import UserFormSubmission, QuestionResponse, BaseQuestion, TextQuestion, NumberQuestion
 from form.mutations.utils.inputs import UserFormInput
 
 
@@ -22,6 +22,8 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
 
     for response in user_form_input.get("responses", []):  # type: ignore
         response_id = response["id"] if "id" in response else None
+        # Immediately cut off responses that are not valid.
+        validate_response(response)
         if response_id:
             # See if the response already exists
             qr = QuestionResponse.objects.get(id=response["id"])
@@ -52,3 +54,24 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
             new_response.submissions.add(current_submission)
 
     return current_submission
+
+
+def validate_response(response):
+    """Backend validation incase malicious responses. Under normal circumstances all validations are already checked in the frontend"""
+    question_id = response["question_id"]  # 1
+    answer = response.answer["value"]  #value : x
+    question = get_question(question_id)
+    # validate will throw an error in case of wrong input.
+    question.validate(answer)
+
+
+def get_question(question_id: int) -> BaseQuestion | NumberQuestion | TextQuestion:
+    """Searches child models of BaseQuestion and returns the appropriate question"""
+    # This answer will always be the same in the current form version.
+    # We might want to consider caching in the future.
+    if TextQuestion.objects.filter(id=question_id).exists():
+        return TextQuestion.objects.get(id=question_id)
+    elif NumberQuestion.objects.filter(id=question_id).exists():
+        return NumberQuestion.objects.get(id=question_id)
+    else:
+        return BaseQuestion.objects.get(id=question_id)
