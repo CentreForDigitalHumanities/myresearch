@@ -171,23 +171,6 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 12,
-        "fields": {
-            "annotation_key": null,
-            "text": "I understand the above.",
-            "text_en": "I understand the above.",
-            "text_nl": "Ik heb het bovenstaande begrepen.",
-            "step": 6,
-            "form": 1,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": true,
-            "_order": 0
-        }
-    },
-    {
-        "model": "form.basequestion",
         "pk": 11,
         "fields": {
             "annotation_key": null,
@@ -199,6 +182,23 @@
             "description": "Distinguish all groups of people whose personal data you will process.",
             "description_en": "Distinguish all groups of people whose personal data you will process.",
             "description_nl": "Onderscheid alle groepen van wie er persoonsgegevens verzameld worden.",
+            "required": true,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 12,
+        "fields": {
+            "annotation_key": null,
+            "text": "I understand the above.",
+            "text_en": "I understand the above.",
+            "text_nl": "Ik heb het bovenstaande begrepen.",
+            "step": 6,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
             "required": true,
             "_order": 1
         }
@@ -392,23 +392,6 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 18,
-        "fields": {
-            "annotation_key": null,
-            "text": "Raw research data will be kept until at least 10 years after publication.",
-            "text_en": "Raw research data will be kept until at least 10 years after publication.",
-            "text_nl": "Ruwe onderzoeksdata worden tot minimaal 10 jaar na publicatie bewaard.",
-            "step": 8,
-            "form": 1,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": false,
-            "_order": 1
-        }
-    },
-    {
-        "model": "form.basequestion",
         "pk": 15,
         "fields": {
             "annotation_key": null,
@@ -421,7 +404,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 2
+            "_order": 1
         }
     },
     {
@@ -438,24 +421,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 3
-        }
-    },
-    {
-        "model": "form.basequestion",
-        "pk": 19,
-        "fields": {
-            "annotation_key": null,
-            "text": "Consent forms will be kept until at least 10 years after publication.",
-            "text_en": "Consent forms will be kept until at least 10 years after publication.",
-            "text_nl": "Toestemmingsverklaringen worden tot minimaal 10 jaar na publicatie bewaard.",
-            "step": 8,
-            "form": 1,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": false,
-            "_order": 4
+            "_order": 2
         }
     },
     {
@@ -472,6 +438,40 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
+            "_order": 3
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 18,
+        "fields": {
+            "annotation_key": null,
+            "text": "Raw research data will be kept until at least 10 years after publication.",
+            "text_en": "Raw research data will be kept until at least 10 years after publication.",
+            "text_nl": "Ruwe onderzoeksdata worden tot minimaal 10 jaar na publicatie bewaard.",
+            "step": 8,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 4
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 19,
+        "fields": {
+            "annotation_key": null,
+            "text": "Consent forms will be kept until at least 10 years after publication.",
+            "text_en": "Consent forms will be kept until at least 10 years after publication.",
+            "text_nl": "Toestemmingsverklaringen worden tot minimaal 10 jaar na publicatie bewaard.",
+            "step": 8,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
             "_order": 5
         }
     },
@@ -732,23 +732,6 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 48,
-        "fields": {
-            "annotation_key": null,
-            "text": "Explanation",
-            "text_en": "Explanation",
-            "text_nl": "Toelichting",
-            "step": 11,
-            "form": 1,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": true,
-            "_order": 1
-        }
-    },
-    {
-        "model": "form.basequestion",
         "pk": 34,
         "fields": {
             "annotation_key": null,
@@ -761,6 +744,23 @@
             "description_en": "",
             "description_nl": "",
             "required": false,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 48,
+        "fields": {
+            "annotation_key": null,
+            "text": "Explanation",
+            "text_en": "Explanation",
+            "text_nl": "Toelichting",
+            "step": 11,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
             "_order": 2
         }
     },
@@ -817,6 +817,40 @@
     },
     {
         "model": "form.basequestion",
+        "pk": 50,
+        "fields": {
+            "annotation_key": null,
+            "text": "I am a PhD student",
+            "text_en": "I am a PhD student",
+            "text_nl": "Ik ben een PhD-student.",
+            "step": 13,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 51,
+        "fields": {
+            "annotation_key": null,
+            "text": "My supervisor has read and approved my answers in this questionnaire.",
+            "text_en": "My supervisor has read and approved my answers in this questionnaire.",
+            "text_nl": "Mijn supervisor heeft mijn antwoorden op de vragen in dit formulier gelezen en gaat ermee akkoord.",
+            "step": 13,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.basequestion",
         "pk": 37,
         "fields": {
             "annotation_key": null,
@@ -829,7 +863,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 1
+            "_order": 3
         }
     },
     {
@@ -1108,6 +1142,20 @@
             "repeat_count": null,
             "use_answer_as_count": false,
             "target_question": 49
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 20,
+        "fields": {
+            "trigger_question": 50,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": true
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 51
         }
     },
     {
@@ -2091,13 +2139,6 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 10,
-        "fields": {
-            "multiple": false
-        }
-    },
-    {
-        "model": "form.selectquestion",
         "pk": 5,
         "fields": {
             "multiple": false
@@ -2105,14 +2146,21 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 6,
+        "pk": 10,
         "fields": {
             "multiple": false
         }
     },
     {
         "model": "form.selectquestion",
-        "pk": 39,
+        "pk": 34,
+        "fields": {
+            "multiple": true
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 6,
         "fields": {
             "multiple": false
         }
@@ -2126,9 +2174,9 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 34,
+        "pk": 39,
         "fields": {
-            "multiple": true
+            "multiple": false
         }
     },
     {
@@ -2411,7 +2459,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 1,
+        "pk": 26,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -2421,12 +2469,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 9,
+        "pk": 1,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5
+            "lines": 1
         }
     },
     {
@@ -2441,17 +2489,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 26,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 36,
+        "pk": 9,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -2461,7 +2499,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 13,
+        "pk": 36,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -2481,6 +2519,26 @@
     },
     {
         "model": "form.textquestion",
+        "pk": 15,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 13,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
         "pk": 22,
         "fields": {
             "placeholder": "",
@@ -2491,27 +2549,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 48,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 27,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 28,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -2531,7 +2569,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 15,
+        "pk": 48,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -2541,12 +2579,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 49,
+        "pk": 28,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5
+            "lines": 1
         }
     },
     {
@@ -2571,6 +2609,36 @@
     },
     {
         "model": "form.textquestion",
+        "pk": 49,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 17,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 41,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
         "pk": 25,
         "fields": {
             "placeholder": "",
@@ -2591,37 +2659,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 41,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 31,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 17,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 32,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -2637,6 +2675,16 @@
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 32,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1
         }
     },
     {
@@ -2661,7 +2709,7 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 12,
+        "pk": 21,
         "fields": {
             "default_value": false
         }
@@ -2675,21 +2723,21 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 21,
+        "pk": 12,
         "fields": {
             "default_value": false
         }
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 18,
+        "pk": 50,
         "fields": {
-            "default_value": true
+            "default_value": false
         }
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 37,
+        "pk": 51,
         "fields": {
             "default_value": false
         }
@@ -2704,6 +2752,20 @@
     {
         "model": "form.truefalsequestion",
         "pk": 40,
+        "fields": {
+            "default_value": true
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
+        "pk": 37,
+        "fields": {
+            "default_value": false
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
+        "pk": 18,
         "fields": {
             "default_value": true
         }
