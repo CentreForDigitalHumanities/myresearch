@@ -159,8 +159,8 @@ class Command(BaseCommand):
                     form=step.form,
                     name_nl=self.faker_nl.sentence(nb_words=5),
                     name_en=self.faker_en.sentence(nb_words=5),
-                    description_nl=self.faker_nl.paragraph(),
-                    description_en=self.faker_en.paragraph(),
+                    description_nl=f"<p>{self.faker_nl.paragraph()}</p>",
+                    description_en=f"<p>{self.faker_en.paragraph()}</p>",
                     slug=self.faker.unique.slug(),
                 )
 
@@ -180,8 +180,8 @@ class Command(BaseCommand):
                 form=form,
                 name_nl=self.faker_nl.sentence(nb_words=5),
                 name_en=self.faker_en.sentence(nb_words=5),
-                description_nl=self.faker_nl.paragraph(),
-                description_en=self.faker_en.paragraph(),
+                description_nl=f"<p>{self.faker_nl.paragraph()}</p>",
+                description_en=f"<p>{self.faker_en.paragraph()}</p>",
                 slug=self.faker.unique.slug(),
             )
             _generate_substeps(step, 1)
@@ -207,8 +207,8 @@ class Command(BaseCommand):
         for _ in range(self.faker.random_int(1, 3)):
             StepInfoText.objects.create(
                 step=step,
-                text_nl=self.faker_nl.paragraph(),
-                text_en=self.faker_en.paragraph(),
+                text_nl=f"<p>{self.faker_nl.paragraph()}</p>",
+                text_en=f"<p>{self.faker_en.paragraph()}</p>",
             )
 
     def _generate_questions(self, options, form: MRForm) -> None:
@@ -217,8 +217,8 @@ class Command(BaseCommand):
                 "text_nl": self.faker_nl.sentence().replace(".", "?"),
                 "text_en": self.faker_en.sentence().replace(".", "?"),
                 "step": step,
-                "description_nl": self.faker_nl.paragraph(),
-                "description_en": self.faker_en.paragraph(),
+                "description_nl": f"<p>{self.faker_nl.paragraph()}</p>",
+                "description_en": f"<p>{self.faker_en.paragraph()}</p>",
                 "required": self.faker.pybool(),
             }
 
