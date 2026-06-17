@@ -1,4 +1,4 @@
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, EmailValidator
 from django.db import models
 from django.core.exceptions import ValidationError
 from datetime import datetime
@@ -133,6 +133,9 @@ class TextQuestion(BaseQuestion):
 
     def validate(self, answer: str):
         super().validate(answer)
+        validator = EmailValidator(message="value must be a valid email address")
+        if self.is_email:
+            validator(answer)
 
 
 class NumberQuestion(BaseQuestion):
