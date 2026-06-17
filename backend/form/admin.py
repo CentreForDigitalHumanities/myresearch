@@ -305,6 +305,7 @@ class SelectQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                 "fields": (
                     "text_nl",
                     "text_en",
+                    "annotation_key",
                     "step",
                     "description_nl",
                     "description_en",
@@ -327,7 +328,7 @@ class SelectQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
 
 @admin.register(TrueFalseQuestion)
 class TrueFalseQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
-    list_display = ("text_nl", "text_en", "step", "required", "default_value")
+    list_display = ("text_nl", "annotation_key", "step", "required", "default_value")
     list_filter = ("step", "required", "default_value")
     search_fields = ("text_nl", "text_en", "description_nl", "description_en")
     fieldsets = (
@@ -337,6 +338,7 @@ class TrueFalseQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                 "fields": (
                     "text_nl",
                     "text_en",
+                    "annotation_key",
                     "step",
                     "description_nl",
                     "description_en",
@@ -361,6 +363,7 @@ class TextQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                 "fields": (
                     "text_nl",
                     "text_en",
+                    "annotation_key",
                     "step",
                     "description_nl",
                     "description_en",
@@ -385,6 +388,7 @@ class NumberQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                 "fields": (
                     "text_nl",
                     "text_en",
+                    "annotation_key",
                     "step",
                     "description_nl",
                     "description_en",
@@ -409,6 +413,7 @@ class DateQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                 "fields": (
                     "text_nl",
                     "text_en",
+                    "annotation_key",
                     "step",
                     "description_nl",
                     "description_en",
@@ -433,6 +438,7 @@ class FileUploadQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                 "fields": (
                     "text_nl",
                     "text_en",
+                    "annotation_key",
                     "step",
                     "description_nl",
                     "description_en",

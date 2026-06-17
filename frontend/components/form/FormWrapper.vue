@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from "vue";
-import { BSButton } from "cdh-vue-lib";
+import { BSButton, useConfirm } from "cdh-vue-lib";
 import type { QueriedForm } from "./FormWrapper";
 import FormStepper, { type FormStepperConfig } from "./FormStepper";
 import MRForm from "~/components/form/MRForm.vue";
@@ -32,14 +32,12 @@ const showSubmissionWarning = ref(false);
 
 const UPDATE_USER_FORM = graphql(`
     mutation SaveFormSubmission(
-        $submissionId: ID!
-        $responses: [ResponseInput!]!
+        $userFormInput: UserFormInput!
+        $finalize: Boolean
     ) {
         updateFormSubmission(
-            userFormInput: {
-                submissionId: $submissionId
-                responses: $responses
-            }
+            userFormInput: $userFormInput
+            finalize: $finalize
         ) {
             ok
             errors {
@@ -79,7 +77,10 @@ function submitForm(options = { submit: false }): void {
         props.queriedForm.submissionId,
     );
 
-    void mutateForm(inputData)
+    void mutateForm({
+        userFormInput: inputData,
+        finalize: options.submit,
+    })
         .catch(() => {
             useNotification(
                 t("An error occurred while saving the form. Please try again."),
@@ -88,13 +89,32 @@ function submitForm(options = { submit: false }): void {
         })
         .then(() => {
             if (options.submit) {
-                // TODO: navigate to the study detail page.
                 useNotification(
                     t("Registration submitted successfully."),
                     "success",
                 );
+                void navigateTo({
+                    name: "studies-studyId",
+                    params: {
+                        studyId: studyId.value,
+                    },
+                });
             }
         });
+}
+
+function finalSubmit(): void {
+    useConfirm({
+        headerText: t("Confirm submission"),
+        text: t(
+            "Are you sure you want to submit the form? Once submitted, you will not be able to make changes.",
+        ),
+        confirmText: t("Yes"),
+        abortText: t("No"),
+        callback: () => {
+            submitForm({ submit: true });
+        },
+    });
 }
 
 const v$ = useVuelidate(
@@ -272,7 +292,7 @@ function navigateToSlug(slug: string) {
                 <BSButton
                     v-if="selectedStep.isOverview"
                     variant="success"
-                    @click="submitForm({ submit: true })"
+                    @click="finalSubmit"
                 >
                     {{ $t("Submit") }}
                     <Send class="ms-2" :size="16" />

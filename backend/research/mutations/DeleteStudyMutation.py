@@ -1,9 +1,8 @@
 from graphene import Mutation, ID, Boolean, ResolveInfo, List
 from graphene_django.types import ErrorType
-from django.db.models import QuerySet
 
 from research.types.StudyType import StudyType
-from research.models import Study
+from research.models.study import Study
 from main.models import MRPermission
 
 
