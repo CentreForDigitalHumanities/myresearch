@@ -151,7 +151,6 @@ class DateQuestion(BaseQuestion):
     def validate(self, answer: str):
         super().validate(answer)
         value = parse_datetime(answer)
-        print(value.__str__())
         if self.future_only and value and value < datetime.now():
             raise ValueError("value must be in the future")
 
