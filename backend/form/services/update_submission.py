@@ -1,5 +1,5 @@
 from main.models import MRPermission, User
-from form.models import UserFormSubmission, QuestionResponse, BaseQuestion, TextQuestion, NumberQuestion
+from form.models import UserFormSubmission, QuestionResponse, BaseQuestion, TextQuestion, NumberQuestion, DateQuestion
 from form.mutations.utils.inputs import UserFormInput
 
 
@@ -73,5 +73,7 @@ def get_question(question_id: int) -> BaseQuestion | NumberQuestion | TextQuesti
         return TextQuestion.objects.get(id=question_id)
     elif NumberQuestion.objects.filter(id=question_id).exists():
         return NumberQuestion.objects.get(id=question_id)
+    elif DateQuestion.objects.filter(id=question_id).exists():
+        return DateQuestion.objects.get(id=question_id)
     else:
         return BaseQuestion.objects.get(id=question_id)

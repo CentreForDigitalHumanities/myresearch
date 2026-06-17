@@ -1,8 +1,8 @@
 from django.core.validators import RegexValidator
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.core.exceptions import ValidationError
-
+from datetime import datetime
+from django.utils.dateparse import parse_datetime
 from django.utils.safestring import mark_safe
 
 snake_case_validator = RegexValidator(
@@ -141,11 +141,18 @@ class NumberQuestion(BaseQuestion):
     def validate(self, answer: str):
         super().validate(answer)
         value = int(answer)
-        if value < 0 and self.positive_only:
+        if self.positive_only and value < 0:
             raise ValueError("value in must be positive")
 
 class DateQuestion(BaseQuestion):
     future_only = models.BooleanField(default=False)
+
+    def validate(self, answer: str):
+        super().validate(answer)
+        value = parse_datetime(answer)
+        print(value.__str__())
+        if self.future_only and value and value < datetime.now():
+            raise ValueError("value must be in the future")
 
 
 class FileUploadQuestion(BaseQuestion):
