@@ -1,7 +1,6 @@
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.http import JsonResponse
 
 from django.utils.safestring import mark_safe
 
