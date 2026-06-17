@@ -65,7 +65,7 @@ def validate_response(response):
     question.validate(answer)
 
 
-def get_question(question_id: int) -> BaseQuestion | NumberQuestion | TextQuestion:
+def get_question(question_id: int) -> BaseQuestion | NumberQuestion | TextQuestion | DateQuestion:
     """Searches child models of BaseQuestion and returns the appropriate question"""
     # This answer will always be the same in the current form version.
     # We might want to consider caching in the future.
