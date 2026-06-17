@@ -144,6 +144,7 @@ class NumberQuestion(BaseQuestion):
         if self.positive_only and value < 0:
             raise ValueError("value in must be positive")
 
+
 class DateQuestion(BaseQuestion):
     future_only = models.BooleanField(default=False)
 
