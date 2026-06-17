@@ -334,6 +334,15 @@ function addValidationRule(
                 );
             }
     }
+    switch (question.__typename) {
+        case "DateQuestionType":
+            if (question.futureOnly) {
+                rules.futureOnly = helpers.withMessage(
+                    t("The date must be in the future"),
+                    (value: string) => new Date(value) >= new Date(),
+                );
+            }
+    }
 
     return {
         value: rules,
