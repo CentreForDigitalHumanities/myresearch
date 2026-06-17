@@ -1,5 +1,5 @@
 from main.models import User
-from research.models import Study
+from research.models.study import Study
 from research.types.StudyType import StudyType
 from research.services.create_study import create_study
 

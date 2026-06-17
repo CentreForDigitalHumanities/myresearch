@@ -1,15 +1,41 @@
-from re import Pattern
-
+from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
-from django.core.validators import validate_email, EmailValidator, RegexValidator
 from django.db import models
 from django.http import JsonResponse
 
+from django.utils.safestring import mark_safe
+
+snake_case_validator = RegexValidator(
+    regex=r"^[a-z]+(_[a-z]+)*$",
+    message="Only snake_case is allowed (e.g. 'recording_details'). Read help text carefully!",
+)
+
 
 class BaseQuestion(models.Model):
+
+    annotation_key = models.CharField(
+        blank=True,
+        null=True,
+        help_text=mark_safe(
+            "<strong>Only for important questions! When in doubt, leave this "
+            "blank!</strong> If needed, provide a short, descriptive name in "
+            "snake_case, eg. 'recording_details'. This is used for annotating "
+            "the answers to certain question from a submission to the "
+            "corresponding Study, which can be useful for list filters."
+        ),
+        validators=[snake_case_validator],
+    )
+
     text = models.CharField(max_length=200)
     step = models.ForeignKey(
         "form.Step", on_delete=models.CASCADE, related_name="questions"
+    )
+    # synced from step.form on save
+    form = models.ForeignKey(
+        "form.MRForm",
+        on_delete=models.CASCADE,
+        related_name="questions",
+        editable=False,
     )
     description = models.TextField(
         blank=True,
@@ -19,6 +45,13 @@ class BaseQuestion(models.Model):
 
     class Meta:
         order_with_respect_to = "step"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["form", "annotation_key"],
+                name="unique_annotation_key_per_form",
+                condition=models.Q(annotation_key__isnull=False),
+            )
+        ]
 
     @property
     def has_conditions(self) -> bool:
@@ -38,6 +71,14 @@ class BaseQuestion(models.Model):
             raise ValidationError(
                 {"step": "Questions cannot be attached to overview steps."}
             )
+
+    def save(self, *args, **kwargs):
+        """Run full clean and sync top_form from step, to ensure validators get run."""
+        # Sync form from the step's top_form
+        if self.step and self.step.form:
+            self.form = self.step.form
+        self.full_clean()
+        super().save(*args, **kwargs)
 
     def get_subclass(self):
         """

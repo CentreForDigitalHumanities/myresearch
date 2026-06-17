@@ -1,5 +1,5 @@
 from main.models import MRPermission
-from research.models import Study
+from research.models.study import Study
 from research.types.StudyType import StudyType
 
 from graphene import ID, Field, List, Mutation, ResolveInfo, String

@@ -2,8 +2,8 @@ from django.db import transaction
 
 from main.models import User
 from form.models import MRForm, UserFormSubmission
-from research.models import Study
-from research.other_models.reviews import StatusChange, SubmissionStatus
+from research.models.study import Study
+from research.models.reviews import StatusChange, SubmissionStatus
 
 
 def create_study(user: User) -> Study:
