@@ -33,6 +33,7 @@ describe("useProcessForm", () => {
         answer,
         textEn: "Text question",
         textNl: "Tekstvraag",
+        isEmail: false,
         descriptionEn: "Description text",
         descriptionNl: "Beschrijving tekst",
         lines,

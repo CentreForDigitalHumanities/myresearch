@@ -1,6 +1,9 @@
-import { helpers, required } from "@vuelidate/validators";
+import { email, helpers, required } from "@vuelidate/validators";
 import type { QueriedForm, Step, Substep } from "~/components/form/FormWrapper";
-import type { ErrorObject, ValidationRuleWithParams } from "@vuelidate/core";
+import {
+    type ErrorObject,
+    type ValidationRuleWithParams,
+} from "@vuelidate/core";
 import type {
     DateQuestionType,
     FileUploadQuestionType,
@@ -11,7 +14,6 @@ import type {
     TrueFalseQuestionType,
 } from "~/generated/gql/graphql";
 import { i18n } from "@/plugins/i18n";
-import validator from "validator";
 
 // Augmented question types
 interface LocatedQuestion {
@@ -328,9 +330,7 @@ function addValidationRule(
             if (question.isEmail) {
                 rules.isEmail = helpers.withMessage(
                     t("This is not a valid email"),
-                    (value: string) => validator.isEmail(value),
-                    // This is not the exact same email validator als in the backend
-                    // JavaScript and Python email regex are not compatible
+                    email,
                 );
             }
     }
