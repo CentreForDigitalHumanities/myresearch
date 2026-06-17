@@ -134,6 +134,7 @@ class TextQuestion(BaseQuestion):
     def validate(self, answer: str):
         super().validate(answer)
         validator = EmailValidator(message="value must be a valid email address")
+        # The email validator in the frontend is slightly different.
         if self.is_email:
             validator(answer)
 
