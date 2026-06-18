@@ -309,7 +309,7 @@ function addValidationRule(
     // General validation rules
     if (question.required) {
         rules.required = helpers.withMessage(
-            t("This field is required"),
+            () => t("This field is required"),
             required,
         );
     }
@@ -329,7 +329,7 @@ function addValidationRule(
         case "TextQuestionType":
             if (question.isEmail) {
                 rules.isEmail = helpers.withMessage(
-                    t("This is not a valid email"),
+                    () => t("This is not a valid email"),
                     email,
                 );
             }
@@ -338,7 +338,7 @@ function addValidationRule(
         case "DateQuestionType":
             if (question.futureOnly) {
                 rules.futureOnly = helpers.withMessage(
-                    t("The date must be in the future"),
+                    () => t("The date must be in the future"),
                     (value: string) => new Date(value) >= new Date(),
                 );
             }
