@@ -318,7 +318,7 @@ function addValidationRule(
             // Example: Add min/max value validation if needed
             if (question.positiveOnly) {
                 rules.positiveOnly = helpers.withMessage(
-                    t("The number must be positive"),
+                    () => t("The number must be positive"),
                     (value: number) => value >= 0,
                 );
             }
