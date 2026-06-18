@@ -135,5 +135,7 @@
     "No actions available": "Geen acties beschikbaar",
     "Faculty": "Faculteit",
     "Are you sure you want to submit the form? Once submitted, you will not be able to make changes.": "Weet je zeker dat je het formulier wilt indienen? Na indiening kun je geen wijzigingen meer aanbrengen.",
-    "Confirm submission": "Indienen bevestigen"
+    "Confirm submission": "Indienen bevestigen",
+    "This is not a valid email": "Dit is geen geldig e-mailadres",
+    "The date must be in the future": "De datum moet in de toekomst zijn"
 }

@@ -1,7 +1,8 @@
-from django.core.validators import RegexValidator
-from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator, EmailValidator
 from django.db import models
-
+from django.core.exceptions import ValidationError
+from datetime import datetime
+from django.utils.dateparse import parse_datetime
 from django.utils.safestring import mark_safe
 
 snake_case_validator = RegexValidator(
@@ -79,6 +80,9 @@ class BaseQuestion(models.Model):
         self.full_clean()
         super().save(*args, **kwargs)
 
+    def validate(self, answer: str):
+        pass
+
     def get_subclass(self):
         """
         Returns the actual subclass instance (TextQuestion, SelectQuestion, etc.).
@@ -125,14 +129,34 @@ class TrueFalseQuestion(BaseQuestion):
 class TextQuestion(BaseQuestion):
     placeholder = models.CharField(max_length=200, blank=True)
     lines = models.PositiveIntegerField(default=1)
+    is_email = models.BooleanField(default=False)
+
+    def validate(self, answer: str):
+        super().validate(answer)
+        validator = EmailValidator(message="value must be a valid email address")
+        # The email validator in the frontend is slightly different.
+        if self.is_email:
+            validator(answer)
 
 
 class NumberQuestion(BaseQuestion):
     positive_only = models.BooleanField(default=False)
 
+    def validate(self, answer: str):
+        super().validate(answer)
+        value = int(answer)
+        if self.positive_only and value < 0:
+            raise ValueError("value in must be positive")
+
 
 class DateQuestion(BaseQuestion):
     future_only = models.BooleanField(default=False)
+
+    def validate(self, answer: str):
+        super().validate(answer)
+        value = parse_datetime(answer)
+        if self.future_only and value and datetime.now() > value:
+            raise ValueError("value must be in the future")
 
 
 class FileUploadQuestion(BaseQuestion):

@@ -2411,42 +2411,24 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 26,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 9,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 1,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 14,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 26,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": false
         }
     },
     {
@@ -2456,37 +2438,30 @@
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5
+            "lines": 5,
+            "is_email": false
         }
     },
     {
         "model": "form.textquestion",
-        "pk": 3,
+        "pk": 1,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1
+            "lines": 1,
+            "is_email": false
         }
     },
     {
         "model": "form.textquestion",
-        "pk": 22,
+        "pk": 9,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 13,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
+            "lines": 5,
+            "is_email": false
         }
     },
     {
@@ -2496,7 +2471,30 @@
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 13,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 3,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": false
         }
     },
     {
@@ -2506,27 +2504,19 @@
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1
+            "lines": 1,
+            "is_email": false
         }
     },
     {
         "model": "form.textquestion",
-        "pk": 15,
+        "pk": 22,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 4,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
+            "lines": 1,
+            "is_email": false
         }
     },
     {
@@ -2536,7 +2526,30 @@
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1
+            "lines": 1,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 15,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 4,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
         }
     },
     {
@@ -2546,7 +2559,8 @@
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5
+            "lines": 5,
+            "is_email": false
         }
     },
     {
@@ -2556,7 +2570,8 @@
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1
+            "lines": 1,
+            "is_email": false
         }
     },
     {
@@ -2566,17 +2581,8 @@
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 25,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
+            "lines": 1,
+            "is_email": false
         }
     },
     {
@@ -2586,7 +2592,19 @@
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 25,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
         }
     },
     {
@@ -2596,7 +2614,8 @@
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1
+            "lines": 1,
+            "is_email": false
         }
     },
     {
@@ -2606,7 +2625,8 @@
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1
+            "lines": 1,
+            "is_email": false
         }
     },
     {
@@ -2616,17 +2636,8 @@
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 32,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1
+            "lines": 5,
+            "is_email": false
         }
     },
     {
@@ -2636,7 +2647,19 @@
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 32,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": false
         }
     },
     {
@@ -2646,7 +2669,8 @@
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5
+            "lines": 5,
+            "is_email": false
         }
     },
     {
@@ -2656,7 +2680,8 @@
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5
+            "lines": 5,
+            "is_email": false
         }
     },
     {

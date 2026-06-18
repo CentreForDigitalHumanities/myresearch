@@ -1,17 +1,19 @@
-import { helpers, required } from "@vuelidate/validators";
-import type { Substep, QueriedForm, Step } from "~/components/form/FormWrapper";
-import type { ErrorObject } from "@vuelidate/core";
+import { email, helpers, required } from "@vuelidate/validators";
+import type { QueriedForm, Step, Substep } from "~/components/form/FormWrapper";
+import {
+    type ErrorObject,
+    type ValidationRuleWithParams,
+} from "@vuelidate/core";
 import type {
-    TextQuestionType,
-    NumberQuestionType,
-    TrueFalseQuestionType,
-    FileUploadQuestionType,
     DateQuestionType,
-    SelectQuestionType,
+    FileUploadQuestionType,
+    NumberQuestionType,
     QuestionType,
+    SelectQuestionType,
+    TextQuestionType,
+    TrueFalseQuestionType,
 } from "~/generated/gql/graphql";
 import { i18n } from "@/plugins/i18n";
-import type { ValidationRuleWithParams } from "@vuelidate/core";
 
 // Augmented question types
 interface LocatedQuestion {
@@ -320,6 +322,24 @@ function addValidationRule(
                 rules.positiveOnly = helpers.withMessage(
                     () => t("The number must be positive"),
                     (value: number) => value >= 0,
+                );
+            }
+    }
+    switch (question.__typename) {
+        case "TextQuestionType":
+            if (question.isEmail) {
+                rules.isEmail = helpers.withMessage(
+                    t("This is not a valid email"),
+                    email,
+                );
+            }
+    }
+    switch (question.__typename) {
+        case "DateQuestionType":
+            if (question.futureOnly) {
+                rules.futureOnly = helpers.withMessage(
+                    t("The date must be in the future"),
+                    (value: string) => new Date(value) >= new Date(),
                 );
             }
     }
