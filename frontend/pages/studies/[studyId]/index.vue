@@ -51,12 +51,6 @@ function randomDatePastYear(): string {
 
     return randomDate.toISOString().split("T")[0];
 }
-
-// If study is even, it is a draft. If it is odd, it is in the review phase
-
-const studyStatus = computed(() =>
-    Number(study.value?.id) % 2 === 0 ? "draft" : "review",
-);
 </script>
 
 <template>
@@ -95,7 +89,7 @@ const studyStatus = computed(() =>
                             />
                         </div>
                         <div class="col-2">
-                            <StudyProgressBar :study-status="studyStatus" />
+                            <StudyProgressBar :study-id="study.id" />
                         </div>
                     </div>
                 </div>

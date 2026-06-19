@@ -4,7 +4,7 @@ from api.gql_list_object_type import GQLListObjectType
 from research.models.reviews import StatusChange, SubmissionStatus
 from research.models.study import Study
 from research.types.StudyType import StudyType
-from graphene import ID, Enum, List, NonNull, ResolveInfo, String, Field
+from graphene import Enum, ResolveInfo, Field
 
 
 class StatusChangeType(GQLListObjectType):

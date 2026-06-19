@@ -1,11 +1,33 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
+import { graphql } from "~/generated/gql";
+import { useQuery } from "@vue/apollo-composable";
+import type { GetStudyStatusChangesQuery } from "~/generated/gql/graphql";
 
 const props = defineProps<{
-    studyStatus: string;
+    studyId: string;
 }>();
 
 const { t } = useI18n();
+
+const GET_STUDY_STATUS_CHANGES = graphql(`
+    query GetStudyStatusChanges($studyId: ID!) {
+        statusChanges(mrPermission: "View", studyId: $studyId) {
+            id
+            status
+            createdAt
+        }
+    }
+`);
+
+const { result: studyStatusChangesResult } =
+    useQuery<GetStudyStatusChangesQuery>(GET_STUDY_STATUS_CHANGES, () => ({
+        studyId: props.studyId,
+    }));
+
+const studyStatusChanges = computed(
+    () => studyStatusChangesResult.value?.statusChanges,
+);
 
 type ProgressItem = {
     label: string;
@@ -39,13 +61,6 @@ const notYetConcluded: ProgressItem = {
     isComplete: false,
 };
 
-const draftProgress: ProgressItem[] = [
-    created,
-    notYetSubmitted,
-    notYetReviewed,
-    notYetConcluded,
-];
-
 // Revision scenario
 
 const submitted: ProgressItem = {
@@ -72,6 +87,20 @@ const activeReview: ProgressItem = {
     isComplete: false,
 };
 
+const draftProgress: ProgressItem[] = [
+    created,
+    notYetSubmitted,
+    notYetReviewed,
+    notYetConcluded,
+];
+
+const submissionProgress: ProgressItem[] = [
+    created,
+    submitted,
+    activeReview,
+    notYetConcluded,
+];
+
 const revisionReviewProgress: ProgressItem[] = [
     created,
     submitted,
@@ -83,7 +112,7 @@ const revisionReviewProgress: ProgressItem[] = [
 ];
 
 const progressItems = computed(() =>
-    props.studyStatus === "draft" ? draftProgress : revisionReviewProgress,
+    studyStatusChanges.value?.length === 2 ? submissionProgress : draftProgress,
 );
 </script>
 
