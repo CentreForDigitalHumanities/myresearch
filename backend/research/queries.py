@@ -7,6 +7,7 @@ from research.models.study import Study
 from research.types.StudyType import StudyType
 from research.types.StatusChangeType import StatusChangeType
 
+
 class StudyQuery(ObjectType):
     study = Field(
         StudyType,
@@ -64,11 +65,11 @@ class StudyQuery(ObjectType):
         )
 
     @staticmethod
-    def resolve_status_changes(root, info: ResolveInfo, mr_permission: str, study_id: str) -> QuerySet[StatusChange]:
+    def resolve_status_changes(
+        root, info: ResolveInfo, mr_permission: str, study_id: str
+    ) -> QuerySet[StatusChange]:
         queryset = StatusChangeType.get_queryset(StatusChange.objects, info)
-        queryset = queryset.accessible_objects(
-            info.context.user, mr_permission
-        )
+        queryset = queryset.accessible_objects(info.context.user, mr_permission)
         if study_id:
             study = Study.objects.get(pk=study_id)
             queryset = queryset.filter(study=study)

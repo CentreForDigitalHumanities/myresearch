@@ -12,6 +12,7 @@ class SubmissionStatus(models.TextChoices):
     APPROVED = "APPROVED"
     REJECTED = "REJECTED"
 
+
 class StatusChangeManager(BaseMRManager):
     def _viewable_objects(self, user: User):
         if user.is_privacy_officer or user.is_fetc_member:
@@ -20,6 +21,7 @@ class StatusChangeManager(BaseMRManager):
 
     def _editable_objects(self, user: User):
         pass
+
 
 class StatusChange(models.Model):
     """
@@ -41,7 +43,6 @@ class StatusChange(models.Model):
 
     class Meta:
         ordering = ["created_at"]
-
 
     def __str__(self) -> str:
         return f"{SubmissionStatus(self.status).label}: {self.created_at.strftime('%d-%m-%Y, %H:%M')}"
