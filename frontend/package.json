@@ -27,7 +27,7 @@
         "@vuelidate/validators": "^2.0.4",
         "apollo-client": "^2.6.10",
         "bootstrap": "^5.3.8",
-        "cdh-vue-lib": "git+https://github.com/CentreForDigitalHumanities/Vue-lib.git#v0.7.0-0",
+        "cdh-vue-lib": "github:CentreForDigitalHumanities/Vue-lib#v0.7.0-0",
         "dotenv": "^17.4.2",
         "graphql": "^15.10.1",
         "graphql-tag": "^2.12.6",
