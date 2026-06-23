@@ -15,12 +15,11 @@ const modelValue = defineModel<number>();
 <template>
     <div>
         <FormLabel :question="question" />
-        <p
+        <div
             v-if="question.descriptionNl || question.descriptionEn"
             class="text-muted"
-        >
-            {{ useTranslateableAttribute(question, "description") }}
-        </p>
+            v-html="useTranslateableAttribute(question, 'description')"
+        ></div>
         <input
             :id="`${question.questionId}-${question.repeatIndex}`"
             v-model="modelValue"
