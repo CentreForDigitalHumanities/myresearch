@@ -48,9 +48,8 @@ function updateModelValue(): void {
         <p
             v-if="question.descriptionNl || question.descriptionEn"
             class="text-muted"
-        >
-            {{ useTranslateableAttribute(question, "description") }}
-        </p>
+            v-html="useTranslateableAttribute(question, 'description')"
+        />
         <input
             :id="`${question.questionId}-${question.repeatIndex}`"
             ref="fileInput"

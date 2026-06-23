@@ -214,7 +214,7 @@ class TestUserFormResolver:
             name="Parent Step", slug="parent-step", form=submission.form
         )
         substep = Step.objects.create(
-            name="Substep", slug="sub-step", parent=parent_step
+            name="Substep", slug="sub-step", parent=parent_step, form=submission.form
         )
 
         TextQuestion.objects.create(text="Parent Question", step=parent_step)
