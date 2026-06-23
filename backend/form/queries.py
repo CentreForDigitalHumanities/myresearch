@@ -6,7 +6,8 @@ from main.models import User
 from form.services.form_evaluator import FormEvaluator
 from form.services.user_form_resolver import UserFormResolver
 from form.types.UserFormType import UserFormType
-from form.models import UserFormSubmission
+from form.types.QuestionType import SelectQuestionType
+from form.models import UserFormSubmission, SelectQuestion
 
 
 class FormQueries(ObjectType):
@@ -39,3 +40,43 @@ class FormQueries(ObjectType):
         resolver = UserFormResolver(evaluator)
 
         return resolver.resolve()
+
+
+class QuestionQueries(ObjectType):
+
+    select_question = Field(
+        SelectQuestionType,
+        id=ID(),
+        annotation_key=String(),
+        form_id=ID(),
+        description="Retrieves a SelectQuestion by id or annotation_key, including its options.",
+    )
+
+    @staticmethod
+    def resolve_select_question(
+        root,
+        info: ResolveInfo,
+        form_id: str | None = None,
+        id: str | None = None,
+        annotation_key: str | None = None,
+    ) -> Optional[SelectQuestionType]:
+        user: User = info.context.user
+        if not user.is_authenticated:
+            return None
+
+        if not id and not (annotation_key and form_id):
+            return None
+
+        try:
+            if id:
+                question = SelectQuestion.objects.get(
+                    id=id,
+                )
+            else:
+                question = SelectQuestion.objects.get(
+                    annotation_key=annotation_key, form_id=form_id
+                )
+
+            return SelectQuestionType(question=question)
+        except SelectQuestion.DoesNotExist:
+            return None

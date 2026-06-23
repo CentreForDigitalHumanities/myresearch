@@ -4,7 +4,7 @@ import { graphql } from "~/generated/gql";
 import type { GetStudyQuery } from "~/generated/gql/graphql";
 import StudyDetailsSidebar from "~/components/studyDetail/StudyDetailsSidebar.vue";
 import AvailableActions from "~/components/studyDetail/AvailableActions.vue";
-import StudyProgessBar from "~/components/studyDetail/StudyProgessBar.vue";
+import StudyProgressBar from "~/components/studyDetail/StudyProgressBar.vue";
 import { useStudyId } from "~/composables/useRouteParams";
 
 const GET_STUDY = graphql(`
@@ -61,23 +61,20 @@ const studyStatus = computed(() =>
 
 <template>
     <div class="uu-content">
-        <Title
-            >{{ $t("Study") }}: {{ study?.title ?? $t("Unknown study") }}</Title
-        >
+        <Title>
+            {{ $t("Study") }}: {{ study?.title ?? $t("Unknown study") }}
+        </Title>
         <div class="uu-hero">
             <h1>{{ $t("Study overview") }}</h1>
         </div>
-        <!-- Sidebar -->
         <div v-if="study" class="uu-sidebar-container">
             <StudyDetailsSidebar
                 :study="study"
                 :random-date-past-year="randomDatePastYear()"
             />
-            <!-- Content -->
             <div class="uu-sidebar-content">
                 <div class="uu-container">
                     <div class="row">
-                        <!-- Main Content -->
                         <div class="col me-5">
                             <h1>
                                 {{ study.reference }} -
@@ -97,9 +94,8 @@ const studyStatus = computed(() =>
                                 :submission-id="study.latestSubmissionId"
                             />
                         </div>
-                        <!-- Progress bar -->
                         <div class="col-2">
-                            <StudyProgessBar :study-status="studyStatus" />
+                            <StudyProgressBar :study-status="studyStatus" />
                         </div>
                     </div>
                 </div>
@@ -107,11 +103,7 @@ const studyStatus = computed(() =>
         </div>
         <div v-else class="uu-container">
             <h3>
-                {{
-                    $t(
-                        "Oops ... The study you are looking for could not be found.",
-                    )
-                }}
+                {{ $t("The study you are looking for could not be found.") }}
             </h3>
         </div>
     </div>
