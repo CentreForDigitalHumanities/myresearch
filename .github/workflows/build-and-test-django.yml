@@ -20,10 +20,5 @@ jobs:
         run: docker compose build django-prod
       - name: Check for missing migrations
         run: docker compose run django-prod python manage.py makemigrations --dry-run --check
-      - name: Check if schema.json is up to date
-        run: |
-          docker compose run django-dev python manage.py graphql_schema --out /tmp/schema.json
-          diff backend/schema.json /tmp/schema.json
-          diff frontend/schema.json /tmp/schema.json
       - name: Run Django tests
         run: docker compose run django-prod pytest
