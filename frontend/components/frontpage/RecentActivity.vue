@@ -39,11 +39,7 @@ const staticIntake: Intake = {
     stepsCompleted: "1/6",
 };
 
-const recentActivity: RecentActivity[] = [
-    staticDraftProposal,
-    staticSendToProposal,
-    staticIntake,
-];
+const recentActivity: RecentActivity[] = [];
 
 type RecentActivity = Proposal | Intake;
 
@@ -59,7 +55,9 @@ const isIntake = (recentActivity: RecentActivity): recentActivity is Intake => {
 </script>
 
 <template>
-    <h2 class="uu-sidebar-header-linked">{{ $t("Recent Activity") }}</h2>
+    <h2 v-if="recentActivity.length !== 0" class="uu-sidebar-header-linked">
+        {{ $t("Recent Activity") }}
+    </h2>
     <div
         v-for="activity in recentActivity"
         class="card mb-2 text-bg-light mw-100"

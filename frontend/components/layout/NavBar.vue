@@ -110,6 +110,15 @@ function newRegistration(): void {
                             {{ $t("Studies") }}
                         </NuxtLink>
                     </li>
+                    <li>
+                        <NuxtLink
+                            to="/notes/FAQ"
+                            class="nav-link"
+                            active-class="active"
+                        >
+                            {{ $t("FAQ") }}
+                        </NuxtLink>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <!-- Placeholder for items on the right -->

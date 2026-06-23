@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import SeasonalCover from "~/components/frontpage/SeasonalCover.vue";
 import RecentActivity from "~/components/frontpage/RecentActivity.vue";
-import FrequentQuestions from "~/components/frontpage/FrequentQuestions.vue";
 definePageMeta({
     public: true,
 });
@@ -21,40 +20,9 @@ definePageMeta({
                 <div class="uu-container">
                     {{
                         $t(
-                            "MyResearch is a website that helps researchers with submitting a request to register a research. On this website you can register your research at the processing registry. First, however, you should fill in the intake form",
+                            "MyResearch is a website that helps researchers manage their research administration/MyResearch is a website that helps researchers with submitting a request to register a research. On this website you can register your research at the processing registry which than can be seen by the privacy officer.",
                         )
                     }}
-                </div>
-                <h2 class="uu-sidebar-header-linked">
-                    {{ $t("Intake form") }}
-                </h2>
-                <div>
-                    {{
-                        $t(
-                            "The intake form is a questionnaire that helps researchers to find out what needs to happen before starting a research project. Do I need to register my research at processing registry at all or not? The intake form helps you answer this question.",
-                        )
-                    }}
-                    <div class="uu-container">
-                        <div class="card-image-left">
-                            <img
-                                src="https://cataas.com/cat?height=200"
-                                alt="Mooie afbeelding of niet"
-                            />
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        {{ $t("Start a new intake form") }}
-                                    </h5>
-                                    <p class="card-text">
-                                        {{ $t("Also possible as orientation") }}
-                                    </p>
-                                    <a href="#" class="btn btn-primary">{{
-                                        $t("Start intake form")
-                                    }}</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <aside class="uu-sidebar pe-3">
@@ -74,12 +42,7 @@ definePageMeta({
                     }}
                 </p>
             </div>
-            <aside class="uu-sidebar pe-3">
-                <FrequentQuestions
-                    questions-group="processingRegistry"
-                    title="Frequent questions"
-                />
-            </aside>
+            <aside class="uu-sidebar pe-3"></aside>
         </div>
         <div class="uu-sidebar-container uu-sidebar-right uu-sidebar-sticky">
             <div class="uu-sidebar-content">
@@ -94,44 +57,13 @@ definePageMeta({
                     }}
                 </p>
                 <p>
-                    {{
-                        $t(
-                            "Please Note: Accepted applications go to the archive. See above menu. The archive is available for everyone at the same facility with with a Solid-ID. ",
-                        )
-                    }}
-                </p>
-                <p>
+                    {{ $t("Registration for the FEtC-H can be done at the") }}
                     <a
                         :href="$t('https://fetc-gw.wp.hum.uu.nl/en/')"
                         target="_blank"
                         >{{ $t("UU-webpage of the FEtC-H") }}</a
                     >
                 </p>
-                <p>
-                    <a
-                        :href="
-                            $t(
-                                'https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/',
-                            )
-                        "
-                        target="_blank"
-                        >{{ $t("Regulations of the FEtC-H") }}</a
-                    >
-                </p>
-            </div>
-            <aside class="uu-sidebar pe-3">
-                <FrequentQuestions
-                    questions-group="ethicalCommission"
-                    title="Frequent questions"
-                />
-            </aside>
-        </div>
-        <div class="uu-sidebar-container uu-sidebar-right uu-sidebar-sticky">
-            <div class="uu-sidebar-content">
-                <FrequentQuestions
-                    title="Other questions"
-                    questions-group="other"
-                />
             </div>
             <aside class="uu-sidebar">
                 <h2 class="uu-sidebar-header-linked">Contact</h2>
@@ -149,6 +81,9 @@ definePageMeta({
                     }}<a href="mailto:portaldev.gw@uu.nl">portaldev.gw@uu.nl</a>
                 </p>
             </aside>
+        </div>
+        <div class="uu-sidebar-container uu-sidebar-right uu-sidebar-sticky">
+            <div class="uu-sidebar-content"></div>
         </div>
     </div>
 </template>
