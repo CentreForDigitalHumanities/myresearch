@@ -1,24 +1,28 @@
 name: Run Django tests
 
 on:
-  pull_request:
+    pull_request:
 
 jobs:
-  django-tests:
-    name: Build and test Django production container
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Compose
-        uses: docker/setup-compose-action@v1
-      - name: Copy test environment and secrets
-        run: |
-          cp .env.example .env
-          cp certificates/private.key secrets/
-          cp certificates/public.cert secrets/
-      - name: Build django-prod container
-        run: docker compose build django-prod
-      - name: Check for missing migrations
-        run: docker compose run django-prod python manage.py makemigrations --dry-run --check
-      - name: Run Django tests
-        run: docker compose run django-prod pytest
+    django-tests:
+        name: Build and test Django production container
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Set up Compose
+              uses: docker/setup-compose-action@v1
+            - name: Copy test environment and secrets
+              run: |
+                  cp .env.example .env
+                  cp certificates/private.key secrets/
+                  cp certificates/public.cert secrets/
+            - name: Build django-prod container
+              run: docker compose build django-prod
+            - name: Check for missing migrations
+              run: docker compose run django-prod python manage.py makemigrations --dry-run --check
+            - name: Check backend schema is up to date
+              run: git diff --no-index backend/schema.json <(docker compose run -T --quiet django-prod python manage.py graphql_schema --out=-)
+            - name: Check frontend schema is up to date
+              run: git diff --no-index frontend/schema.json <(docker compose run -T --quiet django-prod python manage.py graphql_schema --out=-)
+            - name: Run Django tests
+              run: docker compose run django-prod pytest
