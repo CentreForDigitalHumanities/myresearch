@@ -32,7 +32,7 @@ class BaseQuestionInterface(Interface):
     question_id = ID(
         required=True, description="The ID of the question this is based on."
     )
-    repeat_index = Int(required=True)
+    repeat_index = Int(required=False)
     answer = JSONString()
     response_id = ID()
 
@@ -42,6 +42,7 @@ class BaseQuestionInterface(Interface):
     description_en = String(required=True)
     required = Boolean(required=True)
     has_conditions = Boolean(required=True)
+    background = Boolean()
 
     @classmethod
     def resolve_type(cls, instance, info):
