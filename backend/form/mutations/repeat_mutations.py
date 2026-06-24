@@ -7,12 +7,12 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 class CreateRepeatMutation(Mutation):
-    
+
     class Arguments:
         user_form_id = ID(required=True)
         repeatable_id = ID(required=True)
         parent_id = ID(required=False)
-        
+
     new_repeat_index = ID()
     errors = List(ErrorType)
 
@@ -41,8 +41,7 @@ class CreateRepeatMutation(Mutation):
             error = "Access denied"
             return cls(errors=[error])
 
-        new_repeat = RepeatIndex(
-        )
+        new_repeat = RepeatIndex()
         new_repeat.save()
         new_repeat.submissions.add(submission)
         base_repeat.repeat_indices.add(
@@ -98,8 +97,7 @@ class DeleteRepeatMutation(Mutation):
         # repeatable step. But this would be the place to do so.
         if repeat_index.submissions.count() == 0:
             repeat_index.delete()
-        
+
         return cls(
             errors=[],
         )
-

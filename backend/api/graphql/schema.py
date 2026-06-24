@@ -24,7 +24,9 @@ from research.mutations.UpdateStudyMutation import UpdateStudyMutation
 from research.mutations.DeleteStudyMutation import DeleteStudyMutation
 
 
-class Query(FormQueries, UserQueries, StudyQuery, QuestionQueries, NoteQueries, ObjectType):
+class Query(
+    FormQueries, UserQueries, StudyQuery, QuestionQueries, NoteQueries, ObjectType
+):
     pass
 
 

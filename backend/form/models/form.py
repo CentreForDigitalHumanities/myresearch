@@ -91,7 +91,7 @@ class RepeatIndex(models.Model):
         on_delete=models.CASCADE,
         default=None,
         null=True,
-        related_name="children"
+        related_name="children",
     )
 
     submissions = models.ManyToManyField(
@@ -99,7 +99,9 @@ class RepeatIndex(models.Model):
         related_name="repeats",
     )
 
-    def subtree(self,):
+    def subtree(
+        self,
+    ):
         """
         Return all indexes with a repeatable that also references
         this index.
@@ -114,7 +116,7 @@ class RepeatIndex(models.Model):
 
 
 class Repeatable(
-        models.Model,
+    models.Model,
 ):
     repeat_id = models.AutoField(primary_key=True)
 
@@ -125,7 +127,7 @@ class Repeatable(
 
 
 class RepeatableStep(
-        Repeatable,
-        Step,
+    Repeatable,
+    Step,
 ):
     pass

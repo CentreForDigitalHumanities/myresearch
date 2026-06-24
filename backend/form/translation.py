@@ -32,6 +32,7 @@ class RepeatableStepTranslationOptions(TranslationOptions):
     RepeatableStep inherits the translatable fields from StepTranslationOptions,
     but must still be registered regardless.
     """
+
     fields = []
 
 

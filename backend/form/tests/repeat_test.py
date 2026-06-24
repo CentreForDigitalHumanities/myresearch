@@ -4,6 +4,7 @@ from copy import deepcopy
 from form.models import Step, UserFormSubmission, RepeatableStep
 from research.tests import normal_user, test_study
 
+
 def find_steps(content):
     return content["data"]["form"]["steps"]
 
@@ -76,6 +77,7 @@ query GetForm($submissionId: ID!) {
 }
 """
 
+
 @pytest.mark.django_db(transaction=True)
 def test_repeatable_step(
     client_query,
@@ -95,7 +97,7 @@ def test_repeatable_step(
     )
     content = json.loads(response.content)
     assert "errors" not in content
-    # There should be two steps in here    
+    # There should be two steps in here
     found = findkey(content, "background")
     assert len(found) == 2
     # Assert that the repeatable stap has background=True,
@@ -106,6 +108,7 @@ def test_repeatable_step(
             assert step["background"] == True
         else:
             assert step["background"] == False
+
 
 CreateRepeatQuery = """
 mutation CreateRepeat($repeatable_id: ID! $submission_id: ID!) {
@@ -118,6 +121,7 @@ mutation CreateRepeat($repeatable_id: ID! $submission_id: ID!) {
   }
 }
 """
+
 
 @pytest.mark.django_db(transaction=True)
 def test_create_repeat(
@@ -166,10 +170,9 @@ def test_create_repeat(
                 passed += 1
             else:
                 assert step["background"] == True
-                passed += 1                
+                passed += 1
         else:
             assert step["background"] == False
             passed += 1
     # Check that all three above cases happened independently
     assert passed == 3
-

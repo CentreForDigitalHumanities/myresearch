@@ -41,8 +41,9 @@ class UserFormResolver:
         )
 
     def _resolve_steps(
-            self, parent_step: Optional[Step] = None,
-            parent_index=None,
+        self,
+        parent_step: Optional[Step] = None,
+        parent_index=None,
     ):
 
         form = self.evaluator.submission.form
@@ -74,7 +75,11 @@ class UserFormResolver:
                 )
         return instances
 
-    def _make_step_repeats(self, step: Step, parent_index=None,):
+    def _make_step_repeats(
+        self,
+        step: Step,
+        parent_index=None,
+    ):
         repeats = []
         # For repeatable steps, we first insert the "blank" background
         # step into the output.
@@ -107,7 +112,7 @@ class UserFormResolver:
         repeat_index=None,
         background=False,
     ):
-        
+
         if background is False:
             # Background steps for now only serve as a reference that
             # "something may exist here", so we don't need to bother the
@@ -126,20 +131,19 @@ class UserFormResolver:
 
         if repeat_index is not None:
             repeat_index = repeat_index.pk
-        
+
         return StepType(
-                    step_id=step.pk,  # type: ignore
-                    name_nl=step.name_nl,  # type: ignore
-                    name_en=step.name_en,  # type: ignore
-                    description_nl=step.description_nl,  # type: ignore
-                    description_en=step.description_en,  # type: ignore
-                    slug=slug,
-                    repeat_index=repeat_index,  # type: ignore
-                    questions=questions,  # type: ignore
-                    substeps=substeps,  # type: ignore
-                    background=background,
-                )
-    
+            step_id=step.pk,  # type: ignore
+            name_nl=step.name_nl,  # type: ignore
+            name_en=step.name_en,  # type: ignore
+            description_nl=step.description_nl,  # type: ignore
+            description_en=step.description_en,  # type: ignore
+            slug=slug,
+            repeat_index=repeat_index,  # type: ignore
+            questions=questions,  # type: ignore
+            substeps=substeps,  # type: ignore
+            background=background,
+        )
 
     def _resolve_step_questions(self, step, repeat_index):
         # TODO: make question instances from step, rather than questions
@@ -170,9 +174,9 @@ class UserFormResolver:
         return [instance]
 
     def _make_question_repeats(
-            self,
-            question: BaseQuestion,
-            parent_index=None,
+        self,
+        question: BaseQuestion,
+        parent_index=None,
     ):
         repeats = []
         # For repeatable questions, we first insert the "blank" background
@@ -202,7 +206,10 @@ class UserFormResolver:
         return repeats
 
     def _create_question_instance(
-            self, question: BaseQuestion, repeat_index=None, background=False,
+        self,
+        question: BaseQuestion,
+        repeat_index=None,
+        background=False,
     ) -> ObjectType:
         """Create the appropriate user question instance type based on the question type."""
 
@@ -251,6 +258,7 @@ class UserFormResolver:
             indices = indices.filter(parent=parent_index)
         return indices
 
+
 # TODO: Move these helpers somewhere else
 def generate_slug(
     sluggable,
@@ -271,9 +279,8 @@ def is_repeatable(step_or_question):
     """
     Determines if given step or question is repeatable.
     """
-    if (
-        hasattr(step_or_question, "repeatablestep")
-        or hasattr(step_or_question, "repeatablequestion")
+    if hasattr(step_or_question, "repeatablestep") or hasattr(
+        step_or_question, "repeatablequestion"
     ):
         return True
     if issubclass(Repeatable, type(step_or_question)):
