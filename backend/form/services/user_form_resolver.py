@@ -113,7 +113,7 @@ class UserFormResolver:
         background=False,
     ):
 
-        if background is False:
+        if background is True:
             # Background steps for now only serve as a reference that
             # "something may exist here", so we don't need to bother the
             # frontend with their substeps or questions
