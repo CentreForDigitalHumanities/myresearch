@@ -5,6 +5,7 @@ venv/
 .python-version
 .vscode/
 *.sqlite3
+*~
 # Ignore everything in secrets/ except .gitkeep which we keep for a better DX.
 secrets/*
 !secrets/.gitkeep
