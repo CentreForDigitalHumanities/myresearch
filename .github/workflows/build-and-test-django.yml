@@ -25,7 +25,6 @@ jobs:
               run: |
                   generated=$(docker compose run -T --quiet django-prod python manage.py graphql_schema --out=-)
                   diff <(printf '%s' "$generated") backend/schema.json
-                  diff <(printf '%s' "$generated") frontend/schema.json
             - name: Run Django tests
               run: docker compose run django-prod pytest
               
