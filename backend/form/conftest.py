@@ -1,11 +1,40 @@
 import pytest
-from form.models import MRForm, Step, TextQuestion, UserFormSubmission
+from form.models import MRForm, Step, RepeatableStep, TextQuestion, UserFormSubmission
+from graphene_django.utils.testing import graphql_query
+
+GRAPHQL_URL = "/api/graphql"
+# These fixtures are used to test graphql requests
+
+
+@pytest.fixture
+def client_query(client):
+    def func(*args, **kwargs):
+        if "user" in kwargs.keys():
+            client.force_login(kwargs.pop("user"))
+        return graphql_query(
+            *args,
+            **kwargs,
+            client=client,
+            graphql_url=GRAPHQL_URL,
+        )
+
+    return func
 
 
 @pytest.fixture
 def step(form: MRForm) -> Step:
     """Create a test step associated with the test form."""
     return Step.objects.create(name="Test Step", slug="test-step", form=form)
+
+@pytest.fixture
+def repeatable_step(form: MRForm):
+    repeatable_step = RepeatableStep(
+        name="Repeatable",
+        slug="rep",
+        form=form,
+    )
+    repeatable_step.save()
+    return repeatable_step
 
 
 @pytest.fixture
