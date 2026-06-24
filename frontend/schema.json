@@ -1636,6 +1636,33 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "slug",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  }
+                }
+              ],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "note",
+              "type": {
+                "kind": "OBJECT",
+                "name": "NoteType",
+                "ofType": null
+              }
+            },
+            {
+              "args": [
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "id",
                   "type": {
                     "kind": "SCALAR",
@@ -1931,6 +1958,81 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "Query",
+          "possibleTypes": null
+        },
+        {
+          "description": null,
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "titleEn",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "titleNl",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": "For links to other pages within the MR, format url like '/notes/1/'. For links, to other websites, format url like 'https://www.uu.nl'. In case of a really long word, that is overflowing the formatting, go into the source and add the bootstrap class 'text-break' to the paragraph in question.",
+              "isDeprecated": false,
+              "name": "contentEn",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": "For links to other pages within the MR, format url like '/notes/1/'. For links, to other websites, format url like 'https://www.uu.nl'. In case of a really long word, that is overflowing the formatting, go into the source and add the bootstrap class 'text-break' to the paragraph in question.",
+              "isDeprecated": false,
+              "name": "contentNl",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": "Used in the URL, will be generated if not provided",
+              "isDeprecated": false,
+              "name": "slug",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "NoteType",
           "possibleTypes": null
         },
         {
