@@ -66,10 +66,13 @@ class QuestionResponse(models.Model):
 
     answer = models.JSONField()
 
-    # For repeated questions/steps, track which instance this is
-    # 0 = first instance, 1 = second, etc.
-    repeat_index = models.PositiveIntegerField(
-        default=0, help_text="Index for repeated questions."
+    # Note that single reponses may be associated with multiple repeats. This sounds confusing,
+    # but can happen when a repeatable question exists within a repeatable step.
+    repeat_index = models.ForeignKey(
+        "form.RepeatIndex",
+        default=None,
+        null=True,
+        on_delete=models.CASCADE,
     )
 
     answered_at = models.DateTimeField(auto_now=True)
