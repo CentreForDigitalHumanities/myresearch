@@ -422,5 +422,6 @@ class Command(BaseCommand):
                 title_en=self.faker_en.sentence(nb_words=1),
                 content_nl=self.faker_nl.paragraph(),
                 content_en=self.faker_en.paragraph(),
+                slug=self.faker.unique.slug(),
             )
             note.save()
