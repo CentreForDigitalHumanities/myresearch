@@ -20,9 +20,11 @@ jobs:
               run: docker compose build django-prod
             - name: Check for missing migrations
               run: docker compose run django-prod python manage.py makemigrations --dry-run --check
-            - name: Check backend schema is up to date
-              run: git diff --no-index backend/schema.json <(docker compose run -T --quiet django-prod python manage.py graphql_schema --out=-)
-            - name: Check frontend schema is up to date
-              run: git diff --no-index frontend/schema.json <(docker compose run -T --quiet django-prod python manage.py graphql_schema --out=-)
+            - name: Check schemas are up to date
+              shell: bash
+              run: |
+                  generated=$(docker compose run -T --quiet django-prod python manage.py graphql_schema --out=-)
+                  diff <(printf '%s' "$generated") backend/schema.json
+                  diff <(printf '%s' "$generated") frontend/schema.json
             - name: Run Django tests
               run: docker compose run django-prod pytest
