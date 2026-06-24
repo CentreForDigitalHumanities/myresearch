@@ -1,11 +1,9 @@
-from main.models import User
-from form.models import MRForm, BaseQuestion, QuestionResponse
+from form.models import MRForm, BaseQuestion, QuestionResponse, UserFormSubmission
 from main.models import User
 from main.utils.permission_utils import BaseMRManager
 from django.db import models, transaction
 from django.utils import timezone
 from datetime import datetime
-
 from research.models.reviews import StatusChange, SubmissionStatus
 from django.db.models import F, OuterRef, Subquery, Value, CharField, Func
 from django.db.models.functions import Concat, Coalesce, Cast, Extract
