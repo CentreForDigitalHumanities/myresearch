@@ -28,3 +28,4 @@ jobs:
                   diff <(printf '%s' "$generated") frontend/schema.json
             - name: Run Django tests
               run: docker compose run django-prod pytest
+              
