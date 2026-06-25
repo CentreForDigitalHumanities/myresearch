@@ -11,9 +11,7 @@ class NoteQueries(ObjectType):
     )
 
     @staticmethod
-    def resolve_note(
-        root, info: ResolveInfo, slug: str
-    ) -> Optional[Note]:
+    def resolve_note(root, info: ResolveInfo, slug: str) -> Optional[Note]:
         queryset = NoteType.get_queryset(
             Note.objects,
             info,

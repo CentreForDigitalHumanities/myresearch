@@ -28,9 +28,11 @@ const note = computed(() => noteResult.value?.note ?? null);
         <div class="uu-hero">
             <h1>{{ useTranslateableAttribute(note, "title") }}</h1>
         </div>
-        <div
-            class="uu-container"
-            v-html="useTranslateableAttribute(note, 'content')"
-        ></div>
+        <div class="uu-container">
+            <div
+                class="col-9"
+                v-html="useTranslateableAttribute(note, 'content')"
+            ></div>
+        </div>
     </div>
 </template>
