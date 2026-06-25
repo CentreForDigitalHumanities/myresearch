@@ -410,18 +410,3 @@ class Command(BaseCommand):
                     submissions__in=[submission],
                     question=question,
                 ).delete()
-
-    def _create_notes(self, options):
-        for _ in tqdm(
-            range(10),
-            desc="Generating notes...",
-            disable=options["silent"],
-        ):
-            note = Note.objects.create(
-                title_nl=self.faker_nl.sentence(nb_words=1),
-                title_en=self.faker_en.sentence(nb_words=1),
-                content_nl=self.faker_nl.paragraph(),
-                content_en=self.faker_en.paragraph(),
-                slug=self.faker.unique.slug(),
-            )
-            note.save()
