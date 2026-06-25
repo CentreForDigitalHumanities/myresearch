@@ -1,5 +1,6 @@
 from graphene import Schema, ObjectType
 
+from research.types.StudyType import GQLSubmissionStatus
 from form.types.QuestionType import (
     QuestionType,
     BaseQuestionInterface,
@@ -10,9 +11,10 @@ from form.types.QuestionType import (
     FileUploadQuestionType,
     NumberQuestionType,
 )
-from form.queries import FormQueries
+from form.queries import FormQueries, QuestionQueries
 from research.queries import StudyQuery
 from main.queries import UserQueries
+from notes.queries import NoteQueries
 
 from form.mutations.CreateUserFormRevision import CreateUserFormRevision
 from form.mutations.UpdateUserFormSubmission import UpdateUserFormSubmission
@@ -21,7 +23,9 @@ from research.mutations.UpdateStudySeenMutation import UpdateStudySeenMutation
 from research.mutations.DeleteStudyMutation import DeleteStudyMutation
 
 
-class Query(FormQueries, UserQueries, StudyQuery, ObjectType):
+class Query(
+    FormQueries, UserQueries, StudyQuery, QuestionQueries, NoteQueries, ObjectType
+):
     pass
 
 

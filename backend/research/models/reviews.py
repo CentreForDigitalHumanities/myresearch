@@ -5,10 +5,12 @@ from main.utils.permission_utils import BaseMRManager
 
 
 class SubmissionStatus(models.TextChoices):
-    DRAFT = "DRA"
-    SUBMITTED = "SUB"
-    APPROVED = "APP"
-    REJECTED = "REJ"
+    # NOTE: These names need to be identical in order for codegen
+    # to generate these correctly for the frontend
+    DRAFT = "DRAFT"
+    SUBMITTED = "SUBMITTED"
+    APPROVED = "APPROVED"
+    REJECTED = "REJECTED"
 
 
 class StatusChange(models.Model):
