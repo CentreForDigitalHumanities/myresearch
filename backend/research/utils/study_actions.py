@@ -96,7 +96,7 @@ class PrivacyOfficerStudyAction(StudyAction):
         study,
         user,
     ) -> bool:
-        if study.status.status == SubmissionStatus.DRAFT:
+        if study.status == SubmissionStatus.DRAFT:
             return False
 
         if not user.is_privacy_officer:

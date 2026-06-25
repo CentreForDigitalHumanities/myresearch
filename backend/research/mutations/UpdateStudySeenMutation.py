@@ -39,7 +39,7 @@ class UpdateStudySeenMutation(Mutation):
             )
             return cls(errors=[error])
 
-        if study.status.status == SubmissionStatus.DRAFT:
+        if study.status == SubmissionStatus.DRAFT:
             error = ErrorType(
                 field="id", messages=["Draft studies cannot be marked as seen."]
             )
