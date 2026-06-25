@@ -16,31 +16,7 @@ type Intake = {
     stepsCompleted: string;
 };
 
-//mockdata
-const staticDraftProposal: Proposal = {
-    refNumber: 234324_2025,
-    title: "Voorstel Kattenbiologie",
-    type: "proposal_in_ethics",
-    status: "DRAFT",
-    dateSubmitted: "2025-01-24",
-    lastEdited: "2025-04-23",
-};
-const staticSendToProposal: Proposal = {
-    refNumber: 4234_2023,
-    title: "Placeholder",
-    type: "proposal_in_ethics",
-    status: "SUBMITTED_TO_SUPERVISOR",
-    dateSubmitted: "2025-01-24",
-    lastEdited: "2025-04-23",
-};
-const staticIntake: Intake = {
-    refNumber: 3_2025,
-    intakeBody: "body content of intake",
-    stepsCompleted: "1/6",
-};
-
 const recentActivity: RecentActivity[] = [];
-
 type RecentActivity = Proposal | Intake;
 
 const isProposal = (
