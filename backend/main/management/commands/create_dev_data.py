@@ -114,7 +114,7 @@ class Command(BaseCommand):
                 self._generate_questions(options, form)
 
         self._create_submissions_and_studies(options, form)
-        self._create_notes(options)
+        call_command("loaddata", "notes/fixtures/initial.json")
 
         self.print(options, "Dev data generation complete!")
 
