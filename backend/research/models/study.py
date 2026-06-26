@@ -1,11 +1,9 @@
-from main.models import User
-from form.models import MRForm, BaseQuestion, QuestionResponse
+from form.models import MRForm, BaseQuestion, QuestionResponse, UserFormSubmission
 from main.models import User
 from main.utils.permission_utils import BaseMRManager
-
 from django.db import models, transaction
 from django.utils import timezone
-
+from datetime import datetime
 from research.models.reviews import StatusChange, SubmissionStatus
 from django.db.models import F, OuterRef, Subquery, Value, CharField, Func
 from django.db.models.functions import Concat, Coalesce, Cast, Extract
@@ -130,9 +128,10 @@ class Study(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    @staticmethod
-    def can_be_created_by(user):
-        return user.is_authenticated
+    class Meta:
+        verbose_name_plural = "Studies"
+
+    objects = StudyManager()
 
     @property
     def form(self) -> MRForm:
@@ -155,10 +154,17 @@ class Study(models.Model):
             else SubmissionStatus.DRAFT
         )
 
-    class Meta:
-        verbose_name_plural = "Studies"
+    @property
+    def updated_at(self) -> datetime:
+        return (
+            UserFormSubmission.objects.filter(study=self)
+            .latest("updated_at")
+            .updated_at
+        )
 
-    objects = StudyManager()
+    @staticmethod
+    def can_be_created_by(user):
+        return user.is_authenticated
 
     def save(self, *args, **kwargs):
         if not self.reference:
