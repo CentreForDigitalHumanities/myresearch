@@ -1,5 +1,4 @@
 from django.db import models
-
 from main.models import User
 from main.utils.permission_utils import BaseMRManager
 

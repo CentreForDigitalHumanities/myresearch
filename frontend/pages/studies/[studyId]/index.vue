@@ -15,6 +15,8 @@ const GET_STUDY = graphql(`
             reference
             latestSubmissionId
             actions
+            createdAt
+            updatedAt
             createdBy {
                 fullName
                 id
@@ -34,23 +36,11 @@ const { result: studyResult } = useQuery<GetStudyQuery>(
 
 const study = computed(() => studyResult.value?.study ?? null);
 
-// Some functions to generate mockdata
+// If study is even, it is a draft. If it is odd, it is in the review phase
 
-function randomDatePastYear(): string {
-    const today = new Date();
-    const oneYearAgo = new Date();
-    oneYearAgo.setFullYear(today.getFullYear() - 1);
-
-    // Get timestamps
-    const start = oneYearAgo.getTime();
-    const end = today.getTime();
-
-    // Pick a random timestamp between start and end
-    const randomTime = start + Math.random() * (end - start);
-    const randomDate = new Date(randomTime);
-
-    return randomDate.toISOString().split("T")[0];
-}
+const studyStatus = computed(() =>
+    Number(study.value?.id) % 2 === 0 ? "draft" : "review",
+);
 </script>
 
 <template>
@@ -62,10 +52,7 @@ function randomDatePastYear(): string {
             <h1>{{ $t("Study overview") }}</h1>
         </div>
         <div v-if="study" class="uu-sidebar-container">
-            <StudyDetailsSidebar
-                :study="study"
-                :random-date-past-year="randomDatePastYear()"
-            />
+            <StudyDetailsSidebar :study="study" />
             <div class="uu-sidebar-content">
                 <div class="uu-container">
                     <div class="row">
