@@ -5,6 +5,7 @@ import { SharedGraphQLList } from "#components";
 import { useI18n } from "vue-i18n";
 import type { UUListTypes } from "cdh-vue-lib";
 import StatusBadge from "~/components/shared/StatusBadge.vue";
+import IsSeenBadge from "~/components/shared/IsSeenBadge.vue";
 import Loading from "~/components/shared/Loading.vue";
 import { useQuery } from "@vue/apollo-composable";
 import { SubmissionStatus } from "~/generated/gql/graphql";
@@ -12,6 +13,9 @@ import type { GetFacultyQuestionQuery } from "~/generated/gql/graphql";
 import { useTranslatedStatus } from "~/composables/useTranslatedStatus";
 
 const { t } = useI18n();
+
+const currentUserStore = useCurrentUserStore();
+await callOnce("user", () => currentUserStore.loadData());
 
 // The query supplying the data for the list
 const GET_STUDY_PAGES = graphql(`
@@ -22,6 +26,7 @@ const GET_STUDY_PAGES = graphql(`
         $search: String
         $statuses: [String]
         $faculties: [ID]
+        $isSeen: [String]
     ) {
         studyPages(
             mrPermission: "View"
@@ -31,12 +36,14 @@ const GET_STUDY_PAGES = graphql(`
             search: $search
             statuses: $statuses
             faculties: $faculties
+            isSeen: $isSeen
         ) {
             results {
                 id
                 title
                 reference
                 status
+                isSeen
                 createdBy {
                     id
                     fullName
@@ -56,6 +63,7 @@ const variables = ref<GraphQLListVariables>({
     ordering: "-reference",
     statuses: [],
     faculties: [],
+    isSeen: [],
 });
 
 const orderingOptions = computed(() => {
@@ -130,6 +138,19 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
         type: "checkbox",
         initial: [],
     };
+    const isSeenFilter: UUListTypes.FilterDefinition = {
+        field: "isSeen",
+        label: t("Seen by PO"),
+        options: [
+            ["true", t("Seen")],
+            ["false", t("unseen")],
+        ],
+        type: "checkbox",
+        initial: [],
+    };
+    if (currentUserStore.currentUser?.isPrivacyOfficer) {
+        return [facultyFilter, statusFilter, isSeenFilter];
+    }
     return [facultyFilter, statusFilter];
 });
 </script>
@@ -157,6 +178,13 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
                         <th>
                             {{ $t("Status") }}
                         </th>
+                        <th
+                            v-if="
+                                currentUserStore.currentUser?.isPrivacyOfficer
+                            "
+                        >
+                            {{ $t("Seen") }}?
+                        </th>
                         <th>
                             {{ $t("Creator") }}
                         </th>
@@ -179,6 +207,13 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
                         </td>
                         <td>
                             <StatusBadge :status="row.status" />
+                        </td>
+                        <td
+                            v-if="
+                                currentUserStore.currentUser?.isPrivacyOfficer
+                            "
+                        >
+                            <IsSeenBadge :isSeen="row.isSeen" />
                         </td>
                         <td>
                             {{ row.createdBy.fullName }}
