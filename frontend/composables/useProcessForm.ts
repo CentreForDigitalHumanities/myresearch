@@ -306,9 +306,18 @@ function addValidationRule(
 
     // General validation rules
     if (question.required) {
+        // For TrueFalseQuestions, a value is always present (true or false),
+        // so Vuelidate's generic `required` validator is not sufficient here.
+        // Instead, the user must explicitly choose/confirm `true` for such
+        // questions (e.g. "I have understood the above").
+        const requiredFn =
+            question.__typename === "TrueFalseQuestionType"
+                ? (value: boolean) => value
+                : required;
+
         rules.required = helpers.withMessage(
             t("This field is required"),
-            required,
+            requiredFn,
         );
     }
 
