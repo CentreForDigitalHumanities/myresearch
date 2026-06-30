@@ -11,12 +11,13 @@ from django.db.models.functions import Concat, Coalesce, Cast, Extract
 
 class StudyManager(BaseMRManager):
     def _viewable_objects(self, user: User):
+        queryset = self.filter(is_deleted=False)
         if user.is_privacy_officer or user.is_fetc_member:
-            return self.all()
-        return self.filter(created_by=user)
+            return queryset
+        return queryset.filter(created_by=user)
 
     def _editable_objects(self, user: User):
-        return self.filter(created_by=user)
+        return self.filter(is_deleted=False, created_by=user)
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -100,7 +101,7 @@ class StudyManager(BaseMRManager):
             answer = (
                 QuestionResponse.objects.filter(
                     submissions__study=OuterRef("id"),
-                    question_id=question.id,
+                    question_id=question.id,  # type: ignore
                 )
                 .order_by("-submissions__started_at", "-answered_at")
                 .values("answer__value")[:1]
@@ -124,6 +125,10 @@ class Study(models.Model):
 
     # A unique reference number will be created for a study upon first save()
     reference = models.CharField(max_length=10, unique=True)
+    is_deleted = models.BooleanField(
+        default=False,
+        help_text="If true, the study is considered deleted and will not be shown in the UI.",
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -181,6 +186,9 @@ class Study(models.Model):
                 self.reference = f"MR-{year:02d}-{counter_obj.counter:04d}"
 
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Study {self.reference}"
 
 
 class YearCounter(models.Model):
