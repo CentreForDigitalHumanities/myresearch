@@ -13,6 +13,7 @@ type AvailableAction = {
     label: string;
     callback: () => void;
     icon?: Component;
+    hidden?: boolean;
     style?: Record<string, string>;
 };
 
@@ -23,14 +24,14 @@ const props = defineProps<{
 
 const GET_FIRST_SLUG_AND_ACTIONS = graphql(`
     query GetFirstSlugAndActions($studyId: ID!, $submissionId: ID!) {
-        form(submissionId: $submissionId, mrPermission: "Edit") {
+        form(submissionId: $submissionId, mrPermission: "View") {
             formId
             steps {
                 stepId
                 slug
             }
         }
-        study(id: $studyId, mrPermission: "Edit") {
+        study(id: $studyId, mrPermission: "View") {
             id
             actions
         }
@@ -49,8 +50,6 @@ const slug = computed<string | null>(() => {
     const firstStep = result.value?.form?.steps[0];
     return firstStep?.slug || null;
 });
-
-const isSlugLoaded = computed(() => slug.value !== null);
 
 const { t } = useI18n();
 
@@ -103,6 +102,7 @@ const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
     [ActionEnum.EditAction]: {
         label: t("Continue editing"),
         icon: PencilLine,
+        hidden: slug.value === null,
         callback: () => {
             void navigateTo({
                 name: "studies-studyId-submissionId-slug",
@@ -130,9 +130,9 @@ const availableActions = computed<AvailableAction[]>(() => {
     if (!studyActions) {
         return [];
     }
-    return studyActions.map(
-        (actionEnum: ActionEnum) => actionMap.value[actionEnum],
-    );
+    return studyActions
+        .map((actionEnum: ActionEnum) => actionMap.value[actionEnum])
+        .filter((action) => action.hidden !== true);
 });
 </script>
 
@@ -140,7 +140,7 @@ const availableActions = computed<AvailableAction[]>(() => {
     <div v-if="loading">
         <loading />
     </div>
-    <div v-else-if="isSlugLoaded && availableActions.length > 0">
+    <div v-else-if="availableActions.length > 0">
         <h3 class="mb-3">{{ $t("Available actions") }}:</h3>
         <div class="tiles">
             <NuxtLink

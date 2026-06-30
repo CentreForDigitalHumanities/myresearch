@@ -19,6 +19,12 @@ class StudyManager(BaseMRManager):
     def _editable_objects(self, user: User):
         return self.filter(is_deleted=False, created_by=user)
 
+    def _deletable_objects(self, user: User):
+        queryset = self.filter(is_deleted=False)
+        if user.is_privacy_officer or user.is_fetc_member:
+            return queryset
+        return queryset.filter(created_by=user)
+
     def get_queryset(self):
         queryset = super().get_queryset()
         # Annotate important fields (aka question with string_id)
@@ -158,16 +164,18 @@ class Study(models.Model):
             if last_status_change
             else SubmissionStatus.DRAFT
         )
-    
+
     @property
     def has_been_submitted(self) -> bool:
         """
-        A study is considered to have been submitted (at any point in time)if 
+        A study is considered to have been submitted (at any point in time)if
         it has status changes whose status is not DRAFT.
         """
-        return StatusChange.objects.filter(
-            study=self
-        ).exclude(status=SubmissionStatus.DRAFT).exists()
+        return (
+            StatusChange.objects.filter(study=self)
+            .exclude(status=SubmissionStatus.DRAFT)
+            .exists()
+        )
 
     @property
     def updated_at(self) -> datetime:
