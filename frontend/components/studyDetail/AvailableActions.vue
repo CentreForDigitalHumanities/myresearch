@@ -76,27 +76,24 @@ const { mutate: deleteStudy } = useMutation(DELETE_STUDY, {
 function deleteStudyWithConfirmation(): void {
     useConfirm({
         text: t("Are you sure you want to delete this study?"),
+        confirmText: t("Yes"),
+        abortText: t("No"),
+        headerText: t("Confirm study deletion"),
         callback: () => {
             deleteStudy({ id: props.studyId })
                 .then((result) => {
                     if (result?.data?.deleteStudy?.ok) {
                         useNotification(
-                            "Study deleted successfully",
+                            t("Study deleted successfully"),
                             "success",
                         );
                         void navigateTo("/studies");
                     } else {
-                        useNotification(
-                            "Failed to delete study. Please try again.",
-                            "danger",
-                        );
+                        useNotification(t("Failed to delete study."), "danger");
                     }
                 })
                 .catch(() => {
-                    useNotification(
-                        "Failed to delete study. Please try again.",
-                        "danger",
-                    );
+                    useNotification(t("Failed to delete study."), "danger");
                 });
         },
     });
