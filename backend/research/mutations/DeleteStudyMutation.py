@@ -37,6 +37,13 @@ class DeleteStudyMutation(Mutation):
                 messages=["Study not found."],
             )
             return cls(errors=[error])
+        
+        # Soft delete if the study has ever been submitted.
+        if study.has_been_submitted:
+            study.is_deleted = True
+            study.save()
+        # Otherwise, do a regular (hard) delete.
+        else:
+            study.delete()
 
-        study.delete()
         return cls(ok=True)

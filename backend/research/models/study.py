@@ -158,6 +158,16 @@ class Study(models.Model):
             if last_status_change
             else SubmissionStatus.DRAFT
         )
+    
+    @property
+    def has_been_submitted(self) -> bool:
+        """
+        A study is considered to have been submitted (at any point in time)if 
+        it has status changes whose status is not DRAFT.
+        """
+        return StatusChange.objects.filter(
+            study=self
+        ).exclude(status=SubmissionStatus.DRAFT).exists()
 
     @property
     def updated_at(self) -> datetime:
