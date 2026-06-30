@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { useQuery } from "@vue/apollo-composable";
+import { useMutation, useQuery } from "@vue/apollo-composable";
 import { PencilLine, Trash2 } from "lucide-vue-next";
 import type { Component } from "vue";
 import { graphql } from "~/generated/gql";
 import type { GetFirstSlugAndActionsQuery } from "~/generated/gql/graphql";
 import { ActionEnum } from "~/generated/gql/graphql";
 import { NuxtLink } from "#components";
-import type { RouteParamsRawGeneric } from "vue-router";
+import { useConfirm } from "cdh-vue-lib";
 
 type AvailableAction = {
     label: string;
-    name: string;
-    params: RouteParamsRawGeneric;
+    callback: () => void;
     icon?: Component;
     style?: Record<string, string>;
 };
@@ -55,26 +54,73 @@ const isSlugLoaded = computed(() => slug.value !== null);
 
 const { t } = useI18n();
 
-const handleActionClick = (action: AvailableAction) => {
-    void navigateTo({ name: action.name, params: action.params });
-};
+const DELETE_STUDY = graphql(`
+    mutation StudyDetailDeleteStudy($id: ID!) {
+        deleteStudy(id: $id) {
+            ok
+            errors {
+                field
+                messages
+            }
+        }
+    }
+`);
+
+const { mutate: deleteStudy } = useMutation(DELETE_STUDY, {
+    update: (cache) => {
+        cache.evict({ fieldName: "studyPages" });
+        cache.gc();
+    },
+});
+
+function deleteStudyWithConfirmation(): void {
+    useConfirm({
+        text: t("Are you sure you want to delete this study?"),
+        callback: () => {
+            deleteStudy({ id: props.studyId })
+                .then((result) => {
+                    if (result?.data?.deleteStudy?.ok) {
+                        useNotification(
+                            "Study deleted successfully",
+                            "success",
+                        );
+                        void navigateTo("/studies");
+                    } else {
+                        useNotification(
+                            "Failed to delete study. Please try again.",
+                            "danger",
+                        );
+                    }
+                })
+                .catch(() => {
+                    useNotification(
+                        "Failed to delete study. Please try again.",
+                        "danger",
+                    );
+                });
+        },
+    });
+}
 
 const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
     [ActionEnum.EditAction]: {
         label: t("Continue editing"),
-        name: "studies-studyId-submissionId-slug",
-        params: {
-            studyId: props.studyId,
-            submissionId: props.submissionId,
-            slug: slug.value,
-        },
         icon: PencilLine,
+        callback: () => {
+            void navigateTo({
+                name: "studies-studyId-submissionId-slug",
+                params: {
+                    studyId: props.studyId,
+                    submissionId: props.submissionId,
+                    slug: slug.value,
+                },
+            });
+        },
     },
     [ActionEnum.DeleteAction]: {
         label: t("Delete"),
-        name: "studies-studyId-delete",
-        params: { studyId: props.studyId },
         icon: Trash2,
+        callback: deleteStudyWithConfirmation,
         style: {
             "--bs-tiles-hover-bg": "var(--bs-danger)",
             "--bs-tiles-hover-color": "var(--bs-white)",
@@ -84,12 +130,12 @@ const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
 
 const availableActions = computed<AvailableAction[]>(() => {
     const studyActions = result.value?.study?.actions;
-    if (studyActions) {
-        return studyActions.map(
-            (actionEnum: ActionEnum) => actionMap.value[actionEnum],
-        );
+    if (!studyActions) {
+        return [];
     }
-    return [];
+    return studyActions.map(
+        (actionEnum: ActionEnum) => actionMap.value[actionEnum],
+    );
 });
 </script>
 
@@ -105,7 +151,7 @@ const availableActions = computed<AvailableAction[]>(() => {
                 :key="index"
                 :style="action.style"
                 class="tile h-100 justify-content-around"
-                @click.prevent="handleActionClick(action)"
+                @click.prevent="action.callback"
             >
                 <strong class="text-center">{{ $t(action.label) }}</strong>
                 <component :is="action.icon" v-if="action.icon"> </component>
