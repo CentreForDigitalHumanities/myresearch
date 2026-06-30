@@ -183,7 +183,7 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
                                 currentUserStore.currentUser?.isPrivacyOfficer
                             "
                         >
-                            {{ $t("Seen") }}?
+                            {{ $t("Seen") }}
                         </th>
                         <th>
                             {{ $t("Creator") }}
