@@ -31,17 +31,17 @@ const handleCreateStudy = async () => {
         const result = await createStudy();
 
         if (!result?.data) {
-            useNotification(t("No response from server"), "danger");
+            useNotification(t("No response from server."), "danger");
             return;
         }
 
         if (result.data.createStudy?.errors?.length) {
-            useNotification(t("Failed to create study"), "danger");
+            useNotification(t("Failed to create study."), "danger");
             return;
         }
 
         if (result.data.createStudy?.study?.id) {
-            useNotification(t("Study created successfully"), "success");
+            useNotification(t("Study created successfully."), "success");
             void navigateTo(`/studies/${result.data.createStudy.study.id}`);
         }
     } catch {

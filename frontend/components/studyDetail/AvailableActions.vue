@@ -83,7 +83,7 @@ function deleteStudyWithConfirmation(): void {
                 .then((result) => {
                     if (result?.data?.deleteStudy?.ok) {
                         useNotification(
-                            t("Study deleted successfully"),
+                            t("Study deleted successfully."),
                             "success",
                         );
                         void navigateTo("/studies");
