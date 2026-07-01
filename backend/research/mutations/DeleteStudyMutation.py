@@ -28,7 +28,7 @@ class DeleteStudyMutation(Mutation):
                     Study.objects,
                     info,
                 )
-                .accessible_objects(info.context.user, MRPermission.EDIT)
+                .accessible_objects(info.context.user, MRPermission.DELETE)
                 .get(pk=id)
             )
         except Study.DoesNotExist:
