@@ -137,4 +137,4 @@ class DateQuestion(BaseQuestion):
 
 
 class FileUploadQuestion(BaseQuestion):
-    size_limit = models.PositiveIntegerField()
+    size_limit = models.PositiveIntegerField(help_text="Maximum file size in bytes.")
