@@ -8,7 +8,7 @@ from main.models import MRPermission
 
 class DeleteStudyMutation(Mutation):
 
-    ok = Boolean()
+    ok = Boolean(required=True)
     errors = List(ErrorType)
 
     class Arguments:
@@ -36,7 +36,7 @@ class DeleteStudyMutation(Mutation):
                 field="id",
                 messages=["Study not found."],
             )
-            return cls(errors=[error])
+            return cls(errors=[error], ok=False)
         
         # Soft delete if the study has ever been submitted.
         if study.has_been_submitted:
