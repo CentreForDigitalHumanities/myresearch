@@ -1864,6 +1864,20 @@
                       "ofType": null
                     }
                   }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "isSeen",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
                 }
               ],
               "deprecationReason": null,
@@ -2108,6 +2122,22 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
+              "name": "isSeen",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
               "name": "title",
               "type": {
                 "kind": "SCALAR",
@@ -2319,6 +2349,22 @@
                   "ofType": null
                 }
               }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "isPrivacyOfficer",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              }
             }
           ],
           "inputFields": null,
@@ -2341,6 +2387,18 @@
               "description": null,
               "isDeprecated": false,
               "name": "DELETE_ACTION"
+            },
+            {
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "MARK_SEEN_ACTION"
+            },
+            {
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "MARK_UNSEEN_ACTION"
             }
           ],
           "fields": null,
@@ -2879,13 +2937,13 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "title",
+                  "name": "isSeen",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
                       "kind": "SCALAR",
-                      "name": "String",
+                      "name": "Boolean",
                       "ofType": null
                     }
                   }
@@ -2894,10 +2952,10 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "updateStudy",
+              "name": "updateStudySeen",
               "type": {
                 "kind": "OBJECT",
-                "name": "UpdateStudyMutation",
+                "name": "UpdateStudySeenMutation",
                 "ofType": null
               }
             },
@@ -3125,7 +3183,7 @@
           "inputFields": null,
           "interfaces": [],
           "kind": "OBJECT",
-          "name": "UpdateStudyMutation",
+          "name": "UpdateStudySeenMutation",
           "possibleTypes": null
         },
         {
