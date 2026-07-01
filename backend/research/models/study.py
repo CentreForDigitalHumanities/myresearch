@@ -131,9 +131,6 @@ class Study(models.Model):
     # Indicate whether Study has been seen by reviewer
     is_seen = models.BooleanField(default=False)
 
-    # Indicate whether Study has been seen by reviewer
-    is_seen = models.BooleanField(default=False)
-
     class Meta:
         verbose_name_plural = "Studies"
 
