@@ -2076,6 +2076,22 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
+              "name": "createdAt",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "DateTime",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
               "name": "createdBy",
               "type": {
                 "kind": "NON_NULL",
@@ -2154,12 +2170,38 @@
                   "ofType": null
                 }
               }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "updatedAt",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "DateTime",
+                  "ofType": null
+                }
+              }
             }
           ],
           "inputFields": null,
           "interfaces": [],
           "kind": "OBJECT",
           "name": "StudyType",
+          "possibleTypes": null
+        },
+        {
+          "description": "The `DateTime` scalar type represents a DateTime\nvalue as specified by\n[iso8601](https://en.wikipedia.org/wiki/ISO_8601).",
+          "enumValues": null,
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "SCALAR",
+          "name": "DateTime",
           "possibleTypes": null
         },
         {
@@ -2800,16 +2842,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "StepInfoTextType",
-          "possibleTypes": null
-        },
-        {
-          "description": "The `DateTime` scalar type represents a DateTime\nvalue as specified by\n[iso8601](https://en.wikipedia.org/wiki/ISO_8601).",
-          "enumValues": null,
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "SCALAR",
-          "name": "DateTime",
           "possibleTypes": null
         },
         {

@@ -1,6 +1,5 @@
 from graphene import Schema, ObjectType
 
-from research.types.StudyType import GQLSubmissionStatus
 from form.types.QuestionType import (
     QuestionType,
     BaseQuestionInterface,
