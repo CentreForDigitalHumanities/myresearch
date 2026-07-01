@@ -320,6 +320,13 @@ class Command(BaseCommand):
                 StatusChange.objects.create(
                     status=SubmissionStatus.DRAFT, created_by=user, study=study
                 )
+
+                # For 30% of studies, create a submitted StatusChange
+                if self.faker.boolean(30):
+                    StatusChange.objects.create(
+                        status=SubmissionStatus.SUBMITTED, created_by=user, study=study
+                    )
+                
                 # Create one submission per study (for now).
                 self._create_user_form_submission(user, form, study)
 
