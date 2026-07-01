@@ -30,14 +30,14 @@ const props = defineProps<{
 
 const GET_FIRST_SLUG_AND_ACTIONS = graphql(`
     query GetFirstSlugAndActions($studyId: ID!, $submissionId: ID!) {
-        form(submissionId: $submissionId, mrPermission: "Edit") {
+        form(submissionId: $submissionId, mrPermission: "View") {
             formId
             steps {
                 stepId
                 slug
             }
         }
-        study(id: $studyId, mrPermission: "Edit") {
+        study(id: $studyId, mrPermission: "View") {
             id
             actions
         }
