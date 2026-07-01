@@ -419,7 +419,7 @@ class TestDeleteStudyMutation:
 
     def test_soft_delete_submitted_study(self, normal_user: User, test_study: Study):
         """
-        Owner can soft-delete a study that has been submitted; it remains in 
+        Owner can soft-delete a study that has been submitted; it remains in
         the database with is_deleted=True.
         """
         StatusChange.objects.create(
