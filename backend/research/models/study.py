@@ -168,7 +168,7 @@ class Study(models.Model):
     @property
     def has_been_submitted(self) -> bool:
         """
-        A study is considered to have been submitted (at any point in time)if
+        A study is considered to have been submitted (at any point in time) if
         it has status changes whose status is not DRAFT.
         """
         return (
