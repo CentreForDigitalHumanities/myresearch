@@ -11,6 +11,7 @@ from form.services.form_evaluator import FormEvaluator
 from research.models.reviews import StatusChange, SubmissionStatus
 from research.models.study import Study
 from main.models import User
+from notes.models import Note
 from form.models import (
     MRForm,
     QuestionResponse,
@@ -53,6 +54,10 @@ MAX_STEP_DEPTH = 3
 
 
 ALL_QUESTIONS = ["select", "text", "true_false", "date", "number", "file_upload"]
+
+# These are the question annotation_keys that are used in the app
+TEXT_ANNOTATION_KEYS = ["title"]
+SELECT_ANNOTATION_KEYS = ["faculty"]
 
 # Min/max number of studies per user
 MIN_STUDIES_PER_USER = 1
@@ -109,6 +114,7 @@ class Command(BaseCommand):
                 self._generate_questions(options, form)
 
         self._create_submissions_and_studies(options, form)
+        self._create_notes(options)
 
         self.print(options, "Dev data generation complete!")
 
@@ -152,11 +158,11 @@ class Command(BaseCommand):
             ):
                 substep = Step.objects.create(
                     parent=step,
-                    form=None,
+                    form=step.form,
                     name_nl=self.faker_nl.sentence(nb_words=5),
                     name_en=self.faker_en.sentence(nb_words=5),
-                    description_nl=self.faker_nl.paragraph(),
-                    description_en=self.faker_en.paragraph(),
+                    description_nl=f"<p>{self.faker_nl.paragraph()}</p>",
+                    description_en=f"<p>{self.faker_en.paragraph()}</p>",
                     slug=self.faker.unique.slug(),
                 )
 
@@ -176,8 +182,8 @@ class Command(BaseCommand):
                 form=form,
                 name_nl=self.faker_nl.sentence(nb_words=5),
                 name_en=self.faker_en.sentence(nb_words=5),
-                description_nl=self.faker_nl.paragraph(),
-                description_en=self.faker_en.paragraph(),
+                description_nl=f"<p>{self.faker_nl.paragraph()}</p>",
+                description_en=f"<p>{self.faker_en.paragraph()}</p>",
                 slug=self.faker.unique.slug(),
             )
             _generate_substeps(step, 1)
@@ -203,8 +209,8 @@ class Command(BaseCommand):
         for _ in range(self.faker.random_int(1, 3)):
             StepInfoText.objects.create(
                 step=step,
-                text_nl=self.faker_nl.paragraph(),
-                text_en=self.faker_en.paragraph(),
+                text_nl=f"<p>{self.faker_nl.paragraph()}</p>",
+                text_en=f"<p>{self.faker_en.paragraph()}</p>",
             )
 
     def _generate_questions(self, options, form: MRForm) -> None:
@@ -213,8 +219,8 @@ class Command(BaseCommand):
                 "text_nl": self.faker_nl.sentence().replace(".", "?"),
                 "text_en": self.faker_en.sentence().replace(".", "?"),
                 "step": step,
-                "description_nl": self.faker_nl.paragraph(),
-                "description_en": self.faker_en.paragraph(),
+                "description_nl": f"<p>{self.faker_nl.paragraph()}</p>",
+                "description_en": f"<p>{self.faker_en.paragraph()}</p>",
                 "required": self.faker.pybool(),
             }
 
@@ -224,6 +230,10 @@ class Command(BaseCommand):
                 multiple=self.faker.pybool(),
             )
 
+            if SELECT_ANNOTATION_KEYS:
+                select_question.annotation_key = SELECT_ANNOTATION_KEYS.pop()
+                select_question.save()
+
             for _ in range(self.faker.random_int(2, 5)):
                 SelectOption.objects.create(
                     label_nl=self.faker_nl.word(),
@@ -232,12 +242,15 @@ class Command(BaseCommand):
                 )
 
         def _create_text_question(form: Step, index: int) -> None:
-            TextQuestion.objects.create(
+            tq = TextQuestion.objects.create(
                 **_base_question_fields(form, index),
                 placeholder_nl=self.faker_nl.sentence(),
                 placeholder_en=self.faker_en.sentence(),
                 lines=self.faker.random_int(1, 5),
             )
+            if TEXT_ANNOTATION_KEYS:
+                tq.annotation_key = TEXT_ANNOTATION_KEYS.pop()
+                tq.save()
 
         def _create_true_false_question(form: Step, index: int) -> None:
             TrueFalseQuestion.objects.create(
@@ -259,31 +272,8 @@ class Command(BaseCommand):
                 **_base_question_fields(form, index), size_limit=1024
             )
 
-        def _get_all_steps(form: MRForm) -> list[Step]:
-            """Recursively gather all steps and substeps of a given form."""
-
-            def _get_all_substeps(step: Step) -> list[Step]:
-                """Recursively gather all substeps of a given step."""
-                all_substeps: list[Step] = []
-                substeps = Step.objects.filter(parent=step)
-                for substep in substeps:
-                    all_substeps.append(substep)
-                    all_substeps.extend(_get_all_substeps(substep))
-                return all_substeps
-
-            all_steps: list[Step] = []
-
-            steps = Step.objects.filter(form=form)
-            for step in steps:
-                all_steps.append(step)
-                all_steps.extend(_get_all_substeps(step))
-
-            return all_steps
-
-        all_steps = _get_all_steps(form)
-
         for step in tqdm(
-            all_steps, desc="Generating questions...", disable=options["silent"]
+            form.steps.all(), desc="Generating questions...", disable=options["silent"]  # type: ignore
         ):
             number_of_questions = self.faker.random_int(
                 MIN_QUESTIONS_IN_STEP, MAX_QUESTIONS_IN_STEP
@@ -397,10 +387,11 @@ class Command(BaseCommand):
             study=study,
         )
 
-        form_questions = form.all_questions()
+        form_questions = form.questions.all()  # type: ignore
 
         # First generate answers for all questions, regardless of visibility.
         for question in form_questions:
+            question = question.get_subclass()
             if self.faker.random_element([True, False, False, False]):
                 # 25% chance to leave the question unanswered.
                 continue
@@ -423,3 +414,18 @@ class Command(BaseCommand):
                     submissions__in=[submission],
                     question=question,
                 ).delete()
+
+    def _create_notes(self, options):
+        for _ in tqdm(
+            range(10),
+            desc="Generating notes...",
+            disable=options["silent"],
+        ):
+            note = Note.objects.create(
+                title_nl=self.faker_nl.sentence(nb_words=1),
+                title_en=self.faker_en.sentence(nb_words=1),
+                content_nl=self.faker_nl.paragraph(),
+                content_en=self.faker_en.paragraph(),
+                slug=self.faker.unique.slug(),
+            )
+            note.save()

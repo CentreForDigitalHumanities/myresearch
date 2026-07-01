@@ -1,11 +1,12 @@
-from form.models import MRForm, QuestionResponse, UserFormSubmission
+from form.models import MRForm, BaseQuestion, QuestionResponse, UserFormSubmission
 from main.models import User
 from main.utils.permission_utils import BaseMRManager
-
 from django.db import models, transaction
 from django.utils import timezone
-
+from datetime import datetime
 from research.models.reviews import StatusChange, SubmissionStatus
+from django.db.models import F, OuterRef, Subquery, Value, CharField, Func
+from django.db.models.functions import Concat, Coalesce, Cast, Extract
 
 
 class StudyManager(BaseMRManager):
@@ -17,6 +18,107 @@ class StudyManager(BaseMRManager):
     def _editable_objects(self, user: User):
         return self.filter(created_by=user)
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # Annotate important fields (aka question with string_id)
+        queryset = self.with_answers_by_annotation_key(queryset)
+        # Annotate a default title, if no title
+        queryset = self.with_default_title_annotation(queryset)
+        return queryset
+
+    def with_default_title_annotation(self, queryset):
+        """Override empty title values with a default based on creation date.
+
+        Assumes title is already annotated by with_answers_by_annotation_key_annotation.
+        """
+
+        # create a default title in case there is not yet an answer to the title question
+        default_title_str = Concat(
+            Value("Study created on "),
+            Cast(Extract("created_at", "year"), CharField()),
+            Value("-"),
+            # Pad with 0 on the left if month is single digit
+            Func(
+                Cast(Extract("created_at", "month"), CharField()),
+                Value(2),
+                Value("0"),
+                function="LPAD",
+                output_field=CharField(),
+            ),
+            Value("-"),
+            Func(
+                Cast(Extract("created_at", "day"), CharField()),
+                Value(2),
+                Value("0"),
+                function="LPAD",
+                output_field=CharField(),
+            ),
+            Value(" "),
+            Func(
+                Cast(Extract("created_at", "hour"), CharField()),
+                Value(2),
+                Value("0"),
+                function="LPAD",
+                output_field=CharField(),
+            ),
+            Value(":"),
+            Func(
+                Cast(Extract("created_at", "minute"), CharField()),
+                Value(2),
+                Value("0"),
+                function="LPAD",
+                output_field=CharField(),
+            ),
+            output_field=CharField(),
+        )
+
+        default_title = Func(
+            default_title_str, function="to_jsonb", output_field=models.JSONField()
+        )
+
+        return queryset.annotate(
+            title=Coalesce(F("title"), default_title, output_field=models.JSONField())
+        )
+
+    def with_answers_by_annotation_key(self, queryset):
+        """Annotate queryset with latest answers for all questions with annotation_key.
+
+        This is used as a default when getting a queryset in get_queryset.
+        """
+
+        # Get all questions with annotation_key that belong to forms in studies
+        questions = (
+            BaseQuestion.objects.filter(form__submissions__study__in=queryset)
+            .filter(annotation_key__isnull=False)
+            .exclude(annotation_key="")
+            .distinct()
+        )
+
+        # Build annotations dictionary
+        annotations = {}
+        for question in questions:
+            answer = (
+                QuestionResponse.objects.filter(
+                    submissions__study=OuterRef("id"),
+                    question_id=question.id,
+                )
+                .order_by("-submissions__started_at", "-answered_at")
+                .values("answer__value")[:1]
+            )
+
+            annotations[question.annotation_key] = Subquery(answer)
+
+        # Ensure 'title' annotation always exists
+        # This ensures that default title annotation will work
+        if "title" not in annotations:
+            annotations["title"] = Value(None)
+
+        # Apply annotations to queryset
+        if annotations:
+            queryset = queryset.annotate(**annotations)
+
+        return queryset
+
 
 class Study(models.Model):
 
@@ -26,43 +128,16 @@ class Study(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    @staticmethod
-    def can_be_created_by(user):
-        return user.is_authenticated
+    class Meta:
+        verbose_name_plural = "Studies"
+
+    objects = StudyManager()
 
     @property
     def form(self) -> MRForm:
         # There should only ever be one form associated with a study.
         # If there are none or more than one, we will want to know about it.
         return MRForm.objects.filter(submissions__study=self).distinct().get()
-
-    @property
-    def name(self) -> str:
-        default_name = (
-            f"Study created on {self.created_at.strftime('%Y-%m-%d %H:%M:%S')}"
-        )
-
-        name_question = self.form.study_name_question
-        if name_question is None:
-            return default_name
-
-        try:
-            submission = UserFormSubmission.objects.get(
-                user=self.created_by,
-                form=self.form,
-                study=self,
-            )
-            response = QuestionResponse.objects.filter(
-                submissions=submission,
-                question_id=name_question.id,
-            ).latest("answered_at")
-            return (
-                response.answer["value"]
-                if response and response.answer
-                else default_name
-            )
-        except Exception as e:
-            return default_name
 
     @property
     def status(self) -> SubmissionStatus:
@@ -79,10 +154,17 @@ class Study(models.Model):
             else SubmissionStatus.DRAFT
         )
 
-    class Meta:
-        verbose_name_plural = "Studies"
+    @property
+    def updated_at(self) -> datetime:
+        return (
+            UserFormSubmission.objects.filter(study=self)
+            .latest("updated_at")
+            .updated_at
+        )
 
-    objects = StudyManager()
+    @staticmethod
+    def can_be_created_by(user):
+        return user.is_authenticated
 
     def save(self, *args, **kwargs):
         if not self.reference:

@@ -1,10 +1,11 @@
 from django.db import models
-
 from main.models import User
 from main.utils.permission_utils import BaseMRManager
 
 
 class SubmissionStatus(models.TextChoices):
+    # NOTE: These names need to be identical in order for codegen
+    # to generate these correctly for the frontend
     DRAFT = "DRAFT"
     SUBMITTED = "SUBMITTED"
     APPROVED = "APPROVED"

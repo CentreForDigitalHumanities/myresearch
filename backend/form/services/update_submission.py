@@ -2,6 +2,7 @@ from main.models import MRPermission, User
 from form.models import UserFormSubmission, QuestionResponse
 from form.models.responses import MRDocument
 from form.mutations.utils.inputs import UserFormInput
+from django.utils import timezone
 
 
 def _delete_document_if_cleared(old_answer: dict, new_answer: dict) -> None:
@@ -23,9 +24,9 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
     # That is why we use .get() here, which handles both cases.
     try:
         # first filter for editable objects, and then try to get the specific submission
-        current_submission = UserFormSubmission.objects.accessible_objects(
-            user, MRPermission.EDIT
-        ).get(
+        current_submission: (
+            UserFormSubmission
+        ) = UserFormSubmission.objects.accessible_objects(user, MRPermission.EDIT).get(
             id=user_form_input.get("submission_id"),
         )
     except UserFormSubmission.DoesNotExist:
@@ -58,6 +59,8 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
                     _delete_document_if_cleared(qr.answer, response["answer"])
                     qr.answer = response["answer"]
                     qr.save()
+
+                current_submission.updated_at = timezone.now()
         else:
             new_response = QuestionResponse.objects.create(
                 question_id=response["question_id"],
@@ -65,5 +68,6 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
                 repeat_index=response["repeat_index"],
             )
             new_response.submissions.add(current_submission)
-
+            current_submission.updated_at = timezone.now()
+    current_submission.save()
     return current_submission

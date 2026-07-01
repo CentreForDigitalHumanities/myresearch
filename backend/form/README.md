@@ -20,9 +20,9 @@ MRForm (top-level form)
           └── Question (questions within substep)
 ```
 
--   **MRForm**: the root object for a form, identified by name. This will be versioned in the future so we can create new versions of the same form over time without affecting existing submissions.
--   **Step**: a section within a form, can be top-level or nested as substeps. In addition to questions, steps may link to a `StepInfoText` object for displaying information to users.
--   **Question**: represents a single question within a step, of various types (text, number, select, etc).
+- **MRForm**: the root object for a form, identified by name. This will be versioned in the future so we can create new versions of the same form over time without affecting existing submissions.
+- **Step**: a section within a form, can be top-level or nested as substeps. In addition to questions, steps may link to a `StepInfoText` object for displaying information to users.
+- **Question**: represents a single question within a step, of various types (text, number, select, etc).
 
 In principle, there is no limit to the depth of step nesting, but in practice we usually keep it to 1-2 levels for usability. GraphQL enforces a practical limit on nesting depth, as you cannot query infinitely deep structures.
 
@@ -74,29 +74,28 @@ FileUploadQuestion: {
 
 The **FormEvaluator** and **UserFormResolver** services work together to create a user-specific view of a form, taking into account the user's previous answers and the conditional logic defined in the form template. The resolver takes the evaluator as its input. They are designed to be independent of any specific serialization format (e.g. GraphQL), allowing for flexibility in how user forms are presented.
 
--   **FormEvaluator**: This service evaluates which steps and questions should be shown to the user based on their previous answers. It performs the following tasks:
+- **FormEvaluator**: This service evaluates which steps and questions should be shown to the user based on their previous answers. It performs the following tasks:
+    - Creates a tree-like structure representing the form, steps, and questions.
+    - Retrieves an existing user submission or creates a new one if requested.
+    - Evaluates conditional logic to determine visibility and repetition of steps/questions.
+    - Remains agnostic to serialization/output formats.
+    - Caches question responses for efficient lookups during evaluation.
 
-    -   Creates a tree-like structure representing the form, steps, and questions.
-    -   Retrieves an existing user submission or creates a new one if requested.
-    -   Evaluates conditional logic to determine visibility and repetition of steps/questions.
-    -   Remains agnostic to serialization/output formats.
-    -   Caches question responses for efficient lookups during evaluation.
-
--   **UserFormResolver**: This service takes the output from the FormEvaluator and constructs a complete user-specific form structure in GraphQL types. It recursively builds the step and question hierarchy, including all repeated instances, and attaches the user's answers to each question instance.
+- **UserFormResolver**: This service takes the output from the FormEvaluator and constructs a complete user-specific form structure in GraphQL types. It recursively builds the step and question hierarchy, including all repeated instances, and attaches the user's answers to each question instance.
 
 ### GraphQL Types
 
 The user-specific form structure is represented in GraphQL using the following types.
 
--   **UserFormType**: represents the entire user-specific form, containing top-level steps.
--   **StepType**: represents a step within the user form, including substeps and questions. It also includes `repeat_index` for repeated instances.
--   Various question types:
-    -   **TextQuestionType**
-    -   **NumberQuestionType**
-    -   **TrueFalseQuestionType**
-    -   **DateQuestionType**
-    -   **SelectQuestionType**
-    -   **FileUploadQuestionType**
+- **UserFormType**: represents the entire user-specific form, containing top-level steps.
+- **StepType**: represents a step within the user form, including substeps and questions. It also includes `repeat_index` for repeated instances.
+- Various question types:
+    - **TextQuestionType**
+    - **NumberQuestionType**
+    - **TrueFalseQuestionType**
+    - **DateQuestionType**
+    - **SelectQuestionType**
+    - **FileUploadQuestionType**
 
 Each question type implements **BaseQuestionInterface**, which contains common fields such as `text`, `description`, `required` and the user's `answer`. In addition, the field `question_id` refers back to the template question, while `repeat_index` indicates which instance of a repeated question this is.
 
@@ -124,12 +123,12 @@ Visibility is determined according to the following rules.
 
 Each condition defines:
 
--   **trigger_question**: the question whose answer determines if this condition activates.
--   **target_question** or **target_step**: the question or step affected by this condition.
--   **condition_type**: one of the condition types above (`show`/`hide`/`repeat`/`repeat_dynamic`).
--   **trigger_value**: the answer criteria that activates this condition (see Trigger Values below).
--   **repeat_count**: for static repeats, how many times to repeat.
--   **use_answer_as_count**: for dynamic repeats, whether to use the answer's value as the repeat count.
+- **trigger_question**: the question whose answer determines if this condition activates.
+- **target_question** or **target_step**: the question or step affected by this condition.
+- **condition_type**: one of the condition types above (`show`/`hide`/`repeat`/`repeat_dynamic`).
+- **trigger_value**: the answer criteria that activates this condition (see Trigger Values below).
+- **repeat_count**: for static repeats, how many times to repeat.
+- **use_answer_as_count**: for dynamic repeats, whether to use the answer's value as the repeat count.
 
 ### Trigger Values
 
@@ -227,11 +226,11 @@ For safety, the number of repeated instances is constrained to 1-10 (see `MAX_RE
 The application comes with a fixture with a very basic sample form for the intake form located at `form/fixtures/intake.json`. To use it, load it into your database with:
 
 ```bash
-python manage.py loaddata form/fixtures/intake.json
+python manage.py loaddata form/fixtures/vwr.json
 ```
 
 Update the form in Django Admin as you wish. Once you're satisfied, update the fixture by running:
 
 ```bash
-python manage.py dumpdata form --output form/fixtures/intake.json --indent 4
+python manage.py create_form_fixture
 ```
