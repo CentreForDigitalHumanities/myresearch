@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { useMutation, useQuery } from "@vue/apollo-composable";
-import { PencilLine, Trash2, SquareCheckBig, SquareDashed } from "lucide-vue-next";
+import {
+    PencilLine,
+    Trash2,
+    SquareCheckBig,
+    SquareDashed,
+} from "lucide-vue-next";
 import type { Component } from "vue";
 import { graphql } from "~/generated/gql";
 import type { GetFirstSlugAndActionsQuery } from "~/generated/gql/graphql";
