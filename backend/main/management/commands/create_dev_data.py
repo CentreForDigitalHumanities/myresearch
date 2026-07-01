@@ -333,6 +333,7 @@ class Command(BaseCommand):
                     if self.faker.boolean(50):
                         # mark some of these as seen
                         study.is_seen = True
+                        study.save()
                 else:
                     # Non submitted studies will not be filled in perfectly
                     self._create_user_form_submission(user, form, study)
