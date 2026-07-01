@@ -18,7 +18,7 @@ const { t } = useI18n();
 
 type AvailableAction = {
     label: string;
-    actionCallback: () => void;
+    callback: () => void;
     icon?: Component;
     style?: Record<string, string>;
 };
@@ -80,21 +80,21 @@ const handleUpdateStudyIsSeen = async (isSeen: boolean) => {
         const result = await markStudySeen({ studyId: props.studyId, isSeen });
 
         if (!result?.data) {
-            useNotification("No response from server", "danger");
+            useNotification(t("No response from server"), "danger");
             return;
         }
 
         if (result.data.updateStudySeen?.errors?.length) {
-            useNotification("Failed update to study", "danger");
+            useNotification(t("Failed update to study"), "danger");
             return;
         }
 
         if (result.data.updateStudySeen?.study?.id) {
-            useNotification("Study updated successfully", "success");
+            useNotification(t("Study updated successfully"), "success");
             location.reload();
         }
     } catch {
-        useNotification("Failed update study. Please try again.", "danger");
+        useNotification(t("Failed update study. Please try again."), "danger");
     }
 };
 
@@ -113,7 +113,7 @@ function checkMarkStudySeen(isSeen: boolean): void {
 const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
     [ActionEnum.EditAction]: {
         label: t("Continue editing"),
-        actionCallback: () =>
+        callback: () =>
             void navigateTo({
                 name: "studies-studyId-submissionId-slug",
                 params: {
@@ -126,7 +126,7 @@ const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
     },
     [ActionEnum.DeleteAction]: {
         label: t("Delete"),
-        actionCallback: () =>
+        callback: () =>
             void navigateTo({
                 name: "studies-studyId-delete",
                 params: {
@@ -141,7 +141,7 @@ const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
     },
     [ActionEnum.MarkSeenAction]: {
         label: t("Mark as seen"),
-        actionCallback: () => {
+        callback: () => {
             checkMarkStudySeen(true);
         },
         icon: SquareCheckBig,
@@ -152,7 +152,7 @@ const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
     },
     [ActionEnum.MarkUnseenAction]: {
         label: t("Mark as unseen"),
-        actionCallback: () => {
+        callback: () => {
             checkMarkStudySeen(false);
         },
         icon: SquareDashed,
@@ -186,7 +186,7 @@ const availableActions = computed<AvailableAction[]>(() => {
                 :key="index"
                 :style="action.style"
                 class="tile h-100 justify-content-around"
-                @click.prevent="action.actionCallback"
+                @click.prevent="action.callback"
             >
                 <strong class="text-center">{{ $t(action.label) }}</strong>
                 <component :is="action.icon" v-if="action.icon"> </component>
