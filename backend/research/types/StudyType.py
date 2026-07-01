@@ -26,7 +26,7 @@ class StudyFilter(FilterSet):
         method="filter_faculties",
     )
 
-    # Sadly, the frontend does not support booleans as options so we have to 
+    # Sadly, the frontend does not support booleans as options so we have to
     # translate from strings
     is_seen = MultipleChoiceFilter(
         field_name="is_seen",
