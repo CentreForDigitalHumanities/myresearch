@@ -18,34 +18,34 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 50,
+        "pk": 2,
         "fields": {
             "annotation_key": null,
-            "text": "Who holds final responsibility for the study within UU?",
-            "text_en": "Who holds final responsibility for the study within UU?",
-            "text_nl": "Wie is er binnen UU de eindverantwoordelijke voor de studie?",
+            "text": "I hold final responsibility.",
+            "text_en": "I hold final responsibility.",
+            "text_nl": "Ik ben zelf de eindverantwoordelijke.",
             "step": 2,
             "form": 1,
             "description": "",
             "description_en": "",
             "description_nl": "",
-            "required": true,
+            "required": false,
             "_order": 0
         }
     },
     {
         "model": "form.basequestion",
-        "pk": 51,
+        "pk": 3,
         "fields": {
             "annotation_key": null,
-            "text": "Researcher listed below bears ultimate responsibility:",
-            "text_en": "Researcher listed below bears ultimate responsibility:",
-            "text_nl": "Onderstaande onderzoeker is eindverantwoordelijk:",
+            "text": "Responsible researcher",
+            "text_en": "Responsible researcher",
+            "text_nl": "Eindverantwoordelijke",
             "step": 2,
             "form": 1,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
+            "description": "<p>Who holds final responsibility for the study within UU?</p>",
+            "description_en": "<p>Who holds final responsibility for the study within UU?</p>",
+            "description_nl": "<p>Wie is er binnen UU de eindverantwoordelijke voor de studie?</p>",
             "required": false,
             "_order": 1
         }
@@ -55,33 +55,16 @@
         "pk": 4,
         "fields": {
             "annotation_key": null,
-            "text": "Co-researchers UU",
-            "text_en": "Co-researchers UU",
-            "text_nl": "Medeonderzoekers UU",
+            "text": "Other UU researchers",
+            "text_en": "Other UU researchers",
+            "text_nl": "Andere UU-onderzoekers",
             "step": 2,
             "form": 1,
-            "description": "<p>Who else is responsible for the study within UU? (Leave this field blank if it does not apply.)</p>",
-            "description_en": "<p>Who else is responsible for the study within UU? (Leave this field blank if it does not apply.)</p>",
-            "description_nl": "<p>Wie werkt er binnen de UU nog meer mee aan de studie? (Laat dit veld leeg als niet van toepassing.)</p>",
+            "description": "<p>Who else is responsible for the study within UU?</p>",
+            "description_en": "<p>Who else is responsible for the study within UU?</p>",
+            "description_nl": "<p>Wie werkt er binnen de UU nog meer mee aan de studie?</p>",
             "required": false,
             "_order": 2
-        }
-    },
-    {
-        "model": "form.basequestion",
-        "pk": 52,
-        "fields": {
-            "annotation_key": null,
-            "text": "Researchers outside UU",
-            "text_en": "Researchers outside UU",
-            "text_nl": "Onderzoekers buiten UU",
-            "step": 2,
-            "form": 1,
-            "description": "<p>Who else is responsible for the study outside the UU? (Leave this field blank if it does not apply.)&nbsp;</p>",
-            "description_en": "<p>Who else is responsible for the study outside the UU? (Leave this field blank if it does not apply.)&nbsp;</p>",
-            "description_nl": "<p>Wie werkt er buiten de UU nog meer mee aan de studie? &nbsp;(Laat dit veld leeg als niet van toepassing.)</p>",
-            "required": false,
-            "_order": 3
         }
     },
     {
@@ -366,9 +349,9 @@
             "text_nl": "Categorie\u00ebn persoonsgegevens",
             "step": 7,
             "form": 1,
-            "description": "<p>Select all catagories of personal data from participants that you gather/process.</p>",
-            "description_en": "<p>Select all catagories of personal data from participants that you gather/process.</p>",
-            "description_nl": "<p>Selecteer alle categorie&euml;n persoonsgegevens die je van deelnemers verzamelt/verwerkt.</p>",
+            "description": "",
+            "description_en": "",
+            "description_nl": "Selecteer alle categorie\u00ebn persoonsgegevens die je van deelnemers verzamelt/verwerkt.",
             "required": false,
             "_order": 8
         }
@@ -468,9 +451,9 @@
             "text_nl": "Toestemmingsverklaringen worden tot minimaal 10 jaar na publicatie bewaard.",
             "step": 8,
             "form": 1,
-            "description": "<p>Constent forms need to be kept just as long as the personal data, in a separate location.</p>",
-            "description_en": "<p>Constent forms need to be kept just as long as the personal data, in a separate location.</p>",
-            "description_nl": "<p>Toestemmingsverklaringen moeten net zolang worden bewaard als de persoonsgegevens, op een gescheiden locatie.</p>",
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
             "required": false,
             "_order": 4
         }
@@ -497,9 +480,9 @@
         "pk": 20,
         "fields": {
             "annotation_key": null,
-            "text": "WIll Audio and video files will be kept after transcribing them?",
-            "text_en": "WIll Audio and video files will be kept after transcribing them?",
-            "text_nl": "Worden audio- en video- opnamen na het transcriberen bewaard?",
+            "text": "Audio and video files will be kept after transcribing them.",
+            "text_en": "Audio and video files will be kept after transcribing them.",
+            "text_nl": "Audio- en video-opnamen worden na het transcriberen bewaard.",
             "step": 8,
             "form": 1,
             "description": "",
@@ -531,9 +514,9 @@
         "pk": 21,
         "fields": {
             "annotation_key": null,
-            "text": "Will personal data be shared with external recipients?",
-            "text_en": "Will personal data be shared with external recipients?",
-            "text_nl": "Worden persoonsgegevens gedeeld met externe ontvangers?",
+            "text": "Personal data are shared with external recipients.",
+            "text_en": "Personal data are shared with external recipients.",
+            "text_nl": "Persoonsgegevens worden gedeeld met externe ontvangers,",
             "step": 9,
             "form": 1,
             "description": "",
@@ -877,9 +860,9 @@
             "name": "Processing Registry",
             "name_en": "Processing Registry",
             "name_nl": "Verwerkingsregister",
-            "version": "0.2",
+            "version": "0.1",
             "created_at": "2026-03-09T14:15:25.526Z",
-            "updated_at": "2026-06-29T11:37:43.819Z"
+            "updated_at": "2026-06-17T11:54:53.948Z"
         }
     },
     {
@@ -887,6 +870,20 @@
         "pk": 11,
         "fields": {
             "positive_only": true
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 1,
+        "fields": {
+            "trigger_question": 2,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": false
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 3
         }
     },
     {
@@ -1111,20 +1108,6 @@
             "repeat_count": null,
             "use_answer_as_count": false,
             "target_question": 49
-        }
-    },
-    {
-        "model": "form.questioncondition",
-        "pk": 21,
-        "fields": {
-            "trigger_question": 50,
-            "condition_type": "show",
-            "trigger_value": {
-                "value": "158"
-            },
-            "repeat_count": null,
-            "use_answer_as_count": false,
-            "target_question": 51
         }
     },
     {
@@ -2100,46 +2083,8 @@
         }
     },
     {
-        "model": "form.selectoption",
-        "pk": 157,
-        "fields": {
-            "label": "I hold final responsibility",
-            "label_en": "I hold final responsibility",
-            "label_nl": "Ik ben zelf eindverantwoordelijk onderzoeker",
-            "default_selected": false,
-            "question": 50,
-            "_order": 0
-        }
-    },
-    {
-        "model": "form.selectoption",
-        "pk": 158,
-        "fields": {
-            "label": "Researcher listed below bears ultimate responsibility:",
-            "label_en": "Researcher listed below bears ultimate responsibility:",
-            "label_nl": "Onderstaande onderzoeker is eindverantwoordelijk:",
-            "default_selected": false,
-            "question": 50,
-            "_order": 1
-        }
-    },
-    {
-        "model": "form.selectquestion",
-        "pk": 33,
-        "fields": {
-            "multiple": true
-        }
-    },
-    {
         "model": "form.selectquestion",
         "pk": 5,
-        "fields": {
-            "multiple": false
-        }
-    },
-    {
-        "model": "form.selectquestion",
-        "pk": 50,
         "fields": {
             "multiple": false
         }
@@ -2153,14 +2098,14 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 6,
+        "pk": 33,
         "fields": {
-            "multiple": false
+            "multiple": true
         }
     },
     {
         "model": "form.selectquestion",
-        "pk": 47,
+        "pk": 6,
         "fields": {
             "multiple": false
         }
@@ -2175,6 +2120,13 @@
     {
         "model": "form.selectquestion",
         "pk": 39,
+        "fields": {
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 47,
         "fields": {
             "multiple": false
         }
@@ -2228,12 +2180,12 @@
         "model": "form.step",
         "pk": 2,
         "fields": {
-            "name": "Involved researchers",
-            "name_en": "Involved researchers",
-            "name_nl": "Betrokken onderzoekers",
-            "description": null,
-            "description_en": null,
-            "description_nl": null,
+            "name": "Involved UU researchers",
+            "name_en": "Involved UU researchers",
+            "name_nl": "Betrokken UU-onderzoekers",
+            "description": "<p>Who holds final responsibility for the study within UU?</p>",
+            "description_en": "<p>Who holds final responsibility for the study within UU?</p>",
+            "description_nl": "<p>Wie is er binnen UU de eindverantwoordelijke voor de studie?</p>",
             "slug": "involved-researchers",
             "form": 1,
             "parent": null,
@@ -2438,7 +2390,7 @@
             "description": null,
             "description_en": null,
             "description_nl": null,
-            "slug": "data-subject-group",
+            "slug": "personal-data-group",
             "form": 1,
             "parent": 6,
             "is_overview": false,
@@ -2458,26 +2410,6 @@
         }
     },
     {
-        "model": "form.stepinfotext",
-        "pk": 1,
-        "fields": {
-            "step": 1,
-            "text": "<div class=\"ewa-rteLine\">\r\n<div class=\"ewa-rteLine\">\r\n<div class=\"ewa-rteLine\"><strong style=\"color: rgb(0, 0, 0); font-family: Calibri; font-size: 12pt;\">What does a study mean?</strong></div>\r\n<div class=\"ewa-rteLine\"><span style=\"color: rgb(0, 0, 0); font-family: Calibri; font-size: 11pt;\">The definition of a study can be found in <a href=\"../../../../../notes/faq\">/notes/faq</a></span></div>\r\n</div>\r\n</div>",
-            "text_en": "<div class=\"ewa-rteLine\">\r\n<div class=\"ewa-rteLine\">\r\n<div class=\"ewa-rteLine\"><strong style=\"color: rgb(0, 0, 0); font-family: Calibri; font-size: 12pt;\">What does a study mean?</strong></div>\r\n<div class=\"ewa-rteLine\"><span style=\"color: rgb(0, 0, 0); font-family: Calibri; font-size: 11pt;\">The definition of a study can be found in <a href=\"../../../../../notes/faq\">/notes/faq</a></span></div>\r\n</div>\r\n</div>",
-            "text_nl": "<div class=\"ewa-rteLine\">\r\n<div class=\"ewa-rteLine\"><strong style=\"color: rgb(0, 0, 0); font-family: Calibri; font-size: 14pt;\">Wat verstaan we onder een studie?</strong><strong style=\"color: rgb(0, 0, 0); font-family: Calibri; font-size: 11pt;\"> </strong></div>\r\n<div class=\"ewa-rteLine\"><span style=\"color: rgb(0, 0, 0); font-family: Calibri; font-size: 11pt;\">De definitie van een studie is te vinden op <a href=\"../../../../notes/faq\">/notes/faq</a></span></div>\r\n<div class=\"ewa-rteLine\">\r\n<div class=\"ewa-rteLine\"><strong style=\"color: rgb(0, 0, 0); font-family: Calibri; font-size: 12pt;\">Wordt de naam die ik opgeef vaker gebruikt? </strong></div>\r\n<div class=\"ewa-rteLine\"><span style=\"color: rgb(0, 0, 0); font-family: Calibri; font-size: 11pt;\">Deze naam zal worden gebruikt in alle formele correspondentie.</span></div>\r\n<div class=\"ewa-rteLine\">\r\n<div class=\"ewa-rteLine\"><strong style=\"color: rgb(0, 0, 0); font-family: Calibri; font-size: 12pt;\">Wat gebeurt er met de data die ik invoer?</strong></div>\r\n<div class=\"ewa-rteLine\"><span style=\"color: rgb(0, 0, 0); font-family: Calibri; font-size: 11pt;\">De data die je invoert, worden gecontroleerd en waar nodig aangevuld door de privacy officer. Zodra alle data naar behoren zijn ingevuld, is er sprake van een rechtsgeldige registratie in het verwerkingsregister. Deze registratie kan in ieder geval worden ingezien door het management van je faculteit, door de collega-onderzoekers die je zelf opgeeft, door de functionaris voor gegevensbescherming en door de privacy officers van de UU. Indien nodig kan de registratie door jou of de privacy officer worden heropend om wijzigingen aan te brengen.</span></div>\r\n<div class=\"ewa-rteLine\">\r\n<div class=\"ewa-rteLine\"><strong style=\"color: rgb(0, 0, 0); font-family: Calibri; font-size: 12pt;\">Ik heb deze informatie al ergens anders opgegeven. Waarom wordt dit hier weer gevraagd?</strong></div>\r\n<div class=\"ewa-rteLine\"><span style=\"color: rgb(0, 0, 0); font-family: Calibri; font-size: 11pt;\">Vaak moet je voor verschillende toepassingen dezelfde gegevens opgeven. We streven ernaar om dergelijk dubbel werk zo veel mogelijk te beperken. Met dit register zijn we echter nog niet zo ver. In de toekomst worden de data uit dit register ge&iuml;ntegreerd met de data van de FETC. De meeste gegevens hoef je dan nog maar &eacute;&eacute;n keer op te geven. Zo ontstaat er een gestroomlijnd registratieproces waarin je de gegevens nog maar &eacute;&eacute;n keer hoeft op te geven.</span></div>\r\n<div class=\"ewa-rteLine\">\r\n<table style=\"border-collapse: collapse; width: 208pt;\" width=\"277\"><colgroup><col style=\"width: 208pt;\" width=\"277\"></colgroup>\r\n<tbody>\r\n<tr style=\"height: 247.5pt;\">\r\n<td class=\"xl203\" style=\"width: 208pt; height: 247.5pt; font-family: Calibri, sans-serif; mso-font-charset: 0;\" width=\"277\" height=\"330\">&lt;details&gt;&lt;summary&gt;&lt;strong&gt;Wat is het verwerkingsregister?&lt;/strong&gt;&lt;/summary&gt;Het verwerkingsregister is de centrale plaats waar informatie over het gebruik (de &ldquo;verwerking&rdquo;) van persoonsgegevens wordt geregistreerd. Op grond van de AVG is vrijwel elke organisatie verplicht een verwerkingsregister bij te houden. De in het register vastgelegde informatie kan bijvoorbeeld worden geraadpleegd bij datalekken en bij vragen of AVG-verzoeken van datasubjecten (zoals inzage of verwijdering). Het is een belangrijke bron van informatie voor de facultaire ethische toetsingscommissies (FETC&rsquo;s).&nbsp;&lt;/details&gt;</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>"
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 14,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
-        }
-    },
-    {
         "model": "form.textquestion",
         "pk": 26,
         "fields": {
@@ -2485,16 +2417,6 @@
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 1
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 36,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
         }
     },
     {
@@ -2519,7 +2441,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 48,
+        "pk": 14,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -2529,7 +2451,17 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 51,
+        "pk": 36,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 3,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -2549,16 +2481,6 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 27,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 13,
         "fields": {
             "placeholder": "",
@@ -2569,7 +2491,17 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 28,
+        "pk": 48,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 27,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -2599,7 +2531,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 52,
+        "pk": 28,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -2639,6 +2571,16 @@
     },
     {
         "model": "form.textquestion",
+        "pk": 25,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
+        }
+    },
+    {
+        "model": "form.textquestion",
         "pk": 41,
         "fields": {
             "placeholder": "",
@@ -2655,16 +2597,6 @@
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 1
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 25,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
         }
     },
     {
@@ -2689,22 +2621,22 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 43,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 32,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 1
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 43,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5
         }
     },
     {
@@ -2729,6 +2661,13 @@
     },
     {
         "model": "form.truefalsequestion",
+        "pk": 21,
+        "fields": {
+            "default_value": false
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
         "pk": 12,
         "fields": {
             "default_value": false
@@ -2736,7 +2675,14 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 21,
+        "pk": 2,
+        "fields": {
+            "default_value": false
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
+        "pk": 37,
         "fields": {
             "default_value": false
         }
@@ -2746,13 +2692,6 @@
         "pk": 18,
         "fields": {
             "default_value": true
-        }
-    },
-    {
-        "model": "form.truefalsequestion",
-        "pk": 37,
-        "fields": {
-            "default_value": false
         }
     },
     {
