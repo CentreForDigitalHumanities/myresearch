@@ -25,6 +25,8 @@ class BaseMRManager(models.Manager):
                 return self._viewable_objects(user)
             case MRPermission.EDIT:
                 return self._editable_objects(user)
+            case MRPermission.DELETE:
+                return self._deletable_objects(user)
 
         # NOTE: This should never happen.
         raise ValueError(
@@ -37,5 +39,9 @@ class BaseMRManager(models.Manager):
         return self.all()
 
     def _editable_objects(self, user: User):
+        # Needs to be overwritten for a specific object's permissions
+        return self.all()
+
+    def _deletable_objects(self, user: User):
         # Needs to be overwritten for a specific object's permissions
         return self.all()

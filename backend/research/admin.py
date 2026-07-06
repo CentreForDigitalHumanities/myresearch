@@ -32,7 +32,14 @@ class UserFormSubmissionInline(admin.TabularInline):
 
 @admin.register(Study)
 class StudyAdmin(admin.ModelAdmin):
-    list_display = ("id", "study_name", "created_by", "created_at", "current_status")
+    list_display = (
+        "id",
+        "study_title",
+        "created_by",
+        "created_at",
+        "is_deleted",
+        "current_status",
+    )
     list_filter = ("created_at", "created_by")
     search_fields = (
         "id",
@@ -43,8 +50,8 @@ class StudyAdmin(admin.ModelAdmin):
     readonly_fields = ("study_title", "created_at")
     inlines = [StatusChangeInline, UserFormSubmissionInline]
 
-    def study_name(self, obj):
-        return obj.name
+    def study_title(self, obj):
+        return obj.title
 
     def current_status(self, obj):
         return obj.status

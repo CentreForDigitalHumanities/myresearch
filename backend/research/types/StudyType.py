@@ -13,7 +13,6 @@ GQLSubmissionStatus = Enum.from_enum(SubmissionStatus)
 
 
 class StudyFilter(FilterSet):
-
     statuses = MultipleChoiceFilter(
         field_name="status",
         method="filter_latest_status",
@@ -55,7 +54,7 @@ class StudyFilter(FilterSet):
         if not value:
             return queryset
 
-        # We'll receive a list of SelectOption instances, but  we'll just need
+        # We'll receive a list of SelectOption instances, but we'll just need
         # ids
         option_ids = [option.id for option in value]
 
