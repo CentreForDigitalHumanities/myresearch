@@ -10,6 +10,7 @@ from research.models.study import Study
 class ActionEnum(Enum):
     EDIT_ACTION = "edit_action"
     DELETE_ACTION = "delete_action"
+    RETURN_TO_DRAFT_ACTION = "return_to_draft_action"
 
 
 #################################
@@ -75,3 +76,14 @@ class StudyDeleteAction(StudyAction):
     @classmethod
     def is_available(cls, study, user):
         return study in Study.objects.accessible_objects(user, MRPermission.DELETE)
+
+
+class ReturnToDraftAction(StudyAction):
+
+    action = ActionEnum.RETURN_TO_DRAFT_ACTION
+
+    @classmethod
+    def is_available(cls, study, user):
+        if study.status != SubmissionStatus.SUBMITTED:
+            return False
+        return user.is_privacy_officer
