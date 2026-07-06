@@ -5,7 +5,7 @@ from django.db import models, transaction
 from django.utils import timezone
 from datetime import datetime
 from research.models.reviews import StatusChange, SubmissionStatus
-from django.db.models import F, OuterRef, Subquery, Value, CharField, Func
+from django.db.models import Exists, F, OuterRef, Subquery, Value, CharField, Func
 from django.db.models.functions import Concat, Coalesce, Cast, Extract
 
 
@@ -21,8 +21,12 @@ class StudyManager(BaseMRManager):
 
     def _deletable_objects(self, user: User):
         queryset = self.filter(is_deleted=False)
+
+        # POs and FETC members can only (soft) delete submitted studies.
         if user.is_privacy_officer or user.is_fetc_member:
-            return queryset
+            return self.with_has_been_submitted_annotation(queryset).filter(
+                has_been_submitted=True
+            )
         return queryset.filter(created_by=user)
 
     def get_queryset(self):
@@ -31,7 +35,22 @@ class StudyManager(BaseMRManager):
         queryset = self.with_answers_by_annotation_key(queryset)
         # Annotate a default title, if no title
         queryset = self.with_default_title_annotation(queryset)
+        # Annotate whether the study has been submitted
+        queryset = self.with_has_been_submitted_annotation(queryset)
         return queryset
+
+    def with_has_been_submitted_annotation(self, queryset):
+        """
+        A study is considered submitted if it has at least one StatusChange
+        whose status is not DRAFT.
+        """
+        return queryset.annotate(
+            has_been_submitted=Exists(
+                StatusChange.objects.filter(study=OuterRef("pk")).exclude(
+                    status=SubmissionStatus.DRAFT
+                )
+            )
+        )
 
     def with_default_title_annotation(self, queryset):
         """Override empty title values with a default based on creation date.
@@ -163,18 +182,6 @@ class Study(models.Model):
             SubmissionStatus(last_status_change.status)
             if last_status_change
             else SubmissionStatus.DRAFT
-        )
-
-    @property
-    def has_been_submitted(self) -> bool:
-        """
-        A study is considered to have been submitted (at any point in time) if
-        it has status changes whose status is not DRAFT.
-        """
-        return (
-            StatusChange.objects.filter(study=self)
-            .exclude(status=SubmissionStatus.DRAFT)
-            .exists()
         )
 
     @property
