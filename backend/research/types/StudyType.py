@@ -71,7 +71,6 @@ class StudyType(GQLListObjectType):
     latest_submission_id = ID(required=True)
     status = Field((GQLSubmissionStatus), required=True)
     actions = List(NonNull(ActionEnum), required=True)
-    status = Field(GQLSubmissionStatus, required=True)
     updated_at = DateTime(required=True)
 
     class Meta:
