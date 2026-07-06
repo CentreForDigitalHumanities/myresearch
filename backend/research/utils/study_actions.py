@@ -26,7 +26,7 @@ class StudyActions:
     def __init__(self, study: Study, user: User):
         self.study = study
         self.user = user
-        self.all_actions = [StudyEditAction, StudyDeleteAction]
+        self.all_actions = [StudyEditAction, StudyDeleteAction, ReturnToDraftAction]
 
     def get_available_actions(self) -> list[ActionEnum]:
         return [
