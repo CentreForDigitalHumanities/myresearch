@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useI18n } from "vue-i18n";
+import { useDisplayFileSize } from "~/composables/useDisplayFileSize";
 import type {
     CombinedStepWithValues,
     QuestionWithValue,
@@ -26,16 +27,23 @@ function getSelectLabel(question: SelectQuestionWithValue): string {
         : notAnswered.value;
 }
 
+function getFileName(question: FileUploadQuestionWithValue): string {
+    if (!question.value) {
+        return notAnswered.value;
+    }
+    return `${question.value.name} (${useDisplayFileSize(question.value.size)})`;
+}
+
 function formatAnswer(question: QuestionWithValue): string {
     const value = question.value;
 
     switch (question.__typename) {
         case "TrueFalseQuestionType":
             return value ? t("Yes") : t("No");
-        case "FileUploadQuestionType":
-            return value instanceof File ? value.name : notAnswered.value;
         case "SelectQuestionType":
             return getSelectLabel(question);
+        case "FileUploadQuestionType":
+            return getFileName(question);
         case "TextQuestionType":
         case "DateQuestionType":
             return typeof value === "string" && value.trim() !== ""

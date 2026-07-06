@@ -142,5 +142,9 @@
     "Failed to create study.": "Studie kan niet aangemaakt worden.",
     "Study created successfully.": "Studie aangemaakt.",
     "Study deleted successfully.": "Studie verwijderd.",
-    "Failed to delete study.": "Studie kan niet verwijderd worden."
+    "Failed to delete study.": "Studie kan niet verwijderd worden.",
+    "Upload failed. Please try again.": "Upload mislukt. Probeer het opnieuw.",
+    "Uploading…": "Uploaden...",
+    "Download": "Download",
+    "File exceeds maximum size: {size}": "Bestand is groter dan het maximaal toegestane formaat: {size}"
 }

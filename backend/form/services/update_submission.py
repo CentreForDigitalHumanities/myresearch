@@ -1,7 +1,21 @@
 from main.models import MRPermission, User
 from form.models import UserFormSubmission, QuestionResponse
+from form.models.responses import MRDocument
 from form.mutations.utils.inputs import UserFormInput
 from django.utils import timezone
+
+
+def _delete_document_if_cleared(old_answer: dict, new_answer: dict) -> None:
+    """
+    Delete the MRDocument when a FileUpload answer is cleared.
+    """
+    old_uuid = old_answer.get("value", "") if isinstance(old_answer, dict) else ""
+    new_uuid = new_answer.get("value", "") if isinstance(new_answer, dict) else ""
+    if old_uuid and not new_uuid:
+        try:
+            MRDocument.objects.get(file__uuid=old_uuid).delete()
+        except MRDocument.DoesNotExist:
+            pass
 
 
 def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSubmission:
@@ -42,6 +56,7 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
                     new_response.submissions.add(current_submission)
                 else:
                     # If this is not a revision, just update the answer
+                    _delete_document_if_cleared(qr.answer, response["answer"])
                     qr.answer = response["answer"]
                     qr.save()
 
