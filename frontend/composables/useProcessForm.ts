@@ -356,7 +356,7 @@ function addValidationRule(
                 : required;
 
         rules.required = helpers.withMessage(
-            t("This field is required"),
+            () => t("This field is required"),
             requiredFn,
         );
     }
@@ -366,7 +366,7 @@ function addValidationRule(
         case "NumberQuestionType":
             if (question.positiveOnly) {
                 rules.positiveOnly = helpers.withMessage(
-                    t("The number must be positive"),
+                    () => t("The number must be positive"),
                     (value: number) => value >= 0,
                 );
             }
@@ -385,8 +385,17 @@ function addValidationRule(
         case "TextQuestionType":
             if (question.isEmail) {
                 rules.isEmail = helpers.withMessage(
-                    t("This is not a valid email"),
+                    () => t("This is not a valid email"),
                     email,
+                );
+            }
+    }
+    switch (question.__typename) {
+        case "DateQuestionType":
+            if (question.futureOnly) {
+                rules.futureOnly = helpers.withMessage(
+                    () => t("The date must be in the future"),
+                    (value: string) => new Date(value) >= new Date(),
                 );
             }
     }

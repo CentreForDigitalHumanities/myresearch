@@ -147,5 +147,6 @@
     "Uploading…": "Uploaden...",
     "Download": "Download",
     "File exceeds maximum size: {size}": "Bestand is groter dan het maximaal toegestane formaat: {size}",
-    "This is not a valid email": "Dit is geen geldig e-mailadres."
+    "This is not a valid email": "Dit is geen geldig e-mailadres.",
+    "The date must be in the future": "De datum moet in de toekomst zijn"
 }
