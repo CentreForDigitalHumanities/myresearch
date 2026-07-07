@@ -24,11 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Application definition
 
-LOCAL_APPS = [
-    "main",
-    "form",
-    "research",
-]
+LOCAL_APPS = ["main", "form", "research", "notes"]
 
 INSTALLED_APPS = (
     [
@@ -46,8 +42,11 @@ INSTALLED_APPS = (
         "modeltranslation",
         "django_extensions",
         "cdh.core",
+        "cdh.files",
     ]
 )
+
+CDH_FILES_FILE_ROOT = BASE_DIR / "uploads"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
