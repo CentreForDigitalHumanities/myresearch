@@ -111,7 +111,7 @@ function returnToDraft(): void {
                         useNotification(
                             t("Study returned to draft."),
                             "success",
-                        );
+                    );
                         location.reload();
                     } else {
                         useNotification(
