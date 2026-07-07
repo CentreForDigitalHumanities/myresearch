@@ -35,3 +35,4 @@ class MRPermission(models.TextChoices):
 
     VIEW = "View"
     EDIT = "Edit"
+    DELETE = "Delete"

@@ -58,7 +58,6 @@ class StudyAction(ABC):
 
 
 class StudyEditAction(StudyAction):
-
     action = ActionEnum.EDIT_ACTION
 
     @classmethod
@@ -71,10 +70,8 @@ class StudyEditAction(StudyAction):
 
 
 class StudyDeleteAction(StudyAction):
-
     action = ActionEnum.DELETE_ACTION
 
     @classmethod
     def is_available(cls, study, user):
-
-        return study in Study.objects.accessible_objects(user, MRPermission.EDIT)
+        return study in Study.objects.accessible_objects(user, MRPermission.DELETE)

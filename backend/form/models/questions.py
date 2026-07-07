@@ -1,6 +1,7 @@
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.core.exceptions import ValidationError
 
 from django.utils.safestring import mark_safe
 
@@ -137,4 +138,4 @@ class DateQuestion(BaseQuestion):
 
 
 class FileUploadQuestion(BaseQuestion):
-    size_limit = models.PositiveIntegerField()
+    size_limit = models.PositiveIntegerField(help_text="Maximum file size in bytes.")

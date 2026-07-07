@@ -136,5 +136,16 @@
     "Faculty": "Faculteit",
     "Are you sure you want to submit the form? Once submitted, you will not be able to make changes.": "Weet je zeker dat je het formulier wilt indienen? Na indiening kun je geen wijzigingen meer aanbrengen.",
     "Confirm submission": "Indienen bevestigen",
+    "Are you sure you want to delete this study?": "Weet je zeker dat je deze studie wilt verwijderen?",
+    "Confirm study deletion": "Verwijderen bevestigen",
+    "No response from server.": "Geen antwoord van server",
+    "Failed to create study.": "Studie kan niet aangemaakt worden.",
+    "Study created successfully.": "Studie aangemaakt.",
+    "Study deleted successfully.": "Studie verwijderd.",
+    "Failed to delete study.": "Studie kan niet verwijderd worden.",
+    "Upload failed. Please try again.": "Upload mislukt. Probeer het opnieuw.",
+    "Uploading…": "Uploaden...",
+    "Download": "Download",
+    "File exceeds maximum size: {size}": "Bestand is groter dan het maximaal toegestane formaat: {size}",
     "This is not a valid email": "Dit is geen geldig e-mailadres."
 }
