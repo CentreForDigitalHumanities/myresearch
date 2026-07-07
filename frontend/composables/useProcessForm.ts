@@ -1,17 +1,19 @@
-import { helpers, required } from "@vuelidate/validators";
-import type { Substep, QueriedForm, Step } from "~/components/form/FormWrapper";
-import type { ErrorObject } from "@vuelidate/core";
+import { email, helpers, required } from "@vuelidate/validators";
+import type { QueriedForm, Step, Substep } from "~/components/form/FormWrapper";
+import {
+    type ErrorObject,
+    type ValidationRuleWithParams,
+} from "@vuelidate/core";
 import type {
-    TextQuestionType,
-    NumberQuestionType,
-    TrueFalseQuestionType,
-    FileUploadQuestionType,
     DateQuestionType,
-    SelectQuestionType,
+    FileUploadQuestionType,
+    NumberQuestionType,
     QuestionType,
+    SelectQuestionType,
+    TextQuestionType,
+    TrueFalseQuestionType,
 } from "~/generated/gql/graphql";
 import { i18n } from "@/plugins/i18n";
-import type { ValidationRuleWithParams } from "@vuelidate/core";
 import { useDisplayFileSize } from "./useDisplayFileSize";
 
 // Augmented question types
@@ -378,6 +380,15 @@ function addValidationRule(
                     value === null || value.size <= question.sizeLimit,
             );
             break;
+    }
+    switch (question.__typename) {
+        case "TextQuestionType":
+            if (question.isEmail) {
+                rules.isEmail = helpers.withMessage(
+                    t("This is not a valid email"),
+                    email,
+                );
+            }
     }
 
     return {

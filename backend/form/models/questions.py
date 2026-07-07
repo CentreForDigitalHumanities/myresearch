@@ -126,6 +126,7 @@ class TrueFalseQuestion(BaseQuestion):
 class TextQuestion(BaseQuestion):
     placeholder = models.CharField(max_length=200, blank=True)
     lines = models.PositiveIntegerField(default=1)
+    is_email = models.BooleanField(default=False)
 
 
 class NumberQuestion(BaseQuestion):

@@ -368,6 +368,7 @@ class TextQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                     "description_nl",
                     "description_en",
                     "required",
+                    "is_email",
                 )
             },
         ),

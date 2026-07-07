@@ -55,6 +55,7 @@ const GET_FORM = graphql(`
                         placeholderNl
                         placeholderEn
                         lines
+                        isEmail
                     }
                     ... on DateQuestionType {
                         futureOnly
@@ -103,6 +104,7 @@ const GET_FORM = graphql(`
                             placeholderNl
                             placeholderEn
                             lines
+                            isEmail
                         }
                         ... on DateQuestionType {
                             futureOnly
