@@ -5,10 +5,7 @@ from django.utils import timezone
 from form.models import (
     UserFormSubmission,
     QuestionResponse,
-    BaseQuestion,
-    TextQuestion,
-    NumberQuestion,
-    DateQuestion,
+    BaseQuestion
 )
 
 
@@ -84,25 +81,8 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
 
 def validate_response(response):
     """Backend validation incase malicious responses. Under normal circumstances all validations are already checked in the frontend"""
-    question_id = response["question_id"]
     answer = response["answer"]
     value = answer["value"]
-    question = get_question(question_id)
+    question = BaseQuestion.objects.get(response["question_id"]).get_subclass()
     # validate will throw an error in case of wrong input.
     question.validate(value)
-
-
-def get_question(
-    question_id: int,
-) -> BaseQuestion | NumberQuestion | TextQuestion | DateQuestion:
-    """Searches child models of BaseQuestion and returns the appropriate question"""
-    # This answer will always be the same in the current form version.
-    # We might want to consider caching in the future.
-    if TextQuestion.objects.filter(id=question_id).exists():
-        return TextQuestion.objects.get(id=question_id)
-    elif NumberQuestion.objects.filter(id=question_id).exists():
-        return NumberQuestion.objects.get(id=question_id)
-    elif DateQuestion.objects.filter(id=question_id).exists():
-        return DateQuestion.objects.get(id=question_id)
-    else:
-        return BaseQuestion.objects.get(id=question_id)

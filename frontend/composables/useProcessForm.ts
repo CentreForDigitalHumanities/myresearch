@@ -380,8 +380,6 @@ function addValidationRule(
                     value === null || value.size <= question.sizeLimit,
             );
             break;
-    }
-    switch (question.__typename) {
         case "TextQuestionType":
             if (question.isEmail) {
                 rules.isEmail = helpers.withMessage(
@@ -389,8 +387,7 @@ function addValidationRule(
                     email,
                 );
             }
-    }
-    switch (question.__typename) {
+            break;
         case "DateQuestionType":
             if (question.futureOnly) {
                 rules.futureOnly = helpers.withMessage(
@@ -398,6 +395,7 @@ function addValidationRule(
                     (value: string) => new Date(value) >= new Date(),
                 );
             }
+            break;
     }
 
     return {
