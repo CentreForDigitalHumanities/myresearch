@@ -33,7 +33,7 @@ const { t } = useI18n();
 const progressItems = computed(() => {
     const items = statuses.value.map((change, index) => ({
         label: useTranslatedStatus(change.status),
-        createdAt: useLocalDateTime(change.createdAt) || null,
+        createdAt: change.createdAt || null,
         isComplete:
             change.status === SubmissionStatus.Submitted ||
             index < statuses.value.length - 1,
@@ -88,7 +88,7 @@ const progressItems = computed(() => {
                             style="font-size: 0.7em; line-height: 1.3"
                             class="text-muted"
                         >
-                            {{ progressItem.createdAt }}
+                            {{ useLocalDateTime(progressItem.createdAt) }}
                         </span>
                     </span>
                 </a>
