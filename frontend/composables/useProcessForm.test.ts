@@ -481,5 +481,18 @@ describe("useProcessForm", () => {
             expect(positiveValidator(10, null, null)).toBe(true);
             expect(positiveValidator(-5, null, null)).toBe(false);
         });
+
+        it("should validate required True/False questions correctly", () => {
+            const queriedForm = createQueriedForm();
+            const { validationRules } = useProcessForm(queriedForm);
+
+            const trueFalseQuestionRules =
+                validationRules.steps[0].substeps[0].questions[0].value;
+            const requiredValidator =
+                trueFalseQuestionRules.required.$validator;
+
+            expect(requiredValidator(true, null, null)).toBe(true);
+            expect(requiredValidator(false, null, null)).toBe(false);
+        });
     });
 });

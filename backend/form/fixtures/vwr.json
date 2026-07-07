@@ -850,7 +850,7 @@
         "model": "form.fileuploadquestion",
         "pk": 35,
         "fields": {
-            "size_limit": 500
+            "size_limit": 10000000
         }
     },
     {

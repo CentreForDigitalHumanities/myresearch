@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import type { GetStudyQuery } from "~/generated/gql/graphql";
+import { useLocalDateTime } from "~/composables/useLocalisation";
 
-defineProps<{
+interface Props {
     study: NonNullable<GetStudyQuery["study"]>;
-    randomDatePastYear: string;
-}>();
+}
+const props = defineProps<Props>();
+
+const createdAt = computed(() => useLocalDateTime(props.study.createdAt));
+const updatedAt = computed(() => useLocalDateTime(props.study.updatedAt));
 </script>
 
 <template>
@@ -33,10 +37,12 @@ defineProps<{
             <h3>{{ $t("Study details") }}</h3>
             <ul>
                 <li class="mt-2">
-                    {{ $t("Created on") }}: {{ randomDatePastYear }}
+                    {{ $t("Created on") }}:
+                    {{ createdAt }}
                 </li>
                 <li class="mt-2">
-                    {{ $t("Submitted on") }}: {{ randomDatePastYear }}
+                    {{ $t("Submitted on") }}:
+                    {{ updatedAt }}
                 </li>
             </ul>
         </div>

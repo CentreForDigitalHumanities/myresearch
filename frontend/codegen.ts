@@ -24,6 +24,9 @@ const config: CodegenConfig = {
             config: {
                 useTypeImports: true,
                 nonOptionalTypename: true,
+                scalars: {
+                    DateTime: "string",
+                },
             },
         },
     },
