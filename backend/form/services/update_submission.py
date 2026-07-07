@@ -2,11 +2,7 @@ from main.models import MRPermission, User
 from form.models.responses import MRDocument
 from form.mutations.utils.inputs import UserFormInput
 from django.utils import timezone
-from form.models import (
-    UserFormSubmission,
-    QuestionResponse,
-    BaseQuestion
-)
+from form.models import UserFormSubmission, QuestionResponse, BaseQuestion
 
 
 def _delete_document_if_cleared(old_answer: dict, new_answer: dict) -> None:
