@@ -219,7 +219,7 @@ const availableActions = computed<AvailableAction[]>(() => {
                 class="tile h-100 justify-content-around"
                 @click.prevent="action.callback"
             >
-                <strong class="text-center">{{ $t(action.label) }}</strong>
+                <strong class="text-center">{{ action.label }}</strong>
                 <component :is="action.icon" v-if="action.icon"> </component>
             </NuxtLink>
         </div>
