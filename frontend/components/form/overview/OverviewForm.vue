@@ -31,7 +31,7 @@ const contentSteps = computed(() =>
         <div
             v-for="substep in step.substeps"
             :key="substep.stepId"
-            class="ms-3 mb-3"
+            class="ms-3 mb-3 mt-3"
         >
             <h4 class="d-flex align-items-center">
                 {{ useTranslateableAttribute(substep, "name") }}
