@@ -67,7 +67,7 @@ function formatAnswer(question: QuestionWithValue): string {
             class="row g-0"
             :class="{ 'border-bottom': index < step.questions.length - 1 }"
         >
-            <div class="col-md-6 fst-italic border-end px-3 py-2">
+            <div class="col-md-5 fst-italic border-end px-3 py-2">
                 {{ useTranslateableAttribute(question, "text") }}&nbsp;<span
                     v-if="question.required"
                     class="text-danger"
@@ -75,7 +75,7 @@ function formatAnswer(question: QuestionWithValue): string {
                 >
             </div>
             <div
-                class="col-md-6 preserve-white-space px-3 py-2"
+                class="col-md-7 preserve-white-space px-3 py-2"
                 :class="{
                     'text-danger': (question.errors?.length ?? 0) > 0,
                 }"
