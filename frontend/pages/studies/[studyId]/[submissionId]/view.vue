@@ -8,10 +8,11 @@ import type {
 } from "~/generated/gql/graphql";
 import OverviewWrapper from "~/components/form/overview/OverviewWrapper.vue";
 import { useSubmissionId, useStudyId } from "~/composables/useRouteParams";
+import Loading from "~/components/shared/Loading.vue";
 
 const GET_FORM = graphql(`
     query GetFormOverview($submissionId: ID!) {
-        form(submissionId: $submissionId, mrPermission: "Edit") {
+        form(submissionId: $submissionId, mrPermission: "View") {
             formId
             nameEn
             nameNl
