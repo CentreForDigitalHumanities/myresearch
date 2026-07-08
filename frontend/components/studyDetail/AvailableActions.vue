@@ -13,7 +13,6 @@ import type { GetFirstSlugAndActionsQuery } from "~/generated/gql/graphql";
 import { ActionEnum } from "~/generated/gql/graphql";
 import { NuxtLink } from "#components";
 import { useConfirm } from "cdh-vue-lib";
-import type { RouteParamsRawGeneric } from "vue-router";
 import Loading from "~/components/shared/Loading.vue";
 
 type AvailableAction = {
@@ -63,9 +62,7 @@ const { t } = useI18n();
 const MARK_STUDY_SEEN_MUTATION = graphql(`
     mutation MarkStudySeen($studyId: ID!, $isSeen: Boolean!) {
         updateStudySeen(id: $studyId, isSeen: $isSeen) {
-            study {
-                id
-            }
+            ok
             errors {
                 field
                 messages
@@ -113,7 +110,7 @@ const DELETE_STUDY = graphql(`
     }
 `);
 
-const { mutate: markStudySeen } = useMutation(DELETE_STUDY, {
+const { mutate: deleteStudy } = useMutation(DELETE_STUDY, {
     update: (cache) => {
         cache.evict({ fieldName: "studyPages" });
         cache.gc();
@@ -127,7 +124,7 @@ function deleteStudyWithConfirmation(): void {
         abortText: t("No"),
         headerText: t("Confirm study deletion"),
         callback: () => {
-            markStudySeen({ id: props.studyId })
+            deleteStudy({ id: props.studyId })
                 .then((result) => {
                     if (result?.data?.deleteStudy?.ok) {
                         useNotification(
