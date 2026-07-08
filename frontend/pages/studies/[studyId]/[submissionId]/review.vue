@@ -124,15 +124,9 @@ const { result: formResult } = useQuery<GetFormOverviewQuery>(
     () => ({ enabled: !!submissionId.value }),
 );
 
-const form = computed(() => formResult.value?.form ?? null);
+const queried = computed(() => formResult.value?.form);
+const { formObject } = useFormState(queried);
 
-const queried = computed(() => form);
-const { formObject, validationRules } = useFormState(queried);
-
-// const form = computed(() => {
-//     const result = formResult.value?.form;
-//     return result ? useFormState(result).formObject : null;
-// });
 </script>
 
 <template>
@@ -142,7 +136,7 @@ const { formObject, validationRules } = useFormState(queried);
             <h1>{{ $t("Registration overview") }}</h1>
         </div>
         <div class="uu-container">
-            <!-- <SubmissionOverview v-if="formObject" :form="formObject" /> -->
+            <SubmissionOverview v-if="formObject" :form="formObject" />
         </div>
     </div>
 </template>

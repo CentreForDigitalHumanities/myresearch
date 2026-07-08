@@ -12,26 +12,36 @@ interface FormState {
     formId: string | null;
 }
 
-export function useFormState(queriedFormRef: Ref<QueriedForm>) {
-    const formId = queriedFormRef.value.formId;
+export function useFormState(
+    queriedFormRef: Ref<QueriedForm | null | undefined>,
+) {
+    const formId = computed(() => queriedFormRef.value?.formId ?? "unknown");
 
     // useState is a cache in which values are stored globally by key.
     const formState = useState<FormState>(
-        `form-state-${formId}`,
+        `form-state-${formId.value}`,
         initializeFormState,
     );
 
     // Reinitialize if the user navigates to a different form.
-    if (formState.value.formId !== formId) {
+    if (formState.value.formId !== formId.value) {
         formState.value = initializeFormState();
     }
 
     function initializeFormState(): FormState {
-        const processed = useProcessForm(queriedFormRef.value);
+        const queried = queriedFormRef.value;
+        if (!queried) {
+            return {
+                formWithValues: null,
+                validationRules: { steps: [] },
+                formId: null,
+            };
+        }
+        const processed = useProcessForm(queried);
         return {
             formWithValues: processed.formWithValues,
             validationRules: processed.validationRules,
-            formId,
+            formId: formId.value,
         };
     }
 
@@ -39,6 +49,9 @@ export function useFormState(queriedFormRef: Ref<QueriedForm>) {
     watch(
         queriedFormRef,
         (newQueriedForm) => {
+            if (!newQueriedForm) {
+                return;
+            }
             const processed = useProcessForm(newQueriedForm);
             formState.value.formWithValues = processed.formWithValues;
             formState.value.validationRules = processed.validationRules;
