@@ -1,9 +1,13 @@
 <script lang="ts" setup>
 import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
-import type { GetFormOverviewQuery } from "~/generated/gql/graphql";
-import SubmissionOverview from "~/components/form/overview/OverviewForm.vue";
-import { useSubmissionId } from "~/composables/useRouteParams";
+import { BSButton } from "cdh-vue-lib";
+import type {
+    GetFormOverviewQuery,
+    GetStudyTitleQuery,
+} from "~/generated/gql/graphql";
+import OverviewWrapper from "~/components/form/overview/OverviewWrapper.vue";
+import { useSubmissionId, useStudyId } from "~/composables/useRouteParams";
 
 const GET_FORM = graphql(`
     query GetFormOverview($submissionId: ID!) {
@@ -124,8 +128,27 @@ const { result: formResult } = useQuery<GetFormOverviewQuery>(
     () => ({ enabled: !!submissionId.value }),
 );
 
-const queried = computed(() => formResult.value?.form);
-const { formObject } = useFormState(queried);
+const form = computed(() => formResult.value?.form ?? null);
+
+const GET_STUDY = graphql(`
+    query GetStudyTitle($id: ID!) {
+        study(id: $id, mrPermission: "View") {
+            id
+            title
+            reference
+        }
+    }
+`);
+
+const studyId = useStudyId();
+
+const { result: studyResult } = useQuery<GetStudyTitleQuery>(
+    GET_STUDY,
+    () => ({ id: studyId.value }),
+    () => ({ enabled: !!studyId.value }),
+);
+
+const study = computed(() => studyResult.value?.study ?? null);
 </script>
 
 <template>
@@ -136,9 +159,24 @@ const { formObject } = useFormState(queried);
         </div>
         <div class="uu-container">
             <div class="col-12">
-                <SubmissionOverview v-if="formObject" :form="formObject" />
+                <h1>
+                    {{ study?.reference }} - <em>{{ study?.title }}</em>
+                </h1>
+                <hr />
+                <OverviewWrapper v-if="form" :queried-form="form" />
+                <BSButton
+                    variant="primary"
+                    class="btn-arrow-left"
+                    @click="
+                        navigateTo({
+                            name: 'studies-studyId',
+                            params: { studyId },
+                        })
+                    "
+                >
+                    {{ $t("Go back to study detail page") }}
+                </BSButton>
             </div>
         </div>
-        >
     </div>
 </template>
