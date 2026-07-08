@@ -6,7 +6,6 @@ import type { Component } from "vue";
 import { graphql } from "~/generated/gql";
 import type { GetFirstSlugAndActionsQuery } from "~/generated/gql/graphql";
 import { ActionEnum } from "~/generated/gql/graphql";
-import { NuxtLink } from "#components";
 import { useConfirm } from "cdh-vue-lib";
 import type { RouteParamsRawGeneric } from "vue-router";
 import Loading from "~/components/shared/Loading.vue";
@@ -145,7 +144,7 @@ const availableActions = computed<AvailableAction[]>(() => {
     <div v-else-if="availableActions.length > 0">
         <h3 class="mb-3">{{ $t("Available actions") }}:</h3>
         <div class="tiles">
-            <NuxtLink
+            <div
                 v-for="(action, index) in availableActions"
                 :key="index"
                 :style="action.style"
@@ -154,7 +153,7 @@ const availableActions = computed<AvailableAction[]>(() => {
             >
                 <strong class="text-center">{{ $t(action.label) }}</strong>
                 <component :is="action.icon" v-if="action.icon"> </component>
-            </NuxtLink>
+            </div>
         </div>
     </div>
     <h3 v-else>{{ $t("No actions available") }}</h3>
