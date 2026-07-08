@@ -60,25 +60,28 @@ function formatAnswer(question: QuestionWithValue): string {
 </script>
 
 <template>
-    <div
-        v-for="question in step.questions"
-        :key="`${question.questionId}-${question.repeatIndex}`"
-        class="row mb-2"
-    >
-        <div class="col-md-6 fst-italic">
-            {{ useTranslateableAttribute(question, "text") }}&nbsp;<span
-                v-if="question.required"
-                class="text-danger"
-                >*</span
-            >
-        </div>
+    <div class="border rounded overflow-hidden">
         <div
-            class="col-md-6 preserve-white-space"
-            :class="{
-                'text-danger': (question.errors?.length ?? 0) > 0,
-            }"
+            v-for="(question, index) in step.questions"
+            :key="`${question.questionId}-${question.repeatIndex}`"
+            class="row g-0"
+            :class="{ 'border-bottom': index < step.questions.length - 1 }"
         >
-            {{ formatAnswer(question) }}
+            <div class="col-md-6 fst-italic border-end px-3 py-2">
+                {{ useTranslateableAttribute(question, "text") }}&nbsp;<span
+                    v-if="question.required"
+                    class="text-danger"
+                    >*</span
+                >
+            </div>
+            <div
+                class="col-md-6 preserve-white-space px-3 py-2"
+                :class="{
+                    'text-danger': (question.errors?.length ?? 0) > 0,
+                }"
+            >
+                {{ formatAnswer(question) }}
+            </div>
         </div>
     </div>
 </template>
