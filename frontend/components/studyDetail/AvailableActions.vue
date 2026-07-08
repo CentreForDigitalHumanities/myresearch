@@ -75,10 +75,12 @@ const { mutate: markStudySeen } = useMutation(MARK_STUDY_SEEN_MUTATION);
 
 function checkMarkStudySeen(isSeen: boolean): void {
     useConfirm({
-        text: t("Do you want to mark this study as seen?"),
+        text: isSeen
+            ? t("Would you like to mark this study as seen?")
+            : t("Would you like to mark this study as unseen?"),
         confirmText: t("Yes"),
         abortText: t("No"),
-        headerText: t("Confirm new registration"),
+        headerText: t("Update Study"),
         callback: () => {
             markStudySeen({ studyId: props.studyId, isSeen: isSeen })
                 .then((result) => {
