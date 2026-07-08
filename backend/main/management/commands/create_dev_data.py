@@ -369,9 +369,13 @@ class Command(BaseCommand):
         }
 
     def _generate_file_upload_answer(self, question: FileUploadQuestion) -> dict:
-        filename = f"{self.faker.word()}_{self.faker.word()}.pdf"
-        file_url = f"/uploads/{self.faker.uuid4()}/{filename}"
-        return {"value": file_url}
+        # Note: these do not correspond to actually uploaded files, so the
+        # frontend will not be able to retrieve them.
+        return {
+            "value": f"{self.faker.uuid4()}",
+            "name": self.faker.file_name(),
+            "size": self.faker.random_int(min=1, max=question.size_limit),
+        }
 
     def _generate_answer_for_question(self, question: AnyQuestion) -> dict:
         if isinstance(question, TextQuestion):

@@ -6,5 +6,8 @@
 *.sqlite3
 __pycache__/
 
-### dev setttings ###
+### dev settings ###
 local_settings.py
+
+### Uploaded files ###
+uploads/

@@ -1,17 +1,20 @@
-import { helpers, required } from "@vuelidate/validators";
-import type { Substep, QueriedForm, Step } from "~/components/form/FormWrapper";
-import type { ErrorObject } from "@vuelidate/core";
+import { email, helpers, required } from "@vuelidate/validators";
+import type { QueriedForm, Step, Substep } from "~/components/form/FormWrapper";
+import {
+    type ErrorObject,
+    type ValidationRuleWithParams,
+} from "@vuelidate/core";
 import type {
-    TextQuestionType,
-    NumberQuestionType,
-    TrueFalseQuestionType,
-    FileUploadQuestionType,
     DateQuestionType,
-    SelectQuestionType,
+    FileUploadQuestionType,
+    NumberQuestionType,
     QuestionType,
+    SelectQuestionType,
+    TextQuestionType,
+    TrueFalseQuestionType,
 } from "~/generated/gql/graphql";
 import { i18n } from "@/plugins/i18n";
-import type { ValidationRuleWithParams } from "@vuelidate/core";
+import { useDisplayFileSize } from "./useDisplayFileSize";
 
 // Augmented question types
 interface LocatedQuestion {
@@ -23,22 +26,33 @@ export type TextQuestionWithValue = TextQuestionType &
     LocatedQuestion & {
         value: string;
     };
+
 export type NumberQuestionWithValue = NumberQuestionType &
     LocatedQuestion & {
         value: number;
     };
+
 export type TrueFalseQuestionWithValue = TrueFalseQuestionType &
     LocatedQuestion & {
         value: boolean;
     };
+
+export type FileUploadAnswer = {
+    value: string;
+    name: string;
+    size: number;
+};
+
 export type FileUploadQuestionWithValue = FileUploadQuestionType &
     LocatedQuestion & {
-        value: File | null;
+        value: FileUploadAnswer | null;
     };
+
 export type DateQuestionWithValue = DateQuestionType &
     LocatedQuestion & {
         value: string;
     };
+
 export type SelectQuestionWithValue = SelectQuestionType &
     LocatedQuestion & {
         value: string;
@@ -91,6 +105,12 @@ interface FormAndValidation {
     formWithValues: FormWithValues;
     validationRules: FormValidationRules;
 }
+
+// Type for the t object from Vue-I18n.
+type TranslateFn = (
+    key: string,
+    interpolations?: Record<string, unknown>,
+) => string;
 
 /**
  * Processes a queried form (QueriedForm) to produce two derived structures:
@@ -271,18 +291,38 @@ function addValueAndLocationToQuestion(
                     question.defaultValue,
                 ),
             };
-        case "FileUploadQuestionType":
+        case "FileUploadQuestionType": {
+            let fileValue: FileUploadAnswer | null = null;
+            if (question.answer) {
+                try {
+                    const parsed: unknown = JSON.parse(question.answer);
+                    if (
+                        parsed &&
+                        typeof parsed === "object" &&
+                        "value" in parsed &&
+                        "name" in parsed &&
+                        "size" in parsed &&
+                        typeof (parsed as FileUploadAnswer).value ===
+                            "string" &&
+                        typeof (parsed as FileUploadAnswer).name === "string" &&
+                        typeof (parsed as FileUploadAnswer).size === "number"
+                    ) {
+                        fileValue = parsed as FileUploadAnswer;
+                    }
+                } catch {}
+            }
             return {
                 ...question,
                 location,
-                value: parseAnswer<null>(question.answer, question.__typename),
+                value: fileValue,
             };
+        }
     }
 }
 
 function buildValidationRules(
     queriedForm: QueriedForm,
-    t: (key: string) => string,
+    t: TranslateFn,
 ): FormValidationRules {
     return {
         steps: queriedForm.steps.map((step) => ({
@@ -300,7 +340,7 @@ function buildValidationRules(
 
 function addValidationRule(
     question: QuestionType,
-    t: (key: string) => string,
+    t: TranslateFn,
 ): ValidationRule {
     const rules: Record<string, ValidationRuleWithParams> = {};
 
@@ -316,19 +356,51 @@ function addValidationRule(
                 : required;
 
         rules.required = helpers.withMessage(
-            t("This field is required"),
+            () => t("This field is required"),
             requiredFn,
+        );
+    }
+
+    // For True/False questions, 'required' means True.
+    if (question.required && question.__typename === "TrueFalseQuestionType") {
+        rules.required = helpers.withMessage(
+            t("This field is required"),
+            (value: boolean) => value,
         );
     }
 
     // Question-type specific rules. This is an example. Add more as needed.
     switch (question.__typename) {
         case "NumberQuestionType":
-            // Example: Add min/max value validation if needed
             if (question.positiveOnly) {
                 rules.positiveOnly = helpers.withMessage(
-                    t("The number must be positive"),
+                    () => t("The number must be positive"),
                     (value: number) => value >= 0,
+                );
+            }
+            break;
+        case "FileUploadQuestionType":
+            rules.fileSizeLimit = helpers.withMessage(
+                t("File exceeds maximum size: {size}", {
+                    size: useDisplayFileSize(question.sizeLimit),
+                }),
+                (value: FileUploadAnswer | null) =>
+                    value === null || value.size <= question.sizeLimit,
+            );
+            break;
+        case "TextQuestionType":
+            if (question.isEmail) {
+                rules.isEmail = helpers.withMessage(
+                    () => t("This is not a valid email"),
+                    email,
+                );
+            }
+            break;
+        case "DateQuestionType":
+            if (question.futureOnly) {
+                rules.futureOnly = helpers.withMessage(
+                    () => t("The date must be in the future"),
+                    (value: string) => new Date(value) >= new Date(),
                 );
             }
     }

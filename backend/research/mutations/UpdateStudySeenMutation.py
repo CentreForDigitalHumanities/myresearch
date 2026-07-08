@@ -9,6 +9,7 @@ from graphene_django.types import ErrorType
 
 class UpdateStudySeenMutation(Mutation):
     study = Field(StudyType)
+    ok = Boolean(required=True)
     errors = List(ErrorType)
 
     class Arguments:
@@ -37,15 +38,15 @@ class UpdateStudySeenMutation(Mutation):
                 field="id",
                 messages=["Study not found."],
             )
-            return cls(errors=[error])
+            return cls(errors=[error], ok=False)
 
         if study.status == SubmissionStatus.DRAFT:
             error = ErrorType(
                 field="id", messages=["Draft studies cannot be marked as seen."]
             )
-            return cls(errors=[error])
+            return cls(errors=[error], ok=False)
 
         study.is_seen = is_seen
 
         study.save()
-        return cls(study=study)
+        return cls(study=study, ok=True)

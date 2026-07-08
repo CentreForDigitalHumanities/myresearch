@@ -34,12 +34,17 @@ interface Emits {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
-const questionsWithConditions = computed(() =>
-    props.step.questions.filter((question) => question.hasConditions),
+// FileUploadQuestions and questions with conditions are watched. If their
+// values change, the form is resubmitted.
+const watchedQuestions = computed(() =>
+    props.step.questions.filter(
+        (question) =>
+            question.hasConditions ||
+            question.__typename === "FileUploadQuestionType",
+    ),
 );
 
-// Watch conditional questions and trigger form submission when they change
-useConditionalQuestionsWatcher(questionsWithConditions, () => {
+useWatchQuestions(watchedQuestions, () => {
     emit("submitForm");
 });
 </script>

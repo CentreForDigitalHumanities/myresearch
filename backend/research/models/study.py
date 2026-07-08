@@ -5,18 +5,29 @@ from django.db import models, transaction
 from django.utils import timezone
 from datetime import datetime
 from research.models.reviews import StatusChange, SubmissionStatus
-from django.db.models import F, OuterRef, Subquery, Value, CharField, Func
+from django.db.models import Exists, F, OuterRef, Subquery, Value, CharField, Func
 from django.db.models.functions import Concat, Coalesce, Cast, Extract
 
 
 class StudyManager(BaseMRManager):
     def _viewable_objects(self, user: User):
+        queryset = self.filter(is_deleted=False)
         if user.is_privacy_officer or user.is_fetc_member:
-            return self.all()
-        return self.filter(created_by=user)
+            return queryset
+        return queryset.filter(created_by=user)
 
     def _editable_objects(self, user: User):
-        return self.filter(created_by=user)
+        return self.filter(is_deleted=False, created_by=user)
+
+    def _deletable_objects(self, user: User):
+        queryset = self.filter(is_deleted=False)
+
+        # POs and FETC members can only (soft) delete submitted studies.
+        if user.is_privacy_officer or user.is_fetc_member:
+            return self.with_has_been_submitted_annotation(queryset).filter(
+                has_been_submitted=True
+            )
+        return queryset.filter(created_by=user)
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -24,7 +35,22 @@ class StudyManager(BaseMRManager):
         queryset = self.with_answers_by_annotation_key(queryset)
         # Annotate a default title, if no title
         queryset = self.with_default_title_annotation(queryset)
+        # Annotate whether the study has been submitted
+        queryset = self.with_has_been_submitted_annotation(queryset)
         return queryset
+
+    def with_has_been_submitted_annotation(self, queryset):
+        """
+        A study is considered submitted if it has at least one StatusChange
+        whose status is not DRAFT.
+        """
+        return queryset.annotate(
+            has_been_submitted=Exists(
+                StatusChange.objects.filter(study=OuterRef("pk")).exclude(
+                    status=SubmissionStatus.DRAFT
+                )
+            )
+        )
 
     def with_default_title_annotation(self, queryset):
         """Override empty title values with a default based on creation date.
@@ -100,7 +126,7 @@ class StudyManager(BaseMRManager):
             answer = (
                 QuestionResponse.objects.filter(
                     submissions__study=OuterRef("id"),
-                    question_id=question.id,
+                    question_id=question.id,  # type: ignore
                 )
                 .order_by("-submissions__started_at", "-answered_at")
                 .values("answer__value")[:1]
@@ -124,6 +150,10 @@ class Study(models.Model):
 
     # A unique reference number will be created for a study upon first save()
     reference = models.CharField(max_length=10, unique=True)
+    is_deleted = models.BooleanField(
+        default=False,
+        help_text="If true, the study is considered deleted and will not be shown in the UI.",
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -188,6 +218,9 @@ class Study(models.Model):
                 self.reference = f"MR-{year:02d}-{counter_obj.counter:04d}"
 
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Study {self.reference}"
 
 
 class YearCounter(models.Model):

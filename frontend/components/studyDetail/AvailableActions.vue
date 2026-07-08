@@ -13,13 +13,14 @@ import type { GetFirstSlugAndActionsQuery } from "~/generated/gql/graphql";
 import { ActionEnum } from "~/generated/gql/graphql";
 import { NuxtLink } from "#components";
 import { useConfirm } from "cdh-vue-lib";
-
-const { t } = useI18n();
+import type { RouteParamsRawGeneric } from "vue-router";
+import Loading from "~/components/shared/Loading.vue";
 
 type AvailableAction = {
     label: string;
     callback: () => void;
     icon?: Component;
+    hidden?: boolean;
     style?: Record<string, string>;
 };
 
@@ -57,7 +58,7 @@ const slug = computed<string | null>(() => {
     return firstStep?.slug || null;
 });
 
-const isSlugLoaded = computed(() => slug.value !== null);
+const { t } = useI18n();
 
 const MARK_STUDY_SEEN_MUTATION = graphql(`
     mutation MarkStudySeen($studyId: ID!, $isSeen: Boolean!) {
@@ -75,29 +76,6 @@ const MARK_STUDY_SEEN_MUTATION = graphql(`
 
 const { mutate: markStudySeen } = useMutation(MARK_STUDY_SEEN_MUTATION);
 
-const handleUpdateStudyIsSeen = async (isSeen: boolean) => {
-    try {
-        const result = await markStudySeen({ studyId: props.studyId, isSeen });
-
-        if (!result?.data) {
-            useNotification(t("No response from server"), "danger");
-            return;
-        }
-
-        if (result.data.updateStudySeen?.errors?.length) {
-            useNotification(t("Failed update to study"), "danger");
-            return;
-        }
-
-        if (result.data.updateStudySeen?.study?.id) {
-            useNotification(t("Study updated successfully"), "success");
-            location.reload();
-        }
-    } catch {
-        useNotification(t("Failed update study. Please try again."), "danger");
-    }
-};
-
 function checkMarkStudySeen(isSeen: boolean): void {
     useConfirm({
         text: t("Do you want to mark this study as seen?"),
@@ -105,7 +83,65 @@ function checkMarkStudySeen(isSeen: boolean): void {
         abortText: t("No"),
         headerText: t("Confirm new registration"),
         callback: () => {
-            void handleUpdateStudyIsSeen(isSeen);
+            markStudySeen({ studyId: props.studyId, isSeen: isSeen })
+                .then((result) => {
+                    if (result?.data?.updateStudySeen?.ok) {
+                        useNotification(
+                            t("Study updated successfully."),
+                            "success",
+                        );
+                        location.reload();
+                    } else {
+                        useNotification(t("Failed to update study."), "danger");
+                    }
+                })
+                .catch(() => {
+                    useNotification(t("Failed to update study."), "danger");
+                });
+        },
+    });
+}
+const DELETE_STUDY = graphql(`
+    mutation StudyDetailDeleteStudy($id: ID!) {
+        deleteStudy(id: $id) {
+            ok
+            errors {
+                field
+                messages
+            }
+        }
+    }
+`);
+
+const { mutate: markStudySeen } = useMutation(DELETE_STUDY, {
+    update: (cache) => {
+        cache.evict({ fieldName: "studyPages" });
+        cache.gc();
+    },
+});
+
+function deleteStudyWithConfirmation(): void {
+    useConfirm({
+        text: t("Are you sure you want to delete this study?"),
+        confirmText: t("Yes"),
+        abortText: t("No"),
+        headerText: t("Confirm study deletion"),
+        callback: () => {
+            markStudySeen({ id: props.studyId })
+                .then((result) => {
+                    if (result?.data?.deleteStudy?.ok) {
+                        useNotification(
+                            t("Study deleted successfully."),
+                            "success",
+                        );
+                        void navigateTo("/studies");
+                    } else {
+                        useNotification(t("Failed to delete study."), "danger");
+                    }
+                })
+                .catch(() => {
+                    useNotification(t("Failed to delete study."), "danger");
+                });
         },
     });
 }
@@ -113,7 +149,9 @@ function checkMarkStudySeen(isSeen: boolean): void {
 const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
     [ActionEnum.EditAction]: {
         label: t("Continue editing"),
-        callback: () =>
+        icon: PencilLine,
+        hidden: slug.value === null,
+        callback: () => {
             void navigateTo({
                 name: "studies-studyId-submissionId-slug",
                 params: {
@@ -121,19 +159,13 @@ const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
                     submissionId: props.submissionId,
                     slug: slug.value,
                 },
-            }),
-        icon: PencilLine,
+            });
+        },
     },
     [ActionEnum.DeleteAction]: {
         label: t("Delete"),
-        callback: () =>
-            void navigateTo({
-                name: "studies-studyId-delete",
-                params: {
-                    studyId: props.studyId,
-                },
-            }),
         icon: Trash2,
+        callback: deleteStudyWithConfirmation,
         style: {
             "--bs-tiles-hover-bg": "var(--bs-danger)",
             "--bs-tiles-hover-color": "var(--bs-white)",
@@ -165,20 +197,20 @@ const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
 
 const availableActions = computed<AvailableAction[]>(() => {
     const studyActions = result.value?.study?.actions;
-    if (studyActions) {
-        return studyActions.map(
-            (actionEnum: ActionEnum) => actionMap.value[actionEnum],
-        );
+    if (!studyActions) {
+        return [];
     }
-    return [];
+    return studyActions
+        .map((actionEnum: ActionEnum) => actionMap.value[actionEnum])
+        .filter((action) => action.hidden !== true);
 });
 </script>
 
 <template>
     <div v-if="loading">
-        <loading />
+        <Loading />
     </div>
-    <div v-else-if="isSlugLoaded && availableActions.length > 0">
+    <div v-else-if="availableActions.length > 0">
         <h3 class="mb-3">{{ $t("Available actions") }}:</h3>
         <div class="tiles">
             <NuxtLink
