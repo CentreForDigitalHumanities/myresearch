@@ -126,7 +126,6 @@ const { result: formResult } = useQuery<GetFormOverviewQuery>(
 
 const queried = computed(() => formResult.value?.form);
 const { formObject } = useFormState(queried);
-
 </script>
 
 <template>
@@ -136,7 +135,10 @@ const { formObject } = useFormState(queried);
             <h1>{{ $t("Registration overview") }}</h1>
         </div>
         <div class="uu-container">
-            <SubmissionOverview v-if="formObject" :form="formObject" />
+            <div class="col-12">
+                <SubmissionOverview v-if="formObject" :form="formObject" />
+            </div>
         </div>
+        >
     </div>
 </template>
