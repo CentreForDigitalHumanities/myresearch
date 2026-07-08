@@ -156,5 +156,8 @@
   "Mark as unseen": "Markeer als ongezien",
   "Seen by PO": "Gezien door PO",
   "Seen": "Gezien",
-  "unseen": "Ongezien"
+  "unseen": "Ongezien",
+  "Would you like to mark this study as seen?": "Wil je deze studie markeren als gezien?",
+  "Would you like to mark this study as unseen?": "Wil je deze studie markeren als onge",
+  "Update Study": "Update studie"
 }
