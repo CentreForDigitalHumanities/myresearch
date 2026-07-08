@@ -10,6 +10,7 @@ from research.models.study import Study
 class ActionEnum(Enum):
     EDIT_ACTION = "edit_action"
     DELETE_ACTION = "delete_action"
+    VIEW_ACTION = "view_action"
 
 
 #################################
@@ -25,7 +26,7 @@ class StudyActions:
     def __init__(self, study: Study, user: User):
         self.study = study
         self.user = user
-        self.all_actions = [StudyEditAction, StudyDeleteAction]
+        self.all_actions = [StudyEditAction, StudyDeleteAction, StudyViewAction]
 
     def get_available_actions(self) -> list[ActionEnum]:
         return [
@@ -75,3 +76,11 @@ class StudyDeleteAction(StudyAction):
     @classmethod
     def is_available(cls, study, user):
         return study in Study.objects.accessible_objects(user, MRPermission.DELETE)
+
+
+class StudyViewAction(StudyAction):
+    action = ActionEnum.VIEW_ACTION
+
+    @classmethod
+    def is_available(cls, study, user):
+        return study in Study.objects.accessible_objects(user, MRPermission.VIEW)

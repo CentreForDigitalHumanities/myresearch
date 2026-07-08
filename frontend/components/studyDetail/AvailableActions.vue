@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { useMutation, useQuery } from "@vue/apollo-composable";
-import { PencilLine, Trash2 } from "lucide-vue-next";
+import { Eye, PencilLine, Trash2 } from "lucide-vue-next";
 import type { Component } from "vue";
 import { graphql } from "~/generated/gql";
 import type { GetFirstSlugAndActionsQuery } from "~/generated/gql/graphql";
 import { ActionEnum } from "~/generated/gql/graphql";
 import { useConfirm } from "cdh-vue-lib";
-import type { RouteParamsRawGeneric } from "vue-router";
 import Loading from "~/components/shared/Loading.vue";
 
 type AvailableAction = {
@@ -100,6 +99,19 @@ function deleteStudyWithConfirmation(): void {
 }
 
 const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
+    [ActionEnum.ViewAction]: {
+        label: t("View overview"),
+        icon: Eye,
+        callback: () => {
+            void navigateTo({
+                name: "studies-studyId-submissionId-view",
+                params: {
+                    studyId: props.studyId,
+                    submissionId: props.submissionId,
+                },
+            });
+        },
+    },
     [ActionEnum.EditAction]: {
         label: t("Continue editing"),
         icon: PencilLine,
