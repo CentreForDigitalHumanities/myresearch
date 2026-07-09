@@ -60,14 +60,18 @@ const studyStatus = computed(() =>
                 <div class="uu-container">
                     <div class="row">
                         <div class="col me-5">
-                            <span
-                                v-if="
-                                    currentUserStore.currentUser
-                                        ?.isPrivacyOfficer && study.isSeen
-                                "
-                                class="badge rounded-pill text-bg-info mb-1 fs-6"
-                                >Seen</span
-                            >
+                            <div v-if="study.isSeen !== null">
+                                <span
+                                    v-if="study.isSeen"
+                                    class="badge rounded-pill text-bg-info mb-1 fs-6"
+                                    >Seen</span
+                                >
+                                <span
+                                    v-else
+                                    class="badge rounded-pill text-bg-gray mb-1 fs-6"
+                                    >Unseen</span
+                                >
+                            </div>
                             <h1>
                                 {{ study.reference }} -
                                 <em>{{ study.title }}</em>

@@ -1,5 +1,15 @@
 from django.db.models import OuterRef, QuerySet, Q, Subquery
-from graphene import ID, Enum, List, NonNull, ResolveInfo, String, Field, DateTime
+from graphene import (
+    ID,
+    Boolean,
+    Enum,
+    List,
+    NonNull,
+    ResolveInfo,
+    String,
+    Field,
+    DateTime,
+)
 from django_filters import FilterSet, ModelMultipleChoiceFilter, MultipleChoiceFilter
 from api.gql_list_object_type import GQLListObjectType
 from form.models.questions import SelectOption
@@ -90,6 +100,7 @@ class StudyType(GQLListObjectType):
     actions = List(NonNull(ActionEnum), required=True)
     status = Field(GQLSubmissionStatus, required=True)
     updated_at = DateTime(required=True)
+    is_seen = Boolean()
 
     class Meta:
         model = Study
@@ -99,7 +110,6 @@ class StudyType(GQLListObjectType):
             "created_at",
             "reference",
             "title",
-            "is_seen",
         ]
         filterset_class = StudyFilter
         search_fields = [
@@ -134,3 +144,9 @@ class StudyType(GQLListObjectType):
     @staticmethod
     def resolve_updated_at(parent: Study, info: ResolveInfo) -> datetime:
         return parent.updated_at
+
+    @staticmethod
+    def resolve_is_seen(parent: Study, info: ResolveInfo) -> bool | None:
+        if info.context.user.is_privacy_officer:
+            return parent.is_seen
+        return None
