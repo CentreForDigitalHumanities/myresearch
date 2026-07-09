@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db.models import Model
 from django.core.management import call_command
 
+from form.models.responses import MRDocument
 from research.models.reviews import Review, ReviewRound
 from research.models.study import YearCounter
 from form.models import (
@@ -23,6 +24,7 @@ EXCLUDED_MODELS_FOR_COMPLETENESS_CHECK: list[Type[Model]] = [
     Review,
     ReviewRound,
     YearCounter,
+    MRDocument,
 ]
 
 
