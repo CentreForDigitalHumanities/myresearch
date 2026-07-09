@@ -18,53 +18,70 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 2,
+        "pk": 52,
         "fields": {
             "annotation_key": null,
-            "text": "I hold final responsibility.",
-            "text_en": "I hold final responsibility.",
-            "text_nl": "Ik ben zelf de eindverantwoordelijke.",
+            "text": "Who holds final responsibility for the study within UU?",
+            "text_en": "Who holds final responsibility for the study within UU?",
+            "text_nl": "Wie is er binnen UU de eindverantwoordelijke voor de studie?",
             "step": 2,
             "form": 1,
             "description": "",
             "description_en": "",
             "description_nl": "",
-            "required": false,
+            "required": true,
             "_order": 0
         }
     },
     {
         "model": "form.basequestion",
-        "pk": 3,
+        "pk": 53,
         "fields": {
             "annotation_key": null,
-            "text": "Responsible researcher",
-            "text_en": "Responsible researcher",
-            "text_nl": "Eindverantwoordelijke",
+            "text": "E-mail:",
+            "text_en": "E-mail:",
+            "text_nl": "Email:",
             "step": 2,
             "form": 1,
-            "description": "<p>Who holds final responsibility for the study within UU?</p>",
-            "description_en": "<p>Who holds final responsibility for the study within UU?</p>",
-            "description_nl": "<p>Wie is er binnen UU de eindverantwoordelijke voor de studie?</p>",
-            "required": false,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
             "_order": 1
         }
     },
     {
         "model": "form.basequestion",
-        "pk": 4,
+        "pk": 54,
         "fields": {
             "annotation_key": null,
-            "text": "Other UU researchers",
-            "text_en": "Other UU researchers",
-            "text_nl": "Andere UU-onderzoekers",
+            "text": "Co-researchers UU",
+            "text_en": "Co-researchers UU",
+            "text_nl": "Medeonderzoekers UU",
             "step": 2,
             "form": 1,
-            "description": "<p>Who else is responsible for the study within UU?</p>",
-            "description_en": "<p>Who else is responsible for the study within UU?</p>",
-            "description_nl": "<p>Wie werkt er binnen de UU nog meer mee aan de studie?</p>",
+            "description": "<p>Who else at UU is collaborating on the study? (Leave this field blank if not applicable.)&nbsp;</p>",
+            "description_en": "<p>Who else at UU is collaborating on the study? (Leave this field blank if not applicable.)&nbsp;</p>",
+            "description_nl": "<p>Wie werkt er binnen de UU nog meer mee aan de studie? (Laat dit veld leeg als niet van toepassing.)</p>",
             "required": false,
             "_order": 2
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 55,
+        "fields": {
+            "annotation_key": null,
+            "text": "Researchers outside UU",
+            "text_en": "Researchers outside UU",
+            "text_nl": "Onderzoekers buiten UU",
+            "step": 2,
+            "form": 1,
+            "description": "<p>Who else is responsible for the study outside the UU? (Leave this field blank if not applicable.)&nbsp;</p>",
+            "description_en": "<p>Who else is responsible for the study outside the UU? (Leave this field blank if not applicable.)&nbsp;</p>",
+            "description_nl": "<p>Wie werkt er buiten de UU nog meer mee aan de studie? &nbsp;(Laat dit veld leeg als niet van toepassing.)</p>",
+            "required": false,
+            "_order": 3
         }
     },
     {
@@ -77,9 +94,9 @@
             "text_nl": "Faculteit",
             "step": 3,
             "form": 1,
-            "description": "Please select the faculty that hosts or coordinates the research.",
-            "description_en": "Please select the faculty that hosts or coordinates the research.",
-            "description_nl": "Selecteer de faculteit waarbinnen het onderzoek plaatsvindt, of de faculteit die optreedt als penvoerder.",
+            "description": "<p>Please select the faculty in which the research is being conducted, or the faculty &nbsp;acting as the lead institution.</p>",
+            "description_en": "<p>Please select the faculty in which the research is being conducted, or the faculty &nbsp;acting as the lead institution.</p>",
+            "description_nl": "<p>Selecteer de faculteit waarbinnen het onderzoek plaatsvindt, of de faculteit die optreedt als penvoerder.</p>",
             "required": true,
             "_order": 0
         }
@@ -908,20 +925,6 @@
     },
     {
         "model": "form.questioncondition",
-        "pk": 1,
-        "fields": {
-            "trigger_question": 2,
-            "condition_type": "show",
-            "trigger_value": {
-                "value": false
-            },
-            "repeat_count": null,
-            "use_answer_as_count": false,
-            "target_question": 3
-        }
-    },
-    {
-        "model": "form.questioncondition",
         "pk": 3,
         "fields": {
             "trigger_question": 5,
@@ -1156,6 +1159,20 @@
             "repeat_count": null,
             "use_answer_as_count": false,
             "target_question": 51
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 21,
+        "fields": {
+            "trigger_question": 52,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "158"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 53
         }
     },
     {
@@ -2131,10 +2148,27 @@
         }
     },
     {
-        "model": "form.selectquestion",
-        "pk": 5,
+        "model": "form.selectoption",
+        "pk": 157,
         "fields": {
-            "multiple": false
+            "label": "I am the researcher with final responsibility.",
+            "label_en": "I am the researcher with final responsibility.",
+            "label_nl": "Ik ben zelf eindverantwoordelijk onderzoeker.",
+            "default_selected": false,
+            "question": 52,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 158,
+        "fields": {
+            "label": "The researcher listed below  has final responsibility:",
+            "label_en": "The researcher listed below  has final responsibility:",
+            "label_nl": "Onderstaande onderzoeker is eindverantwoordelijk:",
+            "default_selected": false,
+            "question": 52,
+            "_order": 1
         }
     },
     {
@@ -2153,6 +2187,20 @@
     },
     {
         "model": "form.selectquestion",
+        "pk": 52,
+        "fields": {
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 5,
+        "fields": {
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
         "pk": 6,
         "fields": {
             "multiple": false
@@ -2160,9 +2208,9 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 34,
+        "pk": 47,
         "fields": {
-            "multiple": true
+            "multiple": false
         }
     },
     {
@@ -2174,9 +2222,9 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 47,
+        "pk": 34,
         "fields": {
-            "multiple": false
+            "multiple": true
         }
     },
     {
@@ -2228,12 +2276,12 @@
         "model": "form.step",
         "pk": 2,
         "fields": {
-            "name": "Involved UU researchers",
-            "name_en": "Involved UU researchers",
-            "name_nl": "Betrokken UU-onderzoekers",
-            "description": "<p>Who holds final responsibility for the study within UU?</p>",
-            "description_en": "<p>Who holds final responsibility for the study within UU?</p>",
-            "description_nl": "<p>Wie is er binnen UU de eindverantwoordelijke voor de studie?</p>",
+            "name": "Researchers involved",
+            "name_en": "Researchers involved",
+            "name_nl": "Betrokken onderzoekers",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
             "slug": "involved-researchers",
             "form": 1,
             "parent": null,
@@ -2459,6 +2507,28 @@
     },
     {
         "model": "form.textquestion",
+        "pk": 1,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 9,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
         "pk": 14,
         "fields": {
             "placeholder": "",
@@ -2492,51 +2562,18 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 1,
+        "pk": 53,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 1,
-            "is_email": false
+            "is_email": true
         }
     },
     {
         "model": "form.textquestion",
-        "pk": 9,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 48,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 13,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 3,
+        "pk": 22,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -2558,12 +2595,23 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 22,
+        "pk": 13,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 48,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
             "is_email": false
         }
     },
@@ -2591,13 +2639,13 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 4,
+        "pk": 54,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
+            "lines": 1,
+            "is_email": true
         }
     },
     {
@@ -2608,6 +2656,17 @@
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 16,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
             "is_email": false
         }
     },
@@ -2624,7 +2683,18 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 16,
+        "pk": 55,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 30,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -2652,17 +2722,6 @@
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 30,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
             "is_email": false
         }
     },
@@ -2735,20 +2794,6 @@
     {
         "model": "form.truefalsequestion",
         "pk": 21,
-        "fields": {
-            "default_value": false
-        }
-    },
-    {
-        "model": "form.truefalsequestion",
-        "pk": 2,
-        "fields": {
-            "default_value": false
-        }
-    },
-    {
-        "model": "form.truefalsequestion",
-        "pk": 37,
         "fields": {
             "default_value": false
         }
