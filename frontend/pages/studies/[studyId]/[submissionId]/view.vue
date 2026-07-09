@@ -165,8 +165,10 @@ const study = computed(() => studyResult.value?.study ?? null);
                 </h1>
                 <hr />
                 <OverviewWrapper v-if="form" :queried-form="form" />
-                <Loading v-else />
-                <br class="mb-4" />
+                <div v-else>
+                    <Loading />
+                    <br class="mb-4" />
+                </div>
                 <BSButton
                     variant="primary"
                     class="btn-arrow-left"
