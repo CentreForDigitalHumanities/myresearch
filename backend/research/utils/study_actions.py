@@ -88,7 +88,7 @@ class PrivacyOfficerStudyAction(StudyAction):
     """Base class for actions that require privacy officer permission."""
 
     @classmethod
-    def _can_perform_action(
+    def is_available(
         cls,
         study,
         user,
@@ -112,7 +112,7 @@ class MarkSeenAction(PrivacyOfficerStudyAction):
         if study.is_seen:
             return False
 
-        return cls._can_perform_action(study, user)
+        return super().is_available(study, user)
 
 
 class MarkUnseenAction(PrivacyOfficerStudyAction):
@@ -125,4 +125,4 @@ class MarkUnseenAction(PrivacyOfficerStudyAction):
         if not study.is_seen:
             return False
 
-        return cls._can_perform_action(study, user)
+        return super().is_available(study, user)
