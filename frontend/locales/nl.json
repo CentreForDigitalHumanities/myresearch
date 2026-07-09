@@ -148,5 +148,8 @@
     "Download": "Download",
     "File exceeds maximum size: {size}": "Bestand is groter dan het maximaal toegestane formaat: {size}",
     "This is not a valid email": "Dit is geen geldig e-mailadres.",
-    "The date must be in the future": "De datum moet in de toekomst zijn"
+    "The date must be in the future": "De datum moet in de toekomst zijn",
+    "View overview": "Bekijk overzicht",
+    "Registration overview": "Registratie overzicht",
+    "Go back to study page": "Ga terug naar studie page"
 }

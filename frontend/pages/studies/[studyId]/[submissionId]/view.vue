@@ -179,7 +179,7 @@ const study = computed(() => studyResult.value?.study ?? null);
                         })
                     "
                 >
-                    {{ $t("Go back to study detail page") }}
+                    {{ $t("Go back to study page") }}
                 </BSButton>
             </div>
         </div>
