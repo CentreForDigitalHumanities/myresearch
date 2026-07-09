@@ -74,32 +74,20 @@ const MARK_STUDY_SEEN_MUTATION = graphql(`
 const { mutate: markStudySeen } = useMutation(MARK_STUDY_SEEN_MUTATION);
 
 function checkMarkStudySeen(isSeen: boolean): void {
-    useConfirm({
-        text: isSeen
-            ? t("Would you like to mark this study as seen?")
-            : t("Would you like to mark this study as unseen?"),
-        confirmText: t("Yes"),
-        abortText: t("No"),
-        headerText: t("Update Study"),
-        callback: () => {
-            markStudySeen({ studyId: props.studyId, isSeen: isSeen })
-                .then((result) => {
-                    if (result?.data?.updateStudySeen?.ok) {
-                        useNotification(
-                            t("Study updated successfully."),
-                            "success",
-                        );
-                        location.reload();
-                    } else {
-                        useNotification(t("Failed to update study."), "danger");
-                    }
-                })
-                .catch(() => {
-                    useNotification(t("Failed to update study."), "danger");
-                });
-        },
-    });
+    markStudySeen({ studyId: props.studyId, isSeen: isSeen })
+        .then((result) => {
+            if (result?.data?.updateStudySeen?.ok) {
+                useNotification(t("Study updated successfully."), "success");
+                location.reload();
+            } else {
+                useNotification(t("Failed to update study."), "danger");
+            }
+        })
+        .catch(() => {
+            useNotification(t("Failed to update study."), "danger");
+        });
 }
+
 const DELETE_STUDY = graphql(`
     mutation StudyDetailDeleteStudy($id: ID!) {
         deleteStudy(id: $id) {
