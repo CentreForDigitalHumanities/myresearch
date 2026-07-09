@@ -1,17 +1,19 @@
-import { helpers, required } from "@vuelidate/validators";
-import type { Substep, QueriedForm, Step } from "~/components/form/FormWrapper";
-import type { ErrorObject } from "@vuelidate/core";
+import { email, helpers, required } from "@vuelidate/validators";
+import type { QueriedForm, Step, Substep } from "~/components/form/FormWrapper";
+import {
+    type ErrorObject,
+    type ValidationRuleWithParams,
+} from "@vuelidate/core";
 import type {
-    TextQuestionType,
-    NumberQuestionType,
-    TrueFalseQuestionType,
-    FileUploadQuestionType,
     DateQuestionType,
-    SelectQuestionType,
+    FileUploadQuestionType,
+    NumberQuestionType,
     QuestionType,
+    SelectQuestionType,
+    TextQuestionType,
+    TrueFalseQuestionType,
 } from "~/generated/gql/graphql";
 import { i18n } from "@/plugins/i18n";
-import type { ValidationRuleWithParams } from "@vuelidate/core";
 import { useDisplayFileSize } from "./useDisplayFileSize";
 
 // Augmented question types
@@ -354,17 +356,25 @@ function addValidationRule(
                 : required;
 
         rules.required = helpers.withMessage(
-            t("This field is required"),
+            () => t("This field is required"),
             requiredFn,
         );
     }
 
-    // Question-type specific rules.
+    // For True/False questions, 'required' means True.
+    if (question.required && question.__typename === "TrueFalseQuestionType") {
+        rules.required = helpers.withMessage(
+            t("This field is required"),
+            (value: boolean) => value,
+        );
+    }
+
+    // Question-type specific rules. This is an example. Add more as needed.
     switch (question.__typename) {
         case "NumberQuestionType":
             if (question.positiveOnly) {
                 rules.positiveOnly = helpers.withMessage(
-                    t("The number must be positive"),
+                    () => t("The number must be positive"),
                     (value: number) => value >= 0,
                 );
             }
@@ -378,6 +388,21 @@ function addValidationRule(
                     value === null || value.size <= question.sizeLimit,
             );
             break;
+        case "TextQuestionType":
+            if (question.isEmail) {
+                rules.isEmail = helpers.withMessage(
+                    () => t("This is not a valid email"),
+                    email,
+                );
+            }
+            break;
+        case "DateQuestionType":
+            if (question.futureOnly) {
+                rules.futureOnly = helpers.withMessage(
+                    () => t("The date must be in the future"),
+                    (value: string) => new Date(value) >= new Date(),
+                );
+            }
     }
 
     return {
