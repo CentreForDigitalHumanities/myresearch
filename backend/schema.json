@@ -2357,6 +2357,12 @@
               "description": null,
               "isDeprecated": false,
               "name": "DELETE_ACTION"
+            },
+            {
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "VIEW_ACTION"
             }
           ],
           "fields": null,
