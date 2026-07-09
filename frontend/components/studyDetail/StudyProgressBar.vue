@@ -30,15 +30,34 @@ const statuses = computed(() => result.value?.study?.statuses ?? []);
 
 const { t } = useI18n();
 
+const statusBubbleLabels: Record<string, string> = {
+    [SubmissionStatus.Draft]: t("Returned to submitter"),
+    [SubmissionStatus.Submitted]: t("Submitted"),
+};
+
 const progressItems = computed(() => {
     const items = statuses.value.map((change, index) => ({
-        label: useTranslatedStatus(change.status),
-        createdAt: change.createdAt || null,
+        // The first draft will read as created
+        label: index === 0 ? t("Created") : statusBubbleLabels[change.status],
+        // Add the createdAt as the date, except if last status is draft, then just say "Now"
+        createdAt: useLocalDateTime(change.createdAt) || null,
+        // Submitted is always completed, the last item is always incomplete
+        // and the first ("Created") will always be complete
         isComplete:
             change.status === SubmissionStatus.Submitted ||
-            index < statuses.value.length - 1,
+            index < statuses.value.length - 1 ||
+            index === 0,
         isDisabled: false,
     }));
+    // Add a "fake" Draft bubble when we only have one status change ("Created")
+    if (statuses.value.length === 1) {
+        items.push({
+            label: t("Draft"),
+            createdAt: t("Now"),
+            isComplete: false,
+            isDisabled: false,
+        });
+    }
     // If the most recent status is Draft, add a "fake" future submitted status
     if (statuses.value.at(-1)?.status === SubmissionStatus.Draft) {
         items.push({
@@ -48,16 +67,7 @@ const progressItems = computed(() => {
             isDisabled: true,
         });
     }
-    return [
-        // Add a "fake" created StatusChange at the beginning
-        {
-            label: t("Created"),
-            createdAt: null,
-            isComplete: true,
-            isDisabled: false,
-        },
-        ...items,
-    ];
+    return items;
 });
 </script>
 
@@ -88,7 +98,7 @@ const progressItems = computed(() => {
                             style="font-size: 0.7em; line-height: 1.3"
                             class="text-muted"
                         >
-                            {{ useLocalDateTime(progressItem.createdAt) }}
+                            {{ progressItem.createdAt }}
                         </span>
                     </span>
                 </a>
