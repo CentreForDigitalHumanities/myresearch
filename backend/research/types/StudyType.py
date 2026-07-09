@@ -1,19 +1,18 @@
 from django.db.models import OuterRef, QuerySet, Q, Subquery
-from graphene import ID, Enum, List, NonNull, ResolveInfo, String, Field
+from graphene import ID, Enum, List, NonNull, ResolveInfo, String, Field, DateTime
 from django_filters import FilterSet, ModelMultipleChoiceFilter, MultipleChoiceFilter
-
 from api.gql_list_object_type import GQLListObjectType
 from form.models.questions import SelectOption
 from form.models import UserFormSubmission
 from research.models.study import Study
 from research.models.reviews import StatusChange, SubmissionStatus
 from research.utils.study_actions import ActionEnum, StudyActions
+from datetime import datetime
 
 GQLSubmissionStatus = Enum.from_enum(SubmissionStatus)
 
 
 class StudyFilter(FilterSet):
-
     statuses = MultipleChoiceFilter(
         field_name="status",
         method="filter_latest_status",
@@ -55,7 +54,7 @@ class StudyFilter(FilterSet):
         if not value:
             return queryset
 
-        # We'll receive a list of SelectOption instances, but  we'll just need
+        # We'll receive a list of SelectOption instances, but we'll just need
         # ids
         option_ids = [option.id for option in value]
 
@@ -73,12 +72,14 @@ class StudyType(GQLListObjectType):
     status = Field((GQLSubmissionStatus), required=True)
     actions = List(NonNull(ActionEnum), required=True)
     status = Field(GQLSubmissionStatus, required=True)
+    updated_at = DateTime(required=True)
 
     class Meta:
         model = Study
         fields = [
             "id",
             "created_by",
+            "created_at",
             "reference",
             "title",
         ]
@@ -111,3 +112,7 @@ class StudyType(GQLListObjectType):
         user = info.context.user
         study_actions = StudyActions(parent, user)
         return study_actions.get_available_actions()
+
+    @staticmethod
+    def resolve_updated_at(parent: Study, info: ResolveInfo) -> datetime:
+        return parent.updated_at

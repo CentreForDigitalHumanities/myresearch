@@ -26,6 +26,7 @@ from cdh.federated_auth.saml.views import LogoutInitView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("api.urls")),
+    path("api/form/", include("form.urls")),
     # Used for a healthcheck by the Docker container.
     # Not accessible through nginx!
     path("healthcheck/", lambda r: HttpResponse()),
