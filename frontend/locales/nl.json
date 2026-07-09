@@ -151,5 +151,7 @@
     "Confirm return to draft": "Bevestig terugzetten naar concept",
     "Study returned to draft.": "Studie teruggezet naar concept.",
     "Failed to return study to draft.": "Studie terugzetten naar concept niet gelukt.",
-    "Return to draft": "Terugzetten naar concept"
+    "Return to draft": "Terugzetten naar concept",
+    "Returned to submitter": "Teruggestuurd naar indiener",
+    "Now": "Nu"
 }

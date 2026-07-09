@@ -30,12 +30,11 @@ const statuses = computed(() => result.value?.study?.statuses ?? []);
 
 const { t } = useI18n();
 
-const statusBubbleLabels: Record<string, string> = {
-    [SubmissionStatus.Draft]: t("Returned to submitter"),
-    [SubmissionStatus.Submitted]: t("Submitted"),
-};
-
 const progressItems = computed(() => {
+    const statusBubbleLabels: Record<string, string> = {
+        [SubmissionStatus.Draft]: t("Returned to submitter"),
+        [SubmissionStatus.Submitted]: t("Submitted"),
+    };
     const items = statuses.value.map((change, index) => ({
         // The first draft will read as created
         label: index === 0 ? t("Created") : statusBubbleLabels[change.status],
