@@ -2138,22 +2138,6 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "isSeen",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
               "name": "title",
               "type": {
                 "kind": "SCALAR",
@@ -2231,6 +2215,18 @@
                   "name": "DateTime",
                   "ofType": null
                 }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "isSeen",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
               }
             }
           ],
