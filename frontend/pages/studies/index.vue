@@ -143,7 +143,7 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
         label: t("Seen by PO"),
         options: [
             ["true", t("Seen")],
-            ["false", t("unseen")],
+            ["false", t("Unseen")],
         ],
         type: "checkbox",
         initial: [],
