@@ -3038,20 +3038,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "status",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "ENUM",
-                      "name": "SubmissionStatus",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "studyId",
                   "type": {
                     "kind": "NON_NULL",
@@ -3067,10 +3053,10 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "createStatusChange",
+              "name": "createDraftStatusChange",
               "type": {
                 "kind": "OBJECT",
-                "name": "CreateStatusChange",
+                "name": "CreateDraftStatusChange",
                 "ofType": null
               }
             },
@@ -3326,18 +3312,6 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "study",
-              "type": {
-                "kind": "OBJECT",
-                "name": "StudyType",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
               "name": "errors",
               "type": {
                 "kind": "LIST",
@@ -3348,12 +3322,28 @@
                   "ofType": null
                 }
               }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "ok",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              }
             }
           ],
           "inputFields": null,
           "interfaces": [],
           "kind": "OBJECT",
-          "name": "CreateStatusChange",
+          "name": "CreateDraftStatusChange",
           "possibleTypes": null
         },
         {
