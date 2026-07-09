@@ -8,7 +8,6 @@ import type { GetFirstSlugAndActionsQuery } from "~/generated/gql/graphql";
 import { ActionEnum, SubmissionStatus } from "~/generated/gql/graphql";
 import { NuxtLink } from "#components";
 import { useConfirm } from "cdh-vue-lib";
-import type { RouteParamsRawGeneric } from "vue-router";
 import Loading from "~/components/shared/Loading.vue";
 
 type AvailableAction = {
@@ -67,17 +66,10 @@ const DELETE_STUDY = graphql(`
     }
 `);
 
-const CREATE_STATUS_CHANGE = graphql(`
-    mutation StudyDetailReturnToDraft(
-        $studyId: ID!
-        $status: SubmissionStatus!
-    ) {
-        createStatusChange(studyId: $studyId, status: $status) {
-            study {
-                id
-                actions
-                status
-            }
+const CREATE_DRAFT_STATUS_CHANGE = graphql(`
+    mutation StudyDetailReturnToDraft($studyId: ID!) {
+        createDraftStatusChange(studyId: $studyId) {
+            ok
             errors {
                 field
                 messages
@@ -86,7 +78,7 @@ const CREATE_STATUS_CHANGE = graphql(`
     }
 `);
 
-const { mutate: createStatusChange } = useMutation(CREATE_STATUS_CHANGE);
+const { mutate: createDraftStatusChange } = useMutation(CREATE_DRAFT_STATUS_CHANGE);
 
 const { mutate: deleteStudy } = useMutation(DELETE_STUDY, {
     update: (cache) => {
@@ -102,16 +94,15 @@ function returnToDraft(): void {
         abortText: t("No"),
         headerText: t("Confirm return to draft"),
         callback: () => {
-            createStatusChange({
+            createDraftStatusChange({
                 studyId: props.studyId,
-                status: SubmissionStatus.Draft,
             })
                 .then((result) => {
-                    if (result?.data?.createStatusChange?.study) {
+                    if (result?.data?.createDraftStatusChange?.ok) {
                         useNotification(
                             t("Study returned to draft."),
                             "success",
-                    );
+                        );
                         location.reload();
                     } else {
                         useNotification(
