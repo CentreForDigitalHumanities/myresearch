@@ -15,14 +15,23 @@ definePageMeta({
         <div class="uu-sidebar-container uu-sidebar-right">
             <div class="uu-sidebar-content">
                 <h2 class="uu-sidebar-header-linked">
-                    {{ $t("What is MyResearch?") }}
+                    {{ $t("About MyResearch") }}
                 </h2>
                 <div class="uu-container">
+                <p>
                     {{
                         $t(
-                            "MyResearch is a website that helps researchers manage their research administration/MyResearch is a website that helps researchers with submitting a request to register a research. On this website you can register your research at the processing registry which than can be seen by the privacy officer.",
+                            "MyResearch is a tool with which researchers of Utrecht University can register their research activities. This is a legal requirement for the processing of personal data, for example data relating to research participants."
                         )
                     }}
+                </p>
+                <p>
+                    {{
+                        $t(
+                            "At this time MyResearch provides a data processing registry that facilitates compliance with the AVG, or the Dutch implementation of the EU-wide General Data Protection Regulation (GDPR). Future development will allow for multiple registration activities, including Ethical approval, to be completed at once within MyResearch."
+                        )
+                    }}
+                </p>
                 </div>
             </div>
             <aside class="uu-sidebar pe-3">
@@ -32,12 +41,20 @@ definePageMeta({
         <div class="uu-sidebar-container uu-sidebar-right uu-sidebar-sticky">
             <div class="uu-sidebar-content">
                 <h2 class="uu-sidebar-header-linked">
-                    {{ $t("Processing registry") }}
+                    {{ $t("The processing registry") }}
                 </h2>
                 <p>
                     {{
                         $t(
-                            "At the processing registry you register your studies that contain personal data. The processing registry is a central place for all studies with personal data. The Dutch government under the Algemene Verordening Gegevensbescherming (AVG) demands that studies are registered where personal data plays a role. Registering such studies also has an advantage for that researcher that registers the study: registration gives a user-friendly overview about aspects in data processing such as the type of personal data, the persons to whom those data apply, retention periods, used software, necessary security measures and the different parties that play a role",
+                            "When you process personal data in your research, you are mandated to treat them with care and protect them accordingly. A necessary part of that is to register which data you collect and how you process them."
+                        )
+                    }}
+                </p>
+                
+                <p>
+                    {{
+                        $t(
+                            "The participating faculties of Humanities and Law, Economics, and Governance aim to provide a data processing registry that is attuned to the needs of researchers and the kind of data processing that scientific research entails. You don't need any previous knowledge to register the data you process in MyResearch: a guided questionnaire will make things easy."
                         )
                     }}
                 </p>
@@ -47,22 +64,21 @@ definePageMeta({
         <div class="uu-sidebar-container uu-sidebar-right uu-sidebar-sticky">
             <div class="uu-sidebar-content">
                 <h2 class="uu-sidebar-header-linked">
-                    {{ $t("Ethical commission") }}
+                    {{ $t("Where can I start?") }}
                 </h2>
                 <p>
                     {{
                         $t(
-                            "Formal approval by a chamber for the FEtC-H (by means of an official approval letter) is required for research involving human participants within the UU Faculty of Humanities. You must acquire this approval prior even to recruiting participants. Therefore, always wait for the letter of approval before starting research activities.",
+                            "The registration of data processing activities is done at the study level by the lead researcher. The definition of a study may very from one research project to the next. If in doubt, we recommend taking a narrow scope: consider a study to be the set of data and processing activities attributed to one research question. Making additional registrations is always an option."
                         )
                     }}
                 </p>
                 <p>
-                    {{ $t("Registration for the FEtC-H can be done at the") }}
-                    <a
-                        :href="$t('https://fetc-gw.wp.hum.uu.nl/en/')"
-                        target="_blank"
-                        >{{ $t("UU-webpage of the FEtC-H") }}</a
-                    >
+                    {{
+                        $t(
+                            'After logging in with your Solis-ID you can start immediately by navigating to "New registration".'
+                        )
+                    }}
                 </p>
             </div>
             <aside class="uu-sidebar">
@@ -70,15 +86,15 @@ definePageMeta({
                 <p>
                     {{
                         $t(
-                            "For questions about the processing registry contact the privacy officer:",
+                            "For questions about the processing registry contact the privacy officer:"
                         ) + " "
-                    }}<a href="mailto:l.j.w.m.kessels@uu.nl"
-                        >l.j.w.m.kessels@uu.nl</a
+                    }}<a href="mailto:privacy.gw@uu.nl"
+                        >privacy.gw@uu.nl</a
                     >
                 </p>
                 <p>
-                    {{ $t("For compliments contact:") + " "
-                    }}<a href="mailto:portaldev.gw@uu.nl">portaldev.gw@uu.nl</a>
+                    {{ $t("For technical issues relating to myresearch:") + " "
+                    }}<a href="mailto:portalsupport.gw@uu.nl">portalsupport.gw@uu.nl</a>
                 </p>
             </aside>
         </div>
