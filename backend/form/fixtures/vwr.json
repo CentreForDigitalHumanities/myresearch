@@ -94,8 +94,8 @@
             "text_nl": "Faculteit",
             "step": 3,
             "form": 1,
-            "description": "<p>Please select the faculty in which the research is being conducted, or the faculty &nbsp;acting as the lead institution.</p>",
-            "description_en": "<p>Please select the faculty in which the research is being conducted, or the faculty &nbsp;acting as the lead institution.</p>",
+            "description": "<p>Please select the faculty in which the research is being conducted, or the faculty acting as the lead institution.</p>",
+            "description_en": "<p>Please select the faculty in which the research is being conducted, or the faculty acting as the lead institution.</p>",
             "description_nl": "<p>Selecteer de faculteit waarbinnen het onderzoek plaatsvindt, of de faculteit die optreedt als penvoerder.</p>",
             "required": true,
             "_order": 0
@@ -145,8 +145,8 @@
             "text_nl": "Begindatum",
             "step": 4,
             "form": 1,
-            "description": "<p>You start collecting personal data on this date. Note: you must submit this application no later than 4 weeks before the starting date if a review by the FETC is required.</p>",
-            "description_en": "<p>You start collecting personal data on this date. Note: you must submit this application no later than 4 weeks before the starting date if a review by the FETC is required.</p>",
+            "description": "<p>You start collecting personal data on this date. Note: you must submit this application no later than 4 weeks before the starting date if a review by the FETC is required.&nbsp;</p>",
+            "description_en": "<p>You start collecting personal data on this date. Note: you must submit this application no later than 4 weeks before the starting date if a review by the FETC is required.&nbsp;</p>",
             "description_nl": "<p>Dit is de datum waarop je begint met het verzamelen van persoonsgegevens. Let op: deze aanvraag moet minstens 4 weken voor de begindatum ingediend worden als toetsing door de FETC vereist is.</p>",
             "required": true,
             "_order": 0
@@ -191,8 +191,8 @@
         "pk": 12,
         "fields": {
             "annotation_key": null,
-            "text": "I understand the above.",
-            "text_en": "I understand the above.",
+            "text": "I understand what is stated above.",
+            "text_en": "I understand what is stated above.",
             "text_nl": "Ik heb het bovenstaande begrepen.",
             "step": 6,
             "form": 1,
@@ -887,14 +887,14 @@
         "model": "form.datequestion",
         "pk": 7,
         "fields": {
-            "future_only": false
+            "future_only": true
         }
     },
     {
         "model": "form.datequestion",
         "pk": 8,
         "fields": {
-            "future_only": false
+            "future_only": true
         }
     },
     {
@@ -911,9 +911,9 @@
             "name": "Processing Registry",
             "name_en": "Processing Registry",
             "name_nl": "Verwerkingsregister",
-            "version": "0.1",
+            "version": "0.2",
             "created_at": "2026-03-09T14:15:25.526Z",
-            "updated_at": "2026-06-17T11:54:53.948Z"
+            "updated_at": "2026-07-10T13:15:20.550Z"
         }
     },
     {
@@ -2117,7 +2117,7 @@
         "fields": {
             "label": "School of Law",
             "label_en": "School of Law",
-            "label_nl": "Rechtsgeleerdheid",
+            "label_nl": "Departement Rechtsgeleerdheid",
             "default_selected": false,
             "question": 47,
             "_order": 0
@@ -2129,7 +2129,7 @@
         "fields": {
             "label": "School of Economics (U.S.E.)",
             "label_en": "School of Economics (U.S.E.)",
-            "label_nl": "Economie (U.S.E.)",
+            "label_nl": "School of Economics (U.S.E.)",
             "default_selected": false,
             "question": 47,
             "_order": 1
@@ -2163,8 +2163,8 @@
         "model": "form.selectoption",
         "pk": 158,
         "fields": {
-            "label": "The researcher listed below  has final responsibility:",
-            "label_en": "The researcher listed below  has final responsibility:",
+            "label": "The researcher listed below has final responsibility:",
+            "label_en": "The researcher listed below has final responsibility:",
             "label_nl": "Onderstaande onderzoeker is eindverantwoordelijk:",
             "default_selected": false,
             "question": 52,
@@ -2180,9 +2180,9 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 33,
+        "pk": 5,
         "fields": {
-            "multiple": true
+            "multiple": false
         }
     },
     {
@@ -2194,9 +2194,9 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 5,
+        "pk": 33,
         "fields": {
-            "multiple": false
+            "multiple": true
         }
     },
     {
@@ -2215,16 +2215,16 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 39,
+        "pk": 34,
         "fields": {
-            "multiple": false
+            "multiple": true
         }
     },
     {
         "model": "form.selectquestion",
-        "pk": 34,
+        "pk": 39,
         "fields": {
-            "multiple": true
+            "multiple": false
         }
     },
     {
@@ -2276,9 +2276,9 @@
         "model": "form.step",
         "pk": 2,
         "fields": {
-            "name": "Researchers involved",
-            "name_en": "Researchers involved",
-            "name_nl": "Betrokken onderzoekers",
+            "name": "Involved UU researchers",
+            "name_en": "Involved UU researchers",
+            "name_nl": "Betrokken UU-onderzoekers",
             "description": null,
             "description_en": null,
             "description_nl": null,
@@ -2349,7 +2349,7 @@
             "name_nl": "Datasubjecten",
             "description": "<p>In this step you will be asked to indicate which categories of data subjects play a role in your research project. For each category of data subjects, we ask two questions:</p>\r\n<ol>\r\n<li>Why is it necessary to collect personal data?</li>\r\n<li>Which specific categories of personal data you will be processing? If you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.</li>\r\n</ol>",
             "description_en": "<p>In this step you will be asked to indicate which categories of data subjects play a role in your research project. For each category of data subjects, we ask two questions:</p>\r\n<ol>\r\n<li>Why is it necessary to collect personal data?</li>\r\n<li>Which specific categories of personal data you will be processing? If you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.</li>\r\n</ol>",
-            "description_nl": "<p>In deze stap geef je op welke categorie&euml;n betrokken mensen een rol spelen in je onderzoeksproject. Per categorie betrokken mensen vragen we twee dingen:</p>\r\n<ol>\r\n<li>Waarom het noodzakelijk is om persoonsgegevens te verzamelen.</li>\r\n<li>Welke specifieke categorie&euml;n persoonsgegevens je gaat verwerken. Als je in de vorige vraag meerdere categorie&euml;n betrokkenen hebt opgegeven, wordt je dus gevraagd om voor elk van die categorie&euml;n informatie op te geven.</li>\r\n</ol>",
+            "description_nl": "<p>In deze stap geef je op welke categorie&euml;n datasubjecten een rol spelen in je onderzoeksproject. Per categorie datasubjecten vragen we twee dingen:</p>\r\n<ol>\r\n<li>Waarom het noodzakelijk is om persoonsgegevens te verzamelen.</li>\r\n<li>Welke specifieke categorie&euml;n persoonsgegevens je gaat verwerken. Als je in de vorige vraag meerdere categorie&euml;n betrokkenen hebt opgegeven, wordt je dus gevraagd om voor elk van die categorie&euml;n informatie op te geven.</li>\r\n</ol>",
             "slug": "data-subjects",
             "form": 1,
             "parent": null,
@@ -2807,13 +2807,6 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 50,
-        "fields": {
-            "default_value": false
-        }
-    },
-    {
-        "model": "form.truefalsequestion",
         "pk": 18,
         "fields": {
             "default_value": true
@@ -2821,7 +2814,7 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 51,
+        "pk": 50,
         "fields": {
             "default_value": false
         }
@@ -2829,6 +2822,13 @@
     {
         "model": "form.truefalsequestion",
         "pk": 23,
+        "fields": {
+            "default_value": false
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
+        "pk": 51,
         "fields": {
             "default_value": false
         }
