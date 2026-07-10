@@ -130,17 +130,9 @@ services:
       - NUXT_PUBLIC_API_URL=${BASE_URL}/api
       - NUXT_PUBLIC_SAML_URL=${BASE_URL}/saml
     volumes:
-      - ./frontend/generated:/app/generated
+      - ./frontend:/app
     develop:
       watch:
-        - path: ./frontend
-          target: /app
-          action: sync
-          ignore:
-            - node_modules
-            - .nuxt
-            - dist
-            - generated
         - path: ./frontend/package.json
           target: /app/package.json
           action: restart
