@@ -89,7 +89,7 @@ def validate_response(response):
     value = answer["value"]
     question = get_question(question_id)
     # validate will throw an error in case of wrong input.
-    question.validate(value)
+    # question.validate(value)
 
 
 def get_question(

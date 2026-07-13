@@ -395,9 +395,9 @@
         "pk": 14,
         "fields": {
             "annotation_key": null,
-            "text": "On which system or systems will you store your raw research data, from collection to archiving?",
-            "text_en": "On which system or systems will you store your raw research data, from collection to archiving?",
-            "text_nl": "Op welk systeem of systemen ga je jouw ruwe onderzoeksdata opslaan, van verzamelen tot archiveren?",
+            "text": "On which system or systems will you store your research data, from collection to archiving?",
+            "text_en": "On which system or systems will you store your research data, from collection to archiving?",
+            "text_nl": "Op welk systeem of systemen ga je jouw onderzoeksdata opslaan, van verzamelen tot archiveren?",
             "step": 8,
             "form": 1,
             "description": "",
@@ -412,9 +412,9 @@
         "pk": 18,
         "fields": {
             "annotation_key": null,
-            "text": "Raw research data will be kept until at least 10 years after publication.",
-            "text_en": "Raw research data will be kept until at least 10 years after publication.",
-            "text_nl": "Ruwe onderzoeksdata worden tot minimaal 10 jaar na publicatie bewaard.",
+            "text": "Research data will be kept until at least 10 years after publication.",
+            "text_en": "Research data will be kept until at least 10 years after publication.",
+            "text_nl": "Onderzoeksdata worden tot minimaal 10 jaar na publicatie bewaard.",
             "step": 8,
             "form": 1,
             "description": "",
@@ -429,9 +429,9 @@
         "pk": 15,
         "fields": {
             "annotation_key": null,
-            "text": "Specify for how long the raw research data will be retained.",
-            "text_en": "Specify for how long the raw research data will be retained.",
-            "text_nl": "Leg uit hoe lang de ruwe onderzoeksdata bewaard worden.",
+            "text": "Specify for how long the research data will be retained.",
+            "text_en": "Specify for how long the research data will be retained.",
+            "text_nl": "Leg uit hoe lang de onderzoeksdata bewaard worden.",
             "step": 8,
             "form": 1,
             "description": "",
@@ -468,9 +468,9 @@
             "text_nl": "Toestemmingsverklaringen worden tot minimaal 10 jaar na publicatie bewaard.",
             "step": 8,
             "form": 1,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
+            "description": "<p>Constent forms need to be kept just as long as the personal data, in a separate location.&nbsp;</p>",
+            "description_en": "<p>Constent forms need to be kept just as long as the personal data, in a separate location.&nbsp;</p>",
+            "description_nl": "<p>Toestemmingsverklaringen moeten net zolang worden bewaard als de persoonsgegevens, op een gescheiden locatie.</p>",
             "required": false,
             "_order": 4
         }
@@ -497,9 +497,9 @@
         "pk": 20,
         "fields": {
             "annotation_key": null,
-            "text": "Audio and video files will be kept after transcribing them.",
-            "text_en": "Audio and video files will be kept after transcribing them.",
-            "text_nl": "Audio- en video-opnamen worden na het transcriberen bewaard.",
+            "text": "Will audio and video files will be kept after transcription?",
+            "text_en": "Will audio and video files will be kept after transcription?",
+            "text_nl": "Worden audio- en video- opnamen na het transcriberen bewaard?",
             "step": 8,
             "form": 1,
             "description": "",
@@ -514,9 +514,9 @@
         "pk": 38,
         "fields": {
             "annotation_key": null,
-            "text": "Specify why recordings are kept after transcribing.",
-            "text_en": "Specify why recordings are kept after transcribing.",
-            "text_nl": "Leg uit waarom opnames worden bewaard na het transcriberen.",
+            "text": "Specify why recordings are kept after transcription:",
+            "text_en": "Specify why recordings are kept after transcription:",
+            "text_nl": "Leg uit waarom opnames worden bewaard na het transcriberen:",
             "step": 8,
             "form": 1,
             "description": "",
@@ -531,9 +531,9 @@
         "pk": 21,
         "fields": {
             "annotation_key": null,
-            "text": "Personal data are shared with external recipients.",
-            "text_en": "Personal data are shared with external recipients.",
-            "text_nl": "Persoonsgegevens worden gedeeld met externe ontvangers,",
+            "text": "Will personal data be shared with external recipients?",
+            "text_en": "Will personal data be shared with external recipients?",
+            "text_nl": "Worden er persoonsgegevens gedeeld met externe ontvangers?",
             "step": 9,
             "form": 1,
             "description": "",
@@ -638,8 +638,8 @@
             "text_nl": "Transcriptie",
             "step": 10,
             "form": 1,
-            "description": "<p>E.g. Amberscript, Transkriptor, Sonix</p>",
-            "description_en": "<p>E.g. Amberscript, Transkriptor, Sonix</p>",
+            "description": "<p>E.g., Amberscript, Transkriptor, Sonix</p>",
+            "description_en": "<p>E.g., Amberscript, Transkriptor, Sonix</p>",
             "description_nl": "<p>Bijv. Amberscript, Transkriptor, Sonix</p>",
             "required": false,
             "_order": 1
@@ -655,8 +655,8 @@
             "text_nl": "Vragenlijst",
             "step": 10,
             "form": 1,
-            "description": "<p>E.g. Qualtrics</p>",
-            "description_en": "<p>E.g. Qualtrics</p>",
+            "description": "<p>E.g., Qualtrics</p>",
+            "description_en": "<p>E.g., Qualtrics</p>",
             "description_nl": "<p>Bijv. Qualtrics</p>",
             "required": false,
             "_order": 2
@@ -672,8 +672,8 @@
             "text_nl": "Transport en communicatie",
             "step": 10,
             "form": 1,
-            "description": "<p>E.g. SURF File Sender, MS Teams, Cisco Anyconnect</p>",
-            "description_en": "<p>E.g. SURF File Sender, MS Teams, Cisco Anyconnect</p>",
+            "description": "<p>E.g., SURF File Sender, MS Teams, Cisco Anyconnect</p>",
+            "description_en": "<p>E.g., SURF File Sender, MS Teams, Cisco Anyconnect</p>",
             "description_nl": "<p>Bijv. SURF File Sender, MS Teams, Cisco Anyconnect</p>",
             "required": false,
             "_order": 3
@@ -689,8 +689,8 @@
             "text_nl": "Analyse",
             "step": 10,
             "form": 1,
-            "description": "<p>E.g. MatLab, RStudio, SPSS, Nvivo (SHTTP)</p>",
-            "description_en": "<p>E.g. MatLab, RStudio, SPSS, Nvivo (SHTTP)</p>",
+            "description": "<p>E.g., MatLab, RStudio, SPSS, Nvivo (SHTTP)</p>",
+            "description_en": "<p>E.g., MatLab, RStudio, SPSS, Nvivo (SHTTP)</p>",
             "description_nl": "<p>Bijv. MatLab, RStudio, SPSS, Nvivo (SHTTP)</p>",
             "required": false,
             "_order": 4
@@ -706,8 +706,8 @@
             "text_nl": "Opslag",
             "step": 10,
             "form": 1,
-            "description": "<p>E.g. Yoda, OneDrive, MS Teams/Sharepoint, Google Drive</p>",
-            "description_en": "<p>E.g. Yoda, OneDrive, MS Teams/Sharepoint, Google Drive</p>",
+            "description": "<p>E.g., Yoda, OneDrive, MS Teams/Sharepoint, Google Drive</p>",
+            "description_en": "<p>E.g., Yoda, OneDrive, MS Teams/Sharepoint, Google Drive</p>",
             "description_nl": "<p>Bijv. Yoda, OneDrive, MS Teams/Sharepoint, Google Drive</p>",
             "required": false,
             "_order": 5
@@ -723,8 +723,8 @@
             "text_nl": "Diversen",
             "step": 10,
             "form": 1,
-            "description": "<p>E.g. OTree, Textcavator</p>",
-            "description_en": "<p>E.g. OTree, Textcavator</p>",
+            "description": "<p>E.g., OTree, Textcavator</p>",
+            "description_en": "<p>E.g., OTree, Textcavator</p>",
             "description_nl": "<p>Bijv. OTree, Textcavator</p>",
             "required": false,
             "_order": 6
@@ -1371,8 +1371,8 @@
         "model": "form.selectoption",
         "pk": 89,
         "fields": {
-            "label": "Two-factor authentication",
-            "label_en": "Two-factor authentication",
+            "label": "Two-factor authentication (2FA)",
+            "label_en": "Two-factor authentication (2FA)",
             "label_nl": "Twee-factor-authenticatie (2FA)",
             "default_selected": false,
             "question": 33,
@@ -1455,8 +1455,8 @@
         "model": "form.selectoption",
         "pk": 96,
         "fields": {
-            "label": "Other (please specify)",
-            "label_en": "Other (please specify)",
+            "label": "Other (please specify):",
+            "label_en": "Other (please specify):",
             "label_nl": "Anders, namelijk:",
             "default_selected": false,
             "question": 33,
@@ -1491,8 +1491,8 @@
         "model": "form.selectoption",
         "pk": 99,
         "fields": {
-            "label": "Separate storage of pseudonymised personal data and decryption files",
-            "label_en": "Separate storage of pseudonymised personal data and decryption files",
+            "label": "Separate storage of pseudonymised personal data and key files",
+            "label_en": "Separate storage of pseudonymised personal data and key files",
             "label_nl": "Gescheiden opslag van gepseudonimiseerde persoonsgegevens en sleutelbestanden",
             "default_selected": false,
             "question": 34,
@@ -2173,21 +2173,14 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 10,
-        "fields": {
-            "multiple": false
-        }
-    },
-    {
-        "model": "form.selectquestion",
-        "pk": 5,
-        "fields": {
-            "multiple": false
-        }
-    },
-    {
-        "model": "form.selectquestion",
         "pk": 52,
+        "fields": {
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 10,
         "fields": {
             "multiple": false
         }
@@ -2201,14 +2194,14 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 6,
+        "pk": 5,
         "fields": {
             "multiple": false
         }
     },
     {
         "model": "form.selectquestion",
-        "pk": 47,
+        "pk": 6,
         "fields": {
             "multiple": false
         }
@@ -2218,6 +2211,13 @@
         "pk": 34,
         "fields": {
             "multiple": true
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 47,
+        "fields": {
+            "multiple": false
         }
     },
     {
@@ -2506,6 +2506,76 @@
         }
     },
     {
+        "model": "form.stepinfotext",
+        "pk": 1,
+        "fields": {
+            "step": 1,
+            "text": "<h3>What do we mean by 'a study'?</h3>\r\n<p>The definition of a study can be found in de <a href=\"../../../../notes/faq\">faq</a>.</p>\r\n<h3>What will the specified name be used for?</h3>\r\n<p>This name will be used in all formal correspondence.</p>\r\n<h3>What happens to the data I enter?</h3>\r\n<p>The data that you enter will be checked where needed completed by the privary officer. As soon as all data have correctly been registered, your registration in the processing register is legally valid. This registration can be viewed by the management of your faculity, by the co-researchers that you yourself have added, by the data protection officer and by the privacy officier. If needed, the registration can be reopended by you or by the privacy officier.</p>\r\n<h3>I already entered this information in another place. Why do I have to enter it again?</h3>\r\n<p>Often multiple applications demand entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this register will be extended with data required for assessment by the FEtC-H. Data will then need to be entered only once.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+            "text_en": "<h3>What do we mean by 'a study'?</h3>\r\n<p>The definition of a study can be found in de <a href=\"../../../../notes/faq\">faq</a>.</p>\r\n<h3>What will the specified name be used for?</h3>\r\n<p>This name will be used in all formal correspondence.</p>\r\n<h3>What happens to the data I enter?</h3>\r\n<p>The data that you enter will be checked where needed completed by the privary officer. As soon as all data have correctly been registered, your registration in the processing register is legally valid. This registration can be viewed by the management of your faculity, by the co-researchers that you yourself have added, by the data protection officer and by the privacy officier. If needed, the registration can be reopended by you or by the privacy officier.</p>\r\n<h3>I already entered this information in another place. Why do I have to enter it again?</h3>\r\n<p>Often multiple applications demand entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this register will be extended with data required for assessment by the FEtC-H. Data will then need to be entered only once.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+            "text_nl": "<h3>Wat verstaan we onder een studie?</h3>\r\n<p>Definitie studie is te vinden op de <a href=\"../../../../notes/faq\">faq</a>.</p>\r\n<h3>Wordt de naam die ik opgeef vaker gebruikt?&nbsp;</h3>\r\n<p>Deze naam zal worden gebruikt in alle formele correspondentie.</p>\r\n<h3>Wat gebeurt er met de data die ik invoer?</h3>\r\n<p>De data die je invoert, worden gecontroleerd en waar nodig aangevuld door de privacy officer. Zodra alle data naar behoren zijn ingevuld, is er sprake van een rechtsgeldige registratie in het verwerkingsregister. Deze registratie kan in ieder geval worden ingezien door het management van je faculteit, door de collega-onderzoekers die je zelf opgeeft, door de functionaris voor gegevensbescherming en door de privacy officers van de UU. Indien nodig kan de registratie door jou of de privacy officer worden heropend om wijzigingen aan te brengen.</p>\r\n<h3>Ik heb deze informatie al ergens anders opgegeven. Waarom wordt dit hier weer gevraagd?</h3>\r\n<p>Vaak moet je voor verschillende toepassingen dezelfde gegevens opgeven. We streven ernaar om dergelijk dubbel werk zo veel mogelijk te beperken. Met dit register zijn we echter nog niet zo ver. In de toekomst worden de in te vullen data uitgebreid met data die nodig zijn voor toetsing door de FETC. Gegevens hoef je dan nog maar &eacute;&eacute;n keer op te geven.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>"
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 2,
+        "fields": {
+            "step": 2,
+            "text": "<h3 class=\"ewa-rteLine\">What do we mean by person with final responsibility?</h3>\r\n<div class=\"ewa-rteLine\">The person with final responsibilitiy is a researcher with a doctorate, a supervisor with a doctorate or a PhD supervisor</div>\r\n<h3 class=\"ewa-rteLine\">How do we define co-researchers?</h3>\r\n<div class=\"ewa-rteLine\">Co-researchers are those who have been involved in this (part of the) research from the start, and with whom we may have to set up an agreement about joint responsibility.&nbsp;</div>\r\n<h3 class=\"ewa-rteLine\">What happens when I add a co-researcher to this registration?</h3>\r\n<div class=\"ewa-rteLine\">Momenteel moet je zelf medeonderzoekers op de hoogte stellen dat zij genoemd zijn in deze registratie. In de toekomst zullen zij vanuit MyResearch een automatische mail ontvangen.</div>\r\n<h3 class=\"ewa-rteLine\">What do I enter for UU colleagues?</h3>\r\n<div class=\"ewa-rteLine\">For UU colleagues, enter their UU-email address.</div>\r\n<h3 class=\"ewa-rteLine\">What do I enter if someone is not working at UU?</h3>\r\n<div class=\"ewa-rteLine\">For colleagues outside UU, enter their professional email address. Please note: Gmail or any other USA provider is not acceptable.</div>",
+            "text_en": "<h3 class=\"ewa-rteLine\">What do we mean by person with final responsibility?</h3>\r\n<div class=\"ewa-rteLine\">The person with final responsibilitiy is a researcher with a doctorate, a supervisor with a doctorate or a PhD supervisor</div>\r\n<h3 class=\"ewa-rteLine\">How do we define co-researchers?</h3>\r\n<div class=\"ewa-rteLine\">Co-researchers are those who have been involved in this (part of the) research from the start, and with whom we may have to set up an agreement about joint responsibility.&nbsp;</div>\r\n<h3 class=\"ewa-rteLine\">What happens when I add a co-researcher to this registration?</h3>\r\n<div class=\"ewa-rteLine\">Momenteel moet je zelf medeonderzoekers op de hoogte stellen dat zij genoemd zijn in deze registratie. In de toekomst zullen zij vanuit MyResearch een automatische mail ontvangen.</div>\r\n<h3 class=\"ewa-rteLine\">What do I enter for UU colleagues?</h3>\r\n<div class=\"ewa-rteLine\">For UU colleagues, enter their UU-email address.</div>\r\n<h3 class=\"ewa-rteLine\">What do I enter if someone is not working at UU?</h3>\r\n<div class=\"ewa-rteLine\">For colleagues outside UU, enter their professional email address. Please note: Gmail or any other USA provider is not acceptable.</div>",
+            "text_nl": "<h3>Wat zijn medeonderzoekers?</h3>\r\n<p>Medeonderzoekers zijn mensen die al vanaf het begin bij dit specifieke (deel-) onderzoek betrokken zijn en met wie we eventueel een regeling of overeenkomst inzake gezamenlijke verantwoordelijkheid moeten aangaan</p>\r\n<h3>Wat gebeurt er als ik een medeonderzoeker toevoeg aan deze registratie?</h3>\r\n<p>Momenteel moet je zelf medeonderzoekers op de hoogte stellen dat zij genoemd zijn in deze registratie. In de toekomst zullen zij vanuit MyResearch een automatische mail ontvangen.</p>\r\n<h3>Wat vul ik in bij collega's van de UU?</h3>\r\n<p>Bij collega&rsquo;s van de UU vul je hun UU-e-mailadres in.&nbsp;</p>\r\n<h3>Wat vul ik in als iemand niet werkzaam is bij de UU?</h3>\r\n<p>Bij collega&rsquo;s van buiten de UU vul je hun professionele e-mailadres in. Let op: een mailadres op bijvoorbeeld Gmail of een andere Amerikaanse provider is niet acceptabel.</p>\r\n<p>&nbsp;</p>"
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 3,
+        "fields": {
+            "step": 3,
+            "text": "<h3>Do 'faculity' and 'department' refer to the researcher with final responsibility or to the study?</h3>\r\n<p>This concerns the faculty/department of the researcher with final responsibility.</p>\r\n<h3>What happens if multiple faculties take part in the study?</h3>\r\n<p>In all cases, only the coordinating faculity should be entered.</p>",
+            "text_en": "<h3>Do 'faculity' and 'department' refer to the researcher with final responsibility or to the study?</h3>\r\n<p>This concerns the faculty/department of the researcher with final responsibility.</p>\r\n<h3>What happens if multiple faculties take part in the study?</h3>\r\n<p>In all cases, only the coordinating faculity should be entered.</p>",
+            "text_nl": "<h3>Hebben de faculteit en afdeling betrekking op de eindverantwoordelijke of op de studie?</h3>\r\n<p>Het gaat om de faculteit/afdeling van de eindverantwoordelijke.</p>\r\n<h3>Wat als een studie door meerdere faculteiten wordt uitgevoerd?</h3>\r\n<p>In alle gevallen is er slechts &eacute;&eacute;n faculteit waar het onderzoek is ondergebracht, de zgn. penvoerende faculteit.</p>"
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 4,
+        "fields": {
+            "step": 4,
+            "text": "<h3>What happens if the expected study period has passed?</h3>\r\n<p>After the study period has passed the archiving period activates. That will in principle take a minium of 10 years.</p>\r\n<h3>What do we mean by 'start date'?</h3>\r\n<p>The start date is the date where you begin communicating with potential participants (that can happen at the same time as the start of data collecting but in many cases you start with communication with potential participants).</p>\r\n<h3>What do we mean by 'end date'?</h3>\r\n<p>This is the expected publication date of the research results. This date is the start date of the archiving period. Please enter an estimated date here that is as accurate as possible.</p>",
+            "text_en": "<h3>What happens if the expected study period has passed?</h3>\r\n<p>After the study period has passed the archiving period activates. That will in principle take a minium of 10 years.</p>\r\n<h3>What do we mean by 'start date'?</h3>\r\n<p>The start date is the date where you begin communicating with potential participants (that can happen at the same time as the start of data collecting but in many cases you start with communication with potential participants).</p>\r\n<h3>What do we mean by 'end date'?</h3>\r\n<p>This is the expected publication date of the research results. This date is the start date of the archiving period. Please enter an estimated date here that is as accurate as possible.</p>",
+            "text_nl": "<h3>Wat gebeurt er als de verwachte studieperiode is verstreken?</h3>\r\n<p>Na afloop van de studieperiode gaat de archiveringsperiode in. Deze duurt in beginsel minimaal 10 jaar.</p>\r\n<h3>Wat wordt bedoeld met 'begindatum'?</h3>\r\n<p>De begindatum is de datum waarop je begint met het benaderen van mogelijke deelnemers (dat kan tegelijk zijn met de start van de dataverzameling, maar in veel gevallen neem je eerst contact op met mogelijke deelnemers).</p>\r\n<h3>Wat wordt bedoeld met 'einddatum'?</h3>\r\n<p>Dit is de verwachte publicatiedatum van de onderzoeksresultaten. Op deze datum gaat de archiveringstermijn van de onderzoeksdata in. Geef hier een zo correct mogelijke geschatte datum op.</p>"
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 5,
+        "fields": {
+            "step": 5,
+            "text": "<h3>What do we mean with research goal?</h3>\r\n<p>The research goal can mean two things:</p>\r\n<ol>\r\n<li>the research goal you want to answer or the hypothesis you want to prove;</li>\r\n<li>that which you aim to achieve with this study (for example a systematic overview of something).</li>\r\n</ol>\r\n<h3>When do I have multiple goals?</h3>\r\n<p>There are multiple goals when your research questions, hypothesis or things you want to achieve can not be grouped under a single denominator.</p>",
+            "text_en": "<h3>What do we mean with research goal?</h3>\r\n<p>The research goal can mean two things:</p>\r\n<ol>\r\n<li>the research goal you want to answer or the hypothesis you want to prove;</li>\r\n<li>that which you aim to achieve with this study (for example a systematic overview of something).</li>\r\n</ol>\r\n<h3>When do I have multiple goals?</h3>\r\n<p>There are multiple goals when your research questions, hypothesis or things you want to achieve can not be grouped under a single denominator.</p>",
+            "text_nl": "<h3>Wat wordt bedoeld met onderzoeksdoel?</h3>\r\n<p>Het onderzoeksdoel kan twee dingen betekenen:</p>\r\n<ol>\r\n<li>de onderzoeksvraag die je wilt beantwoorden of de hypothese die je wilt bewijzen;</li>\r\n<li>datgene wat je met je studie wilt bereiken (bijvoorbeeld een systematisch overzicht van iets).</li>\r\n</ol>\r\n<h3>Wanneer heb ik meerdere doelen?</h3>\r\n<p>Er is sprake van meerdere doelen als je onderzoeksvragen, je hypothesen of de dingen die je wilt bereiken, niet onder &eacute;&eacute;n noemer te vatten zijn.</p>"
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 6,
+        "fields": {
+            "step": 6,
+            "text": "<h3>What are personal data?</h3>\r\n<p>Personal data are data that say something about a living person. Think of name, adress data, age, sex. But also for example audio or video records, anwers of questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>\r\n<h3>Why do I need to enter 'categories' of personal data?</h3>\r\n<p>Personal data are data such as \"Jan\", \"Yasmina\" or \"12-07-1934\". Categories of personal data are for example \"first name\" or \"birth date\". In the processing register you enter the categories of data, not the data itself.</p>\r\n<h3>Is it allowed to collect data that I will not need right now?</h3>\r\n<p>In principle that is not allowed. The data you collect need to confirm to the concrete goal. Collecting data just in case you may need it for a future research goal is not enough. You need concrete indications that you will need the data in the future.</p>\r\n<h3>What are datasubjects?</h3>\r\n<p>Datasubjects are persons from whom you process data. If you interview somebody that person is a datasubject.</p>\r\n<h3>Why do I need to enter 'categories' of data subjects?</h3>\r\n<p>Datasubjects are individual persons with an own name. Categories of datasubjects are persons that can be grouped together. For example student, UU-colleagues, childeren with dyslexia, or police officers. Be as specific as possible when grouping data subjects.</p>\r\n<h3>Do I need to enter something for every category?</h3>\r\n<p>No, you do not have to do so. You only have to enter the categories datasubjects where you process peronal data. There can be multiple different groups datasubjects per category. For example at participants you can have teachers and students.</p>\r\n<h3>What do I do when my category is not shown?</h3>\r\n<p>The shown categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
+            "text_en": "<h3>What are personal data?</h3>\r\n<p>Personal data are data that say something about a living person. Think of name, adress data, age, sex. But also for example audio or video records, anwers of questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>\r\n<h3>Why do I need to enter 'categories' of personal data?</h3>\r\n<p>Personal data are data such as \"Jan\", \"Yasmina\" or \"12-07-1934\". Categories of personal data are for example \"first name\" or \"birth date\". In the processing register you enter the categories of data, not the data itself.</p>\r\n<h3>Is it allowed to collect data that I will not need right now?</h3>\r\n<p>In principle that is not allowed. The data you collect need to confirm to the concrete goal. Collecting data just in case you may need it for a future research goal is not enough. You need concrete indications that you will need the data in the future.</p>\r\n<h3>What are datasubjects?</h3>\r\n<p>Datasubjects are persons from whom you process data. If you interview somebody that person is a datasubject.</p>\r\n<h3>Why do I need to enter 'categories' of data subjects?</h3>\r\n<p>Datasubjects are individual persons with an own name. Categories of datasubjects are persons that can be grouped together. For example student, UU-colleagues, childeren with dyslexia, or police officers. Be as specific as possible when grouping data subjects.</p>\r\n<h3>Do I need to enter something for every category?</h3>\r\n<p>No, you do not have to do so. You only have to enter the categories datasubjects where you process peronal data. There can be multiple different groups datasubjects per category. For example at participants you can have teachers and students.</p>\r\n<h3>What do I do when my category is not shown?</h3>\r\n<p>The shown categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
+            "text_nl": "<h3 class=\"ewa-rteLine\">Wat zijn persoonsgegevens?</h3>\r\n<div class=\"ewa-rteLine\">Persoonsgegevens zijn gegevens die iets zeggen over een levend persoon. Denk aan naam, adresgegevens, leeftijd, geslacht etc. Maar ook bijvoorbeeld audio- of video-opnamen, antwoorden op vragen, observaties en aantekeningen. Gegevens zijn alleen persoonsgegevens als ze terug te voeren zijn op een bepaalde persoon.</div>\r\n<h3 class=\"ewa-rteLine\">Waarom moet ik 'categorie&euml;n' persoonsgegevens opgeven?</h3>\r\n<div class=\"ewa-rteLine\">Persoonsgegevens zijn gegevens zoals \"Jan\", \"Yasmina\" of \"12-07-1934\". Categorie&euml;n persoonsgegevens zijn dan bijvoorbeeld \"Voornaam\" of \"Geboortedatum\". In het verwerkingsregister leg je alleen de categorie&euml;n vast, niet de persoonsgegevens zelf.</div>\r\n<h3 class=\"ewa-rteLine\">Mag ik gegevens verzamelen die ik nu niet nodig heb?</h3>\r\n<div class=\"ewa-rteLine\">In principe niet. De gegevens die je verzamelt moeten beantwoorden aan het geformuleerde doel. Data alvast verzamelen met de gedachte dat er later misschien een onderzoeksvraag is waarvoor ze nodig zijn, is niet genoeg. Je moet concrete aanwijzingen hebben dat je de data in de toekomst nodig gaat hebben.&nbsp;</div>\r\n<div class=\"ewa-rteLine\">\r\n<h3 class=\"ewa-rteLine\">Wat zijn datasubjecten?</h3>\r\n<div class=\"ewa-rteLine\">Datasubjecten zijn personen van wie je persoonsgegevens verwerkt, dus op wie die persoonsgegevens betrekking hebben. Als je iemand interviewt, dan is diegene het datasubject.</div>\r\n<h3 class=\"ewa-rteLine\">Waarom moet ik 'categorie&euml;n' datasubjecten opgeven?</h3>\r\n<div class=\"ewa-rteLine\">Datasubjecten zijn individuele personen met een eigen naam. Categorie&euml;n datasubjecten zijn groepen personen die binnen eenzelfde categorie vallen. Bijvoorbeeld: studenten, UU-medewerkers, kinderen met dyslexie of politieambtenaren. Wees bij het opgeven van categorie&euml;n datasubjecten zo specifiek mogelijk.</div>\r\n<h3 class=\"ewa-rteLine\">Moet ik bij elke categorie iets opgeven?</h3>\r\n<div class=\"ewa-rteLine\">Nee, dat hoeft niet. Je moet alleen die categori&euml;n datasubjecten opgeven van wie je persoonsgegevens verwerkt. Per categorie kunnen dat wel meerdere, verschillende, groepen datasubjecten zijn, bijv. bij 'Deelnemers, d.w.z. personen die bewust deelnemen aan het onderzoek': docenten en leerlingen.</div>\r\n<h3 class=\"ewa-rteLine\">Wat moet ik doen als mijn categorie er niet tussen staat?</h3>\r\n<div class=\"ewa-rteLine\">De opgevoerde categorie&euml;n zijn geacht uitputtend te zijn. Mochten je desondanks de indruk hebben niet door te kunnen, neem dan contact op met de privacy officer.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n</div>"
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 7,
+        "fields": {
+            "step": 9,
+            "text": "<h3>Who/what are recipients?&nbsp;</h3>\r\n<p>Recipients are people who want to use the personal data for their own different research goal. (meaning, a different purpose-binding when it comes to the GDPR).</p>\r\n<h3>Who/what are third parties?</h3>\r\n<p>See 'Who/what are recipients?'</p>",
+            "text_en": "<h3>Who/what are recipients?&nbsp;</h3>\r\n<p>Recipients are people who want to use the personal data for their own different research goal. (meaning, a different purpose-binding when it comes to the GDPR).</p>\r\n<h3>Who/what are third parties?</h3>\r\n<p>See 'Who/what are recipients?'</p>",
+            "text_nl": "<h3>Wie/wat zijn ontvangers?</h3>\r\n<p>Ontvangers zijn mensen die de persoonsgegevens voor een eigen, andere, onderzoeksvraag willen verwerken (d.w.z. die een andere doelbinding hebben in de zin van de AVG).</p>\r\n<h3>Wie/wat zijn derden?</h3>\r\n<p>Zie 'Wie/wat zijn ontvangers?'</p>"
+        }
+    },
+    {
         "model": "form.textquestion",
         "pk": 1,
         "fields": {
@@ -2519,17 +2589,6 @@
     {
         "model": "form.textquestion",
         "pk": 9,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 14,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -2562,23 +2621,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 53,
+        "pk": 14,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1,
-            "is_email": true
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 22,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
+            "lines": 5,
             "is_email": false
         }
     },
@@ -2595,6 +2643,28 @@
     },
     {
         "model": "form.textquestion",
+        "pk": 48,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 53,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": true
+        }
+    },
+    {
+        "model": "form.textquestion",
         "pk": 13,
         "fields": {
             "placeholder": "",
@@ -2606,13 +2676,24 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 48,
+        "pk": 22,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5,
+            "lines": 1,
             "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 54,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": true
         }
     },
     {
@@ -2639,23 +2720,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 54,
+        "pk": 29,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 1,
-            "is_email": true
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 49,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
             "is_email": false
         }
     },
@@ -2672,12 +2742,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 29,
+        "pk": 49,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1,
+            "lines": 5,
             "is_email": false
         }
     },
@@ -2689,6 +2759,17 @@
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 1,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 25,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
             "is_email": false
         }
     },
@@ -2706,17 +2787,6 @@
     {
         "model": "form.textquestion",
         "pk": 41,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 25,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -2793,6 +2863,13 @@
     },
     {
         "model": "form.truefalsequestion",
+        "pk": 12,
+        "fields": {
+            "default_value": false
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
         "pk": 21,
         "fields": {
             "default_value": false
@@ -2800,7 +2877,7 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 12,
+        "pk": 50,
         "fields": {
             "default_value": false
         }
@@ -2810,13 +2887,6 @@
         "pk": 18,
         "fields": {
             "default_value": true
-        }
-    },
-    {
-        "model": "form.truefalsequestion",
-        "pk": 50,
-        "fields": {
-            "default_value": false
         }
     },
     {
