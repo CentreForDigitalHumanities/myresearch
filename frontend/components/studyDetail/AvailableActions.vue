@@ -3,6 +3,7 @@ import { useI18n } from "vue-i18n";
 import { useMutation, useQuery } from "@vue/apollo-composable";
 import {
     PencilLine,
+    RotateCcw,
     Trash2,
     SquareCheckBig,
     SquareDashed,
@@ -10,7 +11,7 @@ import {
 import type { Component } from "vue";
 import { graphql } from "~/generated/gql";
 import type { GetFirstSlugAndActionsQuery } from "~/generated/gql/graphql";
-import { ActionEnum } from "~/generated/gql/graphql";
+import { ActionEnum, SubmissionStatus } from "~/generated/gql/graphql";
 import { NuxtLink } from "#components";
 import { useConfirm } from "cdh-vue-lib";
 import Loading from "~/components/shared/Loading.vue";
@@ -100,12 +101,60 @@ const DELETE_STUDY = graphql(`
     }
 `);
 
+const CREATE_DRAFT_STATUS_CHANGE = graphql(`
+    mutation StudyDetailReturnToDraft($studyId: ID!) {
+        createDraftStatusChange(studyId: $studyId) {
+            ok
+            errors {
+                field
+                messages
+            }
+        }
+    }
+`);
+
+const { mutate: createDraftStatusChange } = useMutation(CREATE_DRAFT_STATUS_CHANGE);
+
 const { mutate: deleteStudy } = useMutation(DELETE_STUDY, {
     update: (cache) => {
         cache.evict({ fieldName: "studyPages" });
         cache.gc();
     },
 });
+
+function returnToDraft(): void {
+    useConfirm({
+        text: t("Are you sure you want to return this study to draft?"),
+        confirmText: t("Yes"),
+        abortText: t("No"),
+        headerText: t("Confirm return to draft"),
+        callback: () => {
+            createDraftStatusChange({
+                studyId: props.studyId,
+            })
+                .then((result) => {
+                    if (result?.data?.createDraftStatusChange?.ok) {
+                        useNotification(
+                            t("Study returned to draft."),
+                            "success",
+                        );
+                        location.reload();
+                    } else {
+                        useNotification(
+                            t("Failed to return study to draft."),
+                            "danger",
+                        );
+                    }
+                })
+                .catch(() => {
+                    useNotification(
+                        t("Failed to return study to draft."),
+                        "danger",
+                    );
+                });
+        },
+    });
+}
 
 function deleteStudyWithConfirmation(): void {
     useConfirm({
@@ -148,6 +197,11 @@ const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
                 },
             });
         },
+    },
+    [ActionEnum.ReturnToDraftAction]: {
+        label: t("Return to draft"),
+        icon: RotateCcw,
+        callback: returnToDraft,
     },
     [ActionEnum.DeleteAction]: {
         label: t("Delete"),

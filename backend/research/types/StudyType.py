@@ -1,8 +1,8 @@
 from django.db.models import OuterRef, QuerySet, Q, Subquery
+from graphene import ID, List, NonNull, ResolveInfo, String, Field, DateTime
 from graphene import (
     ID,
     Boolean,
-    Enum,
     List,
     NonNull,
     ResolveInfo,
@@ -16,10 +16,9 @@ from form.models.questions import SelectOption
 from form.models import UserFormSubmission
 from research.models.study import Study
 from research.models.reviews import StatusChange, SubmissionStatus
+from research.types.StatusChangeType import StatusChangeType, GQLSubmissionStatus
 from research.utils.study_actions import ActionEnum, StudyActions
 from datetime import datetime
-
-GQLSubmissionStatus = Enum.from_enum(SubmissionStatus)
 
 
 class StudyFilter(FilterSet):
@@ -98,7 +97,7 @@ class StudyType(GQLListObjectType):
     latest_submission_id = ID(required=True)
     status = Field((GQLSubmissionStatus), required=True)
     actions = List(NonNull(ActionEnum), required=True)
-    status = Field(GQLSubmissionStatus, required=True)
+    statuses = List(NonNull(StatusChangeType), required=True)
     updated_at = DateTime(required=True)
     is_seen = Boolean()
 
@@ -140,6 +139,10 @@ class StudyType(GQLListObjectType):
         user = info.context.user
         study_actions = StudyActions(parent, user)
         return study_actions.get_available_actions()
+
+    @staticmethod
+    def resolve_statuses(parent: Study, info: ResolveInfo):
+        return parent.status_changes.all()
 
     @staticmethod
     def resolve_updated_at(parent: Study, info: ResolveInfo) -> datetime:

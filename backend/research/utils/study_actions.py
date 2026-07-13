@@ -10,6 +10,7 @@ from research.models.study import Study
 class ActionEnum(Enum):
     EDIT_ACTION = "edit_action"
     DELETE_ACTION = "delete_action"
+    RETURN_TO_DRAFT_ACTION = "return_to_draft_action"
     MARK_SEEN_ACTION = "mark_seen_action"
     MARK_UNSEEN_ACTION = "mark_unseen_action"
 
@@ -30,6 +31,7 @@ class StudyActions:
         self.all_actions = [
             StudyEditAction,
             StudyDeleteAction,
+            ReturnToDraftAction,
             MarkSeenAction,
             MarkUnseenAction,
         ]
@@ -100,6 +102,11 @@ class PrivacyOfficerStudyAction(StudyAction):
             return False
 
         return True
+
+
+class ReturnToDraftAction(PrivacyOfficerStudyAction):
+
+    action = ActionEnum.RETURN_TO_DRAFT_ACTION
 
 
 class MarkSeenAction(PrivacyOfficerStudyAction):
