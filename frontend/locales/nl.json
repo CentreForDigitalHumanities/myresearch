@@ -146,7 +146,14 @@
     "Upload failed. Please try again.": "Upload mislukt. Probeer het opnieuw.",
     "Uploading…": "Uploaden...",
     "Download": "Download",
-    "File exceeds maximum size: {size}": "Bestand is groter dan het maximaal toegestane formaat: {size}",
     "This is not a valid email": "Dit is geen geldig e-mailadres.",
-    "The date must be in the future": "De datum moet in de toekomst zijn"
+    "The date must be in the future": "De datum moet in de toekomst zijn",
+    "File exceeds maximum size: {size}": "Bestand is groter dan het maximaal toegestane formaat: {size}",
+    "Are you sure you want to return this study to draft?": "Weet je zeker dat je de status van deze studie wilt terugzetten naar concept?",
+    "Confirm return to draft": "Bevestig terugzetten naar concept",
+    "Study returned to draft.": "Studie teruggezet naar concept.",
+    "Failed to return study to draft.": "Studie terugzetten naar concept niet gelukt.",
+    "Return to draft": "Terugzetten naar concept",
+    "Returned to submitter": "Teruggestuurd naar indiener",
+    "Now": "Nu"
 }

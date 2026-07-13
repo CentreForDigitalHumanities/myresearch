@@ -41,7 +41,12 @@ class StudyAdmin(admin.ModelAdmin):
         "current_status",
     )
     list_filter = ("created_at", "created_by")
-    search_fields = ("id", "created_by__full_name", "created_by__email")
+    search_fields = (
+        "id",
+        "created_by__first_name",
+        "created_by__last_name",
+        "created_by__email",
+    )
     readonly_fields = ("study_title", "created_at")
     inlines = [StatusChangeInline, UserFormSubmissionInline]
 
