@@ -155,5 +155,12 @@
     "Failed to return study to draft.": "Studie terugzetten naar concept niet gelukt.",
     "Return to draft": "Terugzetten naar concept",
     "Returned to submitter": "Teruggestuurd naar indiener",
-    "Now": "Nu"
+    "Now": "Nu",
+    "Study updated successfully.": "Studie ge'update't.",
+    "Failed to update study.": "Studie updaten mislukt.",
+    "Mark as seen": "Markeer als gezien",
+    "Mark as unseen": "Markeer als ongezien",
+    "Seen": "Gezien",
+    "Unseen": "Ongezien",
+    "Seen by PO": "Gezien door PO"
 }

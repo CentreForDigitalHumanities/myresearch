@@ -1880,6 +1880,20 @@
                       "ofType": null
                     }
                   }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "isSeen",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
                 }
               ],
               "deprecationReason": null,
@@ -2226,6 +2240,18 @@
                   "ofType": null
                 }
               }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "isSeen",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
             }
           ],
           "inputFields": null,
@@ -2359,6 +2385,22 @@
                   "ofType": null
                 }
               }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "isPrivacyOfficer",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              }
             }
           ],
           "inputFields": null,
@@ -2422,6 +2464,18 @@
               "description": null,
               "isDeprecated": false,
               "name": "RETURN_TO_DRAFT_ACTION"
+            },
+            {
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "MARK_SEEN_ACTION"
+            },
+            {
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "MARK_UNSEEN_ACTION"
             }
           ],
           "fields": null,
@@ -3000,13 +3054,13 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "title",
+                  "name": "isSeen",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
                       "kind": "SCALAR",
-                      "name": "String",
+                      "name": "Boolean",
                       "ofType": null
                     }
                   }
@@ -3015,10 +3069,10 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "updateStudy",
+              "name": "updateStudySeen",
               "type": {
                 "kind": "OBJECT",
-                "name": "UpdateStudyMutation",
+                "name": "UpdateStudySeenMutation",
                 "ofType": null
               }
             },
@@ -3258,6 +3312,22 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
+              "name": "ok",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
               "name": "errors",
               "type": {
                 "kind": "LIST",
@@ -3273,7 +3343,7 @@
           "inputFields": null,
           "interfaces": [],
           "kind": "OBJECT",
-          "name": "UpdateStudyMutation",
+          "name": "UpdateStudySeenMutation",
           "possibleTypes": null
         },
         {

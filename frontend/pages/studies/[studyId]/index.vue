@@ -7,6 +7,9 @@ import AvailableActions from "~/components/studyDetail/AvailableActions.vue";
 import StudyProgressBar from "~/components/studyDetail/StudyProgressBar.vue";
 import { useStudyId } from "~/composables/useRouteParams";
 
+const currentUserStore = useCurrentUserStore();
+await callOnce("user", () => currentUserStore.loadData());
+
 const GET_STUDY = graphql(`
     query GetStudy($id: ID!) {
         study(id: $id, mrPermission: "View") {
@@ -17,6 +20,7 @@ const GET_STUDY = graphql(`
             actions
             createdAt
             updatedAt
+            isSeen
             createdBy {
                 fullName
                 id
@@ -51,6 +55,18 @@ const study = computed(() => studyResult.value?.study ?? null);
                 <div class="uu-container">
                     <div class="row">
                         <div class="col me-5">
+                            <div v-if="study.isSeen !== null">
+                                <span
+                                    v-if="study.isSeen"
+                                    class="badge rounded-pill text-bg-info mb-1 fs-6"
+                                    >{{ $t("Seen") }}</span
+                                >
+                                <span
+                                    v-else
+                                    class="badge rounded-pill text-bg-gray mb-1 fs-6"
+                                    >{{ $t("Unseen") }}</span
+                                >
+                            </div>
                             <h1>
                                 {{ study.reference }} -
                                 <em>{{ study.title }}</em>

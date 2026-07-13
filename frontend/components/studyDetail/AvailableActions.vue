@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { useMutation, useQuery } from "@vue/apollo-composable";
-import { PencilLine, RotateCcw, Trash2 } from "lucide-vue-next";
+import {
+    PencilLine,
+    RotateCcw,
+    Trash2,
+    SquareCheckBig,
+    SquareDashed,
+} from "lucide-vue-next";
 import type { Component } from "vue";
 import { graphql } from "~/generated/gql";
 import type { GetFirstSlugAndActionsQuery } from "~/generated/gql/graphql";
@@ -53,6 +59,35 @@ const slug = computed<string | null>(() => {
 });
 
 const { t } = useI18n();
+
+const MARK_STUDY_SEEN_MUTATION = graphql(`
+    mutation MarkStudySeen($studyId: ID!, $isSeen: Boolean!) {
+        updateStudySeen(id: $studyId, isSeen: $isSeen) {
+            ok
+            errors {
+                field
+                messages
+            }
+        }
+    }
+`);
+
+const { mutate: markStudySeen } = useMutation(MARK_STUDY_SEEN_MUTATION);
+
+function checkMarkStudySeen(isSeen: boolean): void {
+    markStudySeen({ studyId: props.studyId, isSeen: isSeen })
+        .then((result) => {
+            if (result?.data?.updateStudySeen?.ok) {
+                useNotification(t("Study updated successfully."), "success");
+                location.reload();
+            } else {
+                useNotification(t("Failed to update study."), "danger");
+            }
+        })
+        .catch(() => {
+            useNotification(t("Failed to update study."), "danger");
+        });
+}
 
 const DELETE_STUDY = graphql(`
     mutation StudyDetailDeleteStudy($id: ID!) {
@@ -177,6 +212,28 @@ const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
             "--bs-tiles-hover-color": "var(--bs-white)",
         },
     },
+    [ActionEnum.MarkSeenAction]: {
+        label: t("Mark as seen"),
+        callback: () => {
+            checkMarkStudySeen(true);
+        },
+        icon: SquareCheckBig,
+        style: {
+            "--bs-tiles-hover-bg": "var(--bs-info)",
+            "--bs-tiles-hover-color": "var(--bs-white)",
+        },
+    },
+    [ActionEnum.MarkUnseenAction]: {
+        label: t("Mark as unseen"),
+        callback: () => {
+            checkMarkStudySeen(false);
+        },
+        icon: SquareDashed,
+        style: {
+            "--bs-tiles-hover-bg": "var(--bs-secondary)",
+            "--bs-tiles-hover-color": "var(--bs-white)",
+        },
+    },
 }));
 
 const availableActions = computed<AvailableAction[]>(() => {
@@ -204,7 +261,7 @@ const availableActions = computed<AvailableAction[]>(() => {
                 class="tile h-100 justify-content-around"
                 @click.prevent="action.callback"
             >
-                <strong class="text-center">{{ $t(action.label) }}</strong>
+                <strong class="text-center">{{ action.label }}</strong>
                 <component :is="action.icon" v-if="action.icon"> </component>
             </NuxtLink>
         </div>
