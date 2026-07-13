@@ -37,7 +37,7 @@ class CreateDraftStatusChange(Mutation):
             )
 
         # Only allow privacy officers to return SUBMITTED studies back to DRAFT
-        if not user.is_privacy_officer or study.status != SubmissionStatus.SUBMITTED:
+        if not (user.is_privacy_officer and study.status == SubmissionStatus.SUBMITTED):
             return cls(
                 ok=False,
                 errors=[
