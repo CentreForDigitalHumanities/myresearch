@@ -64,12 +64,12 @@ const studyStatus = computed(() =>
                                 <span
                                     v-if="study.isSeen"
                                     class="badge rounded-pill text-bg-info mb-1 fs-6"
-                                    >Seen</span
+                                    >{{ $t("Seen") }}</span
                                 >
                                 <span
                                     v-else
                                     class="badge rounded-pill text-bg-gray mb-1 fs-6"
-                                    >Unseen</span
+                                    >{{ $t("Unseen") }}</span
                                 >
                             </div>
                             <h1>
