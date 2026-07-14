@@ -161,6 +161,7 @@ const availableActions = computed<AvailableAction[]>(() => {
                 :key="index"
                 :style="action.style"
                 class="tile h-100 justify-content-around"
+                style="cursor: pointer"
                 @click.prevent="action.callback"
             >
                 <strong class="text-center">{{ $t(action.label) }}</strong>
