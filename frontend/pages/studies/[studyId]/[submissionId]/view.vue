@@ -1,135 +1,15 @@
 <script lang="ts" setup>
-import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
 import { BSButton } from "cdh-vue-lib";
-import type {
-    GetFormOverviewQuery,
-    GetStudyTitleQuery,
-} from "~/generated/gql/graphql";
+import type { GetStudyTitleQuery } from "~/generated/gql/graphql";
 import OverviewWrapper from "~/components/form/overview/OverviewWrapper.vue";
 import { useSubmissionId, useStudyId } from "~/composables/useRouteParams";
+import { useFormQuery } from "~/composables/useFormQuery";
+import { useQuery } from "@vue/apollo-composable";
 import Loading from "~/components/shared/Loading.vue";
 
-const GET_FORM = graphql(`
-    query GetFormOverview($submissionId: ID!) {
-        form(submissionId: $submissionId, mrPermission: "View") {
-            formId
-            nameEn
-            nameNl
-            submissionId
-            steps {
-                stepId
-                slug
-                repeatIndex
-                nameEn
-                nameNl
-                descriptionEn
-                descriptionNl
-                isOverview
-                ...FormInfoFragment
-                questions {
-                    questionId
-                    repeatIndex
-                    answer
-                    responseId
-                    textEn
-                    textNl
-                    descriptionEn
-                    descriptionNl
-                    required
-                    hasConditions
-                    ... on SelectQuestionType {
-                        multiple
-                        options {
-                            id
-                            labelNl
-                            labelEn
-                            defaultSelected
-                        }
-                    }
-                    ... on NumberQuestionType {
-                        positiveOnly
-                    }
-                    ... on TrueFalseQuestionType {
-                        defaultValue
-                    }
-                    ... on FileUploadQuestionType {
-                        sizeLimit
-                    }
-                    ... on TextQuestionType {
-                        placeholderNl
-                        placeholderEn
-                        lines
-                        isEmail
-                    }
-                    ... on DateQuestionType {
-                        futureOnly
-                    }
-                }
-                substeps {
-                    stepId
-                    slug
-                    repeatIndex
-                    nameEn
-                    nameNl
-                    descriptionEn
-                    descriptionNl
-                    isOverview
-                    ...FormInfoFragment
-                    questions {
-                        questionId
-                        repeatIndex
-                        answer
-                        responseId
-                        textEn
-                        textNl
-                        descriptionEn
-                        descriptionNl
-                        required
-                        hasConditions
-                        ... on SelectQuestionType {
-                            multiple
-                            options {
-                                id
-                                labelNl
-                                labelEn
-                                defaultSelected
-                            }
-                        }
-                        ... on NumberQuestionType {
-                            positiveOnly
-                        }
-                        ... on TrueFalseQuestionType {
-                            defaultValue
-                        }
-                        ... on FileUploadQuestionType {
-                            sizeLimit
-                        }
-                        ... on TextQuestionType {
-                            placeholderNl
-                            placeholderEn
-                            lines
-                            isEmail
-                        }
-                        ... on DateQuestionType {
-                            futureOnly
-                        }
-                    }
-                }
-            }
-        }
-    }
-`);
-
 const submissionId = useSubmissionId();
-
-const { result: formResult } = useQuery<GetFormOverviewQuery>(
-    GET_FORM,
-    () => ({ submissionId: submissionId.value }),
-    () => ({ enabled: !!submissionId.value }),
-);
-
-const form = computed(() => formResult.value?.form ?? null);
+const form = useFormQuery(submissionId, "View");
 
 const GET_STUDY = graphql(`
     query GetStudyTitle($id: ID!) {
