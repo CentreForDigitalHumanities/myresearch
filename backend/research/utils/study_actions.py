@@ -13,6 +13,7 @@ class ActionEnum(Enum):
     RETURN_TO_DRAFT_ACTION = "return_to_draft_action"
     MARK_SEEN_ACTION = "mark_seen_action"
     MARK_UNSEEN_ACTION = "mark_unseen_action"
+    VIEW_ACTION = "view_action"
 
 
 #################################
@@ -31,6 +32,7 @@ class StudyActions:
         self.all_actions = [
             StudyEditAction,
             StudyDeleteAction,
+            StudyViewAction,
             ReturnToDraftAction,
             MarkSeenAction,
             MarkUnseenAction,
@@ -133,3 +135,11 @@ class MarkUnseenAction(PrivacyOfficerStudyAction):
             return False
 
         return super().is_available(study, user)
+
+
+class StudyViewAction(StudyAction):
+    action = ActionEnum.VIEW_ACTION
+
+    @classmethod
+    def is_available(cls, study, user):
+        return study in Study.objects.accessible_objects(user, MRPermission.VIEW)

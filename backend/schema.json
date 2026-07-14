@@ -2476,6 +2476,12 @@
               "description": null,
               "isDeprecated": false,
               "name": "MARK_UNSEEN_ACTION"
+            },
+            {
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "VIEW_ACTION"
             }
           ],
           "fields": null,

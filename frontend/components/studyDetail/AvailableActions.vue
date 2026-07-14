@@ -2,6 +2,7 @@
 import { useI18n } from "vue-i18n";
 import { useMutation, useQuery } from "@vue/apollo-composable";
 import {
+    Eye,
     PencilLine,
     RotateCcw,
     Trash2,
@@ -11,8 +12,7 @@ import {
 import type { Component } from "vue";
 import { graphql } from "~/generated/gql";
 import type { GetFirstSlugAndActionsQuery } from "~/generated/gql/graphql";
-import { ActionEnum, SubmissionStatus } from "~/generated/gql/graphql";
-import { NuxtLink } from "#components";
+import { ActionEnum } from "~/generated/gql/graphql";
 import { useConfirm } from "cdh-vue-lib";
 import Loading from "~/components/shared/Loading.vue";
 
@@ -113,7 +113,9 @@ const CREATE_DRAFT_STATUS_CHANGE = graphql(`
     }
 `);
 
-const { mutate: createDraftStatusChange } = useMutation(CREATE_DRAFT_STATUS_CHANGE);
+const { mutate: createDraftStatusChange } = useMutation(
+    CREATE_DRAFT_STATUS_CHANGE,
+);
 
 const { mutate: deleteStudy } = useMutation(DELETE_STUDY, {
     update: (cache) => {
@@ -183,6 +185,19 @@ function deleteStudyWithConfirmation(): void {
 }
 
 const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
+    [ActionEnum.ViewAction]: {
+        label: t("View"),
+        icon: Eye,
+        callback: () => {
+            void navigateTo({
+                name: "studies-studyId-submissionId-view",
+                params: {
+                    studyId: props.studyId,
+                    submissionId: props.submissionId,
+                },
+            });
+        },
+    },
     [ActionEnum.EditAction]: {
         label: t("Continue editing"),
         icon: PencilLine,
@@ -254,16 +269,17 @@ const availableActions = computed<AvailableAction[]>(() => {
     <div v-else-if="availableActions.length > 0">
         <h3 class="mb-3">{{ $t("Available actions") }}:</h3>
         <div class="tiles">
-            <NuxtLink
+            <div
                 v-for="(action, index) in availableActions"
                 :key="index"
                 :style="action.style"
                 class="tile h-100 justify-content-around"
+                style="cursor: pointer"
                 @click.prevent="action.callback"
             >
                 <strong class="text-center">{{ action.label }}</strong>
                 <component :is="action.icon" v-if="action.icon"> </component>
-            </NuxtLink>
+            </div>
         </div>
     </div>
     <h3 v-else>{{ $t("No actions available") }}</h3>
