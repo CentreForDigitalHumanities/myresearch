@@ -320,8 +320,23 @@ class Command(BaseCommand):
                 StatusChange.objects.create(
                     status=SubmissionStatus.DRAFT, created_by=user, study=study
                 )
-                # Create one submission per study (for now).
-                self._create_user_form_submission(user, form, study)
+
+                # Create one UserFormSubmission per study (for now)
+
+                # For 30% of studies, create a submitted StatusChange and a complete submission
+                if self.faker.boolean(30):
+                    # These will be filled in perfectly
+                    self._create_user_form_submission(user, form, study, complete=True)
+                    StatusChange.objects.create(
+                        status=SubmissionStatus.SUBMITTED, created_by=user, study=study
+                    )
+                    if self.faker.boolean(50):
+                        # mark some of these as seen
+                        study.is_seen = True
+                        study.save()
+                else:
+                    # Non submitted studies will not be filled in perfectly
+                    self._create_user_form_submission(user, form, study)
 
     def _generate_text_answer(self, question: TextQuestion) -> dict:
         return {"value": self.faker.sentence()}
@@ -379,7 +394,11 @@ class Command(BaseCommand):
         raise ValueError(f"Unsupported question type: {type(question)}")
 
     def _create_user_form_submission(
-        self, user: User, form: MRForm, study: Study
+        self,
+        user: User,
+        form: MRForm,
+        study: Study,
+        complete: bool = False,
     ) -> None:
         submission = UserFormSubmission.objects.create(
             user=user,
@@ -392,9 +411,10 @@ class Command(BaseCommand):
         # First generate answers for all questions, regardless of visibility.
         for question in form_questions:
             question = question.get_subclass()
-            if self.faker.random_element([True, False, False, False]):
-                # 25% chance to leave the question unanswered.
-                continue
+            if not complete:
+                if self.faker.random_element([True, False, False, False]):
+                    # 25% chance to leave the question unanswered.
+                    continue
 
             answer_data = self._generate_answer_for_question(question)
 

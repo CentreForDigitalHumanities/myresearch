@@ -7,6 +7,9 @@ import AvailableActions from "~/components/studyDetail/AvailableActions.vue";
 import StudyProgressBar from "~/components/studyDetail/StudyProgressBar.vue";
 import { useStudyId } from "~/composables/useRouteParams";
 
+const currentUserStore = useCurrentUserStore();
+await callOnce("user", () => currentUserStore.loadData());
+
 const GET_STUDY = graphql(`
     query GetStudy($id: ID!) {
         study(id: $id, mrPermission: "View") {
@@ -17,6 +20,7 @@ const GET_STUDY = graphql(`
             actions
             createdAt
             updatedAt
+            isSeen
             createdBy {
                 fullName
                 id
@@ -35,11 +39,6 @@ const { result: studyResult } = useQuery<GetStudyQuery>(
 );
 
 const study = computed(() => studyResult.value?.study ?? null);
-
-// If study is even, it is a draft. If it is odd, it is in the review phase
-const studyStatus = computed(() =>
-    Number(study.value?.id) % 2 === 0 ? "draft" : "review",
-);
 </script>
 
 <template>
@@ -56,6 +55,18 @@ const studyStatus = computed(() =>
                 <div class="uu-container">
                     <div class="row">
                         <div class="col me-5">
+                            <div v-if="study.isSeen !== null">
+                                <span
+                                    v-if="study.isSeen"
+                                    class="badge rounded-pill text-bg-info mb-1 fs-6"
+                                    >{{ $t("Seen") }}</span
+                                >
+                                <span
+                                    v-else
+                                    class="badge rounded-pill text-bg-gray mb-1 fs-6"
+                                    >{{ $t("Unseen") }}</span
+                                >
+                            </div>
                             <h1>
                                 {{ study.reference }} -
                                 <em>{{ study.title }}</em>
@@ -75,7 +86,7 @@ const studyStatus = computed(() =>
                             />
                         </div>
                         <div class="col-2">
-                            <StudyProgressBar :study-status="studyStatus" />
+                            <StudyProgressBar :study-id="study.id" />
                         </div>
                     </div>
                 </div>
