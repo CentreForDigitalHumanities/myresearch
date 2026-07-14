@@ -1,15 +1,24 @@
 from django.db.models import OuterRef, QuerySet, Q, Subquery
-from graphene import ID, Enum, List, NonNull, ResolveInfo, String, Field, DateTime
+from graphene import ID, List, NonNull, ResolveInfo, String, Field, DateTime
+from graphene import (
+    ID,
+    Boolean,
+    List,
+    NonNull,
+    ResolveInfo,
+    String,
+    Field,
+    DateTime,
+)
 from django_filters import FilterSet, ModelMultipleChoiceFilter, MultipleChoiceFilter
 from api.gql_list_object_type import GQLListObjectType
 from form.models.questions import SelectOption
 from form.models import UserFormSubmission
 from research.models.study import Study
 from research.models.reviews import StatusChange, SubmissionStatus
+from research.types.StatusChangeType import StatusChangeType, GQLSubmissionStatus
 from research.utils.study_actions import ActionEnum, StudyActions
 from datetime import datetime
-
-GQLSubmissionStatus = Enum.from_enum(SubmissionStatus)
 
 
 class StudyFilter(FilterSet):
@@ -23,6 +32,14 @@ class StudyFilter(FilterSet):
         field_name="faculty",
         queryset=SelectOption.objects.filter(question__annotation_key="faculty"),
         method="filter_faculties",
+    )
+
+    # Sadly, the frontend does not support booleans as options so we have to
+    # translate from strings
+    is_seen = MultipleChoiceFilter(
+        field_name="is_seen",
+        method="filter_is_seen",
+        choices=[("true", 0), ("false", 1)],
     )
 
     def filter_latest_status(self, queryset, name, value):
@@ -39,6 +56,15 @@ class StudyFilter(FilterSet):
 
     def filter_faculties(self, queryset, name, value):
         return self.filter_select_options(queryset, name, value)
+
+    def filter_is_seen(self, queryset, name, value):
+        match value:
+            case ["true"]:
+                return queryset.filter(is_seen=True)
+            case ["false"]:
+                return queryset.filter(is_seen=False)
+            case _:
+                return queryset
 
     def filter_select_options(self, queryset, name, value):
         """
@@ -71,8 +97,9 @@ class StudyType(GQLListObjectType):
     latest_submission_id = ID(required=True)
     status = Field((GQLSubmissionStatus), required=True)
     actions = List(NonNull(ActionEnum), required=True)
-    status = Field(GQLSubmissionStatus, required=True)
+    statuses = List(NonNull(StatusChangeType), required=True)
     updated_at = DateTime(required=True)
+    is_seen = Boolean()
 
     class Meta:
         model = Study
@@ -114,5 +141,15 @@ class StudyType(GQLListObjectType):
         return study_actions.get_available_actions()
 
     @staticmethod
+    def resolve_statuses(parent: Study, info: ResolveInfo):
+        return parent.status_changes.all()
+
+    @staticmethod
     def resolve_updated_at(parent: Study, info: ResolveInfo) -> datetime:
         return parent.updated_at
+
+    @staticmethod
+    def resolve_is_seen(parent: Study, info: ResolveInfo) -> bool | None:
+        if info.context.user.is_privacy_officer:
+            return parent.is_seen
+        return None

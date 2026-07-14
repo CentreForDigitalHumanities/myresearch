@@ -158,10 +158,17 @@ class Study(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    # Indicate whether Study has been seen by reviewer
+    is_seen = models.BooleanField(default=False)
+
     class Meta:
         verbose_name_plural = "Studies"
 
     objects = StudyManager()
+
+    @staticmethod
+    def can_be_created_by(user):
+        return user.is_authenticated
 
     @property
     def form(self) -> MRForm:

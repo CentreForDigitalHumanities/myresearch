@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { useMutation, useQuery } from "@vue/apollo-composable";
-import { Eye, PencilLine, Trash2 } from "lucide-vue-next";
+import {
+    Eye,
+    PencilLine,
+    RotateCcw,
+    Trash2,
+    SquareCheckBig,
+    SquareDashed,
+} from "lucide-vue-next";
 import type { Component } from "vue";
 import { graphql } from "~/generated/gql";
 import type { GetFirstSlugAndActionsQuery } from "~/generated/gql/graphql";
@@ -53,6 +60,35 @@ const slug = computed<string | null>(() => {
 
 const { t } = useI18n();
 
+const MARK_STUDY_SEEN_MUTATION = graphql(`
+    mutation MarkStudySeen($studyId: ID!, $isSeen: Boolean!) {
+        updateStudySeen(id: $studyId, isSeen: $isSeen) {
+            ok
+            errors {
+                field
+                messages
+            }
+        }
+    }
+`);
+
+const { mutate: markStudySeen } = useMutation(MARK_STUDY_SEEN_MUTATION);
+
+function checkMarkStudySeen(isSeen: boolean): void {
+    markStudySeen({ studyId: props.studyId, isSeen: isSeen })
+        .then((result) => {
+            if (result?.data?.updateStudySeen?.ok) {
+                useNotification(t("Study updated successfully."), "success");
+                location.reload();
+            } else {
+                useNotification(t("Failed to update study."), "danger");
+            }
+        })
+        .catch(() => {
+            useNotification(t("Failed to update study."), "danger");
+        });
+}
+
 const DELETE_STUDY = graphql(`
     mutation StudyDetailDeleteStudy($id: ID!) {
         deleteStudy(id: $id) {
@@ -65,12 +101,62 @@ const DELETE_STUDY = graphql(`
     }
 `);
 
+const CREATE_DRAFT_STATUS_CHANGE = graphql(`
+    mutation StudyDetailReturnToDraft($studyId: ID!) {
+        createDraftStatusChange(studyId: $studyId) {
+            ok
+            errors {
+                field
+                messages
+            }
+        }
+    }
+`);
+
+const { mutate: createDraftStatusChange } = useMutation(
+    CREATE_DRAFT_STATUS_CHANGE,
+);
+
 const { mutate: deleteStudy } = useMutation(DELETE_STUDY, {
     update: (cache) => {
         cache.evict({ fieldName: "studyPages" });
         cache.gc();
     },
 });
+
+function returnToDraft(): void {
+    useConfirm({
+        text: t("Are you sure you want to return this study to draft?"),
+        confirmText: t("Yes"),
+        abortText: t("No"),
+        headerText: t("Confirm return to draft"),
+        callback: () => {
+            createDraftStatusChange({
+                studyId: props.studyId,
+            })
+                .then((result) => {
+                    if (result?.data?.createDraftStatusChange?.ok) {
+                        useNotification(
+                            t("Study returned to draft."),
+                            "success",
+                        );
+                        location.reload();
+                    } else {
+                        useNotification(
+                            t("Failed to return study to draft."),
+                            "danger",
+                        );
+                    }
+                })
+                .catch(() => {
+                    useNotification(
+                        t("Failed to return study to draft."),
+                        "danger",
+                    );
+                });
+        },
+    });
+}
 
 function deleteStudyWithConfirmation(): void {
     useConfirm({
@@ -127,12 +213,39 @@ const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
             });
         },
     },
+    [ActionEnum.ReturnToDraftAction]: {
+        label: t("Return to draft"),
+        icon: RotateCcw,
+        callback: returnToDraft,
+    },
     [ActionEnum.DeleteAction]: {
         label: t("Delete"),
         icon: Trash2,
         callback: deleteStudyWithConfirmation,
         style: {
             "--bs-tiles-hover-bg": "var(--bs-danger)",
+            "--bs-tiles-hover-color": "var(--bs-white)",
+        },
+    },
+    [ActionEnum.MarkSeenAction]: {
+        label: t("Mark as seen"),
+        callback: () => {
+            checkMarkStudySeen(true);
+        },
+        icon: SquareCheckBig,
+        style: {
+            "--bs-tiles-hover-bg": "var(--bs-info)",
+            "--bs-tiles-hover-color": "var(--bs-white)",
+        },
+    },
+    [ActionEnum.MarkUnseenAction]: {
+        label: t("Mark as unseen"),
+        callback: () => {
+            checkMarkStudySeen(false);
+        },
+        icon: SquareDashed,
+        style: {
+            "--bs-tiles-hover-bg": "var(--bs-secondary)",
             "--bs-tiles-hover-color": "var(--bs-white)",
         },
     },
@@ -164,7 +277,7 @@ const availableActions = computed<AvailableAction[]>(() => {
                 style="cursor: pointer"
                 @click.prevent="action.callback"
             >
-                <strong class="text-center">{{ $t(action.label) }}</strong>
+                <strong class="text-center">{{ action.label }}</strong>
                 <component :is="action.icon" v-if="action.icon"> </component>
             </div>
         </div>
