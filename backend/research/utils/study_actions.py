@@ -31,7 +31,7 @@ class StudyActions:
         self.user = user
         self.all_actions = [
             StudyEditAction,
-            StudyDeleteAction, 
+            StudyDeleteAction,
             StudyViewAction,
             ReturnToDraftAction,
             MarkSeenAction,
