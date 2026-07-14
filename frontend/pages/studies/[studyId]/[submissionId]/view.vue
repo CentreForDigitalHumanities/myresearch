@@ -160,9 +160,27 @@ const study = computed(() => studyResult.value?.study ?? null);
         </div>
         <div class="uu-container">
             <div class="col-12">
-                <h1>
-                    {{ study?.reference }} - <em>{{ study?.title }}</em>
-                </h1>
+                <div class="row">
+                    <div class="col-3 d-flex">
+                        <BSButton
+                            variant="primary"
+                            class="btn-arrow-left align-self-center"
+                            @click="
+                                navigateTo({
+                                    name: 'studies-studyId',
+                                    params: { studyId },
+                                })
+                            "
+                        >
+                            {{ $t("Go back to study page") }}
+                        </BSButton>
+                    </div>
+                    <div class="col-9 d-flex">
+                        <h1 class="mb-0">
+                            {{ study?.reference }} - <em>{{ study?.title }}</em>
+                        </h1>
+                    </div>
+                </div>
                 <hr />
                 <OverviewWrapper v-if="form" :queried-form="form" />
                 <div v-else>
