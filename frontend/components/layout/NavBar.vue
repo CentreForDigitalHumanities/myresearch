@@ -112,7 +112,7 @@ function newRegistration(): void {
                     </li>
                     <li>
                         <NuxtLink
-                            to="/notes/FAQ"
+                            to="/notes/faq"
                             class="nav-link"
                             active-class="active"
                         >
