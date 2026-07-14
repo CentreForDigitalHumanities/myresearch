@@ -1,35 +1,15 @@
 import type { UserFormInput } from "~/generated/gql/graphql";
-import type {
-    StepWithValues,
-    SubstepWithValues,
-    QuestionWithValue,
-    FormWithValues,
-} from "~/composables/useProcessForm";
+import type { CombinedStepWithValues } from "~/composables/useProcessForm";
 
 /**
- * Recursively collects all questions from a step and its substeps, and puts them in a flat array.
- */
-function getAllQuestions(
-    step: StepWithValues | SubstepWithValues,
-): QuestionWithValue[] {
-    const ownQuestions = step.questions;
-
-    const subStepQuestions =
-        "substeps" in step
-            ? (step.substeps?.flatMap(getAllQuestions) ?? [])
-            : [];
-
-    return [...ownQuestions, ...subStepQuestions];
-}
-
-/**
- * Utility function to transform our form into the expected input for our mutation.
+ * Utility function to transform the responses of a single step (or substep)
+ * into the expected input for our mutation.
  */
 function useFormDataToMutationInput(
-    formData: FormWithValues,
+    step: CombinedStepWithValues,
     submissionId: string,
 ): UserFormInput {
-    const questions = formData.steps.flatMap(getAllQuestions);
+    const questions = step.questions;
 
     return {
         submissionId: submissionId,
