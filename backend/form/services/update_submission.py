@@ -1,4 +1,5 @@
 from main.models import MRPermission, User
+from graphene_django.types import ErrorType
 from form.models.responses import MRDocument
 from form.mutations.utils.inputs import UserFormInput
 from django.utils import timezone
@@ -42,10 +43,24 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
             f"belonging to user {user} does not exist."
         )
 
+    errors: list[ErrorType] = []
+
     for response in user_form_input.get("responses", []):  # type: ignore
         response_id = response["id"] if "id" in response else None
         # Immediately cut off responses that are not valid.
-        validate_response(response)
+        try:
+            validate_response(response)
+        except Exception as e:
+            errors.append(
+                ErrorType(
+                    field="responses",
+                    messages=[
+                        f"the answer: '{response['answer']['value']}' to question {response['question_id']} caused an exception: {e}"
+                    ],
+                )
+            )
+            continue
+
         if response_id:
             # See if the response already exists
             qr = QuestionResponse.objects.get(id=response["id"])
@@ -79,7 +94,7 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
             new_response.submissions.add(current_submission)
             current_submission.updated_at = timezone.now()
     current_submission.save()
-    return current_submission
+    return current_submission, errors
 
 
 def validate_response(response):

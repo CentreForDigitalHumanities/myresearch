@@ -15,7 +15,7 @@ class TestCreateRevision:
         """Test creation of revision of UserFormSubmission"""
 
         # First update the submission to add responses
-        submission = update_submission(test_user, user_form_input)
+        submission, errors = update_submission(test_user, user_form_input)
 
         submission_revision = create_user_form_revision(submission.id)
 
@@ -28,7 +28,7 @@ class TestCreateRevision:
     def test_update_revision_response(self, test_user, submission, user_form_input):
         """Test updating an answer for revision"""
 
-        submission = update_submission(test_user, user_form_input)
+        submission, errors = update_submission(test_user, user_form_input)
         old_response = QuestionResponse.objects.filter(submissions=submission).first()
 
         submission_revision = create_user_form_revision(submission.id)
@@ -41,7 +41,7 @@ class TestCreateRevision:
         # If we update the revision, but the answer remains the same, the old
         # response should remain intact.
 
-        updated_revision = update_submission(test_user, user_form_input)
+        updated_revision, errors = update_submission(test_user, user_form_input)
 
         assert updated_revision == submission_revision
         assert set(updated_revision.responses.all()) == set(
@@ -53,7 +53,7 @@ class TestCreateRevision:
         self, test_user, submission, user_form_input
     ):
 
-        submission = update_submission(test_user, user_form_input)
+        submission, errors = update_submission(test_user, user_form_input)
         old_response = QuestionResponse.objects.filter(submissions=submission).first()
 
         submission_revision = create_user_form_revision(submission.id)
@@ -65,7 +65,7 @@ class TestCreateRevision:
         new_ans = {"value": "new_answer"}
         user_form_input["responses"][0]["answer"] = new_ans
 
-        updated_revision = update_submission(test_user, user_form_input)
+        updated_revision, errors = update_submission(test_user, user_form_input)
         new_response = QuestionResponse.objects.filter(
             submissions=updated_revision
         ).first()
