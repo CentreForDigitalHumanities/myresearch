@@ -100,7 +100,7 @@ function deleteStudyWithConfirmation(): void {
 
 const actionMap = computed<Record<ActionEnum, AvailableAction>>(() => ({
     [ActionEnum.ViewAction]: {
-        label: t("View overview"),
+        label: t("View"),
         icon: Eye,
         callback: () => {
             void navigateTo({
