@@ -54,4 +54,7 @@ class CreateDraftStatusChange(Mutation):
             created_by=user,
         )
 
+        study.is_seen = False
+        study.save()
+
         return cls(ok=True)
