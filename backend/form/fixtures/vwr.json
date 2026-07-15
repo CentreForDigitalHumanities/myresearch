@@ -1459,8 +1459,8 @@
         "model": "form.selectoption",
         "pk": 87,
         "fields": {
-            "label": "Other abnormal situation (please specify)",
-            "label_en": "Other abnormal situation (please specify)",
+            "label": "Other special situation (please specify)",
+            "label_en": "Other special situation (please specify)",
             "label_nl": "Andere afwijkende situatie (specificeren a.u.b.)",
             "default_selected": false,
             "question": 24,
