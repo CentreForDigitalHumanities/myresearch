@@ -1,6 +1,6 @@
 from django.db.models import QuerySet
 from graphene_django import DjangoObjectType
-from graphene import ResolveInfo, String
+from graphene import Boolean, ResolveInfo, String
 from django.contrib.auth import get_user_model
 
 from main.models import User
@@ -8,6 +8,7 @@ from main.models import User
 
 class UserType(DjangoObjectType):
     full_name = String(required=True)
+    is_privacy_officer = Boolean(required=True)
 
     class Meta:
         model = get_user_model()
@@ -22,3 +23,7 @@ class UserType(DjangoObjectType):
     @staticmethod
     def resolve_full_name(parent: User, info: ResolveInfo) -> str:
         return parent.get_full_name()
+
+    @staticmethod
+    def resolve_is_privacy_officer(parent: User, info: ResolveInfo) -> bool:
+        return parent.is_privacy_officer

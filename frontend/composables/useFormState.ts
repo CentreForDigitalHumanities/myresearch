@@ -35,15 +35,15 @@ export function useFormState(queriedFormRef: Ref<QueriedForm>) {
         };
     }
 
-    // Reprocess form input upon refetching.
+    // Keep the cached form state in sync with the latest query result.
     watch(
-        queriedFormRef,
+        () => queriedFormRef.value,
         (newQueriedForm) => {
             const processed = useProcessForm(newQueriedForm);
             formState.value.formWithValues = processed.formWithValues;
             formState.value.validationRules = processed.validationRules;
         },
-        { deep: true },
+        { deep: true, immediate: true },
     );
 
     return {

@@ -1,4 +1,5 @@
 from main.models import MRPermission, User
+from graphene_django.types import ErrorType
 from form.models.responses import MRDocument
 from form.mutations.utils.inputs import UserFormInput
 from django.utils import timezone
@@ -6,9 +7,6 @@ from form.models import (
     UserFormSubmission,
     QuestionResponse,
     BaseQuestion,
-    TextQuestion,
-    NumberQuestion,
-    DateQuestion,
 )
 
 
@@ -25,7 +23,9 @@ def _delete_document_if_cleared(old_answer: dict, new_answer: dict) -> None:
             pass
 
 
-def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSubmission:
+def update_submission(
+    user: User, user_form_input: UserFormInput
+) -> tuple[UserFormSubmission, list[ErrorType]]:
     # Usually we can use user_form_input.submission_id or getattr(user_form_input, "submission_id").
     # This breaks the tests, however, where user_form_input is mocked as a dict.
     # That is why we use .get() here, which handles both cases.
@@ -42,10 +42,25 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
             f"belonging to user {user} does not exist."
         )
 
+    errors: list[ErrorType] = []
+
     for response in user_form_input.get("responses", []):  # type: ignore
         response_id = response["id"] if "id" in response else None
-        # Immediately cut off responses that are not valid.
-        validate_response(response)
+
+        try:
+            validate_response(response)
+        except Exception as e:
+            # if responses cause an error, add an error to the mutation's response
+            question_id = response.get("question_id", "<unknown>")
+            errors.append(
+                ErrorType(
+                    field="responses",
+                    messages=[f"Invalid response for question {question_id}: {e}"],
+                )
+            )
+            # We don't save responses that do not pass validation
+            continue
+
         if response_id:
             # See if the response already exists
             qr = QuestionResponse.objects.get(id=response["id"])
@@ -79,30 +94,11 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
             new_response.submissions.add(current_submission)
             current_submission.updated_at = timezone.now()
     current_submission.save()
-    return current_submission
+    return current_submission, errors
 
 
 def validate_response(response):
     """Backend validation incase malicious responses. Under normal circumstances all validations are already checked in the frontend"""
-    question_id = response["question_id"]
-    answer = response["answer"]
-    value = answer["value"]
-    question = get_question(question_id)
+    question = BaseQuestion.objects.get(id=response["question_id"]).get_subclass()
     # validate will throw an error in case of wrong input.
-    # question.validate(value)
-
-
-def get_question(
-    question_id: int,
-) -> BaseQuestion | NumberQuestion | TextQuestion | DateQuestion:
-    """Searches child models of BaseQuestion and returns the appropriate question"""
-    # This answer will always be the same in the current form version.
-    # We might want to consider caching in the future.
-    if TextQuestion.objects.filter(id=question_id).exists():
-        return TextQuestion.objects.get(id=question_id)
-    elif NumberQuestion.objects.filter(id=question_id).exists():
-        return NumberQuestion.objects.get(id=question_id)
-    elif DateQuestion.objects.filter(id=question_id).exists():
-        return DateQuestion.objects.get(id=question_id)
-    else:
-        return BaseQuestion.objects.get(id=question_id)
+    question.validate(response["answer"]["value"])
