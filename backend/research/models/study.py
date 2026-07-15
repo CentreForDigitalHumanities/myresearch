@@ -22,12 +22,14 @@ class StudyManager(BaseMRManager):
     def _deletable_objects(self, user: User):
         queryset = self.filter(is_deleted=False)
 
-        # POs and FETC members can only (soft) delete submitted studies.
+        # POs and FETC members can only (soft) delete submitted studies or
+        # (hard) delete their own never submitted studies
         if user.is_privacy_officer or user.is_fetc_member:
-            return self.with_has_been_submitted_annotation(queryset).filter(
-                has_been_submitted=True
+            return queryset.filter(has_been_submitted=True) | queryset.filter(
+                created_by=user, has_been_submitted=False
             )
-        return queryset.filter(created_by=user)
+        # Normal users can only (hard) delete studies they've created, that have never been submitted
+        return queryset.filter(created_by=user, has_been_submitted=False)
 
     def get_queryset(self):
         queryset = super().get_queryset()
