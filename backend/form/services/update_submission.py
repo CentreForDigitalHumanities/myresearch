@@ -49,12 +49,11 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
             validate_response(response)
         except Exception as e:
             # if responses cause an error, add an error to the mutation's response
+            question_id = response.get("question_id", "<unknown>")
             errors.append(
                 ErrorType(
                     field="responses",
-                    messages=[
-                        f"the answer: '{response['answer']['value']}' to question {response['question_id']} caused an exception: {e}"
-                    ],
+                    messages=[f"Invalid response for question {question_id}: {e}"],
                 )
             )
             # We don't save responses that do not pass validation
