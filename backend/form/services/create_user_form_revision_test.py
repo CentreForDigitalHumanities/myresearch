@@ -70,6 +70,7 @@ class TestCreateRevision:
         user_form_input["responses"][0]["answer"] = new_ans
 
         updated_revision, errors = update_submission(test_user, user_form_input)
+        assert errors == []
         new_response = QuestionResponse.objects.filter(
             submissions=updated_revision
         ).first()
