@@ -35,7 +35,7 @@ export function useFormState(queriedFormRef: Ref<QueriedForm>) {
         };
     }
 
-    // Reprocess form input upon refetching - never cache, always use current query
+    // Keep the cached form state in sync with the latest query result.
     watch(
         () => queriedFormRef.value,
         (newQueriedForm) => {
