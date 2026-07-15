@@ -44,10 +44,11 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
 
     for response in user_form_input.get("responses", []):  # type: ignore
         response_id = response["id"] if "id" in response else None
-        # Immediately cut off responses that are not valid.
+
         try:
             validate_response(response)
         except Exception as e:
+            # if responses cause an error, add an error to the mutation's response
             errors.append(
                 ErrorType(
                     field="responses",
@@ -56,6 +57,7 @@ def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSub
                     ],
                 )
             )
+            # We don't save responses that do not pass validation
             continue
 
         if response_id:
