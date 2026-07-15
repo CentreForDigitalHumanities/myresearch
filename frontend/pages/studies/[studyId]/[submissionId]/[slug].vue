@@ -10,9 +10,9 @@ const form = useFormQuery(submissionId, "Edit");
 
 <template>
     <div class="uu-content">
-        <Title>{{ $t("Processing Registry") }}</Title>
+        <Title>{{ $t("Processing Register") }}</Title>
         <div class="uu-hero">
-            <h1>{{ $t("Processing Registry") }}</h1>
+            <h1>{{ $t("Processing Register") }}</h1>
         </div>
         <div class="uu-container">
             <FormWrapper
