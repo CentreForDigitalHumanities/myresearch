@@ -429,6 +429,7 @@ class TestDeleteStudyMutation:
 
         result = self._execute(normal_user, test_study.pk)
 
+        assert not result.errors
         assert result.data
         assert result.data["deleteStudy"]["ok"] is False
         assert result.data["deleteStudy"]["errors"]
