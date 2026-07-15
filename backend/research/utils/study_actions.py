@@ -31,11 +31,11 @@ class StudyActions:
         self.user = user
         self.all_actions = [
             StudyEditAction,
-            StudyDeleteAction,
             StudyViewAction,
             ReturnToDraftAction,
             MarkSeenAction,
             MarkUnseenAction,
+            StudyDeleteAction,
         ]
 
     def get_available_actions(self) -> list[ActionEnum]:

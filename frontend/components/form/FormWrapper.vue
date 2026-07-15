@@ -72,8 +72,13 @@ function submitForm(options = { submit: false }): void {
         }
     }
 
+    const step = selectedStep.value;
+    if (!step) {
+        return;
+    }
+
     const inputData = useFormDataToMutationInput(
-        formData,
+        step,
         props.queriedForm.submissionId,
     );
 

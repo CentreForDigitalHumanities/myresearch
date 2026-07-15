@@ -13,7 +13,8 @@ class TestUpdateSubmission:
     def test_update_response(self, test_user, user_form_input):
         """Test updating an answer"""
 
-        submission = update_submission(test_user, user_form_input)
+        submission, errors = update_submission(test_user, user_form_input)
+        assert errors == []
         response = QuestionResponse.objects.filter(submissions=submission).first()
 
         new_ans = {"value": "new_answer"}
@@ -25,7 +26,7 @@ class TestUpdateSubmission:
         old_ans = response.answer
         old_response_id = response.id
 
-        submission = update_submission(test_user, user_form_input)
+        submission, errors = update_submission(test_user, user_form_input)
         response = QuestionResponse.objects.filter(submissions=submission).first()
 
         assert submission.responses.count() == 1
