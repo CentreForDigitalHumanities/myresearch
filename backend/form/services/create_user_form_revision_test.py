@@ -44,6 +44,7 @@ class TestCreateRevision:
         # response should remain intact.
 
         updated_revision, errors = update_submission(test_user, user_form_input)
+        assert errors == []
 
         assert updated_revision == submission_revision
         assert set(updated_revision.responses.all()) == set(
