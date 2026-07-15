@@ -16,6 +16,7 @@ class TestCreateRevision:
 
         # First update the submission to add responses
         submission, errors = update_submission(test_user, user_form_input)
+        assert errors == []
 
         submission_revision = create_user_form_revision(submission.id)
 
@@ -29,6 +30,7 @@ class TestCreateRevision:
         """Test updating an answer for revision"""
 
         submission, errors = update_submission(test_user, user_form_input)
+        assert errors == []
         old_response = QuestionResponse.objects.filter(submissions=submission).first()
 
         submission_revision = create_user_form_revision(submission.id)
@@ -42,6 +44,7 @@ class TestCreateRevision:
         # response should remain intact.
 
         updated_revision, errors = update_submission(test_user, user_form_input)
+        assert errors == []
 
         assert updated_revision == submission_revision
         assert set(updated_revision.responses.all()) == set(
@@ -54,6 +57,7 @@ class TestCreateRevision:
     ):
 
         submission, errors = update_submission(test_user, user_form_input)
+        assert errors == []
         old_response = QuestionResponse.objects.filter(submissions=submission).first()
 
         submission_revision = create_user_form_revision(submission.id)
@@ -66,6 +70,7 @@ class TestCreateRevision:
         user_form_input["responses"][0]["answer"] = new_ans
 
         updated_revision, errors = update_submission(test_user, user_form_input)
+        assert errors == []
         new_response = QuestionResponse.objects.filter(
             submissions=updated_revision
         ).first()

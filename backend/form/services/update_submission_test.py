@@ -14,6 +14,7 @@ class TestUpdateSubmission:
         """Test updating an answer"""
 
         submission, errors = update_submission(test_user, user_form_input)
+        assert errors == []
         response = QuestionResponse.objects.filter(submissions=submission).first()
 
         new_ans = {"value": "new_answer"}
