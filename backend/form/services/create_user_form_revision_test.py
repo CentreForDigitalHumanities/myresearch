@@ -16,6 +16,7 @@ class TestCreateRevision:
 
         # First update the submission to add responses
         submission, errors = update_submission(test_user, user_form_input)
+        assert errors == []
 
         submission_revision = create_user_form_revision(submission.id)
 
