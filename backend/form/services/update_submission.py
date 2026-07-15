@@ -23,7 +23,9 @@ def _delete_document_if_cleared(old_answer: dict, new_answer: dict) -> None:
             pass
 
 
-def update_submission(user: User, user_form_input: UserFormInput) -> UserFormSubmission:
+def update_submission(
+    user: User, user_form_input: UserFormInput
+) -> tuple[UserFormSubmission, list[ErrorType]]:
     # Usually we can use user_form_input.submission_id or getattr(user_form_input, "submission_id").
     # This breaks the tests, however, where user_form_input is mocked as a dict.
     # That is why we use .get() here, which handles both cases.
