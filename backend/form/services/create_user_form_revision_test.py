@@ -30,6 +30,7 @@ class TestCreateRevision:
         """Test updating an answer for revision"""
 
         submission, errors = update_submission(test_user, user_form_input)
+        assert errors == []
         old_response = QuestionResponse.objects.filter(submissions=submission).first()
 
         submission_revision = create_user_form_revision(submission.id)
