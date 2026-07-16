@@ -3,6 +3,9 @@ import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
 import type { GetNoteQuery } from "~/generated/gql/graphql";
 import { useStepSlug } from "~/composables/useRouteParams";
+definePageMeta({
+    public: true,
+});
 
 const GET_NOTE = graphql(`
     query getNote($slug: ID!) {
