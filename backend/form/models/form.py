@@ -74,7 +74,10 @@ class StepInfoText(models.Model):
 
 class StepInfo(models.Model):
     step = models.ForeignKey(
-        Step, on_delete=models.CASCADE, related_name="info"
+        Step, on_delete=models.CASCADE, related_name="step_infos"
     )
     text = models.CharField(max_length=200)
     content = models.TextField()
+
+    class Meta:
+        order_with_respect_to = "step"

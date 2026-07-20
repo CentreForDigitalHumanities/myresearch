@@ -73,16 +73,6 @@ class SubstepInline(TinyMCETextFieldMixin, admin.StackedInline):
     verbose_name = "Substep"
     verbose_name_plural = "Substeps"
 
-
-class StepInfoTextInline(
-    TinyMCETextFieldMixin,
-    admin.StackedInline,
-):
-    model = StepInfoText
-    extra = 0
-    fields = ("text_en", "text_nl")
-
-
 class SelectOptionInline(admin.TabularInline):
     model = SelectOption
     extra = 0
@@ -262,10 +252,16 @@ class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                 "description": "Set the display order of substeps. Use the substep IDs shown in the Substeps inline below.",
             },
         ),
+        (
+            "Step Info Order",
+            {
+                "fields": ("step_info_order",),
+                "description": "Set the display order of step info. Use the substep IDs shown below.",
+            },
+        ),
     )
     inlines = [
         SubstepInline,
-        StepInfoTextInline,
         QuestionInline,
         StepConditionInline,
     ]
