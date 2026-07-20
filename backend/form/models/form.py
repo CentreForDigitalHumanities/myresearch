@@ -71,3 +71,10 @@ class StepInfoText(models.Model):
         Step, on_delete=models.CASCADE, related_name="info_text"
     )
     text = models.TextField()
+
+class StepInfo(models.Model):
+    step = models.ForeignKey(
+        Step, on_delete=models.CASCADE, related_name="info"
+    )
+    text = models.CharField(max_length=200)
+    content = models.TextField()

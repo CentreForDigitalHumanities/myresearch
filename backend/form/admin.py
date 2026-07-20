@@ -7,6 +7,7 @@ from form.forms import StepAdminForm, SelectQuestionAdminForm
 from .models import (
     MRForm,
     Step,
+    StepInfo,
     StepInfoText,
     BaseQuestion,
     SelectQuestion,
@@ -290,6 +291,13 @@ class StepInfoTextAdmin(
         return obj.text[:50] + "..." if len(obj.text) > 50 else obj.text
 
     short_text.short_description = "Text"
+
+@admin.register(StepInfo)
+class StepInfoAdmin(TinyMCETextFieldMixin,admin.ModelAdmin):
+    list_display = ("step", "text_nl", "text_en")
+    list_filter = ("step",)
+    search_fields = ("text_nl", "text_en")
+    fields = ["step","text_nl", "text_en","content_nl", "content_en",]
 
 
 # Question admins

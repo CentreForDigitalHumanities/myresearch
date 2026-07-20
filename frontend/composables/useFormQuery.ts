@@ -21,6 +21,7 @@ const GET_FORM = graphql(`
                 descriptionNl
                 isOverview
                 ...FormInfoFragment
+                ...StepInfoFragment
                 questions {
                     questionId
                     repeatIndex
