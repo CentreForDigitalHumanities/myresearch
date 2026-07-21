@@ -251,7 +251,7 @@ function navigateToSlug(slug: string) {
             :stepper-config="formStepperConfig"
             @step-clicked="navigateToSlug"
         />
-        <div class="col-12 col-lg-11">
+        <div>
             <form class="uu-form">
                 <h2>{{ useTranslateableAttribute(selectedStep, "name") }}</h2>
                 <div
