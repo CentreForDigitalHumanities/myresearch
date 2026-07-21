@@ -72,7 +72,9 @@ useWatchQuestions(watchedQuestions, () => {
                 </div>
             </div>
         </div>
-        <FormSideBar :step="step" />
+        <aside class="uu-sidebar pe-3">
+            <FormSideBar :step="step" />
+        </aside>
     </div>
 </template>
 

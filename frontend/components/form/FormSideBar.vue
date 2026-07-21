@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { graphql, useFragment, type FragmentType } from "~/generated/gql";
+import { computed } from "vue";
 
 const StepInfoFragment = graphql(`
     fragment StepInfoFragment on StepType {
@@ -20,27 +21,55 @@ const props = defineProps<{
 const stepInfo = computed(
     () => useFragment(StepInfoFragment, props.step).stepInfo,
 );
+
+const uniquePageAccordionKey = computed(() => "additionalInfo");
 </script>
 <template>
-    <div class="uu-form-help">
-        <div v-if="stepInfo?.length !== 0" class="help-item">
-            <strong>{{ $t("Additional Information") }}</strong>
-            <div v-for="qa in stepInfo" :key="qa.id">
-                <details>
-                    <summary>
-                        {{ useTranslateableAttribute(qa, "text") }}
-                    </summary>
+    <div v-if="stepInfo?.length !== 0">
+        <strong>{{ $t("Additional Information") }}</strong>
+        <div
+            :id="'accordion' + uniquePageAccordionKey"
+            class="accordion mw-100"
+        >
+            <div
+                v-for="(info, index) in stepInfo"
+                :key="uniquePageAccordionKey + index"
+                class="mw-100"
+            >
+                <div class="accordion-item mw-100">
+                    <h2 class="accordion-header">
+                        <button
+                            class="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            :data-bs-target="
+                                '#collapse' + uniquePageAccordionKey + index
+                            "
+                            aria-expanded="false"
+                            :aria-controls="
+                                'collapse' + uniquePageAccordionKey + index
+                            "
+                        >
+                            {{ useTranslateableAttribute(info, "text") }}
+                        </button>
+                    </h2>
                     <div
-                        v-html="useTranslateableAttribute(qa, 'content')"
-                    ></div>
-                </details>
+                        :id="'collapse' + uniquePageAccordionKey + index"
+                        class="accordion-collapse collapse mw-100"
+                        :data-bs-parent="'#accordion' + uniquePageAccordionKey"
+                    >
+                        <div class="accordion-body mw-100">
+                            <div
+                                v-html="
+                                    useTranslateableAttribute(info, 'content')
+                                "
+                            ></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
-<style lang="scss" scoped>
-.help-item:not(:last-child) {
-    margin-bottom: 2rem;
-}
-</style>
+<style lang="scss" scoped></style>
