@@ -238,11 +238,7 @@ class StepAdminForm(ModelForm):
 
         # Validate that the provided IDs exist.
         available_ids = [step_info.id for step_info in self.instance.step_infos.all()]
-        invalid_ids = [
-            idee
-            for idee in requested_order
-            if idee not in available_ids
-        ]
+        invalid_ids = [idee for idee in requested_order if idee not in available_ids]
 
         if invalid_ids:
             raise ValidationError(

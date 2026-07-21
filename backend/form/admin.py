@@ -73,6 +73,7 @@ class SubstepInline(TinyMCETextFieldMixin, admin.StackedInline):
     verbose_name = "Substep"
     verbose_name_plural = "Substeps"
 
+
 class SelectOptionInline(admin.TabularInline):
     model = SelectOption
     extra = 0
@@ -288,12 +289,19 @@ class StepInfoTextAdmin(
 
     short_text.short_description = "Text"
 
+
 @admin.register(StepInfo)
-class StepInfoAdmin(TinyMCETextFieldMixin,admin.ModelAdmin):
+class StepInfoAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     list_display = ("step", "text_nl", "text_en")
     list_filter = ("step",)
     search_fields = ("text_nl", "text_en")
-    fields = ["step","text_nl", "text_en","content_nl", "content_en",]
+    fields = [
+        "step",
+        "text_nl",
+        "text_en",
+        "content_nl",
+        "content_en",
+    ]
 
 
 # Question admins

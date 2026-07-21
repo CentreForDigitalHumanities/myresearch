@@ -15,6 +15,7 @@ from .models import (
     TrueFalseQuestion,
 )
 
+
 @register(MRForm)
 class MRFormTranslationOptions(TranslationOptions):
     fields = ["name"]
@@ -29,9 +30,11 @@ class StepTranslationOptions(TranslationOptions):
 class FormInfoTextTranslationOptions(TranslationOptions):
     fields = ["text"]
 
+
 @register(StepInfo)
 class StepInfoTranslationOptions(TranslationOptions):
     fields = ["text", "content"]
+
 
 @register(BaseQuestion)
 class BaseQuestionTranslationOptions(TranslationOptions):
