@@ -58,5 +58,5 @@ class StepType(ObjectType):
             return None
         try:
             return StepInfo.objects.filter(step_id=parent.step_id)
-        except StepInfoText.DoesNotExist:
+        except StepInfo.DoesNotExist:
             return None
