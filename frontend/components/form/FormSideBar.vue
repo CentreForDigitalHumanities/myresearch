@@ -1,16 +1,6 @@
 <script lang="ts" setup>
 import { graphql, useFragment, type FragmentType } from "~/generated/gql";
 
-const FormInfoFragment = graphql(`
-    fragment FormInfoFragment on StepType {
-        infoText {
-            id
-            textNl
-            textEn
-        }
-    }
-`);
-
 const StepInfoFragment = graphql(`
     fragment StepInfoFragment on StepType {
         stepInfo {

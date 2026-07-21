@@ -2721,6 +2721,62 @@
         }
     },
     {
+        "model": "form.stepinfo",
+        "pk": 6,
+        "fields": {
+            "step": 1,
+            "text": "What do we mean by 'a study'?",
+            "text_en": "What do we mean by 'a study'?",
+            "text_nl": "Wat verstaan we onder een studie?",
+            "content": "<p>The definition of a study can be found in de <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>",
+            "content_en": "<p>The definition of a study can be found in de <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>",
+            "content_nl": "<p>Definitie studie is te vinden op de <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>",
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.stepinfo",
+        "pk": 7,
+        "fields": {
+            "step": 1,
+            "text": "What will the specified name be used for?",
+            "text_en": "What will the specified name be used for?",
+            "text_nl": "Wordt de naam die ik opgeef vaker gebruikt?",
+            "content": "<p>This name will be used in all formal correspondence.</p>",
+            "content_en": "<p>This name will be used in all formal correspondence.</p>",
+            "content_nl": "<p>Deze naam zal worden gebruikt in alle formele correspondentie.</p>",
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.stepinfo",
+        "pk": 8,
+        "fields": {
+            "step": 1,
+            "text": "What happens to the data I enter?",
+            "text_en": "What happens to the data I enter?",
+            "text_nl": "Wat gebeurt er met de data die ik invoer?",
+            "content": "<p>The data that you enter will be checked where needed completed by the privary officer. As soon as all data have correctly been registered, your registration in the processing register is legally valid. This registration can be viewed by the management of your faculty, by the co-researchers that you yourself have added, by the data protection officer and by the privacy officier. If needed, the registration can be reopended by you or by the privacy officier.</p>",
+            "content_en": "<p>The data that you enter will be checked where needed completed by the privary officer. As soon as all data have correctly been registered, your registration in the processing register is legally valid. This registration can be viewed by the management of your faculty, by the co-researchers that you yourself have added, by the data protection officer and by the privacy officier. If needed, the registration can be reopended by you or by the privacy officier.</p>",
+            "content_nl": "<p>De data die je invoert, worden gecontroleerd en waar nodig aangevuld door de privacy officer. Zodra alle data naar behoren zijn ingevuld, is er sprake van een rechtsgeldige registratie in het verwerkingsregister. Deze registratie kan in ieder geval worden ingezien door het management van je faculteit, door de collega-onderzoekers die je zelf opgeeft, door de functionaris voor gegevensbescherming en door de privacy officers van de UU. Indien nodig kan de registratie door jou of de privacy officer worden heropend om wijzigingen aan te brengen.</p>",
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.stepinfo",
+        "pk": 9,
+        "fields": {
+            "step": 1,
+            "text": "I already entered this information in another place. Why do I have to enter it again?",
+            "text_en": "I already entered this information in another place. Why do I have to enter it again?",
+            "text_nl": "Ik heb deze informatie al ergens anders opgegeven. Waarom wordt dit hier weer gevraagd?",
+            "content": "<p>Often multiple applications demand entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this register will be extended with data required for assessment by the FEtC-H. Data will then need to be entered only once.</p>",
+            "content_en": "<p>Often multiple applications demand entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this register will be extended with data required for assessment by the FEtC-H. Data will then need to be entered only once.</p>",
+            "content_nl": "<p>Vaak moet je voor verschillende toepassingen dezelfde gegevens opgeven. We streven ernaar om dergelijk dubbel werk zo veel mogelijk te beperken. Met dit register zijn we echter nog niet zo ver. In de toekomst worden de in te vullen data uitgebreid met data die nodig zijn voor toetsing door de FETC. Gegevens hoef je dan nog maar &eacute;&eacute;n keer op te geven.</p>",
+            "_order": 3
+        }
+    },
+    {
         "model": "form.stepinfotext",
         "pk": 1,
         "fields": {
