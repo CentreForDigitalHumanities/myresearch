@@ -2960,11 +2960,19 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "infoText",
+              "name": "stepInfo",
               "type": {
-                "kind": "OBJECT",
-                "name": "StepInfoTextType",
-                "ofType": null
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "StepInfoType",
+                    "ofType": null
+                  }
+                }
               }
             }
           ],
@@ -3017,12 +3025,36 @@
                 "name": "String",
                 "ofType": null
               }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "contentEn",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "contentNl",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             }
           ],
           "inputFields": null,
           "interfaces": [],
           "kind": "OBJECT",
-          "name": "StepInfoTextType",
+          "name": "StepInfoType",
           "possibleTypes": null
         },
         {
