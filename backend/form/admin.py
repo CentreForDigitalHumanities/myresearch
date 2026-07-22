@@ -8,7 +8,6 @@ from .models import (
     MRForm,
     Step,
     StepInfo,
-    StepInfoText,
     BaseQuestion,
     SelectQuestion,
     SelectOption,
@@ -273,21 +272,6 @@ class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
         return "-"
 
     created_at_display.short_description = "Info"
-
-
-@admin.register(StepInfoText)
-class StepInfoTextAdmin(
-    TinyMCETextFieldMixin,
-    admin.ModelAdmin,
-):
-    list_display = ("short_text", "step")
-    list_filter = ("step",)
-    search_fields = ("text",)
-
-    def short_text(self, obj):
-        return obj.text[:50] + "..." if len(obj.text) > 50 else obj.text
-
-    short_text.short_description = "Text"
 
 
 @admin.register(StepInfo)

@@ -66,12 +66,6 @@ class Step(models.Model):
         return f"{self.name} ({self.pk})"
 
 
-class StepInfoText(models.Model):
-    step = models.OneToOneField(
-        Step, on_delete=models.CASCADE, related_name="info_text"
-    )
-    text = models.TextField()
-
 
 class StepInfo(models.Model):
     step = models.ForeignKey(Step, on_delete=models.CASCADE, related_name="step_infos")
