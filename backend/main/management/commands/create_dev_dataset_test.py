@@ -11,14 +11,14 @@ from research.models.study import YearCounter
 from form.models import (
     QuestionCondition,
     StepCondition,
-    StepInfoText,
+    StepInfo,
 )
 
 # Add models here that should be excluded from the completeness check. These
 # are models that are not essential for the dev dataset or are difficult to
 # generate automatically.
 EXCLUDED_MODELS_FOR_COMPLETENESS_CHECK: list[Type[Model]] = [
-    StepInfoText,
+    StepInfo,
     StepCondition,
     QuestionCondition,
     Review,
