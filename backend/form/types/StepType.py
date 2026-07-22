@@ -41,7 +41,6 @@ class StepType(ObjectType):
         required=False,
     )
 
-
     @staticmethod
     def resolve_step_info(parent, info: ResolveInfo) -> QuerySet[StepInfo] | None:
         if not parent.step_id:

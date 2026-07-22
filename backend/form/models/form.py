@@ -66,7 +66,6 @@ class Step(models.Model):
         return f"{self.name} ({self.pk})"
 
 
-
 class StepInfo(models.Model):
     step = models.ForeignKey(Step, on_delete=models.CASCADE, related_name="step_infos")
     text = models.CharField(max_length=200)
