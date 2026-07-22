@@ -11,12 +11,11 @@ from form.services.form_evaluator import FormEvaluator
 from research.models.reviews import StatusChange, SubmissionStatus
 from research.models.study import Study
 from main.models import User
-from notes.models import Note
 from form.models import (
     MRForm,
     QuestionResponse,
     Step,
-    StepInfoText,
+    StepInfo,
     FileUploadQuestion,
     NumberQuestion,
     DateQuestion,
@@ -207,10 +206,12 @@ class Command(BaseCommand):
             return
 
         for _ in range(self.faker.random_int(1, 3)):
-            StepInfoText.objects.create(
+            StepInfo.objects.create(
                 step=step,
-                text_nl=f"<p>{self.faker_nl.paragraph()}</p>",
-                text_en=f"<p>{self.faker_en.paragraph()}</p>",
+                text_nl=self.faker_nl.sentence().replace(".", "?"),
+                text_en=self.faker_en.sentence().replace(".", "?"),
+                content_nl=f"<p>{self.faker_nl.paragraph()}</p>",
+                content_en=f"<p>{self.faker_en.paragraph()}</p>",
             )
 
     def _generate_questions(self, options, form: MRForm) -> None:
