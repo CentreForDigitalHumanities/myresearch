@@ -3062,9 +3062,9 @@
             "text": "Who/what are recipients?",
             "text_en": "Who/what are recipients?",
             "text_nl": "Wie/wat zijn ontvangers?",
-            "content": "<p>Recipients are people who want to use the personal data for their own different research goal. (meaning, a different purpose-binding when it comes to the GDPR).</p>",
-            "content_en": "<p>Recipients are people who want to use the personal data for their own different research goal. (meaning, a different purpose-binding when it comes to the GDPR).</p>",
-            "content_nl": "<p>Ontvangers zijn mensen die de persoonsgegevens voor een eigen, andere, onderzoeksvraag willen verwerken (d.w.z. die een andere doelbinding hebben in de zin van de AVG).</p>",
+            "content": "<p>A recipient is a person or an organization that receives personal data from another organization and that has its own purposes for receiving and further processing that personal data. Example: as a researcher, you provide data (including personal data) to another university that will use it for their own research. Another example: you make your research data available to a national archive.&nbsp;</p>",
+            "content_en": "<p>A recipient is a person or an organization that receives personal data from another organization and that has its own purposes for receiving and further processing that personal data. Example: as a researcher, you provide data (including personal data) to another university that will use it for their own research. Another example: you make your research data available to a national archive.&nbsp;</p>",
+            "content_nl": "<p>Een ontvanger is een persoon of organisatie die persoonsgegevens ontvangt van een andere organisatie en die voor het ontvangen en verder verwerken van die persoonsgegevens eigen doelstellingen heeft. Voorbeeld: als onderzoeker verstrek jij data (inclusief persoonsgegevens) aan een andere universiteit die er zelf onderzoek mee gaat doen. Ander voorbeeld: je stelt je onderzoeksdata beschikbaar aan een nationaal archief.&nbsp;</p>",
             "_order": 0
         }
     },
@@ -3318,6 +3318,34 @@
             "content_en": "<p>If one department within an organization processes personal data that is also of interest to another department, but it is definitely not intended for that other department to see that data, management can impose a formal prohibition on that other department. In this way, the data is shielded internally within the organization. This is called a Chinese wall.&nbsp;</p>",
             "content_nl": "<p>Als de ene afdeling binnen een organisatie persoonsgegevens verwerkt die ook interessant zijn voor een andere afdeling, maar het is beslist niet de bedoeling dat die andere afdeling die gegevens te zien krijgt, kan het management die andere afdeling een formeel verbod opleggen. Op die manier worden de gegevens intern binnen de organisatie afgeschermd. Dit wordt een Chinese wall genoemd.&nbsp;</p>",
             "_order": 6
+        }
+    },
+    {
+        "model": "form.stepinfo",
+        "pk": 48,
+        "fields": {
+            "step": 9,
+            "text": "Why is the recipient\u2019s country important?",
+            "text_en": "Why is the recipient\u2019s country important?",
+            "text_nl": "Waarom is het land van de ontvanger van belang?",
+            "content": "<p>Personal data may only be shared with recipients in countries that offer an adequate level of data protection. The EU countries, Norway, Iceland, and Switzerland (together the EEA) meet this requirement. Some other countries do as well. Arrangements must be made for transfers to countries that do not meet this requirement. For transfers to countries outside the EEA, please contact the privacy officer: <a href=\"mailto:privacy.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.gw@uu.nl</a> or <a href=\"mailto:privacy.rebo@uu.nl%20\" target=\"_blank\" rel=\"noopener\">privacy.rebo@uu.nl</a></p>",
+            "content_en": "<p>Personal data may only be shared with recipients in countries that offer an adequate level of data protection. The EU countries, Norway, Iceland, and Switzerland (together the EEA) meet this requirement. Some other countries do as well. Arrangements must be made for transfers to countries that do not meet this requirement. For transfers to countries outside the EEA, please contact the privacy officer: <a href=\"mailto:privacy.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.gw@uu.nl</a> or <a href=\"mailto:privacy.rebo@uu.nl%20\" target=\"_blank\" rel=\"noopener\">privacy.rebo@uu.nl</a></p>",
+            "content_nl": "<p>Persoonsgegevens mogen alleen worden gedeeld met ontvangers in landen die een afdoende niveau van gegevensbescherming bieden. De EU-landen, Noorwegen, IJsland en Zwitserland (samen de EER) voldoen aan deze eis. Sommige andere landen ook. Voor doorgifte aan landen die niet aan deze eis voldoen, moet er iets geregeld worden. Neem voor doorgifte aan landen buiten de EER contact op met de privacy officer: <a href=\"mailto:privacy.gw@uu.nl\">privacy.gw@uu.nl</a> of <a href=\"mailto:privacy.rebo@uu.nl%20\">privacy.rebo@uu.nl</a></p>",
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.stepinfo",
+        "pk": 49,
+        "fields": {
+            "step": 9,
+            "text": "What is the basis for transfer?",
+            "text_en": "What is the basis for transfer?",
+            "text_nl": "Wat is de basis voor doorgifte?",
+            "content": "<p>The transfer of personal data to countries other than the EU countries, Norway, Iceland, and Switzerland (together the EEA) is prohibited in principle, but there are several exceptions to make it possible. Discuss with the privacy officer (<a href=\"mailto:privacy.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.gw@uu.nl</a> or <a href=\"mailto:privacy.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.rebo@uu.nl</a>) &nbsp;which exception applies to you.</p>",
+            "content_en": "<p>The transfer of personal data to countries other than the EU countries, Norway, Iceland, and Switzerland (together the EEA) is prohibited in principle, but there are several exceptions to make it possible. Discuss with the privacy officer (<a href=\"mailto:privacy.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.gw@uu.nl</a> or <a href=\"mailto:privacy.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.rebo@uu.nl</a>) &nbsp;which exception applies to you.</p>",
+            "content_nl": "<p>Doorgifte van persoonsgegevens naar andere landen dan de EU-landen, Noorwegen, IJsland en Zwitserland (samen de EER) is in beginsel verboden, maar daarop gelden verschillende uitzonderingen. Bespreek met de privacy officer (<a href=\"mailto:privacy.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.gw@uu.nl</a> of <a href=\"mailto:privacy.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.rebo@uu.nl</a>) welke uitzondering voor jou in aanmerking komt.</p>",
+            "_order": 3
         }
     },
     {
