@@ -3129,12 +3129,12 @@
         "pk": 34,
         "fields": {
             "step": 11,
-            "text": "Which security measures are in place at UU?",
-            "text_en": "Which security measures are in place at UU?",
-            "text_nl": "Welke beveiligingsmaatregelen zijn er bij de UU?",
-            "content": "<p>The UU has a large number of technical and organizational measures to increase the security of personal data. For instance, the technical infrastructure has multiple security measures, such as multi-factor authentication, firewalls and anti-virus software. Binding agreements with IT providers have also been signed to protect personal data.</p>",
-            "content_en": "<p>The UU has a large number of technical and organizational measures to increase the security of personal data. For instance, the technical infrastructure has multiple security measures, such as multi-factor authentication, firewalls and anti-virus software. Binding agreements with IT providers have also been signed to protect personal data.</p>",
-            "content_nl": "<p>De UU heeft een groot aantal technische en organisatorische maatregelen getroffen om de beveiliging van persoonsgegevens te verhogen. Zo is de technische infrastructuur op een veelheid aan manieren beveiligd (denk aan multi-factor authenticatie, firewalls en antivirussoftware) en zijn er bindende overeenkomsten gesloten om de leveranciers van IT-diensten te dwingen de bescherming van persoonsgegevens te waarborgen.</p>",
+            "text": "What security measures are standard at the UU?",
+            "text_en": "What security measures are standard at the UU?",
+            "text_nl": "Welke beveiligingsmaatregelen zijn er standaard bij de UU?",
+            "content": "<p>The UU has taken a large number of technical and organizational measures to increase the security of personal data. For example, the technical infrastructure is secured in a multitude of ways (such as multi-factor authentication, firewalls, and antivirus software), and binding agreements have been concluded to compel IT service providers to ensure the protection of personal data.&nbsp;</p>",
+            "content_en": "<p>The UU has taken a large number of technical and organizational measures to increase the security of personal data. For example, the technical infrastructure is secured in a multitude of ways (such as multi-factor authentication, firewalls, and antivirus software), and binding agreements have been concluded to compel IT service providers to ensure the protection of personal data.&nbsp;</p>",
+            "content_nl": "<p>De UU heeft een groot aantal technische en organisatorische maatregelen getroffen om de beveiliging van persoonsgegevens te verhogen. Zo is de technische infrastructuur op een veelheid aan manieren beveiligd (denk aan multi-factor authenticatie, firewalls en antivirussoftware) en zijn er bindende overeenkomsten gesloten om de leveranciers van IT-diensten te dwingen de bescherming van persoonsgegevens te waarborgen.&nbsp;</p>",
             "_order": 0
         }
     },
@@ -3234,6 +3234,90 @@
             "content_en": "<div class=\"ewa-rteLine\">Special categories of personal data are data that are so sensitive that they are subject to extra protection under the General Data Protection Regulation (GDPR). You may only process these data under additional conditions, for example, if you have obtained consent or if the persons to whom the data relate (the data subjects) have made those data public themselves.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">The mentioned special categories of personal data must be interpreted &ldquo;broadly&rdquo;. For the category regarding political opinions, for example, it is not necessary for someone to be a member of a political party. Any opinion someone holds about the organization or functioning of society is considered a special category of personal data.</div>",
             "content_nl": "<div class=\"ewa-rteLine\">Bijzondere persoonsgegevens zijn gegevens die zo gevoelig zijn dat ze onder de Algemene verordening gegevensbescherming (AVG) extra worden beschermd. Deze gegevens mag je alleen onder aanvullende voorwaarden verwerken, bijvoorbeeld als je er toestemming voor hebt gekregen of als degenen op wie de gegevens betrekking hebben (de datasubjecten) die gegevens zelf openbaar hebben gemaakt.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">De genoemde categorie&euml;n bijzondere persoonsgegevens moet je &ldquo;ruim&rdquo; interpreteren. Voor de categorie over politieke opvattingen is het bijvoorbeeld niet nodig dat iemand lid is van een politieke partij. Elke opvatting die iemand heeft over de inrichting of het functioneren van de maatschappij wordt gezien als een bijzonder persoonsgegeven.</div>",
             "_order": 2
+        }
+    },
+    {
+        "model": "form.stepinfo",
+        "pk": 42,
+        "fields": {
+            "step": 11,
+            "text": "What is two-factor authentication?",
+            "text_en": "What is two-factor authentication?",
+            "text_nl": "Wat is twee-factor-authenticatie?",
+            "content": "<p>Two-factor authentication (2FA) is a security method that improves security by identifying users in two ways, for example, through something you know (a specific password) and something you have (a specific phone).&nbsp;</p>",
+            "content_en": "<p>Two-factor authentication (2FA) is a security method that improves security by identifying users in two ways, for example, through something you know (a specific password) and something you have (a specific phone).&nbsp;</p>",
+            "content_nl": "<p>Twee-factor-authenticatie (2FA) is een beveiligingsmethode is een manier om de beveiliging te verbeteren door gebruikers op twee manieren te identificeren, bijvoorbeeld door iets dat je weet (een bepaald wachtwoord) en iets dat je hebt (een bepaalde telefoon).&nbsp;</p>",
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.stepinfo",
+        "pk": 43,
+        "fields": {
+            "step": 11,
+            "text": "What is encryption?",
+            "text_en": "What is encryption?",
+            "text_nl": "Wat is versleuteling?",
+            "content": "<p>Encryption is a technique used to convert information into an encrypted form that is only accessible with a specific key. The goal of encryption is to protect information from unwanted access by unauthorized persons.&nbsp;</p>",
+            "content_en": "<p>Encryption is a technique used to convert information into an encrypted form that is only accessible with a specific key. The goal of encryption is to protect information from unwanted access by unauthorized persons.&nbsp;</p>",
+            "content_nl": "<p>Versleuteling\u202f(of encryptie) is een techniek waarmee informatie wordt omgezet in een versleutelde vorm die alleen toegankelijk is met een specifieke sleutel. Het doel van versleuteling is om de informatie te beschermen tegen ongewenste toegang door onbevoegde personen.&nbsp;</p>",
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.stepinfo",
+        "pk": 44,
+        "fields": {
+            "step": 11,
+            "text": "What is a VPN?",
+            "text_en": "What is a VPN?",
+            "text_nl": "Wat is een VPN?",
+            "content": "<p>A VPN (Virtual Private Network) encrypts your internet connection and routes your traffic through an intermediary server, making your IP address less visible. A VPN creates a kind of &ldquo;conduit&rdquo; between a sender and a receiver.</p>",
+            "content_en": "<p>A VPN (Virtual Private Network) encrypts your internet connection and routes your traffic through an intermediary server, making your IP address less visible. A VPN creates a kind of &ldquo;conduit&rdquo; between a sender and a receiver.</p>",
+            "content_nl": "<p>Een VPN (Virtual Private Network) versleutelt je internetverbinding en laat je verkeer via een tussenserver lopen, waardoor je IP-adres minder zichtbaar is. Een VPN cre&euml;ert een soort &ldquo;buizenpost&rdquo; tussen een verzender en een ontvanger.&nbsp;</p>",
+            "_order": 3
+        }
+    },
+    {
+        "model": "form.stepinfo",
+        "pk": 45,
+        "fields": {
+            "step": 11,
+            "text": "What is the difference between anonymization and pseudonymization?",
+            "text_en": "What is the difference between anonymization and pseudonymization?",
+            "text_nl": "Wat is het verschil tussen anonimisering en pseudonimisering?",
+            "content": "<p>With anonymization, it is permanently impossible to link your research data to specific individuals. With pseudonymization, this is indeed possible, for example by replacing personal data in a data file with codes and storing the meaning of those codes in a separate key file. With anonymization, the GDPR no longer applies, whereas it does with pseudonymization. Pseudonymization is primarily a security method.&nbsp;</p>",
+            "content_en": "<p>With anonymization, it is permanently impossible to link your research data to specific individuals. With pseudonymization, this is indeed possible, for example by replacing personal data in a data file with codes and storing the meaning of those codes in a separate key file. With anonymization, the GDPR no longer applies, whereas it does with pseudonymization. Pseudonymization is primarily a security method.&nbsp;</p>",
+            "content_nl": "<p>Bij anonimisering is het definitief onmogelijk om jouw onderzoeksgegevens in verband te brengen met specifieke personen. Bij pseudonimisering is dat w&eacute;l mogelijk, bijvoorbeeld door persoonsgegevens in een databestand te vervangen door codes en de betekenis van die codes op te slaan in een afzonderlijk sleutelbestand. Bij anonimisering geldt de AVG niet meer, bij pseudonimisering wel. Pseudonimisering is in de eerste plaats een beveiligingsmethode.&nbsp;</p>",
+            "_order": 4
+        }
+    },
+    {
+        "model": "form.stepinfo",
+        "pk": 46,
+        "fields": {
+            "step": 11,
+            "text": "To what extent do agreements contribute to security?",
+            "text_en": "To what extent do agreements contribute to security?",
+            "text_nl": "In hoeverre dragen overeenkomsten bij aan de beveiliging?",
+            "content": "<p>By making binding agreements with parties to whom we entrust personal data, the UU can enforce proper, secure, or lawful handling of that personal data by those parties.&nbsp;</p>",
+            "content_en": "<p>By making binding agreements with parties to whom we entrust personal data, the UU can enforce proper, secure, or lawful handling of that personal data by those parties.&nbsp;</p>",
+            "content_nl": "<p>Door bindende afspraken te maken met partijen aan wie we persoonsgegevens toevertrouwen, kan de UU die partijen dwingen tot een juiste, veilige of rechtmatige behandeling van die persoonsgegevens.&nbsp;</p>",
+            "_order": 5
+        }
+    },
+    {
+        "model": "form.stepinfo",
+        "pk": 47,
+        "fields": {
+            "step": 11,
+            "text": "What is a \u201cChinese wall\u201d?",
+            "text_en": "What is a \u201cChinese wall\u201d?",
+            "text_nl": "Wat is een \u201cChinese wall\u201d?",
+            "content": "<p>If one department within an organization processes personal data that is also of interest to another department, but it is definitely not intended for that other department to see that data, management can impose a formal prohibition on that other department. In this way, the data is shielded internally within the organization. This is called a Chinese wall.&nbsp;</p>",
+            "content_en": "<p>If one department within an organization processes personal data that is also of interest to another department, but it is definitely not intended for that other department to see that data, management can impose a formal prohibition on that other department. In this way, the data is shielded internally within the organization. This is called a Chinese wall.&nbsp;</p>",
+            "content_nl": "<p>Als de ene afdeling binnen een organisatie persoonsgegevens verwerkt die ook interessant zijn voor een andere afdeling, maar het is beslist niet de bedoeling dat die andere afdeling die gegevens te zien krijgt, kan het management die andere afdeling een formeel verbod opleggen. Op die manier worden de gegevens intern binnen de organisatie afgeschermd. Dit wordt een Chinese wall genoemd.&nbsp;</p>",
+            "_order": 6
         }
     },
     {
