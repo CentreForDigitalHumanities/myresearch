@@ -2967,7 +2967,7 @@
             "content": "<p>Personal data are data that say something about a living person. Think of name, adress data, age, sex. But also for example audio or video records, anwers of questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>",
             "content_en": "<p>Personal data are data that say something about a living person. Think of name, adress data, age, sex. But also for example audio or video records, anwers of questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>",
             "content_nl": "<p>Persoonsgegevens zijn gegevens die iets zeggen over een levend persoon. Denk aan naam, adresgegevens, leeftijd, geslacht etc. Maar ook bijvoorbeeld audio- of video-opnamen, antwoorden op vragen, observaties en aantekeningen. Gegevens zijn alleen persoonsgegevens als ze terug te voeren zijn op een bepaalde persoon.</p>",
-            "_order": 0
+            "_order": 1
         }
     },
     {
@@ -2981,7 +2981,7 @@
             "content": "<p>Personal data are data such as \"Jan\", \"Yasmina\" or \"12-07-1934\". Categories of personal data are for example \"first name\" or \"birth date\". In the processing register you enter the categories of data, not the data itself.</p>",
             "content_en": "<p>Personal data are data such as \"Jan\", \"Yasmina\" or \"12-07-1934\". Categories of personal data are for example \"first name\" or \"birth date\". In the processing register you enter the categories of data, not the data itself.</p>",
             "content_nl": "<p>Persoonsgegevens zijn gegevens zoals \"Jan\", \"Yasmina\" of \"12-07-1934\". Categorie&euml;n persoonsgegevens zijn dan bijvoorbeeld \"Voornaam\" of \"Geboortedatum\". In het verwerkingsregister leg je alleen de categorie&euml;n vast, niet de persoonsgegevens zelf.</p>",
-            "_order": 1
+            "_order": 3
         }
     },
     {
@@ -2995,7 +2995,7 @@
             "content": "<p>In principle that is not allowed. The data you collect need to confirm to the concrete goal. Collecting data just in case you may need it for a future research goal is not enough. You need concrete indications that you will need the data in the future.</p>",
             "content_en": "<p>In principle that is not allowed. The data you collect need to confirm to the concrete goal. Collecting data just in case you may need it for a future research goal is not enough. You need concrete indications that you will need the data in the future.</p>",
             "content_nl": "<p>In principe niet. De gegevens die je verzamelt moeten beantwoorden aan het geformuleerde doel. Data alvast verzamelen met de gedachte dat er later misschien een onderzoeksvraag is waarvoor ze nodig zijn, is niet genoeg. Je moet concrete aanwijzingen hebben dat je de data in de toekomst nodig gaat hebben.&nbsp;</p>",
-            "_order": 2
+            "_order": 4
         }
     },
     {
@@ -3206,6 +3206,34 @@
             "content_en": "<p>You can submit documents again so long your study is in the draft phase.</p>",
             "content_nl": "<p>Je kunt, voordat je een studie hebt ingediend, documenten opnieuw indienen.</p>",
             "_order": 4
+        }
+    },
+    {
+        "model": "form.stepinfo",
+        "pk": 40,
+        "fields": {
+            "step": 7,
+            "text": "What is meant by the three categories for groups of data subjects?",
+            "text_en": "What is meant by the three categories for groups of data subjects?",
+            "text_nl": "Wat wordt er bedoeld met de drie categorie\u00ebn voor groepen datasubjecten?",
+            "content": "<div class=\"ewa-rteLine\">&ldquo;Participants&rdquo; refers to participants in the classical sense of the word. For example, people you interview, people who fill out a questionnaire, or people you subject to certain tests.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;People who do not (necessarily) know that research is being conducted on them&rdquo; are, for example, people whose data you &ldquo;scrape&rdquo; on social media or people you secretly record in public spaces.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;People who are otherwise involved&rdquo; are, for example, the parents of participating children (if you ask them to consent to their child's participation or personal data processing) or location holders who are asked permission for the use of their location.</div>",
+            "content_en": "<div class=\"ewa-rteLine\">&ldquo;Participants&rdquo; refers to participants in the classical sense of the word. For example, people you interview, people who fill out a questionnaire, or people you subject to certain tests.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;People who do not (necessarily) know that research is being conducted on them&rdquo; are, for example, people whose data you &ldquo;scrape&rdquo; on social media or people you secretly record in public spaces.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;People who are otherwise involved&rdquo; are, for example, the parents of participating children (if you ask them to consent to their child's participation or personal data processing) or location holders who are asked permission for the use of their location.</div>",
+            "content_nl": "<div class=\"ewa-rteLine\">Onder &ldquo;Deelnemers&rdquo; wordt verstaan: participanten in de klassieke zin van het woord. Bijvoorbeeld mensen die je interviewt of mensen die een vragenlijst invullen of die je aan bepaalde tests onderwerpt.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;Personen die niet (noodzakelijkerwijs) weten dat er onderzoek naar hen wordt gedaan&rdquo; zijn bijvoorbeeld mensen van wie je data &ldquo;scrapet&rdquo; op social media of mensen van wie je in de publieke ruimte heimelijk opnamen maakt.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;Personen die anderszins betrokken zijn&rdquo; zijn bijvoorbeeld de ouders van deelnemende kinderen (als je hen vraagt om toestemming te geven voor de deelname van hun kind) of locatiehouders die toestemming moeten geven voor het gebruik van hun locatie.</div>",
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.stepinfo",
+        "pk": 41,
+        "fields": {
+            "step": 7,
+            "text": "What are special categories of personal data?",
+            "text_en": "What are special categories of personal data?",
+            "text_nl": "Wat zijn bijzondere persoonsgegevens?",
+            "content": "<div class=\"ewa-rteLine\">Special categories of personal data are data that are so sensitive that they are subject to extra protection under the General Data Protection Regulation (GDPR). You may only process these data under additional conditions, for example, if you have obtained consent or if the persons to whom the data relate (the data subjects) have made those data public themselves.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">The mentioned special categories of personal data must be interpreted &ldquo;broadly&rdquo;. For the category regarding political opinions, for example, it is not necessary for someone to be a member of a political party. Any opinion someone holds about the organization or functioning of society is considered a special category of personal data.</div>",
+            "content_en": "<div class=\"ewa-rteLine\">Special categories of personal data are data that are so sensitive that they are subject to extra protection under the General Data Protection Regulation (GDPR). You may only process these data under additional conditions, for example, if you have obtained consent or if the persons to whom the data relate (the data subjects) have made those data public themselves.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">The mentioned special categories of personal data must be interpreted &ldquo;broadly&rdquo;. For the category regarding political opinions, for example, it is not necessary for someone to be a member of a political party. Any opinion someone holds about the organization or functioning of society is considered a special category of personal data.</div>",
+            "content_nl": "<div class=\"ewa-rteLine\">Bijzondere persoonsgegevens zijn gegevens die zo gevoelig zijn dat ze onder de Algemene verordening gegevensbescherming (AVG) extra worden beschermd. Deze gegevens mag je alleen onder aanvullende voorwaarden verwerken, bijvoorbeeld als je er toestemming voor hebt gekregen of als degenen op wie de gegevens betrekking hebben (de datasubjecten) die gegevens zelf openbaar hebben gemaakt.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">De genoemde categorie&euml;n bijzondere persoonsgegevens moet je &ldquo;ruim&rdquo; interpreteren. Voor de categorie over politieke opvattingen is het bijvoorbeeld niet nodig dat iemand lid is van een politieke partij. Elke opvatting die iemand heeft over de inrichting of het functioneren van de maatschappij wordt gezien als een bijzonder persoonsgegeven.</div>",
+            "_order": 2
         }
     },
     {
