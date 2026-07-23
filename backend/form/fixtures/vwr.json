@@ -213,9 +213,9 @@
             "text_nl": "Hoeveel groepen datasubjecten zijn er?",
             "step": 6,
             "form": 1,
-            "description": "<p>Distinguish all groups of people whose personal data you will process.</p>",
-            "description_en": "<p>Distinguish all groups of people whose personal data you will process.</p>",
-            "description_nl": "<p>Onderscheid alle groepen van wie er persoonsgegevens verzameld worden.</p>",
+            "description": "<p>Distinguish all groups of people whose personal data you will collect or use (for instance: Police Officers, Instagram Users, Primary School Pupils).</p>",
+            "description_en": "<p>Distinguish all groups of people whose personal data you will collect or use (for instance: Police Officers, Instagram Users, Primary School Pupils).</p>",
+            "description_nl": "<p>Onderscheid alle groepen van wie er persoonsgegevens worden verzameld of gebruikt (bijvoorbeeld Politieagenten, Instagramgebruikers, Leerlingen basisschool, etc.).</p>",
             "required": true,
             "_order": 1
         }
@@ -344,9 +344,9 @@
         "pk": 42,
         "fields": {
             "annotation_key": null,
-            "text": "Grounds for exclusion",
-            "text_en": "Grounds for exclusion",
-            "text_nl": "Uitsluitingsgronden",
+            "text": "Legal exception",
+            "text_en": "Legal exception",
+            "text_nl": "Uitzonderingsgrond",
             "step": 7,
             "form": 1,
             "description": "<div class=\"ewa-rteLine\">If you do not have consent, on what exception is the processing of special personal data based? Please explain if necessary.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">You have discussed your response with the privacy officer.</div>",
@@ -463,9 +463,9 @@
         "pk": 46,
         "fields": {
             "annotation_key": null,
-            "text": "Explanation",
-            "text_en": "Explanation",
-            "text_nl": "Toelichting",
+            "text": "Other regular personal data",
+            "text_en": "Other regular personal data",
+            "text_nl": "Andere reguliere persoonsgegevens",
             "step": 7,
             "form": 1,
             "description": "",
@@ -1882,11 +1882,11 @@
     },
     {
         "model": "form.selectoption",
-        "pk": 159,
+        "pk": 125,
         "fields": {
-            "label": "None",
-            "label_en": "None",
-            "label_nl": "Geen",
+            "label": "Criminal history data (criminal convictions or offences) of participants.",
+            "label_en": "Criminal history data (criminal convictions or offences) of participants.",
+            "label_nl": "Gegevens over het strafrechtelijk verleden (strafrechtelijke veroordelingen of strafbare feiten) van deelnemers.",
             "default_selected": false,
             "question": 39,
             "_order": 8
@@ -1894,11 +1894,23 @@
     },
     {
         "model": "form.selectoption",
+        "pk": 159,
+        "fields": {
+            "label": "None",
+            "label_en": "None",
+            "label_nl": "Geen",
+            "default_selected": false,
+            "question": 39,
+            "_order": 9
+        }
+    },
+    {
+        "model": "form.selectoption",
         "pk": 121,
         "fields": {
-            "label": "The special personal data have clearly been made public by the data subjects themselves.",
-            "label_en": "The special personal data have clearly been made public by the data subjects themselves.",
-            "label_nl": "De bijzondere persoonsgegevens zijn overduidelijk openbaar gemaakt door de betrokkenen zelf.",
+            "label": "The special categories of data have clearly been made public by the data subjects themselves.",
+            "label_en": "The special categories of data have clearly been made public by the data subjects themselves.",
+            "label_nl": "De bijzondere persoonsgegevens zijn overduidelijk openbaar gemaakt door de datasubjecten zelf.",
             "default_selected": false,
             "question": 42,
             "_order": 0
@@ -1908,9 +1920,9 @@
         "model": "form.selectoption",
         "pk": 122,
         "fields": {
-            "label": "The processing of special categories of personal data is necessary for archiving in the public interest, scientific or historical research, or statistical purposes, and obtaining consent would be so d",
-            "label_en": "The processing of special categories of personal data is necessary for archiving in the public interest, scientific or historical research, or statistical purposes, and obtaining consent would be so d",
-            "label_nl": "De verwerking van de bijzondere persoonsgegevens is noodzakelijk voor archivering in het algemeen belang, wetenschappelijk/historisch onderzoek of statistische doeleinden, en het vragen om toestemming",
+            "label": "Obtaining consent would be so difficult and/or time-consuming that it would jeopardize the entire research project.",
+            "label_en": "Obtaining consent would be so difficult and/or time-consuming that it would jeopardize the entire research project.",
+            "label_nl": "Het vragen om toestemming is zo moeilijk en/of tijdrovend dat het hele onderzoek erdoor in gevaar zou komen.",
             "default_selected": false,
             "question": 42,
             "_order": 1
@@ -1920,9 +1932,9 @@
         "model": "form.selectoption",
         "pk": 123,
         "fields": {
-            "label": "The processing of special categories of personal data is necessary for  a compelling public interest specified by law, namely:",
-            "label_en": "The processing of special categories of personal data is necessary for  a compelling public interest specified by law, namely:",
-            "label_nl": "De verwerking van de bijzondere persoonsgegevens is noodzakelijk voor een zwaarwegend algemeen belang dat in de wet wordt genoemd, te weten:",
+            "label": "Necessary for a compelling public interest specified by law, namely:",
+            "label_en": "Necessary for a compelling public interest specified by law, namely:",
+            "label_nl": "Noodzakelijk voor een zwaarwegend algemeen belang dat in de wet wordt genoemd, te weten:",
             "default_selected": false,
             "question": 42,
             "_order": 2
@@ -1938,18 +1950,6 @@
             "default_selected": false,
             "question": 44,
             "_order": 0
-        }
-    },
-    {
-        "model": "form.selectoption",
-        "pk": 125,
-        "fields": {
-            "label": "Criminal history data (criminal convictions or offences) of participants.",
-            "label_en": "Criminal history data (criminal convictions or offences) of participants.",
-            "label_nl": "Gegevens over het strafrechtelijk verleden (strafrechtelijke veroordelingen of strafbare feiten) van deelnemers.",
-            "default_selected": false,
-            "question": 44,
-            "_order": 1
         }
     },
     {
@@ -2146,6 +2146,18 @@
     },
     {
         "model": "form.selectoption",
+        "pk": 166,
+        "fields": {
+            "label": "Transcripts of recordings",
+            "label_en": "Transcripts of recordings",
+            "label_nl": "Transcripten van opnamen",
+            "default_selected": false,
+            "question": 45,
+            "_order": 15
+        }
+    },
+    {
+        "model": "form.selectoption",
         "pk": 143,
         "fields": {
             "label": "Other video recordings",
@@ -2153,7 +2165,7 @@
             "label_nl": "Overige video-opnamen",
             "default_selected": false,
             "question": 45,
-            "_order": 15
+            "_order": 16
         }
     },
     {
@@ -2165,7 +2177,7 @@
             "label_nl": "Overige geluidsopnamen",
             "default_selected": false,
             "question": 45,
-            "_order": 16
+            "_order": 17
         }
     },
     {
@@ -2177,7 +2189,7 @@
             "label_nl": "Gedrag of gedragingen",
             "default_selected": false,
             "question": 45,
-            "_order": 17
+            "_order": 18
         }
     },
     {
@@ -2189,7 +2201,7 @@
             "label_nl": "Resultaten van tests",
             "default_selected": false,
             "question": 45,
-            "_order": 18
+            "_order": 19
         }
     },
     {
@@ -2201,7 +2213,7 @@
             "label_nl": "School-, opleidings- of cursusresultaten",
             "default_selected": false,
             "question": 45,
-            "_order": 19
+            "_order": 20
         }
     },
     {
@@ -2213,7 +2225,7 @@
             "label_nl": "Gegevens op social media",
             "default_selected": false,
             "question": 45,
-            "_order": 20
+            "_order": 21
         }
     },
     {
@@ -2225,7 +2237,7 @@
             "label_nl": "Al dan niet ondertekende toestemmingsverklaringen",
             "default_selected": false,
             "question": 45,
-            "_order": 21
+            "_order": 22
         }
     },
     {
@@ -2237,7 +2249,7 @@
             "label_nl": "Anders, namelijk:",
             "default_selected": false,
             "question": 45,
-            "_order": 22
+            "_order": 23
         }
     },
     {
@@ -2562,9 +2574,9 @@
             "name": "Data subjects",
             "name_en": "Data subjects",
             "name_nl": "Datasubjecten",
-            "description": "<p>In this step you will be asked to indicate which categories of data subjects play a role in your research project. For each category of data subjects, we ask two questions:</p>\r\n<ol>\r\n<li>Why is it necessary to collect personal data?</li>\r\n<li>Which specific categories of personal data you will be processing? If you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.</li>\r\n</ol>",
-            "description_en": "<p>In this step you will be asked to indicate which categories of data subjects play a role in your research project. For each category of data subjects, we ask two questions:</p>\r\n<ol>\r\n<li>Why is it necessary to collect personal data?</li>\r\n<li>Which specific categories of personal data you will be processing? If you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.</li>\r\n</ol>",
-            "description_nl": "<p>In deze stap geef je op welke categorie&euml;n datasubjecten een rol spelen in je onderzoeksproject. Per categorie datasubjecten vragen we twee dingen:</p>\r\n<ol>\r\n<li>Waarom het noodzakelijk is om persoonsgegevens te verzamelen.</li>\r\n<li>Welke specifieke categorie&euml;n persoonsgegevens je gaat verwerken. Als je in de vorige vraag meerdere categorie&euml;n betrokkenen hebt opgegeven, wordt je dus gevraagd om voor elk van die categorie&euml;n informatie op te geven.</li>\r\n</ol>",
+            "description": "<div class=\"ewa-rteLine\">In this step, you specify who the people are whose personal data you will be processing. Individually, we refer to these people as \"data subjects\", and as a group, we refer to them as \"data subject groups\". You must specify at least one group. There is no maximum.</div>\r\n<div class=\"ewa-rteLine\">\r\n<p>For each group, we ask two things:</p>\r\n</div>\r\n<div class=\"ewa-rteLine\">\r\n<ol>\r\n<li>The name you want to use for the relevant group.</li>\r\n<li>Why it is necessary to use personal data of these data subjects.</li>\r\n<li>Which specific categories of personal data you will be processing, subdivided into special (extra sensitive), sensitive, and normal.</li>\r\n</ol>\r\n</div>",
+            "description_en": "<div class=\"ewa-rteLine\">In this step, you specify who the people are whose personal data you will be processing. Individually, we refer to these people as \"data subjects\", and as a group, we refer to them as \"data subject groups\". You must specify at least one group. There is no maximum.</div>\r\n<div class=\"ewa-rteLine\">\r\n<p>For each group, we ask two things:</p>\r\n</div>\r\n<div class=\"ewa-rteLine\">\r\n<ol>\r\n<li>The name you want to use for the relevant group.</li>\r\n<li>Why it is necessary to use personal data of these data subjects.</li>\r\n<li>Which specific categories of personal data you will be processing, subdivided into special (extra sensitive), sensitive, and normal.</li>\r\n</ol>\r\n</div>",
+            "description_nl": "<div class=\"ewa-rteLine\">In deze stap geef je op wie de mensen zijn van wie je persoonsgegevens gaat verwerken. Individueel noemen we deze mensen \"datasubjecten\" en als groep spreken we van \"datasubjectgroepen\". Je moet minimaal &eacute;&eacute;n groep opgeven. Er geldt geen maximum.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">Per groep vragen we drie dingen:</div>\r\n<ol>\r\n<li>\r\n<div class=\"ewa-rteLine\">De naam die je voor de desbetreffende groep wilt gebruiken.</div>\r\n</li>\r\n<li>\r\n<div class=\"ewa-rteLine\">Waarom het noodzakelijk is om persoonsgegevens van deze datasubjecten te gebruiken.</div>\r\n</li>\r\n<li>\r\n<div class=\"ewa-rteLine\">Welke specifieke categorie&euml;n persoonsgegevens je gaat verwerken, onderverdeeld in bijzonder (extra gevoelig), gevoelig en normaal.</div>\r\n</li>\r\n</ol>",
             "slug": "data-subjects",
             "form": 1,
             "parent": null,
@@ -2882,9 +2894,9 @@
             "text": "What happens if the expected study period has passed?",
             "text_en": "What happens if the expected study period has passed?",
             "text_nl": "Wat gebeurt er als de verwachte studieperiode is verstreken?",
-            "content": "<p>After the study period has passed, the retention period activates. In principle, this period lasts at least 10 years.</p>\r\n<p>Should the study take longer or shorter than expected, please return to MyResearch and update the study period.</p>",
-            "content_en": "<p>After the study period has passed, the retention period activates. In principle, this period lasts at least 10 years.</p>\r\n<p>Should the study take longer or shorter than expected, please return to MyResearch and update the study period.</p>",
-            "content_nl": "<p>Na afloop van de studieperiode gaat de bewaartermijn. Deze duurt in beginsel minimaal 10 jaar.</p>\r\n<p>Mocht jouw studie langer of korter duren dan hier gepland, kom dan terug naar MyResearch en pas de studieperiode aan.</p>",
+            "content": "<p>After the study period has passed, the archiving period starts. In principle, this period lasts at least 10 years.</p>\r\n<p>Should the study take longer or shorter than expected, please return to MyResearch and update the study period.</p>",
+            "content_en": "<p>After the study period has passed, the archiving period starts. In principle, this period lasts at least 10 years.</p>\r\n<p>Should the study take longer or shorter than expected, please return to MyResearch and update the study period.</p>",
+            "content_nl": "<p>Na afloop van de studieperiode gaat de archiveringsperiode in. Deze duurt in beginsel minimaal 10 jaar.</p>\r\n<p>Mocht jouw studie langer of korter duren dan hier gepland, kom dan terug naar MyResearch en pas de studieperiode aan.</p>",
             "_order": 0
         }
     },
@@ -2910,9 +2922,9 @@
             "text": "What do we mean by 'end date'?",
             "text_en": "What do we mean by 'end date'?",
             "text_nl": "Wat wordt bedoeld met 'einddatum'?",
-            "content": "<p>This is the expected publication date of the research results. This date is the start date of the retention period. Please enter an estimated date here that is as accurate as possible.</p>",
-            "content_en": "<p>This is the expected publication date of the research results. This date is the start date of the retention period. Please enter an estimated date here that is as accurate as possible.</p>",
-            "content_nl": "<p>Dit is de verwachte publicatiedatum van de onderzoeksresultaten. Op deze datum gaat de bewaartermijn van de onderzoeksdata in. Geef hier een zo correct mogelijke geschatte datum op.</p>",
+            "content": "<p>This is the expected publication date of the research results. This date is the start date of the archiving period period. Please enter an estimated date here that is as accurate as possible.</p>",
+            "content_en": "<p>This is the expected publication date of the research results. This date is the start date of the archiving period period. Please enter an estimated date here that is as accurate as possible.</p>",
+            "content_nl": "<p>Dit is de verwachte publicatiedatum van de onderzoeksresultaten. Op deze datum gaat de archiveringsperiode van de onderzoeksdata in. Geef hier een zo correct mogelijke geschatte datum op.</p>",
             "_order": 2
         }
     },
@@ -2948,7 +2960,7 @@
         "model": "form.stepinfo",
         "pk": 22,
         "fields": {
-            "step": 6,
+            "step": 7,
             "text": "What are personal data?",
             "text_en": "What are personal data?",
             "text_nl": "Wat zijn persoonsgegevens?",
@@ -2962,7 +2974,7 @@
         "model": "form.stepinfo",
         "pk": 23,
         "fields": {
-            "step": 6,
+            "step": 7,
             "text": "Why do I need to enter 'categories' of personal data?",
             "text_en": "Why do I need to enter 'categories' of personal data?",
             "text_nl": "Waarom moet ik 'categorie\u00ebn' persoonsgegevens opgeven?",
@@ -2976,7 +2988,7 @@
         "model": "form.stepinfo",
         "pk": 24,
         "fields": {
-            "step": 6,
+            "step": 7,
             "text": "Is it allowed to collect data that I will not need right now?",
             "text_en": "Is it allowed to collect data that I will not need right now?",
             "text_nl": "Mag ik gegevens verzamelen die ik nu niet nodig heb?",
@@ -3018,7 +3030,7 @@
         "model": "form.stepinfo",
         "pk": 27,
         "fields": {
-            "step": 6,
+            "step": 7,
             "text": "Do I need to enter something for every category?",
             "text_en": "Do I need to enter something for every category?",
             "text_nl": "Moet ik bij elke categorie iets opgeven?",
@@ -3032,7 +3044,7 @@
         "model": "form.stepinfo",
         "pk": 28,
         "fields": {
-            "step": 6,
+            "step": 7,
             "text": "What do I do when my category is not shown?",
             "text_en": "What do I do when my category is not shown?",
             "text_nl": "Wat moet ik doen als mijn categorie er niet tussen staat?",
