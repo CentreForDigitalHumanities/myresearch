@@ -3,6 +3,7 @@ import { computed } from "vue";
 import { BSButton, useConfirm } from "cdh-vue-lib";
 import type { QueriedForm } from "./FormWrapper";
 import FormStepper, { type FormStepperConfig } from "./FormStepper";
+import FormSideBar from "../form/FormSideBar.vue";
 import MRForm from "~/components/form/MRForm.vue";
 import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConfig";
 import { useFormState } from "~/composables/useFormState";
