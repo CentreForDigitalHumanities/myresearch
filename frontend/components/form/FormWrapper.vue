@@ -251,8 +251,8 @@ function navigateToSlug(slug: string) {
             :stepper-config="formStepperConfig"
             @step-clicked="navigateToSlug"
         />
-        <div>
-            <form class="uu-form">
+        <div class="col-6 pe-4">
+            <form class="uu-form uu-form-no-help">
                 <h2>{{ useTranslateableAttribute(selectedStep, "name") }}</h2>
                 <div
                     v-html="
@@ -311,6 +311,9 @@ function navigateToSlug(slug: string) {
                     {{ $t("Next") }}
                 </BSButton>
             </div>
+        </div>
+        <div class="col-3">
+            <FormSideBar :step="selectedStep" />
         </div>
     </div>
 </template>
