@@ -256,7 +256,7 @@ function navigateToSlug(slug: string) {
             <SubmissionOverview :form="formObject" />
         </div>
         <template v-else>
-            <div class="col-6 pe-4">
+            <div class="col-12 col-lg-6 pe-4">
                 <form class="uu-form uu-form-no-help">
                     <h2>
                         {{ useTranslateableAttribute(selectedStep, "name") }}
@@ -316,7 +316,7 @@ function navigateToSlug(slug: string) {
                     </BSButton>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-3 d-lg-block d-none">
                 <FormSideBar :step="selectedStep" />
             </div>
         </template>
