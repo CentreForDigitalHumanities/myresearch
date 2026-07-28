@@ -26,17 +26,13 @@ const uniquePageAccordionKey = computed(() => "additionalInfo");
 </script>
 <template>
     <div v-if="stepInfo?.length !== 0">
-        <strong>{{ $t("Additional Information") }}</strong>
-        <div
-            :id="'accordion' + uniquePageAccordionKey"
-            class="accordion mw-100"
-        >
+        <h4>{{ $t("Additional Information") }}</h4>
+        <div :id="'accordion' + uniquePageAccordionKey" class="accordion">
             <div
                 v-for="(info, index) in stepInfo"
                 :key="uniquePageAccordionKey + index"
-                class="mw-100"
             >
-                <div class="accordion-item mw-100">
+                <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button
                             class="accordion-button"
@@ -55,10 +51,10 @@ const uniquePageAccordionKey = computed(() => "additionalInfo");
                     </h2>
                     <div
                         :id="'collapse' + uniquePageAccordionKey + index"
-                        class="accordion-collapse collapse mw-100"
+                        class="accordion-collapse collapse"
                         :data-bs-parent="'#accordion' + uniquePageAccordionKey"
                     >
-                        <div class="accordion-body mw-100">
+                        <div class="accordion-body small-text">
                             <div
                                 v-html="
                                     useTranslateableAttribute(info, 'content')
@@ -72,4 +68,8 @@ const uniquePageAccordionKey = computed(() => "additionalInfo");
     </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.small-text {
+    font-size: 0.9rem;
+}
+</style>
