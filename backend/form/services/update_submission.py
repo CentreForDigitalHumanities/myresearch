@@ -1,3 +1,4 @@
+from form.models.questions import FileUploadQuestion
 from main.models import MRPermission, User
 from graphene_django.types import ErrorType
 from form.models.responses import MRDocument
@@ -79,8 +80,11 @@ def update_submission(
                     )
                     new_response.submissions.add(current_submission)
                 else:
+                    if response["answer"]["value"] == "" and isinstance(
+                        qr.question.get_subclass(), FileUploadQuestion
+                    ):
+                        _delete_document_if_cleared(qr.answer, response["answer"])
                     # If this is not a revision, just update the answer
-                    _delete_document_if_cleared(qr.answer, response["answer"])
                     qr.answer = response["answer"]
                     qr.save()
 
