@@ -1,35 +1,16 @@
 <script lang="ts" setup>
-import { graphql } from "~/generated/gql";
 import { BSButton } from "cdh-vue-lib";
-import type { GetStudyTitleQuery } from "~/generated/gql/graphql";
 import OverviewWrapper from "~/components/form/overview/OverviewWrapper.vue";
 import { useSubmissionId, useStudyId } from "~/composables/useRouteParams";
 import { useFormQuery } from "~/composables/useFormQuery";
-import { useQuery } from "@vue/apollo-composable";
+import { useStudyQuery } from "~/composables/useStudyQuery";
 import Loading from "~/components/shared/Loading.vue";
 
 const submissionId = useSubmissionId();
 const form = useFormQuery(submissionId, "View");
 
-const GET_STUDY = graphql(`
-    query GetStudyTitle($id: ID!) {
-        study(id: $id, mrPermission: "View") {
-            id
-            title
-            reference
-        }
-    }
-`);
-
 const studyId = useStudyId();
-
-const { result: studyResult } = useQuery<GetStudyTitleQuery>(
-    GET_STUDY,
-    () => ({ id: studyId.value }),
-    () => ({ enabled: !!studyId.value }),
-);
-
-const study = computed(() => studyResult.value?.study ?? null);
+const study = useStudyQuery(studyId);
 </script>
 
 <template>
