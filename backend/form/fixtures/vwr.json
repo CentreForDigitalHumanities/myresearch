@@ -2721,7 +2721,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 6,
         "fields": {
             "step": 1,
@@ -2735,7 +2735,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 7,
         "fields": {
             "step": 1,
@@ -2749,7 +2749,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 8,
         "fields": {
             "step": 1,
@@ -2763,7 +2763,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 9,
         "fields": {
             "step": 1,
@@ -2777,7 +2777,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 10,
         "fields": {
             "step": 2,
@@ -2791,7 +2791,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 11,
         "fields": {
             "step": 2,
@@ -2805,7 +2805,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 12,
         "fields": {
             "step": 2,
@@ -2819,7 +2819,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 13,
         "fields": {
             "step": 2,
@@ -2833,7 +2833,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 14,
         "fields": {
             "step": 2,
@@ -2847,7 +2847,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 15,
         "fields": {
             "step": 3,
@@ -2861,7 +2861,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 16,
         "fields": {
             "step": 3,
@@ -2875,7 +2875,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 17,
         "fields": {
             "step": 4,
@@ -2889,7 +2889,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 18,
         "fields": {
             "step": 4,
@@ -2903,7 +2903,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 19,
         "fields": {
             "step": 4,
@@ -2917,7 +2917,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 20,
         "fields": {
             "step": 5,
@@ -2931,7 +2931,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 21,
         "fields": {
             "step": 5,
@@ -2945,7 +2945,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 22,
         "fields": {
             "step": 6,
@@ -2959,7 +2959,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 23,
         "fields": {
             "step": 6,
@@ -2973,7 +2973,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 24,
         "fields": {
             "step": 6,
@@ -2987,7 +2987,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 25,
         "fields": {
             "step": 6,
@@ -3001,7 +3001,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 26,
         "fields": {
             "step": 6,
@@ -3015,7 +3015,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 27,
         "fields": {
             "step": 6,
@@ -3029,7 +3029,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 28,
         "fields": {
             "step": 6,
@@ -3043,7 +3043,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 29,
         "fields": {
             "step": 9,
@@ -3057,7 +3057,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 30,
         "fields": {
             "step": 9,
@@ -3071,7 +3071,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 31,
         "fields": {
             "step": 10,
@@ -3085,7 +3085,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 32,
         "fields": {
             "step": 10,
@@ -3099,7 +3099,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 33,
         "fields": {
             "step": 10,
@@ -3113,7 +3113,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 34,
         "fields": {
             "step": 11,
@@ -3127,7 +3127,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 35,
         "fields": {
             "step": 12,
@@ -3141,7 +3141,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 36,
         "fields": {
             "step": 12,
@@ -3155,7 +3155,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 37,
         "fields": {
             "step": 12,
@@ -3169,7 +3169,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 38,
         "fields": {
             "step": 12,
@@ -3183,7 +3183,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 39,
         "fields": {
             "step": 12,

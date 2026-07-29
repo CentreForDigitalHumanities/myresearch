@@ -6,7 +6,7 @@ from .models import (
     FileUploadQuestion,
     MRForm,
     Step,
-    StepInfo,
+    StepInfoText,
     NumberQuestion,
     SelectOption,
     TextQuestion,
@@ -25,8 +25,8 @@ class StepTranslationOptions(TranslationOptions):
     fields = ["name", "description"]
 
 
-@register(StepInfo)
-class StepInfoTranslationOptions(TranslationOptions):
+@register(StepInfoText)
+class StepInfoTextTranslationOptions(TranslationOptions):
     fields = ["text", "content"]
 
 

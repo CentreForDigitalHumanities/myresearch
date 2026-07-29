@@ -7,7 +7,7 @@ from form.forms import StepAdminForm, SelectQuestionAdminForm
 from .models import (
     MRForm,
     Step,
-    StepInfo,
+    StepInfoText,
     BaseQuestion,
     SelectQuestion,
     SelectOption,
@@ -255,7 +255,7 @@ class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
         (
             "Step Info Order",
             {
-                "fields": ("step_info_order",),
+                "fields": ("step_info_text_order",),
                 "description": "Set the display order of step info. Use the substep IDs shown below.",
             },
         ),
@@ -274,8 +274,8 @@ class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     created_at_display.short_description = "Info"
 
 
-@admin.register(StepInfo)
-class StepInfoAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
+@admin.register(StepInfoText)
+class StepInfoTextAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     list_display = ("step", "text_nl", "text_en")
     list_filter = ("step",)
     search_fields = ("text_nl", "text_en")

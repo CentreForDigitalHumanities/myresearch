@@ -3,12 +3,12 @@ from graphene_django import DjangoObjectType
 
 from django.db.models import QuerySet
 
-from form.models import StepInfo
+from form.models import StepInfoText
 
 
-class StepInfoType(DjangoObjectType):
+class StepInfoTextType(DjangoObjectType):
     class Meta:
-        model = StepInfo
+        model = StepInfoText
         fields = [
             "id",
             "text_nl",
@@ -19,6 +19,6 @@ class StepInfoType(DjangoObjectType):
 
     @classmethod
     def get_queryset(
-        cls, queryset: QuerySet[StepInfo], info: ResolveInfo
-    ) -> QuerySet[StepInfo]:
+        cls, queryset: QuerySet[StepInfoText], info: ResolveInfo
+    ) -> QuerySet[StepInfoText]:
         return queryset

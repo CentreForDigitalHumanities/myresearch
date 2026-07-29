@@ -2,9 +2,9 @@
 import { graphql, useFragment, type FragmentType } from "~/generated/gql";
 import { computed } from "vue";
 
-const StepInfoFragment = graphql(`
-    fragment StepInfoFragment on StepType {
-        stepInfo {
+const StepInfoTextFragment = graphql(`
+    fragment StepInfoTextFragment on StepType {
+        stepInfoText {
             id
             textNl
             textEn
@@ -15,21 +15,21 @@ const StepInfoFragment = graphql(`
 `);
 
 const props = defineProps<{
-    step: FragmentType<typeof StepInfoFragment>;
+    step: FragmentType<typeof StepInfoTextFragment>;
 }>();
 
-const stepInfo = computed(
-    () => useFragment(StepInfoFragment, props.step).stepInfo,
+const stepInfoText = computed(
+    () => useFragment(StepInfoTextFragment, props.step).stepInfoText,
 );
 
 const uniquePageAccordionKey = computed(() => "additionalInfo");
 </script>
 <template>
-    <div v-if="stepInfo?.length !== 0">
+    <div v-if="stepInfoText?.length !== 0">
         <h4>{{ $t("Additional Information") }}</h4>
         <div :id="'accordion' + uniquePageAccordionKey" class="accordion">
             <div
-                v-for="(info, index) in stepInfo"
+                v-for="(info, index) in stepInfoText"
                 :key="uniquePageAccordionKey + index"
             >
                 <div class="accordion-item">
