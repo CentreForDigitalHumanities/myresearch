@@ -231,6 +231,8 @@ function getPreviousStepSlug(): string {
 function navigateToSlug(slug: string) {
     submitForm();
 
+    useNotification(t("Your progress has been saved."), "info", 3);
+
     const id = studyId.value;
     if (!id) {
         return;
