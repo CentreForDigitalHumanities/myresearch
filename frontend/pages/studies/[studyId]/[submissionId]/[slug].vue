@@ -14,9 +14,12 @@ const study = useStudyQuery(studyId);
 
 <template>
     <div class="uu-content">
-        <Title>{{ $t("Processing Register") }}</Title>
+        <Title>{{ study?.reference }} - {{ study?.title }}</Title>
         <div class="uu-hero">
-            <h1>{{ $t("Processing Register") }} - {{ study?.title }}</h1>
+            <h1>
+                {{ study?.reference }} -
+                {{ study?.title }}
+            </h1>
         </div>
         <div class="uu-container">
             <FormWrapper
