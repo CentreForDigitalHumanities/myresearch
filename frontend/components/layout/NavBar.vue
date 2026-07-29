@@ -31,21 +31,21 @@ const handleCreateStudy = async () => {
         const result = await createStudy();
 
         if (!result?.data) {
-            useNotification("No response from server", "danger");
+            useNotification(t("No response from server."), "danger");
             return;
         }
 
         if (result.data.createStudy?.errors?.length) {
-            useNotification("Failed to create study", "danger");
+            useNotification(t("Failed to create study."), "danger");
             return;
         }
 
         if (result.data.createStudy?.study?.id) {
-            useNotification("Study created successfully", "success");
+            useNotification(t("Study created successfully."), "success");
             void navigateTo(`/studies/${result.data.createStudy.study.id}`);
         }
     } catch {
-        useNotification("Failed to create study. Please try again.", "danger");
+        useNotification(t("Failed to create study."), "danger");
     }
 };
 
@@ -108,6 +108,15 @@ function newRegistration(): void {
                             active-class="active"
                         >
                             {{ $t("Studies") }}
+                        </NuxtLink>
+                    </li>
+                    <li>
+                        <NuxtLink
+                            to="/notes/faq"
+                            class="nav-link"
+                            active-class="active"
+                        >
+                            {{ $t("FAQ") }}
                         </NuxtLink>
                     </li>
                 </ul>

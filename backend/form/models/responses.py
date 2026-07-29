@@ -1,11 +1,20 @@
 from django.db import models
 from django.db.models import Min
 from django.contrib.auth import get_user_model
+from cdh.files.db.fields import FileField as CDHFileField
 from .questions import BaseQuestion
 from main.utils.permission_utils import BaseMRManager
 
 user_model = get_user_model()
 User = user_model
+
+
+class MRDocument(models.Model):
+    """
+    An uploaded file attached to a file upload question response.
+    """
+
+    file = CDHFileField(on_delete=models.CASCADE)
 
 
 class SubmissionManager(BaseMRManager):
@@ -81,9 +90,7 @@ class QuestionResponse(models.Model):
         return f"Response to Q{self.question.pk} in Submission {self.first_submission.pk if self.first_submission else 'unknown'}: {self.answer}"
 
     @property
-    def first_submission(
-        self,
-    ):
+    def first_submission(self):
         """
         Returns the submission where a response got introduced first
         """

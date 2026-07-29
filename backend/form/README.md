@@ -63,7 +63,11 @@ NumberQuestion:     {"value": 42}
 TrueFalseQuestion:  {"value": true}
 DateQuestion:       {"value": "2025-12-31"}
 SelectQuestion:     {"value": [1, 3]}
-FileUploadQuestion: {"file_url": "/path/to/file"}
+FileUploadQuestion: {
+    "value": "21cbf05a-987d-443b-b091-7c29e40dee92", 
+    "name": "important.pdf", 
+    "size": "500000"
+}
 ```
 
 ### User-specific form structure

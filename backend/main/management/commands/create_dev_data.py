@@ -114,7 +114,7 @@ class Command(BaseCommand):
                 self._generate_questions(options, form)
 
         self._create_submissions_and_studies(options, form)
-        self._create_notes(options)
+        call_command("loaddata", "notes/fixtures/initial.json")
 
         self.print(options, "Dev data generation complete!")
 
@@ -320,8 +320,23 @@ class Command(BaseCommand):
                 StatusChange.objects.create(
                     status=SubmissionStatus.DRAFT, created_by=user, study=study
                 )
-                # Create one submission per study (for now).
-                self._create_user_form_submission(user, form, study)
+
+                # Create one UserFormSubmission per study (for now)
+
+                # For 30% of studies, create a submitted StatusChange and a complete submission
+                if self.faker.boolean(30):
+                    # These will be filled in perfectly
+                    self._create_user_form_submission(user, form, study, complete=True)
+                    StatusChange.objects.create(
+                        status=SubmissionStatus.SUBMITTED, created_by=user, study=study
+                    )
+                    if self.faker.boolean(50):
+                        # mark some of these as seen
+                        study.is_seen = True
+                        study.save()
+                else:
+                    # Non submitted studies will not be filled in perfectly
+                    self._create_user_form_submission(user, form, study)
 
     def _generate_text_answer(self, question: TextQuestion) -> dict:
         return {"value": self.faker.sentence()}
@@ -354,9 +369,13 @@ class Command(BaseCommand):
         }
 
     def _generate_file_upload_answer(self, question: FileUploadQuestion) -> dict:
-        filename = f"{self.faker.word()}_{self.faker.word()}.pdf"
-        file_url = f"/uploads/{self.faker.uuid4()}/{filename}"
-        return {"value": file_url}
+        # Note: these do not correspond to actually uploaded files, so the
+        # frontend will not be able to retrieve them.
+        return {
+            "value": f"{self.faker.uuid4()}",
+            "name": self.faker.file_name(),
+            "size": self.faker.random_int(min=1, max=question.size_limit),
+        }
 
     def _generate_answer_for_question(self, question: AnyQuestion) -> dict:
         if isinstance(question, TextQuestion):
@@ -375,7 +394,11 @@ class Command(BaseCommand):
         raise ValueError(f"Unsupported question type: {type(question)}")
 
     def _create_user_form_submission(
-        self, user: User, form: MRForm, study: Study
+        self,
+        user: User,
+        form: MRForm,
+        study: Study,
+        complete: bool = False,
     ) -> None:
         submission = UserFormSubmission.objects.create(
             user=user,
@@ -388,9 +411,10 @@ class Command(BaseCommand):
         # First generate answers for all questions, regardless of visibility.
         for question in form_questions:
             question = question.get_subclass()
-            if self.faker.random_element([True, False, False, False]):
-                # 25% chance to leave the question unanswered.
-                continue
+            if not complete:
+                if self.faker.random_element([True, False, False, False]):
+                    # 25% chance to leave the question unanswered.
+                    continue
 
             answer_data = self._generate_answer_for_question(question)
 
@@ -410,17 +434,3 @@ class Command(BaseCommand):
                     submissions__in=[submission],
                     question=question,
                 ).delete()
-
-    def _create_notes(self, options):
-        for _ in tqdm(
-            range(10),
-            desc="Generating notes...",
-            disable=options["silent"],
-        ):
-            note = Note.objects.create(
-                title_nl=self.faker_nl.sentence(nb_words=1),
-                title_en=self.faker_en.sentence(nb_words=1),
-                content_nl=self.faker_nl.paragraph(),
-                content_en=self.faker_en.paragraph(),
-            )
-            note.save()

@@ -7,6 +7,9 @@ import AvailableActions from "~/components/studyDetail/AvailableActions.vue";
 import StudyProgressBar from "~/components/studyDetail/StudyProgressBar.vue";
 import { useStudyId } from "~/composables/useRouteParams";
 
+const currentUserStore = useCurrentUserStore();
+await callOnce("user", () => currentUserStore.loadData());
+
 const GET_STUDY = graphql(`
     query GetStudy($id: ID!) {
         study(id: $id, mrPermission: "View") {
@@ -15,6 +18,9 @@ const GET_STUDY = graphql(`
             reference
             latestSubmissionId
             actions
+            createdAt
+            updatedAt
+            isSeen
             createdBy {
                 fullName
                 id
@@ -33,30 +39,6 @@ const { result: studyResult } = useQuery<GetStudyQuery>(
 );
 
 const study = computed(() => studyResult.value?.study ?? null);
-
-// Some functions to generate mockdata
-
-function randomDatePastYear(): string {
-    const today = new Date();
-    const oneYearAgo = new Date();
-    oneYearAgo.setFullYear(today.getFullYear() - 1);
-
-    // Get timestamps
-    const start = oneYearAgo.getTime();
-    const end = today.getTime();
-
-    // Pick a random timestamp between start and end
-    const randomTime = start + Math.random() * (end - start);
-    const randomDate = new Date(randomTime);
-
-    return randomDate.toISOString().split("T")[0];
-}
-
-// If study is even, it is a draft. If it is odd, it is in the review phase
-
-const studyStatus = computed(() =>
-    Number(study.value?.id) % 2 === 0 ? "draft" : "review",
-);
 </script>
 
 <template>
@@ -68,14 +50,23 @@ const studyStatus = computed(() =>
             <h1>{{ $t("Study overview") }}</h1>
         </div>
         <div v-if="study" class="uu-sidebar-container">
-            <StudyDetailsSidebar
-                :study="study"
-                :random-date-past-year="randomDatePastYear()"
-            />
+            <StudyDetailsSidebar :study="study" />
             <div class="uu-sidebar-content">
                 <div class="uu-container">
                     <div class="row">
                         <div class="col me-5">
+                            <div v-if="study.isSeen !== null">
+                                <span
+                                    v-if="study.isSeen"
+                                    class="badge rounded-pill text-bg-info mb-1 fs-6"
+                                    >{{ $t("Seen") }}</span
+                                >
+                                <span
+                                    v-else
+                                    class="badge rounded-pill text-bg-gray mb-1 fs-6"
+                                    >{{ $t("Unseen") }}</span
+                                >
+                            </div>
                             <h1>
                                 {{ study.reference }} -
                                 <em>{{ study.title }}</em>
@@ -95,7 +86,7 @@ const studyStatus = computed(() =>
                             />
                         </div>
                         <div class="col-2">
-                            <StudyProgressBar :study-status="studyStatus" />
+                            <StudyProgressBar :study-id="study.id" />
                         </div>
                     </div>
                 </div>

@@ -17,6 +17,7 @@ export const useCurrentUserStore = defineStore("currentUser", () => {
                     email
                     fullName
                     isStaff
+                    isPrivacyOfficer
                 }
             }
         `);

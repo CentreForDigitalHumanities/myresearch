@@ -23,6 +23,7 @@ export default defineNuxtConfig({
 
     vite: {
         server: {
+            allowedHosts: ["mr-vue"],
             watch: {
                 // Necessary for HMR to pick up changes in the volume.
                 usePolling: true,
@@ -39,7 +40,10 @@ export default defineNuxtConfig({
         },
     },
 
-    css: ["~/assets/css/main.scss"],
+    css: [
+        "~/assets/css/main.scss",
+        "@fortawesome/fontawesome-svg-core/styles.css",
+    ],
 
     app: {
         head: {

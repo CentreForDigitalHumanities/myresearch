@@ -31,7 +31,7 @@ class UpdateUserFormSubmission(Mutation):
         user: User = info.context.user
 
         try:
-            submission = update_submission(
+            submission, errors = update_submission(
                 user,
                 user_form_input,
             )
@@ -41,6 +41,10 @@ class UpdateUserFormSubmission(Mutation):
                 messages=[str(e)],
             )
             return cls(ok=False, errors=[error])
+
+        # If there were validation errors, return them
+        if errors:
+            return cls(ok=False, errors=errors)
 
         study: Study = submission.study  # type: ignore
 

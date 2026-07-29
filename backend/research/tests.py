@@ -1,8 +1,10 @@
 import pytest
 from django.contrib.auth.models import AnonymousUser, Group
+from unittest.mock import MagicMock
 
 from main.models import MRGroups, MRPermission, User
 from research.models.study import YearCounter, Study
+from research.models.reviews import StatusChange, SubmissionStatus
 from form.models import Step, TextQuestion, QuestionResponse, UserFormSubmission
 
 #################
@@ -363,3 +365,109 @@ class TestStudyManagerAnnotations:
 
         # Should have custom title
         assert study_with_annotations.title == "Custom Title"
+
+
+##############################
+# DeleteStudy Mutation Tests #
+##############################
+
+DELETE_STUDY_MUTATION = """
+    mutation DeleteStudy($id: ID!) {
+        deleteStudy(id: $id) {
+            ok
+            errors {
+                field
+                messages
+            }
+        }
+    }
+"""
+
+
+def _make_context(user):
+    """Return a mock request context with the given user."""
+    request = MagicMock()
+    request.user = user
+    return request
+
+
+@pytest.mark.django_db()
+class TestDeleteStudyMutation:
+    """Tests for the DeleteStudy GraphQL mutation."""
+
+    def _execute(self, user, study_id):
+        from api.graphql.schema import schema
+
+        result = schema.execute(
+            DELETE_STUDY_MUTATION,
+            variable_values={"id": study_id},
+            context_value=_make_context(user),
+        )
+        return result
+
+    def test_hard_delete_unsubmitted_study(self, normal_user: User, test_study: Study):
+        """Owner can hard-delete a study that has never been submitted."""
+        study_id = test_study.pk
+
+        result = self._execute(normal_user, study_id)
+
+        assert not result.errors
+        assert result.data
+        assert result.data["deleteStudy"]["ok"] is True
+        assert not result.data["deleteStudy"]["errors"]
+        assert not Study.objects.filter(pk=study_id).exists()
+
+    def test_soft_delete_submitted_study(self, normal_user: User, test_study: Study):
+        """
+        Owner cannot soft-delete a study that has been submitted.
+        """
+        StatusChange.objects.create(
+            study=test_study,
+            status=SubmissionStatus.SUBMITTED,
+            created_by=normal_user,
+        )
+
+        result = self._execute(normal_user, test_study.pk)
+
+        assert not result.errors
+        assert result.data
+        assert result.data["deleteStudy"]["ok"] is False
+        assert result.data["deleteStudy"]["errors"]
+
+        test_study.refresh_from_db()
+        assert test_study.is_deleted is False
+
+    def test_delete_another_users_study_returns_error(
+        self, normal_user: User, test_po_study: Study
+    ):
+        """A user cannot delete a study that belongs to another user."""
+        result = self._execute(normal_user, test_po_study.pk)
+
+        assert not result.errors
+        assert result.data
+        assert result.data["deleteStudy"]["ok"] is False
+        assert result.data["deleteStudy"]["errors"]
+        assert Study.objects.filter(pk=test_po_study.pk).exists()
+
+    def test_delete_nonexistent_study_returns_error(self, normal_user: User):
+        """Attempting to delete a non-existent study ID returns an error."""
+        result = self._execute(normal_user, 999999)
+
+        assert not result.errors
+        assert result.data
+        assert result.data["deleteStudy"]["ok"] is False
+        assert result.data["deleteStudy"]["errors"]
+
+    def test_anonymous_user_cannot_delete(
+        self, anonymous_user: AnonymousUser, test_study: Study
+    ):
+        """An unauthenticated user cannot delete any study."""
+        study_id = test_study.pk
+
+        result = self._execute(anonymous_user, study_id)
+
+        assert not result.errors
+        assert result.data
+        assert result.data["deleteStudy"]["ok"] is False
+        assert result.data["deleteStudy"]["errors"]
+        assert Study.objects.filter(pk=study_id).exists()

@@ -42,8 +42,11 @@ INSTALLED_APPS = (
         "modeltranslation",
         "django_extensions",
         "cdh.core",
+        "cdh.files",
     ]
 )
+
+CDH_FILES_FILE_ROOT = BASE_DIR / "uploads"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -123,7 +126,7 @@ LANGUAGES = [
     ("nl", _("Dutch")),
 ]
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Brussels"
 
 USE_I18N = True
 

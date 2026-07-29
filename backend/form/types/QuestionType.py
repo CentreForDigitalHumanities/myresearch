@@ -21,6 +21,7 @@ from form.models import (
     SelectQuestion,
     TextQuestion,
 )
+from form.models.responses import MRDocument
 from form.types.SelectOptionType import SelectOptionType
 
 
@@ -107,6 +108,7 @@ class TextQuestionType(BaseQuestionMixin, ObjectType):
     placeholder_nl = String()
     placeholder_en = String()
     lines = Int(required=True)
+    is_email = Boolean(required=True)
 
     def __init__(self, question=None, **kwargs):
         super().__init__(**kwargs)
@@ -129,6 +131,12 @@ class TextQuestionType(BaseQuestionMixin, ObjectType):
         if hasattr(parent.question, "textquestion"):
             return parent.question.textquestion.lines
         return parent.question.lines
+
+    @staticmethod
+    def resolve_is_email(parent, info: ResolveInfo):
+        if hasattr(parent.question, "textquestion"):
+            return parent.question.textquestion.is_email
+        return parent.question.is_email
 
 
 class NumberQuestionType(BaseQuestionMixin, ObjectType):
@@ -216,6 +224,20 @@ class FileUploadQuestionType(BaseQuestionMixin, ObjectType):
     def __init__(self, question=None, **kwargs):
         super().__init__(**kwargs)
         self.question = question
+
+    @staticmethod
+    def resolve_answer(parent, info: ResolveInfo):
+        if parent.answer is None:
+            return None
+
+        try:
+            uuid = parent.answer["value"]
+            if not uuid:
+                return None
+            MRDocument.objects.get(file__uuid=uuid)
+            return parent.answer
+        except (KeyError, TypeError, MRDocument.DoesNotExist):
+            return None
 
     @staticmethod
     def resolve_size_limit(parent, info: ResolveInfo):

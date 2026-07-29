@@ -11,18 +11,17 @@ const DEBOUNCED_QUESTION_TYPES: readonly QuestionTypeName[] = [
 const DEBOUNCE_TIME_MS = 300;
 
 /**
- * Watches conditional questions for changes and triggers form submission
- * with appropriate debouncing based on question type.
- *
+ * Watches questions for changes and triggers form submission with appropriate
+ * debouncing based on question type.
  */
-export function useConditionalQuestionsWatcher(
-    questionsWithConditions: Ref<QuestionWithValue[]>,
+export function useWatchQuestions(
+    watchedQuestions: Ref<QuestionWithValue[]>,
     submit: () => void,
 ) {
     // Used to keep track of the last submission to determine when values
     // have changed.
     const questionValuesSnapshot = ref<Map<string, unknown>>(
-        createSnapshot(questionsWithConditions.value),
+        createSnapshot(watchedQuestions.value),
     );
     const debounceTimerRef = ref<ReturnType<typeof setTimeout> | null>(null);
 
@@ -33,11 +32,11 @@ export function useConditionalQuestionsWatcher(
         }
     });
 
-    // Watch for changes in questions with attached conditions.
+    // Watch for changes.
     watchEffect(() => {
         let updateMode: "none" | "debounce-submit" | "submit" = "none";
 
-        for (const question of questionsWithConditions.value) {
+        for (const question of watchedQuestions.value) {
             const key = questionKey(question);
             const currentValue = question.value;
             const previousValue = questionValuesSnapshot.value.get(key);
@@ -60,9 +59,7 @@ export function useConditionalQuestionsWatcher(
         }
 
         // Update snapshot
-        questionValuesSnapshot.value = createSnapshot(
-            questionsWithConditions.value,
-        );
+        questionValuesSnapshot.value = createSnapshot(watchedQuestions.value);
 
         if (updateMode === "none") {
             return;

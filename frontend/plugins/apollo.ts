@@ -14,6 +14,11 @@ export const apolloClient = new ApolloClient({
     cache: new InMemoryCache(),
 });
 
+function getCsrfToken(): string | null {
+    const csrfCookie = useCookie("csrftoken");
+    return csrfCookie.value ?? null;
+}
+
 export default defineNuxtPlugin((nuxtApp) => {
     // We can only access runtime config inside this function, so we setup the
     // link here
@@ -23,6 +28,9 @@ export default defineNuxtPlugin((nuxtApp) => {
     const httpLink = new HttpLink({
         uri: GRAPHQL_URL,
         credentials: "include", // This tells Apollo to send our auth cookies
+        headers: {
+            "X-CSRFToken": getCsrfToken() ?? "",
+        },
     });
     const linkChain = ApolloLink.from([removeTypenameLink, httpLink]);
 
