@@ -2960,7 +2960,7 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "stepInfo",
+              "name": "stepInfoText",
               "type": {
                 "kind": "LIST",
                 "name": null,
