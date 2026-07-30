@@ -11,8 +11,8 @@ from graphene import (
     String,
 )
 
-from form.models import StepInfo
-from form.types.StepInfoType import StepInfoType
+from form.models import StepInfoText
+from form.types.StepInfoTextType import StepInfoTextType
 from form.types.QuestionType import BaseQuestionInterface
 
 
@@ -36,16 +36,18 @@ class StepType(ObjectType):
         lambda: NonNull(StepType),
         required=True,
     )
-    step_info = List(
-        NonNull(StepInfoType),
+    step_info_text = List(
+        NonNull(StepInfoTextType),
         required=False,
     )
 
     @staticmethod
-    def resolve_step_info(parent, info: ResolveInfo) -> QuerySet[StepInfo] | None:
+    def resolve_step_info_text(
+        parent, info: ResolveInfo
+    ) -> QuerySet[StepInfoText] | None:
         if not parent.step_id:
             return None
         try:
-            return StepInfo.objects.filter(step_id=parent.step_id)
-        except StepInfo.DoesNotExist:
+            return StepInfoText.objects.filter(step_id=parent.step_id)
+        except StepInfoText.DoesNotExist:
             return None

@@ -5,7 +5,6 @@ import DateQuestion from "../form/DateQuestion.vue";
 import NumberQuestion from "./NumberQuestion.vue";
 import TrueFalseQuestion from "./TrueFalseQuestion.vue";
 import FileUploadQuestion from "../form/FileUploadQuestion.vue";
-import FormSideBar from "../form/FormSideBar.vue";
 import type { Component } from "vue";
 
 // Imported components are treated as 'any', so the linter complains. There is
@@ -71,11 +70,6 @@ useWatchQuestions(watchedQuestions, () => {
                     {{ error.$message }}
                 </div>
             </div>
-        </div>
-        <div class="uu-sidebar-content">
-            <aside class="uu-sidebar pe-3">
-                <FormSideBar :step="step" />
-            </aside>
         </div>
     </div>
 </template>

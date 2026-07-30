@@ -2960,7 +2960,7 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "stepInfo",
+              "name": "stepInfoText",
               "type": {
                 "kind": "LIST",
                 "name": null,
@@ -2969,7 +2969,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "StepInfoType",
+                    "name": "StepInfoTextType",
                     "ofType": null
                   }
                 }
@@ -3054,7 +3054,7 @@
           "inputFields": null,
           "interfaces": [],
           "kind": "OBJECT",
-          "name": "StepInfoType",
+          "name": "StepInfoTextType",
           "possibleTypes": null
         },
         {

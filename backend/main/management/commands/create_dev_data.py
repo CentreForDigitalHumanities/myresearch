@@ -15,7 +15,7 @@ from form.models import (
     MRForm,
     QuestionResponse,
     Step,
-    StepInfo,
+    StepInfoText,
     FileUploadQuestion,
     NumberQuestion,
     DateQuestion,
@@ -199,14 +199,14 @@ class Command(BaseCommand):
                 is_overview=True,
             )
 
-    def _create_step_info(self, step: Step) -> None:
+    def _create_step_info_text(self, step: Step) -> None:
         """Generates side information for a given step."""
 
         if not self.faker.pybool():
             return
 
         for _ in range(self.faker.random_int(1, 3)):
-            StepInfo.objects.create(
+            StepInfoText.objects.create(
                 step=step,
                 text_nl=self.faker_nl.sentence().replace(".", "?"),
                 text_en=self.faker_en.sentence().replace(".", "?"),
