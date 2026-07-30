@@ -29,7 +29,13 @@ const { formObject, validationRules } = useFormState(queried);
 const studyId = useStudyId();
 const { t } = useI18n();
 
-const showSubmissionWarning = ref(false);
+const v$ = useVuelidate(
+    validationRules,
+    computed(() => formObject.value ?? { steps: [] }),
+    {
+        $autoDirty: true,
+    },
+);
 
 const UPDATE_USER_FORM = graphql(`
     mutation SaveFormSubmission(
@@ -71,7 +77,6 @@ function submitForm(options = { submit: false }): void {
     if (options.submit) {
         void v$.value.$validate();
         if (v$.value.$invalid) {
-            showSubmissionWarning.value = true;
             return;
         }
     }
@@ -130,14 +135,6 @@ function finalSubmit(): void {
     });
 }
 
-const v$ = useVuelidate(
-    validationRules,
-    computed(() => formObject.value ?? { steps: [] }),
-    {
-        $autoDirty: true,
-    },
-);
-
 // Annotate form objects with validation errors whenever they change.
 watchEffect(() => {
     if (formObject.value) {
@@ -173,6 +170,18 @@ const firstStepSelected = computed(() => {
     }
     const steps = allSteps.value;
     return steps[0].slug === selected.slug;
+});
+
+const showSubmissionWarning = computed(() => {
+    const selected = selectedStep.value;
+    return selected?.isOverview && v$.value.$invalid;
+});
+
+watchEffect(() => {
+    if (formObject.value && showSubmissionWarning.value) {
+        void v$.value.$validate();
+        useAnnotateErrors(v$.value, formObject.value);
+    }
 });
 
 function getAllSteps(form: FormWithValues): CombinedStepWithValues[] {
@@ -275,22 +284,20 @@ function navigateToSlug(slug: string) {
             </form>
 
             <div class="mb-3">
-                <Transition name="fade">
-                    <div
-                        v-if="showSubmissionWarning"
-                        class="alert alert-warning d-inline-flex align-items-center gap-2"
-                        role="alert"
-                    >
-                        <TriangleAlert class="icon" />
-                        <span>
-                            {{
-                                t(
-                                    "Your form contains errors. Please review and resubmit.",
-                                )
-                            }}
-                        </span>
-                    </div>
-                </Transition>
+                <div
+                    v-if="showSubmissionWarning"
+                    class="alert alert-warning d-inline-flex align-items-center gap-2"
+                    role="alert"
+                >
+                    <TriangleAlert class="icon" />
+                    <span>
+                        {{
+                            t(
+                                "Your form contains errors. Please review and resubmit.",
+                            )
+                        }}
+                    </span>
+                </div>
             </div>
 
             <div class="btn-group">
@@ -303,7 +310,15 @@ function navigateToSlug(slug: string) {
                     {{ $t("Previous") }}
                 </BSButton>
                 <BSButton
-                    v-if="selectedStep.isOverview"
+                    v-if="showSubmissionWarning"
+                    :disabled="true"
+                    variant="light"
+                >
+                    {{ $t("Submit") }}
+                    <Send class="ms-2" :size="16" />
+                </BSButton>
+                <BSButton
+                    v-else-if="selectedStep.isOverview"
                     variant="success"
                     @click="finalSubmit"
                 >
