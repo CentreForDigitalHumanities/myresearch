@@ -11,38 +11,35 @@ const form = useFormQuery(submissionId, "View");
 
 const studyId = useStudyId();
 const study = useStudyQuery(studyId);
+
+function goBackToStudy() {
+    return navigateTo({
+        name: "studies-studyId",
+        params: { studyId: studyId.value },
+    });
+}
 </script>
 
 <template>
     <div class="uu-content">
-        <Title>{{ $t("Registration overview") }}</Title>
-        <div class="uu-hero">
-            <h1>{{ $t("Registration overview") }}</h1>
+        <Title>{{ study?.reference }} - {{ study?.title }}</Title>
+        <div
+            class="uu-hero d-flex flex-nowrap justify-content-between align-items-center gap-3"
+        >
+            <BSButton
+                variant="secondary"
+                class="btn-arrow-left flex-shrink-0"
+                @click="goBackToStudy"
+            >
+                {{ $t("Go back to study page") }}
+            </BSButton>
+            <h1 class="mb-0 text-wrap text-break">
+                {{ study?.reference }} -
+                {{ study?.title }}
+            </h1>
         </div>
         <div class="uu-container">
             <div class="col-12">
-                <div class="row">
-                    <div class="col-3 d-flex">
-                        <BSButton
-                            variant="primary"
-                            class="btn-arrow-left align-self-center"
-                            @click="
-                                navigateTo({
-                                    name: 'studies-studyId',
-                                    params: { studyId },
-                                })
-                            "
-                        >
-                            {{ $t("Go back to study page") }}
-                        </BSButton>
-                    </div>
-                    <div class="col-9 d-flex">
-                        <h1 class="mb-0">
-                            {{ study?.reference }} - <em>{{ study?.title }}</em>
-                        </h1>
-                    </div>
-                </div>
-                <hr />
                 <OverviewWrapper v-if="form" :queried-form="form" />
                 <div v-else>
                     <Loading />
@@ -51,12 +48,7 @@ const study = useStudyQuery(studyId);
                 <BSButton
                     variant="primary"
                     class="btn-arrow-left"
-                    @click="
-                        navigateTo({
-                            name: 'studies-studyId',
-                            params: { studyId },
-                        })
-                    "
+                    @click="goBackToStudy"
                 >
                     {{ $t("Go back to study page") }}
                 </BSButton>
