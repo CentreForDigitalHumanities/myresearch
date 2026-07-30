@@ -80,7 +80,7 @@ def update_submission(
                     )
                     new_response.submissions.add(current_submission)
                 else:
-                    if not response["answer"].get("value") and isinstance(
+                    if response["answer"]["value"] == "" and isinstance(
                         qr.question.get_subclass(), FileUploadQuestion
                     ):
                         _delete_document_if_cleared(qr.answer, response["answer"])
