@@ -3,7 +3,11 @@ import { useFormQuery } from "~/composables/useFormQuery";
 import { useStudyQuery } from "~/composables/useStudyQuery";
 import { useNotification } from "~/composables/useNotification";
 import FormWrapper from "~/components/form/FormWrapper.vue";
-import { useStepSlug, useSubmissionId } from "~/composables/useRouteParams";
+import {
+    useStepSlug,
+    useSubmissionId,
+    useStudyId,
+} from "~/composables/useRouteParams";
 import { BSButton } from "cdh-vue-lib";
 import { useI18n } from "vue-i18n";
 
@@ -15,7 +19,12 @@ const studyId = useStudyId();
 const study = useStudyQuery(studyId);
 const { t } = useI18n();
 
+const formWrapperRef = ref<{ submitForm: () => void } | null>(null);
+
 function handleBackNavigation() {
+    // We call submitForm from our FormWrapper component
+    formWrapperRef.value?.submitForm();
+
     useNotification(t("Your progress has been saved."), "info", 3);
     return navigateTo({
         name: "studies-studyId",
@@ -35,7 +44,7 @@ function handleBackNavigation() {
                 class="btn-arrow-left flex-shrink-0"
                 @click="handleBackNavigation"
             >
-                {{ $t("Go back & save progress") }}
+                {{ $t("Save and go back") }}
             </BSButton>
             <h1 class="mb-0 text-wrap text-break">
                 {{ study?.reference }} -
@@ -45,6 +54,7 @@ function handleBackNavigation() {
         <div class="uu-container">
             <FormWrapper
                 v-if="form && slug"
+                ref="formWrapperRef"
                 :queried-form="form"
                 :current-step-slug="slug"
                 :should-evict-study="slug === 'study'"
