@@ -3354,7 +3354,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 40,
         "fields": {
             "step": 7,
@@ -3368,7 +3368,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 41,
         "fields": {
             "step": 7,
@@ -3382,7 +3382,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 42,
         "fields": {
             "step": 11,
@@ -3396,7 +3396,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 43,
         "fields": {
             "step": 11,
@@ -3410,7 +3410,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 44,
         "fields": {
             "step": 11,
@@ -3424,7 +3424,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 45,
         "fields": {
             "step": 11,
@@ -3438,7 +3438,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 46,
         "fields": {
             "step": 11,
@@ -3452,7 +3452,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 47,
         "fields": {
             "step": 11,
@@ -3466,7 +3466,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 48,
         "fields": {
             "step": 9,
@@ -3480,7 +3480,7 @@
         }
     },
     {
-        "model": "form.stepinfo",
+        "model": "form.stepinfotext",
         "pk": 49,
         "fields": {
             "step": 9,
