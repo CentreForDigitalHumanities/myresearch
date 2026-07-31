@@ -254,6 +254,24 @@ function navigateToSlug(slug: string) {
         />
         <div v-if="selectedStep.isOverview && formObject" class="col-9">
             <SubmissionOverview :form="formObject" />
+            <div class="mb-3">
+                <Transition name="fade">
+                    <div
+                        v-if="showSubmissionWarning"
+                        class="alert alert-warning d-inline-flex align-items-center gap-2"
+                        role="alert"
+                    >
+                        <TriangleAlert class="icon" />
+                        <span>
+                            {{
+                                t(
+                                    "Your form contains errors. Please review and resubmit.",
+                                )
+                            }}
+                        </span>
+                    </div>
+                </Transition>
+            </div>
             <div class="btn-group">
                 <BSButton
                     variant="primary"
@@ -284,24 +302,6 @@ function navigateToSlug(slug: string) {
                     ></div>
                     <MRForm :step="selectedStep" @submit-form="submitForm" />
                 </form>
-                <div class="mb-3">
-                    <Transition name="fade">
-                        <div
-                            v-if="showSubmissionWarning"
-                            class="alert alert-warning d-inline-flex align-items-center gap-2"
-                            role="alert"
-                        >
-                            <TriangleAlert class="icon" />
-                            <span>
-                                {{
-                                    t(
-                                        "Your form contains errors. Please review and resubmit.",
-                                    )
-                                }}
-                            </span>
-                        </div>
-                    </Transition>
-                </div>
                 <div class="btn-group">
                     <BSButton
                         v-if="!firstStepSelected"
