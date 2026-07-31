@@ -2722,102 +2722,478 @@
     },
     {
         "model": "form.stepinfotext",
-        "pk": 1,
-        "fields": {
-            "step": 1,
-            "text": "<h3>What do we mean by 'a study'?</h3>\r\n<p>The definition of a study can be found in de <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>\r\n<h3>What will the specified name be used for?</h3>\r\n<p>This name will be used in all formal correspondence.</p>\r\n<h3>What happens to the data I enter?</h3>\r\n<p>The data that you enter will be checked where needed completed by the privary officer. As soon as all data have correctly been registered, your registration in the processing register is legally valid. This registration can be viewed by the management of your faculty, by the co-researchers that you yourself have added, by the data protection officer and by the privacy officier. If needed, the registration can be reopended by you or by the privacy officier.</p>\r\n<h3>I already entered this information in another place. Why do I have to enter it again?</h3>\r\n<p>Often multiple applications demand entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this register will be extended with data required for assessment by the FEtC-H. Data will then need to be entered only once.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
-            "text_en": "<h3>What do we mean by 'a study'?</h3>\r\n<p>The definition of a study can be found in de <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>\r\n<h3>What will the specified name be used for?</h3>\r\n<p>This name will be used in all formal correspondence.</p>\r\n<h3>What happens to the data I enter?</h3>\r\n<p>The data that you enter will be checked where needed completed by the privary officer. As soon as all data have correctly been registered, your registration in the processing register is legally valid. This registration can be viewed by the management of your faculty, by the co-researchers that you yourself have added, by the data protection officer and by the privacy officier. If needed, the registration can be reopended by you or by the privacy officier.</p>\r\n<h3>I already entered this information in another place. Why do I have to enter it again?</h3>\r\n<p>Often multiple applications demand entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this register will be extended with data required for assessment by the FEtC-H. Data will then need to be entered only once.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
-            "text_nl": "<h3>Wat verstaan we onder een studie?</h3>\r\n<p>Definitie studie is te vinden op de <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>\r\n<h3>Wordt de naam die ik opgeef vaker gebruikt?&nbsp;</h3>\r\n<p>Deze naam zal worden gebruikt in alle formele correspondentie.</p>\r\n<h3>Wat gebeurt er met de data die ik invoer?</h3>\r\n<p>De data die je invoert, worden gecontroleerd en waar nodig aangevuld door de privacy officer. Zodra alle data naar behoren zijn ingevuld, is er sprake van een rechtsgeldige registratie in het verwerkingsregister. Deze registratie kan in ieder geval worden ingezien door het management van je faculteit, door de collega-onderzoekers die je zelf opgeeft, door de functionaris voor gegevensbescherming en door de privacy officers van de UU. Indien nodig kan de registratie door jou of de privacy officer worden heropend om wijzigingen aan te brengen.</p>\r\n<h3>Ik heb deze informatie al ergens anders opgegeven. Waarom wordt dit hier weer gevraagd?</h3>\r\n<p>Vaak moet je voor verschillende toepassingen dezelfde gegevens opgeven. We streven ernaar om dergelijk dubbel werk zo veel mogelijk te beperken. Met dit register zijn we echter nog niet zo ver. In de toekomst worden de in te vullen data uitgebreid met data die nodig zijn voor toetsing door de FETC. Gegevens hoef je dan nog maar &eacute;&eacute;n keer op te geven.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>"
-        }
-    },
-    {
-        "model": "form.stepinfotext",
-        "pk": 2,
-        "fields": {
-            "step": 2,
-            "text": "<h3 class=\"ewa-rteLine\">What do we mean by person with final responsibility?</h3>\r\n<div class=\"ewa-rteLine\">The person with final responsibilitiy is a researcher with a doctorate, a supervisor with a doctorate or a PhD supervisor</div>\r\n<h3 class=\"ewa-rteLine\">How do we define co-researchers?</h3>\r\n<div class=\"ewa-rteLine\">Co-researchers are those who have been involved in this (part of the) research from the start, and with whom we may have to set up an agreement about joint responsibility.&nbsp;</div>\r\n<h3 class=\"ewa-rteLine\">What happens when I add a co-researcher to this registration?</h3>\r\n<div class=\"ewa-rteLine\">Momenteel moet je zelf medeonderzoekers op de hoogte stellen dat zij genoemd zijn in deze registratie. In de toekomst zullen zij vanuit MyResearch een automatische mail ontvangen.</div>\r\n<h3 class=\"ewa-rteLine\">What do I enter for UU colleagues?</h3>\r\n<div class=\"ewa-rteLine\">For UU colleagues, enter their UU-email address.</div>\r\n<h3 class=\"ewa-rteLine\">What do I enter if someone is not working at UU?</h3>\r\n<div class=\"ewa-rteLine\">For colleagues outside UU, enter their professional email address. Please note: Gmail or any other USA provider is not acceptable.</div>",
-            "text_en": "<h3 class=\"ewa-rteLine\">What do we mean by person with final responsibility?</h3>\r\n<div class=\"ewa-rteLine\">The person with final responsibilitiy is a researcher with a doctorate, a supervisor with a doctorate or a PhD supervisor</div>\r\n<h3 class=\"ewa-rteLine\">How do we define co-researchers?</h3>\r\n<div class=\"ewa-rteLine\">Co-researchers are those who have been involved in this (part of the) research from the start, and with whom we may have to set up an agreement about joint responsibility.&nbsp;</div>\r\n<h3 class=\"ewa-rteLine\">What happens when I add a co-researcher to this registration?</h3>\r\n<div class=\"ewa-rteLine\">Momenteel moet je zelf medeonderzoekers op de hoogte stellen dat zij genoemd zijn in deze registratie. In de toekomst zullen zij vanuit MyResearch een automatische mail ontvangen.</div>\r\n<h3 class=\"ewa-rteLine\">What do I enter for UU colleagues?</h3>\r\n<div class=\"ewa-rteLine\">For UU colleagues, enter their UU-email address.</div>\r\n<h3 class=\"ewa-rteLine\">What do I enter if someone is not working at UU?</h3>\r\n<div class=\"ewa-rteLine\">For colleagues outside UU, enter their professional email address. Please note: Gmail or any other USA provider is not acceptable.</div>",
-            "text_nl": "<h3>Wat zijn medeonderzoekers?</h3>\r\n<p>Medeonderzoekers zijn mensen die al vanaf het begin bij dit specifieke (deel-) onderzoek betrokken zijn en met wie we eventueel een regeling of overeenkomst inzake gezamenlijke verantwoordelijkheid moeten aangaan</p>\r\n<h3>Wat gebeurt er als ik een medeonderzoeker toevoeg aan deze registratie?</h3>\r\n<p>Momenteel moet je zelf medeonderzoekers op de hoogte stellen dat zij genoemd zijn in deze registratie. In de toekomst zullen zij vanuit MyResearch een automatische mail ontvangen.</p>\r\n<h3>Wat vul ik in bij collega's van de UU?</h3>\r\n<p>Bij collega&rsquo;s van de UU vul je hun UU-e-mailadres in.&nbsp;</p>\r\n<h3>Wat vul ik in als iemand niet werkzaam is bij de UU?</h3>\r\n<p>Bij collega&rsquo;s van buiten de UU vul je hun professionele e-mailadres in. Let op: een mailadres op bijvoorbeeld Gmail of een andere Amerikaanse provider is niet acceptabel.</p>\r\n<p>&nbsp;</p>"
-        }
-    },
-    {
-        "model": "form.stepinfotext",
-        "pk": 3,
-        "fields": {
-            "step": 3,
-            "text": "<h3>Do 'faculty' and 'department' refer to the researcher with final responsibility or to the study?</h3>\r\n<p>This concerns the faculty/department of the researcher with final responsibility.</p>\r\n<h3>What happens if multiple faculties take part in the study?</h3>\r\n<p>In all cases, only the coordinating faculty should be entered.</p>",
-            "text_en": "<h3>Do 'faculty' and 'department' refer to the researcher with final responsibility or to the study?</h3>\r\n<p>This concerns the faculty/department of the researcher with final responsibility.</p>\r\n<h3>What happens if multiple faculties take part in the study?</h3>\r\n<p>In all cases, only the coordinating faculty should be entered.</p>",
-            "text_nl": "<h3>Hebben de faculteit en afdeling betrekking op de eindverantwoordelijke of op de studie?</h3>\r\n<p>Het gaat om de faculteit/afdeling van de eindverantwoordelijke.</p>\r\n<h3>Wat als een studie door meerdere faculteiten wordt uitgevoerd?</h3>\r\n<p>In alle gevallen is er slechts &eacute;&eacute;n faculteit waar het onderzoek is ondergebracht, de zgn. penvoerende faculteit.</p>"
-        }
-    },
-    {
-        "model": "form.stepinfotext",
-        "pk": 4,
-        "fields": {
-            "step": 4,
-            "text": "<h3>What happens if the expected study period has passed?</h3>\r\n<p>After the study period has passed, the retention period activates. In principle, this period lasts at least 10 years.</p>\r\n<p>Should the study take longer or shorter than expected, please return to MyResearch and update the study period.</p>\r\n<h3>What do we mean by 'start date'?</h3>\r\n<p>The start date is the date where you begin communicating with potential participants (that can happen at the same time as the start of data collecting but in many cases you start with communication with potential participants).</p>\r\n<h3>What do we mean by 'end date'?</h3>\r\n<p>This is the expected publication date of the research results. This date is the start date of the retention period. Please enter an estimated date here that is as accurate as possible.</p>",
-            "text_en": "<h3>What happens if the expected study period has passed?</h3>\r\n<p>After the study period has passed, the retention period activates. In principle, this period lasts at least 10 years.</p>\r\n<p>Should the study take longer or shorter than expected, please return to MyResearch and update the study period.</p>\r\n<h3>What do we mean by 'start date'?</h3>\r\n<p>The start date is the date where you begin communicating with potential participants (that can happen at the same time as the start of data collecting but in many cases you start with communication with potential participants).</p>\r\n<h3>What do we mean by 'end date'?</h3>\r\n<p>This is the expected publication date of the research results. This date is the start date of the retention period. Please enter an estimated date here that is as accurate as possible.</p>",
-            "text_nl": "<h3>Wat gebeurt er als de verwachte studieperiode is verstreken?</h3>\r\n<p>Na afloop van de studieperiode gaat de bewaartermijn. Deze duurt in beginsel minimaal 10 jaar.</p>\r\n<p>Mocht jouw studie langer of korter duren dan hier gepland, kom dan terug naar MyResearch en pas de studieperiode aan.</p>\r\n<h3>Wat wordt bedoeld met 'begindatum'?</h3>\r\n<p>De begindatum is de datum waarop je begint met het benaderen van mogelijke deelnemers (dat kan tegelijk zijn met de start van de dataverzameling, maar in veel gevallen neem je eerst contact op met mogelijke deelnemers).</p>\r\n<h3>Wat wordt bedoeld met 'einddatum'?</h3>\r\n<p>Dit is de verwachte publicatiedatum van de onderzoeksresultaten. Op deze datum gaat de bewaartermijn van de onderzoeksdata in. Geef hier een zo correct mogelijke geschatte datum op.</p>"
-        }
-    },
-    {
-        "model": "form.stepinfotext",
-        "pk": 5,
-        "fields": {
-            "step": 5,
-            "text": "<h3>What do we mean by research goal?</h3>\r\n<p>The research goal can mean two things:</p>\r\n<ol>\r\n<li>the research goal you want to answer or the hypothesis you want to prove;</li>\r\n<li>that which you aim to achieve with this study (for example a systematic overview of something).</li>\r\n</ol>\r\n<h3>When do I have multiple goals?</h3>\r\n<p>There are multiple goals when your research questions, hypothesis or things you want to achieve can not be grouped under a single denominator.</p>",
-            "text_en": "<h3>What do we mean by research goal?</h3>\r\n<p>The research goal can mean two things:</p>\r\n<ol>\r\n<li>the research goal you want to answer or the hypothesis you want to prove;</li>\r\n<li>that which you aim to achieve with this study (for example a systematic overview of something).</li>\r\n</ol>\r\n<h3>When do I have multiple goals?</h3>\r\n<p>There are multiple goals when your research questions, hypothesis or things you want to achieve can not be grouped under a single denominator.</p>",
-            "text_nl": "<h3>Wat wordt bedoeld met onderzoeksdoel?</h3>\r\n<p>Het onderzoeksdoel kan twee dingen betekenen:</p>\r\n<ol>\r\n<li>de onderzoeksvraag die je wilt beantwoorden of de hypothese die je wilt bewijzen;</li>\r\n<li>datgene wat je met je studie wilt bereiken (bijvoorbeeld een systematisch overzicht van iets).</li>\r\n</ol>\r\n<h3>Wanneer heb ik meerdere doelen?</h3>\r\n<p>Er is sprake van meerdere doelen als je onderzoeksvragen, je hypothesen of de dingen die je wilt bereiken, niet onder &eacute;&eacute;n noemer te vatten zijn.</p>"
-        }
-    },
-    {
-        "model": "form.stepinfotext",
         "pk": 6,
         "fields": {
-            "step": 6,
-            "text": "<h3>What are personal data?</h3>\r\n<p>Personal data are data that say something about a living person. Think of name, adress data, age, sex. But also for example audio or video records, anwers of questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>\r\n<h3>Why do I need to enter 'categories' of personal data?</h3>\r\n<p>Personal data are data such as \"Jan\", \"Yasmina\" or \"12-07-1934\". Categories of personal data are for example \"first name\" or \"birth date\". In the processing register you enter the categories of data, not the data itself.</p>\r\n<h3>Is it allowed to collect data that I will not need right now?</h3>\r\n<p>In principle that is not allowed. The data you collect need to confirm to the concrete goal. Collecting data just in case you may need it for a future research goal is not enough. You need concrete indications that you will need the data in the future.</p>\r\n<h3>What are datasubjects?</h3>\r\n<p>Datasubjects are persons from whom you process data. If you interview somebody that person is a datasubject.</p>\r\n<h3>Why do I need to enter 'categories' of data subjects?</h3>\r\n<p>Datasubjects are individual persons with an own name. Categories of datasubjects are persons that can be grouped together. For example student, UU-colleagues, childeren with dyslexia, or police officers. Be as specific as possible when grouping data subjects.</p>\r\n<h3>Do I need to enter something for every category?</h3>\r\n<p>No, you do not have to do so. You only have to enter the categories datasubjects where you process peronal data. There can be multiple different groups datasubjects per category. For example at participants you can have teachers and students.</p>\r\n<h3>What do I do when my category is not shown?</h3>\r\n<p>The shown categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
-            "text_en": "<h3>What are personal data?</h3>\r\n<p>Personal data are data that say something about a living person. Think of name, adress data, age, sex. But also for example audio or video records, anwers of questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>\r\n<h3>Why do I need to enter 'categories' of personal data?</h3>\r\n<p>Personal data are data such as \"Jan\", \"Yasmina\" or \"12-07-1934\". Categories of personal data are for example \"first name\" or \"birth date\". In the processing register you enter the categories of data, not the data itself.</p>\r\n<h3>Is it allowed to collect data that I will not need right now?</h3>\r\n<p>In principle that is not allowed. The data you collect need to confirm to the concrete goal. Collecting data just in case you may need it for a future research goal is not enough. You need concrete indications that you will need the data in the future.</p>\r\n<h3>What are datasubjects?</h3>\r\n<p>Datasubjects are persons from whom you process data. If you interview somebody that person is a datasubject.</p>\r\n<h3>Why do I need to enter 'categories' of data subjects?</h3>\r\n<p>Datasubjects are individual persons with an own name. Categories of datasubjects are persons that can be grouped together. For example student, UU-colleagues, childeren with dyslexia, or police officers. Be as specific as possible when grouping data subjects.</p>\r\n<h3>Do I need to enter something for every category?</h3>\r\n<p>No, you do not have to do so. You only have to enter the categories datasubjects where you process peronal data. There can be multiple different groups datasubjects per category. For example at participants you can have teachers and students.</p>\r\n<h3>What do I do when my category is not shown?</h3>\r\n<p>The shown categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
-            "text_nl": "<h3 class=\"ewa-rteLine\">Wat zijn persoonsgegevens?</h3>\r\n<div class=\"ewa-rteLine\">Persoonsgegevens zijn gegevens die iets zeggen over een levend persoon. Denk aan naam, adresgegevens, leeftijd, geslacht etc. Maar ook bijvoorbeeld audio- of video-opnamen, antwoorden op vragen, observaties en aantekeningen. Gegevens zijn alleen persoonsgegevens als ze terug te voeren zijn op een bepaalde persoon.</div>\r\n<h3 class=\"ewa-rteLine\">Waarom moet ik 'categorie&euml;n' persoonsgegevens opgeven?</h3>\r\n<div class=\"ewa-rteLine\">Persoonsgegevens zijn gegevens zoals \"Jan\", \"Yasmina\" of \"12-07-1934\". Categorie&euml;n persoonsgegevens zijn dan bijvoorbeeld \"Voornaam\" of \"Geboortedatum\". In het verwerkingsregister leg je alleen de categorie&euml;n vast, niet de persoonsgegevens zelf.</div>\r\n<h3 class=\"ewa-rteLine\">Mag ik gegevens verzamelen die ik nu niet nodig heb?</h3>\r\n<div class=\"ewa-rteLine\">In principe niet. De gegevens die je verzamelt moeten beantwoorden aan het geformuleerde doel. Data alvast verzamelen met de gedachte dat er later misschien een onderzoeksvraag is waarvoor ze nodig zijn, is niet genoeg. Je moet concrete aanwijzingen hebben dat je de data in de toekomst nodig gaat hebben.&nbsp;</div>\r\n<div class=\"ewa-rteLine\">\r\n<h3 class=\"ewa-rteLine\">Wat zijn datasubjecten?</h3>\r\n<div class=\"ewa-rteLine\">Datasubjecten zijn personen van wie je persoonsgegevens verwerkt, dus op wie die persoonsgegevens betrekking hebben. Als je iemand interviewt, dan is diegene het datasubject.</div>\r\n<h3 class=\"ewa-rteLine\">Waarom moet ik 'categorie&euml;n' datasubjecten opgeven?</h3>\r\n<div class=\"ewa-rteLine\">Datasubjecten zijn individuele personen met een eigen naam. Categorie&euml;n datasubjecten zijn groepen personen die binnen eenzelfde categorie vallen. Bijvoorbeeld: studenten, UU-medewerkers, kinderen met dyslexie of politieambtenaren. Wees bij het opgeven van categorie&euml;n datasubjecten zo specifiek mogelijk.</div>\r\n<h3 class=\"ewa-rteLine\">Moet ik bij elke categorie iets opgeven?</h3>\r\n<div class=\"ewa-rteLine\">Nee, dat hoeft niet. Je moet alleen die categori&euml;n datasubjecten opgeven van wie je persoonsgegevens verwerkt. Per categorie kunnen dat wel meerdere, verschillende, groepen datasubjecten zijn, bijv. bij 'Deelnemers, d.w.z. personen die bewust deelnemen aan het onderzoek': docenten en leerlingen.</div>\r\n<h3 class=\"ewa-rteLine\">Wat moet ik doen als mijn categorie er niet tussen staat?</h3>\r\n<div class=\"ewa-rteLine\">De opgevoerde categorie&euml;n zijn geacht uitputtend te zijn. Mochten je desondanks de indruk hebben niet door te kunnen, neem dan contact op met de privacy officer.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n</div>"
+            "step": 1,
+            "text": "What do we mean by 'a study'?",
+            "text_en": "What do we mean by 'a study'?",
+            "text_nl": "Wat verstaan we onder een studie?",
+            "content": "<p>The definition of a study can be found in de <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>",
+            "content_en": "<p>The definition of a study can be found in de <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>",
+            "content_nl": "<p>Definitie studie is te vinden op de <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>",
+            "_order": 0
         }
     },
     {
         "model": "form.stepinfotext",
         "pk": 7,
         "fields": {
-            "step": 9,
-            "text": "<h3>Who/what are recipients?&nbsp;</h3>\r\n<p>Recipients are people who want to use the personal data for their own different research goal. (meaning, a different purpose-binding when it comes to the GDPR).</p>\r\n<h3>Who/what are third parties?</h3>\r\n<p>See 'Who/what are recipients?'</p>",
-            "text_en": "<h3>Who/what are recipients?&nbsp;</h3>\r\n<p>Recipients are people who want to use the personal data for their own different research goal. (meaning, a different purpose-binding when it comes to the GDPR).</p>\r\n<h3>Who/what are third parties?</h3>\r\n<p>See 'Who/what are recipients?'</p>",
-            "text_nl": "<h3>Wie/wat zijn ontvangers?</h3>\r\n<p>Ontvangers zijn mensen die de persoonsgegevens voor een eigen, andere, onderzoeksvraag willen verwerken (d.w.z. die een andere doelbinding hebben in de zin van de AVG).</p>\r\n<h3>Wie/wat zijn derden?</h3>\r\n<p>Zie 'Wie/wat zijn ontvangers?'</p>"
+            "step": 1,
+            "text": "What will the specified name be used for?",
+            "text_en": "What will the specified name be used for?",
+            "text_nl": "Wordt de naam die ik opgeef vaker gebruikt?",
+            "content": "<p>This name will be used in all formal correspondence.</p>",
+            "content_en": "<p>This name will be used in all formal correspondence.</p>",
+            "content_nl": "<p>Deze naam zal worden gebruikt in alle formele correspondentie.</p>",
+            "_order": 1
         }
     },
     {
         "model": "form.stepinfotext",
         "pk": 8,
         "fields": {
-            "step": 10,
-            "text": "<h3>What is online software?</h3>\r\n<p>With online software we mean applications that are offered through internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EER.</p>\r\n<h3>Which software has been approved by the UU?</h3>\r\n<p>Please consult the <a href=\"https://tools.uu.nl/tooladvisor/\" target=\"_blank\" rel=\"noopener\">Tooladvisor</a>. Do keep in mind that the Tooladvisor is not always up to date. If you have any questions, please contact the IT Service Desk.</p>\r\n<h3>What should I do when I use unapproved software anyway?</h3>\r\n<p>The use of non-approved software needs to be reported as soon as possible, in principle even before you are going to use that software for the processing of personal data. The privacy officer will then check if the software meets GDPR requirements.</p>",
-            "text_en": "<h3>What is online software?</h3>\r\n<p>With online software we mean applications that are offered through internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EER.</p>\r\n<h3>Which software has been approved by the UU?</h3>\r\n<p>Please consult the <a href=\"https://tools.uu.nl/tooladvisor/\" target=\"_blank\" rel=\"noopener\">Tooladvisor</a>. Do keep in mind that the Tooladvisor is not always up to date. If you have any questions, please contact the IT Service Desk.</p>\r\n<h3>What should I do when I use unapproved software anyway?</h3>\r\n<p>The use of non-approved software needs to be reported as soon as possible, in principle even before you are going to use that software for the processing of personal data. The privacy officer will then check if the software meets GDPR requirements.</p>",
-            "text_nl": "<h3>Wat is online software?</h3>\r\n<p>Onder online software verstaan we applicaties die via internet worden aangeboden, bijv. Qualtrics, SURFDrive of Office 365.</p>\r\n<p>Cloud software draait op grote serverparken ergens ter wereld. De precieze locaties kunnen verschillen. Vanuit de AVG wordt ge&euml;ist dat persoonsgegevens binnen de EER worden verwerkt.&nbsp;</p>\r\n<h3>Welke software is goedgekeurd door de UU?</h3>\r\n<p>Raadpleeg de <a href=\"https://tools.uu.nl/tooladvisor/\" target=\"_blank\" rel=\"noopener\">Tooladvisor</a>. Houd er rekening mee dat de Tooladvisor niet altijd actueel is. Voor vragen kun je terecht bij de IT Service Desk.</p>\r\n<h3>Wat moet ik doen als ik toch niet-goedgekeurde software gebruik?</h3>\r\n<p>Het gebruik van niet-goedgekeurde software moet je zo snel mogelijk melden, in principe v&oacute;&oacute;rdat je die software gaat inzetten voor het verwerken van persoonsgegevens. De privacy officer gaat dan na of die software aan alle AVG-regels voldoet.</p>"
+            "step": 1,
+            "text": "What happens to the data I enter?",
+            "text_en": "What happens to the data I enter?",
+            "text_nl": "Wat gebeurt er met de data die ik invoer?",
+            "content": "<p>The data that you enter will be checked where needed completed by the privary officer. As soon as all data have correctly been registered, your registration in the processing register is legally valid. This registration can be viewed by the management of your faculty, by the co-researchers that you yourself have added, by the data protection officer and by the privacy officier. If needed, the registration can be reopended by you or by the privacy officier.</p>",
+            "content_en": "<p>The data that you enter will be checked where needed completed by the privary officer. As soon as all data have correctly been registered, your registration in the processing register is legally valid. This registration can be viewed by the management of your faculty, by the co-researchers that you yourself have added, by the data protection officer and by the privacy officier. If needed, the registration can be reopended by you or by the privacy officier.</p>",
+            "content_nl": "<p>De data die je invoert, worden gecontroleerd en waar nodig aangevuld door de privacy officer. Zodra alle data naar behoren zijn ingevuld, is er sprake van een rechtsgeldige registratie in het verwerkingsregister. Deze registratie kan in ieder geval worden ingezien door het management van je faculteit, door de collega-onderzoekers die je zelf opgeeft, door de functionaris voor gegevensbescherming en door de privacy officers van de UU. Indien nodig kan de registratie door jou of de privacy officer worden heropend om wijzigingen aan te brengen.</p>",
+            "_order": 2
         }
     },
     {
         "model": "form.stepinfotext",
         "pk": 9,
         "fields": {
-            "step": 11,
-            "text": "<h3>Which security measures are in place at UU?</h3>\r\n<p>The UU has a large number of technical and organizational measures to increase the security of personal data. For instance, the technical infrastructure has multiple security measures, such as multi-factor authentication, firewalls and anti-virus software. Binding agreements with IT providers have also been signed to protect personal data.</p>",
-            "text_en": "<h3>Which security measures are in place at UU?</h3>\r\n<p>The UU has a large number of technical and organizational measures to increase the security of personal data. For instance, the technical infrastructure has multiple security measures, such as multi-factor authentication, firewalls and anti-virus software. Binding agreements with IT providers have also been signed to protect personal data.</p>",
-            "text_nl": "<h3>Welke beveiligingsmaatregelen zijn er bij de UU?</h3>\r\n<p>De UU heeft een groot aantal technische en organisatorische maatregelen getroffen om de beveiliging van persoonsgegevens te verhogen. Zo is de technische infrastructuur op een veelheid aan manieren beveiligd (denk aan multi-factor authenticatie, firewalls en antivirussoftware) en zijn er bindende overeenkomsten gesloten om de leveranciers van IT-diensten te dwingen de bescherming van persoonsgegevens te waarborgen.</p>"
+            "step": 1,
+            "text": "I already entered this information in another place. Why do I have to enter it again?",
+            "text_en": "I already entered this information in another place. Why do I have to enter it again?",
+            "text_nl": "Ik heb deze informatie al ergens anders opgegeven. Waarom wordt dit hier weer gevraagd?",
+            "content": "<p>Often multiple applications demand entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this register will be extended with data required for assessment by the FEtC-H. Data will then need to be entered only once.</p>",
+            "content_en": "<p>Often multiple applications demand entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this register will be extended with data required for assessment by the FEtC-H. Data will then need to be entered only once.</p>",
+            "content_nl": "<p>Vaak moet je voor verschillende toepassingen dezelfde gegevens opgeven. We streven ernaar om dergelijk dubbel werk zo veel mogelijk te beperken. Met dit register zijn we echter nog niet zo ver. In de toekomst worden de in te vullen data uitgebreid met data die nodig zijn voor toetsing door de FETC. Gegevens hoef je dan nog maar &eacute;&eacute;n keer op te geven.</p>",
+            "_order": 3
         }
     },
     {
         "model": "form.stepinfotext",
         "pk": 10,
         "fields": {
+            "step": 2,
+            "text": "What do we mean by person with final responsibility?",
+            "text_en": "What do we mean by person with final responsibility?",
+            "text_nl": "Wat verstaan we onder eindverantwoordelijke?",
+            "content": "<p>The person with final responsibilitiy is a researcher with a doctorate, a supervisor with a doctorate or a PhD supervisor</p>",
+            "content_en": "<p>The person with final responsibilitiy is a researcher with a doctorate, a supervisor with a doctorate or a PhD supervisor</p>",
+            "content_nl": "<p>De eindverantwoordelijk onderzoeker is een gepromoveerd onderzoeker, een gepromoveerde begeleider of een promotor.</p>",
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 11,
+        "fields": {
+            "step": 2,
+            "text": "How do we define co-researchers?",
+            "text_en": "How do we define co-researchers?",
+            "text_nl": "Wat zijn medeonderzoekers?",
+            "content": "<p>Co-researchers are those who have been involved in this (part of the) research from the start, and with whom we may have to set up an agreement about joint responsibility.&nbsp;</p>",
+            "content_en": "<p>Co-researchers are those who have been involved in this (part of the) research from the start, and with whom we may have to set up an agreement about joint responsibility.&nbsp;</p>",
+            "content_nl": "<p>Medeonderzoekers zijn mensen die al vanaf het begin bij dit specifieke (deel-) onderzoek betrokken zijn en met wie we eventueel een regeling of overeenkomst inzake gezamenlijke verantwoordelijkheid moeten aangaan</p>",
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 12,
+        "fields": {
+            "step": 2,
+            "text": "What happens when I add a co-researcher to this registration?",
+            "text_en": "What happens when I add a co-researcher to this registration?",
+            "text_nl": "Wat gebeurt er als ik een medeonderzoeker toevoeg aan deze registratie?",
+            "content": "<p>At the moment, you need to notify co-researchers yourself about this registration. In the future, an automatic mail will be sent to them from MyResearch.</p>",
+            "content_en": "<p>At the moment, you need to notify co-researchers yourself about this registration. In the future, an automatic mail will be sent to them from MyResearch.</p>",
+            "content_nl": "<p>Momenteel moet je zelf medeonderzoekers op de hoogte stellen dat zij genoemd zijn in deze registratie. In de toekomst zullen zij vanuit MyResearch een automatische mail ontvangen.</p>",
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 13,
+        "fields": {
+            "step": 2,
+            "text": "What do I enter for UU colleagues?",
+            "text_en": "What do I enter for UU colleagues?",
+            "text_nl": "Wat vul ik in bij collega's van de UU?",
+            "content": "<p>For UU colleagues, enter their UU-email address.</p>",
+            "content_en": "<p>For UU colleagues, enter their UU-email address.</p>",
+            "content_nl": "<p>Bij collega&rsquo;s van de UU vul je hun UU-e-mailadres in.&nbsp;</p>",
+            "_order": 3
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 14,
+        "fields": {
+            "step": 2,
+            "text": "What do I enter if someone is not working at UU?",
+            "text_en": "What do I enter if someone is not working at UU?",
+            "text_nl": "Wat vul ik in als iemand niet werkzaam is bij de UU?",
+            "content": "<p>For colleagues outside UU, enter their professional email address. Please note: Gmail or any other USA provider is not acceptable.</p>",
+            "content_en": "<p>For colleagues outside UU, enter their professional email address. Please note: Gmail or any other USA provider is not acceptable.</p>",
+            "content_nl": "<p>Bij collega&rsquo;s van buiten de UU vul je hun professionele e-mailadres in. Let op: een mailadres op bijvoorbeeld Gmail of een andere Amerikaanse provider is niet acceptabel.</p>",
+            "_order": 4
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 15,
+        "fields": {
+            "step": 3,
+            "text": "Do 'faculty' and 'department' refer to the researcher with final responsibility or to the study?",
+            "text_en": "Do 'faculty' and 'department' refer to the researcher with final responsibility or to the study?",
+            "text_nl": "Hebben de faculteit en afdeling betrekking op de eindverantwoordelijke of op de studie?",
+            "content": "<p>This concerns the faculty/department of the researcher with final responsibility.</p>",
+            "content_en": "<p>This concerns the faculty/department of the researcher with final responsibility.</p>",
+            "content_nl": "<p>Het gaat om de faculteit/afdeling van de eindverantwoordelijke.</p>",
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 16,
+        "fields": {
+            "step": 3,
+            "text": "What happens if multiple faculties take part in the study?",
+            "text_en": "What happens if multiple faculties take part in the study?",
+            "text_nl": "Wat als een studie door meerdere faculteiten wordt uitgevoerd?",
+            "content": "<p>In all cases, only the coordinating faculty should be entered.</p>",
+            "content_en": "<p>In all cases, only the coordinating faculty should be entered.</p>",
+            "content_nl": "<p>In alle gevallen is er slechts &eacute;&eacute;n faculteit waar het onderzoek is ondergebracht, de zgn. penvoerende faculteit.</p>",
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 17,
+        "fields": {
+            "step": 4,
+            "text": "What happens if the expected study period has passed?",
+            "text_en": "What happens if the expected study period has passed?",
+            "text_nl": "Wat gebeurt er als de verwachte studieperiode is verstreken?",
+            "content": "<p>After the study period has passed, the retention period activates. In principle, this period lasts at least 10 years.</p>\r\n<p>Should the study take longer or shorter than expected, please return to MyResearch and update the study period.</p>",
+            "content_en": "<p>After the study period has passed, the retention period activates. In principle, this period lasts at least 10 years.</p>\r\n<p>Should the study take longer or shorter than expected, please return to MyResearch and update the study period.</p>",
+            "content_nl": "<p>Na afloop van de studieperiode gaat de bewaartermijn. Deze duurt in beginsel minimaal 10 jaar.</p>\r\n<p>Mocht jouw studie langer of korter duren dan hier gepland, kom dan terug naar MyResearch en pas de studieperiode aan.</p>",
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 18,
+        "fields": {
+            "step": 4,
+            "text": "What do we mean by 'start date'?",
+            "text_en": "What do we mean by 'start date'?",
+            "text_nl": "Wat wordt bedoeld met 'begindatum'?",
+            "content": "<p>The start date is the date where you begin communicating with potential participants (that can happen at the same time as the start of data collecting but in many cases you start with communication with potential participants).</p>",
+            "content_en": "<p>The start date is the date where you begin communicating with potential participants (that can happen at the same time as the start of data collecting but in many cases you start with communication with potential participants).</p>",
+            "content_nl": "<p>De begindatum is de datum waarop je begint met het benaderen van mogelijke deelnemers (dat kan tegelijk zijn met de start van de dataverzameling, maar in veel gevallen neem je eerst contact op met mogelijke deelnemers).</p>",
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 19,
+        "fields": {
+            "step": 4,
+            "text": "What do we mean by 'end date'?",
+            "text_en": "What do we mean by 'end date'?",
+            "text_nl": "Wat wordt bedoeld met 'einddatum'?",
+            "content": "<p>This is the expected publication date of the research results. This date is the start date of the retention period. Please enter an estimated date here that is as accurate as possible.</p>",
+            "content_en": "<p>This is the expected publication date of the research results. This date is the start date of the retention period. Please enter an estimated date here that is as accurate as possible.</p>",
+            "content_nl": "<p>Dit is de verwachte publicatiedatum van de onderzoeksresultaten. Op deze datum gaat de bewaartermijn van de onderzoeksdata in. Geef hier een zo correct mogelijke geschatte datum op.</p>",
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 20,
+        "fields": {
+            "step": 5,
+            "text": "What do we mean by research goal?",
+            "text_en": "What do we mean by research goal?",
+            "text_nl": "Wat wordt bedoeld met onderzoeksdoel?",
+            "content": "<p>The research goal can mean two things:</p>\r\n<ol>\r\n<li>the research goal you want to answer or the hypothesis you want to prove;</li>\r\n<li>that which you aim to achieve with this study (for example a systematic overview of something).</li>\r\n</ol>",
+            "content_en": "<p>The research goal can mean two things:</p>\r\n<ol>\r\n<li>the research goal you want to answer or the hypothesis you want to prove;</li>\r\n<li>that which you aim to achieve with this study (for example a systematic overview of something).</li>\r\n</ol>",
+            "content_nl": "<p>Het onderzoeksdoel kan twee dingen betekenen:</p>\r\n<ol>\r\n<li>de onderzoeksvraag die je wilt beantwoorden of de hypothese die je wilt bewijzen;</li>\r\n<li>datgene wat je met je studie wilt bereiken (bijvoorbeeld een systematisch overzicht van iets).</li>\r\n</ol>",
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 21,
+        "fields": {
+            "step": 5,
+            "text": "When do I have multiple goals?",
+            "text_en": "When do I have multiple goals?",
+            "text_nl": "Wanneer heb ik meerdere doelen?",
+            "content": "<p>There are multiple goals when your research questions, hypothesis or things you want to achieve can not be grouped under a single denominator.</p>",
+            "content_en": "<p>There are multiple goals when your research questions, hypothesis or things you want to achieve can not be grouped under a single denominator.</p>",
+            "content_nl": "<p>Er is sprake van meerdere doelen als je onderzoeksvragen, je hypothesen of de dingen die je wilt bereiken, niet onder &eacute;&eacute;n noemer te vatten zijn.</p>",
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 22,
+        "fields": {
+            "step": 6,
+            "text": "What are personal data?",
+            "text_en": "What are personal data?",
+            "text_nl": "Wat zijn persoonsgegevens?",
+            "content": "<p>Personal data are data that say something about a living person. Think of name, adress data, age, sex. But also for example audio or video records, anwers of questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>",
+            "content_en": "<p>Personal data are data that say something about a living person. Think of name, adress data, age, sex. But also for example audio or video records, anwers of questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>",
+            "content_nl": "<p>Persoonsgegevens zijn gegevens die iets zeggen over een levend persoon. Denk aan naam, adresgegevens, leeftijd, geslacht etc. Maar ook bijvoorbeeld audio- of video-opnamen, antwoorden op vragen, observaties en aantekeningen. Gegevens zijn alleen persoonsgegevens als ze terug te voeren zijn op een bepaalde persoon.</p>",
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 23,
+        "fields": {
+            "step": 6,
+            "text": "Why do I need to enter 'categories' of personal data?",
+            "text_en": "Why do I need to enter 'categories' of personal data?",
+            "text_nl": "Waarom moet ik 'categorie\u00ebn' persoonsgegevens opgeven?",
+            "content": "<p>Personal data are data such as \"Jan\", \"Yasmina\" or \"12-07-1934\". Categories of personal data are for example \"first name\" or \"birth date\". In the processing register you enter the categories of data, not the data itself.</p>",
+            "content_en": "<p>Personal data are data such as \"Jan\", \"Yasmina\" or \"12-07-1934\". Categories of personal data are for example \"first name\" or \"birth date\". In the processing register you enter the categories of data, not the data itself.</p>",
+            "content_nl": "<p>Persoonsgegevens zijn gegevens zoals \"Jan\", \"Yasmina\" of \"12-07-1934\". Categorie&euml;n persoonsgegevens zijn dan bijvoorbeeld \"Voornaam\" of \"Geboortedatum\". In het verwerkingsregister leg je alleen de categorie&euml;n vast, niet de persoonsgegevens zelf.</p>",
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 24,
+        "fields": {
+            "step": 6,
+            "text": "Is it allowed to collect data that I will not need right now?",
+            "text_en": "Is it allowed to collect data that I will not need right now?",
+            "text_nl": "Mag ik gegevens verzamelen die ik nu niet nodig heb?",
+            "content": "<p>In principle that is not allowed. The data you collect need to confirm to the concrete goal. Collecting data just in case you may need it for a future research goal is not enough. You need concrete indications that you will need the data in the future.</p>",
+            "content_en": "<p>In principle that is not allowed. The data you collect need to confirm to the concrete goal. Collecting data just in case you may need it for a future research goal is not enough. You need concrete indications that you will need the data in the future.</p>",
+            "content_nl": "<p>In principe niet. De gegevens die je verzamelt moeten beantwoorden aan het geformuleerde doel. Data alvast verzamelen met de gedachte dat er later misschien een onderzoeksvraag is waarvoor ze nodig zijn, is niet genoeg. Je moet concrete aanwijzingen hebben dat je de data in de toekomst nodig gaat hebben.&nbsp;</p>",
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 25,
+        "fields": {
+            "step": 6,
+            "text": "What are datasubjects?",
+            "text_en": "What are datasubjects?",
+            "text_nl": "Wat zijn datasubjecten?",
+            "content": "<p>Datasubjects are persons from whom you process data. If you interview somebody that person is a datasubject.</p>",
+            "content_en": "<p>Datasubjects are persons from whom you process data. If you interview somebody that person is a datasubject.</p>",
+            "content_nl": "<p>Datasubjecten zijn personen van wie je persoonsgegevens verwerkt, dus op wie die persoonsgegevens betrekking hebben. Als je iemand interviewt, dan is diegene het datasubject.</p>",
+            "_order": 3
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 26,
+        "fields": {
+            "step": 6,
+            "text": "Why do I need to enter 'categories' of data subjects?",
+            "text_en": "Why do I need to enter 'categories' of data subjects?",
+            "text_nl": "Waarom moet ik 'categorie\u00ebn' datasubjecten opgeven?",
+            "content": "<p>Datasubjects are individual persons with an own name. Categories of datasubjects are persons that can be grouped together. For example student, UU-colleagues, childeren with dyslexia, or police officers. Be as specific as possible when grouping data subjects.</p>",
+            "content_en": "<p>Datasubjects are individual persons with an own name. Categories of datasubjects are persons that can be grouped together. For example student, UU-colleagues, childeren with dyslexia, or police officers. Be as specific as possible when grouping data subjects.</p>",
+            "content_nl": "<p>Datasubjecten zijn individuele personen met een eigen naam. Categorie&euml;n datasubjecten zijn groepen personen die binnen eenzelfde categorie vallen. Bijvoorbeeld: studenten, UU-medewerkers, kinderen met dyslexie of politieambtenaren. Wees bij het opgeven van categorie&euml;n datasubjecten zo specifiek mogelijk.</p>",
+            "_order": 4
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 27,
+        "fields": {
+            "step": 6,
+            "text": "Do I need to enter something for every category?",
+            "text_en": "Do I need to enter something for every category?",
+            "text_nl": "Moet ik bij elke categorie iets opgeven?",
+            "content": "<p>No, you do not have to do so. You only have to enter the categories datasubjects where you process peronal data. There can be multiple different groups datasubjects per category. For example at participants you can have teachers and students.</p>",
+            "content_en": "<p>No, you do not have to do so. You only have to enter the categories datasubjects where you process peronal data. There can be multiple different groups datasubjects per category. For example at participants you can have teachers and students.</p>",
+            "content_nl": "<div class=\"ewa-rteLine\">Nee, dat hoeft niet. Je moet alleen die categori&euml;n datasubjecten opgeven van wie je persoonsgegevens verwerkt. Per categorie kunnen dat wel meerdere, verschillende, groepen datasubjecten zijn, bijv. bij 'Deelnemers, d.w.z. personen die bewust deelnemen aan het onderzoek': docenten en leerlingen.</div>",
+            "_order": 5
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 28,
+        "fields": {
+            "step": 6,
+            "text": "What do I do when my category is not shown?",
+            "text_en": "What do I do when my category is not shown?",
+            "text_nl": "Wat moet ik doen als mijn categorie er niet tussen staat?",
+            "content": "<p>The shown categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
+            "content_en": "<p>The shown categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
+            "content_nl": "<p>De opgevoerde categorie&euml;n zijn geacht uitputtend te zijn. Mochten je desondanks de indruk hebben niet door te kunnen, neem dan contact op met de privacy officer.</p>",
+            "_order": 6
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 29,
+        "fields": {
+            "step": 9,
+            "text": "Who/what are recipients?",
+            "text_en": "Who/what are recipients?",
+            "text_nl": "Wie/wat zijn ontvangers?",
+            "content": "<p>Recipients are people who want to use the personal data for their own different research goal. (meaning, a different purpose-binding when it comes to the GDPR).</p>",
+            "content_en": "<p>Recipients are people who want to use the personal data for their own different research goal. (meaning, a different purpose-binding when it comes to the GDPR).</p>",
+            "content_nl": "<p>Ontvangers zijn mensen die de persoonsgegevens voor een eigen, andere, onderzoeksvraag willen verwerken (d.w.z. die een andere doelbinding hebben in de zin van de AVG).</p>",
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 30,
+        "fields": {
+            "step": 9,
+            "text": "Who/what are third parties?",
+            "text_en": "Who/what are third parties?",
+            "text_nl": "Wie/wat zijn derden?",
+            "content": "<p>See 'Who/what are recipients?'</p>",
+            "content_en": "<p>See 'Who/what are recipients?'</p>",
+            "content_nl": "<p>Zie 'Wie/wat zijn ontvangers?'</p>",
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 31,
+        "fields": {
+            "step": 10,
+            "text": "What is online software?",
+            "text_en": "What is online software?",
+            "text_nl": "Wat is online software?",
+            "content": "<p>With online software we mean applications that are offered through internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EER.</p>",
+            "content_en": "<p>With online software we mean applications that are offered through internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EER.</p>",
+            "content_nl": "<p>Onder online software verstaan we applicaties die via internet worden aangeboden, bijv. Qualtrics, SURFDrive of Office 365.</p>\r\n<p>Cloud software draait op grote serverparken ergens ter wereld. De precieze locaties kunnen verschillen. Vanuit de AVG wordt ge&euml;ist dat persoonsgegevens binnen de EER worden verwerkt.&nbsp;</p>",
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 32,
+        "fields": {
+            "step": 10,
+            "text": "Which software has been approved by the UU?",
+            "text_en": "Which software has been approved by the UU?",
+            "text_nl": "Welke software is goedgekeurd door de UU?",
+            "content": "<p>Please consult the <a href=\"https://tools.uu.nl/tooladvisor/\" target=\"_blank\" rel=\"noopener\">Tooladvisor</a>. Do keep in mind that the Tooladvisor is not always up to date. If you have any questions, please contact the IT Service Desk.</p>",
+            "content_en": "<p>Please consult the <a href=\"https://tools.uu.nl/tooladvisor/\" target=\"_blank\" rel=\"noopener\">Tooladvisor</a>. Do keep in mind that the Tooladvisor is not always up to date. If you have any questions, please contact the IT Service Desk.</p>",
+            "content_nl": "<p>Raadpleeg de <a href=\"https://tools.uu.nl/tooladvisor/\" target=\"_blank\" rel=\"noopener\">Tooladvisor</a>. Houd er rekening mee dat de Tooladvisor niet altijd actueel is. Voor vragen kun je terecht bij de IT Service Desk.</p>",
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 33,
+        "fields": {
+            "step": 10,
+            "text": "What should I do when I use unapproved software anyway?",
+            "text_en": "What should I do when I use unapproved software anyway?",
+            "text_nl": "Wat moet ik doen als ik toch niet-goedgekeurde software gebruik?",
+            "content": "<p>The use of non-approved software needs to be reported as soon as possible, in principle even before you are going to use that software for the processing of personal data. The privacy officer will then check if the software meets GDPR requirements.</p>",
+            "content_en": "<p>The use of non-approved software needs to be reported as soon as possible, in principle even before you are going to use that software for the processing of personal data. The privacy officer will then check if the software meets GDPR requirements.</p>",
+            "content_nl": "<p>Het gebruik van niet-goedgekeurde software moet je zo snel mogelijk melden, in principe v&oacute;&oacute;rdat je die software gaat inzetten voor het verwerken van persoonsgegevens. De privacy officer gaat dan na of die software aan alle AVG-regels voldoet.</p>",
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 34,
+        "fields": {
+            "step": 11,
+            "text": "Which security measures are in place at UU?",
+            "text_en": "Which security measures are in place at UU?",
+            "text_nl": "Welke beveiligingsmaatregelen zijn er bij de UU?",
+            "content": "<p>The UU has a large number of technical and organizational measures to increase the security of personal data. For instance, the technical infrastructure has multiple security measures, such as multi-factor authentication, firewalls and anti-virus software. Binding agreements with IT providers have also been signed to protect personal data.</p>",
+            "content_en": "<p>The UU has a large number of technical and organizational measures to increase the security of personal data. For instance, the technical infrastructure has multiple security measures, such as multi-factor authentication, firewalls and anti-virus software. Binding agreements with IT providers have also been signed to protect personal data.</p>",
+            "content_nl": "<p>De UU heeft een groot aantal technische en organisatorische maatregelen getroffen om de beveiliging van persoonsgegevens te verhogen. Zo is de technische infrastructuur op een veelheid aan manieren beveiligd (denk aan multi-factor authenticatie, firewalls en antivirussoftware) en zijn er bindende overeenkomsten gesloten om de leveranciers van IT-diensten te dwingen de bescherming van persoonsgegevens te waarborgen.</p>",
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 35,
+        "fields": {
             "step": 12,
-            "text": "<h3>What if I do not have any of the documents listed?</h3>\r\n<p>You are not required to submit any additional documents.</p>\r\n<h3>What is a DPIA?</h3>\r\n<p>A DPIA (data protection impact assessment) is a document that is only required when the processing of personal data contains great risks for the persons (such as participants or the researchers themself), the UU or society. The DPIA contains a systematic description of the research, an inventory of the risks and an overview of the measures taken to reduce the risk as much as possible.</p>\r\n<p>If you suspect that your research has great risks please contact the privacy officer asap.</p>\r\n<h3>What is a data management plan?</h3>\r\n<p>A data management plan is a structured overview of the managaement of research data. Both for during and after the research. The FEtC-H has a big preference for the following <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a>.</p>\r\n<h3>How do I create a data management plan?</h3>\r\n<p>Please use a template such as <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a> and/or please contact the data manager <a href=\"mailto:datamanagement.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.gw@uu.nl</a> or <a href=\"mailto:datamanagement.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.rebo@uu.nl</a>.</p>\r\n<h3 class=\"ewa-rteLine\">How do I modifiy documents?</h3>\r\n<div class=\"ewa-rteLine\">\r\n<div class=\"ewa-rteLine\">You can submit documents again so long your study is in the draft phase.</div>\r\n</div>",
-            "text_en": "<h3>What if I do not have any of the documents listed?</h3>\r\n<p>You are not required to submit any additional documents.</p>\r\n<h3>What is a DPIA?</h3>\r\n<p>A DPIA (data protection impact assessment) is a document that is only required when the processing of personal data contains great risks for the persons (such as participants or the researchers themself), the UU or society. The DPIA contains a systematic description of the research, an inventory of the risks and an overview of the measures taken to reduce the risk as much as possible.</p>\r\n<p>If you suspect that your research has great risks please contact the privacy officer asap.</p>\r\n<h3>What is a data management plan?</h3>\r\n<p>A data management plan is a structured overview of the managaement of research data. Both for during and after the research. The FEtC-H has a big preference for the following <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a>.</p>\r\n<h3>How do I create a data management plan?</h3>\r\n<p>Please use a template such as <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a> and/or please contact the data manager <a href=\"mailto:datamanagement.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.gw@uu.nl</a> or <a href=\"mailto:datamanagement.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.rebo@uu.nl</a>.</p>\r\n<h3 class=\"ewa-rteLine\">How do I modifiy documents?</h3>\r\n<div class=\"ewa-rteLine\">\r\n<div class=\"ewa-rteLine\">You can submit documents again so long your study is in the draft phase.</div>\r\n</div>",
-            "text_nl": "<h3>Wat als ik geen van de genoemde documenten heb?</h3>\r\n<div class=\"ewa-rteLine\">Het is niet verplicht om extra documenten aan te leveren.</div>\r\n<div class=\"ewa-rteLine\">\r\n<h3 class=\"ewa-rteLine\">Wat is een DPIA?</h3>\r\n<div class=\"ewa-rteLine\">\r\n<div class=\"ewa-rteLine\">Een DPIA (data protection impact assessment) is een document dat alleen nodig is wanneer de verwerking van persoonsgegevens grote risico&rsquo;s met zich meebrengt voor personen (zoals de deelnemers of de onderzoeker zelf), voor de universiteit of voor de maatschappij als geheel. De DPIA bevat een systematische beschrijving van het onderzoek, een inventarisatie van de risico&rsquo;s en een overzicht van maatregelen om die risico&rsquo;s zo veel mogelijk te beperken.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">Denk je dat jouw onderzoek grote risico&rsquo;s oplevert? Neem dan zo snel mogelijk contact op met de privacy officer.</div>\r\n<div class=\"ewa-rteLine\">\r\n<h3 class=\"ewa-rteLine\">Wat is een datamanagementplan?</h3>\r\n<div class=\"ewa-rteLine\">Een datamanagementplan is een gestructureerd overzicht van het beheer van onderzoeksgegevens zowel gedurende als na het onderzoek. (De FETC-GW heeft een grote voorkeur voor deze <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a>.)</div>\r\n<h3 class=\"ewa-rteLine\">Hoe maak ik een datamanagementplan?</h3>\r\n<div class=\"ewa-rteLine\">Gebruik hiervoor een template bijvoorbeeld <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a> en/of neem contact op met de datamanager&nbsp; <a href=\"mailto:datamanagement.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.gw@uu.nl</a> of <a href=\"mailto:datamanagement.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.rebo@uu.nl</a>.</div>\r\n<div class=\"ewa-rteLine\">\r\n<h3 class=\"ewa-rteLine\">Hoe wijzig ik documenten?</h3>\r\n<div class=\"ewa-rteLine\">Je kunt, voordat je een studie hebt ingediend, documenten opnieuw indienen.</div>\r\n</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n</div>\r\n</div>\r\n</div>"
+            "text": "What if I do not have any of the documents listed?",
+            "text_en": "What if I do not have any of the documents listed?",
+            "text_nl": "Wat als ik geen van de genoemde documenten heb?",
+            "content": "<p>You are not required to submit any additional documents.</p>",
+            "content_en": "<p>You are not required to submit any additional documents.</p>",
+            "content_nl": "<p>Het is niet verplicht om extra documenten aan te leveren.</p>",
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 36,
+        "fields": {
+            "step": 12,
+            "text": "What is a DPIA?",
+            "text_en": "What is a DPIA?",
+            "text_nl": "Wat is een DPIA?",
+            "content": "<p>A DPIA (data protection impact assessment) is a document that is only required when the processing of personal data contains great risks for the persons (such as participants or the researchers themself), the UU or society. The DPIA contains a systematic description of the research, an inventory of the risks and an overview of the measures taken to reduce the risk as much as possible.</p>\r\n<p>If you suspect that your research has great risks please contact the privacy officer asap.</p>",
+            "content_en": "<p>A DPIA (data protection impact assessment) is a document that is only required when the processing of personal data contains great risks for the persons (such as participants or the researchers themself), the UU or society. The DPIA contains a systematic description of the research, an inventory of the risks and an overview of the measures taken to reduce the risk as much as possible.</p>\r\n<p>If you suspect that your research has great risks please contact the privacy officer asap.</p>",
+            "content_nl": "<div class=\"ewa-rteLine\">Een DPIA (data protection impact assessment) is een document dat alleen nodig is wanneer de verwerking van persoonsgegevens grote risico&rsquo;s met zich meebrengt voor personen (zoals de deelnemers of de onderzoeker zelf), voor de universiteit of voor de maatschappij als geheel. De DPIA bevat een systematische beschrijving van het onderzoek, een inventarisatie van de risico&rsquo;s en een overzicht van maatregelen om die risico&rsquo;s zo veel mogelijk te beperken.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">Denk je dat jouw onderzoek grote risico&rsquo;s oplevert? Neem dan zo snel mogelijk contact op met de privacy officer.</div>",
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 37,
+        "fields": {
+            "step": 12,
+            "text": "What is a data management plan?",
+            "text_en": "What is a data management plan?",
+            "text_nl": "Wat is een datamanagementplan?",
+            "content": "<p>A data management plan is a structured overview of the managaement of research data. Both for during and after the research. The FEtC-H has a big preference for the following <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a>.</p>",
+            "content_en": "<p>A data management plan is a structured overview of the managaement of research data. Both for during and after the research. The FEtC-H has a big preference for the following <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a>.</p>",
+            "content_nl": "<p>Een datamanagementplan is een gestructureerd overzicht van het beheer van onderzoeksgegevens zowel gedurende als na het onderzoek. (De FETC-GW heeft een grote voorkeur voor deze <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a>.)</p>",
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 38,
+        "fields": {
+            "step": 12,
+            "text": "How do I create a data management plan?",
+            "text_en": "How do I create a data management plan?",
+            "text_nl": "Hoe maak ik een datamanagementplan?",
+            "content": "<p>Please use a template such as <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a> and/or please contact the data manager <a href=\"mailto:datamanagement.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.gw@uu.nl</a> or <a href=\"mailto:datamanagement.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.rebo@uu.nl</a>.</p>",
+            "content_en": "<p>Please use a template such as <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a> and/or please contact the data manager <a href=\"mailto:datamanagement.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.gw@uu.nl</a> or <a href=\"mailto:datamanagement.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.rebo@uu.nl</a>.</p>",
+            "content_nl": "<p>Gebruik hiervoor een template bijvoorbeeld <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a> en/of neem contact op met de datamanager&nbsp; <a href=\"mailto:datamanagement.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.gw@uu.nl</a> of <a href=\"mailto:datamanagement.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.rebo@uu.nl</a>.</p>",
+            "_order": 3
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 39,
+        "fields": {
+            "step": 12,
+            "text": "How do I modifiy documents?",
+            "text_en": "How do I modifiy documents?",
+            "text_nl": "Hoe wijzig ik documenten?",
+            "content": "<p>You can submit documents again so long your study is in the draft phase.</p>",
+            "content_en": "<p>You can submit documents again so long your study is in the draft phase.</p>",
+            "content_nl": "<p>Je kunt, voordat je een studie hebt ingediend, documenten opnieuw indienen.</p>",
+            "_order": 4
         }
     },
     {

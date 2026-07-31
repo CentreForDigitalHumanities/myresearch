@@ -73,15 +73,6 @@ class SubstepInline(TinyMCETextFieldMixin, admin.StackedInline):
     verbose_name_plural = "Substeps"
 
 
-class StepInfoTextInline(
-    TinyMCETextFieldMixin,
-    admin.StackedInline,
-):
-    model = StepInfoText
-    extra = 0
-    fields = ("text_en", "text_nl")
-
-
 class SelectOptionInline(admin.TabularInline):
     model = SelectOption
     extra = 0
@@ -261,10 +252,16 @@ class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                 "description": "Set the display order of substeps. Use the substep IDs shown in the Substeps inline below.",
             },
         ),
+        (
+            "Step Info Order",
+            {
+                "fields": ("step_info_text_order",),
+                "description": "Set the display order of step info. Use the substep IDs shown below.",
+            },
+        ),
     )
     inlines = [
         SubstepInline,
-        StepInfoTextInline,
         QuestionInline,
         StepConditionInline,
     ]
@@ -278,18 +275,17 @@ class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
 
 
 @admin.register(StepInfoText)
-class StepInfoTextAdmin(
-    TinyMCETextFieldMixin,
-    admin.ModelAdmin,
-):
-    list_display = ("short_text", "step")
+class StepInfoTextAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
+    list_display = ("step", "text_nl", "text_en")
     list_filter = ("step",)
-    search_fields = ("text",)
-
-    def short_text(self, obj):
-        return obj.text[:50] + "..." if len(obj.text) > 50 else obj.text
-
-    short_text.short_description = "Text"
+    search_fields = ("text_nl", "text_en")
+    fields = [
+        "step",
+        "text_nl",
+        "text_en",
+        "content_nl",
+        "content_en",
+    ]
 
 
 # Question admins
