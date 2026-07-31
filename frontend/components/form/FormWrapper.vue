@@ -254,6 +254,19 @@ function navigateToSlug(slug: string) {
         />
         <div v-if="selectedStep.isOverview && formObject" class="col-9">
             <SubmissionOverview :form="formObject" />
+            <div class="btn-group">
+                <BSButton
+                    variant="primary"
+                    class="btn-arrow-left"
+                    @click="navigateToSlug(getPreviousStepSlug())"
+                >
+                    {{ $t("Previous") }}
+                </BSButton>
+                <BSButton variant="success" @click="finalSubmit">
+                    {{ $t("Submit") }}
+                    <Send class="ms-2" :size="16" />
+                </BSButton>
+            </div>
         </div>
         <template v-else>
             <div class="col-12 col-lg-6 pe-4">
@@ -299,15 +312,6 @@ function navigateToSlug(slug: string) {
                         {{ $t("Previous") }}
                     </BSButton>
                     <BSButton
-                        v-if="selectedStep.isOverview"
-                        variant="success"
-                        @click="finalSubmit"
-                    >
-                        {{ $t("Submit") }}
-                        <Send class="ms-2" :size="16" />
-                    </BSButton>
-                    <BSButton
-                        v-else
                         variant="primary"
                         class="btn-arrow-right"
                         @click="navigateToSlug(getNextStepSlug())"
