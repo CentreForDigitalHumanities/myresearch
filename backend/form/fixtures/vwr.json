@@ -494,7 +494,7 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 18,
+        "pk": 63,
         "fields": {
             "annotation_key": null,
             "text": "Research data will be kept until at least 10 years after publication.",
@@ -505,7 +505,7 @@
             "description": "",
             "description_en": "",
             "description_nl": "",
-            "required": false,
+            "required": true,
             "_order": 1
         }
     },
@@ -528,24 +528,24 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 16,
+        "pk": 65,
         "fields": {
             "annotation_key": null,
-            "text": "Where are your consent forms stored?",
-            "text_en": "Where are your consent forms stored?",
-            "text_nl": "Wat is de opslaglocatie van jouw toestemmingsverklaringen?",
+            "text": "I am also going to store consent forms.",
+            "text_en": "I am also going to store consent forms.",
+            "text_nl": "Ik ga ook toestemmingsverklaringen bewaren.",
             "step": 8,
             "form": 1,
             "description": "",
             "description_en": "",
             "description_nl": "",
-            "required": true,
+            "required": false,
             "_order": 3
         }
     },
     {
         "model": "form.basequestion",
-        "pk": 19,
+        "pk": 64,
         "fields": {
             "annotation_key": null,
             "text": "Consent forms will be kept until at least 10 years after publication.",
@@ -556,7 +556,7 @@
             "description": "<p>Constent forms need to be kept just as long as the personal data, in a separate location.&nbsp;</p>",
             "description_en": "<p>Constent forms need to be kept just as long as the personal data, in a separate location.&nbsp;</p>",
             "description_nl": "<p>Toestemmingsverklaringen moeten net zolang worden bewaard als de persoonsgegevens, op een gescheiden locatie.</p>",
-            "required": false,
+            "required": true,
             "_order": 4
         }
     },
@@ -579,6 +579,23 @@
     },
     {
         "model": "form.basequestion",
+        "pk": 16,
+        "fields": {
+            "annotation_key": null,
+            "text": "Where are your consent forms stored?",
+            "text_en": "Where are your consent forms stored?",
+            "text_nl": "Wat is de opslaglocatie van jouw toestemmingsverklaringen?",
+            "step": 8,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 6
+        }
+    },
+    {
+        "model": "form.basequestion",
         "pk": 20,
         "fields": {
             "annotation_key": null,
@@ -591,7 +608,7 @@
             "description_en": "",
             "description_nl": "",
             "required": false,
-            "_order": 6
+            "_order": 7
         }
     },
     {
@@ -608,7 +625,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 7
+            "_order": 8
         }
     },
     {
@@ -996,7 +1013,7 @@
             "name": "Processing Registry",
             "name_en": "Processing Registry",
             "name_nl": "Verwerkingsregister",
-            "version": "0.2",
+            "version": "0.2.2",
             "created_at": "2026-03-09T14:15:25.526Z",
             "updated_at": "2026-07-10T13:15:20.550Z"
         }
@@ -1020,34 +1037,6 @@
             "repeat_count": null,
             "use_answer_as_count": false,
             "target_question": 6
-        }
-    },
-    {
-        "model": "form.questioncondition",
-        "pk": 4,
-        "fields": {
-            "trigger_question": 18,
-            "condition_type": "show",
-            "trigger_value": {
-                "value": false
-            },
-            "repeat_count": null,
-            "use_answer_as_count": false,
-            "target_question": 15
-        }
-    },
-    {
-        "model": "form.questioncondition",
-        "pk": 5,
-        "fields": {
-            "trigger_question": 19,
-            "condition_type": "show",
-            "trigger_value": {
-                "value": false
-            },
-            "repeat_count": null,
-            "use_answer_as_count": false,
-            "target_question": 17
         }
     },
     {
@@ -1440,6 +1429,62 @@
             "repeat_count": null,
             "use_answer_as_count": false,
             "target_question": 57
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 39,
+        "fields": {
+            "trigger_question": 63,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "170"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 15
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 40,
+        "fields": {
+            "trigger_question": 64,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "172"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 17
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 41,
+        "fields": {
+            "trigger_question": 65,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": true
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 16
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 42,
+        "fields": {
+            "trigger_question": 65,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": true
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 64
         }
     },
     {
@@ -2075,7 +2120,7 @@
             "label_nl": "Alle deelnemers, of een aantal van hen, zijn kinderen van 0 t/m 15 jaar.",
             "default_selected": false,
             "question": 44,
-            "_order": 2
+            "_order": 1
         }
     },
     {
@@ -2523,8 +2568,63 @@
         }
     },
     {
+        "model": "form.selectoption",
+        "pk": 169,
+        "fields": {
+            "label": "Yes",
+            "label_en": "Yes",
+            "label_nl": "Ja",
+            "default_selected": false,
+            "question": 63,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 170,
+        "fields": {
+            "label": "No",
+            "label_en": "No",
+            "label_nl": "Nee",
+            "default_selected": false,
+            "question": 63,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 171,
+        "fields": {
+            "label": "Yes",
+            "label_en": "Yes",
+            "label_nl": "Ja",
+            "default_selected": false,
+            "question": 64,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 172,
+        "fields": {
+            "label": "No",
+            "label_en": "No",
+            "label_nl": "Nee",
+            "default_selected": false,
+            "question": 64,
+            "_order": 1
+        }
+    },
+    {
         "model": "form.selectquestion",
         "pk": 5,
+        "fields": {
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 52,
         "fields": {
             "multiple": false
         }
@@ -2538,13 +2638,6 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 52,
-        "fields": {
-            "multiple": false
-        }
-    },
-    {
-        "model": "form.selectquestion",
         "pk": 6,
         "fields": {
             "multiple": false
@@ -2553,6 +2646,13 @@
     {
         "model": "form.selectquestion",
         "pk": 10,
+        "fields": {
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 63,
         "fields": {
             "multiple": false
         }
@@ -2573,14 +2673,14 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 62,
+        "pk": 24,
         "fields": {
             "multiple": false
         }
     },
     {
         "model": "form.selectquestion",
-        "pk": 24,
+        "pk": 62,
         "fields": {
             "multiple": false
         }
@@ -2590,6 +2690,13 @@
         "pk": 39,
         "fields": {
             "multiple": true
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 64,
+        "fields": {
+            "multiple": false
         }
     },
     {
@@ -3112,7 +3219,7 @@
             "content": "<p>Personal data are data that say something about a living person. Think of name, adress data, age, sex. But also for example audio or video records, anwers of questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>",
             "content_en": "<p>Personal data are data that say something about a living person. Think of name, adress data, age, sex. But also for example audio or video records, anwers of questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>",
             "content_nl": "<p>Persoonsgegevens zijn gegevens die iets zeggen over een levend persoon. Denk aan naam, adresgegevens, leeftijd, geslacht etc. Maar ook bijvoorbeeld audio- of video-opnamen, antwoorden op vragen, observaties en aantekeningen. Gegevens zijn alleen persoonsgegevens als ze terug te voeren zijn op een bepaalde persoon.</p>",
-            "_order": 1
+            "_order": 0
         }
     },
     {
@@ -3126,7 +3233,7 @@
             "content": "<p>Personal data are data such as \"Jan\", \"Yasmina\" or \"12-07-1934\". Categories of personal data are for example \"first name\" or \"birth date\". In the processing register you enter the categories of data, not the data itself.</p>",
             "content_en": "<p>Personal data are data such as \"Jan\", \"Yasmina\" or \"12-07-1934\". Categories of personal data are for example \"first name\" or \"birth date\". In the processing register you enter the categories of data, not the data itself.</p>",
             "content_nl": "<p>Persoonsgegevens zijn gegevens zoals \"Jan\", \"Yasmina\" of \"12-07-1934\". Categorie&euml;n persoonsgegevens zijn dan bijvoorbeeld \"Voornaam\" of \"Geboortedatum\". In het verwerkingsregister leg je alleen de categorie&euml;n vast, niet de persoonsgegevens zelf.</p>",
-            "_order": 3
+            "_order": 1
         }
     },
     {
@@ -3140,7 +3247,7 @@
             "content": "<p>In principle that is not allowed. The data you collect need to confirm to the concrete goal. Collecting data just in case you may need it for a future research goal is not enough. You need concrete indications that you will need the data in the future.</p>",
             "content_en": "<p>In principle that is not allowed. The data you collect need to confirm to the concrete goal. Collecting data just in case you may need it for a future research goal is not enough. You need concrete indications that you will need the data in the future.</p>",
             "content_nl": "<p>In principe niet. De gegevens die je verzamelt moeten beantwoorden aan het geformuleerde doel. Data alvast verzamelen met de gedachte dat er later misschien een onderzoeksvraag is waarvoor ze nodig zijn, is niet genoeg. Je moet concrete aanwijzingen hebben dat je de data in de toekomst nodig gaat hebben.&nbsp;</p>",
-            "_order": 4
+            "_order": 2
         }
     },
     {
@@ -3154,7 +3261,7 @@
             "content": "<p>Datasubjects are persons from whom you process data. If you interview somebody that person is a datasubject.</p>",
             "content_en": "<p>Datasubjects are persons from whom you process data. If you interview somebody that person is a datasubject.</p>",
             "content_nl": "<p>Datasubjecten zijn personen van wie je persoonsgegevens verwerkt, dus op wie die persoonsgegevens betrekking hebben. Als je iemand interviewt, dan is diegene het datasubject.</p>",
-            "_order": 3
+            "_order": 0
         }
     },
     {
@@ -3168,7 +3275,7 @@
             "content": "<p>Datasubjects are individual persons with an own name. Categories of datasubjects are persons that can be grouped together. For example student, UU-colleagues, childeren with dyslexia, or police officers. Be as specific as possible when grouping data subjects.</p>",
             "content_en": "<p>Datasubjects are individual persons with an own name. Categories of datasubjects are persons that can be grouped together. For example student, UU-colleagues, childeren with dyslexia, or police officers. Be as specific as possible when grouping data subjects.</p>",
             "content_nl": "<p>Datasubjecten zijn individuele personen met een eigen naam. Categorie&euml;n datasubjecten zijn groepen personen die binnen eenzelfde categorie vallen. Bijvoorbeeld: studenten, UU-medewerkers, kinderen met dyslexie of politieambtenaren. Wees bij het opgeven van categorie&euml;n datasubjecten zo specifiek mogelijk.</p>",
-            "_order": 4
+            "_order": 1
         }
     },
     {
@@ -3182,7 +3289,7 @@
             "content": "<p>No, you do not have to do so. You only have to enter the categories datasubjects where you process peronal data. There can be multiple different groups datasubjects per category. For example at participants you can have teachers and students.</p>",
             "content_en": "<p>No, you do not have to do so. You only have to enter the categories datasubjects where you process peronal data. There can be multiple different groups datasubjects per category. For example at participants you can have teachers and students.</p>",
             "content_nl": "<div class=\"ewa-rteLine\">Nee, dat hoeft niet. Je moet alleen die categori&euml;n datasubjecten opgeven van wie je persoonsgegevens verwerkt. Per categorie kunnen dat wel meerdere, verschillende, groepen datasubjecten zijn, bijv. bij 'Deelnemers, d.w.z. personen die bewust deelnemen aan het onderzoek': docenten en leerlingen.</div>",
-            "_order": 5
+            "_order": 3
         }
     },
     {
@@ -3196,7 +3303,7 @@
             "content": "<p>The shown categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
             "content_en": "<p>The shown categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
             "content_nl": "<p>De opgevoerde categorie&euml;n zijn geacht uitputtend te zijn. Mochten je desondanks de indruk hebben niet door te kunnen, neem dan contact op met de privacy officer.</p>",
-            "_order": 6
+            "_order": 4
         }
     },
     {
@@ -3364,7 +3471,7 @@
             "content": "<div class=\"ewa-rteLine\">&ldquo;Participants&rdquo; refers to participants in the classical sense of the word. For example, people you interview, people who fill out a questionnaire, or people you subject to certain tests.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;People who do not (necessarily) know that research is being conducted on them&rdquo; are, for example, people whose data you &ldquo;scrape&rdquo; on social media or people you secretly record in public spaces.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;People who are otherwise involved&rdquo; are, for example, the parents of participating children (if you ask them to consent to their child's participation or personal data processing) or location holders who are asked permission for the use of their location.</div>",
             "content_en": "<div class=\"ewa-rteLine\">&ldquo;Participants&rdquo; refers to participants in the classical sense of the word. For example, people you interview, people who fill out a questionnaire, or people you subject to certain tests.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;People who do not (necessarily) know that research is being conducted on them&rdquo; are, for example, people whose data you &ldquo;scrape&rdquo; on social media or people you secretly record in public spaces.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;People who are otherwise involved&rdquo; are, for example, the parents of participating children (if you ask them to consent to their child's participation or personal data processing) or location holders who are asked permission for the use of their location.</div>",
             "content_nl": "<div class=\"ewa-rteLine\">Onder &ldquo;Deelnemers&rdquo; wordt verstaan: participanten in de klassieke zin van het woord. Bijvoorbeeld mensen die je interviewt of mensen die een vragenlijst invullen of die je aan bepaalde tests onderwerpt.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;Personen die niet (noodzakelijkerwijs) weten dat er onderzoek naar hen wordt gedaan&rdquo; zijn bijvoorbeeld mensen van wie je data &ldquo;scrapet&rdquo; op social media of mensen van wie je in de publieke ruimte heimelijk opnamen maakt.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;Personen die anderszins betrokken zijn&rdquo; zijn bijvoorbeeld de ouders van deelnemende kinderen (als je hen vraagt om toestemming te geven voor de deelname van hun kind) of locatiehouders die toestemming moeten geven voor het gebruik van hun locatie.</div>",
-            "_order": 0
+            "_order": 5
         }
     },
     {
@@ -3378,7 +3485,7 @@
             "content": "<div class=\"ewa-rteLine\">Special categories of personal data are data that are so sensitive that they are subject to extra protection under the General Data Protection Regulation (GDPR). You may only process these data under additional conditions, for example, if you have obtained consent or if the persons to whom the data relate (the data subjects) have made those data public themselves.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">The mentioned special categories of personal data must be interpreted &ldquo;broadly&rdquo;. For the category regarding political opinions, for example, it is not necessary for someone to be a member of a political party. Any opinion someone holds about the organization or functioning of society is considered a special category of personal data.</div>",
             "content_en": "<div class=\"ewa-rteLine\">Special categories of personal data are data that are so sensitive that they are subject to extra protection under the General Data Protection Regulation (GDPR). You may only process these data under additional conditions, for example, if you have obtained consent or if the persons to whom the data relate (the data subjects) have made those data public themselves.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">The mentioned special categories of personal data must be interpreted &ldquo;broadly&rdquo;. For the category regarding political opinions, for example, it is not necessary for someone to be a member of a political party. Any opinion someone holds about the organization or functioning of society is considered a special category of personal data.</div>",
             "content_nl": "<div class=\"ewa-rteLine\">Bijzondere persoonsgegevens zijn gegevens die zo gevoelig zijn dat ze onder de Algemene verordening gegevensbescherming (AVG) extra worden beschermd. Deze gegevens mag je alleen onder aanvullende voorwaarden verwerken, bijvoorbeeld als je er toestemming voor hebt gekregen of als degenen op wie de gegevens betrekking hebben (de datasubjecten) die gegevens zelf openbaar hebben gemaakt.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">De genoemde categorie&euml;n bijzondere persoonsgegevens moet je &ldquo;ruim&rdquo; interpreteren. Voor de categorie over politieke opvattingen is het bijvoorbeeld niet nodig dat iemand lid is van een politieke partij. Elke opvatting die iemand heeft over de inrichting of het functioneren van de maatschappij wordt gezien als een bijzonder persoonsgegeven.</div>",
-            "_order": 2
+            "_order": 6
         }
     },
     {
@@ -3506,17 +3613,6 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 36,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 9,
         "fields": {
             "placeholder": "",
@@ -3556,6 +3652,17 @@
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 1,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 36,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
             "is_email": false
         }
     },
@@ -3605,17 +3712,6 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 54,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
-            "is_email": true
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 15,
         "fields": {
             "placeholder": "",
@@ -3623,6 +3719,17 @@
             "placeholder_nl": null,
             "lines": 5,
             "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 54,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": true
         }
     },
     {
@@ -3649,17 +3756,6 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 49,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 55,
         "fields": {
             "placeholder": "",
@@ -3671,7 +3767,18 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 16,
+        "pk": 49,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 29,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -3682,7 +3789,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 29,
+        "pk": 30,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -3704,12 +3811,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 30,
+        "pk": 17,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1,
+            "lines": 5,
             "is_email": false
         }
     },
@@ -3726,12 +3833,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 17,
+        "pk": 16,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5,
+            "lines": 1,
             "is_email": false
         }
     },
@@ -3759,7 +3866,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 38,
+        "pk": 43,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -3770,7 +3877,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 43,
+        "pk": 38,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -3814,14 +3921,14 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 21,
+        "pk": 12,
         "fields": {
             "default_value": false
         }
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 12,
+        "pk": 21,
         "fields": {
             "default_value": false
         }
@@ -3835,21 +3942,14 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 18,
-        "fields": {
-            "default_value": true
-        }
-    },
-    {
-        "model": "form.truefalsequestion",
-        "pk": 23,
+        "pk": 51,
         "fields": {
             "default_value": false
         }
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 51,
+        "pk": 23,
         "fields": {
             "default_value": false
         }
@@ -3863,9 +3963,9 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 19,
+        "pk": 65,
         "fields": {
-            "default_value": true
+            "default_value": false
         }
     },
     {
