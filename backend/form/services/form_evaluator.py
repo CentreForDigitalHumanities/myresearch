@@ -204,11 +204,18 @@ class FormEvaluator:
         return True
 
     def get_user_response(
-        self, question: BaseQuestion, repeat_index: int = 0
+        self,
+        question: BaseQuestion,
+        repeat_index=None,
     ) -> QuestionResponse | None:
         """Get the user's response for a specific question instance."""
         responses = self.responses.get(question.pk, [])
         for response in responses:
             if response.repeat_index == repeat_index:
+                # Normally, responses to the same question with both
+                # repeat_index=None and repeat_index=not_None should
+                # never coexist. So this check should be considered
+                # for removal when the repeat_index argument to this
+                # method is None.
                 return response
         return None

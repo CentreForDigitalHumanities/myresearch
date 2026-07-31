@@ -8,6 +8,7 @@ from graphene import (
     ObjectType,
     ResolveInfo,
     String,
+    Boolean,
 )
 
 from form.models import StepInfoText
@@ -24,7 +25,7 @@ class StepType(ObjectType):
     description_nl = String()
     description_en = String()
     slug = String(required=True)
-    repeat_index = Int(required=True)
+    repeat_index = Int()
     is_overview = Boolean(required=True)
 
     questions = List(
@@ -36,6 +37,7 @@ class StepType(ObjectType):
         required=True,
     )
     info_text = Field(StepInfoTextType)
+    background = Boolean()
 
     @staticmethod
     def resolve_info_text(parent, info: ResolveInfo) -> StepInfoText | None:

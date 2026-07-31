@@ -12,6 +12,7 @@ from .models import (
     TextQuestion,
     SelectQuestion,
     TrueFalseQuestion,
+    RepeatableStep,
 )
 
 
@@ -23,6 +24,16 @@ class MRFormTranslationOptions(TranslationOptions):
 @register(Step)
 class StepTranslationOptions(TranslationOptions):
     fields = ["name", "description"]
+
+
+@register(RepeatableStep)
+class RepeatableStepTranslationOptions(TranslationOptions):
+    """
+    RepeatableStep inherits the translatable fields from StepTranslationOptions,
+    but must still be registered regardless.
+    """
+
+    fields = []
 
 
 @register(StepInfoText)
