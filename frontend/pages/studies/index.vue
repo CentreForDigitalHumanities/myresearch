@@ -192,7 +192,7 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
                 </thead>
                 <tbody>
                     <tr v-for="row in data" :key="row.id">
-                        <td>
+                        <td class="align-middle">
                             {{ row.reference }}
                         </td>
                         <td class="align-middle">
@@ -205,17 +205,17 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
                                 {{ row.title }}
                             </NuxtLink>
                         </td>
-                        <td>
+                        <td class="align-middle">
                             <StatusBadge :status="row.status" />
                         </td>
-                        <td
+                        <td class="align-middle"
                             v-if="
                                 currentUserStore.currentUser?.isPrivacyOfficer
                             "
                         >
                             <IsSeenBadge :isSeen="row.isSeen" />
                         </td>
-                        <td>
+                        <td class="align-middle">
                             {{ row.createdBy.fullName }}
                         </td>
                     </tr>

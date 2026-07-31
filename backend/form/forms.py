@@ -96,7 +96,7 @@ class StepAdminForm(ModelForm):
         widget=Textarea(attrs={"cols": "75", "rows": "1"}),
     )
 
-    step_info_order = CharField(
+    step_info_text_order = CharField(
         max_length=255,
         help_text="Comma-separated list of substep IDs in desired order, e.g. '3,1,2'.",
         label="Step info order",
@@ -122,10 +122,10 @@ class StepAdminForm(ModelForm):
                     map(str, current_substep_order)
                 )
 
-            current_step_info_order = self.instance.get_stepinfo_order()
-            if current_step_info_order:
-                self.initial["step_info_order"] = ",".join(
-                    map(str, current_step_info_order)
+            current_step_info_text_order = self.instance.get_stepinfotext_order()
+            if current_step_info_text_order:
+                self.initial["step_info_text_order"] = ",".join(
+                    map(str, current_step_info_text_order)
                 )
 
     def clean_question_order(self):
@@ -216,11 +216,11 @@ class StepAdminForm(ModelForm):
             )
         return substep_order
 
-    def clean_step_info_order(self):
+    def clean_step_info_text_order(self):
         """
         Make sure that the provided question IDs are valid and exist.
         """
-        order: str = self.cleaned_data.get("step_info_order", "")
+        order: str = self.cleaned_data.get("step_info_text_order", "")
         if not order:
             return order
 
@@ -237,7 +237,9 @@ class StepAdminForm(ModelForm):
             requested_order.append(int(id_str))
 
         # Validate that the provided IDs exist.
-        available_ids = [step_info.id for step_info in self.instance.step_infos.all()]
+        available_ids = [
+            step_info_text.id for step_info_text in self.instance.step_info_texts.all()
+        ]
         invalid_ids = [idee for idee in requested_order if idee not in available_ids]
 
         if invalid_ids:
@@ -278,15 +280,15 @@ class StepAdminForm(ModelForm):
             ]
             instance.set_step_order(requested_substep_order)
 
-        step_info_order = self.cleaned_data.get("step_info_order", "")
+        step_info_text_order = self.cleaned_data.get("step_info_text_order", "")
 
-        if step_info_order:
+        if step_info_text_order:
             requested_order = [
                 int(id_str)
-                for id_str in step_info_order.split(",")
+                for id_str in step_info_text_order.split(",")
                 if id_str.strip().isdigit()
             ]
-            instance.set_stepinfo_order(requested_order)
+            instance.set_stepinfotext_order(requested_order)
 
         if commit:
             instance.save()
