@@ -34,6 +34,12 @@ class CreateRepeatMutation(Mutation):
             submission = UserFormSubmission.objects.get(
                 pk=user_form_id,
             )
+            if parent_id is not None:
+                parent_index = RepeatIndex.objects.get(
+                    pk=parent_id,
+                )
+            else:
+                parent_index = None
             # assert submission.can_be_edited_by(user)
         except ObjectDoesNotExist as error:
             return cls(errors=[error])
@@ -41,7 +47,9 @@ class CreateRepeatMutation(Mutation):
             error = "Access denied"
             return cls(errors=[error])
 
-        new_repeat = RepeatIndex()
+        new_repeat = RepeatIndex(
+            parent=parent_index,
+        )
         new_repeat.save()
         new_repeat.submissions.add(submission)
         base_repeat.repeat_indices.add(
