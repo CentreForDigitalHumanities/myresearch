@@ -111,9 +111,9 @@
             "text_nl": "Departement",
             "step": 3,
             "form": 1,
-            "description": "For TLC, also indicate with which institute you are affiliated (ILS or ICON).",
-            "description_en": "For TLC, also indicate with which institute you are affiliated (ILS or ICON).",
-            "description_nl": "Geef voor TLC ook aan aan welk onderzoeksinstituut je bent verbonden (ILS of ICON).",
+            "description": "<p>For TLC, also indicate with which institute you are affiliated (ILS or ICON).</p>",
+            "description_en": "<p>For TLC, also indicate with which institute you are affiliated (ILS or ICON).</p>",
+            "description_nl": "<p>Geef voor TLC ook aan aan welk onderzoeksinstituut je bent verbonden (ILS of ICON).</p>",
             "required": true,
             "_order": 1
         }
@@ -131,7 +131,7 @@
             "description": "",
             "description_en": "",
             "description_nl": "",
-            "required": false,
+            "required": true,
             "_order": 2
         }
     },
@@ -213,9 +213,9 @@
             "text_nl": "Hoeveel groepen datasubjecten zijn er?",
             "step": 6,
             "form": 1,
-            "description": "<p>Distinguish all groups of people whose personal data you will process.</p>",
-            "description_en": "<p>Distinguish all groups of people whose personal data you will process.</p>",
-            "description_nl": "<p>Onderscheid alle groepen van wie er persoonsgegevens verzameld worden.</p>",
+            "description": "<p>Distinguish all groups of people whose personal data you will collect or use (for instance: Police Officers, Instagram Users, Primary School Pupils).</p>",
+            "description_en": "<p>Distinguish all groups of people whose personal data you will collect or use (for instance: Police Officers, Instagram Users, Primary School Pupils).</p>",
+            "description_nl": "<p>Onderscheid alle groepen van wie er persoonsgegevens worden verzameld of gebruikt (bijvoorbeeld Politieagenten, Instagramgebruikers, Leerlingen basisschool, etc.).</p>",
             "required": true,
             "_order": 1
         }
@@ -250,7 +250,7 @@
             "description": "",
             "description_en": "",
             "description_nl": "",
-            "required": false,
+            "required": true,
             "_order": 1
         }
     },
@@ -273,7 +273,7 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 56,
+        "pk": 62,
         "fields": {
             "annotation_key": null,
             "text": "Special categories of personal data",
@@ -284,7 +284,7 @@
             "description": "<p>Do you process any of the categories of special personal data listed below of this group? If so, please check which ones.</p>",
             "description_en": "<p>Do you process any of the categories of special personal data listed below of this group? If so, please check which ones.</p>",
             "description_nl": "<p>Verwerk je een van de onderstaande categorie&euml;n bijzondere persoonsgegevens van deze groep? Zo ja, vink aan welke.</p>",
-            "required": false,
+            "required": true,
             "_order": 3
         }
     },
@@ -293,15 +293,15 @@
         "pk": 39,
         "fields": {
             "annotation_key": null,
-            "text": "Special categories of personal data",
-            "text_en": "Special categories of personal data",
-            "text_nl": "Bijzondere persoonsgegevens",
+            "text": "Categories:",
+            "text_en": "Categories:",
+            "text_nl": "Categorie\u00ebn:",
             "step": 7,
             "form": 1,
             "description": "",
             "description_en": "",
             "description_nl": "",
-            "required": false,
+            "required": true,
             "_order": 4
         }
     },
@@ -318,7 +318,7 @@
             "description": "",
             "description_en": "",
             "description_nl": "",
-            "required": false,
+            "required": true,
             "_order": 5
         }
     },
@@ -335,7 +335,7 @@
             "description": "",
             "description_en": "",
             "description_nl": "",
-            "required": false,
+            "required": true,
             "_order": 6
         }
     },
@@ -344,9 +344,9 @@
         "pk": 42,
         "fields": {
             "annotation_key": null,
-            "text": "Grounds for exclusion",
-            "text_en": "Grounds for exclusion",
-            "text_nl": "Uitsluitingsgronden",
+            "text": "Legal exception",
+            "text_en": "Legal exception",
+            "text_nl": "Uitzonderingsgrond",
             "step": 7,
             "form": 1,
             "description": "<div class=\"ewa-rteLine\">If you do not have consent, on what exception is the processing of special personal data based? Please explain if necessary.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">You have discussed your response with the privacy officer.</div>",
@@ -454,7 +454,7 @@
             "description": "<p>Select all categories of personal data that you collect/proces of this group.</p>",
             "description_en": "<p>Select all categories of personal data that you collect/proces of this group.</p>",
             "description_nl": "<p>Selecteer alle categorie&euml;n persoonsgegevens die je van deze groep verzamelt/verwerkt.</p>",
-            "required": false,
+            "required": true,
             "_order": 13
         }
     },
@@ -463,9 +463,9 @@
         "pk": 46,
         "fields": {
             "annotation_key": null,
-            "text": "Explanation",
-            "text_en": "Explanation",
-            "text_nl": "Toelichting",
+            "text": "Other regular personal data",
+            "text_en": "Other regular personal data",
+            "text_nl": "Andere reguliere persoonsgegevens",
             "step": 7,
             "form": 1,
             "description": "",
@@ -494,7 +494,7 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 18,
+        "pk": 63,
         "fields": {
             "annotation_key": null,
             "text": "Research data will be kept until at least 10 years after publication.",
@@ -505,7 +505,7 @@
             "description": "",
             "description_en": "",
             "description_nl": "",
-            "required": false,
+            "required": true,
             "_order": 1
         }
     },
@@ -528,24 +528,24 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 16,
+        "pk": 65,
         "fields": {
             "annotation_key": null,
-            "text": "Where are your consent forms stored?",
-            "text_en": "Where are your consent forms stored?",
-            "text_nl": "Wat is de opslaglocatie van jouw toestemmingsverklaringen?",
+            "text": "I am also going to store consent forms.",
+            "text_en": "I am also going to store consent forms.",
+            "text_nl": "Ik ga ook toestemmingsverklaringen bewaren.",
             "step": 8,
             "form": 1,
             "description": "",
             "description_en": "",
             "description_nl": "",
-            "required": true,
+            "required": false,
             "_order": 3
         }
     },
     {
         "model": "form.basequestion",
-        "pk": 19,
+        "pk": 64,
         "fields": {
             "annotation_key": null,
             "text": "Consent forms will be kept until at least 10 years after publication.",
@@ -556,7 +556,7 @@
             "description": "<p>Constent forms need to be kept just as long as the personal data, in a separate location.&nbsp;</p>",
             "description_en": "<p>Constent forms need to be kept just as long as the personal data, in a separate location.&nbsp;</p>",
             "description_nl": "<p>Toestemmingsverklaringen moeten net zolang worden bewaard als de persoonsgegevens, op een gescheiden locatie.</p>",
-            "required": false,
+            "required": true,
             "_order": 4
         }
     },
@@ -579,6 +579,23 @@
     },
     {
         "model": "form.basequestion",
+        "pk": 16,
+        "fields": {
+            "annotation_key": null,
+            "text": "Where are your consent forms stored?",
+            "text_en": "Where are your consent forms stored?",
+            "text_nl": "Wat is de opslaglocatie van jouw toestemmingsverklaringen?",
+            "step": 8,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 6
+        }
+    },
+    {
+        "model": "form.basequestion",
         "pk": 20,
         "fields": {
             "annotation_key": null,
@@ -591,7 +608,7 @@
             "description_en": "",
             "description_nl": "",
             "required": false,
-            "_order": 6
+            "_order": 7
         }
     },
     {
@@ -608,7 +625,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 7
+            "_order": 8
         }
     },
     {
@@ -641,7 +658,7 @@
             "description": "",
             "description_en": "",
             "description_nl": "",
-            "required": false,
+            "required": true,
             "_order": 1
         }
     },
@@ -879,7 +896,7 @@
             "description": "",
             "description_en": "",
             "description_nl": "",
-            "required": false,
+            "required": true,
             "_order": 3
         }
     },
@@ -1020,34 +1037,6 @@
             "repeat_count": null,
             "use_answer_as_count": false,
             "target_question": 6
-        }
-    },
-    {
-        "model": "form.questioncondition",
-        "pk": 4,
-        "fields": {
-            "trigger_question": 18,
-            "condition_type": "show",
-            "trigger_value": {
-                "value": false
-            },
-            "repeat_count": null,
-            "use_answer_as_count": false,
-            "target_question": 15
-        }
-    },
-    {
-        "model": "form.questioncondition",
-        "pk": 5,
-        "fields": {
-            "trigger_question": 19,
-            "condition_type": "show",
-            "trigger_value": {
-                "value": false
-            },
-            "repeat_count": null,
-            "use_answer_as_count": false,
-            "target_question": 17
         }
     },
     {
@@ -1220,20 +1209,6 @@
     },
     {
         "model": "form.questioncondition",
-        "pk": 22,
-        "fields": {
-            "trigger_question": 56,
-            "condition_type": "show",
-            "trigger_value": {
-                "value": true
-            },
-            "repeat_count": null,
-            "use_answer_as_count": false,
-            "target_question": 39
-        }
-    },
-    {
-        "model": "form.questioncondition",
         "pk": 23,
         "fields": {
             "trigger_question": 57,
@@ -1314,6 +1289,202 @@
             "repeat_count": null,
             "use_answer_as_count": false,
             "target_question": 60
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 29,
+        "fields": {
+            "trigger_question": 62,
+            "condition_type": "hide",
+            "trigger_value": {
+                "value": "168"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 39
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 30,
+        "fields": {
+            "trigger_question": 39,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "113"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 57
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 31,
+        "fields": {
+            "trigger_question": 39,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "114"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 57
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 32,
+        "fields": {
+            "trigger_question": 39,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "115"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 57
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 33,
+        "fields": {
+            "trigger_question": 39,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "116"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 57
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 34,
+        "fields": {
+            "trigger_question": 39,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "117"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 57
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 35,
+        "fields": {
+            "trigger_question": 39,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "118"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 57
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 36,
+        "fields": {
+            "trigger_question": 39,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "119"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 57
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 37,
+        "fields": {
+            "trigger_question": 39,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "120"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 57
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 38,
+        "fields": {
+            "trigger_question": 39,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "125"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 57
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 39,
+        "fields": {
+            "trigger_question": 63,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "170"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 15
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 40,
+        "fields": {
+            "trigger_question": 64,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "172"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 17
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 41,
+        "fields": {
+            "trigger_question": 65,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": true
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 16
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 42,
+        "fields": {
+            "trigger_question": 65,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": true
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 64
         }
     },
     {
@@ -1882,11 +2053,11 @@
     },
     {
         "model": "form.selectoption",
-        "pk": 159,
+        "pk": 125,
         "fields": {
-            "label": "None",
-            "label_en": "None",
-            "label_nl": "Geen",
+            "label": "Criminal history data (criminal convictions or offences) of participants.",
+            "label_en": "Criminal history data (criminal convictions or offences) of participants.",
+            "label_nl": "Gegevens over het strafrechtelijk verleden (strafrechtelijke veroordelingen of strafbare feiten) van deelnemers.",
             "default_selected": false,
             "question": 39,
             "_order": 8
@@ -1896,9 +2067,9 @@
         "model": "form.selectoption",
         "pk": 121,
         "fields": {
-            "label": "The special personal data have clearly been made public by the data subjects themselves.",
-            "label_en": "The special personal data have clearly been made public by the data subjects themselves.",
-            "label_nl": "De bijzondere persoonsgegevens zijn overduidelijk openbaar gemaakt door de betrokkenen zelf.",
+            "label": "The special categories of data have clearly been made public by the data subjects themselves.",
+            "label_en": "The special categories of data have clearly been made public by the data subjects themselves.",
+            "label_nl": "De bijzondere persoonsgegevens zijn overduidelijk openbaar gemaakt door de datasubjecten zelf.",
             "default_selected": false,
             "question": 42,
             "_order": 0
@@ -1908,9 +2079,9 @@
         "model": "form.selectoption",
         "pk": 122,
         "fields": {
-            "label": "The processing of special categories of personal data is necessary for archiving in the public interest, scientific or historical research, or statistical purposes, and obtaining consent would be so d",
-            "label_en": "The processing of special categories of personal data is necessary for archiving in the public interest, scientific or historical research, or statistical purposes, and obtaining consent would be so d",
-            "label_nl": "De verwerking van de bijzondere persoonsgegevens is noodzakelijk voor archivering in het algemeen belang, wetenschappelijk/historisch onderzoek of statistische doeleinden, en het vragen om toestemming",
+            "label": "Obtaining consent would be so difficult and/or time-consuming that it would jeopardize the entire research project.",
+            "label_en": "Obtaining consent would be so difficult and/or time-consuming that it would jeopardize the entire research project.",
+            "label_nl": "Het vragen om toestemming is zo moeilijk en/of tijdrovend dat het hele onderzoek erdoor in gevaar zou komen.",
             "default_selected": false,
             "question": 42,
             "_order": 1
@@ -1920,9 +2091,9 @@
         "model": "form.selectoption",
         "pk": 123,
         "fields": {
-            "label": "The processing of special categories of personal data is necessary for  a compelling public interest specified by law, namely:",
-            "label_en": "The processing of special categories of personal data is necessary for  a compelling public interest specified by law, namely:",
-            "label_nl": "De verwerking van de bijzondere persoonsgegevens is noodzakelijk voor een zwaarwegend algemeen belang dat in de wet wordt genoemd, te weten:",
+            "label": "Necessary for a compelling public interest specified by law, namely:",
+            "label_en": "Necessary for a compelling public interest specified by law, namely:",
+            "label_nl": "Noodzakelijk voor een zwaarwegend algemeen belang dat in de wet wordt genoemd, te weten:",
             "default_selected": false,
             "question": 42,
             "_order": 2
@@ -1942,18 +2113,6 @@
     },
     {
         "model": "form.selectoption",
-        "pk": 125,
-        "fields": {
-            "label": "Criminal history data (criminal convictions or offences) of participants.",
-            "label_en": "Criminal history data (criminal convictions or offences) of participants.",
-            "label_nl": "Gegevens over het strafrechtelijk verleden (strafrechtelijke veroordelingen of strafbare feiten) van deelnemers.",
-            "default_selected": false,
-            "question": 44,
-            "_order": 1
-        }
-    },
-    {
-        "model": "form.selectoption",
         "pk": 126,
         "fields": {
             "label": "All or some participants are children aged 0-15.",
@@ -1961,7 +2120,7 @@
             "label_nl": "Alle deelnemers, of een aantal van hen, zijn kinderen van 0 t/m 15 jaar.",
             "default_selected": false,
             "question": 44,
-            "_order": 2
+            "_order": 1
         }
     },
     {
@@ -2146,6 +2305,18 @@
     },
     {
         "model": "form.selectoption",
+        "pk": 166,
+        "fields": {
+            "label": "Transcripts of recordings",
+            "label_en": "Transcripts of recordings",
+            "label_nl": "Transcripten van opnamen",
+            "default_selected": false,
+            "question": 45,
+            "_order": 15
+        }
+    },
+    {
+        "model": "form.selectoption",
         "pk": 143,
         "fields": {
             "label": "Other video recordings",
@@ -2153,7 +2324,7 @@
             "label_nl": "Overige video-opnamen",
             "default_selected": false,
             "question": 45,
-            "_order": 15
+            "_order": 16
         }
     },
     {
@@ -2165,7 +2336,7 @@
             "label_nl": "Overige geluidsopnamen",
             "default_selected": false,
             "question": 45,
-            "_order": 16
+            "_order": 17
         }
     },
     {
@@ -2177,7 +2348,7 @@
             "label_nl": "Gedrag of gedragingen",
             "default_selected": false,
             "question": 45,
-            "_order": 17
+            "_order": 18
         }
     },
     {
@@ -2189,7 +2360,7 @@
             "label_nl": "Resultaten van tests",
             "default_selected": false,
             "question": 45,
-            "_order": 18
+            "_order": 19
         }
     },
     {
@@ -2201,7 +2372,7 @@
             "label_nl": "School-, opleidings- of cursusresultaten",
             "default_selected": false,
             "question": 45,
-            "_order": 19
+            "_order": 20
         }
     },
     {
@@ -2213,7 +2384,7 @@
             "label_nl": "Gegevens op social media",
             "default_selected": false,
             "question": 45,
-            "_order": 20
+            "_order": 21
         }
     },
     {
@@ -2225,7 +2396,7 @@
             "label_nl": "Al dan niet ondertekende toestemmingsverklaringen",
             "default_selected": false,
             "question": 45,
-            "_order": 21
+            "_order": 22
         }
     },
     {
@@ -2237,7 +2408,7 @@
             "label_nl": "Anders, namelijk:",
             "default_selected": false,
             "question": 45,
-            "_order": 22
+            "_order": 23
         }
     },
     {
@@ -2373,6 +2544,78 @@
         }
     },
     {
+        "model": "form.selectoption",
+        "pk": 167,
+        "fields": {
+            "label": "Yes",
+            "label_en": "Yes",
+            "label_nl": "Ja",
+            "default_selected": false,
+            "question": 62,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 168,
+        "fields": {
+            "label": "No",
+            "label_en": "No",
+            "label_nl": "Nee",
+            "default_selected": false,
+            "question": 62,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 169,
+        "fields": {
+            "label": "Yes",
+            "label_en": "Yes",
+            "label_nl": "Ja",
+            "default_selected": false,
+            "question": 63,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 170,
+        "fields": {
+            "label": "No",
+            "label_en": "No",
+            "label_nl": "Nee",
+            "default_selected": false,
+            "question": 63,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 171,
+        "fields": {
+            "label": "Yes",
+            "label_en": "Yes",
+            "label_nl": "Ja",
+            "default_selected": false,
+            "question": 64,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 172,
+        "fields": {
+            "label": "No",
+            "label_en": "No",
+            "label_nl": "Nee",
+            "default_selected": false,
+            "question": 64,
+            "_order": 1
+        }
+    },
+    {
         "model": "form.selectquestion",
         "pk": 5,
         "fields": {
@@ -2395,6 +2638,13 @@
     },
     {
         "model": "form.selectquestion",
+        "pk": 6,
+        "fields": {
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
         "pk": 10,
         "fields": {
             "multiple": false
@@ -2402,7 +2652,14 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 6,
+        "pk": 63,
+        "fields": {
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 47,
         "fields": {
             "multiple": false
         }
@@ -2416,14 +2673,14 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 47,
+        "pk": 24,
         "fields": {
             "multiple": false
         }
     },
     {
         "model": "form.selectquestion",
-        "pk": 24,
+        "pk": 62,
         "fields": {
             "multiple": false
         }
@@ -2433,6 +2690,13 @@
         "pk": 39,
         "fields": {
             "multiple": true
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 64,
+        "fields": {
+            "multiple": false
         }
     },
     {
@@ -2491,9 +2755,9 @@
         "model": "form.step",
         "pk": 2,
         "fields": {
-            "name": "Involved UU researchers",
-            "name_en": "Involved UU researchers",
-            "name_nl": "Betrokken UU-onderzoekers",
+            "name": "Involved researchers",
+            "name_en": "Involved researchers",
+            "name_nl": "Betrokken onderzoekers",
             "description": null,
             "description_en": null,
             "description_nl": null,
@@ -2562,9 +2826,9 @@
             "name": "Data subjects",
             "name_en": "Data subjects",
             "name_nl": "Datasubjecten",
-            "description": "<p>In this step you will be asked to indicate which categories of data subjects play a role in your research project. For each category of data subjects, we ask two questions:</p>\r\n<ol>\r\n<li>Why is it necessary to collect personal data?</li>\r\n<li>Which specific categories of personal data you will be processing? If you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.</li>\r\n</ol>",
-            "description_en": "<p>In this step you will be asked to indicate which categories of data subjects play a role in your research project. For each category of data subjects, we ask two questions:</p>\r\n<ol>\r\n<li>Why is it necessary to collect personal data?</li>\r\n<li>Which specific categories of personal data you will be processing? If you submitted multiple categories of data subjects in the previous question, you will be asked to provide information for each of those categories.</li>\r\n</ol>",
-            "description_nl": "<p>In deze stap geef je op welke categorie&euml;n datasubjecten een rol spelen in je onderzoeksproject. Per categorie datasubjecten vragen we twee dingen:</p>\r\n<ol>\r\n<li>Waarom het noodzakelijk is om persoonsgegevens te verzamelen.</li>\r\n<li>Welke specifieke categorie&euml;n persoonsgegevens je gaat verwerken. Als je in de vorige vraag meerdere categorie&euml;n betrokkenen hebt opgegeven, wordt je dus gevraagd om voor elk van die categorie&euml;n informatie op te geven.</li>\r\n</ol>",
+            "description": "<div class=\"ewa-rteLine\">In this step, you specify who the people are whose personal data you will be processing. Individually, we refer to these people as \"data subjects\", and as a group, we refer to them as \"data subject groups\". You must specify at least one group. There is no maximum.</div>\r\n<div class=\"ewa-rteLine\">\r\n<p>For each group, we ask two things:</p>\r\n</div>\r\n<div class=\"ewa-rteLine\">\r\n<ol>\r\n<li>The name you want to use for the relevant group.</li>\r\n<li>Why it is necessary to use personal data of these data subjects.</li>\r\n<li>Which specific categories of personal data you will be processing, subdivided into special (extra sensitive), sensitive, and normal.</li>\r\n</ol>\r\n</div>",
+            "description_en": "<div class=\"ewa-rteLine\">In this step, you specify who the people are whose personal data you will be processing. Individually, we refer to these people as \"data subjects\", and as a group, we refer to them as \"data subject groups\". You must specify at least one group. There is no maximum.</div>\r\n<div class=\"ewa-rteLine\">\r\n<p>For each group, we ask two things:</p>\r\n</div>\r\n<div class=\"ewa-rteLine\">\r\n<ol>\r\n<li>The name you want to use for the relevant group.</li>\r\n<li>Why it is necessary to use personal data of these data subjects.</li>\r\n<li>Which specific categories of personal data you will be processing, subdivided into special (extra sensitive), sensitive, and normal.</li>\r\n</ol>\r\n</div>",
+            "description_nl": "<div class=\"ewa-rteLine\">In deze stap geef je op wie de mensen zijn van wie je persoonsgegevens gaat verwerken. Individueel noemen we deze mensen \"datasubjecten\" en als groep spreken we van \"datasubjectgroepen\". Je moet minimaal &eacute;&eacute;n groep opgeven. Er geldt geen maximum.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">Per groep vragen we drie dingen:</div>\r\n<ol>\r\n<li>\r\n<div class=\"ewa-rteLine\">De naam die je voor de desbetreffende groep wilt gebruiken.</div>\r\n</li>\r\n<li>\r\n<div class=\"ewa-rteLine\">Waarom het noodzakelijk is om persoonsgegevens van deze datasubjecten te gebruiken.</div>\r\n</li>\r\n<li>\r\n<div class=\"ewa-rteLine\">Welke specifieke categorie&euml;n persoonsgegevens je gaat verwerken, onderverdeeld in bijzonder (extra gevoelig), gevoelig en normaal.</div>\r\n</li>\r\n</ol>",
             "slug": "data-subjects",
             "form": 1,
             "parent": null,
@@ -2882,9 +3146,9 @@
             "text": "What happens if the expected study period has passed?",
             "text_en": "What happens if the expected study period has passed?",
             "text_nl": "Wat gebeurt er als de verwachte studieperiode is verstreken?",
-            "content": "<p>After the study period has passed, the retention period activates. In principle, this period lasts at least 10 years.</p>\r\n<p>Should the study take longer or shorter than expected, please return to MyResearch and update the study period.</p>",
-            "content_en": "<p>After the study period has passed, the retention period activates. In principle, this period lasts at least 10 years.</p>\r\n<p>Should the study take longer or shorter than expected, please return to MyResearch and update the study period.</p>",
-            "content_nl": "<p>Na afloop van de studieperiode gaat de bewaartermijn. Deze duurt in beginsel minimaal 10 jaar.</p>\r\n<p>Mocht jouw studie langer of korter duren dan hier gepland, kom dan terug naar MyResearch en pas de studieperiode aan.</p>",
+            "content": "<p>After the study period has passed, the archiving period starts. In principle, this period lasts at least 10 years.</p>\r\n<p>Should the study take longer or shorter than expected, please return to MyResearch and update the study period.</p>",
+            "content_en": "<p>After the study period has passed, the archiving period starts. In principle, this period lasts at least 10 years.</p>\r\n<p>Should the study take longer or shorter than expected, please return to MyResearch and update the study period.</p>",
+            "content_nl": "<p>Na afloop van de studieperiode gaat de archiveringsperiode in. Deze duurt in beginsel minimaal 10 jaar.</p>\r\n<p>Mocht jouw studie langer of korter duren dan hier gepland, kom dan terug naar MyResearch en pas de studieperiode aan.</p>",
             "_order": 0
         }
     },
@@ -2910,9 +3174,9 @@
             "text": "What do we mean by 'end date'?",
             "text_en": "What do we mean by 'end date'?",
             "text_nl": "Wat wordt bedoeld met 'einddatum'?",
-            "content": "<p>This is the expected publication date of the research results. This date is the start date of the retention period. Please enter an estimated date here that is as accurate as possible.</p>",
-            "content_en": "<p>This is the expected publication date of the research results. This date is the start date of the retention period. Please enter an estimated date here that is as accurate as possible.</p>",
-            "content_nl": "<p>Dit is de verwachte publicatiedatum van de onderzoeksresultaten. Op deze datum gaat de bewaartermijn van de onderzoeksdata in. Geef hier een zo correct mogelijke geschatte datum op.</p>",
+            "content": "<p>This is the expected publication date of the research results. This date is the start date of the archiving period period. Please enter an estimated date here that is as accurate as possible.</p>",
+            "content_en": "<p>This is the expected publication date of the research results. This date is the start date of the archiving period period. Please enter an estimated date here that is as accurate as possible.</p>",
+            "content_nl": "<p>Dit is de verwachte publicatiedatum van de onderzoeksresultaten. Op deze datum gaat de archiveringsperiode van de onderzoeksdata in. Geef hier een zo correct mogelijke geschatte datum op.</p>",
             "_order": 2
         }
     },
@@ -2948,7 +3212,7 @@
         "model": "form.stepinfotext",
         "pk": 22,
         "fields": {
-            "step": 6,
+            "step": 7,
             "text": "What are personal data?",
             "text_en": "What are personal data?",
             "text_nl": "Wat zijn persoonsgegevens?",
@@ -2962,7 +3226,7 @@
         "model": "form.stepinfotext",
         "pk": 23,
         "fields": {
-            "step": 6,
+            "step": 7,
             "text": "Why do I need to enter 'categories' of personal data?",
             "text_en": "Why do I need to enter 'categories' of personal data?",
             "text_nl": "Waarom moet ik 'categorie\u00ebn' persoonsgegevens opgeven?",
@@ -2976,7 +3240,7 @@
         "model": "form.stepinfotext",
         "pk": 24,
         "fields": {
-            "step": 6,
+            "step": 7,
             "text": "Is it allowed to collect data that I will not need right now?",
             "text_en": "Is it allowed to collect data that I will not need right now?",
             "text_nl": "Mag ik gegevens verzamelen die ik nu niet nodig heb?",
@@ -2997,7 +3261,7 @@
             "content": "<p>Datasubjects are persons from whom you process data. If you interview somebody that person is a datasubject.</p>",
             "content_en": "<p>Datasubjects are persons from whom you process data. If you interview somebody that person is a datasubject.</p>",
             "content_nl": "<p>Datasubjecten zijn personen van wie je persoonsgegevens verwerkt, dus op wie die persoonsgegevens betrekking hebben. Als je iemand interviewt, dan is diegene het datasubject.</p>",
-            "_order": 3
+            "_order": 0
         }
     },
     {
@@ -3011,35 +3275,35 @@
             "content": "<p>Datasubjects are individual persons with an own name. Categories of datasubjects are persons that can be grouped together. For example student, UU-colleagues, childeren with dyslexia, or police officers. Be as specific as possible when grouping data subjects.</p>",
             "content_en": "<p>Datasubjects are individual persons with an own name. Categories of datasubjects are persons that can be grouped together. For example student, UU-colleagues, childeren with dyslexia, or police officers. Be as specific as possible when grouping data subjects.</p>",
             "content_nl": "<p>Datasubjecten zijn individuele personen met een eigen naam. Categorie&euml;n datasubjecten zijn groepen personen die binnen eenzelfde categorie vallen. Bijvoorbeeld: studenten, UU-medewerkers, kinderen met dyslexie of politieambtenaren. Wees bij het opgeven van categorie&euml;n datasubjecten zo specifiek mogelijk.</p>",
-            "_order": 4
+            "_order": 1
         }
     },
     {
         "model": "form.stepinfotext",
         "pk": 27,
         "fields": {
-            "step": 6,
+            "step": 7,
             "text": "Do I need to enter something for every category?",
             "text_en": "Do I need to enter something for every category?",
             "text_nl": "Moet ik bij elke categorie iets opgeven?",
             "content": "<p>No, you do not have to do so. You only have to enter the categories datasubjects where you process peronal data. There can be multiple different groups datasubjects per category. For example at participants you can have teachers and students.</p>",
             "content_en": "<p>No, you do not have to do so. You only have to enter the categories datasubjects where you process peronal data. There can be multiple different groups datasubjects per category. For example at participants you can have teachers and students.</p>",
             "content_nl": "<div class=\"ewa-rteLine\">Nee, dat hoeft niet. Je moet alleen die categori&euml;n datasubjecten opgeven van wie je persoonsgegevens verwerkt. Per categorie kunnen dat wel meerdere, verschillende, groepen datasubjecten zijn, bijv. bij 'Deelnemers, d.w.z. personen die bewust deelnemen aan het onderzoek': docenten en leerlingen.</div>",
-            "_order": 5
+            "_order": 3
         }
     },
     {
         "model": "form.stepinfotext",
         "pk": 28,
         "fields": {
-            "step": 6,
+            "step": 7,
             "text": "What do I do when my category is not shown?",
             "text_en": "What do I do when my category is not shown?",
             "text_nl": "Wat moet ik doen als mijn categorie er niet tussen staat?",
             "content": "<p>The shown categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
             "content_en": "<p>The shown categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
             "content_nl": "<p>De opgevoerde categorie&euml;n zijn geacht uitputtend te zijn. Mochten je desondanks de indruk hebben niet door te kunnen, neem dan contact op met de privacy officer.</p>",
-            "_order": 6
+            "_order": 4
         }
     },
     {
@@ -3050,9 +3314,9 @@
             "text": "Who/what are recipients?",
             "text_en": "Who/what are recipients?",
             "text_nl": "Wie/wat zijn ontvangers?",
-            "content": "<p>Recipients are people who want to use the personal data for their own different research goal. (meaning, a different purpose-binding when it comes to the GDPR).</p>",
-            "content_en": "<p>Recipients are people who want to use the personal data for their own different research goal. (meaning, a different purpose-binding when it comes to the GDPR).</p>",
-            "content_nl": "<p>Ontvangers zijn mensen die de persoonsgegevens voor een eigen, andere, onderzoeksvraag willen verwerken (d.w.z. die een andere doelbinding hebben in de zin van de AVG).</p>",
+            "content": "<p>A recipient is a person or an organization that receives personal data from another organization and that has its own purposes for receiving and further processing that personal data. Example: as a researcher, you provide data (including personal data) to another university that will use it for their own research. Another example: you make your research data available to a national archive.&nbsp;</p>",
+            "content_en": "<p>A recipient is a person or an organization that receives personal data from another organization and that has its own purposes for receiving and further processing that personal data. Example: as a researcher, you provide data (including personal data) to another university that will use it for their own research. Another example: you make your research data available to a national archive.&nbsp;</p>",
+            "content_nl": "<p>Een ontvanger is een persoon of organisatie die persoonsgegevens ontvangt van een andere organisatie en die voor het ontvangen en verder verwerken van die persoonsgegevens eigen doelstellingen heeft. Voorbeeld: als onderzoeker verstrek jij data (inclusief persoonsgegevens) aan een andere universiteit die er zelf onderzoek mee gaat doen. Ander voorbeeld: je stelt je onderzoeksdata beschikbaar aan een nationaal archief.&nbsp;</p>",
             "_order": 0
         }
     },
@@ -3117,12 +3381,12 @@
         "pk": 34,
         "fields": {
             "step": 11,
-            "text": "Which security measures are in place at UU?",
-            "text_en": "Which security measures are in place at UU?",
-            "text_nl": "Welke beveiligingsmaatregelen zijn er bij de UU?",
-            "content": "<p>The UU has a large number of technical and organizational measures to increase the security of personal data. For instance, the technical infrastructure has multiple security measures, such as multi-factor authentication, firewalls and anti-virus software. Binding agreements with IT providers have also been signed to protect personal data.</p>",
-            "content_en": "<p>The UU has a large number of technical and organizational measures to increase the security of personal data. For instance, the technical infrastructure has multiple security measures, such as multi-factor authentication, firewalls and anti-virus software. Binding agreements with IT providers have also been signed to protect personal data.</p>",
-            "content_nl": "<p>De UU heeft een groot aantal technische en organisatorische maatregelen getroffen om de beveiliging van persoonsgegevens te verhogen. Zo is de technische infrastructuur op een veelheid aan manieren beveiligd (denk aan multi-factor authenticatie, firewalls en antivirussoftware) en zijn er bindende overeenkomsten gesloten om de leveranciers van IT-diensten te dwingen de bescherming van persoonsgegevens te waarborgen.</p>",
+            "text": "What security measures are standard at the UU?",
+            "text_en": "What security measures are standard at the UU?",
+            "text_nl": "Welke beveiligingsmaatregelen zijn er standaard bij de UU?",
+            "content": "<p>The UU has taken a large number of technical and organizational measures to increase the security of personal data. For example, the technical infrastructure is secured in a multitude of ways (such as multi-factor authentication, firewalls, and antivirus software), and binding agreements have been concluded to compel IT service providers to ensure the protection of personal data.&nbsp;</p>",
+            "content_en": "<p>The UU has taken a large number of technical and organizational measures to increase the security of personal data. For example, the technical infrastructure is secured in a multitude of ways (such as multi-factor authentication, firewalls, and antivirus software), and binding agreements have been concluded to compel IT service providers to ensure the protection of personal data.&nbsp;</p>",
+            "content_nl": "<p>De UU heeft een groot aantal technische en organisatorische maatregelen getroffen om de beveiliging van persoonsgegevens te verhogen. Zo is de technische infrastructuur op een veelheid aan manieren beveiligd (denk aan multi-factor authenticatie, firewalls en antivirussoftware) en zijn er bindende overeenkomsten gesloten om de leveranciers van IT-diensten te dwingen de bescherming van persoonsgegevens te waarborgen.&nbsp;</p>",
             "_order": 0
         }
     },
@@ -3197,25 +3461,143 @@
         }
     },
     {
-        "model": "form.textquestion",
-        "pk": 9,
+        "model": "form.stepinfotext",
+        "pk": 40,
         "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
+            "step": 7,
+            "text": "What is meant by the three categories for groups of data subjects?",
+            "text_en": "What is meant by the three categories for groups of data subjects?",
+            "text_nl": "Wat wordt er bedoeld met de drie categorie\u00ebn voor groepen datasubjecten?",
+            "content": "<div class=\"ewa-rteLine\">&ldquo;Participants&rdquo; refers to participants in the classical sense of the word. For example, people you interview, people who fill out a questionnaire, or people you subject to certain tests.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;People who do not (necessarily) know that research is being conducted on them&rdquo; are, for example, people whose data you &ldquo;scrape&rdquo; on social media or people you secretly record in public spaces.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;People who are otherwise involved&rdquo; are, for example, the parents of participating children (if you ask them to consent to their child's participation or personal data processing) or location holders who are asked permission for the use of their location.</div>",
+            "content_en": "<div class=\"ewa-rteLine\">&ldquo;Participants&rdquo; refers to participants in the classical sense of the word. For example, people you interview, people who fill out a questionnaire, or people you subject to certain tests.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;People who do not (necessarily) know that research is being conducted on them&rdquo; are, for example, people whose data you &ldquo;scrape&rdquo; on social media or people you secretly record in public spaces.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;People who are otherwise involved&rdquo; are, for example, the parents of participating children (if you ask them to consent to their child's participation or personal data processing) or location holders who are asked permission for the use of their location.</div>",
+            "content_nl": "<div class=\"ewa-rteLine\">Onder &ldquo;Deelnemers&rdquo; wordt verstaan: participanten in de klassieke zin van het woord. Bijvoorbeeld mensen die je interviewt of mensen die een vragenlijst invullen of die je aan bepaalde tests onderwerpt.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;Personen die niet (noodzakelijkerwijs) weten dat er onderzoek naar hen wordt gedaan&rdquo; zijn bijvoorbeeld mensen van wie je data &ldquo;scrapet&rdquo; op social media of mensen van wie je in de publieke ruimte heimelijk opnamen maakt.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">&ldquo;Personen die anderszins betrokken zijn&rdquo; zijn bijvoorbeeld de ouders van deelnemende kinderen (als je hen vraagt om toestemming te geven voor de deelname van hun kind) of locatiehouders die toestemming moeten geven voor het gebruik van hun locatie.</div>",
+            "_order": 5
         }
     },
     {
-        "model": "form.textquestion",
-        "pk": 1,
+        "model": "form.stepinfotext",
+        "pk": 41,
         "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
-            "is_email": false
+            "step": 7,
+            "text": "What are special categories of personal data?",
+            "text_en": "What are special categories of personal data?",
+            "text_nl": "Wat zijn bijzondere persoonsgegevens?",
+            "content": "<div class=\"ewa-rteLine\">Special categories of personal data are data that are so sensitive that they are subject to extra protection under the General Data Protection Regulation (GDPR). You may only process these data under additional conditions, for example, if you have obtained consent or if the persons to whom the data relate (the data subjects) have made those data public themselves.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">The mentioned special categories of personal data must be interpreted &ldquo;broadly&rdquo;. For the category regarding political opinions, for example, it is not necessary for someone to be a member of a political party. Any opinion someone holds about the organization or functioning of society is considered a special category of personal data.</div>",
+            "content_en": "<div class=\"ewa-rteLine\">Special categories of personal data are data that are so sensitive that they are subject to extra protection under the General Data Protection Regulation (GDPR). You may only process these data under additional conditions, for example, if you have obtained consent or if the persons to whom the data relate (the data subjects) have made those data public themselves.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">The mentioned special categories of personal data must be interpreted &ldquo;broadly&rdquo;. For the category regarding political opinions, for example, it is not necessary for someone to be a member of a political party. Any opinion someone holds about the organization or functioning of society is considered a special category of personal data.</div>",
+            "content_nl": "<div class=\"ewa-rteLine\">Bijzondere persoonsgegevens zijn gegevens die zo gevoelig zijn dat ze onder de Algemene verordening gegevensbescherming (AVG) extra worden beschermd. Deze gegevens mag je alleen onder aanvullende voorwaarden verwerken, bijvoorbeeld als je er toestemming voor hebt gekregen of als degenen op wie de gegevens betrekking hebben (de datasubjecten) die gegevens zelf openbaar hebben gemaakt.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">De genoemde categorie&euml;n bijzondere persoonsgegevens moet je &ldquo;ruim&rdquo; interpreteren. Voor de categorie over politieke opvattingen is het bijvoorbeeld niet nodig dat iemand lid is van een politieke partij. Elke opvatting die iemand heeft over de inrichting of het functioneren van de maatschappij wordt gezien als een bijzonder persoonsgegeven.</div>",
+            "_order": 6
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 42,
+        "fields": {
+            "step": 11,
+            "text": "What is two-factor authentication?",
+            "text_en": "What is two-factor authentication?",
+            "text_nl": "Wat is twee-factor-authenticatie?",
+            "content": "<p>Two-factor authentication (2FA) is a security method that improves security by identifying users in two ways, for example, through something you know (a specific password) and something you have (a specific phone).&nbsp;</p>",
+            "content_en": "<p>Two-factor authentication (2FA) is a security method that improves security by identifying users in two ways, for example, through something you know (a specific password) and something you have (a specific phone).&nbsp;</p>",
+            "content_nl": "<p>Twee-factor-authenticatie (2FA) is een beveiligingsmethode is een manier om de beveiliging te verbeteren door gebruikers op twee manieren te identificeren, bijvoorbeeld door iets dat je weet (een bepaald wachtwoord) en iets dat je hebt (een bepaalde telefoon).&nbsp;</p>",
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 43,
+        "fields": {
+            "step": 11,
+            "text": "What is encryption?",
+            "text_en": "What is encryption?",
+            "text_nl": "Wat is versleuteling?",
+            "content": "<p>Encryption is a technique used to convert information into an encrypted form that is only accessible with a specific key. The goal of encryption is to protect information from unwanted access by unauthorized persons.&nbsp;</p>",
+            "content_en": "<p>Encryption is a technique used to convert information into an encrypted form that is only accessible with a specific key. The goal of encryption is to protect information from unwanted access by unauthorized persons.&nbsp;</p>",
+            "content_nl": "<p>Versleuteling\u202f(of encryptie) is een techniek waarmee informatie wordt omgezet in een versleutelde vorm die alleen toegankelijk is met een specifieke sleutel. Het doel van versleuteling is om de informatie te beschermen tegen ongewenste toegang door onbevoegde personen.&nbsp;</p>",
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 44,
+        "fields": {
+            "step": 11,
+            "text": "What is a VPN?",
+            "text_en": "What is a VPN?",
+            "text_nl": "Wat is een VPN?",
+            "content": "<p>A VPN (Virtual Private Network) encrypts your internet connection and routes your traffic through an intermediary server, making your IP address less visible. A VPN creates a kind of &ldquo;conduit&rdquo; between a sender and a receiver.</p>",
+            "content_en": "<p>A VPN (Virtual Private Network) encrypts your internet connection and routes your traffic through an intermediary server, making your IP address less visible. A VPN creates a kind of &ldquo;conduit&rdquo; between a sender and a receiver.</p>",
+            "content_nl": "<p>Een VPN (Virtual Private Network) versleutelt je internetverbinding en laat je verkeer via een tussenserver lopen, waardoor je IP-adres minder zichtbaar is. Een VPN cre&euml;ert een soort &ldquo;buizenpost&rdquo; tussen een verzender en een ontvanger.&nbsp;</p>",
+            "_order": 3
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 45,
+        "fields": {
+            "step": 11,
+            "text": "What is the difference between anonymization and pseudonymization?",
+            "text_en": "What is the difference between anonymization and pseudonymization?",
+            "text_nl": "Wat is het verschil tussen anonimisering en pseudonimisering?",
+            "content": "<p>With anonymization, it is permanently impossible to link your research data to specific individuals. With pseudonymization, this is indeed possible, for example by replacing personal data in a data file with codes and storing the meaning of those codes in a separate key file. With anonymization, the GDPR no longer applies, whereas it does with pseudonymization. Pseudonymization is primarily a security method.&nbsp;</p>",
+            "content_en": "<p>With anonymization, it is permanently impossible to link your research data to specific individuals. With pseudonymization, this is indeed possible, for example by replacing personal data in a data file with codes and storing the meaning of those codes in a separate key file. With anonymization, the GDPR no longer applies, whereas it does with pseudonymization. Pseudonymization is primarily a security method.&nbsp;</p>",
+            "content_nl": "<p>Bij anonimisering is het definitief onmogelijk om jouw onderzoeksgegevens in verband te brengen met specifieke personen. Bij pseudonimisering is dat w&eacute;l mogelijk, bijvoorbeeld door persoonsgegevens in een databestand te vervangen door codes en de betekenis van die codes op te slaan in een afzonderlijk sleutelbestand. Bij anonimisering geldt de AVG niet meer, bij pseudonimisering wel. Pseudonimisering is in de eerste plaats een beveiligingsmethode.&nbsp;</p>",
+            "_order": 4
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 46,
+        "fields": {
+            "step": 11,
+            "text": "To what extent do agreements contribute to security?",
+            "text_en": "To what extent do agreements contribute to security?",
+            "text_nl": "In hoeverre dragen overeenkomsten bij aan de beveiliging?",
+            "content": "<p>By making binding agreements with parties to whom we entrust personal data, the UU can enforce proper, secure, or lawful handling of that personal data by those parties.&nbsp;</p>",
+            "content_en": "<p>By making binding agreements with parties to whom we entrust personal data, the UU can enforce proper, secure, or lawful handling of that personal data by those parties.&nbsp;</p>",
+            "content_nl": "<p>Door bindende afspraken te maken met partijen aan wie we persoonsgegevens toevertrouwen, kan de UU die partijen dwingen tot een juiste, veilige of rechtmatige behandeling van die persoonsgegevens.&nbsp;</p>",
+            "_order": 5
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 47,
+        "fields": {
+            "step": 11,
+            "text": "What is a \u201cChinese wall\u201d?",
+            "text_en": "What is a \u201cChinese wall\u201d?",
+            "text_nl": "Wat is een \u201cChinese wall\u201d?",
+            "content": "<p>If one department within an organization processes personal data that is also of interest to another department, but it is definitely not intended for that other department to see that data, management can impose a formal prohibition on that other department. In this way, the data is shielded internally within the organization. This is called a Chinese wall.&nbsp;</p>",
+            "content_en": "<p>If one department within an organization processes personal data that is also of interest to another department, but it is definitely not intended for that other department to see that data, management can impose a formal prohibition on that other department. In this way, the data is shielded internally within the organization. This is called a Chinese wall.&nbsp;</p>",
+            "content_nl": "<p>Als de ene afdeling binnen een organisatie persoonsgegevens verwerkt die ook interessant zijn voor een andere afdeling, maar het is beslist niet de bedoeling dat die andere afdeling die gegevens te zien krijgt, kan het management die andere afdeling een formeel verbod opleggen. Op die manier worden de gegevens intern binnen de organisatie afgeschermd. Dit wordt een Chinese wall genoemd.&nbsp;</p>",
+            "_order": 6
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 48,
+        "fields": {
+            "step": 9,
+            "text": "Why is the recipient\u2019s country important?",
+            "text_en": "Why is the recipient\u2019s country important?",
+            "text_nl": "Waarom is het land van de ontvanger van belang?",
+            "content": "<p>Personal data may only be shared with recipients in countries that offer an adequate level of data protection. The EU countries, Norway, Iceland, and Switzerland (together the EEA) meet this requirement. Some other countries do as well. Arrangements must be made for transfers to countries that do not meet this requirement. For transfers to countries outside the EEA, please contact the privacy officer: <a href=\"mailto:privacy.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.gw@uu.nl</a> or <a href=\"mailto:privacy.rebo@uu.nl%20\" target=\"_blank\" rel=\"noopener\">privacy.rebo@uu.nl</a></p>",
+            "content_en": "<p>Personal data may only be shared with recipients in countries that offer an adequate level of data protection. The EU countries, Norway, Iceland, and Switzerland (together the EEA) meet this requirement. Some other countries do as well. Arrangements must be made for transfers to countries that do not meet this requirement. For transfers to countries outside the EEA, please contact the privacy officer: <a href=\"mailto:privacy.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.gw@uu.nl</a> or <a href=\"mailto:privacy.rebo@uu.nl%20\" target=\"_blank\" rel=\"noopener\">privacy.rebo@uu.nl</a></p>",
+            "content_nl": "<p>Persoonsgegevens mogen alleen worden gedeeld met ontvangers in landen die een afdoende niveau van gegevensbescherming bieden. De EU-landen, Noorwegen, IJsland en Zwitserland (samen de EER) voldoen aan deze eis. Sommige andere landen ook. Voor doorgifte aan landen die niet aan deze eis voldoen, moet er iets geregeld worden. Neem voor doorgifte aan landen buiten de EER contact op met de privacy officer: <a href=\"mailto:privacy.gw@uu.nl\">privacy.gw@uu.nl</a> of <a href=\"mailto:privacy.rebo@uu.nl%20\">privacy.rebo@uu.nl</a></p>",
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.stepinfotext",
+        "pk": 49,
+        "fields": {
+            "step": 9,
+            "text": "What is the basis for transfer?",
+            "text_en": "What is the basis for transfer?",
+            "text_nl": "Wat is de basis voor doorgifte?",
+            "content": "<p>The transfer of personal data to countries other than the EU countries, Norway, Iceland, and Switzerland (together the EEA) is prohibited in principle, but there are several exceptions to make it possible. Discuss with the privacy officer (<a href=\"mailto:privacy.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.gw@uu.nl</a> or <a href=\"mailto:privacy.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.rebo@uu.nl</a>) &nbsp;which exception applies to you.</p>",
+            "content_en": "<p>The transfer of personal data to countries other than the EU countries, Norway, Iceland, and Switzerland (together the EEA) is prohibited in principle, but there are several exceptions to make it possible. Discuss with the privacy officer (<a href=\"mailto:privacy.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.gw@uu.nl</a> or <a href=\"mailto:privacy.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.rebo@uu.nl</a>) &nbsp;which exception applies to you.</p>",
+            "content_nl": "<p>Doorgifte van persoonsgegevens naar andere landen dan de EU-landen, Noorwegen, IJsland en Zwitserland (samen de EER) is in beginsel verboden, maar daarop gelden verschillende uitzonderingen. Bespreek met de privacy officer (<a href=\"mailto:privacy.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.gw@uu.nl</a> of <a href=\"mailto:privacy.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.rebo@uu.nl</a>) welke uitzondering voor jou in aanmerking komt.</p>",
+            "_order": 3
         }
     },
     {
@@ -3231,7 +3613,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 36,
+        "pk": 9,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -3264,34 +3646,23 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 48,
+        "pk": 1,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5,
+            "lines": 1,
             "is_email": false
         }
     },
     {
         "model": "form.textquestion",
-        "pk": 53,
+        "pk": 36,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1,
-            "is_email": true
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 22,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
+            "lines": 5,
             "is_email": false
         }
     },
@@ -3308,6 +3679,39 @@
     },
     {
         "model": "form.textquestion",
+        "pk": 22,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 53,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": true
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 48,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
         "pk": 15,
         "fields": {
             "placeholder": "",
@@ -3315,6 +3719,17 @@
             "placeholder_nl": null,
             "lines": 5,
             "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 54,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": true
         }
     },
     {
@@ -3341,40 +3756,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 54,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
-            "is_email": true
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 55,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 16,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 29,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -3396,12 +3778,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 25,
+        "pk": 29,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5,
+            "lines": 1,
             "is_email": false
         }
     },
@@ -3418,12 +3800,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 31,
+        "pk": 25,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1,
+            "lines": 5,
             "is_email": false
         }
     },
@@ -3440,12 +3822,23 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 41,
+        "pk": 31,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5,
+            "lines": 1,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 16,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
             "is_email": false
         }
     },
@@ -3462,7 +3855,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 38,
+        "pk": 41,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -3474,6 +3867,17 @@
     {
         "model": "form.textquestion",
         "pk": 43,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 38,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -3517,14 +3921,14 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 21,
+        "pk": 12,
         "fields": {
             "default_value": false
         }
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 12,
+        "pk": 21,
         "fields": {
             "default_value": false
         }
@@ -3538,21 +3942,14 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 18,
-        "fields": {
-            "default_value": true
-        }
-    },
-    {
-        "model": "form.truefalsequestion",
-        "pk": 23,
+        "pk": 51,
         "fields": {
             "default_value": false
         }
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 51,
+        "pk": 23,
         "fields": {
             "default_value": false
         }
@@ -3566,16 +3963,9 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 56,
+        "pk": 65,
         "fields": {
             "default_value": false
-        }
-    },
-    {
-        "model": "form.truefalsequestion",
-        "pk": 19,
-        "fields": {
-            "default_value": true
         }
     },
     {
