@@ -4,6 +4,8 @@ from copy import deepcopy
 from form.models import Step, UserFormSubmission, RepeatableStep
 from research.tests import normal_user, test_study
 
+from pprint import pprint
+
 
 def find_steps(content):
     return content["data"]["form"]["steps"]
@@ -50,6 +52,7 @@ query GetForm($submissionId: ID!) {
         steps {
             stepId
             slug
+            nameEn
             background
             repeatIndex
             questions {
@@ -62,6 +65,7 @@ query GetForm($submissionId: ID!) {
             substeps {
                 stepId
                 slug
+                nameEn
                 background
                 repeatIndex
                 questions {
@@ -111,8 +115,8 @@ def test_repeatable_step(
 
 
 CreateRepeatQuery = """
-mutation CreateRepeat($repeatable_id: ID! $submission_id: ID!) {
-  createRepeat(repeatableId: $repeatable_id, userFormId: $submission_id) {
+mutation CreateRepeat($repeatable_id: ID! $submission_id: ID! $parent_id: ID) {
+  createRepeat(repeatableId: $repeatable_id, userFormId: $submission_id, parentId: $parent_id) {
     errors {
       field
       messages
@@ -176,3 +180,74 @@ def test_create_repeat(
             passed += 1
     # Check that all three above cases happened independently
     assert passed == 3
+
+
+@pytest.mark.django_db(transaction=True)
+def test_substep_repeat(
+    client_query,
+    test_user,
+    submission,
+    step,
+    form,
+    test_study,
+    repeatable_step,
+):
+    repeatable_substep = RepeatableStep(
+        name="Repeatable substep",
+        slug="sub_rep",
+        form=form,
+        parent=repeatable_step,
+    )
+    repeatable_substep.save()
+    substep_id = repeatable_substep.repeatable_ptr.pk
+    # Get the form again
+    response = client_query(
+        GetFormQuery,
+        user=test_user,
+        variables={
+            "submissionId": submission.id,
+        },
+    )
+    content = json.loads(response.content)
+    assert "errors" not in content
+    # Find all items in content with a stepId key
+    # The substep and its repeat should not be present
+    found = findkey(content, "stepId")
+    assert len(found) == 2
+    step_id = repeatable_step.repeatable_ptr.pk
+    # Create a repeat for the main step
+    response = client_query(
+        CreateRepeatQuery,
+        user=test_user,
+        variables={
+            "submission_id": submission.id,
+            "repeatable_id": step_id,
+        },
+    )
+    content = json.loads(response.content)
+    new_index = int(content["data"]["createRepeat"]["newRepeatIndex"])
+    # Create a repeat for the substep
+    response = client_query(
+        CreateRepeatQuery,
+        user=test_user,
+        variables={
+            "submission_id": submission.id,
+            "repeatable_id": substep_id,
+            "parent_id": new_index,
+        },
+    )
+    content = json.loads(response.content)
+    assert "errors" not in content
+    # Get the form again
+    response = client_query(
+        GetFormQuery,
+        user=test_user,
+        variables={
+            "submissionId": submission.id,
+        },
+    )
+    content = json.loads(response.content)
+    assert "errors" not in content
+    # Now we should have five
+    found = findkey(content, "stepId")
+    assert len(found) == 5
