@@ -179,9 +179,9 @@
             "text_nl": "Onderzoeksdoel",
             "step": 5,
             "form": 1,
-            "description": "<p>What is the central question you wish to answer in this study?</p>",
-            "description_en": "<p>What is the central question you wish to answer in this study?</p>",
-            "description_nl": "<p>Wat is de centrale vraag die je met je studie wilt beantwoorden?</p>",
+            "description": "<p>What is the central question you wish to answer in this study, or what do you wish to achieve with it?</p>",
+            "description_en": "<p>What is the central question you wish to answer in this study, or what do you wish to achieve with it?</p>",
+            "description_nl": "<p>Wat is de centrale onderzoeksvraag die je met je studie wilt beantwoorden, of wat wil je met je studie bereiken?</p>",
             "required": true,
             "_order": 0
         }
@@ -633,9 +633,9 @@
         "pk": 21,
         "fields": {
             "annotation_key": null,
-            "text": "Will personal data be shared with external recipients?",
-            "text_en": "Will personal data be shared with external recipients?",
-            "text_nl": "Worden er persoonsgegevens gedeeld met externe ontvangers?",
+            "text": "Personal data will be shared with external recipients.",
+            "text_en": "Personal data will be shared with external recipients.",
+            "text_nl": "Er worden persoonsgegevens gedeeld met externe ontvangers.",
             "step": 9,
             "form": 1,
             "description": "",
@@ -650,9 +650,9 @@
         "pk": 22,
         "fields": {
             "annotation_key": null,
-            "text": "Persons, group or organisation",
-            "text_en": "Persons, group or organisation",
-            "text_nl": "Personen, groep of instantie",
+            "text": "Person, group or organisation",
+            "text_en": "Person, group or organisation",
+            "text_nl": "Persoon, groep of instantie",
             "step": 9,
             "form": 1,
             "description": "",
@@ -684,9 +684,9 @@
         "pk": 24,
         "fields": {
             "annotation_key": null,
-            "text": "Basis for transmission",
-            "text_en": "Basis for transmission",
-            "text_nl": "Basis voor doorgifte",
+            "text": "Basis for transfer (contact the privacy officer).",
+            "text_en": "Basis for transfer (contact the privacy officer).",
+            "text_nl": "Basis for transfer (contact the privacy officer).",
             "step": 9,
             "form": 1,
             "description": "",
@@ -910,9 +910,9 @@
             "text_nl": "Documenten uploaden",
             "step": 12,
             "form": 1,
-            "description": "<ul>\r\n<li>- DPIA (Data Protection Impact Assessment - Privacy scan, pre-GBEB, DPIA Light, Privacy review, or other abbreviated risk assessment - Other relevant privacy-related documents, data management plan (DMP) - Privacy statement</li>\r\n</ul>",
-            "description_en": "<ul>\r\n<li>- DPIA (Data Protection Impact Assessment - Privacy scan, pre-GBEB, DPIA Light, Privacy review, or other abbreviated risk assessment - Other relevant privacy-related documents, data management plan (DMP) - Privacy statement</li>\r\n</ul>",
-            "description_nl": "<ul>\r\n<li>- DPIA (Data Protection Impact Assessment, ook wel GBEB genoemd) - Privacy scan, pre-GBEB, DPIA Light, Privacy review of andere verkorte risico-inventarisatie - Andere relevante, privacy-gerelateerde documenten, datamanagementplan (DMP) - Privacyverklaring</li>\r\n</ul>",
+            "description": "<p>If one or more relevant documents have been prepared in the context of this research, you can upload them here.</p>\r\n<p>For example:</p>\r\n<ul>\r\n<li>a research proposal approved by a grant provider or client</li>\r\n<li>a DPIA (Data Protection Impact Assessment) or privacy scan</li>\r\n<li>a data management plan (DMP)</li>\r\n<li>a privacy statement</li>\r\n<li>other relevant, privacy-related documents.</li>\r\n</ul>",
+            "description_en": "<p>If one or more relevant documents have been prepared in the context of this research, you can upload them here.</p>\r\n<p>For example:</p>\r\n<ul>\r\n<li>a research proposal approved by a grant provider or client</li>\r\n<li>a DPIA (Data Protection Impact Assessment) or privacy scan</li>\r\n<li>a data management plan (DMP)</li>\r\n<li>a privacy statement</li>\r\n<li>other relevant, privacy-related documents.</li>\r\n</ul>",
+            "description_nl": "<p>Als er een of meer van relevante documenten zijn opgesteld in het kader van dit onderzoek, kun je die hier uploaden.</p>\r\n<p>Denk bijvoorbeeld aan:&nbsp;</p>\r\n<ul>\r\n<li>een door een subsidieverstrekker of opdrachtgever goedgekeurd onderzoeksvoorstel</li>\r\n<li>een DPIA (Data Protection Impact Assessment) of privacy scan</li>\r\n<li>een datamanagementplan (DMP)</li>\r\n<li>een privacyverklaring</li>\r\n<li>andere relevante, privacy-gerelateerde documenten.</li>\r\n</ul>",
             "required": false,
             "_order": 0
         }
@@ -973,9 +973,9 @@
         "pk": 37,
         "fields": {
             "annotation_key": null,
-            "text": "The information I have entered is correct and complete, and is ready to be submitted.",
-            "text_en": "The information I have entered is correct and complete, and is ready to be submitted.",
-            "text_nl": "De informatie die ik heb ingevuld is correct en volledig, en is klaar om verstuurd te worden.",
+            "text": "The information I have entered is correct and as complete as possible, and is ready to be submitted.",
+            "text_en": "The information I have entered is correct and as complete as possible, and is ready to be submitted.",
+            "text_nl": "De informatie die ik heb ingevuld is correct en zo volledig mogelijk, en is klaar om verstuurd te worden.",
             "step": 13,
             "form": 1,
             "description": "",
@@ -1659,8 +1659,8 @@
         "model": "form.selectoption",
         "pk": 88,
         "fields": {
-            "label": "No basis for transmission (please specify)",
-            "label_en": "No basis for transmission (please specify)",
+            "label": "No basis for transfer (please specify)",
+            "label_en": "No basis for transfer (please specify)",
             "label_nl": "Geen basis voor doorgifte (verduidelijken a.u.b.)",
             "default_selected": false,
             "question": 24,
@@ -2617,14 +2617,14 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 5,
+        "pk": 52,
         "fields": {
             "multiple": false
         }
     },
     {
         "model": "form.selectquestion",
-        "pk": 52,
+        "pk": 5,
         "fields": {
             "multiple": false
         }
@@ -2877,9 +2877,9 @@
             "name": "Software",
             "name_en": "Software",
             "name_nl": "Software",
-            "description": "<p>Indicate which software packages and (cloud) applications you will be using. Standard office software you use from your local laptop (e.g., Excel, Word) does not need to be listed.</p>",
-            "description_en": "<p>Indicate which software packages and (cloud) applications you will be using. Standard office software you use from your local laptop (e.g., Excel, Word) does not need to be listed.</p>",
-            "description_nl": "<p>Geef aan welke softwarepakketten en (cloud)applicatie(s) je gaat gebruiken. Reguliere kantoorsoftware die je vanaf je lokale laptop gebruikt (bijv. Excel, Word) hoef je niet op te voeren.</p>",
+            "description": "<div class=\"ewa-rteLine\">Indicate which software packages and (cloud) applications you will be using. Standard office software you use from your local laptop (e.g., Excel, Word) does not need to be listed.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">To check which packages have been approved by the UU, consult the <a href=\"https://tools.uu.nl/tooladvisor/\">Tooladvisor</a> in advance.</div>",
+            "description_en": "<div class=\"ewa-rteLine\">Indicate which software packages and (cloud) applications you will be using. Standard office software you use from your local laptop (e.g., Excel, Word) does not need to be listed.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">To check which packages have been approved by the UU, consult the <a href=\"https://tools.uu.nl/tooladvisor/\">Tooladvisor</a> in advance.</div>",
+            "description_nl": "<div class=\"ewa-rteLine\">Geef aan welke softwarepakketten en (cloud)applicatie(s) je gaat gebruiken. Reguliere kantoorsoftware die je vanaf je lokale laptop gebruikt (bijv. Excel, Word) hoef je niet op te voeren.</div>\r\n<div class=\"ewa-rteLine\">&nbsp;</div>\r\n<div class=\"ewa-rteLine\">Om te controleren welke pakketten zijn goedgekeurd door de UU raadpleeg je vooraf de <a href=\"https://tools.uu.nl/tooladvisor/\">Tooladvisor</a>.</div>",
             "slug": "software",
             "form": 1,
             "parent": null,
@@ -2925,13 +2925,13 @@
         "model": "form.step",
         "pk": 13,
         "fields": {
-            "name": "Confirmation",
-            "name_en": "Confirmation",
-            "name_nl": "Bevestiging",
+            "name": "Questions for the PO?",
+            "name_en": "Questions for the PO?",
+            "name_nl": "Vragen voor de PO?",
             "description": null,
             "description_en": null,
             "description_nl": null,
-            "slug": "confirmation",
+            "slug": "questions-for-the-po",
             "form": 1,
             "parent": null,
             "is_overview": false,
@@ -3339,12 +3339,12 @@
         "pk": 31,
         "fields": {
             "step": 10,
-            "text": "What is online software?",
-            "text_en": "What is online software?",
-            "text_nl": "Wat is online software?",
-            "content": "<p>With online software we mean applications that are offered through internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EER.</p>",
-            "content_en": "<p>With online software we mean applications that are offered through internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EER.</p>",
-            "content_nl": "<p>Onder online software verstaan we applicaties die via internet worden aangeboden, bijv. Qualtrics, SURFDrive of Office 365.</p>\r\n<p>Cloud software draait op grote serverparken ergens ter wereld. De precieze locaties kunnen verschillen. Vanuit de AVG wordt ge&euml;ist dat persoonsgegevens binnen de EER worden verwerkt.&nbsp;</p>",
+            "text": "What is cloud software?",
+            "text_en": "What is cloud software?",
+            "text_nl": "Wat is cloudsoftware?",
+            "content": "<p>With cloud software we mean applications that are offered through internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EER.</p>",
+            "content_en": "<p>With cloud software we mean applications that are offered through internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EER.</p>",
+            "content_nl": "<p>Onder cloudsoftware verstaan we applicaties die via internet worden aangeboden, bijv. Qualtrics, SURFDrive of Office 365.</p>\r\n<p>Cloudsoftware draait op grote serverparken ergens ter wereld. De precieze locaties kunnen verschillen. Vanuit de AVG wordt ge&euml;ist dat persoonsgegevens binnen de EER worden verwerkt.&nbsp;</p>",
             "_order": 0
         }
     },
@@ -3602,39 +3602,6 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 26,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 9,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 14,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 61,
         "fields": {
             "placeholder": "",
@@ -3657,6 +3624,28 @@
     },
     {
         "model": "form.textquestion",
+        "pk": 26,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 9,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
         "pk": 36,
         "fields": {
             "placeholder": "",
@@ -3668,7 +3657,18 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 27,
+        "pk": 14,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 22,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -3679,7 +3679,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 22,
+        "pk": 27,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -3712,12 +3712,23 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 15,
+        "pk": 13,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 28,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
             "is_email": false
         }
     },
@@ -3734,7 +3745,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 13,
+        "pk": 15,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -3745,7 +3756,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 28,
+        "pk": 29,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -3778,12 +3789,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 29,
+        "pk": 25,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1,
+            "lines": 5,
             "is_email": false
         }
     },
@@ -3795,17 +3806,6 @@
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 1,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 25,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
             "is_email": false
         }
     },
@@ -3833,12 +3833,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 16,
+        "pk": 41,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1,
+            "lines": 5,
             "is_email": false
         }
     },
@@ -3855,12 +3855,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 41,
+        "pk": 16,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5,
+            "lines": 1,
             "is_email": false
         }
     },
