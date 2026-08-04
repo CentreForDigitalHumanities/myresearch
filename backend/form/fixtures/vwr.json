@@ -1515,9 +1515,9 @@
         "model": "form.selectoption",
         "pk": 72,
         "fields": {
-            "label": "TLC - ILS",
-            "label_en": "TLC - ILS",
-            "label_nl": "TLC - ILS",
+            "label": "Languages and Communication - ILS",
+            "label_en": "Languages and Communication - ILS",
+            "label_nl": "Talen, Literatuur en Communicatie - ILS",
             "default_selected": false,
             "question": 6,
             "_order": 0
@@ -1527,9 +1527,9 @@
         "model": "form.selectoption",
         "pk": 73,
         "fields": {
-            "label": "TLC - ICON",
-            "label_en": "TLC - ICON",
-            "label_nl": "TLC - ICON",
+            "label": "Languages and Communication - ICON",
+            "label_en": "Languages and Communication - ICON",
+            "label_nl": "Talen, Literatuur en Communicatie - ICON",
             "default_selected": false,
             "question": 6,
             "_order": 1
@@ -1539,9 +1539,9 @@
         "model": "form.selectoption",
         "pk": 151,
         "fields": {
-            "label": "GKG",
-            "label_en": "GKG",
-            "label_nl": "GKG",
+            "label": "History and Art History",
+            "label_en": "History and Art History",
+            "label_nl": "Geschiedenis en Kunstgeschiedenis",
             "default_selected": false,
             "question": 6,
             "_order": 2
@@ -1551,9 +1551,9 @@
         "model": "form.selectoption",
         "pk": 152,
         "fields": {
-            "label": "F&R",
-            "label_en": "F&R",
-            "label_nl": "F&R",
+            "label": "Philosophy and Religious Studies",
+            "label_en": "Philosophy and Religious Studies",
+            "label_nl": "Filosofie en  Religiewetenschap",
             "default_selected": false,
             "question": 6,
             "_order": 3
@@ -1563,9 +1563,9 @@
         "model": "form.selectoption",
         "pk": 153,
         "fields": {
-            "label": "MCW",
-            "label_en": "MCW",
-            "label_nl": "MCW",
+            "label": "Media and Culture Studies",
+            "label_en": "Media and Culture Studies",
+            "label_nl": "Media- en Cultuurwetenschappen",
             "default_selected": false,
             "question": 6,
             "_order": 4
@@ -2417,7 +2417,7 @@
         "fields": {
             "label": "School of Law",
             "label_en": "School of Law",
-            "label_nl": "Departement Rechtsgeleerdheid",
+            "label_nl": "Rechtsgeleerdheid",
             "default_selected": false,
             "question": 47,
             "_order": 0
@@ -2427,8 +2427,8 @@
         "model": "form.selectoption",
         "pk": 155,
         "fields": {
-            "label": "School of Economics (U.S.E.)",
-            "label_en": "School of Economics (U.S.E.)",
+            "label": "Utrecht University School of Economics (U.S.E.)",
+            "label_en": "Utrecht University School of Economics (U.S.E.)",
             "label_nl": "School of Economics (U.S.E.)",
             "default_selected": false,
             "question": 47,
@@ -2441,7 +2441,7 @@
         "fields": {
             "label": "School of Governance (USG)",
             "label_en": "School of Governance (USG)",
-            "label_nl": "Bestuurs- en Organisatiewetenschap (USG)",
+            "label_nl": "Bestuurs- en Organisatiewetenschap",
             "default_selected": false,
             "question": 47,
             "_order": 2
@@ -2617,13 +2617,6 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 52,
-        "fields": {
-            "multiple": false
-        }
-    },
-    {
-        "model": "form.selectquestion",
         "pk": 5,
         "fields": {
             "multiple": false
@@ -2634,6 +2627,13 @@
         "pk": 33,
         "fields": {
             "multiple": true
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 52,
+        "fields": {
+            "multiple": false
         }
     },
     {
@@ -2687,16 +2687,16 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 39,
+        "pk": 64,
         "fields": {
-            "multiple": true
+            "multiple": false
         }
     },
     {
         "model": "form.selectquestion",
-        "pk": 64,
+        "pk": 39,
         "fields": {
-            "multiple": false
+            "multiple": true
         }
     },
     {
