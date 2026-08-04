@@ -162,9 +162,9 @@
             "text_nl": "Einddatum",
             "step": 4,
             "form": 1,
-            "description": "<p>This is the date on which the research results are expected to be published and the archival term for the research data starts.</p>",
-            "description_en": "<p>This is the date on which the research results are expected to be published and the archival term for the research data starts.</p>",
-            "description_nl": "<p>Dit is de verwachte publicatiedatum van de onderzoeksresultaten. Op deze datum gaat de archiveringstermijn van de onderzoeksdata in.</p>",
+            "description": "<p>This is the date on which the research results are expected to be published and the archival period for the research data starts.</p>",
+            "description_en": "<p>This is the date on which the research results are expected to be published and the archival period for the research data starts.</p>",
+            "description_nl": "<p>Dit is de verwachte publicatiedatum van de onderzoeksresultaten. Op deze datum gaat de archiveringsperiode van de onderzoeksdata in.</p>",
             "required": true,
             "_order": 1
         }
