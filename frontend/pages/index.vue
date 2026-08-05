@@ -15,20 +15,20 @@ definePageMeta({
         <div class="uu-sidebar-container uu-sidebar-right">
             <div class="uu-sidebar-content">
                 <h2 class="uu-sidebar-header-linked">
-                    {{ $t("About MyResearch") }}
+                    {{ $t("What is MyResearch?") }}
                 </h2>
                 <div class="uu-container">
                     <p>
                         {{
                             $t(
-                                "MyResearch is a tool with which researchers of Utrecht University can register their research activities. This is a legal requirement for the processing of personal data, for example data relating to research participants.",
+                                "MyResearch is a portal that supports researchers from the faculties of Humanities and Law, Economics, and Governance of Utrecht University in preparing their research projects. Some preparatory activities are legally required, others arise from university or faculty policy.",
                             )
                         }}
                     </p>
                     <p>
                         {{
                             $t(
-                                "At this time MyResearch provides a data processing register that facilitates compliance with the AVG, or the Dutch implementation of the EU-wide General Data Protection Regulation (GDPR). Future development will allow for multiple registration activities, including Ethical approval, to be completed at once within MyResearch.",
+                                "MyResearch currently offers a processing register for research data to comply with legal obligations under the General Data Protection Regulation (GDPR). In the future, more and more preparatory tasks will be accommodated in MyResearch, so that you as a researcher can meet a multitude of requirements in one request. Consider drawing up a data management plan and submitting an application for ethical review.",
                             )
                         }}
                     </p>
@@ -41,12 +41,12 @@ definePageMeta({
         <div class="uu-sidebar-container uu-sidebar-right uu-sidebar-sticky">
             <div class="uu-sidebar-content">
                 <h2 class="uu-sidebar-header-linked">
-                    {{ $t("The processing register") }}
+                    {{ $t("Processing Register") }}
                 </h2>
                 <p>
                     {{
                         $t(
-                            "When you process personal data in your research, you are mandated to treat them with care and protect them accordingly. A necessary part of that is to register which data you collect and how you process them.",
+                            "If you process personal data relating to one or more identifiable persons (usually participants) in your research, you are obliged to complete the processing register.",
                         )
                     }}
                 </p>
@@ -54,7 +54,7 @@ definePageMeta({
                 <p>
                     {{
                         $t(
-                            "The participating faculties of Humanities and Law, Economics, and Governance aim to provide a data processing register that is attuned to the needs of researchers and the kind of data processing that scientific research entails. You don't need any previous knowledge to register the data you process in MyResearch: a guided questionnaire will make things easy.",
+                            "Via MyResearch, the participating faculties offer a processing register that is carefully tailored to the needs of researchers and to the processing operations that most commonly occur in scientific research. You do not need to have knowledge of the GDPR to register the processing in your study: your registration is completed on the basis of a helpful questionnaire.",
                         )
                     }}
                 </p>
@@ -69,14 +69,14 @@ definePageMeta({
                 <p>
                     {{
                         $t(
-                            "The registration of data processing activities is done at the study level by the lead researcher. The definition of a study may very from one research project to the next. If in doubt, we recommend taking a narrow scope: consider a study to be the set of data and processing activities attributed to one research question. Making additional registrations is always an option.",
+                            "The conducting researcher registers the research activities per study. The definition of a “study” may differ per research project. If in doubt, we advise you to take this definition narrowly. That is, the activities required to answer one research question. You can always make additional registrations.",
                         )
                     }}
                 </p>
                 <p>
                     {{
                         $t(
-                            'After logging in with your Solis-ID you can start immediately by navigating to "New registration".',
+                            'After logging in with your Solis ID, you can start right away by navigating to "New registration".',
                         )
                     }}
                 </p>
@@ -88,10 +88,11 @@ definePageMeta({
                         $t(
                             "For questions about the processing register contact the privacy officer:",
                         ) + " "
-                    }}<a href="mailto:privacy.gw@uu.nl">privacy.gw@uu.nl</a>
+                    }}<a href="mailto:privacy.gw@uu.nl">privacy.gw@uu.nl</a>/
+                    <a href="mailto:privacy.rebo@uu.nl">privacy.rebo@uu.nl</a>
                 </p>
                 <p>
-                    {{ $t("For technical issues relating to myresearch:") + " "
+                    {{ $t("For technical issues relating to MyResearch:") + " "
                     }}<a href="mailto:portalsupport.gw@uu.nl"
                         >portalsupport.gw@uu.nl</a
                     >
