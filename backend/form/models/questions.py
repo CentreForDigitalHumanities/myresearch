@@ -5,6 +5,8 @@ from datetime import datetime
 from django.utils.dateparse import parse_datetime
 from django.utils.safestring import mark_safe
 
+from form.models import Repeatable
+
 snake_case_validator = RegexValidator(
     regex=r"^[a-z]+(_[a-z]+)*$",
     message="Only snake_case is allowed (e.g. 'recording_details'). Read help text carefully!",
@@ -97,7 +99,9 @@ class BaseQuestion(models.Model):
             "fileuploadquestion",
         ]:
             if hasattr(self, subclass_name):
-                return getattr(self, subclass_name)
+                cls = getattr(self, subclass_name)
+                if hasattr(cls, "repeatable" + subclass_name):
+                    return getattr(cls, "repeatable" + subclass_name)
         return self
 
     def __str__(self):
@@ -161,3 +165,10 @@ class DateQuestion(BaseQuestion):
 
 class FileUploadQuestion(BaseQuestion):
     size_limit = models.PositiveIntegerField(help_text="Maximum file size in bytes.")
+
+
+class RepeatableTextQuestion(
+    Repeatable,
+    TextQuestion,
+):
+    pass

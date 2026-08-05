@@ -109,6 +109,7 @@ class TextQuestionType(BaseQuestionMixin, ObjectType):
     placeholder_en = String()
     lines = Int(required=True)
     is_email = Boolean(required=True)
+    background = Boolean()
 
     def __init__(self, question=None, **kwargs):
         super().__init__(**kwargs)

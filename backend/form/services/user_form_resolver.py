@@ -120,7 +120,7 @@ class UserFormResolver:
             questions = []
             substeps = []
         else:
-            questions = self._make_question_instances(step, repeat_index)
+            questions = self._resolve_step_questions(step, repeat_index)
             substeps = self._resolve_steps(
                 parent_step=step,
                 parent_index=repeat_index,
@@ -151,12 +151,19 @@ class UserFormResolver:
         questions = []
         step_questions = list(BaseQuestion.objects.filter(step=step))
         for question in step_questions:
-            questions.extend(self._make_question_instances(question))
+            questions.extend(
+                self._make_question_instances(
+                    question,
+                    repeat_index,
+                )
+            )
         return questions
 
     def _make_question_instances(self, question: BaseQuestion, repeat_index) -> list:
         """Resolve all instances of a question (considering repeats).
         Also deletes hidden responses as a side effect."""
+
+        question = question.get_subclass()
 
         if is_repeatable(question):
             return self._make_question_repeats(
@@ -280,7 +287,7 @@ def is_repeatable(step_or_question):
     Determines if given step or question is repeatable.
     """
     if hasattr(step_or_question, "repeatablestep") or hasattr(
-        step_or_question, "repeatablequestion"
+        step_or_question, "repeatable_ptr"
     ):
         return True
     if issubclass(Repeatable, type(step_or_question)):

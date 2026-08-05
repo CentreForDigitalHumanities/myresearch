@@ -10,6 +10,7 @@ from .models import (
     NumberQuestion,
     SelectOption,
     TextQuestion,
+    RepeatableTextQuestion,
     SelectQuestion,
     TrueFalseQuestion,
     RepeatableStep,
@@ -64,6 +65,16 @@ class TrueFalseQuestionTranslationOptions(TranslationOptions):
 @register(TextQuestion)
 class TextQuestionTranslationOptions(TranslationOptions):
     fields = ["placeholder"]
+
+
+@register(RepeatableTextQuestion)
+class RepeatableTextQuestionTranslationOptions(TranslationOptions):
+    """
+    RepeatableTextQuestion inherits the translatable fields from TextQuestionTranslationOptions,
+    but must still be registered regardless.
+    """
+
+    fields = []
 
 
 @register(NumberQuestion)
