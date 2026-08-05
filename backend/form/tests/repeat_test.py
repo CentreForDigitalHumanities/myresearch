@@ -6,6 +6,10 @@ from research.tests import normal_user, test_study
 
 from pprint import pprint
 
+# If you're new here, I recommend you scroll down to NEWHERE,
+# uncomment the breakpoint, and execute pprint(content) to get
+# a feel of how these tests operate.
+
 
 def find_steps(content):
     return content["data"]["form"]["steps"]
@@ -16,6 +20,10 @@ def findkey(d, key):
     Finds all the values for a given key in d, at any depth of dict or
     list. Returns a list of dicts in which the found value belongs to a
     top-level key.
+
+    This function is useful for finding all occurrences of a certain key
+    in a large JSON response. Give it a try for some of the `content`
+    responses below.
     """
     if type(d) == dict:
         if key in d:
@@ -326,6 +334,7 @@ def test_question_repeat(
     )
     content = json.loads(response.content)
     assert "errors" not in content
+    new_index = int(content["data"]["createRepeat"]["newRepeatIndex"])
     # Get the form again
     response = client_query(
         GetFormQuery,
@@ -335,7 +344,23 @@ def test_question_repeat(
         },
     )
     content = json.loads(response.content)
+    ################
+    #   NEWHERE    #
+    # breakpoint() #
+    ################
     # Assert that we now have three questions
     assert len(findkey(content, "questionId")) == 3
+    # Make sure we have two background questions, and one actual repeat
+    background_true = 0
+    background_false = 0
+    for question in findkey(content, "questionId"):
+        assert int(question["questionId"]) == rq.pk
+        if question["background"] is True:
+            background_true += 1
+        if question["background"] is False:
+            background_false += 1
+            assert int(question["repeatIndex"]) == new_index
+    assert background_true == 2
+    assert background_false == 1
 
     
