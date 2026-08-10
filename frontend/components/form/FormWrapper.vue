@@ -19,7 +19,7 @@ import { useAnnotateErrors } from "~/composables/useAnnotateErrors";
 interface Props {
     queriedForm: QueriedForm;
     currentStepSlug: string;
-    shouldEvictStudy: boolean;
+    reloadStudy: boolean;
 }
 const props = defineProps<Props>();
 
@@ -60,7 +60,7 @@ const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
     {
         update: (cache) => {
             cache.evict({ fieldName: "form" });
-            if (props.shouldEvictStudy) {
+            if (props.reloadStudy) {
                 cache.evict({ fieldName: "study" });
             }
             cache.gc();

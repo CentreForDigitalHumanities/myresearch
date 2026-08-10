@@ -20,13 +20,13 @@ const UPDATE_USER_FORM = graphql(`
     }
 `);
 
-export function useUpdateFormSubmission(shouldEvictStudy: boolean = false) {
+export function useUpdateFormSubmission(reloadStudy: boolean = false) {
     const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
         UPDATE_USER_FORM,
         {
             update: (cache) => {
                 cache.evict({ fieldName: "form" });
-                if (shouldEvictStudy) {
+                if (reloadStudy) {
                     cache.evict({ fieldName: "study" });
                 }
                 cache.gc();
