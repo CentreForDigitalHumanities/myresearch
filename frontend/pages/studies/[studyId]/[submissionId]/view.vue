@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { BSButton } from "cdh-vue-lib";
 import OverviewWrapper from "~/components/form/overview/OverviewWrapper.vue";
 import { useSubmissionId, useStudyId } from "~/composables/useRouteParams";
 import { useFormQuery } from "~/composables/useFormQuery";
