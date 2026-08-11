@@ -57,7 +57,7 @@ function handleBackNavigation() {
                 ref="formWrapperRef"
                 :queried-form="form"
                 :current-step-slug="slug"
-                :should-evict-study="slug === 'study'"
+                :reload-study="slug === 'study'"
             />
         </div>
     </div>
