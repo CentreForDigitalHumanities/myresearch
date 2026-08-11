@@ -2,6 +2,7 @@
 import { useFormQuery } from "~/composables/useFormQuery";
 import { useStudyTitleQuery } from "~/composables/useStudyTitleQuery";
 import FormWrapper from "~/components/form/FormWrapper.vue";
+import StudyHeroTitle from "~/components/form/StudyHeroTitle.vue";
 import {
     useStepSlug,
     useSubmissionId,
@@ -18,13 +19,7 @@ const study = useStudyTitleQuery(studyId);
 
 <template>
     <div class="uu-content">
-        <Title>{{ study?.reference }} - {{ study?.title }}</Title>
-        <div class="uu-hero">
-            <h1 class="text-wrap text-break">
-                {{ study?.reference }} -
-                {{ study?.title }}
-            </h1>
-        </div>
+        <StudyHeroTitle v-if="study" :study="study" />
         <div class="uu-container">
             <FormWrapper
                 v-if="form && slug"

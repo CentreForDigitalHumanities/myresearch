@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import OverviewWrapper from "~/components/form/overview/OverviewWrapper.vue";
+import StudyHeroTitle from "~/components/form/StudyHeroTitle.vue";
 import { useSubmissionId, useStudyId } from "~/composables/useRouteParams";
 import { useFormQuery } from "~/composables/useFormQuery";
 import { useStudyTitleQuery } from "~/composables/useStudyTitleQuery";
@@ -22,13 +23,7 @@ function goBackToStudy() {
 
 <template>
     <div class="uu-content">
-        <Title>{{ study?.reference }} - {{ study?.title }}</Title>
-        <div class="uu-hero">
-            <h1 class="text-wrap text-break">
-                {{ study?.reference }} -
-                {{ study?.title }}
-            </h1>
-        </div>
+        <StudyHeroTitle v-if="study" :study="study" />
         <div class="uu-container">
             <div class="mb-3">
                 <a href="#" class="pe-auto" @click.prevent="goBackToStudy">
