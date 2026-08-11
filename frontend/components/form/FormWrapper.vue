@@ -13,7 +13,7 @@ import { useMutation } from "@vue/apollo-composable";
 import { useStudyId } from "~/composables/useRouteParams";
 import SubmissionOverview from "~/components/form/overview/OverviewForm.vue";
 import { useI18n } from "vue-i18n";
-import { Send, TriangleAlert } from "lucide-vue-next";
+import { Send, TriangleAlert, MoveLeft } from "lucide-vue-next";
 import { useAnnotateErrors } from "~/composables/useAnnotateErrors";
 import { useNotification } from "~/composables/useNotification";
 
@@ -269,12 +269,11 @@ function handleBackNavigation() {
 
 <template>
     <div class="mb-3">
-        <a
-            href="#"
-            class="ẗext-decoration-underline pe-auto"
-            @click.prevent="handleBackNavigation"
-        >
-            << {{ t("Save and go back") }}
+        <a href="#" class="pe-auto" @click.prevent="handleBackNavigation">
+            <div class="d-flex gap-2 align-items-center">
+                <MoveLeft class="icon" />
+                <div class="ml-3">{{ t("Save and go back") }}</div>
+            </div>
         </a>
     </div>
     <div v-if="selectedStep" class="col-12 d-flex">
