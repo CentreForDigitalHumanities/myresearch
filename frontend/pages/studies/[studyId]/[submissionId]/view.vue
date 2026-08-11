@@ -23,7 +23,7 @@ function goBackToStudy() {
 
 <template>
     <div class="uu-content">
-        <StudyHeroTitle v-if="study" :study="study" />
+        <StudyHeroTitle :study="study" />
         <div class="uu-container">
             <div class="mb-3">
                 <a href="#" class="pe-auto" @click.prevent="goBackToStudy">

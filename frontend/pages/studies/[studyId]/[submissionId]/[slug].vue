@@ -19,7 +19,7 @@ const study = useStudyTitleQuery(studyId);
 
 <template>
     <div class="uu-content">
-        <StudyHeroTitle v-if="study" :study="study" />
+        <StudyHeroTitle :study="study" />
         <div class="uu-container">
             <FormWrapper
                 v-if="form && slug"

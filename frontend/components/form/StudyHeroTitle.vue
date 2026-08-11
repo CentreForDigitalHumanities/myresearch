@@ -4,16 +4,19 @@ import type { GetStudyTitleQuery } from "~/generated/gql/graphql";
 type QueriedStudy = NonNullable<GetStudyTitleQuery["study"]>;
 
 defineProps<{
-    study: QueriedStudy;
+    study: QueriedStudy | null;
 }>();
 </script>
 
 <template>
-    <Title>{{ study.reference }} - {{ study.title }}</Title>
+    <Title v-if="study">{{ study.reference }} - {{ study.title }}</Title>
+    <Title v-else>{{ $t("Registration Overview") }}</Title>
+
     <div class="uu-hero">
-        <h1 class="text-wrap text-break">
+        <h1 v-if="study" class="text-wrap text-break">
             {{ study.reference }} -
             {{ study.title }}
         </h1>
+        <h1 v-else>{{ $t("Registration Overview") }}</h1>
     </div>
 </template>
