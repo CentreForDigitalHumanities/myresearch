@@ -17,6 +17,6 @@ defineProps<{
             {{ study.reference }} -
             {{ study.title }}
         </h1>
-        <h1 v-else>{{ $t("Registration Overview") }}</h1>
+        <h1 v-else>{{ $t("Registration overview") }}</h1>
     </div>
 </template>
