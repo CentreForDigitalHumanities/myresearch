@@ -5,6 +5,7 @@ import { useSubmissionId, useStudyId } from "~/composables/useRouteParams";
 import { useFormQuery } from "~/composables/useFormQuery";
 import { useStudyTitleQuery } from "~/composables/useStudyTitleQuery";
 import Loading from "~/components/shared/Loading.vue";
+import { MoveLeft } from "lucide-vue-next";
 
 const submissionId = useSubmissionId();
 const form = useFormQuery(submissionId, "View");
@@ -23,35 +24,39 @@ function goBackToStudy() {
 <template>
     <div class="uu-content">
         <Title>{{ study?.reference }} - {{ study?.title }}</Title>
-        <div
-            class="uu-hero d-flex flex-nowrap justify-content-between align-items-center gap-3"
-        >
-            <BSButton
-                variant="secondary"
-                class="btn-arrow-left flex-shrink-0"
-                @click="goBackToStudy"
-            >
-                {{ $t("Go back to study page") }}
-            </BSButton>
-            <h1 class="mb-0 text-wrap text-break">
+        <div class="uu-hero">
+            <h1 class="text-wrap text-break">
                 {{ study?.reference }} -
                 {{ study?.title }}
             </h1>
         </div>
         <div class="uu-container">
+            <div class="mb-3">
+                <a href="#" class="pe-auto" @click.prevent="goBackToStudy">
+                    <div class="d-flex gap-2 align-items-center">
+                        <MoveLeft class="icon" />
+                        <div class="ml-3">
+                            {{ $t("Go back to study page") }}
+                        </div>
+                    </div>
+                </a>
+            </div>
             <div class="col-12">
                 <OverviewWrapper v-if="form" :queried-form="form" />
                 <div v-else>
                     <Loading />
                     <br class="mb-4" />
                 </div>
-                <BSButton
-                    variant="primary"
-                    class="btn-arrow-left"
-                    @click="goBackToStudy"
-                >
-                    {{ $t("Go back to study page") }}
-                </BSButton>
+                <div class="mb-3">
+                    <a href="#" class="pe-auto" @click.prevent="goBackToStudy">
+                        <div class="d-flex gap-2 align-items-center">
+                            <MoveLeft class="icon" />
+                            <div class="ml-3">
+                                {{ $t("Go back to study page") }}
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
