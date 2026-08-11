@@ -10,7 +10,7 @@ defineProps<{
 
 <template>
     <Title v-if="study">{{ study.reference }} - {{ study.title }}</Title>
-    <Title v-else>{{ $t("Registration Overview") }}</Title>
+    <Title v-else>{{ $t("Registration overview") }}</Title>
 
     <div class="uu-hero">
         <h1 v-if="study" class="text-wrap text-break">
