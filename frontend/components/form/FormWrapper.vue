@@ -171,8 +171,8 @@ const firstStepSelected = computed(() => {
 });
 
 const showSubmissionWarning = computed(
-    // If we are on the overviewstep, but we have validation errors, show a warning
-    () => selectedStep.value?.isOverview && v$.value.$invalid,
+    // If we are on the overview step, but we have validation errors, show a warning
+    () => !!(selectedStep.value?.isOverview && v$.value.$invalid),
 );
 
 watchEffect(() => {
