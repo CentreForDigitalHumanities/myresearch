@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useFormQuery } from "~/composables/useFormQuery";
-import { useStudyQuery } from "~/composables/useStudyQuery";
+import { useStudyTitleQuery } from "~/composables/useStudyTitleQuery";
 import FormWrapper from "~/components/form/FormWrapper.vue";
 import {
     useStepSlug,
@@ -13,7 +13,7 @@ const slug = useStepSlug();
 const form = useFormQuery(submissionId, "Edit");
 
 const studyId = useStudyId();
-const study = useStudyQuery(studyId);
+const study = useStudyTitleQuery(studyId);
 </script>
 
 <template>

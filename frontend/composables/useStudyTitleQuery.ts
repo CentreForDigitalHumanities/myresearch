@@ -13,7 +13,7 @@ const GET_STUDY_TITLE = graphql(`
     }
 `);
 
-export function useStudyQuery(studyId: Ref<string | undefined>) {
+export function useStudyTitleQuery(studyId: Ref<string | undefined>) {
     const { result: studyResult } = useQuery<GetStudyTitleQuery>(
         GET_STUDY_TITLE,
         () => ({ id: studyId.value }),

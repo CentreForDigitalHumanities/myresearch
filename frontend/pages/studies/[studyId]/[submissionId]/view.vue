@@ -3,14 +3,14 @@ import { BSButton } from "cdh-vue-lib";
 import OverviewWrapper from "~/components/form/overview/OverviewWrapper.vue";
 import { useSubmissionId, useStudyId } from "~/composables/useRouteParams";
 import { useFormQuery } from "~/composables/useFormQuery";
-import { useStudyQuery } from "~/composables/useStudyQuery";
+import { useStudyTitleQuery } from "~/composables/useStudyTitleQuery";
 import Loading from "~/components/shared/Loading.vue";
 
 const submissionId = useSubmissionId();
 const form = useFormQuery(submissionId, "View");
 
 const studyId = useStudyId();
-const study = useStudyQuery(studyId);
+const study = useStudyTitleQuery(studyId);
 
 function goBackToStudy() {
     return navigateTo({
