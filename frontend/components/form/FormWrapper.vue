@@ -309,11 +309,7 @@ function navigateToSlug(slug: string) {
                 >
                     {{ $t("Previous") }}
                 </BSButton>
-                <BSButton
-                    v-if="showSubmissionWarning"
-                    :disabled="true"
-                    variant="light"
-                >
+                <BSButton v-if="showSubmissionWarning" disabled variant="light">
                     {{ $t("Submit") }}
                     <Send class="ms-2" :size="16" />
                 </BSButton>
