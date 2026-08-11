@@ -15,6 +15,7 @@ import SubmissionOverview from "~/components/form/overview/OverviewForm.vue";
 import { useI18n } from "vue-i18n";
 import { Send, TriangleAlert } from "lucide-vue-next";
 import { useAnnotateErrors } from "~/composables/useAnnotateErrors";
+import { useNotification } from "~/composables/useNotification";
 
 interface Props {
     queriedForm: QueriedForm;
@@ -116,10 +117,6 @@ function submitForm(options = { submit: false }): void {
             }
         });
 }
-
-defineExpose({
-    submitForm,
-});
 
 function finalSubmit(): void {
     useConfirm({
@@ -258,9 +255,28 @@ function navigateToSlug(slug: string) {
         },
     });
 }
+
+function handleBackNavigation() {
+    submitForm();
+    useNotification(t("Your progress has been saved."), "info", 3);
+
+    return navigateTo({
+        name: "studies-studyId",
+        params: { studyId: studyId.value },
+    });
+}
 </script>
 
 <template>
+    <div class="mb-3">
+        <a
+            href="#"
+            class="ẗext-decoration-underline pe-auto"
+            @click.prevent="handleBackNavigation"
+        >
+            << {{ t("Save and go back") }}
+        </a>
+    </div>
     <div v-if="selectedStep" class="col-12 d-flex">
         <FormStepper
             v-if="formStepperConfig"
