@@ -172,10 +172,10 @@ const firstStepSelected = computed(() => {
     return steps[0].slug === selected.slug;
 });
 
-const showSubmissionWarning = computed(() => {
-    const selected = selectedStep.value;
-    return selected?.isOverview && v$.value.$invalid;
-});
+const showSubmissionWarning = computed(
+    // If we are on the overviewstep, but we have validation errors, show a warning
+    () => selectedStep.value?.isOverview && v$.value.$invalid,
+);
 
 watchEffect(() => {
     if (formObject.value && showSubmissionWarning.value) {
