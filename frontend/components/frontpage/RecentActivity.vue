@@ -2,6 +2,7 @@
 import { Scale, Pencil } from "lucide-vue-next";
 
 type Status = "DRAFT" | "SUBMITTED_TO_SUPERVISOR";
+
 type Proposal = {
     refNumber: number; // refNumber doesn't show the _, waiting for backend to decide what it should be.
     title: string;
@@ -10,6 +11,7 @@ type Proposal = {
     dateSubmitted: string;
     lastEdited: string;
 };
+
 type Intake = {
     refNumber: number;
     intakeBody: string;
@@ -22,11 +24,11 @@ type RecentActivity = Proposal | Intake;
 const isProposal = (
     recentActivity: RecentActivity,
 ): recentActivity is Proposal => {
-    return recentActivity.hasOwnProperty("status");
+    return "status" in recentActivity;
 };
 
 const isIntake = (recentActivity: RecentActivity): recentActivity is Intake => {
-    return recentActivity.hasOwnProperty("intakeBody");
+    return "intakeBody" in recentActivity;
 };
 </script>
 
@@ -36,6 +38,7 @@ const isIntake = (recentActivity: RecentActivity): recentActivity is Intake => {
     </h2>
     <div
         v-for="activity in recentActivity"
+        :key="activity.refNumber"
         class="card mb-2 text-bg-light mw-100"
     >
         <div class="card-body mw-100">

@@ -20,7 +20,7 @@ const GET_FORM = graphql(`
                 descriptionEn
                 descriptionNl
                 isOverview
-                ...FormInfoFragment
+                ...StepInfoTextFragment
                 questions {
                     questionId
                     repeatIndex
@@ -69,7 +69,7 @@ const GET_FORM = graphql(`
                     descriptionEn
                     descriptionNl
                     isOverview
-                    ...FormInfoFragment
+                    ...StepInfoTextFragment
                     questions {
                         questionId
                         repeatIndex

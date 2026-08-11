@@ -3,6 +3,7 @@ import { computed } from "vue";
 import { BSButton, useConfirm } from "cdh-vue-lib";
 import type { QueriedForm } from "./FormWrapper";
 import FormStepper, { type FormStepperConfig } from "./FormStepper";
+import FormSideBar from "../form/FormSideBar.vue";
 import MRForm from "~/components/form/MRForm.vue";
 import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConfig";
 import { useFormState } from "~/composables/useFormState";
@@ -283,21 +284,8 @@ function handleBackNavigation() {
             :stepper-config="formStepperConfig"
             @step-clicked="navigateToSlug"
         />
-        <div class="col-12 col-lg-9">
-            <form class="uu-form">
-                <h2>{{ useTranslateableAttribute(selectedStep, "name") }}</h2>
-                <div
-                    v-html="
-                        useTranslateableAttribute(selectedStep, 'description')
-                    "
-                ></div>
-                <SubmissionOverview
-                    v-if="selectedStep.isOverview && formObject"
-                    :form="formObject"
-                />
-                <MRForm v-else :step="selectedStep" @submit-form="submitForm" />
-            </form>
-
+        <div v-if="selectedStep.isOverview && formObject" class="col-9">
+            <SubmissionOverview :form="formObject" />
             <div class="mb-3">
                 <div
                     v-if="showSubmissionWarning"
@@ -314,10 +302,8 @@ function handleBackNavigation() {
                     </span>
                 </div>
             </div>
-
             <div class="btn-group">
                 <BSButton
-                    v-if="!firstStepSelected"
                     variant="primary"
                     class="btn-arrow-left"
                     @click="navigateToSlug(getPreviousStepSlug())"
@@ -333,16 +319,46 @@ function handleBackNavigation() {
                     {{ $t("Submit") }}
                     <Send class="ms-2" :size="16" />
                 </BSButton>
-                <BSButton
-                    v-else
-                    variant="primary"
-                    class="btn-arrow-right"
-                    @click="navigateToSlug(getNextStepSlug())"
-                >
-                    {{ $t("Next") }}
-                </BSButton>
             </div>
         </div>
+        <template v-else>
+            <div class="col-12 col-lg-6 pe-4">
+                <form class="uu-form uu-form-no-help">
+                    <h2>
+                        {{ useTranslateableAttribute(selectedStep, "name") }}
+                    </h2>
+                    <div
+                        v-html="
+                            useTranslateableAttribute(
+                                selectedStep,
+                                'description',
+                            )
+                        "
+                    ></div>
+                    <MRForm :step="selectedStep" @submit-form="submitForm" />
+                </form>
+                <div class="btn-group">
+                    <BSButton
+                        v-if="!firstStepSelected"
+                        variant="primary"
+                        class="btn-arrow-left"
+                        @click="navigateToSlug(getPreviousStepSlug())"
+                    >
+                        {{ $t("Previous") }}
+                    </BSButton>
+                    <BSButton
+                        variant="primary"
+                        class="btn-arrow-right"
+                        @click="navigateToSlug(getNextStepSlug())"
+                    >
+                        {{ $t("Next") }}
+                    </BSButton>
+                </div>
+            </div>
+            <div class="col-3 d-lg-block d-none">
+                <FormSideBar :step="selectedStep" />
+            </div>
+        </template>
     </div>
 </template>
 

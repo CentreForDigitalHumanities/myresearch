@@ -11,7 +11,6 @@ from form.services.form_evaluator import FormEvaluator
 from research.models.reviews import StatusChange, SubmissionStatus
 from research.models.study import Study
 from main.models import User
-from notes.models import Note
 from form.models import (
     MRForm,
     QuestionResponse,
@@ -200,7 +199,7 @@ class Command(BaseCommand):
                 is_overview=True,
             )
 
-    def _create_step_info(self, step: Step) -> None:
+    def _create_step_info_text(self, step: Step) -> None:
         """Generates side information for a given step."""
 
         if not self.faker.pybool():
@@ -209,8 +208,10 @@ class Command(BaseCommand):
         for _ in range(self.faker.random_int(1, 3)):
             StepInfoText.objects.create(
                 step=step,
-                text_nl=f"<p>{self.faker_nl.paragraph()}</p>",
-                text_en=f"<p>{self.faker_en.paragraph()}</p>",
+                text_nl=self.faker_nl.sentence().replace(".", "?"),
+                text_en=self.faker_en.sentence().replace(".", "?"),
+                content_nl=f"<p>{self.faker_nl.paragraph()}</p>",
+                content_en=f"<p>{self.faker_en.paragraph()}</p>",
             )
 
     def _generate_questions(self, options, form: MRForm) -> None:

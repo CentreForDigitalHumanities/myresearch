@@ -96,6 +96,14 @@ class StepAdminForm(ModelForm):
         widget=Textarea(attrs={"cols": "75", "rows": "1"}),
     )
 
+    step_info_text_order = CharField(
+        max_length=255,
+        help_text="Comma-separated list of substep IDs in desired order, e.g. '3,1,2'.",
+        label="Step info order",
+        required=False,
+        widget=Textarea(attrs={"cols": "75", "rows": "1"}),
+    )
+
     class Meta:
         model = Step
         fields = "__all__"
@@ -112,6 +120,12 @@ class StepAdminForm(ModelForm):
             if current_substep_order:
                 self.initial["substep_order"] = ",".join(
                     map(str, current_substep_order)
+                )
+
+            current_step_info_text_order = self.instance.get_stepinfotext_order()
+            if current_step_info_text_order:
+                self.initial["step_info_text_order"] = ",".join(
+                    map(str, current_step_info_text_order)
                 )
 
     def clean_question_order(self):
@@ -202,6 +216,48 @@ class StepAdminForm(ModelForm):
             )
         return substep_order
 
+    def clean_step_info_text_order(self):
+        """
+        Make sure that the provided question IDs are valid and exist.
+        """
+        order: str = self.cleaned_data.get("step_info_text_order", "")
+        if not order:
+            return order
+
+        # Get the requested order of question IDs as a list of integers.
+        requested_order = []
+        for id_str in order.split(","):
+            id_str = id_str.strip()
+            if not id_str:
+                continue
+            if not id_str.isdigit():
+                raise ValidationError(
+                    f"Invalid question ID format: '{id_str}'. Must be numeric."
+                )
+            requested_order.append(int(id_str))
+
+        # Validate that the provided IDs exist.
+        available_ids = [
+            step_info_text.id for step_info_text in self.instance.step_info_texts.all()
+        ]
+        invalid_ids = [idee for idee in requested_order if idee not in available_ids]
+
+        if invalid_ids:
+            raise ValidationError(
+                f"Invalid question IDs: {', '.join(map(str, invalid_ids))}. "
+                f"Available IDs: {', '.join(map(str, available_ids))}"
+            )
+
+        # Make sure that all available IDs are included.
+        missing_ids = set(available_ids) - set(requested_order)
+
+        if missing_ids:
+            raise ValidationError(
+                f"Missing IDs: {', '.join(map(str, missing_ids))}. "
+                f"Available IDs: {', '.join(map(str, available_ids))}"
+            )
+        return order
+
     def save(self, commit=True):
         instance = super().save(commit=False)
         question_order = self.cleaned_data.get("question_order", "")
@@ -223,6 +279,16 @@ class StepAdminForm(ModelForm):
                 if id_str.strip().isdigit()
             ]
             instance.set_step_order(requested_substep_order)
+
+        step_info_text_order = self.cleaned_data.get("step_info_text_order", "")
+
+        if step_info_text_order:
+            requested_order = [
+                int(id_str)
+                for id_str in step_info_text_order.split(",")
+                if id_str.strip().isdigit()
+            ]
+            instance.set_stepinfotext_order(requested_order)
 
         if commit:
             instance.save()
