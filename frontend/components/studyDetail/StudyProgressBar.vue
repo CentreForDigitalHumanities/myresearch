@@ -3,7 +3,6 @@ import { useQuery } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
 import { useI18n } from "vue-i18n";
 import { useLocalDateTime } from "~/composables/useLocalisation";
-import { useTranslatedStatus } from "~/composables/useTranslatedStatus";
 import { SubmissionStatus } from "~/generated/gql/graphql";
 import Loading from "~/components/shared/Loading.vue";
 
@@ -14,7 +13,9 @@ const props = defineProps<{
 const GET_STUDY_STATUSES = graphql(`
     query GetStudyStatuses($id: ID!) {
         study(id: $id, mrPermission: "View") {
+            id
             statuses {
+                id
                 status
                 createdAt
             }

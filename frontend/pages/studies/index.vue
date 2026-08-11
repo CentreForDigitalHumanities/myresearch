@@ -208,12 +208,13 @@ const filters = computed<UUListTypes.FilterDefinition[]>(() => {
                         <td class="align-middle">
                             <StatusBadge :status="row.status" />
                         </td>
-                        <td class="align-middle"
+                        <td
                             v-if="
                                 currentUserStore.currentUser?.isPrivacyOfficer
                             "
+                            class="align-middle"
                         >
-                            <IsSeenBadge :isSeen="row.isSeen" />
+                            <IsSeenBadge :is-seen="row.isSeen" />
                         </td>
                         <td class="align-middle">
                             {{ row.createdBy.fullName }}
