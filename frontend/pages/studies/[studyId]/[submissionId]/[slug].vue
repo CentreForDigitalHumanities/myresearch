@@ -28,7 +28,6 @@ const study = useStudyTitleQuery(studyId);
         <div class="uu-container">
             <FormWrapper
                 v-if="form && slug"
-                ref="formWrapperRef"
                 :queried-form="form"
                 :current-step-slug="slug"
                 :reload-study="slug === 'study'"
