@@ -140,6 +140,7 @@ class UserFormResolver:
             description_en=step.description_en,  # type: ignore
             slug=slug,
             repeat_index=repeat_index,  # type: ignore
+            is_overview=step.is_overview,  # type: ignore
             questions=questions,  # type: ignore
             substeps=substeps,  # type: ignore
             background=background,
