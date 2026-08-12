@@ -20,6 +20,7 @@ from form.models import (
     NumberQuestion,
     SelectQuestion,
     TextQuestion,
+    RepeatableStepQuestion,
 )
 from form.models.responses import MRDocument
 from form.types.SelectOptionType import SelectOptionType
@@ -68,6 +69,8 @@ class BaseQuestionInterface(Interface):
             return SelectQuestionType
         elif hasattr(question, "fileuploadquestion"):
             return FileUploadQuestionType
+        elif hasattr(question, "repeatablestepquestion"):
+            return RepeatableStepQuestionType
 
         # Should never happen - default fallback
         return TextQuestionType
@@ -246,6 +249,23 @@ class FileUploadQuestionType(BaseQuestionMixin, ObjectType):
         return parent.question.size_limit
 
 
+class RepeatableStepQuestionType(BaseQuestionMixin, ObjectType):
+    class Meta:
+        interfaces = [BaseQuestionInterface]
+
+    repeatable_step_id = ID(required=True)
+
+    def __init__(self, question=None, **kwargs):
+        super().__init__(**kwargs)
+        self.question = question
+
+    @staticmethod
+    def resolve_repeatable_step_id(parent, info: ResolveInfo):
+        if hasattr(parent.question, "repeatablestepquestion"):
+            return parent.question.repeatablestepquestion.repeatable_step_id
+        return parent.question.repeatable_step_id
+
+
 # Union Type
 class QuestionType(Union):
     class Meta:
@@ -256,6 +276,7 @@ class QuestionType(Union):
             DateQuestionType,
             SelectQuestionType,
             FileUploadQuestionType,
+            RepeatableStepQuestionType,
         )
 
     @classmethod
@@ -277,4 +298,6 @@ class QuestionType(Union):
             return SelectQuestionType
         elif isinstance(question, FileUploadQuestion):
             return FileUploadQuestionType
+        elif isinstance(question, RepeatableStepQuestion):
+            return RepeatableStepQuestionType
         return None

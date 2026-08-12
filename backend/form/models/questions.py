@@ -95,6 +95,7 @@ class BaseQuestion(models.Model):
             "numberquestion",
             "datequestion",
             "fileuploadquestion",
+            "repeatablestepquestion",
         ]:
             if hasattr(self, subclass_name):
                 return getattr(self, subclass_name)
@@ -161,3 +162,15 @@ class DateQuestion(BaseQuestion):
 
 class FileUploadQuestion(BaseQuestion):
     size_limit = models.PositiveIntegerField(help_text="Maximum file size in bytes.")
+
+
+class RepeatableStepQuestion(BaseQuestion):
+    """
+    A special question, with which repeatable steps can be created, deleted and managed.
+
+    Does not have a response, but is used to trigger mutations.
+    """
+
+    repeatable_step = models.OneToOneField(
+        "form.RepeatableStep", on_delete=models.CASCADE
+    )

@@ -5,6 +5,7 @@ import DateQuestion from "../form/DateQuestion.vue";
 import NumberQuestion from "./NumberQuestion.vue";
 import TrueFalseQuestion from "./TrueFalseQuestion.vue";
 import FileUploadQuestion from "../form/FileUploadQuestion.vue";
+import RepeatableStepQuestion from "../form/RepeatableStepQuestion.vue";
 import FormSideBar from "../form/FormSideBar.vue";
 import type { Component } from "vue";
 
@@ -17,6 +18,7 @@ const QUESTION_COMPONENT_MAP = {
     NumberQuestionType: NumberQuestion as Component,
     TrueFalseQuestionType: TrueFalseQuestion as Component,
     FileUploadQuestionType: FileUploadQuestion as Component,
+    RepeatableStepQuestionType: RepeatableStepQuestion as Component,
 } as const;
 </script>
 

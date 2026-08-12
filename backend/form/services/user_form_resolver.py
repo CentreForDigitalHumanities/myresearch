@@ -12,6 +12,7 @@ from form.types.QuestionType import (
     SelectQuestionType,
     TextQuestionType,
     TrueFalseQuestionType,
+    RepeatableStepQuestionType,
 )
 
 
@@ -244,6 +245,8 @@ class UserFormResolver:
             return SelectQuestionType(**base_data)
         elif hasattr(question, "fileuploadquestion"):
             return FileUploadQuestionType(**base_data)
+        elif hasattr(question, "repeatablestepquestion"):
+            return RepeatableStepQuestionType(**base_data)
 
         # Fallback (should not happen)
         return TextQuestionType(**base_data)
