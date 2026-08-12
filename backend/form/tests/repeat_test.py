@@ -524,7 +524,7 @@ def test_repeat_responses(
             "answer": json.dumps(
                 {"value": f"Test answer for index {index.pk}"}
             ),
-            "questionId": rq2.pk,
+            "questionId": rq2.basequestion_ptr.pk,
             "repeatIndex": index.pk,
         })
     gql = client_query(
