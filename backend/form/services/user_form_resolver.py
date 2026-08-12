@@ -120,7 +120,12 @@ class UserFormResolver:
             questions = []
             substeps = []
         else:
-            questions = self._make_question_instances(step, repeat_index)
+            # Get all questions from this step and create instances for each
+            questions = []
+            step_questions = list(BaseQuestion.objects.filter(step=step))
+            for question in step_questions:
+                questions.extend(self._make_question_instances(question, repeat_index))
+
             substeps = self._resolve_steps(
                 parent_step=step,
                 parent_index=repeat_index,
