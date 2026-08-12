@@ -419,8 +419,7 @@ class TestDeleteStudyMutation:
 
     def test_soft_delete_submitted_study(self, normal_user: User, test_study: Study):
         """
-        Owner can soft-delete a study that has been submitted; it remains in
-        the database with is_deleted=True.
+        Owner cannot soft-delete a study that has been submitted.
         """
         StatusChange.objects.create(
             study=test_study,
@@ -432,11 +431,11 @@ class TestDeleteStudyMutation:
 
         assert not result.errors
         assert result.data
-        assert result.data["deleteStudy"]["ok"] is True
-        assert not result.data["deleteStudy"]["errors"]
+        assert result.data["deleteStudy"]["ok"] is False
+        assert result.data["deleteStudy"]["errors"]
 
         test_study.refresh_from_db()
-        assert test_study.is_deleted is True
+        assert test_study.is_deleted is False
 
     def test_delete_another_users_study_returns_error(
         self, normal_user: User, test_po_study: Study

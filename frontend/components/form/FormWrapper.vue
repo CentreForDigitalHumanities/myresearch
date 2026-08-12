@@ -3,6 +3,7 @@ import { computed } from "vue";
 import { BSButton, useConfirm } from "cdh-vue-lib";
 import type { QueriedForm } from "./FormWrapper";
 import FormStepper, { type FormStepperConfig } from "./FormStepper";
+import FormSideBar from "../form/FormSideBar.vue";
 import MRForm from "~/components/form/MRForm.vue";
 import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConfig";
 import { useFormState } from "~/composables/useFormState";
@@ -72,8 +73,13 @@ function submitForm(options = { submit: false }): void {
         }
     }
 
+    const step = selectedStep.value;
+    if (!step) {
+        return;
+    }
+
     const inputData = useFormDataToMutationInput(
-        formData,
+        step,
         props.queriedForm.submissionId,
     );
 
@@ -246,67 +252,74 @@ function navigateToSlug(slug: string) {
             :stepper-config="formStepperConfig"
             @step-clicked="navigateToSlug"
         />
-        <div class="col-12 col-lg-9">
-            <form class="uu-form">
-                <h2>{{ useTranslateableAttribute(selectedStep, "name") }}</h2>
-                <div
-                    v-html="
-                        useTranslateableAttribute(selectedStep, 'description')
-                    "
-                ></div>
-                <SubmissionOverview
-                    v-if="selectedStep.isOverview && formObject"
-                    :form="formObject"
-                />
-                <MRForm v-else :step="selectedStep" @submit-form="submitForm" />
-            </form>
-
-            <div class="mb-3">
-                <Transition name="fade">
-                    <div
-                        v-if="showSubmissionWarning"
-                        class="alert alert-warning d-inline-flex align-items-center gap-2"
-                        role="alert"
-                    >
-                        <TriangleAlert class="icon" />
-                        <span>
-                            {{
-                                t(
-                                    "Your form contains errors. Please review and resubmit.",
-                                )
-                            }}
-                        </span>
-                    </div>
-                </Transition>
-            </div>
-
-            <div class="btn-group">
-                <BSButton
-                    v-if="!firstStepSelected"
-                    variant="primary"
-                    class="btn-arrow-left"
-                    @click="navigateToSlug(getPreviousStepSlug())"
-                >
-                    {{ $t("Previous") }}
-                </BSButton>
-                <BSButton
-                    v-if="selectedStep.isOverview"
-                    variant="success"
-                    @click="finalSubmit"
-                >
-                    {{ $t("Submit") }}
-                    <Send class="ms-2" :size="16" />
-                </BSButton>
-                <BSButton
-                    v-else
-                    variant="primary"
-                    class="btn-arrow-right"
-                    @click="navigateToSlug(getNextStepSlug())"
-                >
-                    {{ $t("Next") }}
-                </BSButton>
-            </div>
+        <div v-if="selectedStep.isOverview && formObject" class="col-9">
+            <SubmissionOverview :form="formObject" />
         </div>
+        <template v-else>
+            <div class="col-12 col-lg-6 pe-4">
+                <form class="uu-form uu-form-no-help">
+                    <h2>
+                        {{ useTranslateableAttribute(selectedStep, "name") }}
+                    </h2>
+                    <div
+                        v-html="
+                            useTranslateableAttribute(
+                                selectedStep,
+                                'description',
+                            )
+                        "
+                    ></div>
+                    <MRForm :step="selectedStep" @submit-form="submitForm" />
+                </form>
+                <div class="mb-3">
+                    <Transition name="fade">
+                        <div
+                            v-if="showSubmissionWarning"
+                            class="alert alert-warning d-inline-flex align-items-center gap-2"
+                            role="alert"
+                        >
+                            <TriangleAlert class="icon" />
+                            <span>
+                                {{
+                                    t(
+                                        "Your form contains errors. Please review and resubmit.",
+                                    )
+                                }}
+                            </span>
+                        </div>
+                    </Transition>
+                </div>
+                <div class="btn-group">
+                    <BSButton
+                        v-if="!firstStepSelected"
+                        variant="primary"
+                        class="btn-arrow-left"
+                        @click="navigateToSlug(getPreviousStepSlug())"
+                    >
+                        {{ $t("Previous") }}
+                    </BSButton>
+                    <BSButton
+                        v-if="selectedStep.isOverview"
+                        variant="success"
+                        @click="finalSubmit"
+                    >
+                        {{ $t("Submit") }}
+                        <Send class="ms-2" :size="16" />
+                    </BSButton>
+                    <BSButton
+                        v-else
+                        variant="primary"
+                        class="btn-arrow-right"
+                        @click="navigateToSlug(getNextStepSlug())"
+                    >
+                        {{ $t("Next") }}
+                    </BSButton>
+                </div>
+            </div>
+            <div class="col-3 d-lg-block d-none">
+                <FormSideBar :step="selectedStep" />
+            </div>
+        </template>
     </div>
 </template>
 

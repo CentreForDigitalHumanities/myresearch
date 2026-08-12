@@ -126,7 +126,7 @@ LANGUAGES = [
     ("nl", _("Dutch")),
 ]
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Brussels"
 
 USE_I18N = True
 

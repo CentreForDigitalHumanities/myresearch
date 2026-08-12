@@ -1,13 +1,12 @@
-<script lang="ts" setup>
 import { useQuery } from "@vue/apollo-composable";
+import { computed } from "vue";
+import type { Ref, ComputedRef } from "vue";
 import { graphql } from "~/generated/gql";
 import type { GetFormQuery } from "~/generated/gql/graphql";
-import FormWrapper from "~/components/form/FormWrapper.vue";
-import { useStepSlug, useSubmissionId } from "~/composables/useRouteParams";
 
 const GET_FORM = graphql(`
-    query GetForm($submissionId: ID!) {
-        form(submissionId: $submissionId, mrPermission: "Edit") {
+    query GetForm($submissionId: ID!, $mrPermission: String!) {
+        form(submissionId: $submissionId, mrPermission: $mrPermission) {
             formId
             nameEn
             nameNl
@@ -21,7 +20,7 @@ const GET_FORM = graphql(`
                 descriptionEn
                 descriptionNl
                 isOverview
-                ...FormInfoFragment
+                ...StepInfoTextFragment
                 questions {
                     questionId
                     repeatIndex
@@ -70,7 +69,7 @@ const GET_FORM = graphql(`
                     descriptionEn
                     descriptionNl
                     isOverview
-                    ...FormInfoFragment
+                    ...StepInfoTextFragment
                     questions {
                         questionId
                         repeatIndex
@@ -116,30 +115,17 @@ const GET_FORM = graphql(`
     }
 `);
 
-const submissionId = useSubmissionId();
-const slug = useStepSlug();
+export function useFormQuery(
+    submissionId:
+        | Ref<string | null | undefined>
+        | ComputedRef<string | undefined>,
+    mrPermission: "View" | "Edit",
+) {
+    const { result: formResult } = useQuery<GetFormQuery>(
+        GET_FORM,
+        () => ({ submissionId: submissionId.value, mrPermission }),
+        () => ({ enabled: !!submissionId.value }),
+    );
 
-const { result: formResult } = useQuery<GetFormQuery>(
-    GET_FORM,
-    () => ({ submissionId: submissionId.value }),
-    () => ({ enabled: !!submissionId.value }),
-);
-
-const form = computed(() => formResult.value?.form ?? null);
-</script>
-
-<template>
-    <div class="uu-content">
-        <Title>{{ $t("Processing Registry") }}</Title>
-        <div class="uu-hero">
-            <h1>{{ $t("Processing Registry") }}</h1>
-        </div>
-        <div class="uu-container">
-            <FormWrapper
-                v-if="form && slug"
-                :queried-form="form"
-                :current-step-slug="slug"
-            />
-        </div>
-    </div>
-</template>
+    return computed(() => formResult.value?.form ?? null);
+}
