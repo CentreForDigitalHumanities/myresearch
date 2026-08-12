@@ -118,6 +118,8 @@ class RepeatIndex(models.Model):
 class Repeatable(
     models.Model,
 ):
+    # We specify the autofield explicitly so that the
+    # default "pk" doesn't conflict with any subclasses
     repeat_id = models.AutoField(primary_key=True)
 
     repeat_indices = models.ManyToManyField(
