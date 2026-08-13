@@ -34,7 +34,7 @@
         "graphql-tag": "^2.12.7",
         "lodash": "^4.18.1",
         "lucide-vue-next": "^0.544.0",
-        "nuxt": "3.21.1",
+        "nuxt": "3.21.10",
         "pinia": "^3.0.4",
         "uu-bootstrap": "github:UtrechtUniversity/UU-Bootstrap#v1.5.0-alpha.1",
         "uuid": "^14.0.1",
