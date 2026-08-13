@@ -254,6 +254,37 @@ function navigateToSlug(slug: string) {
         />
         <div v-if="selectedStep.isOverview && formObject" class="col-9">
             <SubmissionOverview :form="formObject" />
+            <div class="mb-3">
+                <Transition name="fade">
+                    <div
+                        v-if="showSubmissionWarning"
+                        class="alert alert-warning d-inline-flex align-items-center gap-2"
+                        role="alert"
+                    >
+                        <TriangleAlert class="icon" />
+                        <span>
+                            {{
+                                t(
+                                    "Your form contains errors. Please review and resubmit.",
+                                )
+                            }}
+                        </span>
+                    </div>
+                </Transition>
+            </div>
+            <div class="btn-group">
+                <BSButton
+                    variant="primary"
+                    class="btn-arrow-left"
+                    @click="navigateToSlug(getPreviousStepSlug())"
+                >
+                    {{ $t("Previous") }}
+                </BSButton>
+                <BSButton variant="success" @click="finalSubmit">
+                    {{ $t("Submit") }}
+                    <Send class="ms-2" :size="16" />
+                </BSButton>
+            </div>
         </div>
         <template v-else>
             <div class="col-12 col-lg-6 pe-4">
@@ -271,24 +302,6 @@ function navigateToSlug(slug: string) {
                     ></div>
                     <MRForm :step="selectedStep" @submit-form="submitForm" />
                 </form>
-                <div class="mb-3">
-                    <Transition name="fade">
-                        <div
-                            v-if="showSubmissionWarning"
-                            class="alert alert-warning d-inline-flex align-items-center gap-2"
-                            role="alert"
-                        >
-                            <TriangleAlert class="icon" />
-                            <span>
-                                {{
-                                    t(
-                                        "Your form contains errors. Please review and resubmit.",
-                                    )
-                                }}
-                            </span>
-                        </div>
-                    </Transition>
-                </div>
                 <div class="btn-group">
                     <BSButton
                         v-if="!firstStepSelected"
@@ -299,15 +312,6 @@ function navigateToSlug(slug: string) {
                         {{ $t("Previous") }}
                     </BSButton>
                     <BSButton
-                        v-if="selectedStep.isOverview"
-                        variant="success"
-                        @click="finalSubmit"
-                    >
-                        {{ $t("Submit") }}
-                        <Send class="ms-2" :size="16" />
-                    </BSButton>
-                    <BSButton
-                        v-else
                         variant="primary"
                         class="btn-arrow-right"
                         @click="navigateToSlug(getNextStepSlug())"
