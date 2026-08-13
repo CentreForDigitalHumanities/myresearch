@@ -88,8 +88,7 @@ definePageMeta({
                         $t(
                             "For questions about the processing register contact the privacy officer:",
                         ) + " "
-                    }}<a href="mailto:privacy.gw@uu.nl">privacy.gw@uu.nl</a>/
-                    <a href="mailto:privacy.rebo@uu.nl">privacy.rebo@uu.nl</a>
+                    }}<a href="mailto:privacy.gw@uu.nl">privacy.gw@uu.nl</a>/<a href="mailto:privacy.rebo@uu.nl">privacy.rebo@uu.nl</a>
                 </p>
                 <p>
                     {{ $t("For technical issues relating to MyResearch:") + " "
