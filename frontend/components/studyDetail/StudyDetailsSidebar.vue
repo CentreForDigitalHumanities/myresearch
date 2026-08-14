@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import type { GetStudyQuery } from "~/generated/gql/graphql";
-import { useLocalDateTime } from "~/composables/useLocalisation";
 
 interface Props {
     study: NonNullable<GetStudyQuery["study"]>;
 }
 const props = defineProps<Props>();
 
-const createdAt = computed(() => useLocalDateTime(props.study.createdAt));
-const updatedAt = computed(() => useLocalDateTime(props.study.updatedAt));
 </script>
 
 <template>
@@ -32,17 +29,6 @@ const updatedAt = computed(() => useLocalDateTime(props.study.updatedAt));
                 <li class="mt-2">
                     {{ $t("Creator email") }}:
                     {{ study.createdBy.email }}
-                </li>
-            </ul>
-            <h3>{{ $t("Study details") }}</h3>
-            <ul>
-                <li class="mt-2">
-                    {{ $t("Created on") }}:
-                    {{ createdAt }}
-                </li>
-                <li class="mt-2">
-                    {{ $t("Submitted on") }}:
-                    {{ updatedAt }}
                 </li>
             </ul>
         </div>
