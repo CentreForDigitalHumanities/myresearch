@@ -25,13 +25,14 @@ definePageMeta({
                             )
                         }}
                     </p>
-                    <p>
-                        {{
-                            $t(
-                                "MyResearch currently offers a processing register for research data to comply with legal obligations under the General Data Protection Regulation (GDPR). In the future, more and more preparatory tasks will be accommodated in MyResearch, so that you as a researcher can meet a multitude of requirements in one request. Consider drawing up a data management plan and submitting an application for ethical review.",
-                            )
-                        }}
-                    </p>
+                    <i18n-t keypath="MyResearch currently offers a {processingRegister} to comply with legal obligations under the General Data Protection Regulation (GDPR). In the future, more and more preparatory tasks will be accommodated in MyResearch, so that you as a researcher can meet a multitude of requirements in one request. Consider drawing up a data management plan and submitting an application for ethical review." tag="p">
+                        <template #processingRegister>
+                            <b>{{
+                                $t( "processing register for research data" )
+                            }}
+                            </b>
+                        </template>
+                    </i18n-t>
                 </div>
             </div>
             <aside class="uu-sidebar pe-3">
@@ -43,14 +44,14 @@ definePageMeta({
                 <h2 class="uu-sidebar-header-linked">
                     {{ $t("Processing Register") }}
                 </h2>
-                <p>
-                    {{
-                        $t(
-                            "If you process personal data relating to one or more identifiable persons (usually participants) in your research, you are obliged to complete the processing register.",
-                        )
-                    }}
-                </p>
-
+                <i18n-t keypath="If you process {personalData} relating to one or more identifiable persons (usually participants) in your research, you are obliged to complete the processing register." tag="p">
+                    <template #personalData>
+                        <a href="https://intranet.uu.nl/en/knowledgebase/what-is-personal-data" target="_blank">{{
+                            $t( "personal data" )
+                        }}
+                        </a>
+                    </template>
+                </i18n-t>
                 <p>
                     {{
                         $t(
