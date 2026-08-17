@@ -1,5 +1,5 @@
 from typing import Optional
-from graphene import ID, Field, ObjectType, ResolveInfo, String
+from graphene import ID, Field, ObjectType, ResolveInfo, String, List, Int
 
 
 from main.models import User
@@ -7,7 +7,9 @@ from form.services.form_evaluator import FormEvaluator
 from form.services.user_form_resolver import UserFormResolver
 from form.types.UserFormType import UserFormType
 from form.types.QuestionType import SelectQuestionType
-from form.models import UserFormSubmission, SelectQuestion
+from form.types.StepType import StepType
+from form.models import UserFormSubmission, SelectQuestion, RepeatableStep, RepeatIndex
+from form.models.responses import QuestionResponse
 
 
 class FormQueries(ObjectType):
@@ -80,3 +82,57 @@ class QuestionQueries(ObjectType):
             return SelectQuestionType(question=question)
         except SelectQuestion.DoesNotExist:
             return None
+
+
+class RepeatableStepQueries(ObjectType):
+
+    repeatable_steps_with_repeats = Field(
+        List(StepType),
+        repeatable_id=ID(required=True),
+        response_id=ID(required=False),
+        description="Retrieves a RepeatableStep for each repeat index in the response's answer, with the repeat_index field populated.",
+    )
+
+    @staticmethod
+    def resolve_repeatable_steps_with_repeats(
+        root,
+        info: ResolveInfo,
+        repeatable_id: str,
+        response_id: str = None,
+    ) -> list[StepType]:
+        user: User = info.context.user
+        if not user.is_authenticated:
+            return []
+
+        if not response_id:
+            return []
+
+        try:
+            repeatable_step = RepeatableStep.objects.get(pk=repeatable_id)
+            question_response = QuestionResponse.objects.get(pk=response_id)
+
+            # Extract repeat indices from the answer
+            answer = question_response.answer
+            repeat_indices = answer.get("value", []) if isinstance(answer, dict) else []
+
+            # Fetch the repeat index objects
+            repeat_index_objects = RepeatIndex.objects.filter(pk__in=repeat_indices)
+
+            return [
+                StepType(
+                    step_id=repeatable_step.id,
+                    name_nl=repeatable_step.name,
+                    name_en=repeatable_step.name,
+                    description_nl=repeatable_step.description,
+                    description_en=repeatable_step.description,
+                    slug=repeatable_step.slug,
+                    is_overview=repeatable_step.is_overview,
+                    questions=[],
+                    substeps=[],
+                    background=None,
+                    repeat_index=int(repeat_idx.id),
+                )
+                for repeat_idx in repeat_index_objects
+            ]
+        except (RepeatableStep.DoesNotExist, QuestionResponse.DoesNotExist):
+            return []

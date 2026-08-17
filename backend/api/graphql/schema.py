@@ -10,7 +10,7 @@ from form.types.QuestionType import (
     FileUploadQuestionType,
     NumberQuestionType,
 )
-from form.queries import FormQueries, QuestionQueries
+from form.queries import FormQueries, QuestionQueries, RepeatableStepQueries
 from research.queries import StudyQuery
 from main.queries import UserQueries
 from notes.queries import NoteQueries
@@ -25,7 +25,13 @@ from research.mutations.CreateStatusChangeMutation import CreateDraftStatusChang
 
 
 class Query(
-    FormQueries, UserQueries, StudyQuery, QuestionQueries, NoteQueries, ObjectType
+    FormQueries,
+    UserQueries,
+    StudyQuery,
+    QuestionQueries,
+    RepeatableStepQueries,
+    NoteQueries,
+    ObjectType,
 ):
     pass
 
