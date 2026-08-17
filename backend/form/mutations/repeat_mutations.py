@@ -1,5 +1,11 @@
+from form.models.responses import QuestionResponse
 from main.models import User
-from form.models import Repeatable, RepeatIndex, UserFormSubmission
+from form.models import (
+    Repeatable,
+    RepeatIndex,
+    UserFormSubmission,
+    RepeatableStepQuestion,
+)
 
 from graphene import List, Mutation, ResolveInfo, ID
 from graphene_django.types import ErrorType
@@ -12,6 +18,7 @@ class CreateRepeatMutation(Mutation):
         user_form_id = ID(required=True)
         repeatable_id = ID(required=True)
         parent_id = ID(required=False)
+        response_id = ID(required=False)
 
     new_repeat_index = ID()
     errors = List(ErrorType)
@@ -24,6 +31,7 @@ class CreateRepeatMutation(Mutation):
         user_form_id: int,
         repeatable_id: int,
         parent_id: int = None,
+        response_id: int = None,
     ):
         user: User = info.context.user
 
@@ -55,6 +63,26 @@ class CreateRepeatMutation(Mutation):
         base_repeat.repeat_indices.add(
             new_repeat,
         )
+
+        try:
+            rsq = RepeatableStepQuestion.objects.get(repeatable_step=repeatable_id)
+        except RepeatableStepQuestion.MultipleObjectsReturned as error:
+            return cls(errors=[error])
+
+        # Use a QuestionResponse to store
+        if response_id is not None:
+            qr = QuestionResponse.objects.get(
+                pk=response_id,
+            )
+        else:
+            qr = QuestionResponse.objects.create(question=rsq, answer={"value": []})
+            qr.submissions.add(submission)
+
+        answer_value = qr.answer["value"]
+        answer_value.append(new_repeat.pk)
+        qr.answer = {"value": answer_value}
+        qr.save()
+
         return cls(
             new_repeat_index=new_repeat.pk,
             errors=[],
