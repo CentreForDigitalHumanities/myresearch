@@ -58,7 +58,35 @@ const GET_REPEATABLE_STEP_QUERY = graphql(`
     }
 `);
 
+const DELETE_STEP_REPEAT_MUTATION = graphql(`
+    mutation DeleteStepRepeat(
+        $userFormId: ID!
+        $repeatId: ID!
+        $responseId: ID!
+    ) {
+        deleteRepeat(
+            userFormId: $userFormId
+            repeatId: $repeatId
+            responseId: $responseId
+        ) {
+            ok
+            errors {
+                field
+                messages
+            }
+        }
+    }
+`);
+
 const { mutate: createStepRepeat } = useMutation(CREATE_STEP_REPEAT_MUTATION, {
+    update: (cache) => {
+        cache.evict({ fieldName: "form" });
+        cache.evict({ fieldName: "repeatableStepsWithRepeats" });
+        cache.gc();
+    },
+});
+
+const { mutate: deleteStepRepeat } = useMutation(DELETE_STEP_REPEAT_MUTATION, {
     update: (cache) => {
         cache.evict({ fieldName: "form" });
         cache.evict({ fieldName: "repeatableStepsWithRepeats" });
@@ -98,6 +126,30 @@ function handleAddStep(): void {
     });
 }
 
+function handleDeleteStep(repeatId: string): void {
+    const userFormId = submissionId.value;
+    if (!userFormId) {
+        return;
+    }
+
+    // There should always be a response available when deleting
+    const responseId = props.question.responseId;
+    if (!responseId) {
+        return;
+    }
+
+    void deleteStepRepeat({
+        userFormId,
+        repeatId,
+        responseId: responseId,
+    }).catch(() => {
+        useNotification(
+            t("An error occurred while deleting a step. Please try again."),
+            "danger",
+        );
+    });
+}
+
 function navigateToStep(slug: string) {
     return navigateTo({
         name: "studies-studyId-submissionId-slug",
@@ -129,7 +181,7 @@ function navigateToStep(slug: string) {
                     <div>
                         <h5 class="mb-1">
                             {{ useTranslateableAttribute(step, "name") }} -
-                            {{ index + 1 }}
+                            {{ index + 1 }} - {{ step.repeatIndex }}
                         </h5>
                     </div>
 
@@ -144,11 +196,23 @@ function navigateToStep(slug: string) {
                         >
                             {{ $t("Edit") }}
                         </button>
-                        <button class="btn btn-secondary">
+                        <button
+                            class="btn btn-secondary"
+                            @click.prevent="
+                                handleDeleteStep(String(step.repeatIndex))
+                            "
+                        >
                             {{ $t("Delete") }}
                         </button>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div v-else>
+            <div
+                class="p-3 mb-1 d-flex justify-content-center align-items-center"
+            >
+                {{ $t("No steps added yet ...") }}
             </div>
         </div>
         <BSButton

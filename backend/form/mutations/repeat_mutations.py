@@ -1,5 +1,6 @@
+from research.models.study import Study
 from form.models.responses import QuestionResponse
-from main.models import User
+from main.models import MRPermission, User
 from form.models import (
     Repeatable,
     RepeatIndex,
@@ -7,7 +8,7 @@ from form.models import (
     RepeatableStepQuestion,
 )
 
-from graphene import List, Mutation, ResolveInfo, ID
+from graphene import Boolean, List, Mutation, ResolveInfo, ID
 from graphene_django.types import ErrorType
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -94,8 +95,10 @@ class DeleteRepeatMutation(Mutation):
     class Arguments:
         user_form_id = ID(required=True)
         repeat_id = ID(required=True)
+        response_id = ID(required=True)
 
     errors = List(ErrorType)
+    ok = Boolean(required=False)
 
     @classmethod
     def mutate(
@@ -104,6 +107,7 @@ class DeleteRepeatMutation(Mutation):
         info: ResolveInfo,
         user_form_id: int,
         repeat_id: int,
+        response_id: int,
     ):
         user: User = info.context.user
 
@@ -114,7 +118,9 @@ class DeleteRepeatMutation(Mutation):
             submission = UserFormSubmission.objects.get(
                 pk=user_form_id,
             )
-            assert submission.can_be_edited_by(user)
+            assert submission.study in Study.objects.accessible_objects(
+                user, MRPermission.EDIT
+            )
 
             repeat_index.submissions.remove(
                 submission,
@@ -127,6 +133,22 @@ class DeleteRepeatMutation(Mutation):
         except Exception as error:
             return cls(ok=False, errors=[error])
 
+        try:
+            qr = QuestionResponse.objects.get(
+                pk=response_id,
+            )
+
+            # Remove the repeat_id from the answer value list
+            answer_value = qr.answer.get("value", [])
+            if repeat_id in answer_value:
+                answer_value.remove(repeat_id)
+                qr.answer = {"value": answer_value}
+                qr.save()
+        except ObjectDoesNotExist:
+            # If we can't find the response, continue
+            # The repeat will still be deleted from submissions
+            pass
+
         # When a repeat index is removed from its last submission, it
         # is deleted. Currently we do not delete all child indexes that
         # may exist beneath it, e.g. a repeatable question within a
@@ -134,6 +156,4 @@ class DeleteRepeatMutation(Mutation):
         if repeat_index.submissions.count() == 0:
             repeat_index.delete()
 
-        return cls(
-            errors=[],
-        )
+        return cls(errors=[], ok=True)
