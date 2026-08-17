@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { RepeatableStepQuestionWithValue } from "~/composables/useProcessForm";
-import { useSubmissionId } from "~/composables/useRouteParams";
+import { useSubmissionId, useStudyId } from "~/composables/useRouteParams";
 import FormLabel from "../form/FormLabel.vue";
 import { BSButton } from "cdh-vue-lib";
 import { useMutation } from "@vue/apollo-composable";
@@ -12,6 +12,7 @@ import { computed } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 
 const submissionId = useSubmissionId();
+const studyId = useStudyId();
 const { t } = useI18n();
 
 interface Props {
@@ -74,9 +75,9 @@ const { result: repeatableStepResult } = useQuery(
 );
 
 const repeatableSteps = computed(() =>
-    (repeatableStepResult.value?.repeatableStepsWithRepeats || []).filter(
-        (step) => step !== null,
-    ),
+    (repeatableStepResult.value?.repeatableStepsWithRepeats || [])
+        .filter((step) => step !== null)
+        .filter((step) => !step.background),
 );
 
 function handleAddStep(): void {
@@ -94,6 +95,17 @@ function handleAddStep(): void {
             t("An error occurred while adding a step. Please try again."),
             "danger",
         );
+    });
+}
+
+function navigateToStep(slug: string) {
+    return navigateTo({
+        name: "studies-studyId-submissionId-slug",
+        params: {
+            studyId: studyId.value,
+            submissionId: submissionId.value,
+            slug: slug,
+        },
     });
 }
 </script>
@@ -122,7 +134,14 @@ function handleAddStep(): void {
                     </div>
 
                     <div class="d-flex gap-2">
-                        <button class="btn btn-primary">
+                        <button
+                            class="btn btn-primary"
+                            @click.prevent="
+                                navigateToStep(
+                                    `${step.slug}.${step.repeatIndex}`,
+                                )
+                            "
+                        >
                             {{ $t("Edit") }}
                         </button>
                         <button class="btn btn-secondary">
