@@ -172,7 +172,7 @@ function handleDeleteStep(repeatId: string): void {
                     <div>
                         <h5 class="mb-1">
                             {{ useTranslateableAttribute(step, "name") }} -
-                            {{ index + 1 }} - {{ step.repeatIndex }}
+                            {{ index + 1 }}
                         </h5>
                     </div>
 
