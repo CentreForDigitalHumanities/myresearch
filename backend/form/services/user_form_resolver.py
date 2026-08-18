@@ -82,14 +82,19 @@ class UserFormResolver:
         parent_index=None,
     ):
         repeats = []
-        # For repeatable steps, we first insert the "blank" background
-        # step into the output.
-        background_step = self._create_step_instance(
-            step,
-            repeat_index=parent_index,
-            background=True,
-        )
-        repeats.append(background_step)
+
+        # NOTE: I have discussed with Michael that the RepeatableStepQuestion
+        # makes background steps obsolete. He will take it up to properly
+        # remove these in the main branch. (18/08/26)
+
+        # # For repeatable steps, we first insert the "blank" background
+        # # step into the output.
+        # background_step = self._create_step_instance(
+        #     step,
+        #     repeat_index=parent_index,
+        #     background=True,
+        # )
+        # repeats.append(background_step)
         # Then we continue by finding the step's
         # repeat_indices that correspond to this submission.
         repeat_indices = self._fetch_repeat_indices(

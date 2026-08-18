@@ -103,9 +103,9 @@ const { result: repeatableStepResult } = useQuery(
 );
 
 const repeatableSteps = computed(() =>
-    (repeatableStepResult.value?.repeatableStepsWithRepeats || [])
-        .filter((step) => step !== null)
-        .filter((step) => !step.background),
+    (repeatableStepResult.value?.repeatableStepsWithRepeats || []).filter(
+        (step) => step !== null,
+    ),
 );
 
 function handleAddStep(): void {
