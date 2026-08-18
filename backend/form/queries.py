@@ -2,7 +2,7 @@ from typing import Optional
 from graphene import ID, Field, ObjectType, ResolveInfo, String, List, Int
 
 
-from main.models import User
+from main.models import MRPermission, User
 from form.services.form_evaluator import FormEvaluator
 from form.services.user_form_resolver import UserFormResolver
 from form.types.UserFormType import UserFormType
@@ -110,6 +110,13 @@ class RepeatableStepQueries(ObjectType):
         try:
             repeatable_step = RepeatableStep.objects.get(pk=repeatable_id)
             question_response = QuestionResponse.objects.get(pk=response_id)
+
+            queryset = UserFormSubmission.objects.accessible_objects(
+                user, MRPermission.EDIT
+            )
+
+            if not question_response.submissions.last() in queryset:
+                return []
 
             # Extract repeat indices from the answer
             answer = question_response.answer
