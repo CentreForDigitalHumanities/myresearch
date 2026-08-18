@@ -103,6 +103,7 @@ class BaseQuestion(models.Model):
                 cls = getattr(self, subclass_name)
                 if hasattr(cls, "repeatable" + subclass_name):
                     return getattr(cls, "repeatable" + subclass_name)
+                return cls
         return self
 
     def __str__(self):
