@@ -540,3 +540,4 @@ def test_repeat_responses(
     )
     content = json.loads(gql.content)
     assert "errors" not in content
+    breakpoint()
