@@ -137,9 +137,9 @@ class DeleteRepeatMutation(Mutation):
             qr = QuestionResponse.objects.get(
                 pk=response_id,
             )
-
             # Remove the repeat_id from the answer value list
             answer_value = qr.answer.get("value", [])
+            repeat_id = int(repeat_id)
             if repeat_id in answer_value:
                 answer_value.remove(repeat_id)
                 qr.answer = {"value": answer_value}
