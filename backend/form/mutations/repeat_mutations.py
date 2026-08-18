@@ -1,4 +1,3 @@
-from research.models.study import Study
 from form.models.responses import QuestionResponse
 from main.models import MRPermission, User
 from form.models import (
@@ -118,7 +117,7 @@ class DeleteRepeatMutation(Mutation):
             submission = UserFormSubmission.objects.get(
                 pk=user_form_id,
             )
-            assert submission.study in Study.objects.accessible_objects(
+            assert submission in UserFormSubmission.objects.accessible_objects(
                 user, MRPermission.EDIT
             )
 
