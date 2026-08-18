@@ -121,10 +121,10 @@ class RepeatableStepQueries(ObjectType):
             return [
                 StepType(
                     step_id=repeatable_step.id,
-                    name_nl=repeatable_step.name,
-                    name_en=repeatable_step.name,
-                    description_nl=repeatable_step.description,
-                    description_en=repeatable_step.description,
+                    name_nl=repeatable_step.name_nl,
+                    name_en=repeatable_step.name_en,
+                    description_nl=repeatable_step.description_nl,
+                    description_en=repeatable_step.description_en,
                     slug=repeatable_step.slug,
                     is_overview=repeatable_step.is_overview,
                     questions=[],
