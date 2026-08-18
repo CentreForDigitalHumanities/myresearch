@@ -98,7 +98,7 @@ def update_submission(
             new_response = QuestionResponse.objects.create(
                 question_id=response["question_id"],
                 answer=response["answer"],
-                repeat_index=response["repeat_index"],
+                repeat_index_id=response["repeat_index"],
             )
             new_response.submissions.add(current_submission)
             current_submission.updated_at = timezone.now()
