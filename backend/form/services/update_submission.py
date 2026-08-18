@@ -48,10 +48,17 @@ def update_submission(
     for response in user_form_input.get("responses", []):  # type: ignore
         response_id = response["id"] if "id" in response else None
 
+        try:
+            question = BaseQuestion.objects.get(
+                pk=response.get("question_id")
+            ).get_subclass()
+        except BaseQuestion.DoesNotExist:
+            question = None
+
         # Responses for RepeatableStepQuestions are managed in repeat_mutations
         # and can be ignored here
         if isinstance(
-            BaseQuestion.objects.get(pk=response.get("question_id")).get_subclass(),
+            question,
             RepeatableStepQuestion,
         ):
             continue
