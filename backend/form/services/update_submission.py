@@ -1,3 +1,4 @@
+from form.models.questions import RepeatableStepQuestion
 from main.models import MRPermission, User
 from graphene_django.types import ErrorType
 from form.models.responses import MRDocument
@@ -46,6 +47,14 @@ def update_submission(
 
     for response in user_form_input.get("responses", []):  # type: ignore
         response_id = response["id"] if "id" in response else None
+
+        # Responses for RepeatableStepQuestions are managed in repeat_mutations
+        # and can be ignored here
+        if isinstance(
+            BaseQuestion.objects.get(pk=response.get("question_id")).get_subclass(),
+            RepeatableStepQuestion,
+        ):
+            continue
 
         try:
             validate_response(response)
