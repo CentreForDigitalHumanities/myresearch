@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { RepeatableStepQuestionWithValue } from "~/composables/useProcessForm";
-import { useSubmissionId, useStudyId } from "~/composables/useRouteParams";
+import { useSubmissionId } from "~/composables/useRouteParams";
 import FormLabel from "../form/FormLabel.vue";
 import { BSButton } from "cdh-vue-lib";
 import { useMutation } from "@vue/apollo-composable";
@@ -12,7 +12,6 @@ import { computed } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 
 const submissionId = useSubmissionId();
-const studyId = useStudyId();
 const { t } = useI18n();
 
 interface Props {
@@ -21,6 +20,9 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+const emit = defineEmits<{
+    (e: "repeat-step-clicked", slug: string): void;
+}>();
 
 const CREATE_STEP_REPEAT_MUTATION = graphql(`
     mutation CreateStepRepeat(
@@ -149,17 +151,6 @@ function handleDeleteStep(repeatId: string): void {
         );
     });
 }
-
-function navigateToStep(slug: string) {
-    return navigateTo({
-        name: "studies-studyId-submissionId-slug",
-        params: {
-            studyId: studyId.value,
-            submissionId: submissionId.value,
-            slug: slug,
-        },
-    });
-}
 </script>
 
 <template>
@@ -189,7 +180,8 @@ function navigateToStep(slug: string) {
                         <button
                             class="btn btn-primary"
                             @click.prevent="
-                                navigateToStep(
+                                emit(
+                                    'repeat-step-clicked',
                                     `${step.slug}.${step.repeatIndex}`,
                                 )
                             "
