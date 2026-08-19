@@ -1,24 +1,31 @@
 <script lang="ts" setup>
 import { useFormQuery } from "~/composables/useFormQuery";
+import { useStudyTitleQuery } from "~/composables/useStudyTitleQuery";
 import FormWrapper from "~/components/form/FormWrapper.vue";
-import { useStepSlug, useSubmissionId } from "~/composables/useRouteParams";
+import StudyHeroTitle from "~/components/form/StudyHeroTitle.vue";
+import {
+    useStepSlug,
+    useSubmissionId,
+    useStudyId,
+} from "~/composables/useRouteParams";
 
 const submissionId = useSubmissionId();
 const slug = useStepSlug();
 const form = useFormQuery(submissionId, "Edit");
+
+const studyId = useStudyId();
+const study = useStudyTitleQuery(studyId);
 </script>
 
 <template>
     <div class="uu-content">
-        <Title>{{ $t("Processing Register") }}</Title>
-        <div class="uu-hero">
-            <h1>{{ $t("Processing Register") }}</h1>
-        </div>
+        <StudyHeroTitle :study="study" />
         <div class="uu-container">
             <FormWrapper
                 v-if="form && slug"
                 :queried-form="form"
                 :current-step-slug="slug"
+                :reload-study="slug === 'study'"
             />
         </div>
     </div>
