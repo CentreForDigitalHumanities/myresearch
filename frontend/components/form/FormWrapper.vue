@@ -61,11 +61,15 @@ const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
 
 function submitForm(options = { submit: false }): void {
     const formData = formObject.value;
+    console.log("submit form, user data with errors is already removed here.");
     if (!formData) {
+        console.log("no form data");
         return;
     }
+    console.log("form data");
 
     if (options.submit) {
+        console.log("option submit");
         void v$.value.$validate();
         if (v$.value.$invalid) {
             showSubmissionWarning.value = true;
@@ -94,6 +98,7 @@ function submitForm(options = { submit: false }): void {
             );
         })
         .then(() => {
+            console.log("mutate form called");
             if (options.submit) {
                 useNotification(
                     t("Registration submitted successfully."),

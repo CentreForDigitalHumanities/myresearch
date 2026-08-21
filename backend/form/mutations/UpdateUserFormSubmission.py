@@ -34,6 +34,7 @@ class UpdateUserFormSubmission(Mutation):
             submission, errors = update_submission(
                 user,
                 user_form_input,
+                finalize
             )
         except Exception as e:
             error = ErrorType(
