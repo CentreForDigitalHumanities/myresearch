@@ -62,7 +62,7 @@
             "form": 1,
             "description": "<p>Who else at UU is collaborating on the study? (Leave this field blank if not applicable.)&nbsp;</p>",
             "description_en": "<p>Who else at UU is collaborating on the study? (Leave this field blank if not applicable.)&nbsp;</p>",
-            "description_nl": "<p>Wie werkt er binnen de UU nog meer mee aan de studie? (Laat dit veld leeg als niet van toepassing.)</p>",
+            "description_nl": "<p>Wie werkt er binnen de UU nog meer mee aan de studie? (Laat dit veld leeg indien niet van toepassing.)</p>",
             "required": false,
             "_order": 2
         }
@@ -213,9 +213,9 @@
             "text_nl": "Hoeveel groepen datasubjecten zijn er?",
             "step": 6,
             "form": 1,
-            "description": "<p>Distinguish all groups of people whose personal data you will collect or use (for instance: Police Officers, Instagram Users, Primary School Pupils).</p>",
-            "description_en": "<p>Distinguish all groups of people whose personal data you will collect or use (for instance: Police Officers, Instagram Users, Primary School Pupils).</p>",
-            "description_nl": "<p>Onderscheid alle groepen van wie er persoonsgegevens worden verzameld of gebruikt (bijvoorbeeld Politieagenten, Instagramgebruikers, Leerlingen basisschool, etc.).</p>",
+            "description": "<p>Distinguish all groups of people whose personal data you will collect or use (for instance: police officers, instagram users, primary school pupils).</p>",
+            "description_en": "<p>Distinguish all groups of people whose personal data you will collect or use (for instance: police officers, instagram users, primary school pupils).</p>",
+            "description_nl": "<p>Onderscheid alle groepen van wie er persoonsgegevens worden verzameld of gebruikt (bijvoorbeeld politieagenten, instagramgebruikers, leerlingen basisschool, etc.).</p>",
             "required": true,
             "_order": 1
         }
@@ -686,7 +686,7 @@
             "annotation_key": null,
             "text": "Basis for transfer (contact the privacy officer).",
             "text_en": "Basis for transfer (contact the privacy officer).",
-            "text_nl": "Basis for transfer (contact the privacy officer).",
+            "text_nl": "Basis voor doorgifte (neem contact op met de privacy officer).",
             "step": 9,
             "form": 1,
             "description": "",
@@ -1553,7 +1553,7 @@
         "fields": {
             "label": "Philosophy and Religious Studies",
             "label_en": "Philosophy and Religious Studies",
-            "label_nl": "Filosofie en  Religiewetenschap",
+            "label_nl": "Filosofie en Religiewetenschap",
             "default_selected": false,
             "question": 6,
             "_order": 3
@@ -2617,16 +2617,16 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 5,
+        "pk": 33,
         "fields": {
-            "multiple": false
+            "multiple": true
         }
     },
     {
         "model": "form.selectquestion",
-        "pk": 33,
+        "pk": 5,
         "fields": {
-            "multiple": true
+            "multiple": false
         }
     },
     {
@@ -3426,8 +3426,8 @@
             "text": "What is a data management plan?",
             "text_en": "What is a data management plan?",
             "text_nl": "Wat is een datamanagementplan?",
-            "content": "<p>A data management plan is a structured overview of the managaement of research data. Both for during and after the research. The FEtC-H has a big preference for the following <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a>.</p>",
-            "content_en": "<p>A data management plan is a structured overview of the managaement of research data. Both for during and after the research. The FEtC-H has a big preference for the following <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a>.</p>",
+            "content": "<p>A data management plan is a structured overview of the management of research data. Both for during and after the research. The FEtC-H has a strong preference for the following <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a>.</p>",
+            "content_en": "<p>A data management plan is a structured overview of the management of research data. Both for during and after the research. The FEtC-H has a strong preference for the following <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a>.</p>",
             "content_nl": "<p>Een datamanagementplan is een gestructureerd overzicht van het beheer van onderzoeksgegevens zowel gedurende als na het onderzoek. (De FETC-GW heeft een grote voorkeur voor deze <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a>.)</p>",
             "_order": 2
         }
@@ -3440,8 +3440,8 @@
             "text": "How do I create a data management plan?",
             "text_en": "How do I create a data management plan?",
             "text_nl": "Hoe maak ik een datamanagementplan?",
-            "content": "<p>Please use a template such as <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a> and/or please contact the data manager <a href=\"mailto:datamanagement.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.gw@uu.nl</a> or <a href=\"mailto:datamanagement.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.rebo@uu.nl</a>.</p>",
-            "content_en": "<p>Please use a template such as <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a> and/or please contact the data manager <a href=\"mailto:datamanagement.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.gw@uu.nl</a> or <a href=\"mailto:datamanagement.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.rebo@uu.nl</a>.</p>",
+            "content": "<p>Please use this <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a> and/or please contact the data management at <a href=\"mailto:datamanagement.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.gw@uu.nl</a> or <a href=\"mailto:datamanagement.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.rebo@uu.nl</a>.</p>",
+            "content_en": "<p>Please use this <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a> and/or please contact the data management at <a href=\"mailto:datamanagement.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.gw@uu.nl</a> or <a href=\"mailto:datamanagement.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.rebo@uu.nl</a>.</p>",
             "content_nl": "<p>Gebruik hiervoor een template bijvoorbeeld <a href=\"https://intranet.uu.nl/system/files/gw_2025%20-%20Dataset-list.docx\" target=\"_blank\" rel=\"noopener\">template</a> en/of neem contact op met de datamanager&nbsp; <a href=\"mailto:datamanagement.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.gw@uu.nl</a> of <a href=\"mailto:datamanagement.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">datamanagement.rebo@uu.nl</a>.</p>",
             "_order": 3
         }
@@ -3451,11 +3451,11 @@
         "pk": 39,
         "fields": {
             "step": 12,
-            "text": "How do I modifiy documents?",
-            "text_en": "How do I modifiy documents?",
+            "text": "How do I modify documents?",
+            "text_en": "How do I modify documents?",
             "text_nl": "Hoe wijzig ik documenten?",
-            "content": "<p>You can submit documents again so long your study is in the draft phase.</p>",
-            "content_en": "<p>You can submit documents again so long your study is in the draft phase.</p>",
+            "content": "<p>You can modify and resubmit documents so long your as study is still in the draft phase.</p>",
+            "content_en": "<p>You can modify and resubmit documents so long your as study is still in the draft phase.</p>",
             "content_nl": "<p>Je kunt, voordat je een studie hebt ingediend, documenten opnieuw indienen.</p>",
             "_order": 4
         }
@@ -3602,17 +3602,6 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 61,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 1,
         "fields": {
             "placeholder": "",
@@ -3641,6 +3630,17 @@
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 61,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
             "is_email": false
         }
     },
@@ -3712,6 +3712,17 @@
     },
     {
         "model": "form.textquestion",
+        "pk": 54,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": true
+        }
+    },
+    {
+        "model": "form.textquestion",
         "pk": 13,
         "fields": {
             "placeholder": "",
@@ -3734,34 +3745,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 54,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
-            "is_email": true
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 15,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 29,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
             "is_email": false
         }
     },
@@ -3789,12 +3778,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 25,
+        "pk": 29,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5,
+            "lines": 1,
             "is_email": false
         }
     },
@@ -3811,7 +3800,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 17,
+        "pk": 25,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -3833,7 +3822,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 41,
+        "pk": 17,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -3866,7 +3855,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 43,
+        "pk": 41,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -3878,6 +3867,17 @@
     {
         "model": "form.textquestion",
         "pk": 38,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 43,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
