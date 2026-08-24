@@ -44,7 +44,6 @@ class BaseQuestionInterface(Interface):
     description_en = String(required=True)
     required = Boolean(required=True)
     has_conditions = Boolean(required=True)
-    background = Boolean()
 
     @classmethod
     def resolve_type(cls, instance, info):
@@ -112,7 +111,6 @@ class TextQuestionType(BaseQuestionMixin, ObjectType):
     placeholder_en = String()
     lines = Int(required=True)
     is_email = Boolean(required=True)
-    background = Boolean()
 
     def __init__(self, question=None, **kwargs):
         super().__init__(**kwargs)

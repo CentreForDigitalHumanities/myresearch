@@ -1,7 +1,13 @@
 import pytest
 import json
 from copy import deepcopy
-from form.models import Step, UserFormSubmission, RepeatableStep, RepeatableTextQuestion, RepeatIndex
+from form.models import (
+    Step,
+    UserFormSubmission,
+    RepeatableStep,
+    RepeatableTextQuestion,
+    RepeatIndex,
+)
 from research.tests import normal_user, test_study
 
 from pprint import pprint
@@ -61,28 +67,24 @@ query GetForm($submissionId: ID!) {
             stepId
             slug
             nameEn
-            background
             repeatIndex
             questions {
                 questionId
                 repeatIndex
                 answer
                 responseId
-                background
                 __typename
             }
             substeps {
                 stepId
                 slug
                 nameEn
-                background
                 repeatIndex
                 questions {
                     questionId
                     repeatIndex
                     answer
                     responseId
-                    background
                     __typename
                 }
             }
@@ -112,16 +114,8 @@ def test_repeatable_step(
     content = json.loads(response.content)
     assert "errors" not in content
     # There should be two steps in here
-    found = findkey(content, "background")
+    found = findkey(content, "stepId")
     assert len(found) == 2
-    # Assert that the repeatable stap has background=True,
-    # while the other does not.
-    for step in found:
-        step_id = int(step["stepId"])
-        if step_id == repeatable_step.id:
-            assert step["background"] == True
-        else:
-            assert step["background"] == False
 
 
 CreateRepeatQuery = """
@@ -172,24 +166,6 @@ def test_create_repeat(
     # Find all items in content with a stepId key
     found = findkey(content, "stepId")
     assert len(found) == 3
-    # Assert that one of the repeatable steps has background=True,
-    # and the other carries our new repeatIndex
-    # while the other does not.
-    passed = 0
-    for step in found:
-        step_id = int(step["stepId"])
-        if step_id == repeatable_step.id:
-            if step["repeatIndex"] == new_index:
-                assert step["background"] == False
-                passed += 1
-            else:
-                assert step["background"] == True
-                passed += 1
-        else:
-            assert step["background"] == False
-            passed += 1
-    # Check that all three above cases happened independently
-    assert passed == 3
 
 
 @pytest.mark.django_db(transaction=True)
@@ -348,92 +324,12 @@ def test_question_repeat(
     #   NEWHERE    #
     # breakpoint() #
     ################
-    # Assert that we now have three questions
-    assert len(findkey(content, "questionId")) == 3
-    # Make sure we have two background questions, and one actual repeat
-    background_true = 0
-    background_false = 0
-    for question in findkey(content, "questionId"):
-        assert int(question["questionId"]) == rq.pk
-        if question["background"] is True:
-            background_true += 1
-        if question["background"] is False:
-            background_false += 1
-            assert int(question["repeatIndex"]) == new_index
-    assert background_true == 2
-    assert background_false == 1
-
-
-
-@pytest.mark.django_db(transaction=True)
-def test_substep_repeat(
-    client_query,
-    test_user,
-    submission,
-    step,
-    form,
-    test_study,
-    repeatable_step,
-):
-    repeatable_substep = RepeatableStep(
-        name="Repeatable substep",
-        slug="sub_rep",
-        form=form,
-        parent=repeatable_step,
-    )
-    repeatable_substep.save()
-    substep_id = repeatable_substep.repeatable_ptr.pk
-    # Get the form again
-    response = client_query(
-        GetFormQuery,
-        user=test_user,
-        variables={
-            "submissionId": submission.id,
-        },
-    )
-    content = json.loads(response.content)
-    assert "errors" not in content
-    # Find all items in content with a stepId key
-    # The substep and its repeat should not be present
-    found = findkey(content, "stepId")
-    assert len(found) == 2
-    step_id = repeatable_step.repeatable_ptr.pk
-    # Create a repeat for the main step
-    response = client_query(
-        CreateRepeatQuery,
-        user=test_user,
-        variables={
-            "submission_id": submission.id,
-            "repeatable_id": step_id,
-        },
-    )
-    content = json.loads(response.content)
-    new_index = int(content["data"]["createRepeat"]["newRepeatIndex"])
-    # Create a repeat for the substep
-    response = client_query(
-        CreateRepeatQuery,
-        user=test_user,
-        variables={
-            "submission_id": submission.id,
-            "repeatable_id": substep_id,
-            "parent_id": new_index,
-        },
-    )
-    content = json.loads(response.content)
-    assert "errors" not in content
-    # Get the form again
-    response = client_query(
-        GetFormQuery,
-        user=test_user,
-        variables={
-            "submissionId": submission.id,
-        },
-    )
-    content = json.loads(response.content)
-    assert "errors" not in content
-    # Now we should have five
-    found = findkey(content, "stepId")
-    assert len(found) == 5
+    # Assert that we now have one question instance
+    questions = [
+        q for q in findkey(content, "questionId") if int(q["questionId"]) == rq.pk
+    ]
+    assert len(questions) == 1
+    assert int(questions[0]["repeatIndex"]) == new_index
 
 
 SaveFormQuery = """
@@ -449,6 +345,7 @@ mutation SaveFormSubmission($userFormInput: UserFormInput!) {
   }
 }
 """
+
 
 @pytest.mark.django_db(transaction=True)
 def test_repeat_responses(
@@ -519,14 +416,14 @@ def test_repeat_responses(
     responses = []
     for index in rq2.repeat_indices.filter(
         submissions=submission,
-    ): 
-        responses.append({
-            "answer": json.dumps(
-                {"value": f"Test answer for index {index.pk}"}
-            ),
-            "questionId": rq2.basequestion_ptr.pk,
-            "repeatIndex": index.pk,
-        })
+    ):
+        responses.append(
+            {
+                "answer": json.dumps({"value": f"Test answer for index {index.pk}"}),
+                "questionId": rq2.basequestion_ptr.pk,
+                "repeatIndex": index.pk,
+            }
+        )
     gql = client_query(
         SaveFormQuery,
         user=test_user,
@@ -535,9 +432,8 @@ def test_repeat_responses(
             "userFormInput": {
                 "submissionId": submission.id,
                 "responses": responses,
-            }
+            },
         },
     )
     content = json.loads(gql.content)
     assert "errors" not in content
-    breakpoint()

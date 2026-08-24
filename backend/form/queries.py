@@ -123,7 +123,6 @@ class RepeatableStepQueries(ObjectType):
                     is_overview=repeatable_step.is_overview,
                     questions=[],
                     substeps=[],
-                    background=None,
                     repeat_index=int(repeat_idx.id),
                 )
                 for repeat_idx in repeat_index_objects

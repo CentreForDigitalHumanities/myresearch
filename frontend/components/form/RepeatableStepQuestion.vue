@@ -50,7 +50,6 @@ const GET_REPEATABLE_STEP_QUERY = graphql(`
             nameNl
             nameEn
             slug
-            background
             repeatIndex
         }
     }

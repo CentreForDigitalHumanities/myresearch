@@ -83,20 +83,6 @@ class UserFormResolver:
     ):
         repeats = []
 
-        # NOTE: I have discussed with Michael that the RepeatableStepQuestion
-        # makes background steps obsolete. He will take it up to properly
-        # remove these in the main branch. (18/08/26)
-
-        # # For repeatable steps, we first insert the "blank" background
-        # # step into the output.
-        # background_step = self._create_step_instance(
-        #     step,
-        #     repeat_index=parent_index,
-        #     background=True,
-        # )
-        # repeats.append(background_step)
-        # Then we continue by finding the step's
-        # repeat_indices that correspond to this submission.
         repeat_indices = self._fetch_repeat_indices(
             step,
             parent_index=parent_index,
@@ -116,21 +102,14 @@ class UserFormResolver:
         self,
         step,
         repeat_index=None,
-        background=False,
     ):
 
-        if background is True:
-            # Background steps for now only serve as a reference that
-            # "something may exist here", so we don't need to bother the
-            # frontend with their substeps or questions
-            questions = []
-            substeps = []
-        else:
-            questions = self._resolve_step_questions(step, repeat_index)
-            substeps = self._resolve_steps(
-                parent_step=step,
-                parent_index=repeat_index,
-            )
+
+        questions = self._resolve_step_questions(step, repeat_index)
+        substeps = self._resolve_steps(
+            parent_step=step,
+            parent_index=repeat_index,
+        )
 
         slug = step.slug
         slug = generate_slug(step, repeat_index=repeat_index)
@@ -149,7 +128,6 @@ class UserFormResolver:
             is_overview=step.is_overview,  # type: ignore
             questions=questions,  # type: ignore
             substeps=substeps,  # type: ignore
-            background=background,
         )
 
     def _resolve_step_questions(self, step, repeat_index):
@@ -182,7 +160,6 @@ class UserFormResolver:
         instance = self._create_question_instance(
             question,
             repeat_index,
-            background=False,
         )
 
         return [instance]
@@ -193,16 +170,7 @@ class UserFormResolver:
         parent_index=None,
     ):
         repeats = []
-        # For repeatable questions, we first insert the "blank" background
-        # step into the output.
-        background_question = self._create_question_instance(
-            question,
-            repeat_index=parent_index,
-            background=True,
-        )
-        repeats.append(background_question)
-        # Then we continue by finding the question's
-        # repeat_indices that correspond to this submission.
+
         repeat_indices = self._fetch_repeat_indices(
             question,
             parent_index=parent_index,
@@ -214,7 +182,6 @@ class UserFormResolver:
             instance = self._create_question_instance(
                 question,
                 repeat_index=index,
-                background=False,
             )
             repeats.append(instance)
         return repeats
@@ -223,7 +190,6 @@ class UserFormResolver:
         self,
         question: BaseQuestion,
         repeat_index=None,
-        background=False,
     ) -> ObjectType:
         """Create the appropriate user question instance type based on the question type."""
 
@@ -236,7 +202,6 @@ class UserFormResolver:
             "response_id": response.pk if response else None,
             # The 'question' field is used for BaseQuestionInterface.resolve_type.
             "question": question,
-            "background": background,
         }
 
         # Access the specific subclass using Django's reverse relation attributes
