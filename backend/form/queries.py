@@ -9,7 +9,6 @@ from form.types.UserFormType import UserFormType
 from form.types.QuestionType import SelectQuestionType
 from form.types.StepType import StepType
 from form.models import UserFormSubmission, SelectQuestion, RepeatableStep, RepeatIndex
-from form.models.responses import QuestionResponse
 
 
 class FormQueries(ObjectType):
@@ -89,8 +88,8 @@ class RepeatableStepQueries(ObjectType):
     repeatable_steps_with_repeats = Field(
         List(StepType),
         repeatable_id=ID(required=True),
-        response_id=ID(required=False),
-        description="Retrieves a RepeatableStep for each repeat index in the response's answer, with the repeat_index field populated.",
+        repeat_indices=List(ID, required=True),
+        description="Retrieves a RepeatableStep for each repeat index, with the repeat_index field populated.",
     )
 
     @staticmethod
@@ -98,29 +97,17 @@ class RepeatableStepQueries(ObjectType):
         root,
         info: ResolveInfo,
         repeatable_id: str,
-        response_id: str = None,
+        repeat_indices: list,
     ) -> list[StepType]:
         user: User = info.context.user
         if not user.is_authenticated:
             return []
 
-        if not response_id:
+        if not repeat_indices:
             return []
 
         try:
             repeatable_step = RepeatableStep.objects.get(pk=repeatable_id)
-            question_response = QuestionResponse.objects.get(pk=response_id)
-
-            queryset = UserFormSubmission.objects.accessible_objects(
-                user, MRPermission.EDIT
-            )
-
-            if not question_response.submissions.last() in queryset:
-                return []
-
-            # Extract repeat indices from the answer
-            answer = question_response.answer
-            repeat_indices = answer.get("value", []) if isinstance(answer, dict) else []
 
             # Fetch the repeat index objects
             repeat_index_objects = RepeatIndex.objects.filter(pk__in=repeat_indices)
@@ -141,5 +128,5 @@ class RepeatableStepQueries(ObjectType):
                 )
                 for repeat_idx in repeat_index_objects
             ]
-        except (RepeatableStep.DoesNotExist, QuestionResponse.DoesNotExist):
+        except RepeatableStep.DoesNotExist:
             return []

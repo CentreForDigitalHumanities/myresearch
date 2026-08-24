@@ -18,7 +18,6 @@ class CreateRepeatMutation(Mutation):
         user_form_id = ID(required=True)
         repeatable_id = ID(required=True)
         parent_id = ID(required=False)
-        response_id = ID(required=False)
 
     new_repeat_index = ID()
     errors = List(ErrorType)
@@ -31,7 +30,6 @@ class CreateRepeatMutation(Mutation):
         user_form_id: int,
         repeatable_id: int,
         parent_id: int = None,
-        response_id: int = None,
     ):
         user: User = info.context.user
 
@@ -64,25 +62,6 @@ class CreateRepeatMutation(Mutation):
             new_repeat,
         )
 
-        try:
-            rsq = RepeatableStepQuestion.objects.get(repeatable_step=repeatable_id)
-        except RepeatableStepQuestion.MultipleObjectsReturned as error:
-            return cls(errors=[error])
-
-        # Use a QuestionResponse to store
-        if response_id is not None:
-            qr = QuestionResponse.objects.get(
-                pk=response_id,
-            )
-        else:
-            qr = QuestionResponse.objects.create(question=rsq, answer={"value": []})
-            qr.submissions.add(submission)
-
-        answer_value = qr.answer["value"]
-        answer_value.append(new_repeat.pk)
-        qr.answer = {"value": answer_value}
-        qr.save()
-
         return cls(
             new_repeat_index=new_repeat.pk,
             errors=[],
@@ -94,7 +73,6 @@ class DeleteRepeatMutation(Mutation):
     class Arguments:
         user_form_id = ID(required=True)
         repeat_id = ID(required=True)
-        response_id = ID(required=True)
 
     errors = List(ErrorType)
     ok = Boolean(required=False)
@@ -106,7 +84,6 @@ class DeleteRepeatMutation(Mutation):
         info: ResolveInfo,
         user_form_id: int,
         repeat_id: int,
-        response_id: int,
     ):
         user: User = info.context.user
 
@@ -131,22 +108,6 @@ class DeleteRepeatMutation(Mutation):
             return cls(ok=False, errors=[error])
         except Exception as error:
             return cls(ok=False, errors=[error])
-
-        try:
-            qr = QuestionResponse.objects.get(
-                pk=response_id,
-            )
-            # Remove the repeat_id from the answer value list
-            answer_value = qr.answer.get("value", [])
-            repeat_id = int(repeat_id)
-            if repeat_id in answer_value:
-                answer_value.remove(repeat_id)
-                qr.answer = {"value": answer_value}
-                qr.save()
-        except ObjectDoesNotExist:
-            # If we can't find the response, continue
-            # The repeat will still be deleted from submissions
-            pass
 
         # When a repeat index is removed from its last submission, it
         # is deleted. Currently we do not delete all child indexes that

@@ -10,6 +10,7 @@ import { useI18n } from "vue-i18n";
 import { useTranslateableAttribute } from "~/composables/useLocalisation";
 import { computed } from "vue";
 import { useQuery } from "@vue/apollo-composable";
+import Loading from "~/components/shared/Loading.vue";
 
 const submissionId = useSubmissionId();
 const { t } = useI18n();
@@ -25,16 +26,8 @@ const emit = defineEmits<{
 }>();
 
 const CREATE_STEP_REPEAT_MUTATION = graphql(`
-    mutation CreateStepRepeat(
-        $userFormId: ID!
-        $repeatableId: ID!
-        $responseId: ID
-    ) {
-        createRepeat(
-            userFormId: $userFormId
-            repeatableId: $repeatableId
-            responseId: $responseId
-        ) {
+    mutation CreateStepRepeat($userFormId: ID!, $repeatableId: ID!) {
+        createRepeat(userFormId: $userFormId, repeatableId: $repeatableId) {
             newRepeatIndex
             errors {
                 field
@@ -45,10 +38,13 @@ const CREATE_STEP_REPEAT_MUTATION = graphql(`
 `);
 
 const GET_REPEATABLE_STEP_QUERY = graphql(`
-    query GetRepeatableStepsWithRepeats($repeatableId: ID!, $responseId: ID) {
+    query GetRepeatableStepsWithRepeats(
+        $repeatableId: ID!
+        $repeatIndices: [ID!]!
+    ) {
         repeatableStepsWithRepeats(
             repeatableId: $repeatableId
-            responseId: $responseId
+            repeatIndices: $repeatIndices
         ) {
             stepId
             nameNl
@@ -61,16 +57,8 @@ const GET_REPEATABLE_STEP_QUERY = graphql(`
 `);
 
 const DELETE_STEP_REPEAT_MUTATION = graphql(`
-    mutation DeleteStepRepeat(
-        $userFormId: ID!
-        $repeatId: ID!
-        $responseId: ID!
-    ) {
-        deleteRepeat(
-            userFormId: $userFormId
-            repeatId: $repeatId
-            responseId: $responseId
-        ) {
+    mutation DeleteStepRepeat($userFormId: ID!, $repeatId: ID!) {
+        deleteRepeat(userFormId: $userFormId, repeatId: $repeatId) {
             ok
             errors {
                 field
@@ -83,24 +71,35 @@ const DELETE_STEP_REPEAT_MUTATION = graphql(`
 const { mutate: createStepRepeat } = useMutation(CREATE_STEP_REPEAT_MUTATION, {
     update: (cache) => {
         cache.evict({ fieldName: "form" });
-        cache.evict({ fieldName: "repeatableStepsWithRepeats" });
         cache.gc();
     },
+    refetchQueries: ["GetForm", "GetRepeatableStepsWithRepeats"],
+    awaitRefetchQueries: true,
 });
 
 const { mutate: deleteStepRepeat } = useMutation(DELETE_STEP_REPEAT_MUTATION, {
     update: (cache) => {
         cache.evict({ fieldName: "form" });
-        cache.evict({ fieldName: "repeatableStepsWithRepeats" });
         cache.gc();
     },
+    refetchQueries: ["GetForm", "GetRepeatableStepsWithRepeats"],
+    awaitRefetchQueries: true,
+});
+
+const repeatIndices = computed(() => {
+    try {
+        const parsed = JSON.parse(props.question.answer);
+        return parsed?.value || [];
+    } catch {
+        return [];
+    }
 });
 
 const { result: repeatableStepResult } = useQuery(
     GET_REPEATABLE_STEP_QUERY,
     () => ({
         repeatableId: props.question.repeatableStepId,
-        responseId: props.question.responseId,
+        repeatIndices: repeatIndices.value,
     }),
 );
 
@@ -119,7 +118,6 @@ function handleAddStep(): void {
     void createStepRepeat({
         userFormId,
         repeatableId: props.question.repeatableStepId,
-        responseId: props.question.responseId,
     }).catch(() => {
         useNotification(
             t("An error occurred while adding a step. Please try again."),
@@ -134,16 +132,9 @@ function handleDeleteStep(repeatId: string): void {
         return;
     }
 
-    // There should always be a response available when deleting
-    const responseId = props.question.responseId;
-    if (!responseId) {
-        return;
-    }
-
     void deleteStepRepeat({
         userFormId,
         repeatId,
-        responseId: responseId,
     }).catch(() => {
         useNotification(
             t("An error occurred while deleting a step. Please try again."),
@@ -161,51 +152,55 @@ function handleDeleteStep(repeatId: string): void {
             class="text-muted"
             v-html="useTranslateableAttribute(question, 'description')"
         ></div>
-        <div v-if="repeatableSteps.length > 0">
-            <div
-                v-for="(step, index) in repeatableSteps"
-                :key="`${step.stepId}-${step.repeatIndex}`"
-            >
+        <div v-if="repeatableStepResult">
+            <div v-if="repeatableSteps.length > 0">
                 <div
-                    class="border rounded p-3 mb-1 d-flex justify-content-between align-items-center"
+                    v-for="(step, index) in repeatableSteps"
+                    :key="`${step.stepId}-${step.repeatIndex}`"
                 >
-                    <div>
-                        <h5 class="mb-1">
-                            {{ useTranslateableAttribute(step, "name") }} -
-                            {{ index + 1 }}
-                        </h5>
+                    <div
+                        class="border rounded p-3 mb-1 d-flex justify-content-between align-items-center"
+                    >
+                        <div>
+                            <h5 class="mb-1">
+                                {{ useTranslateableAttribute(step, "name") }} -
+                                {{ index + 1 }}
+                            </h5>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button
+                                class="btn btn-primary"
+                                @click.prevent="
+                                    emit(
+                                        'repeat-step-clicked',
+                                        `${step.slug}.${step.repeatIndex}`,
+                                    )
+                                "
+                            >
+                                {{ $t("Edit") }}
+                            </button>
+                            <button
+                                class="btn btn-secondary"
+                                @click.prevent="
+                                    handleDeleteStep(String(step.repeatIndex))
+                                "
+                            >
+                                {{ $t("Delete") }}
+                            </button>
+                        </div>
                     </div>
-
-                    <div class="d-flex gap-2">
-                        <button
-                            class="btn btn-primary"
-                            @click.prevent="
-                                emit(
-                                    'repeat-step-clicked',
-                                    `${step.slug}.${step.repeatIndex}`,
-                                )
-                            "
-                        >
-                            {{ $t("Edit") }}
-                        </button>
-                        <button
-                            class="btn btn-secondary"
-                            @click.prevent="
-                                handleDeleteStep(String(step.repeatIndex))
-                            "
-                        >
-                            {{ $t("Delete") }}
-                        </button>
-                    </div>
+                </div>
+            </div>
+            <div v-else>
+                <div
+                    class="p-3 mb-1 d-flex justify-content-center align-items-center"
+                >
+                    {{ $t("No steps added yet ...") }}
                 </div>
             </div>
         </div>
         <div v-else>
-            <div
-                class="p-3 mb-1 d-flex justify-content-center align-items-center"
-            >
-                {{ $t("No steps added yet ...") }}
-            </div>
+            <Loading />
         </div>
         <BSButton
             variant="primary"

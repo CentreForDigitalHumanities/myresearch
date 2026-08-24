@@ -253,10 +253,19 @@ class UserFormResolver:
         elif hasattr(question, "fileuploadquestion"):
             return FileUploadQuestionType(**base_data)
         elif hasattr(question, "repeatablestepquestion"):
+            base_data["answer"] = self._get_rsq_answer(question)
             return RepeatableStepQuestionType(**base_data)
 
         # Fallback (should not happen)
         return TextQuestionType(**base_data)
+
+    def _get_rsq_answer(self, rsq):
+
+        repeatable_step = rsq.repeatable_step
+
+        indices = self._fetch_repeat_indices(repeatable_step)
+
+        return {"value": [index.pk for index in indices]}
 
     def _fetch_repeat_indices(self, repeatable, parent_index=None):
         """
