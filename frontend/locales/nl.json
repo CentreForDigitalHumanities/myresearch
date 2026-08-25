@@ -176,7 +176,5 @@
     "-": "-",
     "An error occurred while adding a step. Please try again.": "Er is een error opgetreden bij het toevoegen van een stap. Prbeer het opnieuw.",
     "An error occurred while deleting a step. Please try again.": "Er is een error opgetreden bij het verwijderen van een stap. Prbeer het opnieuw.",
-    "Edit": "Wijzig",
-    "No steps added yet ...": "Nog geen stappen aangemaakt ...",
-    "Click to add a step": "Klik om een stap aan te maken"
+    "Edit": "Wijzig"
 }
