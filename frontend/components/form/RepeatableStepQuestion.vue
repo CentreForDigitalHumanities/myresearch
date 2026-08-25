@@ -194,7 +194,7 @@ function handleDeleteStep(repeatId: string): void {
                 <div
                     class="p-3 mb-1 d-flex justify-content-center align-items-center"
                 >
-                    {{ $t("No steps added yet ...") }}
+                    {{ useTranslateableAttribute(question, "noneYetText") }}
                 </div>
             </div>
         </div>
@@ -206,7 +206,7 @@ function handleDeleteStep(repeatId: string): void {
             class="w-100 align-self-stretch"
             @click="handleAddStep"
         >
-            {{ $t("Click to add a step") }}
+            {{ useTranslateableAttribute(question, "createText") }}
         </BSButton>
     </div>
 </template>

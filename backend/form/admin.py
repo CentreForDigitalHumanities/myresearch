@@ -538,7 +538,18 @@ class RepeatableStepQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                 )
             },
         ),
-        ("Repeatable Step Options", {"fields": ("repeatable_step",)}),
+        (
+            "Repeatable Step Options",
+            {
+                "fields": (
+                    "repeatable_step",
+                    "create_text_nl",
+                    "create_text_en",
+                    "none_yet_text_nl",
+                    "none_yet_text_en",
+                )
+            },
+        ),
     )
     inlines = [QuestionConditionInline]
 

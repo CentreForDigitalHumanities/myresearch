@@ -180,6 +180,10 @@ class RepeatableStepQuestion(BaseQuestion):
         "form.RepeatableStep", on_delete=models.CASCADE
     )
 
+    create_text = models.CharField()
+
+    none_yet_text = models.CharField()
+
 
 class RepeatableTextQuestion(
     Repeatable,

@@ -253,6 +253,10 @@ class RepeatableStepQuestionType(BaseQuestionMixin, ObjectType):
         interfaces = [BaseQuestionInterface]
 
     repeatable_step_id = ID(required=True)
+    create_text_nl = String(required=True)
+    create_text_en = String(required=True)
+    none_yet_text_nl = String(required=True)
+    none_yet_text_en = String(required=True)
 
     def __init__(self, question=None, **kwargs):
         super().__init__(**kwargs)
@@ -263,6 +267,30 @@ class RepeatableStepQuestionType(BaseQuestionMixin, ObjectType):
         if hasattr(parent.question, "repeatablestepquestion"):
             return parent.question.repeatablestepquestion.repeatable_step_id
         return parent.question.repeatable_step_id
+
+    @staticmethod
+    def resolve_create_text_nl(parent, info: ResolveInfo):
+        if hasattr(parent.question, "repeatablestepquestion"):
+            return parent.question.repeatablestepquestion.create_text_nl
+        return parent.question.create_text_nl
+
+    @staticmethod
+    def resolve_create_text_en(parent, info: ResolveInfo):
+        if hasattr(parent.question, "repeatablestepquestion"):
+            return parent.question.repeatablestepquestion.create_text_en
+        return parent.question.create_text_en
+
+    @staticmethod
+    def resolve_none_yet_text_nl(parent, info: ResolveInfo):
+        if hasattr(parent.question, "repeatablestepquestion"):
+            return parent.question.repeatablestepquestion.none_yet_text_nl
+        return parent.question.none_yet_text_nl
+
+    @staticmethod
+    def resolve_none_yet_text_en(parent, info: ResolveInfo):
+        if hasattr(parent.question, "repeatablestepquestion"):
+            return parent.question.repeatablestepquestion.none_yet_text_en
+        return parent.question.none_yet_text_en
 
 
 # Union Type

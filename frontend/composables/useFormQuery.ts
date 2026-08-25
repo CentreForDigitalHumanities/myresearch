@@ -61,6 +61,10 @@ const GET_FORM = graphql(`
                     }
                     ... on RepeatableStepQuestionType {
                         repeatableStepId
+                        createTextEn
+                        createTextNl
+                        noneYetTextEn
+                        noneYetTextNl
                     }
                 }
                 substeps {
@@ -113,6 +117,10 @@ const GET_FORM = graphql(`
                         }
                         ... on RepeatableStepQuestionType {
                             repeatableStepId
+                            createTextEn
+                            createTextNl
+                            noneYetTextEn
+                            noneYetTextNl
                         }
                     }
                 }
