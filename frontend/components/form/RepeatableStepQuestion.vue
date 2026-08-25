@@ -87,8 +87,10 @@ const { mutate: deleteStepRepeat } = useMutation(DELETE_STEP_REPEAT_MUTATION, {
 
 const repeatIndices = computed(() => {
     try {
-        const parsed = JSON.parse(props.question.answer);
-        return parsed?.value || [];
+        const parsed = JSON.parse(props.question.answer as string) as {
+            value?: string[];
+        };
+        return parsed.value || [];
     } catch {
         return [];
     }
