@@ -104,7 +104,6 @@ class UserFormResolver:
         repeat_index=None,
     ):
 
-
         questions = self._resolve_step_questions(step, repeat_index)
         substeps = self._resolve_steps(
             parent_step=step,
