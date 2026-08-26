@@ -70,19 +70,17 @@ const DELETE_STEP_REPEAT_MUTATION = graphql(`
 const { mutate: createStepRepeat } = useMutation(CREATE_STEP_REPEAT_MUTATION, {
     update: (cache) => {
         cache.evict({ fieldName: "form" });
+        cache.evict({ fieldName: "repeatableStepsWithRepeats" });
         cache.gc();
     },
-    refetchQueries: ["GetForm", "GetRepeatableStepsWithRepeats"],
-    awaitRefetchQueries: true,
 });
 
 const { mutate: deleteStepRepeat } = useMutation(DELETE_STEP_REPEAT_MUTATION, {
     update: (cache) => {
         cache.evict({ fieldName: "form" });
+        cache.evict({ fieldName: "repeatableStepsWithRepeats" });
         cache.gc();
     },
-    refetchQueries: ["GetForm", "GetRepeatableStepsWithRepeats"],
-    awaitRefetchQueries: true,
 });
 
 const repeatIndices = computed(() => {
@@ -153,56 +151,51 @@ function handleDeleteStep(repeatId: string): void {
             class="text-muted"
             v-html="useTranslateableAttribute(question, 'description')"
         ></div>
-        <div v-if="repeatableStepResult">
-            <div v-if="repeatableSteps.length > 0">
+        <template v-if="repeatableStepResult">
+            <template v-if="repeatableSteps.length > 0">
                 <div
                     v-for="(step, index) in repeatableSteps"
                     :key="`${step.stepId}-${step.repeatIndex}`"
+                    class="border rounded p-3 mb-1 d-flex justify-content-between align-items-center"
                 >
-                    <div
-                        class="border rounded p-3 mb-1 d-flex justify-content-between align-items-center"
-                    >
-                        <div>
-                            <h5 class="mb-1">
-                                {{ useTranslateableAttribute(step, "name") }} -
-                                {{ index + 1 }}
-                            </h5>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <button
-                                class="btn btn-primary"
-                                @click.prevent="
-                                    emit(
-                                        'repeat-step-clicked',
-                                        `${step.slug}.${step.repeatIndex}`,
-                                    )
-                                "
-                            >
-                                {{ $t("Edit") }}
-                            </button>
-                            <button
-                                class="btn btn-secondary"
-                                @click.prevent="
-                                    handleDeleteStep(String(step.repeatIndex))
-                                "
-                            >
-                                {{ $t("Delete") }}
-                            </button>
-                        </div>
+                    <div>
+                        <h5 class="mb-1">
+                            {{ useTranslateableAttribute(step, "name") }} -
+                            {{ index + 1 }}
+                        </h5>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button
+                            class="btn btn-primary"
+                            @click.prevent="
+                                emit(
+                                    'repeat-step-clicked',
+                                    `${step.slug}.${step.repeatIndex}`,
+                                )
+                            "
+                        >
+                            {{ $t("Edit") }}
+                        </button>
+                        <button
+                            v-if="step.repeatIndex"
+                            class="btn btn-secondary"
+                            @click.prevent="
+                                handleDeleteStep(step.repeatIndex.toString())
+                            "
+                        >
+                            {{ $t("Delete") }}
+                        </button>
                     </div>
                 </div>
+            </template>
+            <div
+                v-else
+                class="p-3 mb-1 d-flex justify-content-center align-items-center"
+            >
+                {{ useTranslateableAttribute(question, "noneYetText") }}
             </div>
-            <div v-else>
-                <div
-                    class="p-3 mb-1 d-flex justify-content-center align-items-center"
-                >
-                    {{ useTranslateableAttribute(question, "noneYetText") }}
-                </div>
-            </div>
-        </div>
-        <div v-else>
-            <Loading />
-        </div>
+        </template>
+        <Loading v-else />
         <BSButton
             variant="primary"
             class="w-100 align-self-stretch"
