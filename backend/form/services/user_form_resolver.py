@@ -84,12 +84,12 @@ class UserFormResolver:
         # If any question has step_name_override = True, we override this
         # with that question's value and this will then get used as the step's
         # name.
-        step_name_override = False
 
         repeat_count = self.evaluator.get_repeat_count_for_step(step)
         instances = []
 
         for repeat_index in range(repeat_count):
+            step_name_override = False
             # Get all questions
             questions = []
             for question in step_questions:
