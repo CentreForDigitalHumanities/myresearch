@@ -81,6 +81,11 @@ class UserFormResolver:
         step_questions = list(BaseQuestion.objects.filter(step=step))
         step_substeps = list(Step.objects.filter(parent=step).all())
 
+        # If any question has step_name_override = True, we override this
+        # with that question's value and this will then get used as the step's
+        # name.
+        step_name_override = False
+
         repeat_count = self.evaluator.get_repeat_count_for_step(step)
         instances = []
 
@@ -88,7 +93,13 @@ class UserFormResolver:
             # Get all questions
             questions = []
             for question in step_questions:
-                questions.extend(self._resolve_question_instances(question))
+                resolved_questions = self._resolve_question_instances(question)
+                # We assume that a step_name_override question is never
+                # repeatable, so we work with the first in the list.
+                if question.step_name_override and resolved_questions[0].answer:
+                    # save the question's value in step_name_override var
+                    step_name_override = resolved_questions[0].answer["value"]
+                questions.extend(resolved_questions)
 
             # Get all substeps
             substeps = []
@@ -98,8 +109,8 @@ class UserFormResolver:
             instances.append(
                 StepType(
                     step_id=step.pk,  # type: ignore
-                    name_nl=step.name_nl,  # type: ignore
-                    name_en=step.name_en,  # type: ignore
+                    name_nl=step_name_override if step_name_override else step.name_nl,  # type: ignore
+                    name_en=step_name_override if step_name_override else step.name_en,  # type: ignore
                     description_nl=step.description_nl,  # type: ignore
                     description_en=step.description_en,  # type: ignore
                     is_overview=step.is_overview,  # type: ignore

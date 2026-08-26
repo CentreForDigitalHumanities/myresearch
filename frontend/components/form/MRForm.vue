@@ -61,6 +61,7 @@ useWatchQuestions(watchedQuestions, () => {
                     v-model="question.value"
                     :question="question"
                     :is-invalid="(question.errors?.length ?? 0) > 0"
+                    @blur="question.stepNameOverride && emit('submitForm')"
                 />
                 <div
                     v-for="error of question.errors ?? []"

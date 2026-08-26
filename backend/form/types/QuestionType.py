@@ -43,6 +43,7 @@ class BaseQuestionInterface(Interface):
     description_en = String(required=True)
     required = Boolean(required=True)
     has_conditions = Boolean(required=True)
+    step_name_override = Boolean(required=True)
 
     @classmethod
     def resolve_type(cls, instance, info):
@@ -98,6 +99,10 @@ class BaseQuestionMixin:
     @staticmethod
     def resolve_required(parent, info: ResolveInfo):
         return parent.question.required
+
+    @staticmethod
+    def resolve_step_name_override(parent, info: ResolveInfo):
+        return parent.question.step_name_override
 
 
 class TextQuestionType(BaseQuestionMixin, ObjectType):
