@@ -53,6 +53,7 @@ const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
     {
         update: (cache) => {
             cache.evict({ fieldName: "form" });
+            cache.evict({ fieldName: "repeatableStepsWithRepeats" });
             cache.gc();
         },
     },
