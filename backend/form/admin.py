@@ -435,6 +435,7 @@ class TextQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                     "description_en",
                     "required",
                     "is_email",
+                    "step_name_override",
                 )
             },
         ),

@@ -68,6 +68,7 @@ useWatchQuestions(watchedQuestions, () => {
                     @repeat-step-clicked="
                         (slug: string) => emit('repeat-step-clicked', slug)
                     "
+                    @blur="question.stepNameOverride && emit('submitForm')"
                 />
                 <div
                     v-for="error of question.errors ?? []"
