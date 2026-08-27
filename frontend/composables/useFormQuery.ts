@@ -59,6 +59,13 @@ const GET_FORM = graphql(`
                     ... on DateQuestionType {
                         futureOnly
                     }
+                    ... on RepeatableStepQuestionType {
+                        repeatableStepId
+                        createTextEn
+                        createTextNl
+                        noneYetTextEn
+                        noneYetTextNl
+                    }
                 }
                 substeps {
                     stepId
@@ -107,6 +114,13 @@ const GET_FORM = graphql(`
                         }
                         ... on DateQuestionType {
                             futureOnly
+                        }
+                        ... on RepeatableStepQuestionType {
+                            repeatableStepId
+                            createTextEn
+                            createTextNl
+                            noneYetTextEn
+                            noneYetTextNl
                         }
                     }
                 }

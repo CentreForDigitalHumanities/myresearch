@@ -16,6 +16,8 @@ from .models import (
     NumberQuestion,
     DateQuestion,
     FileUploadQuestion,
+    RepeatableStep,
+    RepeatableStepQuestion,
     UserFormSubmission,
     QuestionResponse,
     StepCondition,
@@ -277,6 +279,70 @@ class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     created_at_display.short_description = "Info"
 
 
+@admin.register(RepeatableStep)
+class RepeatableStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
+    list_display = (
+        "name_nl",
+        "name_en",
+        "slug",
+        "form",
+        "parent",
+        "is_overview",
+    )
+    list_filter = ("form", "parent")
+    search_fields = ("name_nl", "name_en", "slug", "description_nl", "description_en")
+    prepopulated_fields = {"slug": ("name_nl", "name_en")}
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "name_nl",
+                    "name_en",
+                    "slug",
+                    "description_nl",
+                    "description_en",
+                    "is_overview",
+                )
+            },
+        ),
+        (
+            "Hierarchy",
+            {
+                "fields": ("form", "parent"),
+                "description": "Set either 'form' (for top-level steps) OR 'parent' (for substeps), not both.",
+            },
+        ),
+        (
+            "Question Order",
+            {
+                "fields": ("question_order",),
+                "description": "Set the display order of questions. Use the question IDs shown in the Questions inline below.",
+            },
+        ),
+        (
+            "Substep Order",
+            {
+                "fields": ("substep_order",),
+                "description": "Set the display order of substeps. Use the substep IDs shown in the Substeps inline below.",
+            },
+        ),
+    )
+    inlines = [
+        SubstepInline,
+        StepInfoTextInline,
+        QuestionInline,
+        StepConditionInline,
+    ]
+    form = StepAdminForm
+
+    def created_at_display(self, obj):
+        # Steps don't have created_at, but showing placeholder for structure
+        return "-"
+
+    created_at_display.short_description = "Info"
+
+
 @admin.register(StepInfoText)
 class StepInfoTextAdmin(
     TinyMCETextFieldMixin,
@@ -448,6 +514,42 @@ class FileUploadQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
             },
         ),
         ("File Upload Options", {"fields": ("size_limit",)}),
+    )
+    inlines = [QuestionConditionInline]
+
+
+@admin.register(RepeatableStepQuestion)
+class RepeatableStepQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
+    list_display = ("text_nl", "text_en", "step", "required", "repeatable_step")
+    list_filter = ("step", "required")
+    search_fields = ("text_nl", "text_en", "description_nl", "description_en")
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "text_nl",
+                    "text_en",
+                    "annotation_key",
+                    "step",
+                    "description_nl",
+                    "description_en",
+                    "required",
+                )
+            },
+        ),
+        (
+            "Repeatable Step Options",
+            {
+                "fields": (
+                    "repeatable_step",
+                    "create_text_nl",
+                    "create_text_en",
+                    "none_yet_text_nl",
+                    "none_yet_text_en",
+                )
+            },
+        ),
     )
     inlines = [QuestionConditionInline]
 

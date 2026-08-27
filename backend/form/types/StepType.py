@@ -37,7 +37,6 @@ class StepType(ObjectType):
         required=True,
     )
     info_text = Field(StepInfoTextType)
-    background = Boolean()
 
     @staticmethod
     def resolve_info_text(parent, info: ResolveInfo) -> StepInfoText | None:

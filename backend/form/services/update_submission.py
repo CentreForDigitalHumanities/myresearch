@@ -1,3 +1,4 @@
+from form.models.questions import RepeatableStepQuestion
 from main.models import MRPermission, User
 from graphene_django.types import ErrorType
 from form.models.responses import MRDocument
@@ -48,6 +49,21 @@ def update_submission(
         response_id = response["id"] if "id" in response else None
 
         try:
+            question = BaseQuestion.objects.get(
+                pk=response.get("question_id")
+            ).get_subclass()
+        except BaseQuestion.DoesNotExist:
+            question = None
+
+        # Responses for RepeatableStepQuestions are managed in repeat_mutations
+        # and can be ignored here
+        if isinstance(
+            question,
+            RepeatableStepQuestion,
+        ):
+            continue
+
+        try:
             validate_response(response)
         except Exception as e:
             # if responses cause an error, add an error to the mutation's response
@@ -89,7 +105,7 @@ def update_submission(
             new_response = QuestionResponse.objects.create(
                 question_id=response["question_id"],
                 answer=response["answer"],
-                repeat_index=response["repeat_index"],
+                repeat_index_id=response["repeat_index"],
             )
             new_response.submissions.add(current_submission)
             current_submission.updated_at = timezone.now()

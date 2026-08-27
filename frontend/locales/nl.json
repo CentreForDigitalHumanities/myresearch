@@ -172,5 +172,9 @@
     "View overview": "Bekijk overzicht",
     "Registration overview": "Registratie overzicht",
     "Go back to study page": "Ga terug naar studie pagina",
-    "View": "Bekijk"
+    "View": "Bekijk",
+    "-": "-",
+    "An error occurred while adding a step. Please try again.": "Er is een error opgetreden bij het toevoegen van een stap. Prbeer het opnieuw.",
+    "An error occurred while deleting a step. Please try again.": "Er is een error opgetreden bij het verwijderen van een stap. Prbeer het opnieuw.",
+    "Edit": "Wijzig"
 }

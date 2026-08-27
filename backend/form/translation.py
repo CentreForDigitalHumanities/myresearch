@@ -14,6 +14,7 @@ from .models import (
     SelectQuestion,
     TrueFalseQuestion,
     RepeatableStep,
+    RepeatableStepQuestion,
 )
 
 
@@ -90,3 +91,12 @@ class DateQuestionTranslationOptions(TranslationOptions):
 @register(FileUploadQuestion)
 class FileUploadQuestionTranslationOptions(TranslationOptions):
     pass
+
+
+@register(RepeatableStepQuestion)
+class RepeatableStepQuestionTranslationOptions(TranslationOptions):
+
+    fields = [
+        "create_text",
+        "none_yet_text",
+    ]

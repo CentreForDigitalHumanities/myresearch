@@ -1,7 +1,13 @@
-from main.models import User
-from form.models import Repeatable, RepeatIndex, UserFormSubmission
+from form.models.responses import QuestionResponse
+from main.models import MRPermission, User
+from form.models import (
+    Repeatable,
+    RepeatIndex,
+    UserFormSubmission,
+    RepeatableStepQuestion,
+)
 
-from graphene import List, Mutation, ResolveInfo, ID
+from graphene import Boolean, List, Mutation, ResolveInfo, ID
 from graphene_django.types import ErrorType
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -55,6 +61,7 @@ class CreateRepeatMutation(Mutation):
         base_repeat.repeat_indices.add(
             new_repeat,
         )
+
         return cls(
             new_repeat_index=new_repeat.pk,
             errors=[],
@@ -68,6 +75,7 @@ class DeleteRepeatMutation(Mutation):
         repeat_id = ID(required=True)
 
     errors = List(ErrorType)
+    ok = Boolean(required=False)
 
     @classmethod
     def mutate(
@@ -86,7 +94,9 @@ class DeleteRepeatMutation(Mutation):
             submission = UserFormSubmission.objects.get(
                 pk=user_form_id,
             )
-            assert submission.can_be_edited_by(user)
+            assert submission in UserFormSubmission.objects.accessible_objects(
+                user, MRPermission.EDIT
+            )
 
             repeat_index.submissions.remove(
                 submission,
@@ -106,6 +116,4 @@ class DeleteRepeatMutation(Mutation):
         if repeat_index.submissions.count() == 0:
             repeat_index.delete()
 
-        return cls(
-            errors=[],
-        )
+        return cls(errors=[], ok=True)
