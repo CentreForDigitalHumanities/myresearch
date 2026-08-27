@@ -4,9 +4,9 @@ from .models import (
     BaseQuestion,
     DateQuestion,
     FileUploadQuestion,
-    StepInfoText,
     MRForm,
     Step,
+    StepInfoText,
     NumberQuestion,
     SelectOption,
     TextQuestion,
@@ -39,8 +39,8 @@ class RepeatableStepTranslationOptions(TranslationOptions):
 
 
 @register(StepInfoText)
-class FormInfoTextTranslationOptions(TranslationOptions):
-    fields = ["text"]
+class StepInfoTextTranslationOptions(TranslationOptions):
+    fields = ["text", "content"]
 
 
 @register(BaseQuestion)

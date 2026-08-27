@@ -13,6 +13,8 @@ class StepInfoTextType(DjangoObjectType):
             "id",
             "text_nl",
             "text_en",
+            "content_nl",
+            "content_en",
         ]
 
     @classmethod

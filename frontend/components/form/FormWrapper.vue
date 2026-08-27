@@ -3,6 +3,7 @@ import { computed } from "vue";
 import { BSButton, useConfirm } from "cdh-vue-lib";
 import type { QueriedForm } from "./FormWrapper";
 import FormStepper, { type FormStepperConfig } from "./FormStepper";
+import FormSideBar from "../form/FormSideBar.vue";
 import MRForm from "~/components/form/MRForm.vue";
 import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConfig";
 import { useFormState } from "~/composables/useFormState";
@@ -13,12 +14,14 @@ import { useMutation } from "@vue/apollo-composable";
 import { useStudyId } from "~/composables/useRouteParams";
 import SubmissionOverview from "~/components/form/overview/OverviewForm.vue";
 import { useI18n } from "vue-i18n";
-import { Send, TriangleAlert } from "lucide-vue-next";
+import { Send, TriangleAlert, MoveLeft } from "lucide-vue-next";
 import { useAnnotateErrors } from "~/composables/useAnnotateErrors";
+import { useNotification } from "~/composables/useNotification";
 
 interface Props {
     queriedForm: QueriedForm;
     currentStepSlug: string;
+    reloadStudy: boolean;
 }
 const props = defineProps<Props>();
 
@@ -28,7 +31,13 @@ const { formObject, validationRules } = useFormState(queried);
 const studyId = useStudyId();
 const { t } = useI18n();
 
-const showSubmissionWarning = ref(false);
+const v$ = useVuelidate(
+    validationRules,
+    computed(() => formObject.value ?? { steps: [] }),
+    {
+        $autoDirty: true,
+    },
+);
 
 const UPDATE_USER_FORM = graphql(`
     mutation SaveFormSubmission(
@@ -53,6 +62,9 @@ const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
     {
         update: (cache) => {
             cache.evict({ fieldName: "form" });
+            if (props.reloadStudy) {
+                cache.evict({ fieldName: "study" });
+            }
             cache.gc();
         },
     },
@@ -67,7 +79,6 @@ function submitForm(options = { submit: false }): void {
     if (options.submit) {
         void v$.value.$validate();
         if (v$.value.$invalid) {
-            showSubmissionWarning.value = true;
             return;
         }
     }
@@ -122,14 +133,6 @@ function finalSubmit(): void {
     });
 }
 
-const v$ = useVuelidate(
-    validationRules,
-    computed(() => formObject.value ?? { steps: [] }),
-    {
-        $autoDirty: true,
-    },
-);
-
 // Annotate form objects with validation errors whenever they change.
 watchEffect(() => {
     if (formObject.value) {
@@ -165,6 +168,18 @@ const firstStepSelected = computed(() => {
     }
     const steps = allSteps.value;
     return steps[0].slug === selected.slug;
+});
+
+const showSubmissionWarning = computed(
+    // If we are on the overview step, but we have validation errors, show a warning
+    () => !!(selectedStep.value?.isOverview && v$.value.$invalid),
+);
+
+watchEffect(() => {
+    if (formObject.value && showSubmissionWarning.value) {
+        void v$.value.$validate();
+        useAnnotateErrors(v$.value, formObject.value);
+    }
 });
 
 function getAllSteps(form: FormWithValues): CombinedStepWithValues[] {
@@ -241,9 +256,27 @@ function navigateToSlug(slug: string) {
         },
     });
 }
+
+function handleBackNavigation() {
+    submitForm();
+    useNotification(t("Your progress has been saved."), "info", 3);
+
+    return navigateTo({
+        name: "studies-studyId",
+        params: { studyId: studyId.value },
+    });
+}
 </script>
 
 <template>
+    <div class="mb-3">
+        <a href="#" class="pe-auto" @click.prevent="handleBackNavigation">
+            <div class="d-flex gap-2 align-items-center">
+                <MoveLeft class="icon" />
+                <div class="ml-3">{{ t("Save and go back") }}</div>
+            </div>
+        </a>
+    </div>
     <div v-if="selectedStep" class="col-12 d-flex">
         <FormStepper
             v-if="formStepperConfig"
@@ -251,48 +284,26 @@ function navigateToSlug(slug: string) {
             :stepper-config="formStepperConfig"
             @step-clicked="navigateToSlug"
         />
-        <div class="col-12 col-lg-9">
-            <form class="uu-form">
-                <h2>{{ useTranslateableAttribute(selectedStep, "name") }}</h2>
-                <div
-                    v-html="
-                        useTranslateableAttribute(selectedStep, 'description')
-                    "
-                ></div>
-                <SubmissionOverview
-                    v-if="selectedStep.isOverview && formObject"
-                    :form="formObject"
-                />
-                <MRForm
-                    v-else
-                    :step="selectedStep"
-                    @submit-form="submitForm"
-                    @repeat-step-clicked="navigateToSlug"
-                />
-            </form>
-
+        <div v-if="selectedStep.isOverview && formObject" class="col-9">
+            <SubmissionOverview :form="formObject" />
             <div class="mb-3">
-                <Transition name="fade">
-                    <div
-                        v-if="showSubmissionWarning"
-                        class="alert alert-warning d-inline-flex align-items-center gap-2"
-                        role="alert"
-                    >
-                        <TriangleAlert class="icon" />
-                        <span>
-                            {{
-                                t(
-                                    "Your form contains errors. Please review and resubmit.",
-                                )
-                            }}
-                        </span>
-                    </div>
-                </Transition>
+                <div
+                    v-if="showSubmissionWarning"
+                    class="alert alert-warning d-inline-flex align-items-center gap-2"
+                    role="alert"
+                >
+                    <TriangleAlert class="icon" />
+                    <span>
+                        {{
+                            t(
+                                "Your form contains errors. Please review and resubmit.",
+                            )
+                        }}
+                    </span>
+                </div>
             </div>
-
             <div class="btn-group">
                 <BSButton
-                    v-if="!firstStepSelected"
                     variant="primary"
                     class="btn-arrow-left"
                     @click="navigateToSlug(getPreviousStepSlug())"
@@ -301,22 +312,53 @@ function navigateToSlug(slug: string) {
                 </BSButton>
                 <BSButton
                     v-if="selectedStep.isOverview"
-                    variant="success"
-                    @click="finalSubmit"
+                    :disabled="showSubmissionWarning"
+                    :variant="showSubmissionWarning ? 'light' : 'success'"
+                    @click="showSubmissionWarning ? undefined : finalSubmit"
                 >
                     {{ $t("Submit") }}
                     <Send class="ms-2" :size="16" />
                 </BSButton>
-                <BSButton
-                    v-else
-                    variant="primary"
-                    class="btn-arrow-right"
-                    @click="navigateToSlug(getNextStepSlug())"
-                >
-                    {{ $t("Next") }}
-                </BSButton>
             </div>
         </div>
+        <template v-else>
+            <div class="col-12 col-lg-6 pe-4">
+                <form class="uu-form uu-form-no-help">
+                    <h2>
+                        {{ useTranslateableAttribute(selectedStep, "name") }}
+                    </h2>
+                    <div
+                        v-html="
+                            useTranslateableAttribute(
+                                selectedStep,
+                                'description',
+                            )
+                        "
+                    ></div>
+                    <MRForm :step="selectedStep" @submit-form="submitForm" />
+                </form>
+                <div class="btn-group">
+                    <BSButton
+                        v-if="!firstStepSelected"
+                        variant="primary"
+                        class="btn-arrow-left"
+                        @click="navigateToSlug(getPreviousStepSlug())"
+                    >
+                        {{ $t("Previous") }}
+                    </BSButton>
+                    <BSButton
+                        variant="primary"
+                        class="btn-arrow-right"
+                        @click="navigateToSlug(getNextStepSlug())"
+                    >
+                        {{ $t("Next") }}
+                    </BSButton>
+                </div>
+            </div>
+            <div class="col-3 d-lg-block d-none">
+                <FormSideBar :step="selectedStep" />
+            </div>
+        </template>
     </div>
 </template>
 

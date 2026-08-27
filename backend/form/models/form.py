@@ -67,10 +67,14 @@ class Step(models.Model):
 
 
 class StepInfoText(models.Model):
-    step = models.OneToOneField(
-        Step, on_delete=models.CASCADE, related_name="info_text"
+    step = models.ForeignKey(
+        Step, on_delete=models.CASCADE, related_name="step_info_texts"
     )
-    text = models.TextField()
+    text = models.CharField(max_length=200)
+    content = models.TextField()
+
+    class Meta:
+        order_with_respect_to = "step"
 
 
 class RepeatIndex(models.Model):
