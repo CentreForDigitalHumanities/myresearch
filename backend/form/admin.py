@@ -327,7 +327,6 @@ class RepeatableStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     )
     inlines = [
         SubstepInline,
-        StepInfoTextInline,
         QuestionInline,
         StepConditionInline,
     ]
