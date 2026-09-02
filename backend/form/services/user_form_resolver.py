@@ -135,6 +135,9 @@ class UserFormResolver:
         questions = []
         step_questions = list(BaseQuestion.objects.filter(step=step))
         for question in step_questions:
+            # Skip hidden questions
+            if not self.evaluator.is_question_visible(question):
+                continue
             questions.extend(
                 self._make_question_instances(
                     question,

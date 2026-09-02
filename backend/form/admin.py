@@ -89,8 +89,6 @@ class StepConditionInline(admin.StackedInline):
         "condition_type",
         "trigger_question",
         "trigger_value",
-        "repeat_count",
-        "use_answer_as_count",
     )
     verbose_name = "Step Condition"
     verbose_name_plural = "Conditions Applied to This Step"
@@ -104,8 +102,6 @@ class QuestionConditionInline(admin.StackedInline):
         "condition_type",
         "trigger_question",
         "trigger_value",
-        "repeat_count",
-        "use_answer_as_count",
     )
     verbose_name = "Question Condition"
     verbose_name_plural = "Conditions Applied to This Question"
@@ -620,7 +616,6 @@ class StepConditionAdmin(admin.ModelAdmin):
         "condition_type",
         "trigger_question",
         "trigger_value_preview",
-        "repeat_count",
     )
     list_filter = ("condition_type", "target_step__form")
     search_fields = ("target_step__name", "trigger_question__text")
@@ -631,13 +626,6 @@ class StepConditionAdmin(admin.ModelAdmin):
             {
                 "fields": ("trigger_value",),
                 "description": TRIGGER_VALUE_HELP_TEXT,
-            },
-        ),
-        (
-            "Repeat Configuration",
-            {
-                "fields": ("repeat_count", "use_answer_as_count"),
-                "description": "For 'repeat' conditions: set repeat_count. For 'repeat_dynamic': check use_answer_as_count.",
             },
         ),
     )
@@ -656,7 +644,6 @@ class QuestionConditionAdmin(admin.ModelAdmin):
         "condition_type",
         "trigger_question",
         "trigger_value_preview",
-        "repeat_count",
     )
     list_filter = ("condition_type", "target_question__step__form")
     search_fields = ("target_question__text", "trigger_question__text")
@@ -667,13 +654,6 @@ class QuestionConditionAdmin(admin.ModelAdmin):
             {
                 "fields": ("trigger_value",),
                 "description": TRIGGER_VALUE_HELP_TEXT,
-            },
-        ),
-        (
-            "Repeat Configuration",
-            {
-                "fields": ("repeat_count", "use_answer_as_count"),
-                "description": "For 'repeat' conditions: set repeat_count. For 'repeat_dynamic': check use_answer_as_count.",
             },
         ),
     )
