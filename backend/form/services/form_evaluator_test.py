@@ -14,6 +14,7 @@ from form.models import (
     TextQuestion,
     TrueFalseQuestion,
     UserFormSubmission,
+    RepeatIndex,
 )
 from form.services.form_evaluator import MAX_REPEAT_LIMIT, FormEvaluator
 
@@ -640,13 +641,13 @@ class TestFormEvaluatorSubmission:
         qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": "my answer"},
-            repeat_index=0,
+            repeat_index=None,
         )
         qr.submissions.add(submission)
 
         evaluator = FormEvaluator(submission)
 
-        response = evaluator.get_user_response(trigger_question, 0)
+        response = evaluator.get_user_response(trigger_question)
         assert response is not None
         assert response.answer == {"value": "my answer"}
         assert evaluator.get_user_response(trigger_question, 1) is None
@@ -660,24 +661,30 @@ class TestFormEvaluatorSubmission:
         SECOND_ANSWER = "second"
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
+        ri1 = RepeatIndex.objects.create()
+        ri1.save()
+        ri1.submissions.add(submission)
         qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": FIRST_ANSWER},
-            repeat_index=0,
+            repeat_index=ri1,
         )
         qr.submissions.add(submission)
+        ri2 = RepeatIndex.objects.create()
+        ri2.save()
+        ri2.submissions.add(submission)
         qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": SECOND_ANSWER},
-            repeat_index=1,
+            repeat_index=ri2,
         )
         qr.submissions.add(submission)
 
         evaluator = FormEvaluator(submission)
 
-        assert evaluator.get_user_response(trigger_question, 0).answer == {
+        assert evaluator.get_user_response(trigger_question, ri1).answer == {
             "value": FIRST_ANSWER
         }
-        assert evaluator.get_user_response(trigger_question, 1).answer == {
+        assert evaluator.get_user_response(trigger_question, ri2).answer == {
             "value": SECOND_ANSWER
         }
