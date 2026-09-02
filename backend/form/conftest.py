@@ -70,7 +70,7 @@ def response_input(trigger_question: TextQuestion) -> dict:
     """Create an empty ResponseInput"""
     return {
         "question_id": trigger_question.pk,
-        "repeat_index": 0,
+        "repeat_index": None,
         "answer": {"value": None},
     }
 
