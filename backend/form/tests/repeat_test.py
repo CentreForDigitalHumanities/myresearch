@@ -8,6 +8,7 @@ from form.models import (
     RepeatableTextQuestion,
     RepeatIndex,
 )
+from form.services.user_form_resolver import is_repeatable
 from research.tests import normal_user, test_study
 
 from pprint import pprint
@@ -104,6 +105,11 @@ def test_repeatable_step(
     test_study,
     repeatable_step,
 ):
+
+    # Our form contains two steps of which one is repeatable
+    assert len(form.steps.all()) == 2
+    assert any([is_repeatable(step) for step in form.steps.all()])
+
     response = client_query(
         GetFormQuery,
         user=test_user,
@@ -113,9 +119,11 @@ def test_repeatable_step(
     )
     content = json.loads(response.content)
     assert "errors" not in content
-    # There should be two steps in here
+
+    # With no RepeatIndex, our repeatable step should not yet be visible
     found = findkey(content, "stepId")
-    assert len(found) == 2
+    assert len(found) == 1
+    assert not is_repeatable(Step.objects.get(pk=found[0]["stepId"]))
 
 
 CreateRepeatQuery = """
@@ -165,7 +173,7 @@ def test_create_repeat(
     assert "errors" not in content
     # Find all items in content with a stepId key
     found = findkey(content, "stepId")
-    assert len(found) == 3
+    assert len(found) == 2
 
 
 @pytest.mark.django_db(transaction=True)
@@ -199,7 +207,7 @@ def test_substep_repeat(
     # Find all items in content with a stepId key
     # The substep and its repeat should not be present
     found = findkey(content, "stepId")
-    assert len(found) == 2
+    assert len(found) == 1
     step_id = repeatable_step.repeatable_ptr.pk
     # Create a repeat for the main step
     response = client_query(
@@ -236,7 +244,7 @@ def test_substep_repeat(
     assert "errors" not in content
     # Now we should have five
     found = findkey(content, "stepId")
-    assert len(found) == 5
+    assert len(found) == 3
 
 
 @pytest.mark.django_db(transaction=True)
