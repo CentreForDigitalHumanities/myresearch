@@ -44,6 +44,7 @@ class BaseQuestionInterface(Interface):
     description_en = String(required=True)
     required = Boolean(required=True)
     has_conditions = Boolean(required=True)
+    is_repeatable = Boolean(required=True)
 
     @classmethod
     def resolve_type(cls, instance, info):

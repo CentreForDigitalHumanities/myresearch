@@ -231,10 +231,7 @@ useWatchQuestions(watchedQuestions, () => {
                     "
                 />
                 <a
-                    v-if="
-                        question.repeatIndex !== null &&
-                        !isOnlyOccurrence(question)
-                    "
+                    v-if="question.isRepeatable && !isOnlyOccurrence(question)"
                     href="#"
                     class="text-danger"
                     @click="handleDeleteRepeat(question)"
@@ -244,12 +241,7 @@ useWatchQuestions(watchedQuestions, () => {
                         <div class="ml-3">{{ t("Delete") }}</div>
                     </div>
                 </a>
-                <div
-                    v-if="
-                        question.repeatIndex !== null &&
-                        isLastOccurrence(question)
-                    "
-                >
+                <div v-if="question.isRepeatable && isLastOccurrence(question)">
                     <BSButton
                         variant="primary"
                         class="w-100 align-self-stretch mt-3"

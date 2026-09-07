@@ -196,6 +196,7 @@ class UserFormResolver:
             instance = self._create_question_instance(
                 question,
                 repeat_index=index,
+                repeatable=True,
             )
             repeats.append(instance)
         return repeats
@@ -204,6 +205,7 @@ class UserFormResolver:
         self,
         question: BaseQuestion,
         repeat_index=None,
+        repeatable=False,
     ) -> ObjectType:
         """Create the appropriate user question instance type based on the question type."""
 
@@ -216,6 +218,7 @@ class UserFormResolver:
             "response_id": response.pk if response else None,
             # The 'question' field is used for BaseQuestionInterface.resolve_type.
             "question": question,
+            "is_repeatable": repeatable,
         }
 
         # Access the specific subclass using Django's reverse relation attributes

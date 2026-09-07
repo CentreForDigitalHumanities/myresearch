@@ -32,6 +32,7 @@ const GET_FORM = graphql(`
                     descriptionNl
                     required
                     hasConditions
+                    isRepeatable
                     ... on SelectQuestionType {
                         multiple
                         options {
@@ -88,6 +89,7 @@ const GET_FORM = graphql(`
                         descriptionNl
                         required
                         hasConditions
+                        isRepeatable
                         ... on SelectQuestionType {
                             multiple
                             options {
