@@ -64,6 +64,7 @@ import type {
     QuestionWithValue,
 } from "~/composables/useProcessForm";
 import { useSubmissionId } from "~/composables/useRouteParams";
+import { useFormSubmission } from "~/composables/useFormSubmission";
 import { useI18n } from "vue-i18n";
 
 interface Props {
@@ -71,7 +72,6 @@ interface Props {
 }
 
 interface Emits {
-    (e: "submitForm"): void;
     (e: "repeat-step-clicked", slug: string): void;
 }
 
@@ -79,6 +79,10 @@ const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 const { t } = useI18n();
 const submissionId = useSubmissionId();
+
+const { submitForm: mutateFormSubmission } = useFormSubmission({
+    reloadStudy: false,
+});
 
 const { mutate: createQuestionRepeat } = useMutation(
     CREATE_QUESTION_REPEAT_MUTATION,
@@ -160,6 +164,7 @@ async function handleAddRepeat(question: QuestionWithValue): Promise<void> {
         return;
     }
 
+    await mutateFormSubmission(props.step, userFormId);
     try {
         await createQuestionRepeat({
             userFormId,
@@ -168,7 +173,6 @@ async function handleAddRepeat(question: QuestionWithValue): Promise<void> {
                 ? String(props.step.repeatIndex)
                 : null,
         });
-        emit("submitForm");
     } catch {
         useNotification(
             t("An error occurred while adding a question. Please try again."),
@@ -184,7 +188,7 @@ async function handleDeleteRepeat(question: QuestionWithValue): Promise<void> {
     }
 
     try {
-        emit("submitForm");
+        await mutateFormSubmission(props.step, userFormId);
         await deleteQuestionRepeat({
             userFormId,
             repeatId: String(question.repeatIndex),
@@ -198,7 +202,10 @@ async function handleDeleteRepeat(question: QuestionWithValue): Promise<void> {
 }
 
 useWatchQuestions(watchedQuestions, () => {
-    emit("submitForm");
+    const userFormId = submissionId.value;
+    if (userFormId) {
+        void mutateFormSubmission(props.step, userFormId);
+    }
 });
 </script>
 
