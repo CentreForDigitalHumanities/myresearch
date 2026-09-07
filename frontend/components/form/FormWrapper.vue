@@ -335,7 +335,11 @@ function handleBackNavigation() {
                             )
                         "
                     ></div>
-                    <MRForm :step="selectedStep" @submit-form="submitForm" />
+                    <MRForm
+                        :step="selectedStep"
+                        @submit-form="submitForm"
+                        @repeat-step-clicked="navigateToSlug"
+                    />
                 </form>
                 <div class="btn-group">
                     <BSButton
