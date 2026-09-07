@@ -343,7 +343,6 @@ function addValidationRule(
     t: TranslateFn,
 ): ValidationRule {
     const rules: Record<string, ValidationRuleWithParams> = {};
-    console.log("addValidationRule called.");
 
     // General validation rules
     if (question.required) {
