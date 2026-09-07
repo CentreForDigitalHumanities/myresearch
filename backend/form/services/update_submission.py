@@ -111,6 +111,7 @@ def update_submission(
                 repeat_index_id=response["repeat_index"],
             )
             new_response.submissions.add(current_submission)
+            new_response.save()
             current_submission.updated_at = timezone.now()
     current_submission.save()
     return current_submission, errors

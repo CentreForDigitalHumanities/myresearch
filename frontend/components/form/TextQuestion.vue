@@ -5,9 +5,10 @@ import FormLabel from "../form/FormLabel.vue";
 interface Props {
     question: TextQuestionWithValue;
     isInvalid: boolean;
+    isFirstRepeat?: boolean;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const modelValue = defineModel<string>();
 </script>
@@ -15,11 +16,13 @@ const modelValue = defineModel<string>();
 <template>
     <div>
         <FormLabel :question="question" />
-        <div
-            v-if="question.descriptionNl || question.descriptionEn"
-            class="text-muted"
-            v-html="useTranslateableAttribute(question, 'description')"
-        ></div>
+        <template v-if="props.isFirstRepeat">
+            <div
+                v-if="question.descriptionNl || question.descriptionEn"
+                class="text-muted"
+                v-html="useTranslateableAttribute(question, 'description')"
+            ></div>
+        </template>
         <input
             v-if="!question.lines || question.lines < 2"
             :id="`${question.questionId}-${question.repeatIndex}`"

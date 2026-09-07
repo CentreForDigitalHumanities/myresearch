@@ -1,7 +1,7 @@
 from graphene import ObjectType
 from typing import Optional
 
-from form.models import BaseQuestion, Step, Repeatable
+from form.models import BaseQuestion, Step, Repeatable, RepeatIndex
 from form.services.form_evaluator import FormEvaluator
 from form.types.StepType import StepType
 from form.types.UserFormType import UserFormType
@@ -177,6 +177,18 @@ class UserFormResolver:
             question,
             parent_index=parent_index,
         )
+
+        # for repeatable questions, we'll always want at least one repeat.
+        if not repeat_indices:
+            new_repeat = RepeatIndex(
+                parent=parent_index,
+            )
+            new_repeat.save()
+            new_repeat.submissions.add(self.evaluator.submission)
+            question.repeat_indices.add(
+                new_repeat,
+            )
+
         for index in repeat_indices:
             # Now we construct the step instances that will actually appear
             # because there are repeat indices for this question linked

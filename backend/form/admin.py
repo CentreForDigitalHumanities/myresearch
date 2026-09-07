@@ -18,6 +18,7 @@ from .models import (
     FileUploadQuestion,
     RepeatableStep,
     RepeatableStepQuestion,
+    RepeatableTextQuestion,
     UserFormSubmission,
     QuestionResponse,
     StepCondition,
@@ -507,6 +508,11 @@ class FileUploadQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
         ("File Upload Options", {"fields": ("size_limit",)}),
     )
     inlines = [QuestionConditionInline]
+
+
+@admin.register(RepeatableTextQuestion)
+class RepeatableTextQuestionAdmin(TextQuestionAdmin):
+    pass
 
 
 @admin.register(RepeatableStepQuestion)
