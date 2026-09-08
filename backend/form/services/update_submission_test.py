@@ -13,7 +13,7 @@ class TestUpdateSubmission:
     def test_update_response(self, test_user, user_form_input):
         """Test updating an answer"""
 
-        submission, errors = update_submission(test_user, user_form_input)
+        submission, errors = update_submission(test_user, user_form_input, False)
         assert errors == []
         response = QuestionResponse.objects.filter(submissions=submission).first()
 
