@@ -23,7 +23,7 @@ const UPDATE_USER_FORM = graphql(`
     }
 `);
 
-export function useFormSubmission(options: { reloadStudy: boolean, reloadRepeatableSteps: boolean }) {
+export function useFormSubmission(options: { reloadStudy: boolean }) {
     const { t } = useI18n();
 
     const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
@@ -34,9 +34,7 @@ export function useFormSubmission(options: { reloadStudy: boolean, reloadRepeata
                 if (options.reloadStudy) {
                     cache.evict({ fieldName: "study" });
                 }
-                if (options.reloadRepeatableSteps) {
-                    cache.evict({ fieldName: "repeatableStepsWithRepeats" });
-                }
+                cache.evict({ fieldName: "repeatableStepsWithRepeats" });
                 cache.gc();
             },
         },
