@@ -1,3 +1,4 @@
+from django.db.models import QuerySet
 from graphene import (
     ID,
     Boolean,
@@ -36,13 +37,18 @@ class StepType(ObjectType):
         lambda: NonNull(StepType),
         required=True,
     )
-    info_text = Field(StepInfoTextType)
+    step_info_text = List(
+        NonNull(StepInfoTextType),
+        required=False,
+    )
 
     @staticmethod
-    def resolve_info_text(parent, info: ResolveInfo) -> StepInfoText | None:
+    def resolve_step_info_text(
+        parent, info: ResolveInfo
+    ) -> QuerySet[StepInfoText] | None:
         if not parent.step_id:
             return None
         try:
-            return StepInfoText.objects.get(step_id=parent.step_id)
+            return StepInfoText.objects.filter(step_id=parent.step_id)
         except StepInfoText.DoesNotExist:
             return None

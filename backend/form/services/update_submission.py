@@ -1,4 +1,4 @@
-from form.models.questions import RepeatableStepQuestion
+from form.models.questions import FileUploadQuestion, RepeatableStepQuestion
 from main.models import MRPermission, User
 from graphene_django.types import ErrorType
 from form.models.responses import MRDocument
@@ -95,8 +95,11 @@ def update_submission(
                     )
                     new_response.submissions.add(current_submission)
                 else:
+                    if response["answer"]["value"] == "" and isinstance(
+                        qr.question.get_subclass(), FileUploadQuestion
+                    ):
+                        _delete_document_if_cleared(qr.answer, response["answer"])
                     # If this is not a revision, just update the answer
-                    _delete_document_if_cleared(qr.answer, response["answer"])
                     qr.answer = response["answer"]
                     qr.save()
 
@@ -108,6 +111,7 @@ def update_submission(
                 repeat_index_id=response["repeat_index"],
             )
             new_response.submissions.add(current_submission)
+            new_response.save()
             current_submission.updated_at = timezone.now()
     current_submission.save()
     return current_submission, errors

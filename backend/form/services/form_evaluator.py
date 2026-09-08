@@ -132,52 +132,6 @@ class FormEvaluator:
             for response in trigger_responses
         )
 
-    def get_repeat_count_for_step(self, step: Step) -> int:
-        """Determine how many times a step should appear."""
-        conditions = StepCondition.objects.filter(
-            target_step=step,
-            condition_type__in={
-                BaseCondition.ConditionType.REPEAT,
-                BaseCondition.ConditionType.REPEAT_DYNAMIC,
-            },
-        )
-        return self._get_repeat_count(conditions)
-
-    def get_repeat_count_for_question(self, question: BaseQuestion) -> int:
-        """Determine how many times a question should appear."""
-        conditions = QuestionCondition.objects.filter(
-            target_question=question,
-            condition_type__in={
-                BaseCondition.ConditionType.REPEAT,
-                BaseCondition.ConditionType.REPEAT_DYNAMIC,
-            },
-        )
-        return self._get_repeat_count(conditions)
-
-    def _get_repeat_count(
-        self, conditions: QuerySet[StepCondition] | QuerySet[QuestionCondition]
-    ) -> int:
-        """Helper to determine repeat count from conditions."""
-        for condition in conditions:
-            trigger_responses = self.responses.get(condition.trigger_question.pk, [])
-            if not trigger_responses:
-                continue
-
-            trigger_answer = trigger_responses[0].answer
-
-            if not self.check_trigger_value(trigger_answer, condition.trigger_value):
-                continue
-
-            if condition.use_answer_as_count:
-                # Dynamic repeat based on answer value, constrained to reasonable limits.
-                input_value = trigger_answer.get("value")
-                return min(max(0, input_value), MAX_REPEAT_LIMIT)
-            elif condition.repeat_count:
-                return condition.repeat_count
-
-        # Default: show once.
-        return 1
-
     def is_step_visible(self, step: Step) -> bool:
         """Check if a step should be shown based on show/hide conditions."""
         show_conditions = StepCondition.objects.filter(

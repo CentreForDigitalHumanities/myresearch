@@ -1,7 +1,7 @@
 from graphene import ObjectType
 from typing import Optional
 
-from form.models import BaseQuestion, Step, Repeatable
+from form.models import BaseQuestion, Step, Repeatable, RepeatIndex
 from form.services.form_evaluator import FormEvaluator
 from form.types.StepType import StepType
 from form.types.UserFormType import UserFormType
@@ -136,6 +136,9 @@ class UserFormResolver:
         step_name_override = False
         step_questions = list(BaseQuestion.objects.filter(step=step))
         for question in step_questions:
+            # Skip hidden questions
+            if not self.evaluator.is_question_visible(question):
+                continue
             resolved_questions = self._make_question_instances(
                 question,
                 repeat_index,
@@ -179,6 +182,18 @@ class UserFormResolver:
             question,
             parent_index=parent_index,
         )
+
+        # for repeatable questions, we'll always want at least one repeat.
+        if not repeat_indices:
+            new_repeat = RepeatIndex(
+                parent=parent_index,
+            )
+            new_repeat.save()
+            new_repeat.submissions.add(self.evaluator.submission)
+            question.repeat_indices.add(
+                new_repeat,
+            )
+
         for index in repeat_indices:
             # Now we construct the step instances that will actually appear
             # because there are repeat indices for this question linked
@@ -186,6 +201,7 @@ class UserFormResolver:
             instance = self._create_question_instance(
                 question,
                 repeat_index=index,
+                repeatable=True,
             )
             repeats.append(instance)
         return repeats
@@ -194,6 +210,7 @@ class UserFormResolver:
         self,
         question: BaseQuestion,
         repeat_index=None,
+        repeatable=False,
     ) -> ObjectType:
         """Create the appropriate user question instance type based on the question type."""
 
@@ -206,6 +223,7 @@ class UserFormResolver:
             "response_id": response.pk if response else None,
             # The 'question' field is used for BaseQuestionInterface.resolve_type.
             "question": question,
+            "is_repeatable": repeatable,
         }
 
         # Access the specific subclass using Django's reverse relation attributes

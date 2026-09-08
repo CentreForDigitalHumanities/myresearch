@@ -14,6 +14,9 @@ from form.models import (
     StepInfoText,
     RepeatIndex,
     Repeatable,
+    RepeatableStep,
+    RepeatableStepQuestion,
+    RepeatableTextQuestion,
 )
 
 # Add models here that should be excluded from the completeness check. These
@@ -26,9 +29,13 @@ EXCLUDED_MODELS_FOR_COMPLETENESS_CHECK: list[Type[Model]] = [
     Review,
     ReviewRound,
     YearCounter,
+    MRDocument,
+    # TODO: implement repeatables in dev data
     RepeatIndex,
     Repeatable,
-    MRDocument,
+    RepeatableStep,
+    RepeatableStepQuestion,
+    RepeatableTextQuestion,
 ]
 
 

@@ -18,6 +18,7 @@ from .models import (
     FileUploadQuestion,
     RepeatableStep,
     RepeatableStepQuestion,
+    RepeatableTextQuestion,
     UserFormSubmission,
     QuestionResponse,
     StepCondition,
@@ -75,15 +76,6 @@ class SubstepInline(TinyMCETextFieldMixin, admin.StackedInline):
     verbose_name_plural = "Substeps"
 
 
-class StepInfoTextInline(
-    TinyMCETextFieldMixin,
-    admin.StackedInline,
-):
-    model = StepInfoText
-    extra = 0
-    fields = ("text_en", "text_nl")
-
-
 class SelectOptionInline(admin.TabularInline):
     model = SelectOption
     extra = 0
@@ -98,8 +90,6 @@ class StepConditionInline(admin.StackedInline):
         "condition_type",
         "trigger_question",
         "trigger_value",
-        "repeat_count",
-        "use_answer_as_count",
     )
     verbose_name = "Step Condition"
     verbose_name_plural = "Conditions Applied to This Step"
@@ -113,8 +103,6 @@ class QuestionConditionInline(admin.StackedInline):
         "condition_type",
         "trigger_question",
         "trigger_value",
-        "repeat_count",
-        "use_answer_as_count",
     )
     verbose_name = "Question Condition"
     verbose_name_plural = "Conditions Applied to This Question"
@@ -263,10 +251,16 @@ class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                 "description": "Set the display order of substeps. Use the substep IDs shown in the Substeps inline below.",
             },
         ),
+        (
+            "Step Info Order",
+            {
+                "fields": ("step_info_text_order",),
+                "description": "Set the display order of step info. Use the substep IDs shown below.",
+            },
+        ),
     )
     inlines = [
         SubstepInline,
-        StepInfoTextInline,
         QuestionInline,
         StepConditionInline,
     ]
@@ -330,7 +324,6 @@ class RepeatableStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     )
     inlines = [
         SubstepInline,
-        StepInfoTextInline,
         QuestionInline,
         StepConditionInline,
     ]
@@ -344,18 +337,17 @@ class RepeatableStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
 
 
 @admin.register(StepInfoText)
-class StepInfoTextAdmin(
-    TinyMCETextFieldMixin,
-    admin.ModelAdmin,
-):
-    list_display = ("short_text", "step")
+class StepInfoTextAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
+    list_display = ("step", "text_nl", "text_en")
     list_filter = ("step",)
-    search_fields = ("text",)
-
-    def short_text(self, obj):
-        return obj.text[:50] + "..." if len(obj.text) > 50 else obj.text
-
-    short_text.short_description = "Text"
+    search_fields = ("text_nl", "text_en")
+    fields = [
+        "step",
+        "text_nl",
+        "text_en",
+        "content_nl",
+        "content_en",
+    ]
 
 
 # Question admins
@@ -519,6 +511,11 @@ class FileUploadQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     inlines = [QuestionConditionInline]
 
 
+@admin.register(RepeatableTextQuestion)
+class RepeatableTextQuestionAdmin(TextQuestionAdmin):
+    pass
+
+
 @admin.register(RepeatableStepQuestion)
 class RepeatableStepQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     list_display = ("text_nl", "text_en", "step", "required", "repeatable_step")
@@ -626,7 +623,6 @@ class StepConditionAdmin(admin.ModelAdmin):
         "condition_type",
         "trigger_question",
         "trigger_value_preview",
-        "repeat_count",
     )
     list_filter = ("condition_type", "target_step__form")
     search_fields = ("target_step__name", "trigger_question__text")
@@ -637,13 +633,6 @@ class StepConditionAdmin(admin.ModelAdmin):
             {
                 "fields": ("trigger_value",),
                 "description": TRIGGER_VALUE_HELP_TEXT,
-            },
-        ),
-        (
-            "Repeat Configuration",
-            {
-                "fields": ("repeat_count", "use_answer_as_count"),
-                "description": "For 'repeat' conditions: set repeat_count. For 'repeat_dynamic': check use_answer_as_count.",
             },
         ),
     )
@@ -662,7 +651,6 @@ class QuestionConditionAdmin(admin.ModelAdmin):
         "condition_type",
         "trigger_question",
         "trigger_value_preview",
-        "repeat_count",
     )
     list_filter = ("condition_type", "target_question__step__form")
     search_fields = ("target_question__text", "trigger_question__text")
@@ -673,13 +661,6 @@ class QuestionConditionAdmin(admin.ModelAdmin):
             {
                 "fields": ("trigger_value",),
                 "description": TRIGGER_VALUE_HELP_TEXT,
-            },
-        ),
-        (
-            "Repeat Configuration",
-            {
-                "fields": ("repeat_count", "use_answer_as_count"),
-                "description": "For 'repeat' conditions: set repeat_count. For 'repeat_dynamic': check use_answer_as_count.",
             },
         ),
     )

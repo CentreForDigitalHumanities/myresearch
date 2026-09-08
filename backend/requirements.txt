@@ -4,25 +4,25 @@
 #
 #    pip-compile requirements.in
 #
-asgiref==3.11.1
+asgiref==3.12.1
     # via
     #   django
     #   django-cors-headers
 black==26.5.1
     # via -r requirements.in
-blessed==1.44.0
+blessed==1.48.0
     # via curtsies
 bpython==0.26
     # via cdh-django-core
 cdh-django-core[all,core,federated-auth,files,mail,recommended,rest,vue] @ git+https://github.com/CentreForDigitalHumanities/django-shared-core.git@v3.2.0
     # via -r requirements.in
-certifi==2026.6.17
+certifi==2026.7.22
     # via requests
-cffi==2.0.0
+cffi==2.1.1
     # via cryptography
-charset-normalizer==3.4.7
+charset-normalizer==3.5.0
     # via requests
-click==8.4.1
+click==8.4.2
     # via black
 closure==20191111
     # via cdh-django-core
@@ -76,13 +76,13 @@ django-modeltranslation==0.19.17
     # via cdh-django-core
 django-simple-menu==2.1.4
     # via cdh-django-core
-djangorestframework==3.17.1
+djangorestframework==3.17.2
     # via cdh-django-core
 djangosaml2==1.12.0
     # via cdh-django-core
 elementpath==4.8.0
     # via xmlschema
-faker==40.23.0
+faker==40.36.0
     # via -r requirements.in
 graphene==3.4.3
     # via graphene-django
@@ -97,26 +97,26 @@ graphql-relay==3.2.0
     # via
     #   graphene
     #   graphene-django
-greenlet==3.5.2
+greenlet==3.5.5
     # via bpython
 idna==3.18
     # via requests
 iniconfig==2.3.0
     # via pytest
-jinxed==2.0.4
+jinxed==2.1.0
     # via blessed
-lesscpy==0.15.1
+lesscpy==0.15.2
     # via cdh-django-core
 mypy-extensions==1.1.0
     # via black
-packaging==26.2
+packaging==26.3
     # via
     #   black
     #   django-csp
     #   pytest
 pathspec==1.1.1
     # via black
-platformdirs==4.10.0
+platformdirs==4.11.2
     # via black
 pluggy==1.6.0
     # via pytest
@@ -150,7 +150,7 @@ pytest==9.1.1
     # via
     #   -r requirements.in
     #   pytest-django
-pytest-django==4.12.0
+pytest-django==4.14.0
     # via -r requirements.in
 python-dateutil==2.9.0.post0
     # via
@@ -178,9 +178,9 @@ sqlparse==0.5.5
     #   django-debug-toolbar
 text-unidecode==1.3
     # via graphene-django
-tqdm==4.68.3
+tqdm==4.70.0
     # via -r requirements.in
-typing-extensions==4.15.0
+typing-extensions==4.16.0
     # via
     #   graphene
     #   psycopg
@@ -189,9 +189,9 @@ urllib3==2.7.0
     # via requests
 vbuild==0.8.2
     # via cdh-django-core
-wcwidth==0.8.1
+wcwidth==0.8.2
     # via blessed
-wrapt==2.2.2
+wrapt==2.3.0
     # via deprecated
 xmlschema==2.5.1
     # via pysaml2

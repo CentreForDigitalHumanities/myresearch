@@ -45,6 +45,7 @@ class BaseQuestionInterface(Interface):
     required = Boolean(required=True)
     has_conditions = Boolean(required=True)
     step_name_override = Boolean(required=True)
+    is_repeatable = Boolean(required=True)
 
     @classmethod
     def resolve_type(cls, instance, info):
