@@ -214,7 +214,12 @@ class UserFormResolver:
     ) -> ObjectType:
         """Create the appropriate user question instance type based on the question type."""
 
-        response = self.evaluator.get_user_response(question, repeat_index)
+        if repeatable:
+            response = self.evaluator.get_user_response(
+                question.basequestion_ptr, repeat_index
+            )
+        else:
+            response = self.evaluator.get_user_response(question, repeat_index)
 
         base_data = {
             "question_id": question.pk,
