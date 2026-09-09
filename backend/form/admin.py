@@ -76,7 +76,7 @@ class SubstepInline(TinyMCETextFieldMixin, admin.StackedInline):
 class SelectOptionInline(admin.TabularInline):
     model = SelectOption
     extra = 0
-    fields = ("label", "label_nl", "label_en", "default_selected")
+    fields = ("label_nl", "label_en", "default_selected")
 
 
 class StepConditionInline(admin.StackedInline):
