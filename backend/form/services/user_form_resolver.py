@@ -98,12 +98,12 @@ class UserFormResolver:
                 # repeatable, so we work with the first in the list.
                 if question.step_name_override:
                     try:
-                        answer = resolved_questions[0].answer["value"]
+                        answer = resolved_questions[0].answer
                     except IndexError:
                         # This should never happen, as we always expect at least one question
                         pass
                     if answer:
-                        step_name_override = answer
+                        step_name_override = answer["value"]
                 questions.extend(resolved_questions)
 
             # Get all substeps
