@@ -201,6 +201,16 @@ async function handleDeleteRepeat(question: QuestionWithValue): Promise<void> {
     }
 }
 
+function handleStepNameOverride(question: QuestionWithValue): void {
+    if (!question.stepNameOverride) {
+        return;
+    }
+    const userFormId = submissionId.value;
+    if (userFormId) {
+        void mutateFormSubmission(props.step, userFormId);
+    }
+}
+
 useWatchQuestions(watchedQuestions, () => {
     const userFormId = submissionId.value;
     if (userFormId) {
@@ -228,7 +238,7 @@ useWatchQuestions(watchedQuestions, () => {
                     @repeat-step-clicked="
                         (slug: string) => emit('repeat-step-clicked', slug)
                     "
-                    @blur="question.stepNameOverride && emit('submitForm')"
+                    @blur="handleStepNameOverride(question)"
                 />
                 <a
                     v-if="question.isRepeatable && !isOnlyOccurrence(question)"
