@@ -31,7 +31,7 @@ class BaseQuestion(models.Model):
     step_name_override = models.BooleanField(
         default=False,
         help_text="If this is set to True, the answer to the question will "
-        "override the name of its step (for stepper purposes). It can only be "
+        "override the name of its step (for display purposes). It can only be "
         "true for one question per step.",
     )
 

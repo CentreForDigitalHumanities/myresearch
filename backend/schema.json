@@ -320,7 +320,7 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "isRepeatable",
+              "name": "stepNameOverride",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -330,6 +330,17 @@
                   "ofType": null
                 }
               }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "INTERFACE",
+          "name": "BaseQuestionInterface",
+          "possibleTypes": [
+            {
+              "kind": "OBJECT",
+              "name": "TrueFalseQuestionType",
+              "ofType": null
             },
             {
               "args": [],
@@ -842,7 +853,7 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "isRepeatable",
+              "name": "stepNameOverride",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -1039,7 +1050,7 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "isRepeatable",
+              "name": "stepNameOverride",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -1236,7 +1247,7 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "isRepeatable",
+              "name": "stepNameOverride",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -1473,7 +1484,7 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "isRepeatable",
+              "name": "stepNameOverride",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -1761,7 +1772,7 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "isRepeatable",
+              "name": "stepNameOverride",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -1958,7 +1969,7 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "isRepeatable",
+              "name": "stepNameOverride",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
