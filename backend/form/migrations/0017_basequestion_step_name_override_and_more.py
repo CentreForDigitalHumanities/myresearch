@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             name="step_name_override",
             field=models.BooleanField(
                 default=False,
-                help_text="If this is set to True, the answer to the question will override the name of its step (for stepper purposes). It can only be true for one question per step.",
+                help_text="If this is set to True, the answer to the question will override the name of its step (for stepper purposes). It can only be True for one question per step.",
             ),
         ),
         migrations.AddConstraint(
