@@ -68,7 +68,7 @@
             "description_en": "<p>Who else at UU is collaborating on the study? Fill in the e-mail address of all involved researchers. Leave this field blank if not applicable.</p>",
             "description_nl": "<p>Wie werkt er binnen de UU nog meer mee aan de studie? Vul het e-mail adres in van alle betrokken onderzoekers. Laat dit veld leeg indien niet van toepassing.</p>",
             "required": false,
-            "_order": 4
+            "_order": 2
         }
     },
     {
@@ -86,7 +86,7 @@
             "description_en": "<p>Who else is responsible for the study outside the UU? Fill in the e-mail adress of all involved researchers. Leave this field blank if not applicable.</p>",
             "description_nl": "<p>Wie werkt er buiten de UU nog meer mee aan de studie? Vul het e-mail adres in van alle betrokken onderzoekers. Laat dit veld leeg als niet van toepassing.</p>",
             "required": false,
-            "_order": 5
+            "_order": 3
         }
     },
     {
@@ -230,7 +230,7 @@
             "description_en": "<p>Distinguish all groups of people whose personal data you will collect or use (for instance: police officers, instagram users, primary school pupils).</p>",
             "description_nl": "<p>Onderscheid alle groepen van wie er persoonsgegevens worden verzameld of gebruikt (bijvoorbeeld politieagenten, instagramgebruikers, leerlingen basisschool, etc.).</p>",
             "required": false,
-            "_order": 2
+            "_order": 1
         }
     },
     {
@@ -3009,7 +3009,7 @@
             "form": 1,
             "parent": 6,
             "is_overview": false,
-            "_order": 1
+            "_order": 0
         }
     },
     {
@@ -3641,17 +3641,6 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 14,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 36,
         "fields": {
             "placeholder": "",
@@ -3691,6 +3680,17 @@
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 1,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 14,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
             "is_email": false
         }
     },
@@ -3740,6 +3740,17 @@
     },
     {
         "model": "form.textquestion",
+        "pk": 13,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
         "pk": 28,
         "fields": {
             "placeholder": "",
@@ -3762,23 +3773,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 13,
+        "pk": 68,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 49,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
+            "lines": 1,
             "is_email": false
         }
     },
@@ -3795,24 +3795,24 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 30,
+        "pk": 49,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 69,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 1,
             "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 68,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
-            "is_email": true
         }
     },
     {
@@ -3828,12 +3828,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 17,
+        "pk": 30,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5,
+            "lines": 1,
             "is_email": false
         }
     },
@@ -3850,13 +3850,13 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 69,
+        "pk": 17,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1,
-            "is_email": true
+            "lines": 5,
+            "is_email": false
         }
     },
     {
