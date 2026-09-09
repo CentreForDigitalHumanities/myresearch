@@ -39,7 +39,8 @@ const watchedQuestions = computed(() =>
     props.step.questions.filter(
         (question) =>
             question.hasConditions ||
-            question.__typename === "FileUploadQuestionType",
+            question.__typename === "FileUploadQuestionType" ||
+            question.stepNameOverride,
     ),
 );
 
@@ -61,7 +62,6 @@ useWatchQuestions(watchedQuestions, () => {
                     v-model="question.value"
                     :question="question"
                     :is-invalid="(question.errors?.length ?? 0) > 0"
-                    @blur="question.stepNameOverride && emit('submitForm')"
                 />
                 <div
                     v-for="error of question.errors ?? []"
