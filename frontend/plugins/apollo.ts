@@ -12,6 +12,7 @@ import { useRuntimeConfig } from "#imports";
 
 export const apolloClient = new ApolloClient({
     cache: new InMemoryCache(),
+    link: ApolloLink.empty(),
 });
 
 function getCsrfToken(): string | null {

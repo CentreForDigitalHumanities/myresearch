@@ -10,14 +10,18 @@ import type {
     SelectQuestionType,
 } from "~/generated/gql/graphql";
 
+type I18nPlugin = typeof import("@/plugins/i18n");
+
 // Mock the i18n plugin
-vi.mock("@/plugins/i18n", () => ({
-    i18n: {
-        global: {
+vi.mock("@/plugins/i18n", async (importOriginal) => {
+    const actual = await importOriginal<I18nPlugin>();
+    return {
+        ...actual,
+        useI18n: () => ({
             t: (key: string) => key,
-        },
-    },
-}));
+        }),
+    };
+});
 
 describe("useProcessForm", () => {
     // Test fixtures
