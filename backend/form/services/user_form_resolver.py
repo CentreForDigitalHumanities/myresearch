@@ -96,9 +96,14 @@ class UserFormResolver:
                 resolved_questions = self._resolve_question_instances(question)
                 # We assume that a step_name_override question is never
                 # repeatable, so we work with the first in the list.
-                if question.step_name_override and resolved_questions[0].answer:
-                    # save the question's value in step_name_override var
-                    step_name_override = resolved_questions[0].answer["value"]
+                if question.step_name_override:
+                    try:
+                        answer = resolved_questions[0].answer["value"]
+                    except IndexError:
+                        # This should never happen, as we always expect at least one question
+                        pass
+                    if answer:
+                        step_name_override = answer
                 questions.extend(resolved_questions)
 
             # Get all substeps
