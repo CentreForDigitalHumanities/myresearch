@@ -223,8 +223,7 @@ useWatchQuestions(watchedQuestions, () => {
                     :question="question"
                     :is-invalid="(question.errors?.length ?? 0) > 0"
                     :is-first-repeat="
-                        question.repeatIndex !== null &&
-                        isFirstOccurrence(question)
+                        !question.isRepeatable || isFirstOccurrence(question)
                     "
                     @repeat-step-clicked="
                         (slug: string) => emit('repeat-step-clicked', slug)
