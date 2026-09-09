@@ -365,9 +365,9 @@
         "fields": {
             "annotation_key": null,
             "step_name_override": false,
-            "text": "I can demonstrate that I have the explicit consent of all participants whose special personal data I process.",
-            "text_en": "I can demonstrate that I have the explicit consent of all participants whose special personal data I process.",
-            "text_nl": "Ik kan aantonen dat ik de uitdrukkelijke toestemming heb van alle deelnemers van wie ik bijzondere persoonsgegevens verwerk.",
+            "text": "I can demonstrate that I have the explicit consent of or for all participants whose special personal data I process.",
+            "text_en": "I can demonstrate that I have the explicit consent of or for all participants whose special personal data I process.",
+            "text_nl": "Ik kan aantonen dat ik de uitdrukkelijke toestemming heb van of voor alle deelnemers van wie ik bijzondere persoonsgegevens verwerk.",
             "step": 7,
             "form": 1,
             "description": "",
