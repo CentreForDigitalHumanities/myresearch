@@ -171,7 +171,7 @@ async function handleAddRepeat(question: QuestionWithValue): Promise<void> {
             userFormId,
             repeatableId: question.questionId,
             parentId: props.step.repeatIndex
-                ? String(props.step.repeatIndex)
+                ? props.step.repeatIndex.toString()
                 : null,
         });
     } catch {
@@ -192,7 +192,7 @@ async function handleDeleteRepeat(question: QuestionWithValue): Promise<void> {
         await mutateFormSubmission(props.step, userFormId);
         await deleteQuestionRepeat({
             userFormId,
-            repeatId: String(question.repeatIndex),
+            repeatId: question.repeatIndex?.toString(),
         });
     } catch {
         useNotification(
