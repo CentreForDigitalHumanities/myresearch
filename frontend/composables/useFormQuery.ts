@@ -33,6 +33,7 @@ const GET_FORM = graphql(`
                     required
                     hasConditions
                     isRepeatable
+                    stepNameOverride
                     ... on SelectQuestionType {
                         multiple
                         options {
@@ -90,6 +91,7 @@ const GET_FORM = graphql(`
                         required
                         hasConditions
                         isRepeatable
+                        stepNameOverride
                         ... on SelectQuestionType {
                             multiple
                             options {

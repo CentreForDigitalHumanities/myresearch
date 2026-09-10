@@ -104,7 +104,7 @@ class UserFormResolver:
         repeat_index=None,
     ):
 
-        questions = self._resolve_step_questions(step, repeat_index)
+        questions, step_name_override = self._resolve_step_questions(step, repeat_index)
         substeps = self._resolve_steps(
             parent_step=step,
             parent_index=repeat_index,
@@ -118,8 +118,8 @@ class UserFormResolver:
 
         return StepType(
             step_id=step.pk,  # type: ignore
-            name_nl=step.name_nl,  # type: ignore
-            name_en=step.name_en,  # type: ignore
+            name_nl=step_name_override if step_name_override else step.name_nl,  # type: ignore
+            name_en=step_name_override if step_name_override else step.name_en,  # type: ignore
             description_nl=step.description_nl,  # type: ignore
             description_en=step.description_en,  # type: ignore
             slug=slug,
@@ -133,18 +133,28 @@ class UserFormResolver:
         # TODO: make question instances from step, rather than questions
         # Check out the old implementation
         questions = []
+        step_name_override = False
         step_questions = list(BaseQuestion.objects.filter(step=step))
         for question in step_questions:
             # Skip hidden questions
             if not self.evaluator.is_question_visible(question):
                 continue
-            questions.extend(
-                self._make_question_instances(
-                    question,
-                    repeat_index,
-                )
+            resolved_questions = self._make_question_instances(
+                question,
+                repeat_index,
             )
-        return questions
+            # We assume that a step_name_override question is never
+            # repeatable, so we work with the first in the list.
+            if question.step_name_override:
+                try:
+                    answer = resolved_questions[0].answer
+                except IndexError:
+                    # This should never happen, as we always expect at least one question
+                    pass
+                if answer:
+                    step_name_override = answer["value"]
+            questions.extend(resolved_questions)
+        return questions, step_name_override
 
     def _make_question_instances(self, question: BaseQuestion, repeat_index) -> list:
         """Resolve all instances of a question (considering repeats).

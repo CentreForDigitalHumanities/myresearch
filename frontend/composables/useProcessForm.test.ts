@@ -42,6 +42,7 @@ describe("useProcessForm", () => {
         placeholderNl: "",
         hasConditions: false,
         isRepeatable: false,
+        stepNameOverride: false,
     });
 
     const createNumberQuestion = (
@@ -62,6 +63,7 @@ describe("useProcessForm", () => {
         positiveOnly,
         hasConditions: false,
         isRepeatable: false,
+        stepNameOverride: false,
     });
 
     const createTrueFalseQuestion = (
@@ -82,6 +84,7 @@ describe("useProcessForm", () => {
         defaultValue,
         hasConditions: false,
         isRepeatable: false,
+        stepNameOverride: false,
     });
 
     const createFileUploadQuestion = (
@@ -101,6 +104,7 @@ describe("useProcessForm", () => {
         required,
         hasConditions: false,
         isRepeatable: false,
+        stepNameOverride: false,
     });
 
     const createDateQuestion = (
@@ -121,6 +125,7 @@ describe("useProcessForm", () => {
         required,
         hasConditions: false,
         isRepeatable: false,
+        stepNameOverride: false,
     });
 
     const createSelectQuestion = (
@@ -141,6 +146,7 @@ describe("useProcessForm", () => {
         required,
         hasConditions: false,
         isRepeatable: false,
+        stepNameOverride: false,
         options: [
             {
                 __typename: "SelectOptionType",
