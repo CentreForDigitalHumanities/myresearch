@@ -647,6 +647,22 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
+              "name": "stepNameOverride",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
               "name": "isRepeatable",
               "type": {
                 "kind": "NON_NULL",
