@@ -1103,8 +1103,8 @@
         "fields": {
             "annotation_key": null,
             "step_name_override": false,
-            "text": "I am a PhD student",
-            "text_en": "I am a PhD student",
+            "text": "I am a PhD student.",
+            "text_en": "I am a PhD student.",
             "text_nl": "Ik ben een PhD-student.",
             "step": 13,
             "form": 1,
@@ -1113,6 +1113,24 @@
             "description_nl": "",
             "required": false,
             "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 72,
+        "fields": {
+            "annotation_key": null,
+            "step_name_override": false,
+            "text": "I am a student.",
+            "text_en": "I am a student.",
+            "text_nl": "Ik ben een student.",
+            "step": 13,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 2
         }
     },
     {
@@ -1130,7 +1148,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 2
+            "_order": 3
         }
     },
     {
@@ -1148,7 +1166,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 3
+            "_order": 4
         }
     },
     {
@@ -1847,6 +1865,20 @@
             "repeat_count": null,
             "use_answer_as_count": false,
             "target_question": 71
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 58,
+        "fields": {
+            "trigger_question": 72,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": true
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 51
         }
     },
     {
@@ -4906,7 +4938,7 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 51,
+        "pk": 72,
         "fields": {
             "default_value": false
         }
@@ -4920,7 +4952,7 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 37,
+        "pk": 51,
         "fields": {
             "default_value": false
         }
@@ -4928,6 +4960,13 @@
     {
         "model": "form.truefalsequestion",
         "pk": 65,
+        "fields": {
+            "default_value": false
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
+        "pk": 37,
         "fields": {
             "default_value": false
         }
