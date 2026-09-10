@@ -160,8 +160,7 @@ function handleDeleteStep(repeatId: string): void {
                 >
                     <div>
                         <h5 class="mb-1">
-                            {{ useTranslateableAttribute(step, "name") }} -
-                            {{ index + 1 }}
+                            {{ useTranslateableAttribute(step, "name") }}
                         </h5>
                     </div>
                     <div class="d-flex gap-2">
