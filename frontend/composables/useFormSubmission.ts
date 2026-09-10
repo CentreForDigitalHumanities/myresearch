@@ -23,15 +23,19 @@ const UPDATE_USER_FORM = graphql(`
     }
 `);
 
-export function useFormSubmission(options: { reloadStudy: boolean }) {
+export function useFormSubmission(options: { reloadStudy: boolean, reloadForm: boolean }) {
     const { t } = useI18n();
+    const defaultOptions = options;
 
     const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
         UPDATE_USER_FORM,
         {
-            update: (cache) => {
-                cache.evict({ fieldName: "form" });
-                if (options.reloadStudy) {
+            update: (cache, _, mutationOptions) => {
+                const context = mutationOptions.context as { reloadForm?: boolean; reloadStudy?: boolean } | undefined;
+                if (context?.reloadForm ?? defaultOptions.reloadForm) {
+                    cache.evict({ fieldName: "form" });
+                }
+                if (context?.reloadStudy ?? defaultOptions.reloadStudy) {
                     cache.evict({ fieldName: "study" });
                 }
                 cache.gc();
@@ -42,15 +46,23 @@ export function useFormSubmission(options: { reloadStudy: boolean }) {
     async function submitForm(
         step: CombinedStepWithValues,
         submissionId: string,
-        finalize: boolean = false,
+        options?: { finalize?: boolean; reloadForm?: boolean; reloadStudy?: boolean },
     ) {
         const inputData = useFormDataToMutationInput(step, submissionId);
 
         try {
-            await mutateForm({
-                userFormInput: inputData,
-                finalize,
-            });
+            await mutateForm(
+                {
+                    userFormInput: inputData,
+                    finalize: options?.finalize ?? false,
+                },
+                {
+                    context: {
+                        reloadForm: options?.reloadForm ?? true,
+                        reloadStudy: options?.reloadStudy ?? false,
+                    },
+                },
+            );
         } catch {
             useNotification(
                 t("An error occurred while saving the form. Please try again."),
