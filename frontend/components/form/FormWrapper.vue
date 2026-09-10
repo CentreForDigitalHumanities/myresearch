@@ -39,6 +39,7 @@ const v$ = useVuelidate(
 
 const { submitForm: mutateFormSubmission } = useFormSubmission({
     reloadStudy: props.reloadStudy,
+    reloadForm: true,
 });
 
 function submitForm(options = { submit: false }): void {
@@ -59,11 +60,9 @@ function submitForm(options = { submit: false }): void {
         return;
     }
 
-    void mutateFormSubmission(
-        step,
-        props.queriedForm.submissionId,
-        options.submit,
-    ).then(() => {
+    void mutateFormSubmission(step, props.queriedForm.submissionId, {
+        finalize: options.submit,
+    }).then(() => {
         if (options.submit) {
             useNotification(
                 t("Registration submitted successfully."),

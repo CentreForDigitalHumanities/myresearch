@@ -82,6 +82,7 @@ const submissionId = useSubmissionId();
 
 const { submitForm: mutateFormSubmission } = useFormSubmission({
     reloadStudy: false,
+    reloadForm: true,
 });
 
 const { mutate: createQuestionRepeat } = useMutation(
@@ -165,7 +166,12 @@ async function handleAddRepeat(question: QuestionWithValue): Promise<void> {
         return;
     }
 
-    await mutateFormSubmission(props.step, userFormId);
+    // for these submit mutations, we do not reload the form upon submit, because it
+    // get reloaded after the create mutation
+    await mutateFormSubmission(props.step, userFormId, {
+        reloadStudy: false,
+        reloadForm: false,
+    });
     try {
         await createQuestionRepeat({
             userFormId,
@@ -184,15 +190,24 @@ async function handleAddRepeat(question: QuestionWithValue): Promise<void> {
 
 async function handleDeleteRepeat(question: QuestionWithValue): Promise<void> {
     const userFormId = submissionId.value;
-    if (!userFormId || question.repeatIndex === null) {
+    if (
+        !userFormId ||
+        question.repeatIndex === null ||
+        question.repeatIndex === undefined
+    ) {
         return;
     }
 
     try {
-        await mutateFormSubmission(props.step, userFormId);
+        // for these submit mutations, we do not reload the form upon submit, because it
+        // get reloaded after the create mutation
+        await mutateFormSubmission(props.step, userFormId, {
+            reloadStudy: false,
+            reloadForm: false,
+        });
         await deleteQuestionRepeat({
             userFormId,
-            repeatId: question.repeatIndex?.toString(),
+            repeatId: question.repeatIndex.toString(),
         });
     } catch {
         useNotification(
