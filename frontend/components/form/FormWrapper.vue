@@ -61,6 +61,7 @@ function submitForm(options = { submit: false }): void {
     }
 
     void mutateFormSubmission(step, props.queriedForm.submissionId, {
+        reloadStudy: props.reloadStudy,
         finalize: options.submit,
     }).then(() => {
         if (options.submit) {
