@@ -24,6 +24,7 @@ export function useAnnotateErrors(
         let stepHasErrors = false;
 
         step.questions.forEach((question) => {
+            // combined with autodirty from v$ in FormWrapper.vue this creates the warnings on the form.
             question.errors = errorsByPath.get(question.location) ?? [];
             stepHasErrors = stepHasErrors || question.errors.length > 0;
         });
