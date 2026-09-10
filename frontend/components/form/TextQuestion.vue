@@ -11,6 +11,10 @@ interface Props {
 const props = defineProps<Props>();
 
 const modelValue = defineModel<string>();
+
+const emit = defineEmits<{
+    blur: [];
+}>();
 </script>
 
 <template>
@@ -30,6 +34,7 @@ const modelValue = defineModel<string>();
             type="text"
             class="form-control"
             :class="{ 'is-invalid': isInvalid }"
+            @blur="emit('blur')"
         />
         <textarea
             v-if="question.lines && question.lines >= 2"
@@ -38,6 +43,7 @@ const modelValue = defineModel<string>();
             class="form-control"
             :class="{ 'is-invalid': isInvalid }"
             :rows="question.lines"
+            @blur="emit('blur')"
         ></textarea>
     </div>
 </template>

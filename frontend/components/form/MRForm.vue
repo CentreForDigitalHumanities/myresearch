@@ -111,8 +111,7 @@ const watchedQuestions = computed(() =>
     props.step.questions.filter(
         (question) =>
             question.hasConditions ||
-            question.__typename === "FileUploadQuestionType" ||
-            question.stepNameOverride,
+            question.__typename === "FileUploadQuestionType",
     ),
 );
 
@@ -217,6 +216,16 @@ async function handleDeleteRepeat(question: QuestionWithValue): Promise<void> {
     }
 }
 
+function handleStepNameOverride(question: QuestionWithValue): void {
+    if (!question.stepNameOverride) {
+        return;
+    }
+    const userFormId = submissionId.value;
+    if (userFormId) {
+        void mutateFormSubmission(props.step, userFormId);
+    }
+}
+
 useWatchQuestions(watchedQuestions, () => {
     const userFormId = submissionId.value;
     if (userFormId) {
@@ -244,6 +253,7 @@ useWatchQuestions(watchedQuestions, () => {
                     @repeat-step-clicked="
                         (slug: string) => emit('repeat-step-clicked', slug)
                     "
+                    @blur="handleStepNameOverride(question)"
                 />
                 <a
                     v-if="question.isRepeatable && !isOnlyOccurrence(question)"
