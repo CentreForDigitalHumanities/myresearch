@@ -12,6 +12,7 @@ import type {
     SelectQuestionType,
     TextQuestionType,
     TrueFalseQuestionType,
+    RepeatableStepQuestionType,
 } from "~/generated/gql/graphql";
 import { i18n } from "@/plugins/i18n";
 import { useDisplayFileSize } from "./useDisplayFileSize";
@@ -58,13 +59,19 @@ export type SelectQuestionWithValue = SelectQuestionType &
         value: string;
     };
 
+export type RepeatableStepQuestionWithValue = RepeatableStepQuestionType &
+    LocatedQuestion & {
+        value: null;
+    };
+
 export type QuestionWithValue =
     | TextQuestionWithValue
     | NumberQuestionWithValue
     | TrueFalseQuestionWithValue
     | FileUploadQuestionWithValue
     | DateQuestionWithValue
-    | SelectQuestionWithValue;
+    | SelectQuestionWithValue
+    | RepeatableStepQuestionWithValue;
 
 export type SubstepWithValues = Omit<Substep, "questions"> & {
     questions: QuestionWithValue[];
@@ -317,6 +324,12 @@ function addValueAndLocationToQuestion(
                 value: fileValue,
             };
         }
+        case "RepeatableStepQuestionType":
+            return {
+                ...question,
+                location,
+                value: null,
+            } as RepeatableStepQuestionWithValue;
     }
 }
 

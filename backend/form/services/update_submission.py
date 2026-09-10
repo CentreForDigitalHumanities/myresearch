@@ -1,4 +1,4 @@
-from form.models.questions import FileUploadQuestion
+from form.models.questions import FileUploadQuestion, RepeatableStepQuestion
 from main.models import MRPermission, User
 from graphene_django.types import ErrorType
 from form.models.responses import MRDocument
@@ -8,6 +8,7 @@ from form.models import (
     UserFormSubmission,
     QuestionResponse,
     BaseQuestion,
+    RepeatableTextQuestion,
 )
 
 
@@ -47,12 +48,35 @@ def update_submission(
 
     for response in user_form_input.get("responses", []):  # type: ignore
         response_id = response["id"] if "id" in response else None
+        question_id = response.get("question_id", "<unknown>")
+
+        question = None
+        try:
+            question = BaseQuestion.objects.get(
+                pk=question_id,
+            ).get_subclass()
+        except BaseQuestion.DoesNotExist:
+            # Since repeatable question's id's are linked with their corresponding
+            # Repeatable object, their id's differ from their basequestion.
+            # But we need the basequestion's id here.
+            try:
+                question = RepeatableTextQuestion.objects.get(pk=question_id)
+                question_id = question.basequestion_ptr_id
+            except RepeatableTextQuestion.DoesNotExist:
+                pass
+
+        # Responses for RepeatableStepQuestions are managed in repeat_mutations
+        # and can be ignored here
+        if isinstance(
+            question,
+            RepeatableStepQuestion,
+        ):
+            continue
 
         try:
-            validate_response(response)
+            validate_response(response, question_id)
         except Exception as e:
             # if responses cause an error, add an error to the mutation's response
-            question_id = response.get("question_id", "<unknown>")
             errors.append(
                 ErrorType(
                     field="responses",
@@ -74,7 +98,7 @@ def update_submission(
                     current_submission.responses.remove(qr)
                     # Create a new response
                     new_response = QuestionResponse.objects.create(
-                        question_id=response["question_id"],
+                        question_id=question_id,
                         answer=response["answer"],
                         repeat_index=response["repeat_index"],
                     )
@@ -91,18 +115,20 @@ def update_submission(
                 current_submission.updated_at = timezone.now()
         else:
             new_response = QuestionResponse.objects.create(
-                question_id=response["question_id"],
+                question_id=question_id,
                 answer=response["answer"],
-                repeat_index=response["repeat_index"],
+                repeat_index_id=response["repeat_index"],
             )
             new_response.submissions.add(current_submission)
+            new_response.save()
             current_submission.updated_at = timezone.now()
     current_submission.save()
     return current_submission, errors
 
 
-def validate_response(response):
+def validate_response(response, question_id):
     """Backend validation incase malicious responses. Under normal circumstances all validations are already checked in the frontend"""
-    question = BaseQuestion.objects.get(id=response["question_id"]).get_subclass()
+    question = BaseQuestion.objects.get(id=question_id).get_subclass()
+
     # validate will throw an error in case of wrong input.
     question.validate(response["answer"]["value"])

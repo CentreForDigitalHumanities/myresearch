@@ -41,6 +41,7 @@ describe("useProcessForm", () => {
         placeholderEn: "",
         placeholderNl: "",
         hasConditions: false,
+        isRepeatable: false,
         stepNameOverride: false,
     });
 
@@ -61,6 +62,7 @@ describe("useProcessForm", () => {
         required,
         positiveOnly,
         hasConditions: false,
+        isRepeatable: false,
         stepNameOverride: false,
     });
 
@@ -81,6 +83,7 @@ describe("useProcessForm", () => {
         required,
         defaultValue,
         hasConditions: false,
+        isRepeatable: false,
         stepNameOverride: false,
     });
 
@@ -100,6 +103,7 @@ describe("useProcessForm", () => {
         sizeLimit: 99999999,
         required,
         hasConditions: false,
+        isRepeatable: false,
         stepNameOverride: false,
     });
 
@@ -120,6 +124,7 @@ describe("useProcessForm", () => {
         futureOnly,
         required,
         hasConditions: false,
+        isRepeatable: false,
         stepNameOverride: false,
     });
 
@@ -140,6 +145,7 @@ describe("useProcessForm", () => {
         multiple,
         required,
         hasConditions: false,
+        isRepeatable: false,
         stepNameOverride: false,
         options: [
             {
