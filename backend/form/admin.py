@@ -321,6 +321,13 @@ class RepeatableStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                 "description": "Set the display order of substeps. Use the substep IDs shown in the Substeps inline below.",
             },
         ),
+        (
+            "Step Info Order",
+            {
+                "fields": ("step_info_text_order",),
+                "description": "Set the display order of step info. Use the substep IDs shown below.",
+            },
+        ),
     )
     inlines = [
         SubstepInline,
