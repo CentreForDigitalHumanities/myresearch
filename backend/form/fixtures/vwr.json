@@ -217,7 +217,7 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 11,
+        "pk": 75,
         "fields": {
             "annotation_key": null,
             "step_name_override": false,
@@ -229,8 +229,8 @@
             "description": "<p>Distinguish all groups of people whose personal data you will collect or use (for instance: police officers, instagram users, primary school pupils).</p>",
             "description_en": "<p>Distinguish all groups of people whose personal data you will collect or use (for instance: police officers, instagram users, primary school pupils).</p>",
             "description_nl": "<p>Onderscheid alle groepen van wie er persoonsgegevens worden verzameld of gebruikt (bijvoorbeeld politieagenten, instagramgebruikers, leerlingen basisschool, etc.).</p>",
-            "required": true,
-            "_order": 1
+            "required": false,
+            "_order": 0
         }
     },
     {
@@ -500,7 +500,7 @@
             "description_en": "<p>Do you process any of the categories of sensitive personal data listed below of this group? If so, please check which ones.</p>",
             "description_nl": "<p>Verwerk je een van de onderstaande categorie&euml;n gevoelige persoonsgegevens van deze groep? Zo ja, vink aan welke.</p>",
             "required": false,
-            "_order": 15
+            "_order": 14
         }
     },
     {
@@ -518,7 +518,7 @@
             "description_en": "",
             "description_nl": "",
             "required": false,
-            "_order": 16
+            "_order": 15
         }
     },
     {
@@ -536,7 +536,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 17
+            "_order": 16
         }
     },
     {
@@ -554,7 +554,7 @@
             "description_en": "<p>Select all categories of personal data that you collect/proces of this group.</p>",
             "description_nl": "<p>Selecteer alle categorie&euml;n persoonsgegevens die je van deze groep verzamelt/verwerkt.</p>",
             "required": true,
-            "_order": 18
+            "_order": 17
         }
     },
     {
@@ -572,7 +572,7 @@
             "description_en": "<p>Select all categories of personal data that you collect/proces of this group.</p>",
             "description_nl": "<p>Selecteer alle categorie&euml;n persoonsgegevens die je van deze groep verzamelt/verwerkt.</p>",
             "required": true,
-            "_order": 19
+            "_order": 18
         }
     },
     {
@@ -590,7 +590,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 20
+            "_order": 19
         }
     },
     {
@@ -608,7 +608,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 21
+            "_order": 20
         }
     },
     {
@@ -626,7 +626,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 22
+            "_order": 21
         }
     },
     {
@@ -1221,13 +1221,6 @@
         }
     },
     {
-        "model": "form.numberquestion",
-        "pk": 11,
-        "fields": {
-            "positive_only": true
-        }
-    },
-    {
         "model": "form.questioncondition",
         "pk": 3,
         "fields": {
@@ -1321,18 +1314,6 @@
                 "value": "70"
             },
             "target_question": 47
-        }
-    },
-    {
-        "model": "form.questioncondition",
-        "pk": 17,
-        "fields": {
-            "trigger_question": 12,
-            "condition_type": "show",
-            "trigger_value": {
-                "value": true
-            },
-            "target_question": 11
         }
     },
     {
@@ -1921,6 +1902,45 @@
                 "value": "226"
             },
             "target_question": 43
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 71,
+        "fields": {
+            "trigger_question": 12,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": true
+            },
+            "target_question": 75
+        }
+    },
+    {
+        "model": "form.repeatable",
+        "pk": 1,
+        "fields": {
+            "repeat_indices": []
+        }
+    },
+    {
+        "model": "form.repeatablestep",
+        "pk": 1,
+        "fields": {
+            "step_ptr": 15
+        }
+    },
+    {
+        "model": "form.repeatablestepquestion",
+        "pk": 75,
+        "fields": {
+            "repeatable_step": 1,
+            "create_text": "add datasubject group",
+            "create_text_en": "add datasubject group",
+            "create_text_nl": "voeg datasubject groep toe",
+            "none_yet_text": "No data groups",
+            "none_yet_text_en": "No data groups",
+            "none_yet_text_nl": "Geen datagroepen"
         }
     },
     {
@@ -4048,6 +4068,23 @@
             "parent": 6,
             "is_overview": false,
             "_order": 0
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 15,
+        "fields": {
+            "name": "Data subject group",
+            "name_en": "Data subject group",
+            "name_nl": "Datasubjectgroep",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "data-subject-group",
+            "form": 1,
+            "parent": 6,
+            "is_overview": false,
+            "_order": 1
         }
     },
     {
