@@ -1236,8 +1236,6 @@
             "trigger_value": {
                 "value": "67"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 6
         }
     },
@@ -1250,8 +1248,6 @@
             "trigger_value": {
                 "value": true
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 38
         }
     },
@@ -1264,8 +1260,6 @@
             "trigger_value": {
                 "value": true
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 22
         }
     },
@@ -1278,8 +1272,6 @@
             "trigger_value": {
                 "value": true
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 25
         }
     },
@@ -1292,8 +1284,6 @@
             "trigger_value": {
                 "value": true
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 24
         }
     },
@@ -1306,8 +1296,6 @@
             "trigger_value": {
                 "value": true
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 23
         }
     },
@@ -1320,8 +1308,6 @@
             "trigger_value": {
                 "value": "150"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 46
         }
     },
@@ -1334,8 +1320,6 @@
             "trigger_value": {
                 "value": "70"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 47
         }
     },
@@ -1348,8 +1332,6 @@
             "trigger_value": {
                 "value": true
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 11
         }
     },
@@ -1362,8 +1344,6 @@
             "trigger_value": {
                 "value": "96"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 48
         }
     },
@@ -1376,8 +1356,6 @@
             "trigger_value": {
                 "value": "112"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 49
         }
     },
@@ -1390,8 +1368,6 @@
             "trigger_value": {
                 "value": true
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 51
         }
     },
@@ -1404,8 +1380,6 @@
             "trigger_value": {
                 "value": "158"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 53
         }
     },
@@ -1418,8 +1392,6 @@
             "trigger_value": {
                 "value": "160"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 41
         }
     },
@@ -1432,8 +1404,6 @@
             "trigger_value": {
                 "value": "161"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 42
         }
     },
@@ -1446,8 +1416,6 @@
             "trigger_value": {
                 "value": "122"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 43
         }
     },
@@ -1460,8 +1428,6 @@
             "trigger_value": {
                 "value": "126"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 59
         }
     },
@@ -1474,8 +1440,6 @@
             "trigger_value": {
                 "value": "162"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 60
         }
     },
@@ -1488,8 +1452,6 @@
             "trigger_value": {
                 "value": "168"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 39
         }
     },
@@ -1502,8 +1464,6 @@
             "trigger_value": {
                 "value": "113"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 57
         }
     },
@@ -1516,8 +1476,6 @@
             "trigger_value": {
                 "value": "114"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 57
         }
     },
@@ -1530,8 +1488,6 @@
             "trigger_value": {
                 "value": "115"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 57
         }
     },
@@ -1544,8 +1500,6 @@
             "trigger_value": {
                 "value": "116"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 57
         }
     },
@@ -1558,8 +1512,6 @@
             "trigger_value": {
                 "value": "117"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 57
         }
     },
@@ -1572,8 +1524,6 @@
             "trigger_value": {
                 "value": "118"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 57
         }
     },
@@ -1586,8 +1536,6 @@
             "trigger_value": {
                 "value": "119"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 57
         }
     },
@@ -1600,8 +1548,6 @@
             "trigger_value": {
                 "value": "120"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 57
         }
     },
@@ -1614,8 +1560,6 @@
             "trigger_value": {
                 "value": "125"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 57
         }
     },
@@ -1628,8 +1572,6 @@
             "trigger_value": {
                 "value": "170"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 15
         }
     },
@@ -1642,8 +1584,6 @@
             "trigger_value": {
                 "value": "172"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 17
         }
     },
@@ -1656,8 +1596,6 @@
             "trigger_value": {
                 "value": true
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 16
         }
     },
@@ -1670,8 +1608,6 @@
             "trigger_value": {
                 "value": true
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 64
         }
     },
@@ -1684,8 +1620,6 @@
             "trigger_value": {
                 "value": "196"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 46
         }
     },
@@ -1698,8 +1632,6 @@
             "trigger_value": {
                 "value": "74"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 45
         }
     },
@@ -1712,8 +1644,6 @@
             "trigger_value": {
                 "value": "75"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 66
         }
     },
@@ -1726,8 +1656,6 @@
             "trigger_value": {
                 "value": "75"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 67
         }
     },
@@ -1740,8 +1668,6 @@
             "trigger_value": {
                 "value": "205"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 68
         }
     },
@@ -1754,8 +1680,6 @@
             "trigger_value": {
                 "value": "168"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 69
         }
     },
@@ -1768,8 +1692,6 @@
             "trigger_value": {
                 "value": "74"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 39
         }
     },
@@ -1782,8 +1704,6 @@
             "trigger_value": {
                 "value": "75"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 69
         }
     },
@@ -1796,8 +1716,6 @@
             "trigger_value": {
                 "value": "74"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 62
         }
     },
@@ -1810,8 +1728,6 @@
             "trigger_value": {
                 "value": "74"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 44
         }
     },
@@ -1824,8 +1740,6 @@
             "trigger_value": {
                 "value": "75"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 44
         }
     },
@@ -1838,8 +1752,6 @@
             "trigger_value": {
                 "value": "77"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 70
         }
     },
@@ -1852,8 +1764,6 @@
             "trigger_value": {
                 "value": "224"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 71
         }
     },
@@ -1866,8 +1776,6 @@
             "trigger_value": {
                 "value": true
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 51
         }
     },
@@ -1880,8 +1788,6 @@
             "trigger_value": {
                 "value": "75"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 74
         }
     },
@@ -1894,8 +1800,6 @@
             "trigger_value": {
                 "value": "206"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 73
         }
     },
@@ -1908,8 +1812,6 @@
             "trigger_value": {
                 "value": "207"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 73
         }
     },
@@ -1922,8 +1824,6 @@
             "trigger_value": {
                 "value": "208"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 73
         }
     },
@@ -1936,8 +1836,6 @@
             "trigger_value": {
                 "value": "209"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 73
         }
     },
@@ -1950,8 +1848,6 @@
             "trigger_value": {
                 "value": "210"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 73
         }
     },
@@ -1964,8 +1860,6 @@
             "trigger_value": {
                 "value": "211"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 73
         }
     },
@@ -1978,8 +1872,6 @@
             "trigger_value": {
                 "value": "212"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 73
         }
     },
@@ -1992,8 +1884,6 @@
             "trigger_value": {
                 "value": "213"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 73
         }
     },
@@ -2006,8 +1896,6 @@
             "trigger_value": {
                 "value": "214"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 73
         }
     },
@@ -2020,8 +1908,6 @@
             "trigger_value": {
                 "value": "123"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 43
         }
     },
@@ -2034,8 +1920,6 @@
             "trigger_value": {
                 "value": "226"
             },
-            "repeat_count": null,
-            "use_answer_as_count": false,
             "target_question": 43
         }
     },
@@ -4164,18 +4048,6 @@
             "parent": 6,
             "is_overview": false,
             "_order": 0
-        }
-    },
-    {
-        "model": "form.stepcondition",
-        "pk": 2,
-        "fields": {
-            "trigger_question": 11,
-            "condition_type": "repeat_dynamic",
-            "trigger_value": {},
-            "repeat_count": null,
-            "use_answer_as_count": true,
-            "target_step": 7
         }
     },
     {
