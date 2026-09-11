@@ -379,12 +379,30 @@
     },
     {
         "model": "form.basequestion",
+        "pk": 74,
+        "fields": {
+            "annotation_key": null,
+            "step_name_override": false,
+            "text": "Special categories of personal data 2",
+            "text_en": "Special categories of personal data 2",
+            "text_nl": "Bijzondere persoonsgegevens 2",
+            "step": 7,
+            "form": 1,
+            "description": "<p>Do you process any of the categories of special personal data listed below of this group? If so, please check which ones.</p>",
+            "description_en": "<p>Do you process any of the categories of special personal data listed below of this group? If so, please check which ones.</p>",
+            "description_nl": "<p>Verwerk je een van de onderstaande categorie&euml;n bijzondere persoonsgegevens van deze groep? Zo ja, vink aan welke.</p>",
+            "required": true,
+            "_order": 8
+        }
+    },
+    {
+        "model": "form.basequestion",
         "pk": 69,
         "fields": {
             "annotation_key": null,
             "step_name_override": false,
-            "text": "Categories:",
-            "text_en": "Categories:",
+            "text": "Categories: 2",
+            "text_en": "Categories: 2",
             "text_nl": "Categorie\u00ebn: 2",
             "step": 7,
             "form": 1,
@@ -392,7 +410,25 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 8
+            "_order": 9
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 73,
+        "fields": {
+            "annotation_key": null,
+            "step_name_override": false,
+            "text": "Legal exception",
+            "text_en": "Legal exception",
+            "text_nl": "Uitzonderingsgrond 2",
+            "step": 7,
+            "form": 1,
+            "description": "<div>Which exception applies to the processing of special categories of personal data? Please explain if asked.</div>\r\n<div>&nbsp;</div>\r\n<div>You have discussed your response with the privacy officer.</div>",
+            "description_en": "<div>Which exception applies to the processing of special categories of personal data? Please explain if asked.</div>\r\n<div>&nbsp;</div>\r\n<div>You have discussed your response with the privacy officer.</div>",
+            "description_nl": "<div>Op welke uitzonderingsgrond is de verwerking van bijzondere persoonsgegevens gebaseerd? Geef desgevraagd uitleg.</div>\r\n<div>&nbsp;</div>\r\n<div>Over het antwoord heb je overlegd met de privacy officer.</div>",
+            "required": true,
+            "_order": 10
         }
     },
     {
@@ -410,7 +446,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 9
+            "_order": 11
         }
     },
     {
@@ -428,7 +464,7 @@
             "description_en": "<div>If you do not have consent, on what exception is the processing of special personal data based? Please explain if necessary.</div>\r\n<div></div>\r\n<div>You have discussed your response with the privacy officer.</div>",
             "description_nl": "<div>Als je geen toestemming hebt, op welke uitzonderingsgrond is de verwerking van bijzondere persoonsgegevens dan gebaseerd? Geef uitleg waar nodig.</div>\r\n<div></div>\r\n<div>Over het antwoord heb je overlegd met de privacy officer.</div>",
             "required": true,
-            "_order": 10
+            "_order": 12
         }
     },
     {
@@ -446,25 +482,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 11
-        }
-    },
-    {
-        "model": "form.basequestion",
-        "pk": 58,
-        "fields": {
-            "annotation_key": null,
-            "step_name_override": false,
-            "text": "Explanation",
-            "text_en": "Explanation",
-            "text_nl": "Toelichting",
-            "step": 7,
-            "form": 1,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": true,
-            "_order": 12
+            "_order": 13
         }
     },
     {
@@ -482,7 +500,7 @@
             "description_en": "<p>Do you process any of the categories of sensitive personal data listed below of this group? If so, please check which ones.</p>",
             "description_nl": "<p>Verwerk je een van de onderstaande categorie&euml;n gevoelige persoonsgegevens van deze groep? Zo ja, vink aan welke.</p>",
             "required": false,
-            "_order": 13
+            "_order": 15
         }
     },
     {
@@ -500,7 +518,7 @@
             "description_en": "",
             "description_nl": "",
             "required": false,
-            "_order": 14
+            "_order": 16
         }
     },
     {
@@ -518,7 +536,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 15
+            "_order": 17
         }
     },
     {
@@ -536,7 +554,7 @@
             "description_en": "<p>Select all categories of personal data that you collect/proces of this group.</p>",
             "description_nl": "<p>Selecteer alle categorie&euml;n persoonsgegevens die je van deze groep verzamelt/verwerkt.</p>",
             "required": true,
-            "_order": 16
+            "_order": 18
         }
     },
     {
@@ -554,7 +572,7 @@
             "description_en": "<p>Select all categories of personal data that you collect/proces of this group.</p>",
             "description_nl": "<p>Selecteer alle categorie&euml;n persoonsgegevens die je van deze groep verzamelt/verwerkt.</p>",
             "required": true,
-            "_order": 17
+            "_order": 19
         }
     },
     {
@@ -572,7 +590,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 18
+            "_order": 20
         }
     },
     {
@@ -590,7 +608,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 19
+            "_order": 21
         }
     },
     {
@@ -608,7 +626,7 @@
             "description_en": "",
             "description_nl": "",
             "required": true,
-            "_order": 20
+            "_order": 22
         }
     },
     {
@@ -1435,20 +1453,6 @@
     },
     {
         "model": "form.questioncondition",
-        "pk": 26,
-        "fields": {
-            "trigger_question": 42,
-            "condition_type": "show",
-            "trigger_value": {
-                "value": "123"
-            },
-            "repeat_count": null,
-            "use_answer_as_count": false,
-            "target_question": 58
-        }
-    },
-    {
-        "model": "form.questioncondition",
         "pk": 27,
         "fields": {
             "trigger_question": 44,
@@ -1799,20 +1803,6 @@
     },
     {
         "model": "form.questioncondition",
-        "pk": 53,
-        "fields": {
-            "trigger_question": 10,
-            "condition_type": "show",
-            "trigger_value": {
-                "value": "75"
-            },
-            "repeat_count": null,
-            "use_answer_as_count": false,
-            "target_question": 62
-        }
-    },
-    {
-        "model": "form.questioncondition",
         "pk": 54,
         "fields": {
             "trigger_question": 10,
@@ -1879,6 +1869,174 @@
             "repeat_count": null,
             "use_answer_as_count": false,
             "target_question": 51
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 59,
+        "fields": {
+            "trigger_question": 10,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "75"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 74
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 60,
+        "fields": {
+            "trigger_question": 69,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "206"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 73
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 61,
+        "fields": {
+            "trigger_question": 69,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "207"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 73
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 62,
+        "fields": {
+            "trigger_question": 69,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "208"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 73
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 63,
+        "fields": {
+            "trigger_question": 69,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "209"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 73
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 64,
+        "fields": {
+            "trigger_question": 69,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "210"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 73
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 65,
+        "fields": {
+            "trigger_question": 69,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "211"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 73
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 66,
+        "fields": {
+            "trigger_question": 69,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "212"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 73
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 67,
+        "fields": {
+            "trigger_question": 69,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "213"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 73
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 68,
+        "fields": {
+            "trigger_question": 69,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "214"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 73
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 69,
+        "fields": {
+            "trigger_question": 42,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "123"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 43
+        }
+    },
+    {
+        "model": "form.questioncondition",
+        "pk": 70,
+        "fields": {
+            "trigger_question": 73,
+            "condition_type": "show",
+            "trigger_value": {
+                "value": "226"
+            },
+            "repeat_count": null,
+            "use_answer_as_count": false,
+            "target_question": 43
         }
     },
     {
@@ -3169,9 +3327,9 @@
         "model": "form.selectoption",
         "pk": 186,
         "fields": {
-            "label": "Video recordings of conversations/interviews",
-            "label_en": "Video recordings of conversations/interviews",
-            "label_nl": "Video-opnamen van gesprekken/interviews",
+            "label": "Video recordings",
+            "label_en": "Video recordings",
+            "label_nl": "Video-opnamen",
             "default_selected": false,
             "question": 66,
             "_order": 11
@@ -3181,9 +3339,9 @@
         "model": "form.selectoption",
         "pk": 187,
         "fields": {
-            "label": "Audio recordings of conversations/interviews",
-            "label_en": "Audio recordings of conversations/interviews",
-            "label_nl": "Geluidsopnamen van gesprekken/interviews",
+            "label": "Audio recordings",
+            "label_en": "Audio recordings",
+            "label_nl": "Geluidsopnamen",
             "default_selected": false,
             "question": 66,
             "_order": 12
@@ -3562,6 +3720,54 @@
         }
     },
     {
+        "model": "form.selectoption",
+        "pk": 225,
+        "fields": {
+            "label": "The special categories of data have clearly been made public by the data subjects themselves.",
+            "label_en": "The special categories of data have clearly been made public by the data subjects themselves.",
+            "label_nl": "De bijzondere persoonsgegevens zijn overduidelijk openbaar gemaakt door de datasubjecten zelf.",
+            "default_selected": false,
+            "question": 73,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 226,
+        "fields": {
+            "label": "Necessary for a compelling public interest specified by law, namely:",
+            "label_en": "Necessary for a compelling public interest specified by law, namely:",
+            "label_nl": "Noodzakelijk voor een zwaarwegend algemeen belang dat in de wet wordt genoemd, te weten:",
+            "default_selected": false,
+            "question": 73,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 227,
+        "fields": {
+            "label": "Yes",
+            "label_en": "Yes",
+            "label_nl": "Ja",
+            "default_selected": false,
+            "question": 74,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 228,
+        "fields": {
+            "label": "No",
+            "label_en": "No",
+            "label_nl": "Nee",
+            "default_selected": false,
+            "question": 74,
+            "_order": 1
+        }
+    },
+    {
         "model": "form.selectquestion",
         "pk": 5,
         "fields": {
@@ -3661,9 +3867,23 @@
     },
     {
         "model": "form.selectquestion",
+        "pk": 74,
+        "fields": {
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
         "pk": 69,
         "fields": {
             "multiple": true
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 73,
+        "fields": {
+            "multiple": false
         }
     },
     {
@@ -4576,12 +4796,34 @@
     },
     {
         "model": "form.textquestion",
+        "pk": 14,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
         "pk": 26,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 1,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 36,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
             "is_email": false
         }
     },
@@ -4599,28 +4841,6 @@
     {
         "model": "form.textquestion",
         "pk": 9,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 36,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 14,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -4664,17 +4884,6 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 48,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 22,
         "fields": {
             "placeholder": "",
@@ -4686,7 +4895,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 13,
+        "pk": 48,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -4697,18 +4906,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 28,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 15,
+        "pk": 13,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -4730,7 +4928,18 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 55,
+        "pk": 15,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 28,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -4742,6 +4951,17 @@
     {
         "model": "form.textquestion",
         "pk": 29,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 55,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -4774,17 +4994,6 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 25,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 30,
         "fields": {
             "placeholder": "",
@@ -4796,12 +5005,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 31,
+        "pk": 25,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 1,
+            "lines": 5,
             "is_email": false
         }
     },
@@ -4818,7 +5027,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 32,
+        "pk": 31,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -4830,6 +5039,17 @@
     {
         "model": "form.textquestion",
         "pk": 16,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 32,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -4863,17 +5083,6 @@
     {
         "model": "form.textquestion",
         "pk": 43,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 58,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
