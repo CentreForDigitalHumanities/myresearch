@@ -53,6 +53,8 @@ function formatAnswer(question: QuestionWithValue): string {
             return typeof value === "number"
                 ? value.toString()
                 : notAnswered.value;
+        case "RepeatableStepQuestionType":
+            return t("-");
         default:
             return notAnswered.value;
     }

@@ -1,0 +1,447 @@
+import pytest
+import json
+from copy import deepcopy
+from form.models import (
+    Step,
+    UserFormSubmission,
+    RepeatableStep,
+    RepeatableTextQuestion,
+    RepeatIndex,
+)
+from form.services.user_form_resolver import is_repeatable
+from research.tests import normal_user, test_study
+
+from pprint import pprint
+
+# If you're new here, I recommend you scroll down to NEWHERE,
+# uncomment the breakpoint, and execute pprint(content) to get
+# a feel of how these tests operate.
+
+
+def find_steps(content):
+    return content["data"]["form"]["steps"]
+
+
+def findkey(d, key):
+    """
+    Finds all the values for a given key in d, at any depth of dict or
+    list. Returns a list of dicts in which the found value belongs to a
+    top-level key.
+
+    This function is useful for finding all occurrences of a certain key
+    in a large JSON response. Give it a try for some of the `content`
+    responses below.
+    """
+    if type(d) == dict:
+        if key in d:
+            # Found a value for our key!
+            found = [deepcopy(d)]
+            # But we'll also keep looking inside our found value, while
+            # removing it from the remaining pool. We make another copy
+            # to not mutate the original dict.
+            copy = deepcopy(d)
+            item = copy.pop(key)
+            return found + findkey([item, copy], key)
+        else:
+            # Not in this dict, but maybe there's more dicts hidden
+            # in the values here. So we set the remainder to the list
+            # of those values
+            return findkey(list(d.values()), key)
+    # Lists are the only other type we look into
+    elif type(d) == list:
+        if d == []:
+            # Empty list, stop looking
+            return []
+        # Continue looking in the first item of the list
+        copy = deepcopy(d)
+        item = copy.pop()
+        return findkey(item, key) + findkey(copy, key)
+    # If d is neither a list or dict, we call it a day
+    return []
+
+
+GetFormQuery = """
+query GetForm($submissionId: ID!) {
+    form(submissionId: $submissionId, mrPermission: "Edit") {
+        formId
+        steps {
+            stepId
+            slug
+            nameEn
+            repeatIndex
+            questions {
+                questionId
+                repeatIndex
+                answer
+                responseId
+                __typename
+            }
+            substeps {
+                stepId
+                slug
+                nameEn
+                repeatIndex
+                questions {
+                    questionId
+                    repeatIndex
+                    answer
+                    responseId
+                    __typename
+                }
+            }
+        }
+    }
+}
+"""
+
+
+@pytest.mark.django_db(transaction=True)
+def test_repeatable_step(
+    client_query,
+    test_user,
+    submission,
+    step,
+    form,
+    test_study,
+    repeatable_step,
+):
+
+    # Our form contains two steps of which one is repeatable
+    assert len(form.steps.all()) == 2
+    assert any([is_repeatable(step) for step in form.steps.all()])
+
+    response = client_query(
+        GetFormQuery,
+        user=test_user,
+        variables={
+            "submissionId": submission.id,
+        },
+    )
+    content = json.loads(response.content)
+    assert "errors" not in content
+
+    # With no RepeatIndex, our repeatable step should not yet be visible
+    found = findkey(content, "stepId")
+    assert len(found) == 1
+    assert not is_repeatable(Step.objects.get(pk=found[0]["stepId"]))
+
+
+CreateRepeatQuery = """
+mutation CreateRepeat($repeatable_id: ID! $submission_id: ID! $parent_id: ID) {
+  createRepeat(repeatableId: $repeatable_id, userFormId: $submission_id, parentId: $parent_id) {
+    errors {
+      field
+      messages
+    }
+    newRepeatIndex
+  }
+}
+"""
+
+
+@pytest.mark.django_db(transaction=True)
+def test_create_repeat(
+    client_query,
+    test_user,
+    submission,
+    step,
+    form,
+    test_study,
+    repeatable_step,
+):
+    repeatable_id = repeatable_step.repeatable_ptr.pk
+    response = client_query(
+        CreateRepeatQuery,
+        user=test_user,
+        variables={
+            "submission_id": submission.id,
+            "repeatable_id": repeatable_id,
+        },
+    )
+    content = json.loads(response.content)
+    assert "errors" not in content
+    new_index = int(content["data"]["createRepeat"]["newRepeatIndex"])
+    # Now let's get the form again.
+    response = client_query(
+        GetFormQuery,
+        user=test_user,
+        variables={
+            "submissionId": submission.id,
+        },
+    )
+    content = json.loads(response.content)
+    assert "errors" not in content
+    # Find all items in content with a stepId key
+    found = findkey(content, "stepId")
+    assert len(found) == 2
+
+
+@pytest.mark.django_db(transaction=True)
+def test_substep_repeat(
+    client_query,
+    test_user,
+    submission,
+    step,
+    form,
+    test_study,
+    repeatable_step,
+):
+    repeatable_substep = RepeatableStep(
+        name="Repeatable substep",
+        slug="sub_rep",
+        form=form,
+        parent=repeatable_step,
+    )
+    repeatable_substep.save()
+    substep_id = repeatable_substep.repeatable_ptr.pk
+    # Get the form again
+    response = client_query(
+        GetFormQuery,
+        user=test_user,
+        variables={
+            "submissionId": submission.id,
+        },
+    )
+    content = json.loads(response.content)
+    assert "errors" not in content
+    # Find all items in content with a stepId key
+    # The substep and its repeat should not be present
+    found = findkey(content, "stepId")
+    assert len(found) == 1
+    step_id = repeatable_step.repeatable_ptr.pk
+    # Create a repeat for the main step
+    response = client_query(
+        CreateRepeatQuery,
+        user=test_user,
+        variables={
+            "submission_id": submission.id,
+            "repeatable_id": step_id,
+        },
+    )
+    content = json.loads(response.content)
+    new_index = int(content["data"]["createRepeat"]["newRepeatIndex"])
+    # Create a repeat for the substep
+    response = client_query(
+        CreateRepeatQuery,
+        user=test_user,
+        variables={
+            "submission_id": submission.id,
+            "repeatable_id": substep_id,
+            "parent_id": new_index,
+        },
+    )
+    content = json.loads(response.content)
+    assert "errors" not in content
+    # Get the form again
+    response = client_query(
+        GetFormQuery,
+        user=test_user,
+        variables={
+            "submissionId": submission.id,
+        },
+    )
+    content = json.loads(response.content)
+    assert "errors" not in content
+    # Now we should have five
+    found = findkey(content, "stepId")
+    assert len(found) == 3
+
+
+@pytest.mark.django_db(transaction=True)
+def test_question_repeat(
+    client_query,
+    test_user,
+    submission,
+    step,
+    form,
+    test_study,
+    repeatable_step,
+):
+    repeatable_substep = RepeatableStep(
+        name="Repeatable substep",
+        slug="sub_rep",
+        form=form,
+        parent=repeatable_step,
+    )
+    repeatable_substep.save()
+    substep_id = repeatable_substep.repeatable_ptr.pk
+    # Add repeatable question to substep
+    rq = RepeatableTextQuestion(
+        text="Repeatable Text Question",
+        step=repeatable_substep,
+    )
+    rq.save()
+    # Add repeats to step and substeps
+    #     First the step...
+    step_id = repeatable_step.repeatable_ptr.pk
+    response = client_query(
+        CreateRepeatQuery,
+        user=test_user,
+        variables={
+            "submission_id": submission.id,
+            "repeatable_id": step_id,
+        },
+    )
+    content = json.loads(response.content)
+    parent_index = int(content["data"]["createRepeat"]["newRepeatIndex"])
+    #     Now two substeps
+    response = client_query(
+        CreateRepeatQuery,
+        user=test_user,
+        variables={
+            "submission_id": submission.id,
+            "repeatable_id": substep_id,
+            "parent_id": parent_index,
+        },
+    )
+    response = client_query(
+        CreateRepeatQuery,
+        user=test_user,
+        variables={
+            "submission_id": submission.id,
+            "repeatable_id": substep_id,
+            "parent_id": parent_index,
+        },
+    )
+    # And save the index and question id of the second substep repeat
+    content = json.loads(response.content)
+    parent_index = int(content["data"]["createRepeat"]["newRepeatIndex"])
+    # Create a repeat for one of repeatable questions
+    response = client_query(
+        CreateRepeatQuery,
+        user=test_user,
+        variables={
+            "submission_id": submission.id,
+            "repeatable_id": rq.pk,
+            "parent_id": parent_index,
+        },
+    )
+    content = json.loads(response.content)
+    assert "errors" not in content
+    new_index = int(content["data"]["createRepeat"]["newRepeatIndex"])
+    # Get the form again
+    response = client_query(
+        GetFormQuery,
+        user=test_user,
+        variables={
+            "submissionId": submission.id,
+        },
+    )
+    content = json.loads(response.content)
+    ################
+    #   NEWHERE    #
+    # breakpoint() #
+    ################
+    # Assert that we now have one question instance
+    questions = [
+        q for q in findkey(content, "questionId") if int(q["questionId"]) == rq.pk
+    ]
+    assert len(questions) == 1
+    assert int(questions[0]["repeatIndex"]) == new_index
+
+
+SaveFormQuery = """
+mutation SaveFormSubmission($userFormInput: UserFormInput!) {
+  updateFormSubmission(userFormInput: $userFormInput, finalize: false) {
+    ok
+    errors {
+      field
+      messages
+      __typename
+    }
+    __typename
+  }
+}
+"""
+
+
+@pytest.mark.django_db(transaction=True)
+def test_repeat_responses(
+    client_query,
+    test_user,
+    submission,
+    step,
+    form,
+    test_study,
+    repeatable_step,
+):
+    rq1 = RepeatableTextQuestion(
+        text="Repeatable Text Question",
+        step=repeatable_step,
+    )
+    rq1.save()
+    # Set up repeatable substep and repeatable questions
+    repeatable_substep = RepeatableStep(
+        name="Repeatable substep",
+        slug="sub_rep",
+        form=form,
+        parent=repeatable_step,
+    )
+    repeatable_substep.save()
+    substep_id = repeatable_substep.repeatable_ptr.pk
+    # Add repeatable question to substep
+    rq2 = RepeatableTextQuestion(
+        text="Repeatable substep Question",
+        step=repeatable_substep,
+    )
+    rq2.save()
+    # Add repeats to step and substeps
+    for i in range(2):
+        step_ri = RepeatIndex.objects.create()
+        step_ri.submissions.add(submission)
+        repeatable_step.repeat_indices.add(
+            step_ri,
+        )
+        for i in range(2):
+            question_ri = RepeatIndex.objects.create(
+                parent=step_ri,
+            )
+            question_ri.submissions.add(submission)
+            rq1.repeat_indices.add(question_ri)
+            substep_ri = RepeatIndex.objects.create(
+                parent=step_ri,
+            )
+            substep_ri.submissions.add(submission)
+            repeatable_substep.repeat_indices.add(
+                substep_ri,
+            )
+            for i in range(2):
+                question2_ri = RepeatIndex.objects.create(
+                    parent=substep_ri,
+                )
+                question2_ri.submissions.add(submission)
+                rq2.repeat_indices.add(question2_ri)
+    # Get the form again with all our various
+    response = client_query(
+        GetFormQuery,
+        user=test_user,
+        variables={
+            "submissionId": submission.id,
+        },
+    )
+    content = json.loads(response.content)
+    # Now submit responses to all our subquestions
+    responses = []
+    for index in rq2.repeat_indices.filter(
+        submissions=submission,
+    ):
+        responses.append(
+            {
+                "answer": json.dumps({"value": f"Test answer for index {index.pk}"}),
+                "questionId": rq2.basequestion_ptr.pk,
+                "repeatIndex": index.pk,
+            }
+        )
+    gql = client_query(
+        SaveFormQuery,
+        user=test_user,
+        variables={
+            "submissionId": submission.id,
+            "userFormInput": {
+                "submissionId": submission.id,
+                "responses": responses,
+            },
+        },
+    )
+    content = json.loads(gql.content)
+    assert "errors" not in content

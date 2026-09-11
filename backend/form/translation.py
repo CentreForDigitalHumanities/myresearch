@@ -10,8 +10,11 @@ from .models import (
     NumberQuestion,
     SelectOption,
     TextQuestion,
+    RepeatableTextQuestion,
     SelectQuestion,
     TrueFalseQuestion,
+    RepeatableStep,
+    RepeatableStepQuestion,
 )
 
 
@@ -23,6 +26,16 @@ class MRFormTranslationOptions(TranslationOptions):
 @register(Step)
 class StepTranslationOptions(TranslationOptions):
     fields = ["name", "description"]
+
+
+@register(RepeatableStep)
+class RepeatableStepTranslationOptions(TranslationOptions):
+    """
+    RepeatableStep inherits the translatable fields from StepTranslationOptions,
+    but must still be registered regardless.
+    """
+
+    fields = []
 
 
 @register(StepInfoText)
@@ -55,6 +68,16 @@ class TextQuestionTranslationOptions(TranslationOptions):
     fields = ["placeholder"]
 
 
+@register(RepeatableTextQuestion)
+class RepeatableTextQuestionTranslationOptions(TranslationOptions):
+    """
+    RepeatableTextQuestion inherits the translatable fields from TextQuestionTranslationOptions,
+    but must still be registered regardless.
+    """
+
+    fields = []
+
+
 @register(NumberQuestion)
 class NumberQuestionTranslationOptions(TranslationOptions):
     pass
@@ -68,3 +91,12 @@ class DateQuestionTranslationOptions(TranslationOptions):
 @register(FileUploadQuestion)
 class FileUploadQuestionTranslationOptions(TranslationOptions):
     pass
+
+
+@register(RepeatableStepQuestion)
+class RepeatableStepQuestionTranslationOptions(TranslationOptions):
+
+    fields = [
+        "create_text",
+        "none_yet_text",
+    ]

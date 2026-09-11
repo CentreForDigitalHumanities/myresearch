@@ -75,3 +75,65 @@ class StepInfoText(models.Model):
 
     class Meta:
         order_with_respect_to = "step"
+
+
+class RepeatIndex(models.Model):
+    """
+    A marker for various repeatable items to be connected
+    to a UserFormSubmission through a single foreign
+    relationship.
+
+    Although a repeatable item has a simple relationship to
+    its indeces representing its repeats, the index itself has
+    an additional relationship to its parent. This is necessary
+    to disambiguate parallel nested repeats within the same
+    submission.
+    """
+
+    parent = models.ForeignKey(
+        to="form.RepeatIndex",
+        on_delete=models.CASCADE,
+        default=None,
+        null=True,
+        related_name="children",
+    )
+
+    submissions = models.ManyToManyField(
+        to="form.UserFormSubmission",
+        related_name="repeats",
+    )
+
+    def subtree(
+        self,
+    ):
+        """
+        Return all indexes with a repeatable that also references
+        this index.
+
+        Stated simply, this means all indexes below this item. So
+        for a repeatable step, this function
+        will return the repeats of substeps and questions benath it.
+        """
+        return self.objects.filter(
+            repeatable_set__repeat_indices=self,
+        ).exclude(pk=self.pk)
+
+
+class Repeatable(
+    models.Model,
+):
+    # We specify the autofield explicitly so that the
+    # default "pk" doesn't conflict with any subclasses
+    repeat_id = models.AutoField(primary_key=True)
+
+    repeat_indices = models.ManyToManyField(
+        to=RepeatIndex,
+        default=None,
+    )
+
+
+class RepeatableStep(
+    Repeatable,
+    Step,
+):
+    pass
