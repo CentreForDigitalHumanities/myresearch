@@ -79,7 +79,7 @@ class SubstepInline(TinyMCETextFieldMixin, admin.StackedInline):
 class SelectOptionInline(admin.TabularInline):
     model = SelectOption
     extra = 0
-    fields = ("label", "label_nl", "label_en", "default_selected")
+    fields = ("label_nl", "label_en", "default_selected")
 
 
 class StepConditionInline(admin.StackedInline):
@@ -319,6 +319,13 @@ class RepeatableStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
             {
                 "fields": ("substep_order",),
                 "description": "Set the display order of substeps. Use the substep IDs shown in the Substeps inline below.",
+            },
+        ),
+        (
+            "Step Info Order",
+            {
+                "fields": ("step_info_text_order",),
+                "description": "Set the display order of step info. Use the substep IDs shown below.",
             },
         ),
     )
