@@ -46,7 +46,7 @@ class CreateRepeatMutation(Mutation):
                 )
             else:
                 parent_index = None
-            # assert submission.can_be_edited_by(user)
+            assert submission.can_be_edited_by(user)
         except ObjectDoesNotExist as error:
             return cls(errors=[error])
         except AssertionError:
