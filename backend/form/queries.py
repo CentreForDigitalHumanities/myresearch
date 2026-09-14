@@ -1,8 +1,8 @@
 from typing import Optional
-from graphene import ID, Field, ObjectType, ResolveInfo, String, List, Int
+from graphene import ID, Field, ObjectType, ResolveInfo, String, List
 
 
-from main.models import MRPermission, User
+from main.models import User
 from form.services.form_evaluator import FormEvaluator
 from form.services.user_form_resolver import UserFormResolver
 from form.types.UserFormType import UserFormType
@@ -115,48 +115,49 @@ class RepeatableStepQueries(ObjectType):
 
         try:
             repeatable_step = RepeatableStep.objects.get(pk=repeatable_id)
-
-            # Fetch the repeat index objects
-            repeat_index_objects = RepeatIndex.objects.filter(pk__in=repeat_indices)
-
-            step_name_override_question = BaseQuestion.objects.filter(
-                step=repeatable_step, step_name_override=True
-            )
-
-            step_names = {}
-            if step_name_override_question:
-
-                for repeat_idx in repeat_index_objects:
-                    response = QuestionResponse.objects.filter(
-                        question=step_name_override_question[0], repeat_index=repeat_idx
-                    )
-                    if response:
-                        step_names[repeat_idx] = response[0].answer["value"]
-                    else:
-                        step_names[repeat_idx] = False
-
-            return [
-                StepType(
-                    step_id=repeatable_step.id,
-                    name_en=(
-                        step_names[repeat_idx]
-                        if step_name_override_question and step_names[repeat_idx]
-                        else repeatable_step.name_en
-                    ),
-                    name_nl=(
-                        step_names[repeat_idx]
-                        if step_name_override_question and step_names[repeat_idx]
-                        else repeatable_step.name_nl
-                    ),
-                    description_nl=repeatable_step.description_nl,
-                    description_en=repeatable_step.description_en,
-                    slug=repeatable_step.slug,
-                    is_overview=repeatable_step.is_overview,
-                    questions=[],
-                    substeps=[],
-                    repeat_index=int(repeat_idx.id),
-                )
-                for repeat_idx in repeat_index_objects
-            ]
         except RepeatableStep.DoesNotExist:
             return []
+
+        # Fetch the repeat index objects
+        repeat_index_objects = RepeatIndex.objects.filter(pk__in=repeat_indices)
+
+        step_name_override_question = BaseQuestion.objects.filter(
+            step=repeatable_step, step_name_override=True
+        )
+
+        step_names = {}
+        if step_name_override_question:
+
+            for repeat_idx in repeat_index_objects:
+                response = QuestionResponse.objects.filter(
+                    question=step_name_override_question[0], repeat_index=repeat_idx
+                )
+                if response:
+                    step_names[repeat_idx] = response[0].answer["value"]
+                else:
+                    step_names[repeat_idx] = False
+
+        return [
+            StepType(
+                step_id=repeatable_step.id,
+                name_en=(
+                    step_names[repeat_idx]
+                    if step_name_override_question and step_names[repeat_idx]
+                    else repeatable_step.name_en
+                ),
+                name_nl=(
+                    step_names[repeat_idx]
+                    if step_name_override_question and step_names[repeat_idx]
+                    else repeatable_step.name_nl
+                ),
+                description_nl=repeatable_step.description_nl,
+                description_en=repeatable_step.description_en,
+                slug=repeatable_step.slug,
+                is_overview=repeatable_step.is_overview,
+                questions=[],
+                substeps=[],
+                repeat_index=int(repeat_idx.id),
+            )
+            for repeat_idx in repeat_index_objects
+        ]
+
