@@ -3,15 +3,13 @@ import json
 from copy import deepcopy
 from form.models import (
     Step,
-    UserFormSubmission,
     RepeatableStep,
     RepeatableTextQuestion,
     RepeatIndex,
 )
 from form.services.user_form_resolver import is_repeatable
-from research.tests import normal_user, test_study
+from research.tests import test_study
 
-from pprint import pprint
 
 # If you're new here, I recommend you scroll down to NEWHERE,
 # uncomment the breakpoint, and execute pprint(content) to get

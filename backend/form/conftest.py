@@ -3,6 +3,7 @@ from form.models import MRForm, Step, RepeatableStep, TextQuestion, UserFormSubm
 from graphene_django.utils.testing import graphql_query
 
 GRAPHQL_URL = "/api/graphql"
+
 # These fixtures are used to test graphql requests
 
 

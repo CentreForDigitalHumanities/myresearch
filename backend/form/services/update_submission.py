@@ -127,7 +127,10 @@ def update_submission(
 
 
 def validate_response(response, question_id):
-    """Backend validation incase malicious responses. Under normal circumstances all validations are already checked in the frontend"""
+    """
+    Backend validation in case of malicious hand-crafted requests. 
+    Under normal circumstances the input is validated in the frontend.
+    """
     question = BaseQuestion.objects.get(id=question_id).get_subclass()
 
     # validate will throw an error in case of wrong input.
