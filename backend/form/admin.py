@@ -203,8 +203,7 @@ class MRFormAdmin(admin.ModelAdmin):
     inlines = [StepInline]
 
 
-@admin.register(Step)
-class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
+class BaseStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     list_display = (
         "name_nl",
         "name_en",
@@ -234,7 +233,6 @@ class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
             "Hierarchy",
             {
                 "fields": ("form", "parent"),
-                "description": "Set either 'form' (for top-level steps) OR 'parent' (for substeps), not both.",
             },
         ),
         (
@@ -273,81 +271,14 @@ class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     created_at_display.short_description = "Info"
 
 
+@admin.register(Step)
+class StepAdmin(BaseStepAdmin):
+    pass
+
+
 @admin.register(RepeatableStep)
-class RepeatableStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
-    list_display = (
-        "name_nl",
-        "name_en",
-        "slug",
-        "form",
-        "parent",
-        "is_overview",
-    )
-    list_filter = ("form", "parent")
-    search_fields = ("name_nl", "name_en", "slug", "description_nl", "description_en")
-    prepopulated_fields = {"slug": ("name_nl", "name_en")}
-    fieldsets = (
-        (
-            None,
-            {
-                "fields": (
-                    "name_nl",
-                    "name_en",
-                    "slug",
-                    "description_nl",
-                    "description_en",
-                    "is_overview",
-                )
-            },
-        ),
-        (
-            "Hierarchy",
-            {
-                "fields": ("form", "parent"),
-                "description": "Set either 'form' (for top-level steps) OR 'parent' (for substeps), not both.",
-            },
-        ),
-        (
-            "Question Order",
-            {
-                "fields": ("question_order",),
-                "description": "Set the display order of questions. Use the question IDs shown in the Questions inline below.",
-            },
-        ),
-        (
-            "Substep Order",
-            {
-                "fields": ("substep_order",),
-                "description": "Set the display order of substeps. Use the substep IDs shown in the Substeps inline below.",
-            },
-        ),
-    )
-    inlines = [
-        SubstepInline,
-        QuestionInline,
-        StepConditionInline,
-    ]
-    form = StepAdminForm
-
-    def created_at_display(self, obj):
-        # Steps don't have created_at, but showing placeholder for structure
-        return "-"
-
-    created_at_display.short_description = "Info"
-
-
-@admin.register(StepInfoText)
-class StepInfoTextAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
-    list_display = ("step", "text_nl", "text_en")
-    list_filter = ("step",)
-    search_fields = ("text_nl", "text_en")
-    fields = [
-        "step",
-        "text_nl",
-        "text_en",
-        "content_nl",
-        "content_en",
-    ]
+class RepeatableStepAdmin(BaseStepAdmin):
+    pass
 
 
 # Question admins
