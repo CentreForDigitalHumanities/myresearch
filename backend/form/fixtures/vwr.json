@@ -55,7 +55,7 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 54,
+        "pk": 84,
         "fields": {
             "annotation_key": null,
             "step_name_override": false,
@@ -73,7 +73,7 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 55,
+        "pk": 77,
         "fields": {
             "annotation_key": null,
             "step_name_override": false,
@@ -230,7 +230,7 @@
             "description_en": "<p>Distinguish all groups of people whose personal data you will collect or use (for instance: police officers, instagram users, primary school pupils).</p>",
             "description_nl": "<p>Onderscheid alle groepen van wie er persoonsgegevens worden verzameld of gebruikt (bijvoorbeeld politieagenten, instagramgebruikers, leerlingen basisschool, etc.).</p>",
             "required": false,
-            "_order": 0
+            "_order": 1
         }
     },
     {
@@ -397,92 +397,20 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 21,
+        "pk": 82,
         "fields": {
             "annotation_key": null,
             "step_name_override": false,
-            "text": "Personal data will be shared with external recipients.",
-            "text_en": "Personal data will be shared with external recipients.",
-            "text_nl": "Er worden persoonsgegevens gedeeld met externe ontvangers.",
+            "text": "External recipients",
+            "text_en": "External recipients",
+            "text_nl": "Externe ontvangers",
             "step": 9,
             "form": 1,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
+            "description": "<p>Every external person, group or organisation that receives personal data needs to be named here.</p>",
+            "description_en": "<p>Every external person, group or organisation that receives personal data needs to be named here.</p>",
+            "description_nl": "<p>Elke persoon, groep of instantie dat persoonlijke data ontvangt moet hier aangegeven worden.</p>",
             "required": false,
-            "_order": 0
-        }
-    },
-    {
-        "model": "form.basequestion",
-        "pk": 22,
-        "fields": {
-            "annotation_key": null,
-            "step_name_override": false,
-            "text": "Person, group or organisation",
-            "text_en": "Person, group or organisation",
-            "text_nl": "Persoon, groep of instantie",
-            "step": 9,
-            "form": 1,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": true,
-            "_order": 1
-        }
-    },
-    {
-        "model": "form.basequestion",
-        "pk": 23,
-        "fields": {
-            "annotation_key": null,
-            "step_name_override": false,
-            "text": "This recipient is NOT based in the EU, Norway, Iceland or Liechtenstein.",
-            "text_en": "This recipient is NOT based in the EU, Norway, Iceland or Liechtenstein.",
-            "text_nl": "Deze ontvanger is NIET gevestigd in de EU, Noorwegen, IJsland of Liechtenstein.",
-            "step": 9,
-            "form": 1,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": false,
-            "_order": 2
-        }
-    },
-    {
-        "model": "form.basequestion",
-        "pk": 24,
-        "fields": {
-            "annotation_key": null,
-            "step_name_override": false,
-            "text": "Basis for transfer (contact the privacy officer).",
-            "text_en": "Basis for transfer (contact the privacy officer).",
-            "text_nl": "Basis voor doorgifte (neem contact op met de privacy officer).",
-            "step": 9,
-            "form": 1,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": true,
-            "_order": 3
-        }
-    },
-    {
-        "model": "form.basequestion",
-        "pk": 25,
-        "fields": {
-            "annotation_key": null,
-            "step_name_override": false,
-            "text": "Explanation",
-            "text_en": "Explanation",
-            "text_nl": "Toelichting",
-            "step": 9,
-            "form": 1,
-            "description": "<p>Please state at least the country and provide a specification or clarification if requested.</p>",
-            "description_en": "<p>Please state at least the country and provide a specification or clarification if requested.</p>",
-            "description_nl": "<p>Noem minimaal het land en geef desgevraagd een specificatie of verduidelijking op.</p>",
-            "required": true,
-            "_order": 4
+            "_order": 5
         }
     },
     {
@@ -1188,6 +1116,150 @@
         }
     },
     {
+        "model": "form.basequestion",
+        "pk": 78,
+        "fields": {
+            "annotation_key": null,
+            "step_name_override": true,
+            "text": "Name Researcher",
+            "text_en": "Name Researcher",
+            "text_nl": "Naam onderzoeker",
+            "step": 16,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 79,
+        "fields": {
+            "annotation_key": null,
+            "step_name_override": false,
+            "text": "E-mail:",
+            "text_en": "E-mail:",
+            "text_nl": "Email:",
+            "step": 16,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 80,
+        "fields": {
+            "annotation_key": null,
+            "step_name_override": false,
+            "text": "departement / faculity",
+            "text_en": "departement / faculity",
+            "text_nl": "departement / afdeling",
+            "step": 16,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 81,
+        "fields": {
+            "annotation_key": null,
+            "step_name_override": false,
+            "text": "university / institute / organization",
+            "text_en": "university / institute / organization",
+            "text_nl": "universiteit / instituut / organisatie",
+            "step": 16,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 3
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 22,
+        "fields": {
+            "annotation_key": null,
+            "step_name_override": true,
+            "text": "Person, group or organisation",
+            "text_en": "Person, group or organisation",
+            "text_nl": "Persoon, groep of instantie",
+            "step": 17,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 23,
+        "fields": {
+            "annotation_key": null,
+            "step_name_override": false,
+            "text": "This recipient is NOT based in the EU, Norway, Iceland or Liechtenstein.",
+            "text_en": "This recipient is NOT based in the EU, Norway, Iceland or Liechtenstein.",
+            "text_nl": "Deze ontvanger is NIET gevestigd in de EU, Noorwegen, IJsland of Liechtenstein.",
+            "step": 17,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": false,
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 24,
+        "fields": {
+            "annotation_key": null,
+            "step_name_override": false,
+            "text": "Basis for transfer (contact the privacy officer).",
+            "text_en": "Basis for transfer (contact the privacy officer).",
+            "text_nl": "Basis voor doorgifte (neem contact op met de privacy officer).",
+            "step": 17,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 3
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 25,
+        "fields": {
+            "annotation_key": null,
+            "step_name_override": false,
+            "text": "Explanation",
+            "text_en": "Explanation",
+            "text_nl": "Toelichting",
+            "step": 17,
+            "form": 1,
+            "description": "<p>Please state at least the country and provide a specification or clarification if requested.</p>",
+            "description_en": "<p>Please state at least the country and provide a specification or clarification if requested.</p>",
+            "description_nl": "<p>Noem minimaal het land en geef desgevraagd een specificatie of verduidelijking op.</p>",
+            "required": true,
+            "_order": 4
+        }
+    },
+    {
         "model": "form.datequestion",
         "pk": 7,
         "fields": {
@@ -1246,18 +1318,6 @@
     },
     {
         "model": "form.questioncondition",
-        "pk": 7,
-        "fields": {
-            "trigger_question": 21,
-            "condition_type": "show",
-            "trigger_value": {
-                "value": true
-            },
-            "target_question": 22
-        }
-    },
-    {
-        "model": "form.questioncondition",
         "pk": 8,
         "fields": {
             "trigger_question": 23,
@@ -1278,18 +1338,6 @@
                 "value": true
             },
             "target_question": 24
-        }
-    },
-    {
-        "model": "form.questioncondition",
-        "pk": 10,
-        "fields": {
-            "trigger_question": 21,
-            "condition_type": "show",
-            "trigger_value": {
-                "value": true
-            },
-            "target_question": 23
         }
     },
     {
@@ -1924,10 +1972,45 @@
         }
     },
     {
+        "model": "form.repeatable",
+        "pk": 2,
+        "fields": {
+            "repeat_indices": []
+        }
+    },
+    {
+        "model": "form.repeatable",
+        "pk": 3,
+        "fields": {
+            "repeat_indices": []
+        }
+    },
+    {
+        "model": "form.repeatable",
+        "pk": 5,
+        "fields": {
+            "repeat_indices": []
+        }
+    },
+    {
         "model": "form.repeatablestep",
         "pk": 1,
         "fields": {
             "step_ptr": 15
+        }
+    },
+    {
+        "model": "form.repeatablestep",
+        "pk": 2,
+        "fields": {
+            "step_ptr": 16
+        }
+    },
+    {
+        "model": "form.repeatablestep",
+        "pk": 3,
+        "fields": {
+            "step_ptr": 17
         }
     },
     {
@@ -1941,6 +2024,39 @@
             "none_yet_text": "No data groups",
             "none_yet_text_en": "No data groups",
             "none_yet_text_nl": "Geen datagroepen"
+        }
+    },
+    {
+        "model": "form.repeatablestepquestion",
+        "pk": 77,
+        "fields": {
+            "repeatable_step": 2,
+            "create_text": "Add researcher",
+            "create_text_en": "Add researcher",
+            "create_text_nl": "Voeg onderzoeker toe",
+            "none_yet_text": "Placeholder geen ingevulde onderzoekers",
+            "none_yet_text_en": "Placeholder geen ingevulde onderzoekers",
+            "none_yet_text_nl": "Placeholder geen ingevulde onderzoekers"
+        }
+    },
+    {
+        "model": "form.repeatablestepquestion",
+        "pk": 82,
+        "fields": {
+            "repeatable_step": 3,
+            "create_text": "New recipient",
+            "create_text_en": "New recipient",
+            "create_text_nl": "Nieuwe ontvanger",
+            "none_yet_text": "No recipients have been named.",
+            "none_yet_text_en": "No recipients have been named.",
+            "none_yet_text_nl": "Er zijn geen ontvangers ingevuld"
+        }
+    },
+    {
+        "model": "form.repeatabletextquestion",
+        "pk": 5,
+        "fields": {
+            "textquestion_ptr": 84
         }
     },
     {
@@ -3673,16 +3789,16 @@
     },
     {
         "model": "form.selectquestion",
-        "pk": 33,
+        "pk": 52,
         "fields": {
-            "multiple": true
+            "multiple": false
         }
     },
     {
         "model": "form.selectquestion",
-        "pk": 52,
+        "pk": 33,
         "fields": {
-            "multiple": false
+            "multiple": true
         }
     },
     {
@@ -4055,6 +4171,23 @@
     },
     {
         "model": "form.step",
+        "pk": 16,
+        "fields": {
+            "name": "Researcher",
+            "name_en": "Researcher",
+            "name_nl": "Onderzoeker",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "onderzoeker-researcher",
+            "form": 1,
+            "parent": 2,
+            "is_overview": false,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.step",
         "pk": 15,
         "fields": {
             "name": "Data subject group",
@@ -4067,7 +4200,24 @@
             "form": 1,
             "parent": 6,
             "is_overview": false,
-            "_order": 1
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 17,
+        "fields": {
+            "name": "Recipient",
+            "name_en": "Recipient",
+            "name_nl": "Ontvanger",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "ontvanger-recipient",
+            "form": 1,
+            "parent": 9,
+            "is_overview": false,
+            "_order": 0
         }
     },
     {
@@ -4699,18 +4849,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 14,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 61,
+        "pk": 26,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -4743,18 +4882,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 26,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 48,
+        "pk": 14,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -4765,7 +4893,18 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 27,
+        "pk": 78,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 61,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -4798,6 +4937,39 @@
     },
     {
         "model": "form.textquestion",
+        "pk": 27,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 48,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 79,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": true
+        }
+    },
+    {
+        "model": "form.textquestion",
         "pk": 28,
         "fields": {
             "placeholder": "",
@@ -4809,7 +4981,29 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 54,
+        "pk": 13,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 80,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 84,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -4831,18 +5025,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 13,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 5,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 55,
+        "pk": 29,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -4864,7 +5047,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 29,
+        "pk": 81,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -4886,23 +5069,23 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 30,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 68,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 30,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 1,
             "is_email": false
         }
     },
@@ -4930,7 +5113,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 32,
+        "pk": 16,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -4941,7 +5124,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 16,
+        "pk": 32,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -5025,21 +5208,7 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 21,
-        "fields": {
-            "default_value": false
-        }
-    },
-    {
-        "model": "form.truefalsequestion",
         "pk": 50,
-        "fields": {
-            "default_value": false
-        }
-    },
-    {
-        "model": "form.truefalsequestion",
-        "pk": 72,
         "fields": {
             "default_value": false
         }
@@ -5053,7 +5222,7 @@
     },
     {
         "model": "form.truefalsequestion",
-        "pk": 51,
+        "pk": 72,
         "fields": {
             "default_value": false
         }
@@ -5061,6 +5230,13 @@
     {
         "model": "form.truefalsequestion",
         "pk": 65,
+        "fields": {
+            "default_value": false
+        }
+    },
+    {
+        "model": "form.truefalsequestion",
+        "pk": 51,
         "fields": {
             "default_value": false
         }

@@ -25,6 +25,7 @@ from form.models import (
     TextQuestion,
     TrueFalseQuestion,
     UserFormSubmission,
+    RepeatableStepQuestion
 )
 
 AnyQuestion: TypeAlias = (
@@ -386,6 +387,9 @@ class Command(BaseCommand):
             "size": self.faker.random_int(min=1, max=question.size_limit),
         }
 
+    def _generate_repeatable_step_answer(self, question: RepeatableStepQuestion) -> dict:
+        return {"": "",} # RepeatableStepQuestion has no response
+
     def _generate_answer_for_question(self, question: AnyQuestion) -> dict:
         if isinstance(question, TextQuestion):
             return self._generate_text_answer(question)
@@ -399,6 +403,8 @@ class Command(BaseCommand):
             return self._generate_number_answer(question)
         if isinstance(question, FileUploadQuestion):
             return self._generate_file_upload_answer(question)
+        if isinstance(question, RepeatableStepQuestion):
+            return self._generate_repeatable_step_answer(question)
 
         raise ValueError(f"Unsupported question type: {type(question)}")
 
