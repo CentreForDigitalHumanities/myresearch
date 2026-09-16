@@ -25,7 +25,7 @@ from form.models import (
     TextQuestion,
     TrueFalseQuestion,
     UserFormSubmission,
-    RepeatableStepQuestion
+    RepeatableStepQuestion,
 )
 
 AnyQuestion: TypeAlias = (
@@ -387,8 +387,12 @@ class Command(BaseCommand):
             "size": self.faker.random_int(min=1, max=question.size_limit),
         }
 
-    def _generate_repeatable_step_answer(self, question: RepeatableStepQuestion) -> dict:
-        return {"": "",} # RepeatableStepQuestion has no response
+    def _generate_repeatable_step_answer(
+        self, question: RepeatableStepQuestion
+    ) -> dict:
+        return {
+            "": "",
+        }  # RepeatableStepQuestion has no response
 
     def _generate_answer_for_question(self, question: AnyQuestion) -> dict:
         if isinstance(question, TextQuestion):
