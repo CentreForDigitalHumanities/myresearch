@@ -83,7 +83,11 @@ export function useWatchQuestions(
     }
 
     function questionKey(question: QuestionWithValue): string {
-        return `${question.questionId}-${question.repeatIndex.toString()}`;
+        if (question.repeatIndex) {
+            return `${question.questionId}-${question.repeatIndex.toString()}`;
+        } else {
+            return question.questionId;
+        }
     }
 
     function createSnapshot(
