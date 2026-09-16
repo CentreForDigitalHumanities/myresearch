@@ -451,8 +451,8 @@
             "text_nl": "Reguliere persoonsgegevens van deze groep",
             "step": 7,
             "form": 1,
-            "description": "<p>Select all categories of personal data that you collect/process of this group.</p>",
-            "description_en": "<p>Select all categories of personal data that you collect/process of this group.</p>",
+            "description": "<p>Select all categories of personal data that you collect/process from this group.</p>",
+            "description_en": "<p>Select all categories of personal data that you collect/process from this group.</p>",
             "description_nl": "<p>Selecteer alle categorie&euml;n persoonsgegevens die je van deze groep verzamelt/verwerkt.</p>",
             "required": true,
             "_order": 13
@@ -1010,8 +1010,8 @@
         "model": "form.mrform",
         "pk": 1,
         "fields": {
-            "name": "Processing Registry",
-            "name_en": "Processing Registry",
+            "name": "Processing Register",
+            "name_en": "Processing Register",
             "name_nl": "Verwerkingsregister",
             "version": "0.3",
             "created_at": "2026-03-09T14:15:25.526Z",
@@ -2992,9 +2992,9 @@
             "text": "What do we mean by 'a study'?",
             "text_en": "What do we mean by 'a study'?",
             "text_nl": "Wat verstaan we onder een studie?",
-            "content": "<p>The definition of a study can be found in <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>",
-            "content_en": "<p>The definition of a study can be found in <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>",
-            "content_nl": "<p>De definitie van een studie is te vinden op de <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>",
+            "content": "<p>The definition of a study can be found in <a href=\"/notes/faq\" target=\"_blank\" rel=\"noopener\">FAQ</a>.</p>",
+            "content_en": "<p>The definition of a study can be found in <a href=\"/notes/faq\" target=\"_blank\" rel=\"noopener\">FAQ</a>.</p>",
+            "content_nl": "<p>De definitie van een studie is te vinden in de <a href=\"/notes/faq\" target=\"_blank\" rel=\"noopener\">FAQ</a>.</p>",
             "_order": 0
         }
     },
@@ -3020,8 +3020,8 @@
             "text": "What happens to the data I enter?",
             "text_en": "What happens to the data I enter?",
             "text_nl": "Wat gebeurt er met de data die ik invoer?",
-            "content": "<p>The data that you enter will be checked where needed and completed by the privacy officer. As soon as all data have correctly been registered, your registration in the processing registry is legally valid. This registration can be viewed by the management of your faculty, by the co-researchers that you yourself have added, by the data protection officer and by the privacy officer. If needed, the registration can be reopened by you or by the privacy officer.</p>",
-            "content_en": "<p>The data that you enter will be checked where needed and completed by the privacy officer. As soon as all data have correctly been registered, your registration in the processing registry is legally valid. This registration can be viewed by the management of your faculty, by the co-researchers that you yourself have added, by the data protection officer and by the privacy officer. If needed, the registration can be reopened by you or by the privacy officer.</p>",
+            "content": "<p>The data that you enter will be checked where needed and completed by the privacy officer. As soon as all data have correctly been registered, your registration in the processing register is legally valid. This registration can be viewed by the management of your faculty, by the co-researchers that you yourself have added, by the data protection officer and by the privacy officer. If needed, the registration can be reopened by you or by the privacy officer.</p>",
+            "content_en": "<p>The data that you enter will be checked where needed and completed by the privacy officer. As soon as all data have correctly been registered, your registration in the processing register is legally valid. This registration can be viewed by the management of your faculty, by the co-researchers that you yourself have added, by the data protection officer and by the privacy officer. If needed, the registration can be reopened by you or by the privacy officer.</p>",
             "content_nl": "<p>De data die je invoert, worden gecontroleerd en waar nodig aangevuld door de privacy officer. Zodra alle data naar behoren zijn ingevuld, is er sprake van een rechtsgeldige registratie in het verwerkingsregister. Deze registratie kan in ieder geval worden ingezien door het management van je faculteit, door de collega-onderzoekers die je zelf opgeeft, door de functionaris voor gegevensbescherming en door de privacy officers van de UU. Indien nodig kan de registratie door jou of de privacy officer worden heropend om wijzigingen aan te brengen.</p>",
             "_order": 2
         }
@@ -3034,8 +3034,8 @@
             "text": "I already entered this information in another place. Why do I have to enter it again?",
             "text_en": "I already entered this information in another place. Why do I have to enter it again?",
             "text_nl": "Ik heb deze informatie al ergens anders opgegeven. Waarom wordt dit hier weer gevraagd?",
-            "content": "<p>Often multiple applications demand entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this registry will be extended with data required for assessment by the FEtC-H. Data will then need to be entered only once.</p>",
-            "content_en": "<p>Often multiple applications demand entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this registry will be extended with data required for assessment by the FEtC-H. Data will then need to be entered only once.</p>",
+            "content": "<p>Often multiple applications demand entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this register will be extended with data required for assessment by the FEtC-H. Data will then need to be entered only once.</p>",
+            "content_en": "<p>Often multiple applications demand entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this register will be extended with data required for assessment by the FEtC-H. Data will then need to be entered only once.</p>",
             "content_nl": "<p>Vaak moet je voor verschillende toepassingen dezelfde gegevens opgeven. We streven ernaar om dergelijk dubbel werk zo veel mogelijk te beperken. Met dit register zijn we echter nog niet zo ver. In de toekomst worden de in te vullen data uitgebreid met data die nodig zijn voor toetsing door de FETC. Gegevens hoef je dan nog maar &eacute;&eacute;n keer op te geven.</p>",
             "_order": 3
         }
@@ -3064,7 +3064,7 @@
             "text_nl": "Wat zijn medeonderzoekers?",
             "content": "<p>Co-researchers are those who have been involved in this (part of the) research from the start, and with whom we may have to set up an agreement about joint responsibility.</p>",
             "content_en": "<p>Co-researchers are those who have been involved in this (part of the) research from the start, and with whom we may have to set up an agreement about joint responsibility.</p>",
-            "content_nl": "<p>Medeonderzoekers zijn mensen die al vanaf het begin bij dit specifieke (deel-) onderzoek betrokken zijn en met wie we eventueel een regeling of overeenkomst inzake gezamenlijke verantwoordelijkheid moeten aangaan.</p>",
+            "content_nl": "<p>Medeonderzoekers zijn mensen die al vanaf het begin bij dit specifieke (deel-)onderzoek betrokken zijn en met wie we eventueel een regeling of overeenkomst inzake gezamenlijke verantwoordelijkheid moeten aangaan.</p>",
             "_order": 1
         }
     },
@@ -3160,8 +3160,8 @@
             "text": "What do we mean by 'start date'?",
             "text_en": "What do we mean by 'start date'?",
             "text_nl": "Wat wordt bedoeld met 'begindatum'?",
-            "content": "<p>The start date is the date on which you begin communicating with potential participants (that can happen at the same time as the start of data collecting but in many cases you start with communication with potential participants).</p>",
-            "content_en": "<p>The start date is the date on which you begin communicating with potential participants (that can happen at the same time as the start of data collecting but in many cases you start with communication with potential participants).</p>",
+            "content": "<p>The start date is the date on which you start communicating with potential participants or collecting data, whichever comes first.</p>",
+            "content_en": "<p>The start date is the date on which you start communicating with potential participants or collecting data, whichever comes first.</p>",
             "content_nl": "<p>De begindatum is de datum waarop je begint met het benaderen van mogelijke deelnemers (dat kan tegelijk zijn met de start van de dataverzameling, maar in veel gevallen neem je eerst contact op met mogelijke deelnemers).</p>",
             "_order": 1
         }
@@ -3202,8 +3202,8 @@
             "text": "When do I have multiple goals?",
             "text_en": "When do I have multiple goals?",
             "text_nl": "Wanneer heb ik meerdere doelen?",
-            "content": "<p>There are multiple goals when your research questions, hypotheses or things you want to achieve cannot be grouped under a single denominator.</p>",
-            "content_en": "<p>There are multiple goals when your research questions, hypotheses or things you want to achieve cannot be grouped under a single denominator.</p>",
+            "content": "<p>There are multiple goals when your research questions, hypotheses, or things you want to achieve cannot be grouped under a single denominator.</p>",
+            "content_en": "<p>There are multiple goals when your research questions, hypotheses, or things you want to achieve cannot be grouped under a single denominator.</p>",
             "content_nl": "<p>Er is sprake van meerdere doelen als je onderzoeksvragen, je hypothesen of de dingen die je wilt bereiken, niet onder &eacute;&eacute;n noemer te vatten zijn.</p>",
             "_order": 1
         }
@@ -3216,8 +3216,8 @@
             "text": "What are personal data?",
             "text_en": "What are personal data?",
             "text_nl": "Wat zijn persoonsgegevens?",
-            "content": "<p>Personal data are data that say something about a living person. Think of name, address data, age, sex. But also for example audio or video recordings, anwers to questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>",
-            "content_en": "<p>Personal data are data that say something about a living person. Think of name, adrdess data, age, sex. But also for example audio or video recordings, anwers to questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>",
+            "content": "<p>Personal data are data that say something about a living person. Think of name, address, age, and sex. But also for example audio or video recordings, anwers to questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>",
+            "content_en": "<p>Personal data are data that say something about a living person. Think of name, adrdess, age, and sex. But also for example audio or video recordings, anwers to questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>",
             "content_nl": "<p>Persoonsgegevens zijn gegevens die iets zeggen over een levend persoon. Denk aan naam, adresgegevens, leeftijd, geslacht etc. Maar ook bijvoorbeeld audio- of video-opnamen, antwoorden op vragen, observaties en aantekeningen. Gegevens zijn alleen persoonsgegevens als ze terug te voeren zijn op een bepaalde persoon.</p>",
             "_order": 0
         }
@@ -3230,8 +3230,8 @@
             "text": "Why do I need to enter 'categories' of personal data?",
             "text_en": "Why do I need to enter 'categories' of personal data?",
             "text_nl": "Waarom moet ik 'categorie\u00ebn' persoonsgegevens opgeven?",
-            "content": "<p>Personal data are data such as \"Jan\", \"Yasmina\" or \"12-07-1934\". Categories of personal data are for example \"first name\" or \"birth date\". In the processing registry you enter the categories of data, not the data itself.</p>",
-            "content_en": "<p>Personal data are data such as \"Jan\", \"Yasmina\" or \"12-07-1934\". Categories of personal data are for example \"first name\" or \"birth date\". In the processing registry you enter the categories of data, not the data itself.</p>",
+            "content": "<p>Personal data are data such as \"Jan\", \"Yasmina\" or \"12-07-1934\". Categories of personal data are for example \"first name\" or \"birth date\". In the processing register you enter the categories of data, not the data itself.</p>",
+            "content_en": "<p>Personal data are data such as \"Jan\", \"Yasmina\" or \"12-07-1934\". Categories of personal data are for example \"first name\" or \"birth date\". In the processing register you enter the categories of data, not the data itself.</p>",
             "content_nl": "<p>Persoonsgegevens zijn gegevens zoals \"Jan\", \"Yasmina\" of \"12-07-1934\". Categorie&euml;n persoonsgegevens zijn dan bijvoorbeeld \"Voornaam\" of \"Geboortedatum\". In het verwerkingsregister leg je alleen de categorie&euml;n vast, niet de persoonsgegevens zelf.</p>",
             "_order": 1
         }
@@ -3342,8 +3342,8 @@
             "text": "What is cloud software?",
             "text_en": "What is cloud software?",
             "text_nl": "Wat is cloudsoftware?",
-            "content": "<p>With cloud software we mean applications that are provided via the internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EEA.</p>",
-            "content_en": "<p>With cloud software we mean applications that are provided via the internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EEA.</p>",
+            "content": "<p>With cloud software we mean applications that are provided over the internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EEA.</p>",
+            "content_en": "<p>With cloud software we mean applications that are provided over the internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EEA.</p>",
             "content_nl": "<p>Onder cloudsoftware verstaan we applicaties die via internet worden aangeboden, bijv. Qualtrics, SURFDrive of Office 365.</p>\r\n<p>Cloudsoftware draait op grote serverparken ergens ter wereld. De precieze locaties kunnen verschillen. Vanuit de AVG wordt ge&euml;ist dat persoonsgegevens binnen de EER worden verwerkt.</p>",
             "_order": 0
         }
