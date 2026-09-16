@@ -48,7 +48,7 @@ def update_submission(
     for response in user_form_input.get("responses", []):  # type: ignore
         response_id = response["id"] if "id" in response else None
 
-        # Responses need to be validated but only once the responses are final.
+        # Only validate responses if they are final.
         if finalize:
             try:
                 validate_response(response)
