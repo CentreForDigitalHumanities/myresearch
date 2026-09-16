@@ -172,5 +172,12 @@
     "Go back to study page": "Ga terug naar studie pagina",
     "View": "Bekijken",
     "Your progress has been saved.": "Je voortgang is opgeslagen",
-    "Save and go back": "Opslaan en teruggaan"
+    "Save and go back": "Opslaan en teruggaan",
+    "-": "-",
+    "An error occurred while adding a step. Please try again.": "Er is een error opgetreden bij het toevoegen van een stap. Prbeer het opnieuw.",
+    "An error occurred while deleting a step. Please try again.": "Er is een error opgetreden bij het verwijderen van een stap. Prbeer het opnieuw.",
+    "Edit": "Wijzig",
+    "An error occurred while adding a question. Please try again.": "Er is een error opgetreden bij het toevoegen van een vraag. Prbeer het opnieuw.",
+    "An error occurred while deleting a question. Please try again.": "Er is een error opgetreden bij het verwijderen van een vraag. Prbeer het opnieuw.",
+    "Click to add another": "Voeg nog één toe"
 }

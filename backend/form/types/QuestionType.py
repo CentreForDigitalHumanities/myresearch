@@ -20,6 +20,7 @@ from form.models import (
     NumberQuestion,
     SelectQuestion,
     TextQuestion,
+    RepeatableStepQuestion,
 )
 from form.models.responses import MRDocument
 from form.types.SelectOptionType import SelectOptionType
@@ -33,7 +34,7 @@ class BaseQuestionInterface(Interface):
     question_id = ID(
         required=True, description="The ID of the question this is based on."
     )
-    repeat_index = Int(required=True)
+    repeat_index = Int(required=False)
     answer = JSONString()
     response_id = ID()
 
@@ -43,6 +44,8 @@ class BaseQuestionInterface(Interface):
     description_en = String(required=True)
     required = Boolean(required=True)
     has_conditions = Boolean(required=True)
+    step_name_override = Boolean(required=True)
+    is_repeatable = Boolean(required=True)
 
     @classmethod
     def resolve_type(cls, instance, info):
@@ -67,6 +70,8 @@ class BaseQuestionInterface(Interface):
             return SelectQuestionType
         elif hasattr(question, "fileuploadquestion"):
             return FileUploadQuestionType
+        elif hasattr(question, "repeatablestepquestion"):
+            return RepeatableStepQuestionType
 
         # Should never happen - default fallback
         return TextQuestionType
@@ -98,6 +103,10 @@ class BaseQuestionMixin:
     @staticmethod
     def resolve_required(parent, info: ResolveInfo):
         return parent.question.required
+
+    @staticmethod
+    def resolve_step_name_override(parent, info: ResolveInfo):
+        return parent.question.step_name_override
 
 
 class TextQuestionType(BaseQuestionMixin, ObjectType):
@@ -245,6 +254,51 @@ class FileUploadQuestionType(BaseQuestionMixin, ObjectType):
         return parent.question.size_limit
 
 
+class RepeatableStepQuestionType(BaseQuestionMixin, ObjectType):
+    class Meta:
+        interfaces = [BaseQuestionInterface]
+
+    repeatable_step_id = ID(required=True)
+    create_text_nl = String(required=True)
+    create_text_en = String(required=True)
+    none_yet_text_nl = String(required=True)
+    none_yet_text_en = String(required=True)
+
+    def __init__(self, question=None, **kwargs):
+        super().__init__(**kwargs)
+        self.question = question
+
+    @staticmethod
+    def resolve_repeatable_step_id(parent, info: ResolveInfo):
+        if hasattr(parent.question, "repeatablestepquestion"):
+            return parent.question.repeatablestepquestion.repeatable_step_id
+        return parent.question.repeatable_step_id
+
+    @staticmethod
+    def resolve_create_text_nl(parent, info: ResolveInfo):
+        if hasattr(parent.question, "repeatablestepquestion"):
+            return parent.question.repeatablestepquestion.create_text_nl
+        return parent.question.create_text_nl
+
+    @staticmethod
+    def resolve_create_text_en(parent, info: ResolveInfo):
+        if hasattr(parent.question, "repeatablestepquestion"):
+            return parent.question.repeatablestepquestion.create_text_en
+        return parent.question.create_text_en
+
+    @staticmethod
+    def resolve_none_yet_text_nl(parent, info: ResolveInfo):
+        if hasattr(parent.question, "repeatablestepquestion"):
+            return parent.question.repeatablestepquestion.none_yet_text_nl
+        return parent.question.none_yet_text_nl
+
+    @staticmethod
+    def resolve_none_yet_text_en(parent, info: ResolveInfo):
+        if hasattr(parent.question, "repeatablestepquestion"):
+            return parent.question.repeatablestepquestion.none_yet_text_en
+        return parent.question.none_yet_text_en
+
+
 # Union Type
 class QuestionType(Union):
     class Meta:
@@ -255,6 +309,7 @@ class QuestionType(Union):
             DateQuestionType,
             SelectQuestionType,
             FileUploadQuestionType,
+            RepeatableStepQuestionType,
         )
 
     @classmethod
@@ -276,4 +331,6 @@ class QuestionType(Union):
             return SelectQuestionType
         elif isinstance(question, FileUploadQuestion):
             return FileUploadQuestionType
+        elif isinstance(question, RepeatableStepQuestion):
+            return RepeatableStepQuestionType
         return None

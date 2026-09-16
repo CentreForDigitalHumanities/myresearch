@@ -5,7 +5,7 @@ class ResponseInput(InputObjectType):
     id = ID()
     question_id = ID(required=True)
     answer = JSONString(required=True)
-    repeat_index = Int(required=True)
+    repeat_index = Int()
 
 
 class UserFormInput(InputObjectType):

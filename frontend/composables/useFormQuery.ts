@@ -32,6 +32,8 @@ const GET_FORM = graphql(`
                     descriptionNl
                     required
                     hasConditions
+                    isRepeatable
+                    stepNameOverride
                     ... on SelectQuestionType {
                         multiple
                         options {
@@ -59,6 +61,13 @@ const GET_FORM = graphql(`
                     ... on DateQuestionType {
                         futureOnly
                     }
+                    ... on RepeatableStepQuestionType {
+                        repeatableStepId
+                        createTextEn
+                        createTextNl
+                        noneYetTextEn
+                        noneYetTextNl
+                    }
                 }
                 substeps {
                     stepId
@@ -81,6 +90,8 @@ const GET_FORM = graphql(`
                         descriptionNl
                         required
                         hasConditions
+                        isRepeatable
+                        stepNameOverride
                         ... on SelectQuestionType {
                             multiple
                             options {
@@ -107,6 +118,13 @@ const GET_FORM = graphql(`
                         }
                         ... on DateQuestionType {
                             futureOnly
+                        }
+                        ... on RepeatableStepQuestionType {
+                            repeatableStepId
+                            createTextEn
+                            createTextNl
+                            noneYetTextEn
+                            noneYetTextNl
                         }
                     }
                 }

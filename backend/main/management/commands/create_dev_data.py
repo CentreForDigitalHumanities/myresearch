@@ -4,6 +4,7 @@ from tqdm import tqdm
 from faker import Faker
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
+from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.core.management import call_command
 
@@ -24,6 +25,7 @@ from form.models import (
     TextQuestion,
     TrueFalseQuestion,
     UserFormSubmission,
+    RepeatableStepQuestion
 )
 
 AnyQuestion: TypeAlias = (
@@ -249,6 +251,13 @@ class Command(BaseCommand):
                 placeholder_en=self.faker_en.sentence(),
                 lines=self.faker.random_int(1, 5),
             )
+            # For 10% of tq's make them override the step name
+            if self.faker.boolean(10):
+                try:
+                    tq.step_name_override = True
+                    tq.save()
+                except ValidationError:
+                    pass
             if TEXT_ANNOTATION_KEYS:
                 tq.annotation_key = TEXT_ANNOTATION_KEYS.pop()
                 tq.save()
@@ -378,6 +387,9 @@ class Command(BaseCommand):
             "size": self.faker.random_int(min=1, max=question.size_limit),
         }
 
+    def _generate_repeatable_step_answer(self, question: RepeatableStepQuestion) -> dict:
+        return {"": "",} # RepeatableStepQuestion has no response
+
     def _generate_answer_for_question(self, question: AnyQuestion) -> dict:
         if isinstance(question, TextQuestion):
             return self._generate_text_answer(question)
@@ -391,6 +403,8 @@ class Command(BaseCommand):
             return self._generate_number_answer(question)
         if isinstance(question, FileUploadQuestion):
             return self._generate_file_upload_answer(question)
+        if isinstance(question, RepeatableStepQuestion):
+            return self._generate_repeatable_step_answer(question)
 
         raise ValueError(f"Unsupported question type: {type(question)}")
 

@@ -1,0 +1,119 @@
+from form.models.responses import QuestionResponse
+from main.models import MRPermission, User
+from form.models import (
+    Repeatable,
+    RepeatIndex,
+    UserFormSubmission,
+    RepeatableStepQuestion,
+)
+
+from graphene import Boolean, List, Mutation, ResolveInfo, ID
+from graphene_django.types import ErrorType
+from django.core.exceptions import ObjectDoesNotExist
+
+
+class CreateRepeatMutation(Mutation):
+
+    class Arguments:
+        user_form_id = ID(required=True)
+        repeatable_id = ID(required=True)
+        parent_id = ID(required=False)
+
+    new_repeat_index = ID()
+    errors = List(ErrorType)
+
+    @classmethod
+    def mutate(
+        cls,
+        root: None,
+        info: ResolveInfo,
+        user_form_id: int,
+        repeatable_id: int,
+        parent_id: int = None,
+    ):
+        user: User = info.context.user
+
+        try:
+            base_repeat = Repeatable.objects.get(
+                pk=repeatable_id,
+            )
+            submission = UserFormSubmission.objects.get(
+                pk=user_form_id,
+            )
+            if parent_id is not None:
+                parent_index = RepeatIndex.objects.get(
+                    pk=parent_id,
+                )
+            else:
+                parent_index = None
+            # assert submission.can_be_edited_by(user)
+        except ObjectDoesNotExist as error:
+            return cls(errors=[error])
+        except AssertionError:
+            error = "Access denied"
+            return cls(errors=[error])
+
+        new_repeat = RepeatIndex(
+            parent=parent_index,
+        )
+        new_repeat.save()
+        new_repeat.submissions.add(submission)
+        base_repeat.repeat_indices.add(
+            new_repeat,
+        )
+
+        return cls(
+            new_repeat_index=new_repeat.pk,
+            errors=[],
+        )
+
+
+class DeleteRepeatMutation(Mutation):
+
+    class Arguments:
+        user_form_id = ID(required=True)
+        repeat_id = ID(required=True)
+
+    errors = List(ErrorType)
+    ok = Boolean(required=False)
+
+    @classmethod
+    def mutate(
+        cls,
+        root: None,
+        info: ResolveInfo,
+        user_form_id: int,
+        repeat_id: int,
+    ):
+        user: User = info.context.user
+
+        try:
+            repeat_index = RepeatIndex.objects.get(
+                pk=repeat_id,
+            )
+            submission = UserFormSubmission.objects.get(
+                pk=user_form_id,
+            )
+            assert submission in UserFormSubmission.objects.accessible_objects(
+                user, MRPermission.EDIT
+            )
+
+            repeat_index.submissions.remove(
+                submission,
+            )
+        except ObjectDoesNotExist as error:
+            return cls(ok=False, errors=[error])
+        except AssertionError:
+            error = "Access denied"
+            return cls(ok=False, errors=[error])
+        except Exception as error:
+            return cls(ok=False, errors=[error])
+
+        # When a repeat index is removed from its last submission, it
+        # is deleted. Currently we do not delete all child indexes that
+        # may exist beneath it, e.g. a repeatable question within a
+        # repeatable step. But this would be the place to do so.
+        if repeat_index.submissions.count() == 0:
+            repeat_index.delete()
+
+        return cls(errors=[], ok=True)

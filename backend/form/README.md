@@ -64,8 +64,8 @@ TrueFalseQuestion:  {"value": true}
 DateQuestion:       {"value": "2025-12-31"}
 SelectQuestion:     {"value": [1, 3]}
 FileUploadQuestion: {
-    "value": "21cbf05a-987d-443b-b091-7c29e40dee92", 
-    "name": "important.pdf", 
+    "value": "21cbf05a-987d-443b-b091-7c29e40dee92",
+    "name": "important.pdf",
     "size": "500000"
 }
 ```
@@ -125,10 +125,8 @@ Each condition defines:
 
 - **trigger_question**: the question whose answer determines if this condition activates.
 - **target_question** or **target_step**: the question or step affected by this condition.
-- **condition_type**: one of the condition types above (`show`/`hide`/`repeat`/`repeat_dynamic`).
+- **condition_type**: one of the condition types above (`show`/`hide`).
 - **trigger_value**: the answer criteria that activates this condition (see Trigger Values below).
-- **repeat_count**: for static repeats, how many times to repeat.
-- **use_answer_as_count**: for dynamic repeats, whether to use the answer's value as the repeat count.
 
 ### Trigger Values
 
@@ -184,42 +182,6 @@ create multiple conditions with the same target and different single option IDs.
 ```
 
 Conditions with this value are always considered met.
-
-### Repetition
-
-Conditions of type `repeat` and `repeat_dynamic` allow steps or questions to be repeated multiple times based on user input. The steps and questions returned to the user will include multiple instances, each with a unique `repeat_index` starting from 0. The repeat index also features in the slug of the `StepType`, which is used in the URL of the step.
-
-#### Static Repeats
-
-When the trigger question's answer matches `trigger_value`, the target appears `repeat_count` times.
-
-```python
-# Condition configuration
-condition_type = "repeat"
-trigger_value = {"value": true}  # When checkbox is checked
-repeat_count = 3                  # Create 3 instances
-```
-
-#### Dynamic Repeats
-
-The numeric value from the trigger question's answer determines the repeat count.
-
-```python
-# Condition configuration
-condition_type = "repeat_dynamic"
-trigger_value = {}                # Any answer triggers
-use_answer_as_count = True        # Use answer value
-```
-
-A good use case could be:
-
-```
-Question: "How many collaborators do you have?"
-Answer: 3
-Result: The "Collaborator Information" step repeats 3 times
-```
-
-For safety, the number of repeated instances is constrained to 1-10 (see `MAX_REPEAT_LIMIT`).
 
 ## Updating form fixtures
 
