@@ -390,9 +390,7 @@ class Command(BaseCommand):
     def _generate_repeatable_step_answer(
         self, question: RepeatableStepQuestion
     ) -> dict:
-        return {
-            "": "",
-        }  # RepeatableStepQuestion has no response
+        return {}  # RepeatableStepQuestion has no response
 
     def _generate_answer_for_question(self, question: AnyQuestion) -> dict:
         if isinstance(question, TextQuestion):
