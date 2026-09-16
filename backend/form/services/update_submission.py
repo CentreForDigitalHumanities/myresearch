@@ -61,7 +61,6 @@ def update_submission(
                         messages=[f"Invalid response for question {question_id}: {e}"],
                     )
                 )
-                # We don't save responses that do not pass validation
                 continue
 
         if response_id:
