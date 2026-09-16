@@ -25,7 +25,7 @@ from form.models import (
     TextQuestion,
     TrueFalseQuestion,
     UserFormSubmission,
-    RepeatableStepQuestion
+    RepeatableStepQuestion,
 )
 
 AnyQuestion: TypeAlias = (
@@ -107,7 +107,7 @@ class Command(BaseCommand):
             if options["vwr"]:
                 self.print(options, "Loading VWR fixture for form...")
                 call_command("loaddata", "form/fixtures/vwr.json")
-                form = MRForm.objects.get(name_en="Processing Registry")
+                form = MRForm.objects.get(name_en="Processing Register")
             else:
                 self.print(options, "Generating random form and associated data...")
                 form = self._generate_form(options)
@@ -387,8 +387,12 @@ class Command(BaseCommand):
             "size": self.faker.random_int(min=1, max=question.size_limit),
         }
 
-    def _generate_repeatable_step_answer(self, question: RepeatableStepQuestion) -> dict:
-        return {"": "",} # RepeatableStepQuestion has no response
+    def _generate_repeatable_step_answer(
+        self, question: RepeatableStepQuestion
+    ) -> dict:
+        return {
+            "": "",
+        }  # RepeatableStepQuestion has no response
 
     def _generate_answer_for_question(self, question: AnyQuestion) -> dict:
         if isinstance(question, TextQuestion):
