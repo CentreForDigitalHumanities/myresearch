@@ -25,10 +25,10 @@ definePageMeta({
                             )
                         }}
                     </p>
-                    <i18n-t keypath="MyResearch currently offers a {processingRegister} to comply with legal obligations under the General Data Protection Regulation (GDPR). In the future, more and more preparatory tasks will be accommodated in MyResearch, so that you as a researcher can meet a multitude of requirements in one request. Consider drawing up a data management plan and submitting an application for ethical review." tag="p">
+                    <i18n-t keypath="MyResearch currently offers a {processingRegister} to comply with legal obligations under the General Data Protection Regulation (GDPR). In the future, more and more preparatory tasks will be accommodated in MyResearch, so that you as a researcher can meet multiple requirements through a single request. Consider drawing up a data management plan and submitting an application for ethical review." tag="p">
                         <template #processingRegister>
                             <b>{{
-                                $t( "processing register for research data" )
+                                $t( "processing register for personal data in your research" )
                             }}
                             </b>
                         </template>
@@ -46,7 +46,7 @@ definePageMeta({
                 </h2>
                 <i18n-t keypath="If you process {personalData} relating to one or more identifiable persons (usually participants) in your research, you are obliged to complete the processing register." tag="p">
                     <template #personalData>
-                        <a href="https://intranet.uu.nl/en/knowledgebase/what-is-personal-data" target="_blank">{{
+                        <a href="https://utrechtuniversity.github.io/dataprivacyhandbook/personal-data.html" target="_blank">{{
                             $t( "personal data" )
                         }}
                         </a>
@@ -55,7 +55,7 @@ definePageMeta({
                 <p>
                     {{
                         $t(
-                            "Via MyResearch, the participating faculties offer a processing register that is carefully tailored to the needs of researchers and to the processing operations that most commonly occur in scientific research. You do not need to have knowledge of the GDPR to register the processing in your study: your registration is completed on the basis of a helpful questionnaire.",
+                            "Via MyResearch, the participating faculties offer a processing register that is carefully tailored to the needs of researchers and to the processing operations that most commonly occur in scientific research. You do not need to have knowledge of the GDPR to register the processing in your study: you can complete and submit your registration using a helpful questionnaire.",
                         )
                     }}
                 </p>
@@ -89,7 +89,7 @@ definePageMeta({
                         $t(
                             "For questions about the processing register contact the privacy officer:",
                         ) + " "
-                    }}<a href="mailto:privacy.gw@uu.nl">privacy.gw@uu.nl</a>/<a href="mailto:privacy.rebo@uu.nl">privacy.rebo@uu.nl</a>
+                    }}<a href="mailto:privacy.gw@uu.nl">privacy.gw@uu.nl</a> / <a href="mailto:privacy.rebo@uu.nl">privacy.rebo@uu.nl</a>
                 </p>
                 <p>
                     {{ $t("For technical issues relating to MyResearch:") + " "
