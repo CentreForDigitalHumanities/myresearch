@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.db.models import QuerySet
 
 from form.models import (
     BaseCondition,
@@ -11,6 +10,7 @@ from form.models import (
     StepCondition,
     MRForm,
 )
+from form.models.form import RepeatIndex
 
 User = get_user_model()
 
@@ -160,7 +160,7 @@ class FormEvaluator:
     def get_user_response(
         self,
         question: BaseQuestion,
-        repeat_index=None,
+        repeat_index: RepeatIndex | None = None,
     ) -> QuestionResponse | None:
         """Get the user's response for a specific question instance."""
         responses = self.responses.get(question.pk, [])
