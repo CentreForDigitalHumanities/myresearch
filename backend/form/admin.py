@@ -273,7 +273,12 @@ class BaseStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
 
 @admin.register(Step)
 class StepAdmin(BaseStepAdmin):
-    pass
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        # Filter out RepeatableSteps when viewing Steps in the admin, since they are a separate model.
+        if self.model is Step:
+            queryset = queryset.filter(repeatablestep__isnull=True)
+        return queryset
 
 
 @admin.register(RepeatableStep)
@@ -365,6 +370,13 @@ class TextQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
         ("Text Options", {"fields": ("placeholder", "lines")}),
     )
     inlines = [QuestionConditionInline]
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        # Filter out RepeatableTextQuestions when viewing TextQuestions in the admin, since they are a separate model.
+        if self.model is TextQuestion:
+            queryset = queryset.filter(repeatabletextquestion__isnull=True)
+        return queryset
 
 
 @admin.register(NumberQuestion)
