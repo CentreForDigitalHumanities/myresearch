@@ -250,17 +250,16 @@ useWatchQuestions(watchedQuestions, () => {
                     "
                     @blur="handleStepNameOverride(question)"
                 />
-                <a
+                <button
                     v-if="question.isRepeatable && !isOnlyOccurrence(question)"
-                    href="#"
-                    class="text-danger"
+                    class="text-danger link-underline-danger border-0"
                     @click="handleDeleteRepeat(question)"
                 >
                     <div class="d-flex align-items-center">
                         <X class="icon" />
                         <div class="ml-3">{{ t("Delete") }}</div>
                     </div>
-                </a>
+                </button>
                 <div v-if="question.isRepeatable && isLastOccurrence(question)">
                     <BSButton
                         variant="primary"
