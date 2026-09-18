@@ -4,6 +4,7 @@ import type { UpdateUserFormSubmission } from "~/generated/gql/graphql";
 import { useNotification } from "~/composables/useNotification";
 import { useI18n } from "vue-i18n";
 import type { CombinedStepWithValues } from "~/composables/useProcessForm";
+import useFormDataToMutationInput from "~/composables/useFormDataToMutationInput";
 
 const UPDATE_USER_FORM = graphql(`
     mutation SaveFormSubmission(
@@ -23,7 +24,13 @@ const UPDATE_USER_FORM = graphql(`
     }
 `);
 
-export function useFormSubmission(options: { reloadStudy: boolean, reloadForm: boolean }) {
+type FormSubmissionOptions = {
+    reloadStudy?: boolean;
+    reloadForm?: boolean;
+    finalize?: boolean;
+};
+
+export function useFormSubmission(options: FormSubmissionOptions) {
     const { t } = useI18n();
     const defaultOptions = options;
 
@@ -31,7 +38,7 @@ export function useFormSubmission(options: { reloadStudy: boolean, reloadForm: b
         UPDATE_USER_FORM,
         {
             update: (cache, _, mutationOptions) => {
-                const context = mutationOptions.context as { reloadForm?: boolean; reloadStudy?: boolean } | undefined;
+                const context: FormSubmissionOptions | undefined = mutationOptions.context;
                 if (context?.reloadForm ?? defaultOptions.reloadForm) {
                     cache.evict({ fieldName: "form" });
                 }
@@ -47,7 +54,7 @@ export function useFormSubmission(options: { reloadStudy: boolean, reloadForm: b
     async function submitForm(
         step: CombinedStepWithValues,
         submissionId: string,
-        options?: { finalize?: boolean; reloadForm?: boolean; reloadStudy?: boolean },
+        options?: FormSubmissionOptions,
     ) {
         const inputData = useFormDataToMutationInput(step, submissionId);
 
@@ -61,7 +68,7 @@ export function useFormSubmission(options: { reloadStudy: boolean, reloadForm: b
                     context: {
                         reloadForm: options?.reloadForm ?? true,
                         reloadStudy: options?.reloadStudy ?? false,
-                    },
+                    } satisfies FormSubmissionOptions,
                 },
             );
         } catch {

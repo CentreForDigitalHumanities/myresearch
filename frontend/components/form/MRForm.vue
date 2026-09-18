@@ -12,6 +12,8 @@ import { useMutation } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
 import { useNotification } from "~/composables/useNotification";
 import { X } from "lucide-vue-next";
+import type { ApolloCache } from "@apollo/client/core";
+import { Repeatable } from "~/generated/gql/graphql.ts";
 
 // Imported components are treated as 'any', so the linter complains. There is
 // nothing we can do to change this, so we need to assert the type manually.
@@ -26,16 +28,8 @@ const QUESTION_COMPONENT_MAP = {
 } as const;
 
 const CREATE_QUESTION_REPEAT_MUTATION = graphql(`
-    mutation CreateQuestionRepeat(
-        $userFormId: ID!
-        $repeatableId: ID!
-        $parentId: ID
-    ) {
-        createRepeat(
-            userFormId: $userFormId
-            repeatableId: $repeatableId
-            parentId: $parentId
-        ) {
+    mutation CreateQuestionRepeat($input: CreateRepeatMutationInput!) {
+        createRepeat(input: $input) {
             newRepeatIndex
             errors {
                 field
@@ -46,8 +40,8 @@ const CREATE_QUESTION_REPEAT_MUTATION = graphql(`
 `);
 
 const DELETE_QUESTION_REPEAT_MUTATION = graphql(`
-    mutation DeleteQuestionRepeat($userFormId: ID!, $repeatId: ID!) {
-        deleteRepeat(userFormId: $userFormId, repeatId: $repeatId) {
+    mutation DeleteQuestionRepeat($input: DeleteRepeatMutationInput!) {
+        deleteRepeat(input: $input) {
             ok
             errors {
                 field
@@ -88,22 +82,21 @@ const { submitForm: mutateFormSubmission } = useFormSubmission({
 const { mutate: createQuestionRepeat } = useMutation(
     CREATE_QUESTION_REPEAT_MUTATION,
     {
-        update: (cache) => {
-            cache.evict({ fieldName: "form" });
-            cache.gc();
-        },
+        update: evictForm,
     },
 );
 
 const { mutate: deleteQuestionRepeat } = useMutation(
     DELETE_QUESTION_REPEAT_MUTATION,
     {
-        update: (cache) => {
-            cache.evict({ fieldName: "form" });
-            cache.gc();
-        },
+        update: evictForm,
     },
 );
+
+function evictForm(cache: ApolloCache<unknown>): void {
+    cache.evict({ fieldName: "form" });
+    cache.gc();
+}
 
 // FileUploadQuestions and questions with conditions are watched. If their
 // values change, the form is resubmitted.
@@ -115,40 +108,38 @@ const watchedQuestions = computed(() =>
     ),
 );
 
-// Track the last repeatIndex for each questionId to show button only once
-const lastRepeatIndexByQuestionId = computed(() => {
-    const map = new Map<number, number | null>();
-    for (const question of props.step.questions) {
-        const current = map.get(Number(question.questionId));
-        const repeatIndex =
-            question.repeatIndex !== null ? Number(question.repeatIndex) : -1;
-        if (current === undefined || repeatIndex > (current ?? -1)) {
-            map.set(
-                Number(question.questionId),
-                repeatIndex === -1 ? null : repeatIndex,
-            );
+// TODO: move repeatables-related logic below to separate component.
+
+// Build a map between question IDs and their last occurrence to show button only once.
+const lastOccurrenceByQuestionId = computed(() =>
+    props.step.questions.reduce((lastOccurrences, question) => {
+        const previous = lastOccurrences.get(question.questionId);
+
+        if (
+            !previous ||
+            (question.repeatIndex ?? -1) > (previous.repeatIndex ?? -1)
+        ) {
+            lastOccurrences.set(question.questionId, question);
         }
-    }
-    return map;
-});
 
-const isLastOccurrence = (question: QuestionWithValue) => {
-    const lastIndex = lastRepeatIndexByQuestionId.value.get(
-        Number(question.questionId),
+        return lastOccurrences;
+    }, new Map<string, QuestionWithValue>()),
+);
+
+function isLastOccurrence(question: QuestionWithValue): boolean {
+    return (
+        lastOccurrenceByQuestionId.value.get(question.questionId) === question
     );
-    const currentIndex =
-        question.repeatIndex !== null ? Number(question.repeatIndex) : null;
-    return currentIndex === lastIndex;
-};
+}
 
-const isOnlyOccurrence = (question: QuestionWithValue) => {
+function isOnlyOccurrence(question: QuestionWithValue): boolean {
     const count = props.step.questions.filter(
         (q) => q.questionId === question.questionId,
     ).length;
     return count === 1;
 };
 
-const isFirstOccurrence = (question: QuestionWithValue) => {
+function isFirstOccurrence(question: QuestionWithValue): boolean {
     const firstIndex = Math.min(
         ...props.step.questions
             .filter((q) => q.questionId === question.questionId)
@@ -165,19 +156,21 @@ async function handleAddRepeat(question: QuestionWithValue): Promise<void> {
         return;
     }
 
-    // for these submit mutations, we do not reload the form upon submit, because it
-    // get reloaded after the create mutation
     await mutateFormSubmission(props.step, userFormId, {
         reloadStudy: false,
+        // The form is reloaded after the create mutation.
         reloadForm: false,
     });
     try {
         await createQuestionRepeat({
-            userFormId,
-            repeatableId: question.questionId,
-            parentId: props.step.repeatIndex
-                ? props.step.repeatIndex.toString()
-                : null,
+            input: {
+                submissionId: userFormId,
+                repeatableType: Repeatable.Question,
+                objectId: question.questionId,
+                parentId: props.step.repeatIndex
+                    ? props.step.repeatIndex.toString()
+                    : null,
+            },
         });
     } catch {
         useNotification(
@@ -198,15 +191,16 @@ async function handleDeleteRepeat(question: QuestionWithValue): Promise<void> {
     }
 
     try {
-        // for these submit mutations, we do not reload the form upon submit, because it
-        // get reloaded after the create mutation
         await mutateFormSubmission(props.step, userFormId, {
             reloadStudy: false,
+            // The form is reloaded after the delete mutation.
             reloadForm: false,
         });
         await deleteQuestionRepeat({
-            userFormId,
-            repeatId: question.repeatIndex.toString(),
+            input: {
+                userFormId,
+                repeatIndexId: question.repeatIndex.toString(),
+            },
         });
     } catch {
         useNotification(
@@ -246,8 +240,9 @@ useWatchQuestions(watchedQuestions, () => {
                     :is="QUESTION_COMPONENT_MAP[question.__typename]"
                     v-model="question.value"
                     :question="question"
+                    :parent-repeat-index="step.repeatIndex"
                     :is-invalid="(question.errors?.length ?? 0) > 0"
-                    :is-first-repeat="
+                    :show-description="
                         !question.isRepeatable || isFirstOccurrence(question)
                     "
                     @repeat-step-clicked="

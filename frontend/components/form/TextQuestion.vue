@@ -5,7 +5,7 @@ import FormLabel from "../form/FormLabel.vue";
 interface Props {
     question: TextQuestionWithValue;
     isInvalid: boolean;
-    isFirstRepeat?: boolean;
+    showDescription?: boolean;
 }
 
 const props = defineProps<Props>();
@@ -20,7 +20,7 @@ const emit = defineEmits<{
 <template>
     <div>
         <FormLabel :question="question" />
-        <template v-if="props.isFirstRepeat">
+        <template v-if="props.showDescription">
             <div
                 v-if="question.descriptionNl || question.descriptionEn"
                 class="text-muted"
