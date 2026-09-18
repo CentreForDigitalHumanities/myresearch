@@ -1,8 +1,7 @@
 from graphene import ObjectType
 
-from form.models import BaseQuestion, Step, Repeatable, RepeatIndex
-from form.models.form import RepeatableStep
-from form.models.questions import RepeatableStepQuestion, RepeatableTextQuestion
+from form.models import BaseQuestion, Step, RepeatIndex
+from form.models.questions import RepeatableStepQuestion
 from form.services.form_evaluator import FormEvaluator
 from form.types.StepType import StepType
 from form.types.UserFormType import UserFormType
@@ -61,10 +60,10 @@ class UserFormResolver:
             if not self.evaluator.is_step_visible(step):
                 continue
             # Check for repeatability
-            if is_repeatable(step):
+            if step.is_repeatable:
                 instances.extend(
                     self._resolve_step_repeats(
-                        step.repeatablestep,
+                        step,
                         parent_index=parent_index,
                     ),
                 )
@@ -78,7 +77,7 @@ class UserFormResolver:
         return instances
 
     def _resolve_step_repeats(
-        self, step: RepeatableStep, parent_index: RepeatIndex | None = None
+        self, step: Step, parent_index: RepeatIndex | None = None
     ) -> list[StepType]:
         repeated_steps: list[StepType] = []
 
@@ -161,9 +160,9 @@ class UserFormResolver:
 
         question = question.get_subclass()
 
-        if is_repeatable(question):
+        if question.is_repeatable:
             return self._resolve_question_repeats(
-                question.repeatabletextquestion,
+                question,
                 parent_index=repeat_index,
             )
         # When this question isn't repeatable, just return a single instance.
@@ -176,7 +175,7 @@ class UserFormResolver:
 
     def _resolve_question_repeats(
         self,
-        question: RepeatableTextQuestion,
+        question: BaseQuestion,
         parent_index: RepeatIndex | None = None,
     ):
         repeats = []
@@ -215,12 +214,7 @@ class UserFormResolver:
     ) -> ObjectType:
         """Create the appropriate user question instance type based on the question type."""
 
-        if repeatable:
-            response = self.evaluator.get_user_response(
-                question.basequestion_ptr, repeat_index
-            )
-        else:
-            response = self.evaluator.get_user_response(question, repeat_index)
+        response = self.evaluator.get_user_response(question, repeat_index)
 
         base_data = {
             "question_id": question.pk,
@@ -272,18 +266,3 @@ def generate_slug(
         parts.append(str(repeat_index.pk))
     return ".".join(parts)
 
-
-def is_repeatable(
-    step_or_question: Step | BaseQuestion | RepeatableStep | RepeatableTextQuestion,
-) -> bool:
-    """
-    Determines whether a given step or question is repeatable.
-    """
-    if isinstance(step_or_question, Repeatable):
-        return True
-
-    # Django returns the non-polymorphic base class,
-    # so we need to do a reverse check.
-    return hasattr(step_or_question, "repeatabletextquestion") or hasattr(
-        step_or_question, "repeatablestep"
-    )

@@ -2,10 +2,10 @@ from graphene import Enum, InputObjectType, List, Mutation, NonNull, ResolveInfo
 from graphene_django.types import ErrorType
 from django.core.exceptions import ObjectDoesNotExist
 
-from form.models.form import RepeatableStep
-from form.models.questions import RepeatableTextQuestion
 from main.models import User
 from form.models import (
+    BaseQuestion,
+    Step,
     RepeatIndex,
     UserFormSubmission,
 )
@@ -45,9 +45,9 @@ class CreateRepeatMutation(Mutation):
         object_id = getattr(input, "object_id")
         object_type = getattr(input, "repeatable_type")
         if object_type == Repeatable.QUESTION:
-            RepeatableModel = RepeatableTextQuestion
+            RepeatableModel = BaseQuestion
         elif object_type == Repeatable.STEP:
-            RepeatableModel = RepeatableStep
+            RepeatableModel = Step
         else:
             error = ErrorType(
                 field="repeatable_type",
