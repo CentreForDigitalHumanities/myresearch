@@ -1,5 +1,5 @@
 from typing import Optional
-from graphene import ID, Field, ObjectType, ResolveInfo, String, List
+from graphene import ID, Field, NonNull, ObjectType, ResolveInfo, String, List
 
 
 from main.models import User
@@ -92,10 +92,11 @@ class QuestionQueries(ObjectType):
 
 class RepeatableStepQueries(ObjectType):
 
-    repeatable_steps_with_repeats = Field(
-        List(StepType),
+    repeatable_steps_with_repeats = List(
+        NonNull(StepType),
         repeatable_id=ID(required=True),
-        repeat_indices=List(ID, required=True),
+        repeat_indices=List(NonNull(ID), required=True),
+        submission_id=ID(required=True),
         description="Retrieves a RepeatableStep for each repeat index, with the repeat_index field populated.",
     )
 
@@ -104,6 +105,7 @@ class RepeatableStepQueries(ObjectType):
         root,
         info: ResolveInfo,
         repeatable_id: str,
+        submission_id: str,
         repeat_indices: list,
     ) -> list[StepType]:
         user: User = info.context.user
@@ -117,9 +119,14 @@ class RepeatableStepQueries(ObjectType):
             repeatable_step = RepeatableStep.objects.get(pk=repeatable_id)
         except RepeatableStep.DoesNotExist:
             return []
+        if not submission_id:
+            return []
 
-        # Fetch the repeat index objects
-        repeat_index_objects = RepeatIndex.objects.filter(pk__in=repeat_indices)
+        # Fetch the repeat index objects for the current submission.
+        repeat_index_objects = RepeatIndex.objects.filter(
+            pk__in=repeat_indices,
+            submissions__id=submission_id,
+        )
 
         step_name_override_question = BaseQuestion.objects.filter(
             step=repeatable_step, step_name_override=True
@@ -160,4 +167,3 @@ class RepeatableStepQueries(ObjectType):
             )
             for repeat_idx in repeat_index_objects
         ]
-

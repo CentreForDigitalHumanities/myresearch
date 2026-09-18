@@ -47,6 +47,9 @@ class UserFormSubmission(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     completed_at = models.DateTimeField(null=True, blank=True)
 
+    def can_be_edited_by(self, user: User) -> bool:
+        return UserFormSubmission.objects._editable_objects(user).filter(pk=self.pk).exists()
+
     def __str__(self) -> str:
         return f"Submission {self.pk} by {self.user} started at {self.started_at.strftime('%Y-%m-%d %H:%M:%S')} (Form {self.form.pk})"
 

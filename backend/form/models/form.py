@@ -102,26 +102,12 @@ class RepeatIndex(models.Model):
         related_name="repeats",
     )
 
-    def subtree(self):
-        """
-        Return all indices with a repeatable that also references
-        this index.
-
-        Stated simply, this means all indices below this item. So for a 
-        repeatable step, this function will return the repeats of substeps and 
-        questions beneath it.
-        """
-        return RepeatIndex.objects.filter(
-            repeatable_set__repeat_indices=self,
-        ).exclude(pk=self.pk)
-
 
 class Repeatable(models.Model):
-    # We specify the autofield explicitly so that the
-    # default "pk" doesn't conflict with any subclasses
-    repeat_id = models.AutoField(primary_key=True)
-
     repeat_indices = models.ManyToManyField(to=RepeatIndex)
+
+    class Meta:
+        abstract = True
 
 
 class RepeatableStep(Repeatable, Step):

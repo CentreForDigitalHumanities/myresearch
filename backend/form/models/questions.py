@@ -5,7 +5,7 @@ from datetime import datetime
 from django.utils.dateparse import parse_datetime
 from django.utils.safestring import mark_safe
 
-from form.models import Repeatable
+from form.models import Repeatable, RepeatableStep
 
 snake_case_validator = RegexValidator(
     regex=r"^[a-z]+(_[a-z]+)*$",
@@ -189,9 +189,7 @@ class RepeatableStepQuestion(BaseQuestion):
     Does not have a response, but is used to trigger mutations.
     """
 
-    repeatable_step = models.OneToOneField(
-        "form.RepeatableStep", on_delete=models.CASCADE
-    )
+    repeatable_step = models.OneToOneField(RepeatableStep, on_delete=models.CASCADE)
 
     create_text = models.CharField()
 

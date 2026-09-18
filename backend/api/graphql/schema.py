@@ -17,7 +17,8 @@ from notes.queries import NoteQueries
 
 from form.mutations.CreateUserFormRevision import CreateUserFormRevision
 from form.mutations.UpdateUserFormSubmission import UpdateUserFormSubmission
-from form.mutations.repeat_mutations import CreateRepeatMutation, DeleteRepeatMutation
+from form.mutations.CreateRepeatMutation import CreateRepeatMutation
+from form.mutations.DeleteRepeatMutation import DeleteRepeatMutation
 from research.mutations.CreateStudyMutation import CreateStudyMutation
 from research.mutations.UpdateStudySeenMutation import UpdateStudySeenMutation
 from research.mutations.DeleteStudyMutation import DeleteStudyMutation
