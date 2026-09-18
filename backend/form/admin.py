@@ -7,7 +7,6 @@ from form.forms import StepAdminForm, SelectQuestionAdminForm
 from .models import (
     MRForm,
     Step,
-    StepInfoText,
     BaseQuestion,
     SelectQuestion,
     SelectOption,
@@ -16,9 +15,7 @@ from .models import (
     NumberQuestion,
     DateQuestion,
     FileUploadQuestion,
-    RepeatableStep,
     RepeatableStepQuestion,
-    RepeatableTextQuestion,
     UserFormSubmission,
     QuestionResponse,
     StepCondition,
@@ -176,6 +173,7 @@ class QuestionInline(TinyMCETextFieldMixin, admin.TabularInline):
         "required",
         "description_nl",
         "description_en",
+        "is_repeatable",
     )
     readonly_fields = (
         "id",
@@ -226,6 +224,7 @@ class BaseStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                     "description_nl",
                     "description_en",
                     "is_overview",
+                    "is_repeatable",
                 )
             },
         ),
@@ -273,18 +272,7 @@ class BaseStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
 
 @admin.register(Step)
 class StepAdmin(BaseStepAdmin):
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        # Filter out RepeatableSteps when viewing Steps in the admin, since they are a separate model.
-        if self.model is Step:
-            queryset = queryset.filter(repeatablestep__isnull=True)
-        return queryset
-
-
-@admin.register(RepeatableStep)
-class RepeatableStepAdmin(BaseStepAdmin):
     pass
-
 
 # Question admins
 @admin.register(SelectQuestion)
@@ -371,12 +359,6 @@ class TextQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     )
     inlines = [QuestionConditionInline]
 
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        # Filter out RepeatableTextQuestions when viewing TextQuestions in the admin, since they are a separate model.
-        if self.model is TextQuestion:
-            queryset = queryset.filter(repeatabletextquestion__isnull=True)
-        return queryset
 
 
 @admin.register(NumberQuestion)
@@ -452,11 +434,6 @@ class FileUploadQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
         ("File Upload Options", {"fields": ("size_limit",)}),
     )
     inlines = [QuestionConditionInline]
-
-
-@admin.register(RepeatableTextQuestion)
-class RepeatableTextQuestionAdmin(TextQuestionAdmin):
-    pass
 
 
 @admin.register(RepeatableStepQuestion)
