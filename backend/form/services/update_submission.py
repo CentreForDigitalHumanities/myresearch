@@ -128,7 +128,7 @@ def update_submission(
 
 def validate_response(response, question_id):
     """
-    Backend validation in case of malicious hand-crafted requests. 
+    Backend validation in case of malicious hand-crafted requests.
     Under normal circumstances the input is validated in the frontend.
     """
     question = BaseQuestion.objects.get(id=question_id).get_subclass()

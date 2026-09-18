@@ -1,6 +1,12 @@
+from typing import TYPE_CHECKING
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.db.models import QuerySet
+
+if TYPE_CHECKING:
+    from form.models.responses import UserFormSubmission
 
 user_model = get_user_model()
 
@@ -108,6 +114,21 @@ class Repeatable(models.Model):
 
     class Meta:
         abstract = True
+
+    def repeat_indices_for_submission(
+        self,
+        submission: "UserFormSubmission",
+        parent_index: RepeatIndex | None = None,
+    ) -> QuerySet[RepeatIndex]:
+        """
+        Finds indices for the given object that are connected to
+        the current submission.
+        """
+        filter = {"submissions": submission}
+        if parent_index is not None:
+            filter["parent_id"] = parent_index.pk
+
+        return self.repeat_indices.filter(**filter)
 
 
 class RepeatableStep(Repeatable, Step):

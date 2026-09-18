@@ -1,7 +1,8 @@
 from graphene import ObjectType
-from typing import Optional
 
 from form.models import BaseQuestion, Step, Repeatable, RepeatIndex
+from form.models.form import RepeatableStep
+from form.models.questions import RepeatableStepQuestion, RepeatableTextQuestion
 from form.services.form_evaluator import FormEvaluator
 from form.types.StepType import StepType
 from form.types.UserFormType import UserFormType
@@ -43,9 +44,9 @@ class UserFormResolver:
 
     def _resolve_steps(
         self,
-        parent_step: Optional[Step] = None,
-        parent_index=None,
-    ):
+        parent_step: Step | None = None,
+        parent_index: RepeatIndex | None = None,
+    ) -> list[StepType]:
 
         form = self.evaluator.submission.form
 
@@ -54,7 +55,7 @@ class UserFormResolver:
         else:
             steps = Step.objects.filter(parent=parent_step).all()
 
-        instances = []
+        instances: list[StepType] = []
         for step in steps:
             # Skip hidden steps
             if not self.evaluator.is_step_visible(step):
@@ -62,8 +63,8 @@ class UserFormResolver:
             # Check for repeatability
             if is_repeatable(step):
                 instances.extend(
-                    self._make_step_repeats(
-                        step,
+                    self._resolve_step_repeats(
+                        step.repeatablestep,
                         parent_index=parent_index,
                     ),
                 )
@@ -76,41 +77,35 @@ class UserFormResolver:
                 )
         return instances
 
-    def _make_step_repeats(
-        self,
-        step: Step,
-        parent_index=None,
-    ):
-        repeats = []
+    def _resolve_step_repeats(
+        self, step: RepeatableStep, parent_index: RepeatIndex | None = None
+    ) -> list[StepType]:
+        repeated_steps: list[StepType] = []
 
-        repeat_indices = self._fetch_repeat_indices(
-            step,
+        repeat_indices = step.repeat_indices_for_submission(
+            submission=self.evaluator.submission,
             parent_index=parent_index,
         )
         for index in repeat_indices:
             # Now we construct the step instances that will actually appear
-            # because there are repeat indices for this question linked
+            # because there are repeat indices for this step linked
             # to this submission.
             instance = self._create_step_instance(
                 step,
                 repeat_index=index,
             )
-            repeats.append(instance)
-        return repeats
+            repeated_steps.append(instance)
+        return repeated_steps
 
     def _create_step_instance(
-        self,
-        step,
-        repeat_index=None,
-    ):
-
+        self, step: Step, repeat_index: RepeatIndex | None = None
+    ) -> StepType:
         questions, step_name_override = self._resolve_step_questions(step, repeat_index)
         substeps = self._resolve_steps(
             parent_step=step,
             parent_index=repeat_index,
         )
 
-        slug = step.slug
         slug = generate_slug(step, repeat_index=repeat_index)
 
         if repeat_index is not None:
@@ -129,7 +124,9 @@ class UserFormResolver:
             substeps=substeps,  # type: ignore
         )
 
-    def _resolve_step_questions(self, step, repeat_index):
+    def _resolve_step_questions(
+        self, step: Step, repeat_index: RepeatIndex | None = None
+    ):
         # TODO: make question instances from step, rather than questions
         # Check out the old implementation
         questions = []
@@ -139,7 +136,7 @@ class UserFormResolver:
             # Skip hidden questions
             if not self.evaluator.is_question_visible(question):
                 continue
-            resolved_questions = self._make_question_instances(
+            resolved_questions = self._resolve_question_instances(
                 question,
                 repeat_index,
             )
@@ -150,25 +147,26 @@ class UserFormResolver:
                     answer = resolved_questions[0].answer
                 except IndexError:
                     # This should never happen, as we always expect at least one question
-                    pass
+                    continue
                 if answer:
                     step_name_override = answer["value"]
             questions.extend(resolved_questions)
         return questions, step_name_override
 
-    def _make_question_instances(self, question: BaseQuestion, repeat_index) -> list:
+    def _resolve_question_instances(
+        self, question: BaseQuestion, repeat_index: RepeatIndex | None
+    ) -> list:
         """Resolve all instances of a question (considering repeats).
         Also deletes hidden responses as a side effect."""
 
         question = question.get_subclass()
 
         if is_repeatable(question):
-            return self._make_question_repeats(
-                question,
+            return self._resolve_question_repeats(
+                question.repeatabletextquestion,
                 parent_index=repeat_index,
             )
-        # When this question isn't repeatable, just return a single
-        # instance
+        # When this question isn't repeatable, just return a single instance.
         instance = self._create_question_instance(
             question,
             repeat_index,
@@ -176,28 +174,26 @@ class UserFormResolver:
 
         return [instance]
 
-    def _make_question_repeats(
+    def _resolve_question_repeats(
         self,
-        question: BaseQuestion,
-        parent_index=None,
+        question: RepeatableTextQuestion,
+        parent_index: RepeatIndex | None = None,
     ):
         repeats = []
 
-        repeat_indices = self._fetch_repeat_indices(
-            question,
+        repeat_indices = question.repeat_indices_for_submission(
+            submission=self.evaluator.submission,
             parent_index=parent_index,
         )
 
-        # for repeatable questions, we'll always want at least one repeat.
+        # For repeatable questions, we'll always want at least one repeat.
         if not repeat_indices:
             new_repeat = RepeatIndex(
                 parent=parent_index,
             )
             new_repeat.save()
             new_repeat.submissions.add(self.evaluator.submission)
-            question.repeat_indices.add(
-                new_repeat,
-            )
+            question.repeat_indices.add(new_repeat)
 
         for index in repeat_indices:
             # Now we construct the step instances that will actually appear
@@ -214,7 +210,7 @@ class UserFormResolver:
     def _create_question_instance(
         self,
         question: BaseQuestion,
-        repeat_index=None,
+        repeat_index: RepeatIndex | None = None,
         repeatable=False,
     ) -> ObjectType:
         """Create the appropriate user question instance type based on the question type."""
@@ -250,41 +246,21 @@ class UserFormResolver:
         elif hasattr(question, "fileuploadquestion"):
             return FileUploadQuestionType(**base_data)
         elif hasattr(question, "repeatablestepquestion"):
-            base_data["answer"] = self._get_rsq_answer(question)
+            assert isinstance(question, RepeatableStepQuestion)
+            base_data["answer"] = question.get_answer(
+                parent_index=repeat_index,
+                submission=self.evaluator.submission,
+            )
             return RepeatableStepQuestionType(**base_data)
 
         # Fallback (should not happen)
         return TextQuestionType(**base_data)
 
-    def _get_rsq_answer(self, rsq):
-
-        repeatable_step = rsq.repeatable_step
-
-        indices = self._fetch_repeat_indices(repeatable_step)
-
-        return {"value": [index.pk for index in indices]}
-
-    def _fetch_repeat_indices(self, repeatable, parent_index=None):
-        """
-        Finds indices for the given object that are connected to
-        the current submission.
-        """
-        # TODO: make this standalone with a submission argument
-        submission = self.evaluator.submission
-        if hasattr(repeatable, "repeatablestep"):
-            repeatable = repeatable.repeatablestep
-        indices = repeatable.repeat_indices.filter(
-            submissions=submission,
-        )
-        if parent_index is not None:
-            indices = indices.filter(parent=parent_index)
-        return indices
-
 
 # TODO: Move these helpers somewhere else
 def generate_slug(
     sluggable,
-    repeat_index=None,
+    repeat_index: RepeatIndex | None = None,
 ):
     """
     Generate a slug for a stop or question that is unique within a
@@ -297,17 +273,17 @@ def generate_slug(
     return ".".join(parts)
 
 
-def is_repeatable(step_or_question):
+def is_repeatable(
+    step_or_question: Step | BaseQuestion | RepeatableStep | RepeatableTextQuestion,
+) -> bool:
     """
-    Determines if given step or question is repeatable.
+    Determines whether a given step or question is repeatable.
     """
-    if hasattr(step_or_question, "repeatablestep") or hasattr(
-        step_or_question, "repeatable_ptr"
-    ):
-        return True
-    if issubclass(Repeatable, type(step_or_question)):
-        return True
-    if hasattr(step_or_question, "repeatable_ptr"):
+    if isinstance(step_or_question, Repeatable):
         return True
 
-    return False
+    # Django returns the non-polymorphic base class,
+    # so we need to do a reverse check.
+    return hasattr(step_or_question, "repeatabletextquestion") or hasattr(
+        step_or_question, "repeatablestep"
+    )

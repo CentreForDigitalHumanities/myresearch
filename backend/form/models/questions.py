@@ -1,3 +1,5 @@
+from typing import TYPE_CHECKING
+
 from django.core.validators import RegexValidator, EmailValidator
 from django.db import models
 from django.core.exceptions import ValidationError
@@ -5,7 +7,10 @@ from datetime import datetime
 from django.utils.dateparse import parse_datetime
 from django.utils.safestring import mark_safe
 
-from form.models import Repeatable, RepeatableStep
+from form.models.form import Repeatable, RepeatableStep, RepeatIndex
+
+if TYPE_CHECKING:
+    from form.models.responses import UserFormSubmission
 
 snake_case_validator = RegexValidator(
     regex=r"^[a-z]+(_[a-z]+)*$",
@@ -194,6 +199,15 @@ class RepeatableStepQuestion(BaseQuestion):
     create_text = models.CharField()
 
     none_yet_text = models.CharField()
+
+    def get_answer(
+        self, submission: "UserFormSubmission", parent_index: RepeatIndex | None = None
+    ) -> dict:
+        indices = self.repeatable_step.repeat_indices.filter(
+            submissions=submission,
+            parent=parent_index,
+        )
+        return {"value": [index.pk for index in indices]}
 
 
 class RepeatableTextQuestion(Repeatable, TextQuestion):
