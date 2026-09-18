@@ -173,7 +173,6 @@ class QuestionInline(TinyMCETextFieldMixin, admin.TabularInline):
         "required",
         "description_nl",
         "description_en",
-        "is_repeatable",
     )
     readonly_fields = (
         "id",
@@ -274,6 +273,7 @@ class BaseStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
 class StepAdmin(BaseStepAdmin):
     pass
 
+
 # Question admins
 @admin.register(SelectQuestion)
 class SelectQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
@@ -352,13 +352,13 @@ class TextQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                     "required",
                     "is_email",
                     "step_name_override",
+                    "is_repeatable",
                 )
             },
         ),
         ("Text Options", {"fields": ("placeholder", "lines")}),
     )
     inlines = [QuestionConditionInline]
-
 
 
 @admin.register(NumberQuestion)
