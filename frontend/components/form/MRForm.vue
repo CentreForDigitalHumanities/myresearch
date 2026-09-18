@@ -137,7 +137,7 @@ function isOnlyOccurrence(question: QuestionWithValue): boolean {
         (q) => q.questionId === question.questionId,
     ).length;
     return count === 1;
-};
+}
 
 function isFirstOccurrence(question: QuestionWithValue): boolean {
     const firstIndex = Math.min(
@@ -148,7 +148,7 @@ function isFirstOccurrence(question: QuestionWithValue): boolean {
     const currentIndex =
         question.repeatIndex !== null ? Number(question.repeatIndex) : -1;
     return currentIndex === firstIndex;
-};
+}
 
 async function handleAddRepeat(question: QuestionWithValue): Promise<void> {
     const userFormId = submissionId.value;
@@ -250,17 +250,16 @@ useWatchQuestions(watchedQuestions, () => {
                     "
                     @blur="handleStepNameOverride(question)"
                 />
-                <a
+                <button
                     v-if="question.isRepeatable && !isOnlyOccurrence(question)"
-                    href="#"
-                    class="text-danger"
+                    class="text-danger link-underline-danger border-0"
                     @click="handleDeleteRepeat(question)"
                 >
                     <div class="d-flex align-items-center">
                         <X class="icon" />
                         <div class="ml-3">{{ t("Delete") }}</div>
                     </div>
-                </a>
+                </button>
                 <div v-if="question.isRepeatable && isLastOccurrence(question)">
                     <BSButton
                         variant="primary"
