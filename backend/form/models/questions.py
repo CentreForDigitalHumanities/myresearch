@@ -26,6 +26,13 @@ class BaseQuestion(models.Model):
         validators=[snake_case_validator],
     )
 
+    step_name_override = models.BooleanField(
+        default=False,
+        help_text="If this is set to True, the answer to the question will "
+        "override the name of its step (for display purposes). It can only be "
+        "true for one question per step.",
+    )
+
     text = models.CharField(max_length=200)
     step = models.ForeignKey(
         "form.Step", on_delete=models.CASCADE, related_name="questions"
@@ -50,7 +57,12 @@ class BaseQuestion(models.Model):
                 fields=["form", "annotation_key"],
                 name="unique_annotation_key_per_form",
                 condition=models.Q(annotation_key__isnull=False),
-            )
+            ),
+            models.UniqueConstraint(
+                fields=["step"],
+                condition=models.Q(step_name_override=True),
+                name="one_step_name_override_per_step",
+            ),
         ]
 
     @property
@@ -127,6 +139,7 @@ class TrueFalseQuestion(BaseQuestion):
 
 
 class TextQuestion(BaseQuestion):
+
     placeholder = models.CharField(max_length=200, blank=True)
     lines = models.PositiveIntegerField(default=1)
     is_email = models.BooleanField(default=False)

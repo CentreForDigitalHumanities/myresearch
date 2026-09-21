@@ -13,21 +13,16 @@ function useFormDataToMutationInput(
 
     return {
         submissionId: submissionId,
-        responses: questions
-            // Do not send questions with errors to the backend
-            .filter(
-                (question) => !question.errors || question.errors.length === 0,
-            )
-            .map((question) => ({
-                // FileUploadQuestion answers are already in the correct format.
-                answer:
-                    question.__typename === "FileUploadQuestionType"
-                        ? JSON.stringify(question.value ?? { value: "" })
-                        : JSON.stringify({ value: question.value }),
-                id: question.responseId,
-                questionId: question.questionId,
-                repeatIndex: question.repeatIndex,
-            })),
+        responses: questions.map((question) => ({
+            // FileUploadQuestion answers are already in the correct format.
+            answer:
+                question.__typename === "FileUploadQuestionType"
+                    ? JSON.stringify(question.value ?? { value: "" })
+                    : JSON.stringify({ value: question.value }),
+            id: question.responseId,
+            questionId: question.questionId,
+            repeatIndex: question.repeatIndex,
+        })),
     };
 }
 

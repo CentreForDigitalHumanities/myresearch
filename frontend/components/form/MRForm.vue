@@ -39,7 +39,8 @@ const watchedQuestions = computed(() =>
     props.step.questions.filter(
         (question) =>
             question.hasConditions ||
-            question.__typename === "FileUploadQuestionType",
+            question.__typename === "FileUploadQuestionType" ||
+            question.stepNameOverride,
     ),
 );
 
