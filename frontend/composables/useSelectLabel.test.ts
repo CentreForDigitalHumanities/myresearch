@@ -9,6 +9,7 @@ const createQuestion = (value: string): SelectQuestionWithValue => ({
     descriptionEn: "Description 1",
     descriptionNl: "Beschrijving 1",
     hasConditions: false,
+    stepNameOverride: false,
     multiple: true,
     repeatIndex: 0,
     required: false,
