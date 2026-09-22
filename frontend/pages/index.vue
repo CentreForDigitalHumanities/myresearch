@@ -25,7 +25,7 @@ definePageMeta({
                             )
                         }}
                     </p>
-                    <i18n-t keypath="MyResearch currently offers a {processingRegister} to comply with legal obligations under the General Data Protection Regulation (GDPR). In the future, more and more preparatory tasks will be accommodated in MyResearch, so that you as a researcher can meet multiple requirements through a single request. Consider drawing up a data management plan and submitting an application for ethical review." tag="p">
+                    <i18n-t keypath="MyResearch currently offers a {processingRegister} to comply with legal obligations under the General Data Protection Regulation (GDPR). In the future, more and more preparatory tasks will be accommodated in MyResearch, so that you as a researcher can meet multiple requirements through a single request. For example, you might submit your study for ethical review and simultaneously create a data management plan." tag="p">
                         <template #processingRegister>
                             <b>{{
                                 $t( "processing register for personal data in your research" )
