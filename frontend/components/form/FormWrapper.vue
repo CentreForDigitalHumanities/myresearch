@@ -270,7 +270,7 @@ function handleBackNavigation() {
 const blockSubmitOnEnter = (event: KeyboardEvent) => {
     const target = event.target as HTMLElement;
     if (target.tagName === "TEXTAREA") {
-        // Enter is still needed in textarea's and default behavior at that point is not submit.
+        // We do not want to block default behavior in textarea's
         return;
     }
     event.preventDefault();
