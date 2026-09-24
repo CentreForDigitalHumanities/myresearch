@@ -266,6 +266,15 @@ function handleBackNavigation() {
         params: { studyId: studyId.value },
     });
 }
+
+const blockSubmitOnEnter = (event: KeyboardEvent) => {
+    const target = event.target as HTMLElement;
+    if (target.tagName === "TEXTAREA") {
+        // Enter is still needed in textarea's and default behavior at that point is not submit.
+        return;
+    }
+    event.preventDefault();
+};
 </script>
 
 <template>
@@ -323,7 +332,10 @@ function handleBackNavigation() {
         </div>
         <template v-else>
             <div class="col-12 col-lg-6 pe-4">
-                <form class="uu-form uu-form-no-help">
+                <form
+                    class="uu-form uu-form-no-help"
+                    @keydown.enter="blockSubmitOnEnter"
+                >
                     <h2>
                         {{ useTranslateableAttribute(selectedStep, "name") }}
                     </h2>
