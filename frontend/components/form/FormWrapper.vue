@@ -267,10 +267,11 @@ function handleBackNavigation() {
     });
 }
 
+/* When pressing enter when inside a textfield the form submits and the textfield does not get saved. This method blocks that. */
 const blockSubmitOnEnter = (event: KeyboardEvent) => {
     const target = event.target as HTMLElement;
     if (target.tagName === "TEXTAREA") {
-        // We do not want to block default behavior in textarea's
+        // We do not want to block default behavior in textarea fields.
         return;
     }
     event.preventDefault();
