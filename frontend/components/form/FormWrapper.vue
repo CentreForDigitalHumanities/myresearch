@@ -267,7 +267,7 @@ function handleBackNavigation() {
     });
 }
 
-/* When pressing enter when inside a textfield the form submits and the textfield does not get saved. This method blocks that. */
+/* When pressing enter when inside a text field the form submits and the textfield does not get saved. This method prevents this. */
 const blockSubmitOnEnter = (event: KeyboardEvent) => {
     const target = event.target as HTMLElement;
     if (target.tagName === "TEXTAREA") {
