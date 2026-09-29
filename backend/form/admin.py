@@ -467,6 +467,11 @@ class RepeatableStepQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     )
     inlines = [QuestionConditionInline]
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "repeatable_step":
+            kwargs["queryset"] = Step.objects.filter(is_repeatable=True)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
 
 @admin.register(SelectOption)
 class SelectOptionAdmin(admin.ModelAdmin):
