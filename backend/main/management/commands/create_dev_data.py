@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.core.management import call_command
 
+from form.models.questions import RepeatableStepQuestion
 from form.services.form_evaluator import FormEvaluator
 from research.models.reviews import StatusChange, SubmissionStatus
 from research.models.study import Study
@@ -49,13 +50,25 @@ MAX_SUBSTEPS_IN_STEP = 5
 MIN_QUESTIONS_IN_STEP = 1
 MAX_QUESTIONS_IN_STEP = 5
 
+# Min/max number of repeatable steps.
+MIN_REPEATABLE_STEPS = 1
+MAX_REPEATABLE_STEPS = 3
+
 # Limits nested steps to avoid infinite recursion.
 MAX_STEP_DEPTH = 3
 
 
-ALL_QUESTIONS = ["select", "text", "true_false", "date", "number", "file_upload"]
+ALL_QUESTIONS = [
+    "select",
+    "text",
+    "true_false",
+    "date",
+    "number",
+    "file_upload",
+    "repeatable_text",
+]
 
-# These are the question annotation_keys that are used in the app
+# These are the question annotation_keys that are used in the app.
 TEXT_ANNOTATION_KEYS = ["title"]
 SELECT_ANNOTATION_KEYS = ["faculty"]
 
@@ -111,6 +124,7 @@ class Command(BaseCommand):
                 self.print(options, "Generating random form and associated data...")
                 form = self._generate_form(options)
                 self._generate_steps(options, form)
+                self._generate_step_infos(options, form)
                 self._generate_questions(options, form)
 
         self._create_submissions_and_studies(options, form)
@@ -200,20 +214,82 @@ class Command(BaseCommand):
                 is_overview=True,
             )
 
-    def _create_step_info_text(self, step: Step) -> None:
-        """Generates side information for a given step."""
+    def _generate_repeatable_steps(self, options, form: MRForm) -> None:
+        """
+        Generate repeatable steps for the provided form.
+        """
+        num_repeatable_steps = self.faker.random_int(
+            MIN_REPEATABLE_STEPS, MAX_REPEATABLE_STEPS
+        )
 
-        if not self.faker.pybool():
-            return
-
-        for _ in range(self.faker.random_int(1, 3)):
-            StepInfoText.objects.create(
-                step=step,
-                text_nl=self.faker_nl.sentence().replace(".", "?"),
-                text_en=self.faker_en.sentence().replace(".", "?"),
-                content_nl=f"<p>{self.faker_nl.paragraph()}</p>",
-                content_en=f"<p>{self.faker_en.paragraph()}</p>",
+        for _ in tqdm(
+            range(num_repeatable_steps),
+            desc="Generating repeatable steps...",
+            disable=options["silent"],
+        ):
+            repeatable_step = Step.objects.create(
+                form=form,
+                name_nl=self.faker_nl.sentence(nb_words=5),
+                name_en=self.faker_en.sentence(nb_words=5),
+                description_nl=f"<p>{self.faker_nl.paragraph()}</p>",
+                description_en=f"<p>{self.faker_en.paragraph()}</p>",
+                slug=self.faker.unique.slug(),
+                is_repeatable=True,
+                # For now, we will only create repeatable steps at the top
+                # level, but this could be extended to substeps in the future.
+                parent=None,
             )
+            # Every repeatable step needs a RepeatableStepQuestion (RSQ) to manage its instances.
+            self._generate_rsq(repeatable_step)
+
+    def _generate_rsq(self, repeatable_step: Step) -> None:
+        """
+        Generate a RepeatableStepQuestion (RSQ) for a repeatable step so instances of the step can be created or deleted.
+        """
+        host_step = Step.objects.exclude(id=repeatable_step.pk).first()
+
+        assert host_step is not None, "No host step found to attach the RSQ to."
+
+        RepeatableStepQuestion.objects.create(
+            text=f"Manage instances of {repeatable_step.name}",
+            description=f"This question allows you to manage instances of the repeatable step {repeatable_step.name}.",
+            repeatable_step=repeatable_step,
+            step=host_step,
+            form=host_step.form,
+            create_text="Create new instance",
+            create_text_en="Create new instance",
+            create_text_nl="Nieuwe stap toevoegen",
+            none_yet_text="No instances yet",
+            none_yet_text_en="No instances yet",
+            none_yet_text_nl="Geen stappen toegevoegd",
+        )
+
+    def _generate_step_infos(self, options, form: MRForm) -> None:
+        """
+        Generate side information for each step in the form, in around 50% of cases.
+        """
+
+        def _generate_step_info_text(step: Step) -> None:
+            """Generates side information for a given step."""
+
+            if not self.faker.pybool():
+                return
+
+            for _ in range(self.faker.random_int(1, 3)):
+                StepInfoText.objects.create(
+                    step=step,
+                    text_nl=self.faker_nl.sentence().replace(".", "?"),
+                    text_en=self.faker_en.sentence().replace(".", "?"),
+                    content_nl=f"<p>{self.faker_nl.paragraph()}</p>",
+                    content_en=f"<p>{self.faker_en.paragraph()}</p>",
+                )
+
+        for step in tqdm(
+            Step.objects.filter(form=form),
+            desc="Generating step infos...",
+            disable=options["silent"],
+        ):
+            _generate_step_info_text(step)
 
     def _generate_questions(self, options, form: MRForm) -> None:
         def _base_question_fields(step: Step, order: int) -> dict:
@@ -243,12 +319,17 @@ class Command(BaseCommand):
                     question=select_question,
                 )
 
-        def _create_text_question(form: Step, index: int) -> None:
+        def _create_text_question(
+            form: Step,
+            index: int,
+            is_repeatable=False,
+        ) -> None:
             tq = TextQuestion.objects.create(
                 **_base_question_fields(form, index),
                 placeholder_nl=self.faker_nl.sentence(),
                 placeholder_en=self.faker_en.sentence(),
                 lines=self.faker.random_int(1, 5),
+                is_repeatable=is_repeatable,
             )
             # For 10% of tq's make them override the step name
             if self.faker.boolean(10):
@@ -282,7 +363,9 @@ class Command(BaseCommand):
             )
 
         for step in tqdm(
-            form.steps.all(), desc="Generating questions...", disable=options["silent"]  # type: ignore
+            Step.objects.filter(form=form),
+            desc="Generating questions...",
+            disable=options["silent"],
         ):
             number_of_questions = self.faker.random_int(
                 MIN_QUESTIONS_IN_STEP, MAX_QUESTIONS_IN_STEP
@@ -294,7 +377,7 @@ class Command(BaseCommand):
                     case "select":
                         _create_select_question(step, question_index)
                     case "text":
-                        _create_text_question(step, question_index)
+                        _create_text_question(step, question_index, False)
                     case "true_false":
                         _create_true_false_question(step, question_index)
                     case "date":
@@ -303,6 +386,10 @@ class Command(BaseCommand):
                         _create_number_question(step, question_index)
                     case "file_upload":
                         _create_file_upload_question(step, question_index)
+                    case "repeatable_text":
+                        _create_text_question(step, question_index, True)
+                    case _:
+                        raise ValueError(f"Unknown question type: {question_type}")
 
     def _create_submissions_and_studies(self, options, form):
         """
