@@ -265,4 +265,3 @@ def generate_slug(
     if repeat_index is not None:
         parts.append(str(repeat_index.pk))
     return ".".join(parts)
-

@@ -204,5 +204,3 @@ class RepeatableStepQuestion(BaseQuestion):
             parent=parent_index,
         )
         return {"value": [index.pk for index in indices]}
-
-
