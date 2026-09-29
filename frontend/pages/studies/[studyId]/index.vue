@@ -54,7 +54,7 @@ const study = computed(() => studyResult.value?.study ?? null);
             <div class="uu-sidebar-content">
                 <div class="uu-container">
                     <div class="row">
-                        <div class="col me-5">
+                        <div class="col-7 me-1">
                             <div v-if="study.isSeen !== null">
                                 <span
                                     v-if="study.isSeen"
@@ -85,7 +85,7 @@ const study = computed(() => studyResult.value?.study ?? null);
                                 :submission-id="study.latestSubmissionId"
                             />
                         </div>
-                        <div class="col-2">
+                        <div class="col-3">
                             <StudyProgressBar :study-id="study.id" />
                         </div>
                     </div>
