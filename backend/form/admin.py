@@ -200,7 +200,8 @@ class MRFormAdmin(admin.ModelAdmin):
     inlines = [StepInline]
 
 
-class BaseStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
+@admin.register(Step)
+class StepAdmin(admin.ModelAdmin):
     list_display = (
         "name_nl",
         "name_en",
@@ -267,11 +268,6 @@ class BaseStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
         return "-"
 
     created_at_display.short_description = "Info"
-
-
-@admin.register(Step)
-class StepAdmin(BaseStepAdmin):
-    pass
 
 
 # Question admins
