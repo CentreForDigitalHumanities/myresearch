@@ -126,8 +126,6 @@ class UserFormResolver:
     def _resolve_step_questions(
         self, step: Step, repeat_index: RepeatIndex | None = None
     ):
-        # TODO: make question instances from step, rather than questions
-        # Check out the old implementation
         questions = []
         step_name_override = False
         step_questions = list(BaseQuestion.objects.filter(step=step))
