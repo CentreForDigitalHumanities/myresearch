@@ -27,6 +27,7 @@ from form.models import (
     TextQuestion,
     TrueFalseQuestion,
     UserFormSubmission,
+    RepeatableStepQuestion,
 )
 
 # Min/max number of steps for the (top-level) form.
@@ -111,7 +112,7 @@ class Command(BaseCommand):
             if options["vwr"]:
                 self.print(options, "Loading VWR fixture for form...")
                 call_command("loaddata", "form/fixtures/vwr.json")
-                form = MRForm.objects.get(name_en="Processing Registry")
+                form = MRForm.objects.get(name_en="Processing Register")
             else:
                 self.print(options, "Generating random form and associated data...")
                 form = self._generate_form(options)

@@ -4,6 +4,7 @@ from django.db import models
 from cdh.core.forms import TinyMCEWidget
 
 from form.forms import StepAdminForm, SelectQuestionAdminForm
+from form.models.form import StepInfoText
 from .models import (
     MRForm,
     Step,
@@ -76,7 +77,7 @@ class SubstepInline(TinyMCETextFieldMixin, admin.StackedInline):
 class SelectOptionInline(admin.TabularInline):
     model = SelectOption
     extra = 0
-    fields = ("label", "label_nl", "label_en", "default_selected")
+    fields = ("label_nl", "label_en", "default_selected")
 
 
 class StepConditionInline(admin.StackedInline):
@@ -268,6 +269,20 @@ class StepAdmin(admin.ModelAdmin):
         return "-"
 
     created_at_display.short_description = "Info"
+
+
+@admin.register(StepInfoText)
+class StepInfoTextAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
+    list_display = ("step", "text_nl", "text_en")
+    list_filter = ("step",)
+    search_fields = ("text_nl", "text_en")
+    fields = [
+        "step",
+        "text_nl",
+        "text_en",
+        "content_nl",
+        "content_en",
+    ]
 
 
 # Question admins
