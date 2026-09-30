@@ -38,8 +38,17 @@ The following question types are available:
 4. **DateQuestion**: Date picker
 5. **SelectQuestion**: Dropdown or multi-select
 6. **FileUploadQuestion**: File attachment
+7. **RepeatableStepQuestion**: A special question, which does not store answers, but is used to manage repeatable steps.
 
 Each question type may have additional fields specific to its behavior (e.g. options for `SelectQuestion`, or file type restrictions for `FileUploadQuestion`).
+
+### Repeats
+
+Both Steps and Questions can be repeatable, although they work slightly differently. To create a repeatable Step/Question, just ensure is_repeatable = True. This can be done through the admin interface when creating an item.
+
+A repeatable question will receive an add another button in the UI, so you can add as many eg. applicants, as needed when filling in your form. As of now (29-09-2026) we have only tested repeatable TextQuestions, as these are the only repeatable question type we currently use, but other types will probably work as well.
+
+To make repeating steps work, we also need a **RepeatableStepQuestion**. This is a special question in the form, which can create and delete step repeats. It also shows us an overview of them and can link the user to the edit page for each repeat.
 
 ## User-specific forms
 
@@ -109,8 +118,6 @@ Both **QuestionCondition** and **StepCondition** inherit from **BaseCondition** 
 
 1. **show**: display the target only when the condition is met.
 2. **hide**: hide the target when the condition is met.
-3. **repeat**: repeat the target a fixed number of times when triggered.
-4. **repeat_dynamic**: repeat the target based on the answer value (e.g., "How many children?" → repeat child info questions).
 
 Visibility is determined according to the following rules.
 
