@@ -27,7 +27,9 @@ const QUESTION_COMPONENT_MAP = {
 } as const;
 
 const CREATE_QUESTION_REPEAT_MUTATION = graphql(`
-    mutation MRFormCreateQuestionRepeat($input: CreateQuestionRepeatMutationInput!) {
+    mutation MRFormCreateQuestionRepeat(
+        $input: CreateQuestionRepeatMutationInput!
+    ) {
         createQuestionRepeat(input: $input) {
             newRepeatIndex
             errors {
@@ -142,10 +144,10 @@ function isFirstOccurrence(question: QuestionWithValue): boolean {
     const firstIndex = Math.min(
         ...props.step.questions
             .filter((q) => q.questionId === question.questionId)
-            .map((q) => (q.repeatIndex !== null ? Number(q.repeatIndex) : -1)),
+            .map((q) => (q.repeatIndex != null ? q.repeatIndex : -1)),
     );
     const currentIndex =
-        question.repeatIndex !== null ? Number(question.repeatIndex) : -1;
+        question.repeatIndex != null ? question.repeatIndex : -1;
     return currentIndex === firstIndex;
 }
 
