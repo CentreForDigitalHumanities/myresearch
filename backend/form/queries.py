@@ -11,7 +11,7 @@ from form.types.StepType import StepType
 from form.models import (
     UserFormSubmission,
     SelectQuestion,
-    RepeatableStep,
+    Step,
     RepeatIndex,
     BaseQuestion,
     QuestionResponse,
@@ -116,8 +116,8 @@ class RepeatableStepQueries(ObjectType):
             return []
 
         try:
-            repeatable_step = RepeatableStep.objects.get(pk=repeatable_id)
-        except RepeatableStep.DoesNotExist:
+            repeatable_step = Step.objects.get(pk=repeatable_id)
+        except Step.DoesNotExist:
             return []
         if not submission_id:
             return []

@@ -12,7 +12,6 @@ import { computed } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import Loading from "~/components/shared/Loading.vue";
 import type { ApolloCache } from "@apollo/client/core";
-import { Repeatable } from "~/generated/gql/graphql.ts";
 
 interface Props {
     question: RepeatableStepQuestionWithValue;
@@ -29,8 +28,8 @@ const currentSubmissionId = useSubmissionId();
 const { t } = useI18n();
 
 const CREATE_STEP_REPEAT_MUTATION = graphql(`
-    mutation CreateStepRepeat($input: CreateRepeatMutationInput!) {
-        createRepeat(input: $input) {
+    mutation RSQCreateStepRepeat($input: CreateStepRepeatMutationInput!) {
+        createStepRepeat(input: $input) {
             newRepeatIndex
             errors {
                 field
@@ -119,8 +118,7 @@ function handleAddStep(): void {
     void createStepRepeat({
         input: {
             submissionId,
-            repeatableType: Repeatable.Step,
-            objectId: props.question.repeatableStepId,
+            stepId: props.question.repeatableStepId,
             parentId: props.parentRepeatIndex?.toString() ?? null,
         },
     }).catch(() => {
@@ -132,14 +130,14 @@ function handleAddStep(): void {
 }
 
 function handleDeleteStep(repeatIndexId: number): void {
-    const userFormId = currentSubmissionId.value;
-    if (!userFormId) {
+    const submissionId = currentSubmissionId.value;
+    if (!submissionId) {
         return;
     }
 
     void deleteStepRepeat({
         input: {
-            userFormId,
+            submissionId,
             repeatIndexId: repeatIndexId.toString(),
         },
     }).catch(() => {

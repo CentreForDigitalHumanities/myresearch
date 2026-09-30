@@ -7,7 +7,6 @@ from form.forms import StepAdminForm, SelectQuestionAdminForm
 from .models import (
     MRForm,
     Step,
-    StepInfoText,
     BaseQuestion,
     SelectQuestion,
     SelectOption,
@@ -16,9 +15,7 @@ from .models import (
     NumberQuestion,
     DateQuestion,
     FileUploadQuestion,
-    RepeatableStep,
     RepeatableStepQuestion,
-    RepeatableTextQuestion,
     UserFormSubmission,
     QuestionResponse,
     StepCondition,
@@ -203,7 +200,8 @@ class MRFormAdmin(admin.ModelAdmin):
     inlines = [StepInline]
 
 
-class BaseStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
+@admin.register(Step)
+class StepAdmin(admin.ModelAdmin):
     list_display = (
         "name_nl",
         "name_en",
@@ -226,6 +224,7 @@ class BaseStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                     "description_nl",
                     "description_en",
                     "is_overview",
+                    "is_repeatable",
                 )
             },
         ),
@@ -269,21 +268,6 @@ class BaseStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
         return "-"
 
     created_at_display.short_description = "Info"
-
-
-@admin.register(Step)
-class StepAdmin(BaseStepAdmin):
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        # Filter out RepeatableSteps when viewing Steps in the admin, since they are a separate model.
-        if self.model is Step:
-            queryset = queryset.filter(repeatablestep__isnull=True)
-        return queryset
-
-
-@admin.register(RepeatableStep)
-class RepeatableStepAdmin(BaseStepAdmin):
-    pass
 
 
 # Question admins
@@ -364,19 +348,13 @@ class TextQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                     "required",
                     "is_email",
                     "step_name_override",
+                    "is_repeatable",
                 )
             },
         ),
         ("Text Options", {"fields": ("placeholder", "lines")}),
     )
     inlines = [QuestionConditionInline]
-
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        # Filter out RepeatableTextQuestions when viewing TextQuestions in the admin, since they are a separate model.
-        if self.model is TextQuestion:
-            queryset = queryset.filter(repeatabletextquestion__isnull=True)
-        return queryset
 
 
 @admin.register(NumberQuestion)
@@ -454,11 +432,6 @@ class FileUploadQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     inlines = [QuestionConditionInline]
 
 
-@admin.register(RepeatableTextQuestion)
-class RepeatableTextQuestionAdmin(TextQuestionAdmin):
-    pass
-
-
 @admin.register(RepeatableStepQuestion)
 class RepeatableStepQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     list_display = ("text_nl", "text_en", "step", "required", "repeatable_step")
@@ -493,6 +466,11 @@ class RepeatableStepQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
         ),
     )
     inlines = [QuestionConditionInline]
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "repeatable_step":
+            kwargs["queryset"] = Step.objects.filter(is_repeatable=True)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 @admin.register(SelectOption)

@@ -1,6 +1,5 @@
 from graphene import Boolean, InputObjectType, List, Mutation, NonNull, ResolveInfo, ID
 from graphene_django.types import ErrorType
-from django.core.exceptions import ObjectDoesNotExist
 
 from main.models import User
 from form.models import (
@@ -10,13 +9,13 @@ from form.models import (
 
 
 class DeleteRepeatMutationInput(InputObjectType):
-    user_form_id = ID(required=True)
+    submission_id = ID(required=True)
     repeat_index_id = ID(required=True)
 
 
 class DeleteRepeatMutation(Mutation):
     errors = List(NonNull(ErrorType), required=True)
-    ok = Boolean(required=False)
+    ok = Boolean(required=True)
 
     class Arguments:
         input = DeleteRepeatMutationInput(required=True)
@@ -30,7 +29,7 @@ class DeleteRepeatMutation(Mutation):
     ):
         user: User = info.context.user
 
-        user_form_id = getattr(input, "user_form_id")
+        submission_id = getattr(input, "submission_id")
         repeat_index_id = getattr(input, "repeat_index_id")
 
         try:
@@ -38,21 +37,30 @@ class DeleteRepeatMutation(Mutation):
                 pk=repeat_index_id,
             )
             submission = UserFormSubmission.objects.get(
-                pk=user_form_id,
+                pk=submission_id,
             )
+        except RepeatIndex.DoesNotExist:
+            error = ErrorType(
+                field="repeat_index_id",  # type: ignore
+                message=f"RepeatIndex with id {repeat_index_id} does not exist.",  # type: ignore
+            )
+            return cls(ok=False, errors=[error])  # type: ignore
+        except UserFormSubmission.DoesNotExist:
+            error = ErrorType(
+                field="submission_id",  # type: ignore
+                message=f"Submission with id {submission_id} does not exist.",  # type: ignore
+            )
+            return cls(ok=False, errors=[error])  # type: ignore
 
-            repeat_index.submissions.remove(submission)
-
-        except ObjectDoesNotExist as error:
-            return cls(ok=False, errors=[error])
-        except Exception as error:
-            return cls(ok=False, errors=[error])
-
+        repeat_index.submissions.remove(submission)
         try:
             assert submission.can_be_edited_by(user)
         except AssertionError:
-            error = "Access denied"
-            return cls(ok=False, errors=[error])
+            error = ErrorType(
+                field="submission_id",  # type: ignore
+                message=f"Access denied.",  # type: ignore
+            )
+            return cls(ok=False, errors=[error])  # type: ignore
 
         # When a repeat index is removed from its last submission, it
         # is deleted. Currently we do not delete all child indices that
@@ -61,4 +69,4 @@ class DeleteRepeatMutation(Mutation):
         if repeat_index.submissions.count() == 0:
             repeat_index.delete()
 
-        return cls(errors=[], ok=True)
+        return cls(ok=True, errors=[])  # type: ignore

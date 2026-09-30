@@ -1,5 +1,5 @@
 import pytest
-from form.models import MRForm, Step, RepeatableStep, TextQuestion, UserFormSubmission
+from form.models import MRForm, Step, TextQuestion, UserFormSubmission
 from graphene_django.utils.testing import graphql_query
 
 GRAPHQL_URL = "/api/graphql"
@@ -30,10 +30,11 @@ def step(form: MRForm) -> Step:
 
 @pytest.fixture
 def repeatable_step(form: MRForm):
-    repeatable_step = RepeatableStep(
+    repeatable_step = Step(
         name="Repeatable",
         slug="rep",
         form=form,
+        is_repeatable=True,
     )
     repeatable_step.save()
     return repeatable_step

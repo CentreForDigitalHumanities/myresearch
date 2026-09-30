@@ -17,7 +17,8 @@ from notes.queries import NoteQueries
 
 from form.mutations.CreateUserFormRevision import CreateUserFormRevision
 from form.mutations.UpdateUserFormSubmission import UpdateUserFormSubmission
-from form.mutations.CreateRepeatMutation import CreateRepeatMutation
+from form.mutations.CreateQuestionRepeatMutation import CreateQuestionRepeatMutation
+from form.mutations.CreateStepRepeatMutation import CreateStepRepeatMutation
 from form.mutations.DeleteRepeatMutation import DeleteRepeatMutation
 from research.mutations.CreateStudyMutation import CreateStudyMutation
 from research.mutations.UpdateStudySeenMutation import UpdateStudySeenMutation
@@ -44,7 +45,8 @@ class Mutation(ObjectType):
     create_draft_status_change = CreateDraftStatusChange.Field()
     update_form_submission = UpdateUserFormSubmission.Field()
     create_user_form_revision = CreateUserFormRevision.Field()
-    create_repeat = CreateRepeatMutation.Field()
+    create_step_repeat = CreateStepRepeatMutation.Field()
+    create_question_repeat = CreateQuestionRepeatMutation.Field()
     delete_repeat = DeleteRepeatMutation.Field()
 
 

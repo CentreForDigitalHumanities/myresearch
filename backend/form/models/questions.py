@@ -7,7 +7,7 @@ from datetime import datetime
 from django.utils.dateparse import parse_datetime
 from django.utils.safestring import mark_safe
 
-from form.models.form import Repeatable, RepeatableStep, RepeatIndex
+from form.models.form import RepeatIndex, Repeatable, Step
 
 if TYPE_CHECKING:
     from form.models.responses import UserFormSubmission
@@ -18,8 +18,7 @@ snake_case_validator = RegexValidator(
 )
 
 
-class BaseQuestion(models.Model):
-
+class BaseQuestion(Repeatable):
     annotation_key = models.CharField(
         blank=True,
         null=True,
@@ -119,9 +118,6 @@ class BaseQuestion(models.Model):
             if hasattr(self, subclass_name):
                 return getattr(self, subclass_name)
 
-            if hasattr(self, "repeatable" + subclass_name):
-                return getattr(self, "repeatable" + subclass_name)
-
         return self
 
     def __str__(self):
@@ -151,7 +147,6 @@ class TrueFalseQuestion(BaseQuestion):
 
 
 class TextQuestion(BaseQuestion):
-
     placeholder = models.CharField(max_length=200, blank=True)
     lines = models.PositiveIntegerField(default=1)
     is_email = models.BooleanField(default=False)
@@ -194,7 +189,7 @@ class RepeatableStepQuestion(BaseQuestion):
     Does not have a response, but is used to trigger mutations.
     """
 
-    repeatable_step = models.OneToOneField(RepeatableStep, on_delete=models.CASCADE)
+    repeatable_step = models.OneToOneField(Step, on_delete=models.CASCADE)
 
     create_text = models.CharField()
 
@@ -208,7 +203,3 @@ class RepeatableStepQuestion(BaseQuestion):
             parent=parent_index,
         )
         return {"value": [index.pk for index in indices]}
-
-
-class RepeatableTextQuestion(Repeatable, TextQuestion):
-    pass
