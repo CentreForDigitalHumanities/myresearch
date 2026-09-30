@@ -115,7 +115,7 @@ function handleAddStep(): void {
         return;
     }
 
-    void createStepRepeat({
+    createStepRepeat({
         input: {
             submissionId,
             stepId: props.question.repeatableStepId,
@@ -135,7 +135,7 @@ function handleDeleteStep(repeatIndexId: number): void {
         return;
     }
 
-    void deleteStepRepeat({
+    deleteStepRepeat({
         input: {
             submissionId,
             repeatIndexId: repeatIndexId.toString(),
