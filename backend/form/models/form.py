@@ -1,6 +1,12 @@
+from typing import TYPE_CHECKING
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.db.models import QuerySet
+
+if TYPE_CHECKING:
+    from form.models.responses import UserFormSubmission
 
 user_model = get_user_model()
 
@@ -20,7 +26,54 @@ class MRForm(models.Model):
         return f"{self.name} ({self.pk})"
 
 
-class Step(models.Model):
+class RepeatIndex(models.Model):
+    """
+    A marker for various repeatable items to be connected
+    to a UserFormSubmission through a ManyToMany relationship.
+
+    Although a repeatable item has a simple relationship to
+    its indices representing its repeats, the index itself has
+    an additional relationship to its parent. This is necessary
+    to disambiguate parallel nested repeats within the same
+    submission.
+    """
+
+    parent = models.ForeignKey(
+        to="form.RepeatIndex",
+        on_delete=models.CASCADE,
+        default=None,
+        null=True,
+        related_name="children",
+    )
+
+    submissions = models.ManyToManyField(
+        to="form.UserFormSubmission",
+        related_name="repeats",
+    )
+
+
+class Repeatable(models.Model):
+    is_repeatable = models.BooleanField(default=False)
+    repeat_indices = models.ManyToManyField(
+        to=RepeatIndex,
+        related_name="%(class)s_repeatables",
+    )
+
+    class Meta:
+        abstract = True
+
+    def repeat_indices_for_submission(
+        self,
+        submission: "UserFormSubmission",
+        parent_index: "RepeatIndex | None" = None,
+    ) -> QuerySet["RepeatIndex"]:
+        filters = {"submissions": submission}
+        if parent_index is not None:
+            filters["parent_id"] = parent_index.pk
+        return self.repeat_indices.filter(**filters)
+
+
+class Step(Repeatable):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     slug = models.SlugField(
@@ -75,65 +128,3 @@ class StepInfoText(models.Model):
 
     class Meta:
         order_with_respect_to = "step"
-
-
-class RepeatIndex(models.Model):
-    """
-    A marker for various repeatable items to be connected
-    to a UserFormSubmission through a single foreign
-    relationship.
-
-    Although a repeatable item has a simple relationship to
-    its indeces representing its repeats, the index itself has
-    an additional relationship to its parent. This is necessary
-    to disambiguate parallel nested repeats within the same
-    submission.
-    """
-
-    parent = models.ForeignKey(
-        to="form.RepeatIndex",
-        on_delete=models.CASCADE,
-        default=None,
-        null=True,
-        related_name="children",
-    )
-
-    submissions = models.ManyToManyField(
-        to="form.UserFormSubmission",
-        related_name="repeats",
-    )
-
-    def subtree(
-        self,
-    ):
-        """
-        Return all indexes with a repeatable that also references
-        this index.
-
-        Stated simply, this means all indexes below this item. So
-        for a repeatable step, this function
-        will return the repeats of substeps and questions benath it.
-        """
-        return self.objects.filter(
-            repeatable_set__repeat_indices=self,
-        ).exclude(pk=self.pk)
-
-
-class Repeatable(
-    models.Model,
-):
-    # We specify the autofield explicitly so that the
-    # default "pk" doesn't conflict with any subclasses
-    repeat_id = models.AutoField(primary_key=True)
-
-    repeat_indices = models.ManyToManyField(
-        to=RepeatIndex,
-        default=None,
-    )
-
-
-class RepeatableStep(
-    Repeatable,
-    Step,
-):
-    pass

@@ -7,7 +7,6 @@ from main.models import MRPermission
 
 
 class DeleteStudyMutation(Mutation):
-
     ok = Boolean(required=True)
     errors = List(ErrorType)
 

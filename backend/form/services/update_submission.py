@@ -8,7 +8,6 @@ from form.models import (
     UserFormSubmission,
     QuestionResponse,
     BaseQuestion,
-    RepeatableTextQuestion,
 )
 
 
@@ -56,14 +55,7 @@ def update_submission(
                 pk=question_id,
             ).get_subclass()
         except BaseQuestion.DoesNotExist:
-            # Since repeatable question's id's are linked with their corresponding
-            # Repeatable object, their id's differ from their basequestion.
-            # But we need the basequestion's id here.
-            try:
-                question = RepeatableTextQuestion.objects.get(pk=question_id)
-                question_id = question.basequestion_ptr_id
-            except RepeatableTextQuestion.DoesNotExist:
-                pass
+            pass
 
         # Responses for RepeatableStepQuestions are managed in repeat_mutations
         # and can be ignored here
@@ -127,7 +119,10 @@ def update_submission(
 
 
 def validate_response(response, question_id):
-    """Backend validation incase malicious responses. Under normal circumstances all validations are already checked in the frontend"""
+    """
+    Backend validation in case of malicious hand-crafted requests.
+    Under normal circumstances the input is validated in the frontend.
+    """
     question = BaseQuestion.objects.get(id=question_id).get_subclass()
 
     # validate will throw an error in case of wrong input.
