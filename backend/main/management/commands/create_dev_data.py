@@ -1,7 +1,6 @@
-from typing import TypeAlias
-
 from tqdm import tqdm
 from faker import Faker
+
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.core.exceptions import ValidationError
@@ -14,6 +13,7 @@ from research.models.reviews import StatusChange, SubmissionStatus
 from research.models.study import Study
 from main.models import User
 from form.models import (
+    BaseQuestion,
     MRForm,
     QuestionResponse,
     Step,
@@ -21,22 +21,13 @@ from form.models import (
     FileUploadQuestion,
     NumberQuestion,
     DateQuestion,
+    RepeatIndex,
     SelectOption,
     SelectQuestion,
     TextQuestion,
     TrueFalseQuestion,
     UserFormSubmission,
 )
-
-AnyQuestion: TypeAlias = (
-    SelectQuestion
-    | TrueFalseQuestion
-    | TextQuestion
-    | NumberQuestion
-    | DateQuestion
-    | FileUploadQuestion
-)
-
 
 # Min/max number of steps for the (top-level) form.
 MIN_STEPS_IN_ROOT_FORM = 3
@@ -65,8 +56,9 @@ ALL_QUESTIONS = [
     "date",
     "number",
     "file_upload",
-    "repeatable_text",
 ]
+
+REPEATABLE_QUESTIONS = ["text"]
 
 # These are the question annotation_keys that are used in the app.
 TEXT_ANNOTATION_KEYS = ["title"]
@@ -124,6 +116,8 @@ class Command(BaseCommand):
                 self.print(options, "Generating random form and associated data...")
                 form = self._generate_form(options)
                 self._generate_steps(options, form)
+                self._generate_repeatable_steps(options, form)
+                self._generate_overview_step(options, form)
                 self._generate_step_infos(options, form)
                 self._generate_questions(options, form)
 
@@ -202,18 +196,6 @@ class Command(BaseCommand):
             )
             _generate_substeps(step, 1)
 
-        # Add an overview substep (in about 80% of cases)
-        if self.faker.pybool(truth_probability=80):
-            Step.objects.create(
-                form=form,
-                name_nl="Overzicht",
-                name_en="Overview",
-                description_nl=self.faker_nl.paragraph(),
-                description_en=self.faker_en.paragraph(),
-                slug=f"overview-{self.faker.unique.slug()}",
-                is_overview=True,
-            )
-
     def _generate_repeatable_steps(self, options, form: MRForm) -> None:
         """
         Generate repeatable steps for the provided form.
@@ -242,6 +224,20 @@ class Command(BaseCommand):
             # Every repeatable step needs a RepeatableStepQuestion (RSQ) to manage its instances.
             self._generate_rsq(repeatable_step)
 
+    def _generate_overview_step(self, options, form: MRForm) -> None:
+        """Generate an overview step for the form."""
+        # Add an overview substep (in about 80% of cases)
+        if self.faker.pybool(truth_probability=80):
+            Step.objects.create(
+                form=form,
+                name_nl="Overzicht",
+                name_en="Overview",
+                description_nl=self.faker_nl.paragraph(),
+                description_en=self.faker_en.paragraph(),
+                slug=f"overview-{self.faker.unique.slug()}",
+                is_overview=True,
+            )
+
     def _generate_rsq(self, repeatable_step: Step) -> None:
         """
         Generate a RepeatableStepQuestion (RSQ) for a repeatable step so instances of the step can be created or deleted.
@@ -252,7 +248,11 @@ class Command(BaseCommand):
 
         RepeatableStepQuestion.objects.create(
             text=f"Manage instances of {repeatable_step.name}",
+            text_en=f"Manage instances of {repeatable_step.name}",
+            text_nl=f"Beheer stappen van {repeatable_step.name}",
             description=f"This question allows you to manage instances of the repeatable step {repeatable_step.name}.",
+            description_en=f"This question allows you to manage instances of the repeatable step {repeatable_step.name}.",
+            description_nl=f"Deze vraag stelt u in staat om instanties van de herhaalbare stap {repeatable_step.name} te beheren.",
             repeatable_step=repeatable_step,
             step=host_step,
             form=host_step.form,
@@ -373,11 +373,16 @@ class Command(BaseCommand):
             for question_index in range(number_of_questions):
                 question_type = self.faker.random_element(ALL_QUESTIONS)
 
+                # Make question repeatable in 10% of cases.
+                repeatable = (
+                    question_type in REPEATABLE_QUESTIONS and self.faker.pybool(10)
+                )
+
                 match question_type:
                     case "select":
                         _create_select_question(step, question_index)
                     case "text":
-                        _create_text_question(step, question_index, False)
+                        _create_text_question(step, question_index, repeatable)
                     case "true_false":
                         _create_true_false_question(step, question_index)
                     case "date":
@@ -386,8 +391,6 @@ class Command(BaseCommand):
                         _create_number_question(step, question_index)
                     case "file_upload":
                         _create_file_upload_question(step, question_index)
-                    case "repeatable_text":
-                        _create_text_question(step, question_index, True)
                     case _:
                         raise ValueError(f"Unknown question type: {question_type}")
 
@@ -473,7 +476,7 @@ class Command(BaseCommand):
             "size": self.faker.random_int(min=1, max=question.size_limit),
         }
 
-    def _generate_answer_for_question(self, question: AnyQuestion) -> dict:
+    def _generate_answer_for_question(self, question: BaseQuestion) -> dict:
         if isinstance(question, TextQuestion):
             return self._generate_text_answer(question)
         if isinstance(question, SelectQuestion):
@@ -489,6 +492,134 @@ class Command(BaseCommand):
 
         raise ValueError(f"Unsupported question type: {type(question)}")
 
+    def _create_repeat_index(
+        self,
+        repeatable,
+        submission: UserFormSubmission,
+        parent: RepeatIndex | None = None,
+    ) -> RepeatIndex:
+        repeat_index = RepeatIndex.objects.create(parent=parent)
+        repeat_index.submissions.add(submission)
+        repeatable.repeat_indices.add(repeat_index)
+        return repeat_index
+
+    def _generate_repeat_indices_for_step(
+        self,
+        step: Step,
+        submission: UserFormSubmission,
+        parent: RepeatIndex | None = None,
+    ) -> list[RepeatIndex | None]:
+        """
+        Generates repeat indices for a step in a submission. If the step is
+        repeatable, it will generate 1-3 repeat indices for that step.
+
+        For each generated repeat index, this function will recursively
+        generate repeat indices for any substeps of the step.
+        """
+        repeat_indices: list[RepeatIndex | None] = []
+
+        if not step.is_repeatable:
+            repeat_indices = [parent]
+        else:
+            # For each step, generate 1-3 repeat indices (repeated instances).
+            for _ in range(self.faker.random_int(1, 3)):
+                repeat_index = self._create_repeat_index(
+                    step,
+                    submission,
+                    parent,
+                )
+                repeat_indices.append(repeat_index)
+
+        # For each repeated step, generate repeat indices for its substeps.
+        for repeat_index in repeat_indices:
+            for substep in Step.objects.filter(parent=step):
+                self._generate_repeat_indices_for_step(
+                    substep,
+                    submission,
+                    repeat_index,
+                )
+
+        return repeat_indices
+
+    def _get_step_instance_indices(
+        self,
+        step: Step,
+        submission: UserFormSubmission,
+    ) -> list[RepeatIndex | None]:
+        """
+        Get the repeat indices for a step in a submission.
+        """
+        parent_indices: list[RepeatIndex | None] = [None]
+
+        # If the step has a parent, get the repeat indices for the parent step.
+        if step.parent is not None:
+            parent_indices = self._get_step_instance_indices(
+                step.parent,
+                submission,
+            )
+
+        # If the step is not repeatable, we just return the parent indices.
+        if not step.is_repeatable:
+            return parent_indices
+
+        # If the step is repeatable, get the repeat indices for the step itself.
+        return [
+            repeat_index
+            for parent_index in parent_indices
+            for repeat_index in step.repeat_indices_for_submission(
+                submission,
+                parent_index,
+            )
+        ]
+
+    def _generate_repeat_indices_and_responses(
+        self,
+        submission: UserFormSubmission,
+        form: MRForm,
+        complete: bool,
+    ) -> None:
+        """
+        Create repeat markers and indexed responses for one submission.
+        """
+        top_level_steps = Step.objects.filter(form=form, parent__isnull=True)
+        for step in top_level_steps:
+            self._generate_repeat_indices_for_step(step, submission)
+
+        for step in Step.objects.filter(form=form):
+            enclosing_indices = self._get_step_instance_indices(step, submission)
+
+            for question in BaseQuestion.objects.filter(step=step):
+                question = question.get_subclass()
+                if isinstance(question, RepeatableStepQuestion):
+                    continue
+
+                if question.is_repeatable:
+                    for parent_index in enclosing_indices:
+                        for _ in range(self.faker.random_int(1, 3)):
+                            repeat_index = self._create_repeat_index(
+                                question,
+                                submission,
+                                parent_index,
+                            )
+                            if complete or self.faker.pybool(truth_probability=75):
+                                response = QuestionResponse.objects.create(
+                                    question=question,
+                                    answer=self._generate_answer_for_question(question),
+                                    repeat_index=repeat_index,
+                                )
+                                response.submissions.add(submission)
+                    continue
+
+                for repeat_index in enclosing_indices:
+                    if not complete and self.faker.pybool(truth_probability=25):
+                        continue
+                    response = QuestionResponse.objects.create(
+                        question=question,
+                        answer=self._generate_answer_for_question(question),
+                        repeat_index=repeat_index,
+                    )
+                    response.submissions.add(submission)
+
     def _create_user_form_submission(
         self,
         user: User,
@@ -502,23 +633,9 @@ class Command(BaseCommand):
             study=study,
         )
 
+        self._generate_repeat_indices_and_responses(submission, form, complete)
+
         form_questions = form.questions.all()  # type: ignore
-
-        # First generate answers for all questions, regardless of visibility.
-        for question in form_questions:
-            question = question.get_subclass()
-            if not complete:
-                if self.faker.random_element([True, False, False, False]):
-                    # 25% chance to leave the question unanswered.
-                    continue
-
-            answer_data = self._generate_answer_for_question(question)
-
-            response = QuestionResponse.objects.create(
-                question=question,
-                answer=answer_data,
-            )
-            response.submissions.add(submission)
 
         # Evaluate the submission
         evaluator = FormEvaluator(submission)
