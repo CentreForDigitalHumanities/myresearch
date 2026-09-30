@@ -252,6 +252,7 @@ useWatchQuestions(watchedQuestions, () => {
                 />
                 <button
                     v-if="question.isRepeatable && !isOnlyOccurrence(question)"
+                    type="button"
                     class="text-danger link-underline-danger border-0"
                     @click="handleDeleteRepeat(question)"
                 >
@@ -262,6 +263,7 @@ useWatchQuestions(watchedQuestions, () => {
                 </button>
                 <div v-if="question.isRepeatable && isLastOccurrence(question)">
                     <BSButton
+                        type="button"
                         variant="primary"
                         class="w-100 align-self-stretch mt-3"
                         @click="handleAddRepeat(question)"

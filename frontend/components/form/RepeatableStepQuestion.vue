@@ -170,6 +170,7 @@ function handleDeleteStep(repeatIndexId: number): void {
                 </div>
                 <div class="d-flex gap-2">
                     <button
+                        type="button"
                         class="btn btn-primary"
                         @click.prevent="
                             emit(
@@ -182,6 +183,7 @@ function handleDeleteStep(repeatIndexId: number): void {
                     </button>
                     <button
                         v-if="step.repeatIndex"
+                        type="button"
                         class="btn btn-secondary"
                         @click.prevent="handleDeleteStep(step.repeatIndex)"
                     >
@@ -197,6 +199,7 @@ function handleDeleteStep(repeatIndexId: number): void {
             {{ useTranslateableAttribute(question, "noneYetText") }}
         </div>
         <BSButton
+            type="button"
             variant="primary"
             class="w-100 align-self-stretch"
             @click="handleAddStep"
