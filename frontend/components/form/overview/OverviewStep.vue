@@ -54,7 +54,7 @@ function formatAnswer(question: QuestionWithValue): string {
                 ? value.toString()
                 : notAnswered.value;
         case "RepeatableStepQuestionType":
-            return t("-");
+            return "-";
         default:
             return notAnswered.value;
     }
