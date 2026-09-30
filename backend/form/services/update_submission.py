@@ -49,13 +49,12 @@ def update_submission(
         response_id = response["id"] if "id" in response else None
         question_id = response.get("question_id", "<unknown>")
 
-        question = None
         try:
             question = BaseQuestion.objects.get(
-                pk=question_id,
+                pk=response.get("question_id")
             ).get_subclass()
         except BaseQuestion.DoesNotExist:
-            pass
+            continue
 
         # Responses for RepeatableStepQuestions are managed in repeat_mutations
         # and can be ignored here
@@ -66,7 +65,7 @@ def update_submission(
             continue
 
         try:
-            validate_response(response, question_id)
+            validate_response(response)
         except Exception as e:
             # if responses cause an error, add an error to the mutation's response
             errors.append(
@@ -90,7 +89,7 @@ def update_submission(
                     current_submission.responses.remove(qr)
                     # Create a new response
                     new_response = QuestionResponse.objects.create(
-                        question_id=question_id,
+                        question_id=response["question_id"],
                         answer=response["answer"],
                         repeat_index=response["repeat_index"],
                     )
@@ -107,7 +106,7 @@ def update_submission(
                 current_submission.updated_at = timezone.now()
         else:
             new_response = QuestionResponse.objects.create(
-                question_id=question_id,
+                question_id=response["question_id"],
                 answer=response["answer"],
                 repeat_index_id=response["repeat_index"],
             )
@@ -118,12 +117,11 @@ def update_submission(
     return current_submission, errors
 
 
-def validate_response(response, question_id):
+def validate_response(response):
     """
     Backend validation in case of malicious hand-crafted requests.
     Under normal circumstances the input is validated in the frontend.
     """
-    question = BaseQuestion.objects.get(id=question_id).get_subclass()
-
+    question = BaseQuestion.objects.get(id=response["question_id"]).get_subclass()
     # validate will throw an error in case of wrong input.
     question.validate(response["answer"]["value"])
