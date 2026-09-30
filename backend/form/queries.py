@@ -92,7 +92,7 @@ class QuestionQueries(ObjectType):
 
 class RepeatableStepQueries(ObjectType):
 
-    repeatable_steps_with_repeats = List(
+    repeatable_steps = List(
         NonNull(StepType),
         repeatable_id=ID(required=True),
         repeat_indices=List(NonNull(ID), required=True),
@@ -101,7 +101,7 @@ class RepeatableStepQueries(ObjectType):
     )
 
     @staticmethod
-    def resolve_repeatable_steps_with_repeats(
+    def resolve_repeatable_steps(
         root,
         info: ResolveInfo,
         repeatable_id: str,
