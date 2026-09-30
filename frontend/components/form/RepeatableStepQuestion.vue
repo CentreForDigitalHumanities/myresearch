@@ -40,12 +40,12 @@ const CREATE_STEP_REPEAT_MUTATION = graphql(`
 `);
 
 const GET_REPEATABLE_STEP_QUERY = graphql(`
-    query GetRepeatableStepsWithRepeats(
+    query GetRepeatableSteps(
         $repeatableId: ID!
         $submissionId: ID!
         $repeatIndices: [ID!]!
     ) {
-        repeatableStepsWithRepeats(
+        repeatableSteps(
             repeatableId: $repeatableId
             submissionId: $submissionId
             repeatIndices: $repeatIndices
@@ -106,7 +106,7 @@ const { result: repeatableStepResult } = useQuery(
 );
 
 const repeatableSteps = computed(
-    () => repeatableStepResult.value?.repeatableStepsWithRepeats ?? [],
+    () => repeatableStepResult.value?.repeatableSteps ?? [],
 );
 
 function handleAddStep(): void {
