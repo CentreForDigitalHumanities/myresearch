@@ -13,7 +13,6 @@ import { graphql } from "~/generated/gql";
 import { useNotification } from "~/composables/useNotification";
 import { X } from "lucide-vue-next";
 import type { ApolloCache } from "@apollo/client/core";
-import { Repeatable } from "~/generated/gql/graphql.ts";
 
 // Imported components are treated as 'any', so the linter complains. There is
 // nothing we can do to change this, so we need to assert the type manually.
@@ -28,8 +27,8 @@ const QUESTION_COMPONENT_MAP = {
 } as const;
 
 const CREATE_QUESTION_REPEAT_MUTATION = graphql(`
-    mutation CreateQuestionRepeat($input: CreateRepeatMutationInput!) {
-        createRepeat(input: $input) {
+    mutation CreateQuestionRepeat($input: CreateQuestionRepeatMutationInput!) {
+        createQuestionRepeat(input: $input) {
             newRepeatIndex
             errors {
                 field
@@ -165,8 +164,7 @@ async function handleAddRepeat(question: QuestionWithValue): Promise<void> {
         await createQuestionRepeat({
             input: {
                 submissionId: userFormId,
-                repeatableType: Repeatable.Question,
-                objectId: question.questionId,
+                questionId: question.questionId,
                 parentId: props.step.repeatIndex
                     ? props.step.repeatIndex.toString()
                     : null,
@@ -181,9 +179,9 @@ async function handleAddRepeat(question: QuestionWithValue): Promise<void> {
 }
 
 async function handleDeleteRepeat(question: QuestionWithValue): Promise<void> {
-    const userFormId = submissionId.value;
+    const userSubmissionId = submissionId.value;
     if (
-        !userFormId ||
+        !userSubmissionId ||
         question.repeatIndex === null ||
         question.repeatIndex === undefined
     ) {
@@ -191,14 +189,14 @@ async function handleDeleteRepeat(question: QuestionWithValue): Promise<void> {
     }
 
     try {
-        await mutateFormSubmission(props.step, userFormId, {
+        await mutateFormSubmission(props.step, userSubmissionId, {
             reloadStudy: false,
             // The form is reloaded after the delete mutation.
             reloadForm: false,
         });
         await deleteQuestionRepeat({
             input: {
-                userFormId,
+                submissionId: userSubmissionId,
                 repeatIndexId: question.repeatIndex.toString(),
             },
         });
