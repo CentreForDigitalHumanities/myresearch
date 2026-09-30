@@ -27,7 +27,7 @@ const QUESTION_COMPONENT_MAP = {
 } as const;
 
 const CREATE_QUESTION_REPEAT_MUTATION = graphql(`
-    mutation CreateQuestionRepeat($input: CreateQuestionRepeatMutationInput!) {
+    mutation MRFormCreateQuestionRepeat($input: CreateQuestionRepeatMutationInput!) {
         createQuestionRepeat(input: $input) {
             newRepeatIndex
             errors {
@@ -39,7 +39,7 @@ const CREATE_QUESTION_REPEAT_MUTATION = graphql(`
 `);
 
 const DELETE_QUESTION_REPEAT_MUTATION = graphql(`
-    mutation DeleteQuestionRepeat($input: DeleteRepeatMutationInput!) {
+    mutation MRFormDeleteQuestionRepeat($input: DeleteRepeatMutationInput!) {
         deleteRepeat(input: $input) {
             ok
             errors {

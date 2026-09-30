@@ -28,7 +28,7 @@ const currentSubmissionId = useSubmissionId();
 const { t } = useI18n();
 
 const CREATE_STEP_REPEAT_MUTATION = graphql(`
-    mutation CreateStepRepeat($input: CreateStepRepeatMutationInput!) {
+    mutation RSQCreateStepRepeat($input: CreateStepRepeatMutationInput!) {
         createStepRepeat(input: $input) {
             newRepeatIndex
             errors {
