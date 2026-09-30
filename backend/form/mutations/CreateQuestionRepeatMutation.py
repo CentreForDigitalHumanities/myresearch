@@ -34,7 +34,9 @@ class CreateQuestionRepeatMutation(Mutation):
         question_id = getattr(input, "question_id")
 
         try:
-            repeatable_question = BaseQuestion.objects.get(is_repeatable=True, pk=question_id)
+            repeatable_question = BaseQuestion.objects.get(
+                is_repeatable=True, pk=question_id
+            )
             submission = UserFormSubmission.objects.get(
                 pk=submission_id,
             )
@@ -80,6 +82,6 @@ class CreateQuestionRepeatMutation(Mutation):
         repeatable_question.repeat_indices.add(new_repeat_index)
 
         return cls(
-            new_repeat_index=new_repeat_index.pk, # type: ignore
-            errors=[], # type: ignore
+            new_repeat_index=new_repeat_index.pk,  # type: ignore
+            errors=[],  # type: ignore
         )

@@ -79,6 +79,6 @@ class CreateStepRepeatMutation(Mutation):
         repeatable_step.repeat_indices.add(new_repeat_index)
 
         return cls(
-            new_repeat_index=new_repeat_index.pk, # type: ignore
-            errors=[], # type: ignore
+            new_repeat_index=new_repeat_index.pk,  # type: ignore
+            errors=[],  # type: ignore
         )
