@@ -266,6 +266,16 @@ function handleBackNavigation() {
         params: { studyId: studyId.value },
     });
 }
+
+/* When pressing enter when inside a text field the form submits and
+the text field does not get saved. This method prevents this. */
+const blockSubmitOnEnter = (event: KeyboardEvent) => {
+    const target = event.target as HTMLElement;
+    if (target.tagName === "TEXTAREA") {
+        return;
+    }
+    event.preventDefault();
+};
 </script>
 
 <template>
@@ -323,7 +333,10 @@ function handleBackNavigation() {
         </div>
         <template v-else>
             <div class="col-12 col-lg-6 pe-4">
-                <form class="uu-form uu-form-no-help">
+                <form
+                    class="uu-form uu-form-no-help"
+                    @keydown.enter="blockSubmitOnEnter"
+                >
                     <h2>
                         {{ useTranslateableAttribute(selectedStep, "name") }}
                     </h2>
