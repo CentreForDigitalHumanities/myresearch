@@ -314,7 +314,7 @@ function handleBackNavigation() {
                     v-if="selectedStep.isOverview"
                     :disabled="showSubmissionWarning"
                     :variant="showSubmissionWarning ? 'light' : 'success'"
-                    @click="showSubmissionWarning ? undefined : finalSubmit"
+                    @click="finalSubmit"
                 >
                     {{ $t("Submit") }}
                     <Send class="ms-2" :size="16" />
