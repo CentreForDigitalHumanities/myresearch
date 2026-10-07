@@ -9,4 +9,44 @@ class Migration(migrations.Migration):
         ("form", "0018_repeatable_repeatablestepquestion_repeatindex_and_more"),
     ]
 
-    operations = []
+    operations = [
+        migrations.AlterField(
+            model_name="repeatablestepquestion",
+            name="repeatable_step",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE, to="form.step"
+            ),
+        ),
+        migrations.AddField(
+            model_name="basequestion",
+            name="is_repeatable",
+            field=models.BooleanField(default=False),
+        ),
+        migrations.AddField(
+            model_name="basequestion",
+            name="repeat_indices",
+            field=models.ManyToManyField(
+                related_name="%(class)s_repeatables", to="form.repeatindex"
+            ),
+        ),
+        migrations.AddField(
+            model_name="step",
+            name="is_repeatable",
+            field=models.BooleanField(default=False),
+        ),
+        migrations.AddField(
+            model_name="step",
+            name="repeat_indices",
+            field=models.ManyToManyField(
+                related_name="%(class)s_repeatables", to="form.repeatindex"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="basequestion",
+            name="step_name_override",
+            field=models.BooleanField(
+                default=False,
+                help_text="If this is set to True, the answer to the question will override the name of its step (for display purposes). It can only be True for one question per step.",
+            ),
+        ),
+    ]
