@@ -1,3 +1,5 @@
+from typing import TYPE_CHECKING
+
 from django.core.validators import RegexValidator, EmailValidator
 from django.db import models
 from django.core.exceptions import ValidationError
@@ -5,7 +7,10 @@ from datetime import datetime
 from django.utils.dateparse import parse_datetime
 from django.utils.safestring import mark_safe
 
-from form.models import Repeatable
+from form.models.form import RepeatIndex, Repeatable, Step
+
+if TYPE_CHECKING:
+    from form.models.responses import UserFormSubmission
 
 snake_case_validator = RegexValidator(
     regex=r"^[a-z]+(_[a-z]+)*$",
@@ -13,8 +18,7 @@ snake_case_validator = RegexValidator(
 )
 
 
-class BaseQuestion(models.Model):
-
+class BaseQuestion(Repeatable):
     annotation_key = models.CharField(
         blank=True,
         null=True,
@@ -32,7 +36,7 @@ class BaseQuestion(models.Model):
         default=False,
         help_text="If this is set to True, the answer to the question will "
         "override the name of its step (for display purposes). It can only be "
-        "true for one question per step.",
+        "True for one question per step.",
     )
 
     text = models.CharField(max_length=200)
@@ -112,10 +116,8 @@ class BaseQuestion(models.Model):
             "repeatablestepquestion",
         ]:
             if hasattr(self, subclass_name):
-                cls = getattr(self, subclass_name)
-                if hasattr(cls, "repeatable" + subclass_name):
-                    return getattr(cls, "repeatable" + subclass_name)
-                return cls
+                return getattr(self, subclass_name)
+
         return self
 
     def __str__(self):
@@ -145,14 +147,13 @@ class TrueFalseQuestion(BaseQuestion):
 
 
 class TextQuestion(BaseQuestion):
-
     placeholder = models.CharField(max_length=200, blank=True)
     lines = models.PositiveIntegerField(default=1)
     is_email = models.BooleanField(default=False)
 
     def validate(self, answer: str):
         super().validate(answer)
-        validator = EmailValidator(message="value must be a valid email address")
+        validator = EmailValidator(message="Value must be a valid email address.")
         # The email validator in the frontend is slightly different.
         if self.is_email:
             validator(answer)
@@ -165,7 +166,7 @@ class NumberQuestion(BaseQuestion):
         super().validate(answer)
         value = int(answer)
         if self.positive_only and value < 0:
-            raise ValueError("value in must be positive")
+            raise ValueError("Value must be positive.")
 
 
 class DateQuestion(BaseQuestion):
@@ -175,7 +176,7 @@ class DateQuestion(BaseQuestion):
         super().validate(answer)
         value = parse_datetime(answer)
         if self.future_only and value and datetime.now() > value:
-            raise ValueError("value must be in the future")
+            raise ValueError("Value must be a future date.")
 
 
 class FileUploadQuestion(BaseQuestion):
@@ -185,21 +186,20 @@ class FileUploadQuestion(BaseQuestion):
 class RepeatableStepQuestion(BaseQuestion):
     """
     A special question, with which repeatable steps can be created, deleted and managed.
-
     Does not have a response, but is used to trigger mutations.
     """
 
-    repeatable_step = models.OneToOneField(
-        "form.RepeatableStep", on_delete=models.CASCADE
-    )
+    repeatable_step = models.OneToOneField(Step, on_delete=models.CASCADE)
 
     create_text = models.CharField()
 
     none_yet_text = models.CharField()
 
-
-class RepeatableTextQuestion(
-    Repeatable,
-    TextQuestion,
-):
-    pass
+    def get_answer(
+        self, submission: "UserFormSubmission", parent_index: RepeatIndex | None = None
+    ) -> dict:
+        indices = self.repeatable_step.repeat_indices.filter(
+            submissions=submission,
+            parent=parent_index,
+        )
+        return {"value": [index.pk for index in indices]}

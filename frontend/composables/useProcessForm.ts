@@ -329,7 +329,7 @@ function addValueAndLocationToQuestion(
                 ...question,
                 location,
                 value: null,
-            } as RepeatableStepQuestionWithValue;
+            };
     }
 }
 

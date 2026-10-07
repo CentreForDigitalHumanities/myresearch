@@ -3,15 +3,12 @@ import json
 from copy import deepcopy
 from form.models import (
     Step,
-    UserFormSubmission,
-    RepeatableStep,
-    RepeatableTextQuestion,
+    TextQuestion,
     RepeatIndex,
 )
-from form.services.user_form_resolver import is_repeatable
-from research.tests import normal_user, test_study
 
-from pprint import pprint
+# normal_user is a dependency for test_study so it is actually used!
+from research.tests import normal_user, test_study
 
 # If you're new here, I recommend you scroll down to NEWHERE,
 # uncomment the breakpoint, and execute pprint(content) to get
@@ -108,7 +105,7 @@ def test_repeatable_step(
 
     # Our form contains two steps of which one is repeatable
     assert len(form.steps.all()) == 2
-    assert any([is_repeatable(step) for step in form.steps.all()])
+    assert any(step.is_repeatable for step in form.steps.all())
 
     response = client_query(
         GetFormQuery,
@@ -123,18 +120,31 @@ def test_repeatable_step(
     # With no RepeatIndex, our repeatable step should not yet be visible
     found = findkey(content, "stepId")
     assert len(found) == 1
-    assert not is_repeatable(Step.objects.get(pk=found[0]["stepId"]))
+    assert not Step.objects.get(pk=found[0]["stepId"]).is_repeatable
 
 
-CreateRepeatQuery = """
-mutation CreateRepeat($repeatable_id: ID! $submission_id: ID! $parent_id: ID) {
-  createRepeat(repeatableId: $repeatable_id, userFormId: $submission_id, parentId: $parent_id) {
+CreateStepRepeatQuery = """
+mutation CreateStepRepeat($input: CreateStepRepeatMutationInput!) {
+    createStepRepeat(input: $input) {
     errors {
       field
       messages
     }
     newRepeatIndex
   }
+}
+"""
+
+
+CreateQuestionRepeatQuery = """
+mutation CreateQuestionRepeat($input: CreateQuestionRepeatMutationInput!) {
+    createQuestionRepeat(input: $input) {
+        errors {
+            field
+            messages
+        }
+        newRepeatIndex
+    }
 }
 """
 
@@ -149,18 +159,20 @@ def test_create_repeat(
     test_study,
     repeatable_step,
 ):
-    repeatable_id = repeatable_step.repeatable_ptr.pk
+    repeatable_id = repeatable_step.pk
     response = client_query(
-        CreateRepeatQuery,
+        CreateStepRepeatQuery,
         user=test_user,
         variables={
-            "submission_id": submission.id,
-            "repeatable_id": repeatable_id,
+            "input": {
+                "submissionId": submission.id,
+                "stepId": repeatable_id,
+            },
         },
     )
     content = json.loads(response.content)
     assert "errors" not in content
-    new_index = int(content["data"]["createRepeat"]["newRepeatIndex"])
+    new_index = int(content["data"]["createStepRepeat"]["newRepeatIndex"])
     # Now let's get the form again.
     response = client_query(
         GetFormQuery,
@@ -186,14 +198,15 @@ def test_substep_repeat(
     test_study,
     repeatable_step,
 ):
-    repeatable_substep = RepeatableStep(
+    repeatable_substep = Step(
         name="Repeatable substep",
         slug="sub_rep",
         form=form,
         parent=repeatable_step,
+        is_repeatable=True,
     )
     repeatable_substep.save()
-    substep_id = repeatable_substep.repeatable_ptr.pk
+    substep_id = repeatable_substep.pk
     # Get the form again
     response = client_query(
         GetFormQuery,
@@ -208,26 +221,30 @@ def test_substep_repeat(
     # The substep and its repeat should not be present
     found = findkey(content, "stepId")
     assert len(found) == 1
-    step_id = repeatable_step.repeatable_ptr.pk
+    step_id = repeatable_step.pk
     # Create a repeat for the main step
     response = client_query(
-        CreateRepeatQuery,
+        CreateStepRepeatQuery,
         user=test_user,
         variables={
-            "submission_id": submission.id,
-            "repeatable_id": step_id,
+            "input": {
+                "submissionId": submission.id,
+                "stepId": step_id,
+            },
         },
     )
     content = json.loads(response.content)
-    new_index = int(content["data"]["createRepeat"]["newRepeatIndex"])
+    new_index = int(content["data"]["createStepRepeat"]["newRepeatIndex"])
     # Create a repeat for the substep
     response = client_query(
-        CreateRepeatQuery,
+        CreateStepRepeatQuery,
         user=test_user,
         variables={
-            "submission_id": submission.id,
-            "repeatable_id": substep_id,
-            "parent_id": new_index,
+            "input": {
+                "submissionId": submission.id,
+                "stepId": substep_id,
+                "parentId": new_index,
+            },
         },
     )
     content = json.loads(response.content)
@@ -257,68 +274,78 @@ def test_question_repeat(
     test_study,
     repeatable_step,
 ):
-    repeatable_substep = RepeatableStep(
+    repeatable_substep = Step(
         name="Repeatable substep",
         slug="sub_rep",
         form=form,
         parent=repeatable_step,
+        is_repeatable=True,
     )
     repeatable_substep.save()
-    substep_id = repeatable_substep.repeatable_ptr.pk
+    substep_id = repeatable_substep.pk
     # Add repeatable question to substep
-    rq = RepeatableTextQuestion(
+    rq = TextQuestion(
         text="Repeatable Text Question",
         step=repeatable_substep,
+        is_repeatable=True,
     )
     rq.save()
     # Add repeats to step and substeps
     #     First the step...
-    step_id = repeatable_step.repeatable_ptr.pk
+    step_id = repeatable_step.pk
     response = client_query(
-        CreateRepeatQuery,
+        CreateStepRepeatQuery,
         user=test_user,
         variables={
-            "submission_id": submission.id,
-            "repeatable_id": step_id,
+            "input": {
+                "submissionId": submission.id,
+                "stepId": step_id,
+            },
         },
     )
     content = json.loads(response.content)
-    parent_index = int(content["data"]["createRepeat"]["newRepeatIndex"])
+    parent_index = int(content["data"]["createStepRepeat"]["newRepeatIndex"])
     #     Now two substeps
     response = client_query(
-        CreateRepeatQuery,
+        CreateStepRepeatQuery,
         user=test_user,
         variables={
-            "submission_id": submission.id,
-            "repeatable_id": substep_id,
-            "parent_id": parent_index,
+            "input": {
+                "submissionId": submission.id,
+                "stepId": substep_id,
+                "parentId": parent_index,
+            },
         },
     )
     response = client_query(
-        CreateRepeatQuery,
+        CreateStepRepeatQuery,
         user=test_user,
         variables={
-            "submission_id": submission.id,
-            "repeatable_id": substep_id,
-            "parent_id": parent_index,
+            "input": {
+                "submissionId": submission.id,
+                "stepId": substep_id,
+                "parentId": parent_index,
+            },
         },
     )
     # And save the index and question id of the second substep repeat
     content = json.loads(response.content)
-    parent_index = int(content["data"]["createRepeat"]["newRepeatIndex"])
+    parent_index = int(content["data"]["createStepRepeat"]["newRepeatIndex"])
     # Create a repeat for one of repeatable questions
     response = client_query(
-        CreateRepeatQuery,
+        CreateQuestionRepeatQuery,
         user=test_user,
         variables={
-            "submission_id": submission.id,
-            "repeatable_id": rq.pk,
-            "parent_id": parent_index,
+            "input": {
+                "submissionId": submission.id,
+                "questionId": rq.pk,
+                "parentId": parent_index,
+            },
         },
     )
     content = json.loads(response.content)
     assert "errors" not in content
-    new_index = int(content["data"]["createRepeat"]["newRepeatIndex"])
+    new_index = int(content["data"]["createQuestionRepeat"]["newRepeatIndex"])
     # Get the form again
     response = client_query(
         GetFormQuery,
@@ -365,24 +392,26 @@ def test_repeat_responses(
     test_study,
     repeatable_step,
 ):
-    rq1 = RepeatableTextQuestion(
+    rq1 = TextQuestion(
         text="Repeatable Text Question",
         step=repeatable_step,
+        is_repeatable=True,
     )
     rq1.save()
     # Set up repeatable substep and repeatable questions
-    repeatable_substep = RepeatableStep(
+    repeatable_substep = Step(
         name="Repeatable substep",
         slug="sub_rep",
         form=form,
         parent=repeatable_step,
+        is_repeatable=True,
     )
     repeatable_substep.save()
-    substep_id = repeatable_substep.repeatable_ptr.pk
     # Add repeatable question to substep
-    rq2 = RepeatableTextQuestion(
+    rq2 = TextQuestion(
         text="Repeatable substep Question",
         step=repeatable_substep,
+        is_repeatable=True,
     )
     rq2.save()
     # Add repeats to step and substeps
@@ -428,7 +457,7 @@ def test_repeat_responses(
         responses.append(
             {
                 "answer": json.dumps({"value": f"Test answer for index {index.pk}"}),
-                "questionId": rq2.basequestion_ptr.pk,
+                "questionId": rq2.pk,
                 "repeatIndex": index.pk,
             }
         )

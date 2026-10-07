@@ -97,12 +97,6 @@ class Command(BaseCommand):
             for model in sorted(models_by_name.keys()):
                 sorted_data.extend(models_by_name[model])
 
-            # Clear repeat_indices for all form.repeatable objects since RepeatIndex is excluded
-            self.stdout.write("Clearing repeat_indices for form.repeatable objects...")
-            for item in sorted_data:
-                if item.get("model") == "form.repeatable":
-                    item["fields"]["repeat_indices"] = []
-
             # Write to final output
             with open(output_path, "w") as f:
                 json.dump(sorted_data, f, indent=4)

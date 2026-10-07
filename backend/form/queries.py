@@ -1,8 +1,8 @@
 from typing import Optional
-from graphene import ID, Field, ObjectType, ResolveInfo, String, List, Int
+from graphene import ID, Field, NonNull, ObjectType, ResolveInfo, String, List
 
 
-from main.models import MRPermission, User
+from main.models import User
 from form.services.form_evaluator import FormEvaluator
 from form.services.user_form_resolver import UserFormResolver
 from form.types.UserFormType import UserFormType
@@ -11,7 +11,7 @@ from form.types.StepType import StepType
 from form.models import (
     UserFormSubmission,
     SelectQuestion,
-    RepeatableStep,
+    Step,
     RepeatIndex,
     BaseQuestion,
     QuestionResponse,
@@ -92,18 +92,20 @@ class QuestionQueries(ObjectType):
 
 class RepeatableStepQueries(ObjectType):
 
-    repeatable_steps_with_repeats = Field(
-        List(StepType),
+    repeatable_steps = List(
+        NonNull(StepType),
         repeatable_id=ID(required=True),
-        repeat_indices=List(ID, required=True),
+        repeat_indices=List(NonNull(ID), required=True),
+        submission_id=ID(required=True),
         description="Retrieves a RepeatableStep for each repeat index, with the repeat_index field populated.",
     )
 
     @staticmethod
-    def resolve_repeatable_steps_with_repeats(
+    def resolve_repeatable_steps(
         root,
         info: ResolveInfo,
         repeatable_id: str,
+        submission_id: str,
         repeat_indices: list,
     ) -> list[StepType]:
         user: User = info.context.user
@@ -114,49 +116,54 @@ class RepeatableStepQueries(ObjectType):
             return []
 
         try:
-            repeatable_step = RepeatableStep.objects.get(pk=repeatable_id)
-
-            # Fetch the repeat index objects
-            repeat_index_objects = RepeatIndex.objects.filter(pk__in=repeat_indices)
-
-            step_name_override_question = BaseQuestion.objects.filter(
-                step=repeatable_step, step_name_override=True
-            )
-
-            step_names = {}
-            if step_name_override_question:
-
-                for repeat_idx in repeat_index_objects:
-                    response = QuestionResponse.objects.filter(
-                        question=step_name_override_question[0], repeat_index=repeat_idx
-                    )
-                    if response:
-                        step_names[repeat_idx] = response[0].answer["value"]
-                    else:
-                        step_names[repeat_idx] = False
-
-            return [
-                StepType(
-                    step_id=repeatable_step.id,
-                    name_en=(
-                        step_names[repeat_idx]
-                        if step_name_override_question and step_names[repeat_idx]
-                        else repeatable_step.name_en
-                    ),
-                    name_nl=(
-                        step_names[repeat_idx]
-                        if step_name_override_question and step_names[repeat_idx]
-                        else repeatable_step.name_nl
-                    ),
-                    description_nl=repeatable_step.description_nl,
-                    description_en=repeatable_step.description_en,
-                    slug=repeatable_step.slug,
-                    is_overview=repeatable_step.is_overview,
-                    questions=[],
-                    substeps=[],
-                    repeat_index=int(repeat_idx.id),
-                )
-                for repeat_idx in repeat_index_objects
-            ]
-        except RepeatableStep.DoesNotExist:
+            repeatable_step = Step.objects.get(pk=repeatable_id)
+        except Step.DoesNotExist:
             return []
+        if not submission_id:
+            return []
+
+        # Fetch the repeat index objects for the current submission.
+        repeat_index_objects = RepeatIndex.objects.filter(
+            pk__in=repeat_indices,
+            submissions__id=submission_id,
+        )
+
+        step_name_override_question = BaseQuestion.objects.filter(
+            step=repeatable_step, step_name_override=True
+        )
+
+        step_names = {}
+        if step_name_override_question:
+
+            for repeat_idx in repeat_index_objects:
+                response = QuestionResponse.objects.filter(
+                    question=step_name_override_question[0], repeat_index=repeat_idx
+                )
+                if response:
+                    step_names[repeat_idx] = response[0].answer["value"]
+                else:
+                    step_names[repeat_idx] = False
+
+        return [
+            StepType(
+                step_id=repeatable_step.id,
+                name_en=(
+                    step_names[repeat_idx]
+                    if step_name_override_question and step_names[repeat_idx]
+                    else repeatable_step.name_en
+                ),
+                name_nl=(
+                    step_names[repeat_idx]
+                    if step_name_override_question and step_names[repeat_idx]
+                    else repeatable_step.name_nl
+                ),
+                description_nl=repeatable_step.description_nl,
+                description_en=repeatable_step.description_en,
+                slug=repeatable_step.slug,
+                is_overview=repeatable_step.is_overview,
+                questions=[],
+                substeps=[],
+                repeat_index=int(repeat_idx.id),
+            )
+            for repeat_idx in repeat_index_objects
+        ]

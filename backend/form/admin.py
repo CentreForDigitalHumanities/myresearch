@@ -4,10 +4,10 @@ from django.db import models
 from cdh.core.forms import TinyMCEWidget
 
 from form.forms import StepAdminForm, SelectQuestionAdminForm
+from form.models.form import StepInfoText
 from .models import (
     MRForm,
     Step,
-    StepInfoText,
     BaseQuestion,
     SelectQuestion,
     SelectOption,
@@ -16,9 +16,7 @@ from .models import (
     NumberQuestion,
     DateQuestion,
     FileUploadQuestion,
-    RepeatableStep,
     RepeatableStepQuestion,
-    RepeatableTextQuestion,
     UserFormSubmission,
     QuestionResponse,
     StepCondition,
@@ -204,7 +202,7 @@ class MRFormAdmin(admin.ModelAdmin):
 
 
 @admin.register(Step)
-class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
+class StepAdmin(admin.ModelAdmin):
     list_display = (
         "name_nl",
         "name_en",
@@ -227,6 +225,7 @@ class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                     "description_nl",
                     "description_en",
                     "is_overview",
+                    "is_repeatable",
                 )
             },
         ),
@@ -234,77 +233,6 @@ class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
             "Hierarchy",
             {
                 "fields": ("form", "parent"),
-                "description": "Set either 'form' (for top-level steps) OR 'parent' (for substeps), not both.",
-            },
-        ),
-        (
-            "Question Order",
-            {
-                "fields": ("question_order",),
-                "description": "Set the display order of questions. Use the question IDs shown in the Questions inline below.",
-            },
-        ),
-        (
-            "Substep Order",
-            {
-                "fields": ("substep_order",),
-                "description": "Set the display order of substeps. Use the substep IDs shown in the Substeps inline below.",
-            },
-        ),
-        (
-            "Step Info Order",
-            {
-                "fields": ("step_info_text_order",),
-                "description": "Set the display order of step info. Use the substep IDs shown below.",
-            },
-        ),
-    )
-    inlines = [
-        SubstepInline,
-        QuestionInline,
-        StepConditionInline,
-    ]
-    form = StepAdminForm
-
-    def created_at_display(self, obj):
-        # Steps don't have created_at, but showing placeholder for structure
-        return "-"
-
-    created_at_display.short_description = "Info"
-
-
-@admin.register(RepeatableStep)
-class RepeatableStepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
-    list_display = (
-        "name_nl",
-        "name_en",
-        "slug",
-        "form",
-        "parent",
-        "is_overview",
-    )
-    list_filter = ("form", "parent")
-    search_fields = ("name_nl", "name_en", "slug", "description_nl", "description_en")
-    prepopulated_fields = {"slug": ("name_nl", "name_en")}
-    fieldsets = (
-        (
-            None,
-            {
-                "fields": (
-                    "name_nl",
-                    "name_en",
-                    "slug",
-                    "description_nl",
-                    "description_en",
-                    "is_overview",
-                )
-            },
-        ),
-        (
-            "Hierarchy",
-            {
-                "fields": ("form", "parent"),
-                "description": "Set either 'form' (for top-level steps) OR 'parent' (for substeps), not both.",
             },
         ),
         (
@@ -435,6 +363,7 @@ class TextQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                     "required",
                     "is_email",
                     "step_name_override",
+                    "is_repeatable",
                 )
             },
         ),
@@ -518,11 +447,6 @@ class FileUploadQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     inlines = [QuestionConditionInline]
 
 
-@admin.register(RepeatableTextQuestion)
-class RepeatableTextQuestionAdmin(TextQuestionAdmin):
-    pass
-
-
 @admin.register(RepeatableStepQuestion)
 class RepeatableStepQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     list_display = ("text_nl", "text_en", "step", "required", "repeatable_step")
@@ -557,6 +481,11 @@ class RepeatableStepQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
         ),
     )
     inlines = [QuestionConditionInline]
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "repeatable_step":
+            kwargs["queryset"] = Step.objects.filter(is_repeatable=True)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 @admin.register(SelectOption)
