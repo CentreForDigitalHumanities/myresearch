@@ -30,7 +30,9 @@ class StudyFilter(FilterSet):
 
     faculties = ModelMultipleChoiceFilter(
         field_name="faculty",
-        queryset=SelectOption.objects.filter(question__annotation_key="faculty"),
+        queryset=SelectOption.objects.filter(
+            questions__annotation_key="faculty"
+        ).distinct(),
         method="filter_faculties",
     )
 
