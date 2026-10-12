@@ -261,8 +261,9 @@ class TestFormEvaluatorQuestionConditions:
             step=step,
             multiple=False,
         )
-        option1 = SelectOption.objects.create(label="Option 1", question=select_trigger)
-        option2 = SelectOption.objects.create(label="Option 2", question=select_trigger)
+        option1 = SelectOption.objects.create(label="Option 1")
+        option2 = SelectOption.objects.create(label="Option 2")
+        select_trigger.options.add(option1, option2)
 
         QuestionCondition.objects.create(
             target_question=target_question,

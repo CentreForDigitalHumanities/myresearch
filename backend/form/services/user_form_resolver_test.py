@@ -322,18 +322,10 @@ class TestComplexConditionScenarios:
         select_question = SelectQuestion.objects.create(
             text="Select", step=step, multiple=True
         )
-        option_1 = SelectOption.objects.create(
-            label="Option 1",
-            question=select_question,
-        )
-        option_2 = SelectOption.objects.create(
-            label="Option 2",
-            question=select_question,
-        )
-        option_3 = SelectOption.objects.create(
-            label="Option 3",
-            question=select_question,
-        )
+        option_1 = SelectOption.objects.create(label="Option 1")
+        option_2 = SelectOption.objects.create(label="Option 2")
+        option_3 = SelectOption.objects.create(label="Option 3")
+        select_question.options.add(option_1, option_2, option_3)
 
         target = TextQuestion.objects.create(text="Target", step=step)
 
