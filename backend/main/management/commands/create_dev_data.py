@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.core.management import call_command
 
+from form.models.questions import SelectQuestionOption
 from form.services.form_evaluator import FormEvaluator
 from research.models.reviews import StatusChange, SubmissionStatus
 from research.models.study import Study
@@ -236,11 +237,15 @@ class Command(BaseCommand):
                 select_question.annotation_key = SELECT_ANNOTATION_KEYS.pop()
                 select_question.save()
 
-            for _ in range(self.faker.random_int(2, 5)):
-                SelectOption.objects.create(
+            for option_index in range(self.faker.random_int(2, 5)):
+                option = SelectOption.objects.create(
                     label_nl=self.faker_nl.word(),
                     label_en=self.faker_en.word(),
+                )
+                SelectQuestionOption.objects.create(
                     question=select_question,
+                    option=option,
+                    _order=option_index,
                 )
 
         def _create_text_question(form: Step, index: int) -> None:
@@ -355,7 +360,7 @@ class Command(BaseCommand):
         return {"value": self.faker.random_int(min=min, max=100)}
 
     def _generate_select_answer(self, question: SelectQuestion) -> dict:
-        options = list(SelectOption.objects.filter(question=question))
+        options = list(question.options.all())
         if not options:
             return {"value": []}
         max_selected = len(options) if question.multiple else 1

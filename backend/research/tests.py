@@ -2,10 +2,20 @@ import pytest
 from django.contrib.auth.models import AnonymousUser, Group
 from unittest.mock import MagicMock
 
+from form.models.questions import SelectQuestionOption
 from main.models import MRGroups, MRPermission, User
 from research.models.study import YearCounter, Study
 from research.models.reviews import StatusChange, SubmissionStatus
-from form.models import Step, TextQuestion, QuestionResponse, UserFormSubmission
+from form.models import (
+    MRForm,
+    QuestionResponse,
+    SelectOption,
+    SelectQuestion,
+    Step,
+    TextQuestion,
+    UserFormSubmission,
+)
+from research.types.StudyType import StudyFilter
 
 #################
 # User fixtures #
@@ -365,6 +375,61 @@ class TestStudyManagerAnnotations:
 
         # Should have custom title
         assert study_with_annotations.title == "Custom Title"
+
+    def test_option_filter_matches_shared_option_across_questions(
+        self, form, normal_user
+    ):
+        """An annotation-key filter should match studies using one shared option."""
+        # Create two forms, each with one step and one question.
+        second_form = MRForm.objects.create(name="Second Form", version="1.0.0")
+        step_1 = Step.objects.create(name="Step 1", slug="shared-option-1", form=form)
+        step_2 = Step.objects.create(
+            name="Step 2", slug="shared-option-2", form=second_form
+        )
+
+        # The two questions get the 'faculty' annotation key.
+        question_1 = SelectQuestion.objects.create(
+            text="Faculty 1", step=step_1, annotation_key="faculty", multiple=True
+        )
+        question_2 = SelectQuestion.objects.create(
+            text="Faculty 2", step=step_2, annotation_key="faculty", multiple=True
+        )
+
+        # Now create a shared SelectOption for the 'faculty' question.
+        shared_option = SelectOption.objects.create(label="Humanities")
+        for question in [question_1, question_2]:
+            SelectQuestionOption.objects.create(
+                question=question,
+                option=shared_option,
+                _order=1,
+            )
+
+        # Create studies/submissions for both questions.
+        studies = []
+        for question, question_form in (
+            (question_1, form),
+            (question_2, second_form),
+        ):
+            study = Study.objects.create(created_by=normal_user)
+            submission = UserFormSubmission.objects.create(
+                user=normal_user, form=question_form, study=study
+            )
+            response = QuestionResponse.objects.create(
+                question=question, answer={"value": [shared_option.pk]}
+            )
+            response.submissions.add(submission)
+            studies.append(study)
+
+        # Use the faculty StudyFilter to filter studies by the shared faculty option.
+        filtered = StudyFilter(
+            data={"faculties": [str(shared_option.pk)]},
+            queryset=Study.objects.all(),
+        ).qs
+
+        # Both studies should appear in the list.
+        assert set(filtered.values_list("pk", flat=True)) == {
+            study.pk for study in studies
+        }
 
 
 ##############################

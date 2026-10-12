@@ -20,6 +20,7 @@ from .models import (
     QuestionResponse,
     StepCondition,
     QuestionCondition,
+    SelectQuestionOption,
 )
 
 # Utils
@@ -73,10 +74,10 @@ class SubstepInline(TinyMCETextFieldMixin, admin.StackedInline):
     verbose_name_plural = "Substeps"
 
 
-class SelectOptionInline(admin.TabularInline):
-    model = SelectOption
+class SelectQuestionOptionInline(admin.TabularInline):
+    model = SelectQuestionOption
     extra = 0
-    fields = ("label", "label_nl", "label_en", "default_selected")
+    fields = ("option", "default_selected")
 
 
 class StepConditionInline(admin.StackedInline):
@@ -256,7 +257,7 @@ class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
             "Step Info Order",
             {
                 "fields": ("step_info_text_order",),
-                "description": "Set the display order of step info. Use the substep IDs shown below.",
+                "description": "Set the display order of step info. Use the step info IDs shown below.",
             },
         ),
     )
@@ -318,7 +319,7 @@ class SelectQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
             },
         ),
     )
-    inlines = [SelectOptionInline, QuestionConditionInline]
+    inlines = [SelectQuestionOptionInline, QuestionConditionInline]
     form = SelectQuestionAdminForm
 
 
@@ -451,8 +452,8 @@ class FileUploadQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
 
 @admin.register(SelectOption)
 class SelectOptionAdmin(admin.ModelAdmin):
-    list_display = ("label_nl", "label_en", "question", "default_selected")
-    list_filter = ("question", "default_selected")
+    list_display = ("label_nl", "label_en")
+    list_filter = ("questions",)
     search_fields = ("label_nl", "label_en")
 
 

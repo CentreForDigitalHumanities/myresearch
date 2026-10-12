@@ -5,7 +5,7 @@ from form.models import Step
 class SelectQuestionAdminForm(ModelForm):
     option_order = CharField(
         max_length=255,
-        help_text="Comma-separated list of question IDs in desired order, e.g. '3,1,2'.",
+        help_text="Comma-separated list of option IDs in desired order, e.g. '3,1,2'.",
         label="Select Option order",
         required=False,
         widget=Textarea(attrs={"cols": "75", "rows": "1"}),
@@ -14,19 +14,19 @@ class SelectQuestionAdminForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance.pk:
-            current_order = self.instance.get_selectoption_order()
+            current_order = self.instance.get_option_order()
             if current_order:
                 self.initial["option_order"] = ",".join(map(str, current_order))
 
-    def clean_options_order(self):
+    def clean_option_order(self):
         """
-        Make sure that the provided question IDs are valid and exist.
+        Make sure that the provided option IDs are valid and exist.
         """
         order: str = self.cleaned_data.get("option_order", "")
         if not order:
             return order
 
-        # Get the requested order of question IDs as a list of integers.
+        # Get the requested order of option IDs as a list of integers.
         requested_order = []
         for id_str in order.split(","):
             id_str = id_str.strip()
@@ -34,13 +34,12 @@ class SelectQuestionAdminForm(ModelForm):
                 continue
             if not id_str.isdigit():
                 raise ValidationError(
-                    f"Invalid question ID format: '{id_str}'. Must be numeric."
+                    f"Invalid option ID format: '{id_str}'. Must be numeric."
                 )
             requested_order.append(int(id_str))
 
         # Validate that the provided IDs exist.
-        # In instance.NAME.all(), NAME is the related name.
-        available_ids = [question.id for question in self.instance.options.all()]
+        available_ids = list(self.instance.options.values_list("id", flat=True))
         invalid_ids = [id for id in requested_order if id not in available_ids]
 
         if invalid_ids:
@@ -52,9 +51,9 @@ class SelectQuestionAdminForm(ModelForm):
         # Make sure that all available IDs are included.
         missing_ids = set(available_ids) - set(requested_order)
 
-        if missing_ids:
+        if missing_ids or len(set(requested_order)) != len(requested_order):
             raise ValidationError(
-                f"Missing IDs: {', '.join(map(str, missing_ids))}. "
+                f"Missing or duplicate IDs: {', '.join(map(str, missing_ids))}. "
                 f"Available IDs: {', '.join(map(str, available_ids))}"
             )
         return order
@@ -67,7 +66,7 @@ class SelectQuestionAdminForm(ModelForm):
             requested_order = [
                 int(id_str) for id_str in order.split(",") if id_str.strip().isdigit()
             ]
-            instance.set_selectoption_order(requested_order)
+            instance.set_option_order(requested_order)
         if commit:
             instance.save()
         return instance
@@ -98,7 +97,7 @@ class StepAdminForm(ModelForm):
 
     step_info_text_order = CharField(
         max_length=255,
-        help_text="Comma-separated list of substep IDs in desired order, e.g. '3,1,2'.",
+        help_text="Comma-separated list of step info IDs in desired order, e.g. '3,1,2'.",
         label="Step info order",
         required=False,
         widget=Textarea(attrs={"cols": "75", "rows": "1"}),

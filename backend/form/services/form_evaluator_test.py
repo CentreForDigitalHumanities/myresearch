@@ -1,5 +1,3 @@
-from django.utils import timezone
-from datetime import timedelta
 import pytest
 
 from form.models import (
@@ -15,6 +13,7 @@ from form.models import (
     TrueFalseQuestion,
     UserFormSubmission,
 )
+from form.models.questions import SelectQuestionOption
 from form.services.form_evaluator import MAX_REPEAT_LIMIT, FormEvaluator
 
 
@@ -261,8 +260,12 @@ class TestFormEvaluatorQuestionConditions:
             step=step,
             multiple=False,
         )
-        option1 = SelectOption.objects.create(label="Option 1", question=select_trigger)
-        option2 = SelectOption.objects.create(label="Option 2", question=select_trigger)
+        option1 = SelectOption.objects.create(label="Option 1")
+        option2 = SelectOption.objects.create(label="Option 2")
+        for option, order in [(option1, 1), (option2, 2)]:
+            SelectQuestionOption.objects.create(
+                question=select_trigger, option=option, _order=order
+            )
 
         QuestionCondition.objects.create(
             target_question=target_question,

@@ -12,6 +12,7 @@ from form.models import (
     TextQuestion,
     UserFormSubmission,
 )
+from form.models.questions import SelectQuestionOption
 from form.services.form_evaluator import FormEvaluator
 from form.services.user_form_resolver import UserFormResolver
 
@@ -322,19 +323,13 @@ class TestComplexConditionScenarios:
         select_question = SelectQuestion.objects.create(
             text="Select", step=step, multiple=True
         )
-        option_1 = SelectOption.objects.create(
-            label="Option 1",
-            question=select_question,
-        )
-        option_2 = SelectOption.objects.create(
-            label="Option 2",
-            question=select_question,
-        )
-        option_3 = SelectOption.objects.create(
-            label="Option 3",
-            question=select_question,
-        )
-
+        option_1 = SelectOption.objects.create(label="Option 1")
+        option_2 = SelectOption.objects.create(label="Option 2")
+        option_3 = SelectOption.objects.create(label="Option 3")
+        for option, order in [(option_1, 1), (option_2, 2), (option_3, 3)]:
+            SelectQuestionOption.objects.create(
+                question=select_question, option=option, _order=order
+            )
         target = TextQuestion.objects.create(text="Target", step=step)
 
         # Trigger on option_1 or option_2
