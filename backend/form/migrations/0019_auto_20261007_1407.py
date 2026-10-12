@@ -13,7 +13,7 @@ def backup_fields(apps, schema_editor,):
     RepeatableStep = apps.get_model("form.repeatablestep")
     for rs in RepeatableStep.objects.all():
         rs.step_ptr.is_repeatable = True
-        rs.save()
+        rs.step_ptr.save()
 
 
 class Migration(migrations.Migration):
