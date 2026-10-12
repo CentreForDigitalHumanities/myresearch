@@ -122,19 +122,26 @@ class StudyManager(BaseMRManager):
             .distinct()
         )
 
+        # Maps an annotation key to a list of question IDs. There may be
+        # multiple questions with the same annotation key.
+        annotation_key_question_ids = {}
+        for question in questions:
+            record = annotation_key_question_ids.setdefault(question.annotation_key, [])
+            record.append(question.pk)
+
         # Build annotations dictionary
         annotations = {}
-        for question in questions:
+        for annotation_key, question_ids in annotation_key_question_ids.items():
             answer = (
                 QuestionResponse.objects.filter(
                     submissions__study=OuterRef("id"),
-                    question_id=question.id,  # type: ignore
+                    question_id__in=question_ids,
                 )
                 .order_by("-submissions__started_at", "-answered_at")
                 .values("answer__value")[:1]
             )
 
-            annotations[question.annotation_key] = Subquery(answer)
+            annotations[annotation_key] = Subquery(answer)
 
         # Ensure 'title' annotation always exists
         # This ensures that default title annotation will work
