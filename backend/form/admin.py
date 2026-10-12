@@ -316,10 +316,7 @@ class SelectQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
             },
         ),
     )
-    inlines = [
-        SelectQuestionOptionInline, 
-        QuestionConditionInline
-    ]
+    inlines = [SelectQuestionOptionInline, QuestionConditionInline]
     form = SelectQuestionAdminForm
 
 
