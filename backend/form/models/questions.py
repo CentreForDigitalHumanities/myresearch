@@ -163,6 +163,7 @@ class SelectQuestionOption(models.Model):
     A through model for the M2M relationship between SelectQuestion and
     SelectOption, with additional ordering and default selection.
     """
+
     question = models.ForeignKey(
         SelectQuestion, on_delete=models.CASCADE, related_name="option_links"
     )

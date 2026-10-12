@@ -228,8 +228,8 @@ class SelectQuestionType(BaseQuestionMixin, ObjectType):
                 SelectQuestionOption.objects.filter(
                     question=question,
                     option_id=OuterRef("pk"),
-                # Slice to get only one result. This is safe because there is a
-                # unique constraint on (question, option) in the through model.
+                    # Slice to get only one result. This is safe because there is a
+                    # unique constraint on (question, option) in the through model.
                 ).values("default_selected")[:1],
                 output_field=BooleanField(),
             )
