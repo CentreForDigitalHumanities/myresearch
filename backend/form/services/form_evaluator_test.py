@@ -1,5 +1,3 @@
-from django.utils import timezone
-from datetime import timedelta
 import pytest
 
 from form.models import (
