@@ -323,7 +323,7 @@ function handleBackNavigation() {
         </div>
         <template v-else>
             <div class="col-12 col-lg-6 pe-4">
-                <form class="uu-form uu-form-no-help">
+                <form class="uu-form uu-form-no-help" @submit.prevent>
                     <h2>
                         {{ useTranslateableAttribute(selectedStep, "name") }}
                     </h2>
