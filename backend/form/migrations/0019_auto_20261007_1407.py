@@ -3,11 +3,11 @@
 import django.db.models.deletion
 from django.db import migrations, models
 
-def test_breakpoint(apps, schema_editor,):
+def backup_fields(apps, schema_editor,):
     Step = apps.get_model("form.step")
     RepeatableStepQuestion = apps.get_model("form.repeatablestepquestion")
     for rsq in RepeatableStepQuestion.objects.all():
-        target = rsq.repeatable_step
+        target = rsq.repeatable_step.step_ptr
         rsq.regular_step = target
         rsq.save()
     RepeatableStep = apps.get_model("form.repeatablestep")
@@ -23,6 +23,11 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RenameField(
+            "repeatable",
+            "repeat_indices",
+            "vintage_repeat_indices",
+        ),
         migrations.AddField(
             model_name="basequestion",
             name="is_repeatable",
@@ -66,6 +71,6 @@ class Migration(migrations.Migration):
             ),
         ),
         migrations.RunPython(
-            test_breakpoint,
+            backup_fields,
         ),
     ]
