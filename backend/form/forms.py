@@ -14,11 +14,11 @@ class SelectQuestionAdminForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance.pk:
-            current_order = self.instance.get_selectoption_order()
+            current_order = self.instance.get_option_order()
             if current_order:
                 self.initial["option_order"] = ",".join(map(str, current_order))
 
-    def clean_options_order(self):
+    def clean_option_order(self):
         """
         Make sure that the provided option IDs are valid and exist.
         """
@@ -39,8 +39,7 @@ class SelectQuestionAdminForm(ModelForm):
             requested_order.append(int(id_str))
 
         # Validate that the provided IDs exist.
-        # In instance.NAME.all(), NAME is the related name.
-        available_ids = [question.id for question in self.instance.options.all()]
+        available_ids = list(self.instance.options.values_list("id", flat=True))
         invalid_ids = [id for id in requested_order if id not in available_ids]
 
         if invalid_ids:
@@ -52,9 +51,9 @@ class SelectQuestionAdminForm(ModelForm):
         # Make sure that all available IDs are included.
         missing_ids = set(available_ids) - set(requested_order)
 
-        if missing_ids:
+        if missing_ids or len(set(requested_order)) != len(requested_order):
             raise ValidationError(
-                f"Missing IDs: {', '.join(map(str, missing_ids))}. "
+                f"Missing or duplicate IDs: {', '.join(map(str, missing_ids))}. "
                 f"Available IDs: {', '.join(map(str, available_ids))}"
             )
         return order
@@ -67,7 +66,7 @@ class SelectQuestionAdminForm(ModelForm):
             requested_order = [
                 int(id_str) for id_str in order.split(",") if id_str.strip().isdigit()
             ]
-            instance.set_selectoption_order(requested_order)
+            instance.set_option_order(requested_order)
         if commit:
             instance.save()
         return instance
