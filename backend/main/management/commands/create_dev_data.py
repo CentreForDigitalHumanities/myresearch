@@ -237,11 +237,11 @@ class Command(BaseCommand):
                 select_question.save()
 
             for _ in range(self.faker.random_int(2, 5)):
-                SelectOption.objects.create(
+                option = SelectOption.objects.create(
                     label_nl=self.faker_nl.word(),
                     label_en=self.faker_en.word(),
-                    question=select_question,
                 )
+                select_question.options.add(option)
 
         def _create_text_question(form: Step, index: int) -> None:
             tq = TextQuestion.objects.create(
@@ -355,7 +355,7 @@ class Command(BaseCommand):
         return {"value": self.faker.random_int(min=min, max=100)}
 
     def _generate_select_answer(self, question: SelectQuestion) -> dict:
-        options = list(SelectOption.objects.filter(question=question))
+        options = list(question.options.all())
         if not options:
             return {"value": []}
         max_selected = len(options) if question.multiple else 1
