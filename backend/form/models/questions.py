@@ -116,22 +116,73 @@ class BaseQuestion(models.Model):
         return f"{self.text} ({self.pk})"
 
 
+class SelectOption(models.Model):
+    label = models.CharField(max_length=200)
+    default_selected = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Select option ({self.pk}): {self.label}"
+
+
 class SelectQuestion(BaseQuestion):
+    options = models.ManyToManyField(
+        SelectOption,
+        through="form.SelectQuestionOption",
+        related_name="questions",
+    )
     multiple = models.BooleanField(
         default=False,
         help_text="Allows multiple options to be selected if true.",
     )
 
+    def get_ordered_options(self):
+        """
+        Returns an ordered list of SelectOptions for this question.
+        Use this instead of SelectQuestion.options if the order matters.
+        """
+        return self.options.order_by("question_links___order", "pk")
 
-class SelectOption(models.Model):
-    label = models.CharField(max_length=200)
-    default_selected = models.BooleanField(default=False)
+    def get_option_order(self) -> list[int]:
+        return list(self.get_ordered_options().values_list("pk", flat=True))
+
+    def set_option_order(self, option_ids: list[int]) -> None:
+        available_option_ids = set(self.options.values_list("pk", flat=True))
+        if (
+            len(option_ids) != len(available_option_ids)
+            or set(option_ids) != available_option_ids
+        ):
+            raise ValueError("Option order must include every option exactly once.")
+
+        for order, option_id in enumerate(option_ids):
+            SelectQuestionOption.objects.filter(
+                question=self, option_id=option_id
+            ).update(_order=order)
+
+
+class SelectQuestionOption(models.Model):
+    """
+    A through model for the M2M relationship between SelectQuestion and
+    SelectOption, with additional ordering.
+    """
+
     question = models.ForeignKey(
-        SelectQuestion, on_delete=models.CASCADE, related_name="options"
+        SelectQuestion, on_delete=models.CASCADE, related_name="option_links"
+    )
+    option = models.ForeignKey(
+        SelectOption, on_delete=models.CASCADE, related_name="question_links"
     )
 
     class Meta:
         order_with_respect_to = "question"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["question", "option"],
+                name="unique_option_per_select_question",
+            )
+        ]
+
+    def __str__(self):
+        return f"Link between {self.option} and {self.question}"
 
 
 class TrueFalseQuestion(BaseQuestion):
