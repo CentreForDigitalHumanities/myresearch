@@ -109,7 +109,7 @@ class StudyManager(BaseMRManager):
         )
 
     def with_answers_by_annotation_key(self, queryset):
-        """Annotate queryset with latest answers for all questions with annotation_key.
+        """Annotate queryset with latest answers for all questions with an annotation_key.
 
         This is used as a default when getting a queryset in get_queryset.
         """
