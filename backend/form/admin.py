@@ -77,7 +77,7 @@ class SubstepInline(TinyMCETextFieldMixin, admin.StackedInline):
 class SelectQuestionOptionInline(admin.TabularInline):
     model = SelectQuestionOption
     extra = 0
-    fields = ("option",)
+    fields = ("option", "default_selected")
 
 
 class StepConditionInline(admin.StackedInline):
@@ -455,8 +455,8 @@ class FileUploadQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
 
 @admin.register(SelectOption)
 class SelectOptionAdmin(admin.ModelAdmin):
-    list_display = ("label_nl", "label_en", "default_selected")
-    list_filter = ("questions", "default_selected")
+    list_display = ("label_nl", "label_en")
+    list_filter = ("questions",)
     search_fields = ("label_nl", "label_en")
 
 

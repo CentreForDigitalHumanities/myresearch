@@ -118,7 +118,6 @@ class BaseQuestion(models.Model):
 
 class SelectOption(models.Model):
     label = models.CharField(max_length=200)
-    default_selected = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Select option ({self.pk}): {self.label}"
@@ -162,15 +161,16 @@ class SelectQuestion(BaseQuestion):
 class SelectQuestionOption(models.Model):
     """
     A through model for the M2M relationship between SelectQuestion and
-    SelectOption, with additional ordering.
+    SelectOption, with additional ordering and default selection.
     """
-
     question = models.ForeignKey(
         SelectQuestion, on_delete=models.CASCADE, related_name="option_links"
     )
     option = models.ForeignKey(
         SelectOption, on_delete=models.CASCADE, related_name="question_links"
     )
+
+    default_selected = models.BooleanField(default=False)
 
     class Meta:
         order_with_respect_to = "question"

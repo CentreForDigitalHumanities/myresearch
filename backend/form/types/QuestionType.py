@@ -11,6 +11,7 @@ from graphene import (
     NonNull,
     JSONString,
 )
+from django.db.models import BooleanField, OuterRef, Subquery
 
 from form.models import (
     BaseQuestion,
@@ -19,6 +20,7 @@ from form.models import (
     FileUploadQuestion,
     NumberQuestion,
     SelectQuestion,
+    SelectQuestionOption,
     TextQuestion,
 )
 from form.models.responses import MRDocument
@@ -214,9 +216,24 @@ class SelectQuestionType(BaseQuestionMixin, ObjectType):
 
     @staticmethod
     def resolve_options(parent, info: ResolveInfo):
-        if hasattr(parent.question, "selectquestion"):
-            return parent.question.selectquestion.get_ordered_options()
-        return parent.question.options.all()
+        question = (
+            parent.question.selectquestion
+            if hasattr(parent.question, "selectquestion")
+            else parent.question
+        )
+
+        # Annotate the default_selected field using the through model.
+        return question.get_ordered_options().annotate(
+            default_selected=Subquery(
+                SelectQuestionOption.objects.filter(
+                    question=question,
+                    option_id=OuterRef("pk"),
+                # Slice to get only one result. This is safe because there is a
+                # unique constraint on (question, option) in the through model.
+                ).values("default_selected")[:1],
+                output_field=BooleanField(),
+            )
+        )
 
 
 class FileUploadQuestionType(BaseQuestionMixin, ObjectType):
