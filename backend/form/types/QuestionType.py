@@ -215,7 +215,7 @@ class SelectQuestionType(BaseQuestionMixin, ObjectType):
     @staticmethod
     def resolve_options(parent, info: ResolveInfo):
         if hasattr(parent.question, "selectquestion"):
-            return parent.question.selectquestion.options.all()
+            return parent.question.selectquestion.get_ordered_options()
         return parent.question.options.all()
 
 
