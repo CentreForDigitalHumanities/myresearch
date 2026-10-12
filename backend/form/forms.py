@@ -5,7 +5,7 @@ from form.models import Step
 class SelectQuestionAdminForm(ModelForm):
     option_order = CharField(
         max_length=255,
-        help_text="Comma-separated list of question IDs in desired order, e.g. '3,1,2'.",
+        help_text="Comma-separated list of option IDs in desired order, e.g. '3,1,2'.",
         label="Select Option order",
         required=False,
         widget=Textarea(attrs={"cols": "75", "rows": "1"}),
@@ -20,13 +20,13 @@ class SelectQuestionAdminForm(ModelForm):
 
     def clean_options_order(self):
         """
-        Make sure that the provided question IDs are valid and exist.
+        Make sure that the provided option IDs are valid and exist.
         """
         order: str = self.cleaned_data.get("option_order", "")
         if not order:
             return order
 
-        # Get the requested order of question IDs as a list of integers.
+        # Get the requested order of option IDs as a list of integers.
         requested_order = []
         for id_str in order.split(","):
             id_str = id_str.strip()
@@ -34,7 +34,7 @@ class SelectQuestionAdminForm(ModelForm):
                 continue
             if not id_str.isdigit():
                 raise ValidationError(
-                    f"Invalid question ID format: '{id_str}'. Must be numeric."
+                    f"Invalid option ID format: '{id_str}'. Must be numeric."
                 )
             requested_order.append(int(id_str))
 
@@ -98,7 +98,7 @@ class StepAdminForm(ModelForm):
 
     step_info_text_order = CharField(
         max_length=255,
-        help_text="Comma-separated list of substep IDs in desired order, e.g. '3,1,2'.",
+        help_text="Comma-separated list of step info IDs in desired order, e.g. '3,1,2'.",
         label="Step info order",
         required=False,
         widget=Textarea(attrs={"cols": "75", "rows": "1"}),
