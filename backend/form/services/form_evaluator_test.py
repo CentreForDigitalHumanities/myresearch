@@ -16,6 +16,7 @@ from form.models import (
     UserFormSubmission,
     RepeatIndex,
 )
+from form.models.questions import SelectQuestionOption
 from form.services.form_evaluator import MAX_REPEAT_LIMIT, FormEvaluator
 
 
@@ -264,7 +265,10 @@ class TestFormEvaluatorQuestionConditions:
         )
         option1 = SelectOption.objects.create(label="Option 1")
         option2 = SelectOption.objects.create(label="Option 2")
-        select_trigger.options.add(option1, option2)
+        for option, order in [(option1, 1), (option2, 2)]:
+            SelectQuestionOption.objects.create(
+                question=select_trigger, option=option, _order=order
+            )
 
         QuestionCondition.objects.create(
             target_question=target_question,

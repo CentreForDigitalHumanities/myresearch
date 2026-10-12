@@ -58,7 +58,7 @@ def restore_option_assignments(apps, schema_editor):
     unassigned_options = [option for option in options if option.pk not in assignments]
     if any(unassigned_options):
         raise IrreversibleError(
-            f"Unassigned select options found: {', '.join(str(option.pk) for option in unassigned_options)}. An unassigned select option cannot be represented by the old schema and will be lost. Please make sure that all select options are assigned to exactly one question before migrating back, or delete optiosn that you do not want to keep before migrating back."
+            f"Unassigned select options found: {', '.join(str(option.pk) for option in unassigned_options)}. An unassigned select option cannot be represented by the old schema and will be lost. Please make sure that all select options are assigned to exactly one question before migrating back, or delete options that you do not want to keep before migrating back."
         )
 
     for option in options:
