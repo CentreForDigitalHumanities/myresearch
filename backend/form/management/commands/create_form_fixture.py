@@ -9,6 +9,15 @@ EXCLUDED_MODELS = [
     "form.RepeatIndex",
 ]
 
+EXCLUDED_FIELDS = {
+    "form.basequestion": [
+        "repeat_indices",
+    ],
+    "form.step": [
+        "repeat_indices",
+    ],
+}
+
 
 class Command(BaseCommand):
     """
@@ -68,29 +77,8 @@ class Command(BaseCommand):
                     models_by_name[model] = []
                 models_by_name[model].append(item)
 
-            # Define sorting keys for specific models
-            # models are sorted based on these keys
-            # eg. basequestion gets sorted by step first, then by _order
-            sort_keys = {
-                "form.basequestion": ("step", "_order"),
-                "form.selectoption": ("question", "_order"),
-                "form.step": ("form", "parent", "_order"),
-            }
-
-            # Sort each model's objects
-            for model in models_by_name:
-                objects = models_by_name[model]
-
-                if model in sort_keys:
-                    sort_key_fields = sort_keys[model]
-                    models_by_name[model] = sorted(
-                        objects,
-                        key=lambda x: tuple(
-                            x.get("fields", {}).get(field, float("inf"))
-                            or float("-inf")
-                            for field in sort_key_fields
-                        ),
-                    )
+            models_by_name = exclude_fields(models_by_name)
+            models_by_name = sort_by_order(models_by_name)
 
             # Flatten back to list, maintaining model order
             sorted_data = []
@@ -106,3 +94,48 @@ class Command(BaseCommand):
             )
         except Exception as e:
             self.stderr.write(self.style.ERROR(f"Error dumping data: {str(e)}"))
+
+
+def exclude_fields(models_by_name):
+    """
+    Remove certain fields from a model. Modifies the
+    dict in place.
+    """
+    for model in models_by_name:
+        if not model in EXCLUDED_FIELDS:
+            continue
+        objects = models_by_name[model]
+        excluded = EXCLUDED_FIELDS[model]
+        for obj in objects:
+            for exclusion in excluded:
+                obj["fields"].pop(exclusion, None)
+
+    return models_by_name
+
+
+def sort_by_order(models_by_name):
+
+    # Define sorting keys for specific models
+    # models are sorted based on these keys
+    # eg. basequestion gets sorted by step first, then by _order
+    sort_keys = {
+        "form.basequestion": ("step", "_order"),
+        "form.selectoption": ("question", "_order"),
+        "form.step": ("form", "parent", "_order"),
+    }
+
+    # Sort each model's objects
+    for model in models_by_name:
+        objects = models_by_name[model]
+
+        if model in sort_keys:
+            sort_key_fields = sort_keys[model]
+            models_by_name[model] = sorted(
+                objects,
+                key=lambda x: tuple(
+                    x.get("fields", {}).get(field, float("inf")) or float("-inf")
+                    for field in sort_key_fields
+                ),
+            )
+
+    return models_by_name
