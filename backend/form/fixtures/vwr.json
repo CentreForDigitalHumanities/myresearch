@@ -4902,7 +4902,7 @@
         "model": "form.stepinfotext",
         "pk": 48,
         "fields": {
-            "step": 9,
+            "step": 17,
             "text": "Why is the recipient\u2019s country important?",
             "text_en": "Why is the recipient\u2019s country important?",
             "text_nl": "Waarom is het land van de ontvanger van belang?",
@@ -4916,7 +4916,7 @@
         "model": "form.stepinfotext",
         "pk": 49,
         "fields": {
-            "step": 9,
+            "step": 17,
             "text": "What is the basis for transfer?",
             "text_en": "What is the basis for transfer?",
             "text_nl": "Wat is de basis voor doorgifte?",
