@@ -448,9 +448,9 @@
             "text_nl": "Audio-/video-opnames",
             "step": 10,
             "form": 1,
-            "description": "<p>E.g. Audacity, MS Teams, Adobe Audition</p>",
-            "description_en": "<p>E.g. Audacity, MS Teams, Adobe Audition</p>",
-            "description_nl": "<p>Bijv. Audacity, MS Teams, Adobe Audition</p>",
+            "description": "<p>E.g. Audacity, MS Teams</p>",
+            "description_en": "<p>E.g. Audacity, MS Teams</p>",
+            "description_nl": "<p>Bijv. Audacity, MS Teams</p>",
             "required": false,
             "_order": 0
         }
@@ -467,9 +467,9 @@
             "text_nl": "Transcriptie",
             "step": 10,
             "form": 1,
-            "description": "<p>E.g., Amberscript, Transkriptor, Sonix</p>",
-            "description_en": "<p>E.g., Amberscript, Transkriptor, Sonix</p>",
-            "description_nl": "<p>Bijv. Amberscript, Transkriptor, Sonix</p>",
+            "description": "<p>E.g., Amberscript</p>",
+            "description_en": "<p>E.g., Amberscript</p>",
+            "description_nl": "<p>Bijv. Amberscript</p>",
             "required": false,
             "_order": 1
         }
@@ -524,9 +524,9 @@
             "text_nl": "Analyse",
             "step": 10,
             "form": 1,
-            "description": "<p>E.g., MatLab, RStudio, SPSS, Nvivo (SHTTP)</p>",
-            "description_en": "<p>E.g., MatLab, RStudio, SPSS, Nvivo (SHTTP)</p>",
-            "description_nl": "<p>Bijv. MatLab, RStudio, SPSS, Nvivo (SHTTP)</p>",
+            "description": "<p>E.g., MatLab, RStudio, SPSS</p>",
+            "description_en": "<p>E.g., MatLab, RStudio, SPSS</p>",
+            "description_nl": "<p>Bijv. MatLab, RStudio, SPSS</p>",
             "required": false,
             "_order": 4
         }
@@ -543,9 +543,9 @@
             "text_nl": "Opslag",
             "step": 10,
             "form": 1,
-            "description": "<p>E.g., Yoda, OneDrive, MS Teams/Sharepoint, Google Drive</p>",
-            "description_en": "<p>E.g., Yoda, OneDrive, MS Teams/Sharepoint, Google Drive</p>",
-            "description_nl": "<p>Bijv. Yoda, OneDrive, MS Teams/Sharepoint, Google Drive</p>",
+            "description": "<p>E.g., Yoda, OneDrive, MS Teams/Sharepoint</p>",
+            "description_en": "<p>E.g., Yoda, OneDrive, MS Teams/Sharepoint</p>",
+            "description_nl": "<p>Bijv. Yoda, OneDrive, MS Teams/Sharepoint</p>",
             "required": false,
             "_order": 5
         }
@@ -562,9 +562,9 @@
             "text_nl": "Diversen",
             "step": 10,
             "form": 1,
-            "description": "<p>E.g., OTree, Textcavator</p>",
-            "description_en": "<p>E.g., OTree, Textcavator</p>",
-            "description_nl": "<p>Bijv. OTree, Textcavator</p>",
+            "description": "<p>E.g., LimeSurvey (surveys)</p>",
+            "description_en": "<p>E.g., LimeSurvey (surveys)</p>",
+            "description_nl": "<p>Bijv. LimeSurvey (enquêtes)</p>",
             "required": false,
             "_order": 6
         }
