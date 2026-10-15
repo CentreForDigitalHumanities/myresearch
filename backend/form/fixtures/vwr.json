@@ -4598,9 +4598,9 @@
             "text": "What are datasubjects?",
             "text_en": "What are datasubjects?",
             "text_nl": "Wat zijn datasubjecten?",
-            "content": "<p>Datasubjects are persons from whom you process data. If you interview somebody that person is a datasubject.</p>",
-            "content_en": "<p>Datasubjects are persons from whom you process data. If you interview somebody that person is a datasubject.</p>",
-            "content_nl": "<p>Datasubjecten zijn personen van wie je persoonsgegevens verwerkt, dus op wie die persoonsgegevens betrekking hebben. Als je iemand interviewt, dan is diegene het datasubject.</p>",
+            "content": "<p>Datasubjects are living persons from whom you process data. If you interview somebody that person is a datasubject.</p>",
+            "content_en": "<p>Datasubjects are living persons from whom you process data. If you interview somebody that person is a datasubject.</p>",
+            "content_nl": "<p>Datasubjecten zijn levende personen van wie je persoonsgegevens verwerkt, dus op wie die persoonsgegevens betrekking hebben. Als je iemand interviewt, dan is diegene het datasubject.</p>",
             "_order": 0
         }
     },
