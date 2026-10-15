@@ -4668,9 +4668,9 @@
             "text": "What is cloud software?",
             "text_en": "What is cloud software?",
             "text_nl": "Wat is cloudsoftware?",
-            "content": "<p>With cloud software we mean applications that are offered through internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EER.</p>",
-            "content_en": "<p>With cloud software we mean applications that are offered through internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EER.</p>",
-            "content_nl": "<p>Onder cloudsoftware verstaan we applicaties die via internet worden aangeboden, bijv. Qualtrics, SURFDrive of Office 365.</p>\r\n<p>Cloudsoftware draait op grote serverparken ergens ter wereld. De precieze locaties kunnen verschillen. Vanuit de AVG wordt ge&euml;ist dat persoonsgegevens binnen de EER worden verwerkt.</p>",
+            "content": "<p>With cloud software we mean applications that are offered through internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EER (EU plus Norway, Liechtenstein and Iceland).</p>",
+            "content_en": "<p>With cloud software we mean applications that are offered through internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EER (EU plus Norway, Liechtenstein and Iceland).</p>",
+            "content_nl": "<p>Onder cloudsoftware verstaan we applicaties die via internet worden aangeboden, bijv. Qualtrics, SURFDrive of Office 365.</p>\r\n<p>Cloudsoftware draait op grote serverparken ergens ter wereld. De precieze locaties kunnen verschillen. Vanuit de AVG wordt ge&euml;ist dat persoonsgegevens binnen de EER (EU plus Noorwegen, Liechtenstein en IJsland) worden verwerkt.</p>",
             "_order": 0
         }
     },
