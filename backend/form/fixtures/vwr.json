@@ -4427,12 +4427,12 @@
         "pk": 13,
         "fields": {
             "step": 2,
-            "text": "What do I enter for UU colleagues?",
-            "text_en": "What do I enter for UU colleagues?",
-            "text_nl": "Wat vul ik in bij collega's van de UU?",
-            "content": "<p>For UU colleagues, enter their UU-email address.</p>",
-            "content_en": "<p>For UU colleagues, enter their UU-email address.</p>",
-            "content_nl": "<p>Bij collega&rsquo;s van de UU vul je hun UU-e-mailadres in.</p>",
+            "text": "What do I enter for UU co-researchers?",
+            "text_en": "What do I enter for UU co-researchers?",
+            "text_nl": "Wat vul ik in bij medeonderzoekers van de UU?",
+            "content": "<p>For UU co-researchers, enter their UU-email address.</p>",
+            "content_en": "<p>For UU co-researchers, enter their UU-email address.</p>",
+            "content_nl": "<p>Bij medeonderzoekers van de UU vul je hun UU-e-mailadres in.</p>",
             "_order": 3
         }
     },
@@ -4444,9 +4444,9 @@
             "text": "What do I enter if someone is not working at UU?",
             "text_en": "What do I enter if someone is not working at UU?",
             "text_nl": "Wat vul ik in als iemand niet werkzaam is bij de UU?",
-            "content": "<p>For colleagues outside UU, enter their professional email address. Please note: Gmail or any other USA provider is not acceptable.</p>",
-            "content_en": "<p>For colleagues outside UU, enter their professional email address. Please note: Gmail or any other USA provider is not acceptable.</p>",
-            "content_nl": "<p>Bij collega&rsquo;s van buiten de UU vul je hun professionele e-mailadres in. Let op: een mailadres op bijvoorbeeld Gmail of een andere Amerikaanse provider is niet acceptabel.</p>",
+            "content": "<p>For co-researchers outside UU, enter their name, professional email address and the university/institute/organisation with which they are affiliated. Please note: Gmail or any other USA provider is not acceptable.</p>",
+            "content_en": "<p>For co-researchers outside UU, enter their name, professional email address and the university/institute/organisation with which they are affiliated. Please note: Gmail or any other USA provider is not acceptable.</p>",
+            "content_nl": "<p>Bij medeonderzoekers van buiten de UU vul je hun naam, professionele e-mailadres, en de universiteit/het instituut/de organisatie in waar ze werkzaam zijn. Let op: een mailadres op bijvoorbeeld Gmail of een andere Amerikaanse provider is niet acceptabel.</p>",
             "_order": 4
         }
     },
