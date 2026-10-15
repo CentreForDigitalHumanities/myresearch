@@ -4682,9 +4682,9 @@
             "text": "Which software has been approved by the UU?",
             "text_en": "Which software has been approved by the UU?",
             "text_nl": "Welke software is goedgekeurd door de UU?",
-            "content": "<p>Please consult the <a href=\"https://tools.uu.nl/tooladvisor/\" target=\"_blank\" rel=\"noopener\">Tooladvisor</a>. Do keep in mind that the Tooladvisor is not always up to date. If you have any questions, please contact the IT Service Desk.</p>",
-            "content_en": "<p>Please consult the <a href=\"https://tools.uu.nl/tooladvisor/\" target=\"_blank\" rel=\"noopener\">Tooladvisor</a>. Do keep in mind that the Tooladvisor is not always up to date. If you have any questions, please contact the IT Service Desk.</p>",
-            "content_nl": "<p>Raadpleeg de <a href=\"https://tools.uu.nl/tooladvisor/\" target=\"_blank\" rel=\"noopener\">Tooladvisor</a>. Houd er rekening mee dat de Tooladvisor niet altijd actueel is. Voor vragen kun je terecht bij de IT Service Desk.</p>",
+            "content": "<p>Please consult the <a href=\"https://tools.uu.nl/tooladvisor/\" target=\"_blank\" rel=\"noopener\">Tooladvisor</a>. Do keep in mind that the Tooladvisor is not always up to date. If you have any questions, please contact the <a href='mailto:servicedesk@uu.nl'>IT Service Desk</a>(030-253 4500).</p>",
+            "content_en": "<p>Please consult the <a href=\"https://tools.uu.nl/tooladvisor/\" target=\"_blank\" rel=\"noopener\">Tooladvisor</a>. Do keep in mind that the Tooladvisor is not always up to date. If you have any questions, please contact the <a href='mailto:servicedesk@uu.nl'>IT Service Desk</a>(030-253 4500).</p>",
+            "content_nl": "<p>Raadpleeg de <a href=\"https://tools.uu.nl/tooladvisor/\" target=\"_blank\" rel=\"noopener\">Tooladvisor</a>. Houd er rekening mee dat de Tooladvisor niet altijd actueel is. Voor vragen kun je terecht bij de <a href='mailto:servicedesk@uu.nl'>IT Service Desk</a>(030-253 4500).</p>",
             "_order": 1
         }
     },
