@@ -163,9 +163,9 @@
             "text_nl": "Begindatum",
             "step": 4,
             "form": 1,
-            "description": "<p>You start collecting personal data on this date. Note: you must submit this application no later than 4 weeks before the starting date if a review by the FETC is required.</p>",
-            "description_en": "<p>You start collecting personal data on this date. Note: you must submit this application no later than 4 weeks before the starting date if a review by the FETC is required.</p>",
-            "description_nl": "<p>Dit is de datum waarop je begint met het verzamelen van persoonsgegevens. Let op: deze aanvraag moet minstens 4 weken voor de begindatum ingediend worden als toetsing door de FETC vereist is.</p>",
+            "description": "<p>You start collecting personal data on this date. Note: If approval from the FETC is required, you must allow for a lead time of 3 to 4 weeks.</p>",
+            "description_en": "<p>You start collecting personal data on this date. Note: If approval from the FETC is required, you must allow for a lead time of 3 to 4 weeks.</p>",
+            "description_nl": "<p>Dit is de datum waarop je begint met het verzamelen van persoonsgegevens. Let op: is toetsing door de FETC verplicht of gewenst? Houd dan ook rekening met de doorlooptijd van de FETC (3 tot 4 weken).</p>",
             "required": true,
             "_order": 0
         }
