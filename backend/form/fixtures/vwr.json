@@ -4457,10 +4457,10 @@
             "step": 3,
             "text": "Do 'faculty' and 'department' refer to the researcher with final responsibility or to the study?",
             "text_en": "Do 'faculty' and 'department' refer to the researcher with final responsibility or to the study?",
-            "text_nl": "Hebben de faculteit en afdeling betrekking op de eindverantwoordelijke onderzoeker of op de studie?",
+            "text_nl": "Hebben de faculteit en het departement betrekking op de eindverantwoordelijke onderzoeker of op de studie?",
             "content": "<p>This concerns the faculty/department of the researcher with final responsibility.</p>",
             "content_en": "<p>This concerns the faculty/department of the researcher with final responsibility.</p>",
-            "content_nl": "<p>Het gaat om de faculteit/afdeling van de eindverantwoordelijke onderzoeker.</p>",
+            "content_nl": "<p>Het gaat om de faculteit/het departement van de eindverantwoordelijke onderzoeker.</p>",
             "_order": 0
         }
     },
