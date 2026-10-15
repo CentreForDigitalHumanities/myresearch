@@ -1265,9 +1265,9 @@
             "text_nl": "Persoon, groep of instantie",
             "step": 17,
             "form": 1,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
+            "description": "In case of a person, please also enter their affiliation.",
+            "description_en": "In case of a person, please also enter their affiliation.",
+            "description_nl": "Geef bij een persoon ook diens affiliatie op.",
             "required": true,
             "_order": 0
         }
