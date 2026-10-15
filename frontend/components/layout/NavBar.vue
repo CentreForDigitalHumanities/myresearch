@@ -107,7 +107,10 @@ function newRegistration(): void {
                             class="nav-link"
                             active-class="active"
                         >
-                            {{ $t("Studies") }}
+                            <template v-if="currentUser.isPrivacyOfficer">{{
+                                $t("Studies")
+                            }}</template>
+                            <template v-else>{{ $t("My studies") }}</template>
                         </NuxtLink>
                     </li>
                     <li>
