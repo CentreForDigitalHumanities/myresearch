@@ -4662,20 +4662,6 @@
     },
     {
         "model": "form.stepinfotext",
-        "pk": 30,
-        "fields": {
-            "step": 9,
-            "text": "Who/what are third parties?",
-            "text_en": "Who/what are third parties?",
-            "text_nl": "Wie/wat zijn derden?",
-            "content": "<p>See 'Who/what are recipients?'</p>",
-            "content_en": "<p>See 'Who/what are recipients?'</p>",
-            "content_nl": "<p>Zie 'Wie/wat zijn ontvangers?'</p>",
-            "_order": 1
-        }
-    },
-    {
-        "model": "form.stepinfotext",
         "pk": 31,
         "fields": {
             "step": 10,
