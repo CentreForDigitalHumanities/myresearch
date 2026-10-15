@@ -54,7 +54,7 @@ function newRegistration(): void {
         text: t("Are you sure you want to register a new study?"),
         confirmText: t("Yes"),
         abortText: t("No"),
-        headerText: t("Confirm new registration"),
+        headerText: t("Confirm new study"),
         callback: () => {
             void handleCreateStudy();
         },
@@ -98,7 +98,7 @@ function newRegistration(): void {
                             class="nav-link"
                             @click="newRegistration"
                         >
-                            {{ $t("New registration") }}
+                            {{ $t("New study") }}
                         </button>
                     </li>
                     <li v-if="currentUser">
