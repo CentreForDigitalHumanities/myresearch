@@ -4836,9 +4836,9 @@
             "text": "What is encryption?",
             "text_en": "What is encryption?",
             "text_nl": "Wat is versleuteling?",
-            "content": "<p>Encryption is a technique used to convert information into an encrypted form that is only accessible with a specific key. The goal of encryption is to protect information from unwanted access by unauthorized persons.</p>",
-            "content_en": "<p>Encryption is a technique used to convert information into an encrypted form that is only accessible with a specific key. The goal of encryption is to protect information from unwanted access by unauthorized persons.</p>",
-            "content_nl": "<p>Versleuteling\u202f(of encryptie) is een techniek waarmee informatie wordt omgezet in een versleutelde vorm die alleen toegankelijk is met een specifieke sleutel. Het doel van versleuteling is om de informatie te beschermen tegen ongewenste toegang door onbevoegde personen.</p>",
+            "content": "<p>Encryption is a way to make data unreadable. Only those who have the key, can 'unlock' the data and read it. For others, the data remain unintelligable. Bitlocker (Microsoft) uses encryption. WhatsApp even uses 'end-to-end encryption', meaning even the supplier has no access to the data.</p>",
+            "content_en": "<p>Encryption is a way to make data unreadable. Only those who have the key, can 'unlock' the data and read it. For others, the data remain unintelligable. Bitlocker (Microsoft) uses encryption. WhatsApp even uses 'end-to-end encryption', meaning even the supplier has no access to the data.</p>",
+            "content_nl": "<p>Versleuteling (of 'encryptie') is een manier om data onleesbaar te maken. Alleen diegenen die de sleutel hebben, kunnen de data 'ontsleutelen' en lezen. Voor anderen blijven de data onbegrijpelijk. Bitlocker (Microsoft) werkt met versleuteling. WhatsApp werkt zelfs met 'end-to-end versleuteling'. Dat wil zeggen dat zelfs de leverancier van de encryptiesleutel geen toegang heeft tot de data.</p>",
             "_order": 2
         }
     },
