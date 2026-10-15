@@ -431,7 +431,7 @@
             "form": 1,
             "description": "<p>Every external person, group or organisation that receives personal data needs to be named here.</p>",
             "description_en": "<p>Every external person, group or organisation that receives personal data needs to be named here.</p>",
-            "description_nl": "<p>Elke persoon, groep of instantie dat persoonlijke data ontvangt moet hier aangegeven worden.</p>",
+            "description_nl": "<p>Elke persoon, groep of instantie die persoonlijke data ontvangt moet hier aangegeven worden.</p>",
             "required": false,
             "_order": 0
         }
