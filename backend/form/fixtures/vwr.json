@@ -4235,9 +4235,9 @@
         "pk": 13,
         "fields": {
             "is_repeatable": false,
-            "name": "Questions for the PO?",
-            "name_en": "Questions for the PO?",
-            "name_nl": "Vragen voor de PO?",
+            "name": "Questions for the privacy officer?",
+            "name_en": "Questions for the privacy officer?",
+            "name_nl": "Vragen voor de privacy officer?",
             "description": null,
             "description_en": null,
             "description_nl": null,
