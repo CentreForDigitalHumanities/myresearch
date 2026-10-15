@@ -4354,20 +4354,6 @@
     },
     {
         "model": "form.stepinfotext",
-        "pk": 7,
-        "fields": {
-            "step": 1,
-            "text": "What will the specified name be used for?",
-            "text_en": "What will the specified name be used for?",
-            "text_nl": "Wordt de naam die ik opgeef vaker gebruikt?",
-            "content": "<p>This name will be used in all formal correspondence.</p>",
-            "content_en": "<p>This name will be used in all formal correspondence.</p>",
-            "content_nl": "<p>Deze naam zal worden gebruikt in alle formele correspondentie.</p>",
-            "_order": 1
-        }
-    },
-    {
-        "model": "form.stepinfotext",
         "pk": 8,
         "fields": {
             "step": 1,
