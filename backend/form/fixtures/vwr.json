@@ -3073,7 +3073,7 @@
         "fields": {
             "label": "Consent forms (signed or not)",
             "label_en": "Consent forms (signed or not)",
-            "label_nl": "Al dan niet ondertekende toestemmingsverklaringen",
+            "label_nl": "Ondertekende toestemmingsverklaringen",
             "default_selected": false,
             "question": 45,
             "_order": 24
