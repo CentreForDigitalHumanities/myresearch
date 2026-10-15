@@ -2831,9 +2831,9 @@
         "model": "form.selectoption",
         "pk": 132,
         "fields": {
-            "label": "Age over/under 16",
-            "label_en": "Age over/under 16",
-            "label_nl": "Ouder/jonger dan 16",
+            "label": "Age over/under 16 (but without a specific age, birthday or birth year)",
+            "label_en": "Age over/under 16 (but without a specific age, birthday or birth year)",
+            "label_nl": "Ouder/jonger dan 16 (maar zonder specifieke leeftijd, geboortedatum of geboortejaar)",
             "default_selected": false,
             "question": 45,
             "_order": 4
