@@ -3133,7 +3133,7 @@
         "fields": {
             "label": "I am the researcher with final responsibility.",
             "label_en": "I am the researcher with final responsibility.",
-            "label_nl": "Ik ben zelf eindverantwoordelijk onderzoeker.",
+            "label_nl": "Ik ben zelf eindverantwoordelijke onderzoeker.",
             "default_selected": false,
             "question": 52,
             "_order": 0
@@ -4387,10 +4387,10 @@
             "step": 2,
             "text": "What do we mean by person with final responsibility?",
             "text_en": "What do we mean by person with final responsibility?",
-            "text_nl": "Wat verstaan we onder eindverantwoordelijke?",
+            "text_nl": "Wat verstaan we onder eindverantwoordelijke onderzoeker?",
             "content": "<p>The person with final responsibilitiy is a researcher with a doctorate, a supervisor with a doctorate or a PhD supervisor</p>",
             "content_en": "<p>The person with final responsibilitiy is a researcher with a doctorate, a supervisor with a doctorate or a PhD supervisor</p>",
-            "content_nl": "<p>De eindverantwoordelijk onderzoeker is een gepromoveerd onderzoeker, een gepromoveerde begeleider of een promotor.</p>",
+            "content_nl": "<p>De eindverantwoordelijke onderzoeker is een gepromoveerd onderzoeker, een gepromoveerde begeleider of een promotor.</p>",
             "_order": 0
         }
     },
@@ -4457,10 +4457,10 @@
             "step": 3,
             "text": "Do 'faculty' and 'department' refer to the researcher with final responsibility or to the study?",
             "text_en": "Do 'faculty' and 'department' refer to the researcher with final responsibility or to the study?",
-            "text_nl": "Hebben de faculteit en afdeling betrekking op de eindverantwoordelijke of op de studie?",
+            "text_nl": "Hebben de faculteit en afdeling betrekking op de eindverantwoordelijke onderzoeker of op de studie?",
             "content": "<p>This concerns the faculty/department of the researcher with final responsibility.</p>",
             "content_en": "<p>This concerns the faculty/department of the researcher with final responsibility.</p>",
-            "content_nl": "<p>Het gaat om de faculteit/afdeling van de eindverantwoordelijke.</p>",
+            "content_nl": "<p>Het gaat om de faculteit/afdeling van de eindverantwoordelijke onderzoeker.</p>",
             "_order": 0
         }
     },
