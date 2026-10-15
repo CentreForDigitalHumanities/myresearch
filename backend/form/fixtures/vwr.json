@@ -4623,7 +4623,7 @@
         "pk": 27,
         "fields": {
             "step": 15,
-            "text": "Do I need to enter something for every category of datasubjects?",
+            "text": "Do I need to enter something for every category of datasubject categories?",
             "text_en": "Do I need to enter something for every category of datasubjects?",
             "text_nl": "Moet ik bij elke categorie datasubjecten iets opgeven?",
             "content": "<p>No, you do not have to do so. You only have to enter the categories datasubjects where you process peronal data. There can be multiple different groups datasubjects per category. For example at participants you can have teachers and students.</p>",
@@ -4637,12 +4637,12 @@
         "pk": 28,
         "fields": {
             "step": 15,
-            "text": "What do I do when my category is not shown?",
-            "text_en": "What do I do when my category is not shown?",
-            "text_nl": "Wat moet ik doen als mijn categorie er niet tussen staat?",
-            "content": "<p>The shown categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
-            "content_en": "<p>The shown categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
-            "content_nl": "<p>De opgevoerde categorie&euml;n zijn geacht uitputtend te zijn. Mochten je desondanks de indruk hebben niet door te kunnen, neem dan contact op met de privacy officer.</p>",
+            "text": "What do I do when my datasubject categories is not shown?",
+            "text_en": "What do I do when my datasubject categories is not shown?",
+            "text_nl": "Wat moet ik doen als mijn categorie datasubjecten er niet tussen staat?",
+            "content": "<p>The shown datasubject categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
+            "content_en": "<p>The shown datasubject categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
+            "content_nl": "<p>De opgevoerde categorie&euml;n datasubjecten worden geacht uitputtend te zijn. Mochten je desondanks de indruk hebben niet door te kunnen, neem dan contact op met de privacy officer.</p>",
             "_order": 4
         }
     },
