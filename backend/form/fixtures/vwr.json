@@ -4623,9 +4623,9 @@
         "pk": 27,
         "fields": {
             "step": 15,
-            "text": "Do I need to enter something for every category?",
-            "text_en": "Do I need to enter something for every category?",
-            "text_nl": "Moet ik bij elke categorie iets opgeven?",
+            "text": "Do I need to enter something for every category of datasubjects?",
+            "text_en": "Do I need to enter something for every category of datasubjects?",
+            "text_nl": "Moet ik bij elke categorie datasubjecten iets opgeven?",
             "content": "<p>No, you do not have to do so. You only have to enter the categories datasubjects where you process peronal data. There can be multiple different groups datasubjects per category. For example at participants you can have teachers and students.</p>",
             "content_en": "<p>No, you do not have to do so. You only have to enter the categories datasubjects where you process peronal data. There can be multiple different groups datasubjects per category. For example at participants you can have teachers and students.</p>",
             "content_nl": "<div>Nee, dat hoeft niet. Je moet alleen die categori&euml;n datasubjecten opgeven van wie je persoonsgegevens verwerkt. Per categorie kunnen dat wel meerdere, verschillende, groepen datasubjecten zijn, bijv. bij 'Deelnemers, d.w.z. personen die bewust deelnemen aan het onderzoek': docenten en leerlingen.</div>",
