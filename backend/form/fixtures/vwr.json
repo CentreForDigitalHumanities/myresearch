@@ -58,7 +58,7 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 84,
+        "pk": 91,
         "fields": {
             "is_repeatable": false,
             "annotation_key": null,
@@ -68,9 +68,9 @@
             "text_nl": "Medeonderzoeker(s) UU",
             "step": 2,
             "form": 1,
-            "description": "<p>Who else at UU is collaborating on the study? (Leave this field blank if not applicable.)</p>",
-            "description_en": "<p>Who else at UU is collaborating on the study? (Leave this field blank if not applicable.)</p>",
-            "description_nl": "<p>Wie werkt er binnen de UU nog meer mee aan de studie? (Laat dit veld leeg indien niet van toepassing.)</p>",
+            "description": "<p>Who else at UU is collaborating on the study?</p>",
+            "description_en": "<p>Who else at UU is collaborating on the study?</p>",
+            "description_nl": "<p>Wie werkt er binnen de UU nog meer mee aan de studie?</p>",
             "required": false,
             "_order": 2
         }
@@ -1198,25 +1198,6 @@
     },
     {
         "model": "form.basequestion",
-        "pk": 79,
-        "fields": {
-            "is_repeatable": false,
-            "annotation_key": null,
-            "step_name_override": false,
-            "text": "Email:",
-            "text_en": "Email:",
-            "text_nl": "E-mail:",
-            "step": 16,
-            "form": 1,
-            "description": "",
-            "description_en": "",
-            "description_nl": "",
-            "required": true,
-            "_order": 1
-        }
-    },
-    {
-        "model": "form.basequestion",
         "pk": 80,
         "fields": {
             "is_repeatable": false,
@@ -1382,6 +1363,63 @@
             "description": "<p>If one or more relevant documents have been prepared in the context of this research, you can upload them here.</p>\r\n<p>For example:</p>\r\n<ul>\r\n<li>a research proposal approved by a grant provider or client</li>\r\n<li>a DPIA (Data Protection Impact Assessment) or privacy scan</li>\r\n<li>a data management plan (DMP)</li>\r\n<li>a privacy statement</li>\r\n<li>other relevant, privacy-related documents.</li>\r\n</ul>",
             "description_en": "<p>If one or more relevant documents have been prepared in the context of this research, you can upload them here.</p>\r\n<p>For example:</p>\r\n<ul>\r\n<li>a research proposal approved by a grant provider or client</li>\r\n<li>a DPIA (Data Protection Impact Assessment) or privacy scan</li>\r\n<li>a data management plan (DMP)</li>\r\n<li>a privacy statement</li>\r\n<li>other relevant, privacy-related documents.</li>\r\n</ul>",
             "description_nl": "<p>Als er een of meer van relevante documenten zijn opgesteld in het kader van dit onderzoek, kun je die hier uploaden.</p>\r\n<p>Denk bijvoorbeeld aan:</p>\r\n<ul>\r\n<li>een door een subsidieverstrekker of opdrachtgever goedgekeurd onderzoeksvoorstel</li>\r\n<li>een DPIA (Data Protection Impact Assessment) of privacy scan</li>\r\n<li>een datamanagementplan (DMP)</li>\r\n<li>een privacyverklaring</li>\r\n<li>andere relevante, privacy-gerelateerde documenten.</li>\r\n</ul>",
+            "required": true,
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 89,
+        "fields": {
+            "is_repeatable": false,
+            "annotation_key": null,
+            "step_name_override": true,
+            "text": "Name researcher",
+            "text_en": "Name researcher",
+            "text_nl": "Naam onderzoeker",
+            "step": 19,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 79,
+        "fields": {
+            "is_repeatable": false,
+            "annotation_key": null,
+            "step_name_override": false,
+            "text": "Email:",
+            "text_en": "Email:",
+            "text_nl": "E-mail:",
+            "step": 19,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
+            "required": true,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.basequestion",
+        "pk": 90,
+        "fields": {
+            "is_repeatable": false,
+            "annotation_key": null,
+            "step_name_override": false,
+            "text": "Faculty",
+            "text_en": "Faculty",
+            "text_nl": "Faculteit",
+            "step": 19,
+            "form": 1,
+            "description": "",
+            "description_en": "",
+            "description_nl": "",
             "required": true,
             "_order": 2
         }
@@ -2128,6 +2166,19 @@
             "none_yet_text": "No data groups",
             "none_yet_text_en": "No data groups",
             "none_yet_text_nl": "Geen datagroepen"
+        }
+    },
+    {
+        "model": "form.repeatablestepquestion",
+        "pk": 91,
+        "fields": {
+            "repeatable_step": 19,
+            "create_text": "Add UU researcher",
+            "create_text_en": "Add UU researcher",
+            "create_text_nl": "Voeg UU onderzoeker toe",
+            "none_yet_text": "No UU co-researchers yet ...",
+            "none_yet_text_en": "No UU co-researchers yet ...",
+            "none_yet_text_nl": "Nog geen UU medeonderzoekers ..."
         }
     },
     {
@@ -3493,7 +3544,7 @@
         "fields": {
             "label": "School, study programme or course results",
             "label_en": "School, study programme or course results",
-            "label_nl": "Diploma's of toetsresultaten",
+            "label_nl": "Diploma\u2019s of toetsresultaten",
             "default_selected": false,
             "question": 66,
             "_order": 16
@@ -3872,10 +3923,87 @@
         }
     },
     {
-        "model": "form.selectquestion",
-        "pk": 52,
+        "model": "form.selectoption",
+        "pk": 231,
         "fields": {
-            "multiple": false
+            "label": "Faculty of Humanities",
+            "label_en": "Faculty of Humanities",
+            "label_nl": "Faculteit Geesteswetenschappen",
+            "default_selected": false,
+            "question": 90,
+            "_order": 0
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 234,
+        "fields": {
+            "label": "Faculty of Law, Economics and Governance",
+            "label_en": "Faculty of Law, Economics and Governance",
+            "label_nl": "Faculteit Recht, Economie, Bestuur en Organisatie",
+            "default_selected": false,
+            "question": 90,
+            "_order": 1
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 229,
+        "fields": {
+            "label": "Faculty of Science",
+            "label_en": "Faculty of Science",
+            "label_nl": "Faculteit B\u00e8tawetenschappen",
+            "default_selected": false,
+            "question": 90,
+            "_order": 2
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 230,
+        "fields": {
+            "label": "Faculty of Veterinary Medicine",
+            "label_en": "Faculty of Veterinary Medicine",
+            "label_nl": "Faculteit Diergeneeskunde",
+            "default_selected": false,
+            "question": 90,
+            "_order": 3
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 232,
+        "fields": {
+            "label": "Faculty of Geosciences",
+            "label_en": "Faculty of Geosciences",
+            "label_nl": "Faculteit Geowetenschappen",
+            "default_selected": false,
+            "question": 90,
+            "_order": 4
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 233,
+        "fields": {
+            "label": "Faculty of Medical Sciences",
+            "label_en": "Faculty of Medical Sciences",
+            "label_nl": "Faculteit Medische Wetenschappen",
+            "default_selected": false,
+            "question": 90,
+            "_order": 5
+        }
+    },
+    {
+        "model": "form.selectoption",
+        "pk": 235,
+        "fields": {
+            "label": "Faculty of Social and Behavioural Sciences",
+            "label_en": "Faculty of Social and Behavioural Sciences",
+            "label_nl": "Faculteit Sociale Wetenschappen",
+            "default_selected": false,
+            "question": 90,
+            "_order": 6
         }
     },
     {
@@ -3890,6 +4018,13 @@
         "pk": 33,
         "fields": {
             "multiple": true
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 52,
+        "fields": {
+            "multiple": false
         }
     },
     {
@@ -3909,6 +4044,13 @@
     {
         "model": "form.selectquestion",
         "pk": 6,
+        "fields": {
+            "multiple": false
+        }
+    },
+    {
+        "model": "form.selectquestion",
+        "pk": 90,
         "fields": {
             "multiple": false
         }
@@ -4282,6 +4424,24 @@
             "parent": 2,
             "is_overview": false,
             "_order": 0
+        }
+    },
+    {
+        "model": "form.step",
+        "pk": 19,
+        "fields": {
+            "is_repeatable": true,
+            "name": "UU researcher",
+            "name_en": "UU researcher",
+            "name_nl": "UU onderzoeker",
+            "description": null,
+            "description_en": null,
+            "description_nl": null,
+            "slug": "uu-researcher",
+            "form": 1,
+            "parent": 2,
+            "is_overview": false,
+            "_order": 1
         }
     },
     {
@@ -4903,8 +5063,8 @@
         "pk": 48,
         "fields": {
             "step": 17,
-            "text": "Why is the recipient's country important?",
-            "text_en": "Why is the recipient's country important?",
+            "text": "Why is the recipient\u2019s country important?",
+            "text_en": "Why is the recipient\u2019s country important?",
             "text_nl": "Waarom is het land van de ontvanger van belang?",
             "content": "<p>Personal data may only be shared with recipients in countries that offer an adequate level of data protection. The EU countries, Norway, Iceland, and Switzerland (together the EEA) meet this requirement. Some other countries do as well. Arrangements must be made for transfers to countries that do not meet this requirement. For transfers to countries outside the EEA, please contact the privacy officer: <a href=\"mailto:privacy.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.gw@uu.nl</a> or <a href=\"mailto:privacy.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.rebo@uu.nl</a></p>",
             "content_en": "<p>Personal data may only be shared with recipients in countries that offer an adequate level of data protection. The EU countries, Norway, Iceland, and Switzerland (together the EEA) meet this requirement. Some other countries do as well. Arrangements must be made for transfers to countries that do not meet this requirement. For transfers to countries outside the EEA, please contact the privacy officer: <a href=\"mailto:privacy.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.gw@uu.nl</a> or <a href=\"mailto:privacy.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.rebo@uu.nl</a></p>",
@@ -4959,8 +5119,8 @@
         "pk": 52,
         "fields": {
             "step": 11,
-            "text": "What do we mean by 'security protocol' and by 'project members?",
-            "text_en": "What do we mean by 'security protocol' and by 'project members?",
+            "text": "What do we mean by \u2018security protocol\u2019 and by \u2018project members?",
+            "text_en": "What do we mean by \u2018security protocol\u2019 and by \u2018project members?",
             "text_nl": "Wat bedoelen we met een beveiligingsprotocol en met projectmedewerkers?",
             "content": "<p>A security protocol contains agreements and instructions that everyone involved in a study must follow, such as transcription assistants, data stewards, and secretarial staff. The goal is to elevate security within the study to a level higher than the current baseline standard.&nbsp;</p>",
             "content_en": "<p>A security protocol contains agreements and instructions that everyone involved in a study must follow, such as transcription assistants, data stewards, and secretarial staff. The goal is to elevate security within the study to a level higher than the current baseline standard.&nbsp;</p>",
@@ -5015,9 +5175,9 @@
         "pk": 56,
         "fields": {
             "step": 11,
-            "text": "What does the 'four-eyes principle' involve?",
-            "text_en": "What does the 'four-eyes principle' involve?",
-            "text_nl": "Wat is het 'vier-ogen-principe'?",
+            "text": "What does the \u2018four-eyes principle\u2019 involve?",
+            "text_en": "What does the \u2018four-eyes principle\u2019 involve?",
+            "text_nl": "Wat is het \u2018vier-ogen-principe\u2019?",
             "content": "<p>The &lsquo;four-eyes principle&rsquo; here means that sensitive or special categories of personal data are never accessed by a single person, but always by two people who can &lsquo;keep an eye&rsquo; on each other. This way of working offers no guarantee that data are used in an improper manner, but it is, however, an extra obstacle.</p>",
             "content_en": "<p>The &lsquo;four-eyes principle&rsquo; here means that sensitive or special categories of personal data are never accessed by a single person, but always by two people who can &lsquo;keep an eye&rsquo; on each other. This way of working offers no guarantee that data are used in an improper manner, but it is, however, an extra obstacle.</p>",
             "content_nl": "<p>Het vier-ogen-principe houdt hier in dat gevoelige en bijzondere persoonsgegevens nooit door &eacute;&eacute;n persoon worden ingezien, maar altijd door twee personen die elkaar &lsquo;in de gaten&rsquo; kunnen houden. Deze manier van werken geeft geen garantie dat data niet op een oneigenlijke manier worden gebruikt, maar het is daar wel een extra belemmering voor.&nbsp;</p>",
@@ -5125,12 +5285,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 87,
+        "pk": 89,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 3,
+            "lines": 1,
             "is_email": false
         }
     },
@@ -5158,17 +5318,6 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 79,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
-            "is_email": true
-        }
-    },
-    {
-        "model": "form.textquestion",
         "pk": 53,
         "fields": {
             "placeholder": "",
@@ -5180,18 +5329,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 28,
-        "fields": {
-            "placeholder": "",
-            "placeholder_en": "",
-            "placeholder_nl": null,
-            "lines": 1,
-            "is_email": false
-        }
-    },
-    {
-        "model": "form.textquestion",
-        "pk": 84,
+        "pk": 79,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -5202,12 +5340,12 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 15,
+        "pk": 87,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5,
+            "lines": 3,
             "is_email": false
         }
     },
@@ -5235,18 +5373,18 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 25,
+        "pk": 28,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
             "placeholder_nl": null,
-            "lines": 5,
+            "lines": 1,
             "is_email": false
         }
     },
     {
         "model": "form.textquestion",
-        "pk": 49,
+        "pk": 15,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -5279,7 +5417,18 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 68,
+        "pk": 25,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 49,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -5296,6 +5445,17 @@
             "placeholder_en": "",
             "placeholder_nl": null,
             "lines": 1,
+            "is_email": false
+        }
+    },
+    {
+        "model": "form.textquestion",
+        "pk": 68,
+        "fields": {
+            "placeholder": "",
+            "placeholder_en": "",
+            "placeholder_nl": null,
+            "lines": 5,
             "is_email": false
         }
     },
@@ -5323,7 +5483,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 32,
+        "pk": 16,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
@@ -5334,7 +5494,7 @@
     },
     {
         "model": "form.textquestion",
-        "pk": 16,
+        "pk": 32,
         "fields": {
             "placeholder": "",
             "placeholder_en": "",
