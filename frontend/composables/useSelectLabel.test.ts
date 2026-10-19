@@ -11,7 +11,7 @@ const createQuestion = (value: string): SelectQuestionWithValue => ({
     hasConditions: false,
     stepNameOverride: false,
     multiple: true,
-    repeatIndex: 0,
+    isRepeatable: false,
     required: false,
     location: "location1",
     value,
