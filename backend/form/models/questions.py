@@ -190,7 +190,6 @@ class RepeatableStepQuestion(BaseQuestion):
     """
 
     repeatable_step = models.OneToOneField(Step, on_delete=models.CASCADE)
-    regular_step = models.OneToOneField(Step, on_delete=models.CASCADE, related_name="temp_rsq", null=True)
 
     create_text = models.CharField()
 
