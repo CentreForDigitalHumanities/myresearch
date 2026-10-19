@@ -14,6 +14,7 @@ from form.models import (
     TextQuestion,
     TrueFalseQuestion,
     UserFormSubmission,
+    RepeatIndex,
 )
 from form.services.form_evaluator import MAX_REPEAT_LIMIT, FormEvaluator
 
@@ -309,103 +310,6 @@ class TestFormEvaluatorQuestionConditions:
 
         assert evaluator.is_question_visible(target_question) is True
 
-    def test_repeat_condition_static_count(
-        self, form, test_user, trigger_question, target_question
-    ):
-        """Question with repeat condition should return static repeat count."""
-
-        NUMBER_OF_REPEATS = 3
-
-        QuestionCondition.objects.create(
-            target_question=target_question,
-            trigger_question=trigger_question,
-            condition_type=BaseCondition.ConditionType.REPEAT,
-            trigger_value={},  # Any answer triggers
-            repeat_count=NUMBER_OF_REPEATS,
-        )
-
-        submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        qr = QuestionResponse.objects.create(
-            question=trigger_question,
-            answer={"value": "anything"},
-        )
-        qr.submissions.add(submission)
-
-        evaluator = FormEvaluator(submission)
-
-        assert (
-            evaluator.get_repeat_count_for_question(target_question)
-            == NUMBER_OF_REPEATS
-        )
-
-    def test_repeat_dynamic_condition_uses_answer_value(
-        self, form, step, test_user, target_question
-    ):
-        """Question with repeat_dynamic should use answer value as count."""
-
-        NUMBER_OF_REPEATS = 5
-
-        number_trigger = NumberQuestion.objects.create(
-            text="How many times?",
-            step=step,
-        )
-
-        QuestionCondition.objects.create(
-            target_question=target_question,
-            trigger_question=number_trigger,
-            condition_type=BaseCondition.ConditionType.REPEAT_DYNAMIC,
-            trigger_value={},  # Any answer triggers
-            use_answer_as_count=True,
-        )
-
-        submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        qr = QuestionResponse.objects.create(
-            question=number_trigger,
-            answer={"value": NUMBER_OF_REPEATS},
-        )
-        qr.submissions.add(submission)
-
-        evaluator = FormEvaluator(submission)
-
-        assert (
-            evaluator.get_repeat_count_for_question(target_question)
-            == NUMBER_OF_REPEATS
-        )
-
-    def test_repeat_dynamic_minimum_is_zero(
-        self, form, step, test_user, target_question
-    ):
-        """Repeat count should be at least 0 even with a negative answer."""
-        number_trigger = NumberQuestion.objects.create(
-            text="How many times?",
-            step=step,
-        )
-
-        QuestionCondition.objects.create(
-            target_question=target_question,
-            trigger_question=number_trigger,
-            condition_type=BaseCondition.ConditionType.REPEAT_DYNAMIC,
-            trigger_value={},
-            use_answer_as_count=True,
-        )
-
-        submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        qr = QuestionResponse.objects.create(
-            question=number_trigger,
-            answer={"value": -99},
-        )
-        qr.submissions.add(submission)
-
-        evaluator = FormEvaluator(submission)
-
-        assert evaluator.get_repeat_count_for_question(target_question) == 0
-
-    def test_no_repeat_condition_returns_one(self, submission, target_question):
-        """Question without repeat condition should have repeat count of 1."""
-        evaluator = FormEvaluator(submission)
-
-        assert evaluator.get_repeat_count_for_question(target_question) == 1
-
 
 @pytest.mark.django_db
 class TestFormEvaluatorStepConditions:
@@ -503,120 +407,6 @@ class TestFormEvaluatorStepConditions:
 
         assert evaluator.is_step_visible(step) is False
 
-    def test_step_repeat_condition_static_count(
-        self, form, step, test_user, trigger_question
-    ):
-        """Step with repeat condition should return static repeat count."""
-
-        REPEAT_COUNT = 4
-
-        StepCondition.objects.create(
-            target_step=step,
-            trigger_question=trigger_question,
-            condition_type=BaseCondition.ConditionType.REPEAT,
-            trigger_value={},
-            repeat_count=REPEAT_COUNT,
-        )
-
-        submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        qr = QuestionResponse.objects.create(
-            question=trigger_question,
-            answer={"value": "trigger"},
-        )
-        qr.submissions.add(submission)
-
-        evaluator = FormEvaluator(submission)
-
-        assert evaluator.get_repeat_count_for_step(step) == REPEAT_COUNT
-
-    def test_step_repeat_dynamic_uses_answer_value(self, form, step, test_user):
-        """Step with repeat_dynamic should use answer value as count."""
-        number_trigger = NumberQuestion.objects.create(
-            text="How many steps?",
-            step=step,
-        )
-
-        REPEAT_COUNT = 3
-
-        StepCondition.objects.create(
-            target_step=step,
-            trigger_question=number_trigger,
-            condition_type=BaseCondition.ConditionType.REPEAT_DYNAMIC,
-            trigger_value={},
-            use_answer_as_count=True,
-        )
-
-        submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        qr = QuestionResponse.objects.create(
-            question=number_trigger,
-            answer={"value": REPEAT_COUNT},
-        )
-        qr.submissions.add(submission)
-
-        evaluator = FormEvaluator(submission)
-
-        assert evaluator.get_repeat_count_for_step(step) == REPEAT_COUNT
-
-    def test_step_repeat_dynamic_minimum_is_zero(self, form, step, test_user):
-        """Step repeat count should be at least 0."""
-        number_trigger = NumberQuestion.objects.create(
-            text="How many steps?",
-            step=step,
-        )
-
-        StepCondition.objects.create(
-            target_step=step,
-            trigger_question=number_trigger,
-            condition_type=BaseCondition.ConditionType.REPEAT_DYNAMIC,
-            trigger_value={},
-            use_answer_as_count=True,
-        )
-
-        submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        qr = QuestionResponse.objects.create(
-            question=number_trigger,
-            answer={"value": -5},
-        )
-        qr.submissions.add(submission)
-
-        evaluator = FormEvaluator(submission)
-
-        assert evaluator.get_repeat_count_for_step(step) == 0
-
-    def test_step_repeate_dynamic_maximum_limit(self, form, step, test_user):
-        """Step repeat count should not exceed maximum limit."""
-        number_trigger = NumberQuestion.objects.create(
-            text="How many steps?",
-            step=step,
-        )
-
-        EXCESSIVE_COUNT = 99999999999
-
-        StepCondition.objects.create(
-            target_step=step,
-            trigger_question=number_trigger,
-            condition_type=BaseCondition.ConditionType.REPEAT_DYNAMIC,
-            trigger_value={},
-            use_answer_as_count=True,
-        )
-
-        submission = UserFormSubmission.objects.create(user=test_user, form=form)
-        qr = QuestionResponse.objects.create(
-            question=number_trigger,
-            answer={"value": EXCESSIVE_COUNT},
-        )
-        qr.submissions.add(submission)
-
-        evaluator = FormEvaluator(submission)
-
-        assert evaluator.get_repeat_count_for_step(step) == MAX_REPEAT_LIMIT
-
-    def test_no_step_repeat_condition_returns_one(self, submission, step):
-        """Step without repeat condition should have repeat count of 1."""
-        evaluator = FormEvaluator(submission)
-
-        assert evaluator.get_repeat_count_for_step(step) == 1
-
 
 @pytest.mark.django_db
 class TestFormEvaluatorSubmission:
@@ -640,44 +430,48 @@ class TestFormEvaluatorSubmission:
         qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": "my answer"},
-            repeat_index=0,
+            repeat_index=None,
         )
         qr.submissions.add(submission)
 
         evaluator = FormEvaluator(submission)
 
-        response = evaluator.get_user_response(trigger_question, 0)
+        response = evaluator.get_user_response(trigger_question)
         assert response is not None
         assert response.answer == {"value": "my answer"}
         assert evaluator.get_user_response(trigger_question, 1) is None
 
-    def test_get_user_response_with_repeat_index(
-        self, form, test_user, trigger_question
-    ):
+    def test_get_user_response_with_u_index(self, form, test_user, trigger_question):
         """Test get_user_response with different repeat indices."""
 
         FIRST_ANSWER = "first"
         SECOND_ANSWER = "second"
 
         submission = UserFormSubmission.objects.create(user=test_user, form=form)
+        ri1 = RepeatIndex.objects.create()
+        ri1.save()
+        ri1.submissions.add(submission)
         qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": FIRST_ANSWER},
-            repeat_index=0,
+            repeat_index=ri1,
         )
         qr.submissions.add(submission)
+        ri2 = RepeatIndex.objects.create()
+        ri2.save()
+        ri2.submissions.add(submission)
         qr = QuestionResponse.objects.create(
             question=trigger_question,
             answer={"value": SECOND_ANSWER},
-            repeat_index=1,
+            repeat_index=ri2,
         )
         qr.submissions.add(submission)
 
         evaluator = FormEvaluator(submission)
 
-        assert evaluator.get_user_response(trigger_question, 0).answer == {
+        assert evaluator.get_user_response(trigger_question, ri1).answer == {
             "value": FIRST_ANSWER
         }
-        assert evaluator.get_user_response(trigger_question, 1).answer == {
+        assert evaluator.get_user_response(trigger_question, ri2).answer == {
             "value": SECOND_ANSWER
         }

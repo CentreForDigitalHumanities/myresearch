@@ -12,6 +12,8 @@ from form.models import (
     QuestionCondition,
     StepCondition,
     StepInfoText,
+    RepeatIndex,
+    Repeatable,
 )
 
 # Add models here that should be excluded from the completeness check. These
@@ -25,6 +27,8 @@ EXCLUDED_MODELS_FOR_COMPLETENESS_CHECK: list[Type[Model]] = [
     ReviewRound,
     YearCounter,
     MRDocument,
+    RepeatIndex,
+    Repeatable,
 ]
 
 

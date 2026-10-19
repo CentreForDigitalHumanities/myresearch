@@ -4,10 +4,10 @@ from django.db import models
 from cdh.core.forms import TinyMCEWidget
 
 from form.forms import StepAdminForm, SelectQuestionAdminForm
+from form.models.form import StepInfoText
 from .models import (
     MRForm,
     Step,
-    StepInfoText,
     BaseQuestion,
     SelectQuestion,
     SelectOption,
@@ -16,6 +16,7 @@ from .models import (
     NumberQuestion,
     DateQuestion,
     FileUploadQuestion,
+    RepeatableStepQuestion,
     UserFormSubmission,
     QuestionResponse,
     StepCondition,
@@ -76,7 +77,7 @@ class SubstepInline(TinyMCETextFieldMixin, admin.StackedInline):
 class SelectOptionInline(admin.TabularInline):
     model = SelectOption
     extra = 0
-    fields = ("label", "label_nl", "label_en", "default_selected")
+    fields = ("label_nl", "label_en", "default_selected")
 
 
 class StepConditionInline(admin.StackedInline):
@@ -87,8 +88,6 @@ class StepConditionInline(admin.StackedInline):
         "condition_type",
         "trigger_question",
         "trigger_value",
-        "repeat_count",
-        "use_answer_as_count",
     )
     verbose_name = "Step Condition"
     verbose_name_plural = "Conditions Applied to This Step"
@@ -102,8 +101,6 @@ class QuestionConditionInline(admin.StackedInline):
         "condition_type",
         "trigger_question",
         "trigger_value",
-        "repeat_count",
-        "use_answer_as_count",
     )
     verbose_name = "Question Condition"
     verbose_name_plural = "Conditions Applied to This Question"
@@ -205,7 +202,7 @@ class MRFormAdmin(admin.ModelAdmin):
 
 
 @admin.register(Step)
-class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
+class StepAdmin(admin.ModelAdmin):
     list_display = (
         "name_nl",
         "name_en",
@@ -228,6 +225,7 @@ class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                     "description_nl",
                     "description_en",
                     "is_overview",
+                    "is_repeatable",
                 )
             },
         ),
@@ -235,7 +233,6 @@ class StepAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
             "Hierarchy",
             {
                 "fields": ("form", "parent"),
-                "description": "Set either 'form' (for top-level steps) OR 'parent' (for substeps), not both.",
             },
         ),
         (
@@ -366,6 +363,7 @@ class TextQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
                     "required",
                     "is_email",
                     "step_name_override",
+                    "is_repeatable",
                 )
             },
         ),
@@ -449,6 +447,47 @@ class FileUploadQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
     inlines = [QuestionConditionInline]
 
 
+@admin.register(RepeatableStepQuestion)
+class RepeatableStepQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
+    list_display = ("text_nl", "text_en", "step", "required", "repeatable_step")
+    list_filter = ("step", "required")
+    search_fields = ("text_nl", "text_en", "description_nl", "description_en")
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "text_nl",
+                    "text_en",
+                    "annotation_key",
+                    "step",
+                    "description_nl",
+                    "description_en",
+                    "required",
+                )
+            },
+        ),
+        (
+            "Repeatable Step Options",
+            {
+                "fields": (
+                    "repeatable_step",
+                    "create_text_nl",
+                    "create_text_en",
+                    "none_yet_text_nl",
+                    "none_yet_text_en",
+                )
+            },
+        ),
+    )
+    inlines = [QuestionConditionInline]
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "repeatable_step":
+            kwargs["queryset"] = Step.objects.filter(is_repeatable=True)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+
 @admin.register(SelectOption)
 class SelectOptionAdmin(admin.ModelAdmin):
     list_display = ("label_nl", "label_en", "question", "default_selected")
@@ -520,7 +559,6 @@ class StepConditionAdmin(admin.ModelAdmin):
         "condition_type",
         "trigger_question",
         "trigger_value_preview",
-        "repeat_count",
     )
     list_filter = ("condition_type", "target_step__form")
     search_fields = ("target_step__name", "trigger_question__text")
@@ -531,13 +569,6 @@ class StepConditionAdmin(admin.ModelAdmin):
             {
                 "fields": ("trigger_value",),
                 "description": TRIGGER_VALUE_HELP_TEXT,
-            },
-        ),
-        (
-            "Repeat Configuration",
-            {
-                "fields": ("repeat_count", "use_answer_as_count"),
-                "description": "For 'repeat' conditions: set repeat_count. For 'repeat_dynamic': check use_answer_as_count.",
             },
         ),
     )
@@ -556,7 +587,6 @@ class QuestionConditionAdmin(admin.ModelAdmin):
         "condition_type",
         "trigger_question",
         "trigger_value_preview",
-        "repeat_count",
     )
     list_filter = ("condition_type", "target_question__step__form")
     search_fields = ("target_question__text", "trigger_question__text")
@@ -567,13 +597,6 @@ class QuestionConditionAdmin(admin.ModelAdmin):
             {
                 "fields": ("trigger_value",),
                 "description": TRIGGER_VALUE_HELP_TEXT,
-            },
-        ),
-        (
-            "Repeat Configuration",
-            {
-                "fields": ("repeat_count", "use_answer_as_count"),
-                "description": "For 'repeat' conditions: set repeat_count. For 'repeat_dynamic': check use_answer_as_count.",
             },
         ),
     )

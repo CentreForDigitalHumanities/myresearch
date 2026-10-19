@@ -47,6 +47,13 @@ class UserFormSubmission(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     completed_at = models.DateTimeField(null=True, blank=True)
 
+    def can_be_edited_by(self, user: User) -> bool:
+        return (
+            UserFormSubmission.objects._editable_objects(user)
+            .filter(pk=self.pk)
+            .exists()
+        )
+
     def __str__(self) -> str:
         return f"Submission {self.pk} by {self.user} started at {self.started_at.strftime('%Y-%m-%d %H:%M:%S')} (Form {self.form.pk})"
 
@@ -75,10 +82,13 @@ class QuestionResponse(models.Model):
 
     answer = models.JSONField()
 
-    # For repeated questions/steps, track which instance this is
-    # 0 = first instance, 1 = second, etc.
-    repeat_index = models.PositiveIntegerField(
-        default=0, help_text="Index for repeated questions."
+    # Note that single reponses may be associated with multiple repeats. This sounds confusing,
+    # but can happen when a repeatable question exists within a repeatable step.
+    repeat_index = models.ForeignKey(
+        "form.RepeatIndex",
+        default=None,
+        null=True,
+        on_delete=models.CASCADE,
     )
 
     answered_at = models.DateTimeField(auto_now=True)
