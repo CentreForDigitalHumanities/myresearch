@@ -2507,9 +2507,9 @@
         "model": "form.selectoption",
         "pk": 104,
         "fields": {
-            "label": "Processing agreement with external processors",
-            "label_en": "Processing agreement with external processors",
-            "label_nl": "Verwerkersovereenkomsten met externe verwerkers",
+            "label": "Processing agreement with external processors (see 'recipients')",
+            "label_en": "Processing agreement with external processors (see 'recipients')",
+            "label_nl": "Verwerkersovereenkomsten met externe verwerkers (zie 'Ontvangers')",
             "default_selected": false,
             "question": 34,
             "_order": 7
@@ -4346,9 +4346,9 @@
             "text": "What do we mean by 'a study'?",
             "text_en": "What do we mean by 'a study'?",
             "text_nl": "Wat verstaan we onder een studie?",
-            "content": "<p>The definition of a study can be found in de <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>",
-            "content_en": "<p>The definition of a study can be found in de <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>",
-            "content_nl": "<p>Definitie studie is te vinden op de <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>",
+            "content": "<p>In this application, we mean by 'study' (subproject, work package) research that is defined in terms of content and time and aims to answer a specific research question, with specific participant groups and specific methods. For more information, see the <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>",
+            "content_en": "<p>In this application, we mean by 'study' (subproject, work package) research that is defined in terms of content and time and aims to answer a specific research question, with specific participant groups and specific methods. For more information, see the <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>",
+            "content_nl": "<p>Onder studie (deelproject, werkpakket) verstaan we in deze applicatie een inhoudelijk en in de tijd afgebakend onderzoek dat een specifieke onderzoeksvraag beoogt te beantwoorden, met specifieke deelnemersgroepen en specifieke methoden. Voor meer informatie zie de <a href=\"../../../../notes/faq\" target=\"_blank\" rel=\"noopener\">faq</a>.</p>",
             "_order": 0
         }
     },
