@@ -1,6 +1,6 @@
-ARG NODE_VERSION=22.16.0-alpine
+ARG NODE_VERSION=26
 
-FROM node:${NODE_VERSION} AS dev
+FROM node:${NODE_VERSION}-alpine AS dev
 
 ENV NODE_ENV=development
 
