@@ -10,7 +10,7 @@ const defaultLocale = "en";
    data, ignoring the country part (i.e. nl-NL becomes nl).
  */
 const locale =
-    localStorage.getItem("locale") ||
+    (typeof localStorage !== "undefined") && localStorage.getItem("locale") ||
     navigator.language.split("-")[0] ||
     defaultLocale;
 
