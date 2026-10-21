@@ -564,7 +564,7 @@
             "form": 1,
             "description": "<p>E.g., LimeSurvey (surveys)</p>",
             "description_en": "<p>E.g., LimeSurvey (surveys)</p>",
-            "description_nl": "<p>Bijv. LimeSurvey (enqu\u00eates)</p>",
+            "description_nl": "<p>Bijv. LimeSurvey (enquêtes)</p>",
             "required": false,
             "_order": 6
         }
@@ -868,7 +868,7 @@
             "form": 1,
             "description": "<p>Do you process any of the categories of special personal data listed below of this group? If so, please check which ones.</p>",
             "description_en": "<p>Do you process any of the categories of special personal data listed below of this group? If so, please check which ones.</p>",
-            "description_nl": "<p>Verwerk je een van de onderstaande categorie&euml;n bijzondere persoonsgegevens van deze groep? Zo ja, vink aan welke.</p>",
+            "description_nl": "<p>Verwerk je een van de onderstaande categorieën bijzondere persoonsgegevens van deze groep? Zo ja, vink aan welke.</p>",
             "required": true,
             "_order": 5
         }
@@ -882,7 +882,7 @@
             "step_name_override": false,
             "text": "Categories:",
             "text_en": "Categories:",
-            "text_nl": "Categorie\u00ebn:",
+            "text_nl": "Categorieën:",
             "step": 15,
             "form": 1,
             "description": "",
@@ -925,7 +925,7 @@
             "form": 1,
             "description": "<p>Do you process any of the categories of special personal data listed below of this group? If so, please check which ones.</p>",
             "description_en": "<p>Do you process any of the categories of special personal data listed below of this group? If so, please check which ones.</p>",
-            "description_nl": "<p>Verwerk je een van de onderstaande categorie&euml;n bijzondere persoonsgegevens van deze groep? Zo ja, vink aan welke.</p>",
+            "description_nl": "<p>Verwerk je een van de onderstaande categorieën bijzondere persoonsgegevens van deze groep? Zo ja, vink aan welke.</p>",
             "required": true,
             "_order": 8
         }
@@ -939,7 +939,7 @@
             "step_name_override": false,
             "text": "Categories: 2",
             "text_en": "Categories: 2",
-            "text_nl": "Categorie\u00ebn: 2",
+            "text_nl": "Categorieën: 2",
             "step": 15,
             "form": 1,
             "description": "",
@@ -1039,7 +1039,7 @@
             "form": 1,
             "description": "<p>Do you process any of the categories of sensitive personal data listed below of this group? If so, please check which ones.</p>",
             "description_en": "<p>Do you process any of the categories of sensitive personal data listed below of this group? If so, please check which ones.</p>",
-            "description_nl": "<p>Verwerk je een van de onderstaande categorie&euml;n gevoelige persoonsgegevens van deze groep? Zo ja, vink aan welke.</p>",
+            "description_nl": "<p>Verwerk je een van de onderstaande categorieën gevoelige persoonsgegevens van deze groep? Zo ja, vink aan welke.</p>",
             "required": false,
             "_order": 14
         }
@@ -1096,7 +1096,7 @@
             "form": 1,
             "description": "<p>Select all categories of personal data that you collect/proces of this group.</p>",
             "description_en": "<p>Select all categories of personal data that you collect/proces of this group.</p>",
-            "description_nl": "<p>Selecteer alle categorie&euml;n persoonsgegevens die je van deze groep verzamelt/verwerkt.</p>",
+            "description_nl": "<p>Selecteer alle categorieën persoonsgegevens die je van deze groep verzamelt/verwerkt.</p>",
             "required": true,
             "_order": 17
         }
@@ -1115,7 +1115,7 @@
             "form": 1,
             "description": "<p>Select all categories of personal data that you collect/proces of this group.</p>",
             "description_en": "<p>Select all categories of personal data that you collect/proces of this group.</p>",
-            "description_nl": "<p>Selecteer alle categorie&euml;n persoonsgegevens die je van deze groep verzamelt/verwerkt.</p>",
+            "description_nl": "<p>Selecteer alle categorieën persoonsgegevens die je van deze groep verzamelt/verwerkt.</p>",
             "required": true,
             "_order": 18
         }
@@ -2812,7 +2812,7 @@
         "fields": {
             "label": "Financial data of identified/identifiable participants.",
             "label_en": "Financial data of identified/identifiable participants.",
-            "label_nl": "Financi\u00eble gegevens van ge\u00efdentificeerde of identificeerbare deelnemers.",
+            "label_nl": "Financiële gegevens van geïdentificeerde of identificeerbare deelnemers.",
             "default_selected": false,
             "question": 44,
             "_order": 0
@@ -3232,7 +3232,7 @@
         "fields": {
             "label": "will not be informed (explain why not)",
             "label_en": "will not be informed (explain why not)",
-            "label_nl": "worden niet ge\u00efnformeerd (leg uit waarom niet)",
+            "label_nl": "worden niet geïnformeerd (leg uit waarom niet)",
             "default_selected": false,
             "question": 59,
             "_order": 0
@@ -3244,7 +3244,7 @@
         "fields": {
             "label": "will be informed and can object (the research is anonymous)",
             "label_en": "will be informed and can object (the research is anonymous)",
-            "label_nl": "worden ge\u00efnformeerd en mogen bezwaar maken (het onderzoek is anoniem).",
+            "label_nl": "worden geïnformeerd en mogen bezwaar maken (het onderzoek is anoniem).",
             "default_selected": false,
             "question": 59,
             "_order": 1
@@ -3256,7 +3256,7 @@
         "fields": {
             "label": "will be informed and can object (the legal GDPR basis is 'public interest').",
             "label_en": "will be informed and can object (the legal GDPR basis is 'public interest').",
-            "label_nl": "worden ge\u00efnformeerd en mogen bezwaar maken (AVG-grondslag is 'algemeen belang').",
+            "label_nl": "worden geïnformeerd en mogen bezwaar maken (AVG-grondslag is 'algemeen belang').",
             "default_selected": false,
             "question": 59,
             "_order": 2
@@ -3268,7 +3268,7 @@
         "fields": {
             "label": "will be informed and need to consent (the legal GDPR basis is 'consent').",
             "label_en": "will be informed and need to consent (the legal GDPR basis is 'consent').",
-            "label_nl": "worden ge\u00efnformeerd en moeten toestemming geven (AVG-grondslag is 'toestemming').",
+            "label_nl": "worden geïnformeerd en moeten toestemming geven (AVG-grondslag is 'toestemming').",
             "default_selected": false,
             "question": 59,
             "_order": 3
@@ -3544,7 +3544,7 @@
         "fields": {
             "label": "School, study programme or course results",
             "label_en": "School, study programme or course results",
-            "label_nl": "Diploma\u2019s of toetsresultaten",
+            "label_nl": "Diploma's of toetsresultaten",
             "default_selected": false,
             "question": 66,
             "_order": 16
@@ -3952,7 +3952,7 @@
         "fields": {
             "label": "Faculty of Science",
             "label_en": "Faculty of Science",
-            "label_nl": "Faculteit B\u00e8tawetenschappen",
+            "label_nl": "Faculteit Bètawetenschappen",
             "default_selected": false,
             "question": 90,
             "_order": 2
@@ -4274,7 +4274,7 @@
             "name_nl": "Datasubjecten",
             "description": "<div>In this step, you specify who the (living) people are whose personal data you will be processing. Individually, we refer to these people as 'data subjects', and as a group, we refer to them as 'data subject groups'. You must specify at least one group. There is no maximum.</div>\r\n<div>\r\n<p>For each group, we ask four things:</p>\r\n</div>\r\n<div>\r\n<ol>\r\n<li>The name you want to use for the relevant group.</li>\r\n<li>To which category these data subjects belong.</li>\r\n<li>Why it is necessary to use personal data of these data subjects.</li>\r\n<li>Which specific categories of personal data you will be processing, subdivided into special (extra sensitive), sensitive, and normal.</li>\r\n</ol>\r\n</div>",
             "description_en": "<div>In this step, you specify who the (living) people are whose personal data you will be processing. Individually, we refer to these people as 'data subjects', and as a group, we refer to them as 'data subject groups'. You must specify at least one group. There is no maximum.</div>\r\n<div>\r\n<p>For each group, we ask four things:</p>\r\n</div>\r\n<div>\r\n<ol>\r\n<li>The name you want to use for the relevant group.</li>\r\n<li>To which category these data subjects belong.</li>\r\n<li>Why it is necessary to use personal data of these data subjects.</li>\r\n<li>Which specific categories of personal data you will be processing, subdivided into special (extra sensitive), sensitive, and normal.</li>\r\n</ol>\r\n</div>",
-            "description_nl": "<div>In deze stap geef je op wie de (levende) mensen zijn van wie je persoonsgegevens gaat verwerken. Individueel noemen we deze mensen 'datasubjecten' en als groep spreken we van 'datasubjectgroepen'. Je moet minimaal &eacute;&eacute;n groep opgeven. Er geldt geen maximum.</div>\r\n<div></div>\r\n<div>Per groep vragen we vier dingen:</div>\r\n<ol>\r\n<li>\r\n<div>De naam die je voor de desbetreffende groep wilt gebruiken.</div>\r\n</li>\r\n<li>\r\n<div>Tot welke categorie deze groep datasubjecten behoort.</div>\r\n</li>\r\n<li>\r\n<div>Waarom het noodzakelijk is om persoonsgegevens van deze datasubjecten te gebruiken.</div>\r\n</li>\r\n<li>\r\n<div>Welke specifieke categorie&euml;n persoonsgegevens je gaat verwerken, onderverdeeld in bijzonder (extra gevoelig), gevoelig en normaal.</div>\r\n</li>\r\n</ol>",
+            "description_nl": "<div>In deze stap geef je op wie de (levende) mensen zijn van wie je persoonsgegevens gaat verwerken. Individueel noemen we deze mensen 'datasubjecten' en als groep spreken we van 'datasubjectgroepen'. Je moet minimaal één groep opgeven. Er geldt geen maximum.</div>\r\n<div></div>\r\n<div>Per groep vragen we vier dingen:</div>\r\n<ol>\r\n<li>\r\n<div>De naam die je voor de desbetreffende groep wilt gebruiken.</div>\r\n</li>\r\n<li>\r\n<div>Tot welke categorie deze groep datasubjecten behoort.</div>\r\n</li>\r\n<li>\r\n<div>Waarom het noodzakelijk is om persoonsgegevens van deze datasubjecten te gebruiken.</div>\r\n</li>\r\n<li>\r\n<div>Welke specifieke categorieën persoonsgegevens je gaat verwerken, onderverdeeld in bijzonder (extra gevoelig), gevoelig en normaal.</div>\r\n</li>\r\n</ol>",
             "slug": "data-subjects",
             "form": 1,
             "parent": null,
@@ -4536,7 +4536,7 @@
             "text_nl": "Ik heb deze informatie al ergens anders opgegeven. Waarom wordt dit hier weer gevraagd?",
             "content": "<p>Often multiple applications require entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this register will be extended with data required for creating a data management plan and for assessment by the FEtC-H. Data will then need to be entered only once.</p>",
             "content_en": "<p>Often multiple applications require entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this register will be extended with data required for creating a data management plan and for assessment by the FEtC-H. Data will then need to be entered only once.</p>",
-            "content_nl": "<p>Vaak moet je voor verschillende toepassingen dezelfde gegevens opgeven. We streven ernaar om dergelijk dubbel werk zo veel mogelijk te beperken. Met dit register zijn we echter nog niet zo ver. In de toekomst worden de in te vullen data uitgebreid met data die nodig zijn voor het opstellen van een datamanagementplan en voor toetsing door de FETC. Gegevens hoef je dan nog maar &eacute;&eacute;n keer op te geven.</p>",
+            "content_nl": "<p>Vaak moet je voor verschillende toepassingen dezelfde gegevens opgeven. We streven ernaar om dergelijk dubbel werk zo veel mogelijk te beperken. Met dit register zijn we echter nog niet zo ver. In de toekomst worden de in te vullen data uitgebreid met data die nodig zijn voor het opstellen van een datamanagementplan en voor toetsing door de FETC. Gegevens hoef je dan nog maar één keer op te geven.</p>",
             "_order": 2
         }
     },
@@ -4634,7 +4634,7 @@
             "text_nl": "Wat als een studie door meerdere faculteiten wordt uitgevoerd?",
             "content": "<p>In all cases, only the coordinating faculty should be entered.</p>",
             "content_en": "<p>In all cases, only the coordinating faculty should be entered.</p>",
-            "content_nl": "<p>In alle gevallen is er slechts &eacute;&eacute;n faculteit waar het onderzoek is ondergebracht, de zgn. penvoerende faculteit.</p>",
+            "content_nl": "<p>In alle gevallen is er slechts één faculteit waar het onderzoek is ondergebracht, de zgn. penvoerende faculteit.</p>",
             "_order": 1
         }
     },
@@ -4704,7 +4704,7 @@
             "text_nl": "Wanneer heb ik meerdere doelen?",
             "content": "<p>There are multiple goals when your research questions, hypotheses or things you want to achieve cannot be grouped under a single denominator.</p>",
             "content_en": "<p>There are multiple goals when your research questions, hypotheses or things you want to achieve cannot be grouped under a single denominator.</p>",
-            "content_nl": "<p>Er is sprake van meerdere doelen als je onderzoeksvragen, je hypothesen of de dingen die je wilt bereiken, niet onder &eacute;&eacute;n noemer te vatten zijn.</p>",
+            "content_nl": "<p>Er is sprake van meerdere doelen als je onderzoeksvragen, je hypothesen of de dingen die je wilt bereiken, niet onder één noemer te vatten zijn.</p>",
             "_order": 1
         }
     },
@@ -4729,10 +4729,10 @@
             "step": 15,
             "text": "Why do I need to enter 'categories' of personal data?",
             "text_en": "Why do I need to enter 'categories' of personal data?",
-            "text_nl": "Waarom moet ik 'categorie\u00ebn' persoonsgegevens opgeven?",
+            "text_nl": "Waarom moet ik 'categorieën' persoonsgegevens opgeven?",
             "content": "<p>Personal data are data such as \"Jan\", \"Yasmina\" or \"12-07-1934\". Categories of personal data are for example \"first name\" or \"birth date\". In the processing register you enter the categories of data, not the data itself.</p>",
             "content_en": "<p>Personal data are data such as \"Jan\", \"Yasmina\" or \"12-07-1934\". Categories of personal data are for example \"first name\" or \"birth date\". In the processing register you enter the categories of data, not the data itself.</p>",
-            "content_nl": "<p>Persoonsgegevens zijn gegevens zoals \"Jan\", \"Yasmina\" of \"12-07-1934\". Categorie&euml;n persoonsgegevens zijn dan bijvoorbeeld \"Voornaam\" of \"Geboortedatum\". In het verwerkingsregister leg je alleen de categorie&euml;n vast, niet de persoonsgegevens zelf.</p>",
+            "content_nl": "<p>Persoonsgegevens zijn gegevens zoals \"Jan\", \"Yasmina\" of \"12-07-1934\". Categorieën persoonsgegevens zijn dan bijvoorbeeld \"Voornaam\" of \"Geboortedatum\". In het verwerkingsregister leg je alleen de categorieën vast, niet de persoonsgegevens zelf.</p>",
             "_order": 1
         }
     },
@@ -4771,10 +4771,10 @@
             "step": 6,
             "text": "Why do I need to enter 'categories' of data subjects?",
             "text_en": "Why do I need to enter 'categories' of data subjects?",
-            "text_nl": "Waarom moet ik 'categorie\u00ebn' datasubjecten opgeven?",
+            "text_nl": "Waarom moet ik 'categorieën' datasubjecten opgeven?",
             "content": "<p>Data subjects are individual persons with their own name. Categories of data subjects are persons that can be grouped together. For example students, UU-colleagues, children with dyslexia, or police officers. Be as specific as possible when grouping data subjects.</p>",
             "content_en": "<p>Data subjects are individual persons with their own name. Categories of data subjects are persons that can be grouped together. For example students, UU-colleagues, children with dyslexia, or police officers. Be as specific as possible when grouping data subjects.</p>",
-            "content_nl": "<p>Datasubjecten zijn individuele personen met een eigen naam. Categorie&euml;n datasubjecten zijn groepen personen die binnen eenzelfde categorie vallen. Bijvoorbeeld: studenten, UU-medewerkers, kinderen met dyslexie of politieambtenaren. Wees bij het opgeven van categorie&euml;n datasubjecten zo specifiek mogelijk.</p>",
+            "content_nl": "<p>Datasubjecten zijn individuele personen met een eigen naam. Categorieën datasubjecten zijn groepen personen die binnen eenzelfde categorie vallen. Bijvoorbeeld: studenten, UU-medewerkers, kinderen met dyslexie of politieambtenaren. Wees bij het opgeven van categorieën datasubjecten zo specifiek mogelijk.</p>",
             "_order": 1
         }
     },
@@ -4788,7 +4788,7 @@
             "text_nl": "Moet ik bij elke categorie datasubjecten iets opgeven?",
             "content": "<p>No, you do not have to do so. You only have to enter the categories for data subjects whose personal data you process. There can be multiple different groups data subjects per category. For example at participants you can have teachers and students.</p>",
             "content_en": "<p>No, you do not have to do so. You only have to enter the categories for data subjects whose personal data you process. There can be multiple different groups data subjects per category. For example at participants you can have teachers and students.</p>",
-            "content_nl": "<div>Nee, dat hoeft niet. Je moet alleen die categori&euml;n datasubjecten opgeven van wie je persoonsgegevens verwerkt. Per categorie kunnen dat wel meerdere, verschillende, groepen datasubjecten zijn, bijv. bij 'Deelnemers, d.w.z. personen die bewust deelnemen aan het onderzoek': docenten en leerlingen.</div>",
+            "content_nl": "<div>Nee, dat hoeft niet. Je moet alleen die categorieën datasubjecten opgeven van wie je persoonsgegevens verwerkt. Per categorie kunnen dat wel meerdere, verschillende, groepen datasubjecten zijn, bijv. bij 'Deelnemers, d.w.z. personen die bewust deelnemen aan het onderzoek': docenten en leerlingen.</div>",
             "_order": 3
         }
     },
@@ -4802,7 +4802,7 @@
             "text_nl": "Wat moet ik doen als mijn categorie datasubjecten er niet tussen staat?",
             "content": "<p>The shown data subject categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
             "content_en": "<p>The shown data subject categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
-            "content_nl": "<p>De opgevoerde categorie&euml;n datasubjecten worden geacht uitputtend te zijn. Mocht je desondanks de indruk hebben niet door te kunnen, neem dan contact op met de privacy officer.</p>",
+            "content_nl": "<p>De opgevoerde categorieën datasubjecten worden geacht uitputtend te zijn. Mocht je desondanks de indruk hebben niet door te kunnen, neem dan contact op met de privacy officer.</p>",
             "_order": 4
         }
     },
@@ -4830,7 +4830,7 @@
             "text_nl": "Wat is cloudsoftware?",
             "content": "<p>With cloud software we mean applications that are provided over the internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EEA (EU plus Norway, Liechtenstein and Iceland).</p>",
             "content_en": "<p>With cloud software we mean applications that are provided over the internet, such as Qualtrics, SURFDrive or Office 365.</p>\r\n<p>Cloud software runs on big server farms somewhere in the world. The exact location can differ. GDPR demands that personal data are processed within the EEA (EU plus Norway, Liechtenstein and Iceland).</p>",
-            "content_nl": "<p>Onder cloudsoftware verstaan we applicaties die via internet worden aangeboden, bijv. Qualtrics, SURFDrive of Office 365.</p>\r\n<p>Cloudsoftware draait op grote serverparken ergens ter wereld. De precieze locaties kunnen verschillen. Vanuit de AVG wordt ge&euml;ist dat persoonsgegevens binnen de EER (EU plus Noorwegen, Liechtenstein en IJsland) worden verwerkt.</p>",
+            "content_nl": "<p>Onder cloudsoftware verstaan we applicaties die via internet worden aangeboden, bijv. Qualtrics, SURFDrive of Office 365.</p>\r\n<p>Cloudsoftware draait op grote serverparken ergens ter wereld. De precieze locaties kunnen verschillen. Vanuit de AVG wordt geëist dat persoonsgegevens binnen de EER (EU plus Noorwegen, Liechtenstein en IJsland) worden verwerkt.</p>",
             "_order": 0
         }
     },
@@ -4858,7 +4858,7 @@
             "text_nl": "Wat moet ik doen als ik toch niet-goedgekeurde software gebruik?",
             "content": "<p>The use of non-approved software needs to be reported as soon as possible, in principle even before you are going to use that software for the processing of personal data. The privacy officer will then check if the software meets GDPR requirements.</p>",
             "content_en": "<p>The use of non-approved software needs to be reported as soon as possible, in principle even before you are going to use that software for the processing of personal data. The privacy officer will then check if the software meets GDPR requirements.</p>",
-            "content_nl": "<p>Het gebruik van niet-goedgekeurde software moet je zo snel mogelijk melden, in principe v&oacute;&oacute;rdat je die software gaat inzetten voor het verwerken van persoonsgegevens. De privacy officer gaat dan na of die software aan alle AVG-regels voldoet.</p>",
+            "content_nl": "<p>Het gebruik van niet-goedgekeurde software moet je zo snel mogelijk melden, in principe vóórdat je die software gaat inzetten voor het verwerken van persoonsgegevens. De privacy officer gaat dan na of die software aan alle AVG-regels voldoet.</p>",
             "_order": 2
         }
     },
@@ -4953,7 +4953,7 @@
             "step": 15,
             "text": "What is meant by the three categories for groups of data subjects?",
             "text_en": "What is meant by the three categories for groups of data subjects?",
-            "text_nl": "Wat wordt er bedoeld met de drie categorie\u00ebn voor groepen datasubjecten?",
+            "text_nl": "Wat wordt er bedoeld met de drie categorieën voor groepen datasubjecten?",
             "content": "<div>\"Participants\" refers to participants in the classical sense of the word. For example, people you interview, people who fill out a questionnaire, or people you subject to certain tests.</div>\r\n<div>&nbsp;</div>\r\n<div>\"People who do not (necessarily) know that research is being conducted on them\" are, for example, people whose data you \"scrape\" on social media or people you secretly record in public spaces.</div>\r\n<div>&nbsp;</div>\r\n<div>\"People who are otherwise involved\" are, for example, the parents of participating children (if you ask them to consent to their child's participation or personal data processing) or location holders who are asked permission for the use of their location.</div>",
             "content_en": "<div>\"Participants\" refers to participants in the classical sense of the word. For example, people you interview, people who fill out a questionnaire, or people you subject to certain tests.</div>\r\n<div>&nbsp;</div>\r\n<div>\"People who do not (necessarily) know that research is being conducted on them\" are, for example, people whose data you \"scrape\" on social media or people you secretly record in public spaces.</div>\r\n<div>&nbsp;</div>\r\n<div>\"People who are otherwise involved\" are, for example, the parents of participating children (if you ask them to consent to their child's participation or personal data processing) or location holders who are asked permission for the use of their location.</div>",
             "content_nl": "<div>Onder \"Deelnemers\" wordt verstaan: participanten in de klassieke zin van het woord. Bijvoorbeeld mensen die je interviewt of mensen die een vragenlijst invullen of die je aan bepaalde tests onderwerpt.</div>\r\n<div>&nbsp;</div>\r\n<div>\"Personen die niet (noodzakelijkerwijs) weten dat er onderzoek naar hen wordt gedaan\" zijn bijvoorbeeld mensen van wie je data \"scrapet\" op social media of mensen van wie je in de publieke ruimte heimelijk opnamen maakt.</div>\r\n<div>&nbsp;</div>\r\n<div>\"Personen die anderszins betrokken zijn\" zijn bijvoorbeeld de ouders van deelnemende kinderen (als je hen vraagt om toestemming te geven voor de deelname van hun kind) of locatiehouders die toestemming moeten geven voor het gebruik van hun locatie.</div>",
@@ -4970,7 +4970,7 @@
             "text_nl": "Wat zijn bijzondere persoonsgegevens?",
             "content": "<div>Special categories of personal data are data that are so sensitive that they are subject to extra protection under the General Data Protection Regulation (GDPR). You may only process these data under additional conditions, for example, if you have obtained consent or if the persons to whom the data relate (the data subjects) have made those data public themselves.</div>\r\n<div>&nbsp;</div>\r\n<div>The mentioned special categories of personal data must be interpreted \"broadly\". For the category regarding political opinions, for example, it is not necessary for someone to be a member of a political party. Any opinion someone holds about the organization or functioning of society is considered a special category of personal data.</div>",
             "content_en": "<div>Special categories of personal data are data that are so sensitive that they are subject to extra protection under the General Data Protection Regulation (GDPR). You may only process these data under additional conditions, for example, if you have obtained consent or if the persons to whom the data relate (the data subjects) have made those data public themselves.</div>\r\n<div>&nbsp;</div>\r\n<div>The mentioned special categories of personal data must be interpreted \"broadly\". For the category regarding political opinions, for example, it is not necessary for someone to be a member of a political party. Any opinion someone holds about the organization or functioning of society is considered a special category of personal data.</div>",
-            "content_nl": "<div>Bijzondere persoonsgegevens zijn gegevens die zo gevoelig zijn dat ze onder de Algemene verordening gegevensbescherming (AVG) extra worden beschermd. Deze gegevens mag je alleen onder aanvullende voorwaarden verwerken, bijvoorbeeld als je er toestemming voor hebt gekregen of als degenen op wie de gegevens betrekking hebben (de datasubjecten) die gegevens zelf openbaar hebben gemaakt.</div>\r\n<div>&nbsp;</div>\r\n<div>De genoemde categorie&euml;n bijzondere persoonsgegevens moet je \"ruim\" interpreteren. Voor de categorie over politieke opvattingen is het bijvoorbeeld niet nodig dat iemand lid is van een politieke partij. Elke opvatting die iemand heeft over de inrichting of het functioneren van de maatschappij wordt gezien als een bijzonder persoonsgegeven.</div>",
+            "content_nl": "<div>Bijzondere persoonsgegevens zijn gegevens die zo gevoelig zijn dat ze onder de Algemene verordening gegevensbescherming (AVG) extra worden beschermd. Deze gegevens mag je alleen onder aanvullende voorwaarden verwerken, bijvoorbeeld als je er toestemming voor hebt gekregen of als degenen op wie de gegevens betrekking hebben (de datasubjecten) die gegevens zelf openbaar hebben gemaakt.</div>\r\n<div>&nbsp;</div>\r\n<div>De genoemde categorieën bijzondere persoonsgegevens moet je \"ruim\" interpreteren. Voor de categorie over politieke opvattingen is het bijvoorbeeld niet nodig dat iemand lid is van een politieke partij. Elke opvatting die iemand heeft over de inrichting of het functioneren van de maatschappij wordt gezien als een bijzonder persoonsgegeven.</div>",
             "_order": 6
         }
     },
@@ -5012,7 +5012,7 @@
             "text_nl": "Wat is een VPN?",
             "content": "<p>A VPN (Virtual Private Network) encrypts your internet connection and routes your traffic through an intermediary server, making your IP address less visible. A VPN creates a kind of \"conduit\" between a sender and a receiver.</p>",
             "content_en": "<p>A VPN (Virtual Private Network) encrypts your internet connection and routes your traffic through an intermediary server, making your IP address less visible. A VPN creates a kind of \"conduit\" between a sender and a receiver.</p>",
-            "content_nl": "<p>Een VPN (Virtual Private Network) versleutelt je internetverbinding en laat je verkeer via een tussenserver lopen, waardoor je IP-adres minder zichtbaar is. Een VPN cre&euml;ert een soort \"buizenpost\" tussen een verzender en een ontvanger.</p>",
+            "content_nl": "<p>Een VPN (Virtual Private Network) versleutelt je internetverbinding en laat je verkeer via een tussenserver lopen, waardoor je IP-adres minder zichtbaar is. Een VPN creëert een soort \"buizenpost\" tussen een verzender en een ontvanger.</p>",
             "_order": 3
         }
     },
@@ -5026,7 +5026,7 @@
             "text_nl": "Wat is het verschil tussen anonimisering en pseudonimisering?",
             "content": "<p>With anonymization, it is permanently impossible to link your research data to specific individuals. With pseudonymization, this is indeed possible, for example by replacing personal data in a data file with codes and storing the meaning of those codes in a separate key file. With anonymization, the GDPR no longer applies, whereas it does with pseudonymization. Pseudonymization is primarily a security method. See also the <a href='https://utrechtuniversity.github.io/dataprivacyhandbook/pseudonymisation-anonymisation.html' target='_blank'>Data Privacy Handbook</a></p>",
             "content_en": "<p>With anonymization, it is permanently impossible to link your research data to specific individuals. With pseudonymization, this is indeed possible, for example by replacing personal data in a data file with codes and storing the meaning of those codes in a separate key file. With anonymization, the GDPR no longer applies, whereas it does with pseudonymization. Pseudonymization is primarily a security method. See also the <a href='https://utrechtuniversity.github.io/dataprivacyhandbook/pseudonymisation-anonymisation.html' target='_blank'>Data Privacy Handbook</a></p>",
-            "content_nl": "<p>Bij anonimisering is het definitief onmogelijk om jouw onderzoeksgegevens in verband te brengen met specifieke personen. Bij pseudonimisering is dat w&eacute;l mogelijk, bijvoorbeeld door persoonsgegevens in een databestand te vervangen door codes en de betekenis van die codes op te slaan in een afzonderlijk sleutelbestand. Bij anonimisering geldt de AVG niet meer, bij pseudonimisering wel. Pseudonimisering is in de eerste plaats een beveiligingsmethode. Zie ook het <a href='https://utrechtuniversity.github.io/dataprivacyhandbook/pseudonymisation-anonymisation.html' target='_blank'>Data Privacy Handbook</a></p>",
+            "content_nl": "<p>Bij anonimisering is het definitief onmogelijk om jouw onderzoeksgegevens in verband te brengen met specifieke personen. Bij pseudonimisering is dat wél mogelijk, bijvoorbeeld door persoonsgegevens in een databestand te vervangen door codes en de betekenis van die codes op te slaan in een afzonderlijk sleutelbestand. Bij anonimisering geldt de AVG niet meer, bij pseudonimisering wel. Pseudonimisering is in de eerste plaats een beveiligingsmethode. Zie ook het <a href='https://utrechtuniversity.github.io/dataprivacyhandbook/pseudonymisation-anonymisation.html' target='_blank'>Data Privacy Handbook</a></p>",
             "_order": 4
         }
     },
@@ -5049,9 +5049,9 @@
         "pk": 47,
         "fields": {
             "step": 11,
-            "text": "What is a \u201cChinese wall\u201d?",
-            "text_en": "What is a \u201cChinese wall\u201d?",
-            "text_nl": "Wat is een \u201cChinese wall\u201d?",
+            "text": "What is a \"Chinese wall\"?",
+            "text_en": "What is a \"Chinese wall\"?",
+            "text_nl": "Wat is een \"Chinese wall\"?",
             "content": "<p>If one department within an organization processes personal data that is also of interest to another department, but it is definitely not intended for that other department to see that data, management can impose a formal prohibition on that other department. In this way, the data is shielded internally within the organization. This is called a Chinese wall.</p>",
             "content_en": "<p>If one department within an organization processes personal data that is also of interest to another department, but it is definitely not intended for that other department to see that data, management can impose a formal prohibition on that other department. In this way, the data is shielded internally within the organization. This is called a Chinese wall.</p>",
             "content_nl": "<p>Als de ene afdeling binnen een organisatie persoonsgegevens verwerkt die ook interessant zijn voor een andere afdeling, maar het is beslist niet de bedoeling dat die andere afdeling die gegevens te zien krijgt, kan het management die andere afdeling een formeel verbod opleggen. Op die manier worden de gegevens intern binnen de organisatie afgeschermd. Dit wordt een Chinese wall genoemd.</p>",
@@ -5063,8 +5063,8 @@
         "pk": 48,
         "fields": {
             "step": 17,
-            "text": "Why is the recipient\u2019s country important?",
-            "text_en": "Why is the recipient\u2019s country important?",
+            "text": "Why is the recipient's country important?",
+            "text_en": "Why is the recipient's country important?",
             "text_nl": "Waarom is het land van de ontvanger van belang?",
             "content": "<p>Personal data may only be shared with recipients in countries that offer an adequate level of data protection. The EU countries, Norway, Iceland, and Switzerland (together the EEA) meet this requirement. Some other countries do as well. Arrangements must be made for transfers to countries that do not meet this requirement. For transfers to countries outside the EEA, please contact the privacy officer: <a href=\"mailto:privacy.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.gw@uu.nl</a> or <a href=\"mailto:privacy.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.rebo@uu.nl</a></p>",
             "content_en": "<p>Personal data may only be shared with recipients in countries that offer an adequate level of data protection. The EU countries, Norway, Iceland, and Switzerland (together the EEA) meet this requirement. Some other countries do as well. Arrangements must be made for transfers to countries that do not meet this requirement. For transfers to countries outside the EEA, please contact the privacy officer: <a href=\"mailto:privacy.gw@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.gw@uu.nl</a> or <a href=\"mailto:privacy.rebo@uu.nl\" target=\"_blank\" rel=\"noopener\">privacy.rebo@uu.nl</a></p>",
@@ -5093,10 +5093,10 @@
             "step": 6,
             "text": "Which categories of data subjects are there?",
             "text_en": "Which categories of data subjects are there?",
-            "text_nl": "Welke categorie\u00ebn datasubjecten zijn er?",
+            "text_nl": "Welke categorieën datasubjecten zijn er?",
             "content": "<p>There are three categories of data subjects.</p>\r\n<p>1.&nbsp; &nbsp; Participants, i.e., people who consciously participate in the research.</p>\r\n<p>Participants are for instance people you interview or people who fill out a questionnaire or whom you subject to certain tests. Participants also include infants who participate in e.g. language research.</p>\r\n<p>2.&nbsp; &nbsp; Individuals who do not (necessarily) know they are the subject of research.</p>\r\n<p>This applies, for example, to people whose data you 'scrape' from social media or people whom you secretly record in public spaces.</p>\r\n<p>3.&nbsp; &nbsp; Individuals who are otherwise involved.</p>\r\n<p>This includes, for example, gatekeepers, i.e., people who grant you access to a certain location, where you want to conduct your research, such as schools, musea, theatres or parents of participating children (if you ask them to give permission for their child to participate).</p>",
             "content_en": "<p>There are three categories of data subjects.</p>\r\n<p>1.&nbsp; &nbsp; Participants, i.e., people who consciously participate in the research.</p>\r\n<p>Participants are for instance people you interview or people who fill out a questionnaire or whom you subject to certain tests. Participants also include infants who participate in e.g. language research.</p>\r\n<p>2.&nbsp; &nbsp; Individuals who do not (necessarily) know they are the subject of research.</p>\r\n<p>This applies, for example, to people whose data you 'scrape' from social media or people whom you secretly record in public spaces.</p>\r\n<p>3.&nbsp; &nbsp; Individuals who are otherwise involved.</p>\r\n<p>This includes, for example, gatekeepers, i.e., people who grant you access to a certain location, where you want to conduct your research, such as schools, musea, theatres or parents of participating children (if you ask them to give permission for their child to participate).</p>",
-            "content_nl": "<p>Er zijn drie categorie&euml;n datasubjecten:</p>\r\n<p>1.&nbsp; &nbsp; Deelnemers, d.w.z. personen die bewust deelnemen aan het onderzoek.&nbsp;</p>\r\n<p>Deelnemers zijn participanten in de klassieke zin van het woord. Bijvoorbeeld mensen die je interviewt of mensen die een vragenlijst invullen of die je aan bepaalde tests onderwerpt, maar ook baby's die meedoen aan bijv. taalonderzoek. &nbsp;</p>\r\n<p>2.&nbsp; &nbsp; Personen die niet (noodzakelijkerwijs) weten dat er onderzoek naar hen wordt gedaan.&nbsp;</p>\r\n<p>Dit geldt bijv. voor mensen van wie je data \"scrapet\" op social media of mensen van wie je in de publieke ruimte heimelijk opnamen maakt.&nbsp;</p>\r\n<p>3.&nbsp; &nbsp; Personen die anderszins betrokken zijn. &nbsp;</p>\r\n<p>Hieronder vallen bijv. 'poortwachters', mensen die je toegang geven tot een bepaalde locatie, waar je je onderzoek wilt doen, zoals scholen, musea, theaters of de ouders van deelnemende kinderen (als je hen vraagt om toestemming te geven voor de deelname van hun kind).&nbsp;</p>",
+            "content_nl": "<p>Er zijn drie categorieën datasubjecten:</p>\r\n<p>1.&nbsp; &nbsp; Deelnemers, d.w.z. personen die bewust deelnemen aan het onderzoek.&nbsp;</p>\r\n<p>Deelnemers zijn participanten in de klassieke zin van het woord. Bijvoorbeeld mensen die je interviewt of mensen die een vragenlijst invullen of die je aan bepaalde tests onderwerpt, maar ook baby's die meedoen aan bijv. taalonderzoek. &nbsp;</p>\r\n<p>2.&nbsp; &nbsp; Personen die niet (noodzakelijkerwijs) weten dat er onderzoek naar hen wordt gedaan.&nbsp;</p>\r\n<p>Dit geldt bijv. voor mensen van wie je data \"scrapet\" op social media of mensen van wie je in de publieke ruimte heimelijk opnamen maakt.&nbsp;</p>\r\n<p>3.&nbsp; &nbsp; Personen die anderszins betrokken zijn. &nbsp;</p>\r\n<p>Hieronder vallen bijv. 'poortwachters', mensen die je toegang geven tot een bepaalde locatie, waar je je onderzoek wilt doen, zoals scholen, musea, theaters of de ouders van deelnemende kinderen (als je hen vraagt om toestemming te geven voor de deelname van hun kind).&nbsp;</p>",
             "_order": 2
         }
     },
@@ -5119,12 +5119,12 @@
         "pk": 52,
         "fields": {
             "step": 11,
-            "text": "What do we mean by \u2018security protocol\u2019 and by \u2018project members?",
-            "text_en": "What do we mean by \u2018security protocol\u2019 and by \u2018project members?",
+            "text": "What do we mean by 'security protocol' and by 'project members?",
+            "text_en": "What do we mean by 'security protocol' and by 'project members?",
             "text_nl": "Wat bedoelen we met een beveiligingsprotocol en met projectmedewerkers?",
             "content": "<p>A security protocol contains agreements and instructions that everyone involved in a study must follow, such as transcription assistants, data stewards, and secretarial staff. The goal is to elevate security within the study to a level higher than the current baseline standard.&nbsp;</p>",
             "content_en": "<p>A security protocol contains agreements and instructions that everyone involved in a study must follow, such as transcription assistants, data stewards, and secretarial staff. The goal is to elevate security within the study to a level higher than the current baseline standard.&nbsp;</p>",
-            "content_nl": "<p>Een beveiligingsprotocol bevat afspraken en instructies waaraan iedereen die bij een studie betrokken is zich moet houden, zoals onderzoekers, transcriptieassistenten, datastewards en secretari&euml;le medewerkers. Het doel is om de beveiliging binnen de studie naar een hoger niveau te brengen dan het geldende basisniveau.</p>",
+            "content_nl": "<p>Een beveiligingsprotocol bevat afspraken en instructies waaraan iedereen die bij een studie betrokken is zich moet houden, zoals onderzoekers, transcriptieassistenten, datastewards en secretariële medewerkers. Het doel is om de beveiliging binnen de studie naar een hoger niveau te brengen dan het geldende basisniveau.</p>",
             "_order": 7
         }
     },
@@ -5175,12 +5175,12 @@
         "pk": 56,
         "fields": {
             "step": 11,
-            "text": "What does the \u2018four-eyes principle\u2019 involve?",
-            "text_en": "What does the \u2018four-eyes principle\u2019 involve?",
-            "text_nl": "Wat is het \u2018vier-ogen-principe\u2019?",
+            "text": "What does the 'four-eyes principle' involve?",
+            "text_en": "What does the 'four-eyes principle' involve?",
+            "text_nl": "Wat is het 'vier-ogen-principe'?",
             "content": "<p>The 'four-eyes principle' here means that sensitive or special categories of personal data are never accessed by a single person, but always by two people who can 'keep an eye' on each other. This way of working offers no guarantee that data are used in an improper manner, but it is, however, an extra obstacle.</p>",
             "content_en": "<p>The 'four-eyes principle' here means that sensitive or special categories of personal data are never accessed by a single person, but always by two people who can 'keep an eye' on each other. This way of working offers no guarantee that data are used in an improper manner, but it is, however, an extra obstacle.</p>",
-            "content_nl": "<p>Het vier-ogen-principe houdt hier in dat gevoelige en bijzondere persoonsgegevens nooit door &eacute;&eacute;n persoon worden ingezien, maar altijd door twee personen die elkaar 'in de gaten' kunnen houden. Deze manier van werken geeft geen garantie dat data niet op een oneigenlijke manier worden gebruikt, maar het is daar wel een extra belemmering voor.&nbsp;</p>",
+            "content_nl": "<p>Het vier-ogen-principe houdt hier in dat gevoelige en bijzondere persoonsgegevens nooit door één persoon worden ingezien, maar altijd door twee personen die elkaar 'in de gaten' kunnen houden. Deze manier van werken geeft geen garantie dat data niet op een oneigenlijke manier worden gebruikt, maar het is daar wel een extra belemmering voor.&nbsp;</p>",
             "_order": 11
         }
     },
