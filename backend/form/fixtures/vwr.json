@@ -163,8 +163,8 @@
             "text_nl": "Begindatum",
             "step": 4,
             "form": 1,
-            "description": "<p>You start collecting personal data on this date. Note: If approval from the FETC is required, you must allow for a lead time of 3 to 4 weeks.</p>",
-            "description_en": "<p>You start collecting personal data on this date. Note: If approval from the FETC is required, you must allow for a lead time of 3 to 4 weeks.</p>",
+            "description": "<p>You start collecting personal data on this date. Note: if approval from the FETC is required, you must allow for a lead time of 3 to 4 weeks.</p>",
+            "description_en": "<p>You start collecting personal data on this date. Note: if approval from the FETC is required, you must allow for a lead time of 3 to 4 weeks.</p>",
             "description_nl": "<p>Dit is de datum waarop je begint met het verzamelen van persoonsgegevens. Let op: is toetsing door de FETC verplicht of gewenst? Houd dan ook rekening met de doorlooptijd van de FETC (3 tot 4 weken).</p>",
             "required": true,
             "_order": 0
@@ -239,8 +239,8 @@
             "text_nl": "Hoeveel groepen datasubjecten zijn er?",
             "step": 6,
             "form": 1,
-            "description": "<p>Distinguish all groups of people whose personal data you will collect or use (for instance: police officers, instagram users, primary school pupils).</p>",
-            "description_en": "<p>Distinguish all groups of people whose personal data you will collect or use (for instance: police officers, instagram users, primary school pupils).</p>",
+            "description": "<p>Distinguish all groups of people whose personal data you will collect or use (for instance: police officers, Instagram users, primary school pupils).</p>",
+            "description_en": "<p>Distinguish all groups of people whose personal data you will collect or use (for instance: police officers, Instagram users, primary school pupils).</p>",
             "description_nl": "<p>Onderscheid alle groepen van wie er persoonsgegevens worden verzameld of gebruikt (bijvoorbeeld politieagenten, instagramgebruikers, leerlingen basisschool, etc.).</p>",
             "required": false,
             "_order": 1
@@ -659,7 +659,7 @@
             "form": 1,
             "description": "<p>If one or more relevant documents have been prepared in the context of this research, you can upload them here.</p>\r\n<p>For example:</p>\r\n<ul>\r\n<li>a research proposal approved by a grant provider or client</li>\r\n<li>a DPIA (Data Protection Impact Assessment) or privacy scan</li>\r\n<li>a data management plan (DMP)</li>\r\n<li>a privacy statement</li>\r\n<li>other relevant, privacy-related documents.</li>\r\n</ul>\r\n<p>&nbsp;</p>",
             "description_en": "<p>If one or more relevant documents have been prepared in the context of this research, you can upload them here.</p>\r\n<p>For example:</p>\r\n<ul>\r\n<li>a research proposal approved by a grant provider or client</li>\r\n<li>a DPIA (Data Protection Impact Assessment) or privacy scan</li>\r\n<li>a data management plan (DMP)</li>\r\n<li>a privacy statement</li>\r\n<li>other relevant, privacy-related documents.</li>\r\n</ul>\r\n<p>&nbsp;</p>",
-            "description_nl": "<p>Als er een of meer van relevante documenten zijn opgesteld in het kader van dit onderzoek, kun je die hier uploaden.</p>\r\n<p>Denk bijvoorbeeld aan:</p>\r\n<ul>\r\n<li>een door een subsidieverstrekker of opdrachtgever goedgekeurd onderzoeksvoorstel</li>\r\n<li>een DPIA (Data Protection Impact Assessment) of privacy scan</li>\r\n<li>een datamanagementplan (DMP)</li>\r\n<li>een privacyverklaring</li>\r\n<li>andere relevante, privacy-gerelateerde documenten.</li>\r\n</ul>\r\n<p>&nbsp;</p>",
+            "description_nl": "<p>Als er een of meer relevante documenten zijn opgesteld in het kader van dit onderzoek, kun je die hier uploaden.</p>\r\n<p>Denk bijvoorbeeld aan:</p>\r\n<ul>\r\n<li>een door een subsidieverstrekker of opdrachtgever goedgekeurd onderzoeksvoorstel</li>\r\n<li>een DPIA (Data Protection Impact Assessment) of privacy scan</li>\r\n<li>een datamanagementplan (DMP)</li>\r\n<li>een privacyverklaring</li>\r\n<li>andere relevante, privacy-gerelateerde documenten.</li>\r\n</ul>\r\n<p>&nbsp;</p>",
             "required": false,
             "_order": 0
         }
@@ -804,8 +804,8 @@
             "is_repeatable": false,
             "annotation_key": null,
             "step_name_override": false,
-            "text": "Why is it necessary to process personal data of this group of data subjects?",
-            "text_en": "Why is it necessary to process personal data of this group of data subjects?",
+            "text": "Why is it necessary to process personal data for this group of data subjects?",
+            "text_en": "Why is it necessary to process personal data for this group of data subjects?",
             "text_nl": "Waarom is het noodzakelijk om persoonsgegevens van deze groep datasubjecten te verwerken?",
             "step": 15,
             "form": 1,
@@ -1324,7 +1324,7 @@
             "form": 1,
             "description": "<p>Use at most a few words to name this document.</p>",
             "description_en": "<p>Use at most a few words to name this document.</p>",
-            "description_nl": "<p>Geef dit document een herkenbare naam. Gebruik op zijn meest een paar woorden.</p>",
+            "description_nl": "<p>Geef dit document een herkenbare naam. Gebruik maximaal een paar woorden.</p>",
             "required": true,
             "_order": 0
         }
@@ -1341,9 +1341,9 @@
             "text_nl": "Omschrijving",
             "step": 18,
             "form": 1,
-            "description": "<p>Use this optional field describe this file or your motivation for attaching it.</p>\r\n<p>&nbsp;</p>",
-            "description_en": "<p>Use this optional field describe this file or your motivation for attaching it.</p>\r\n<p>&nbsp;</p>",
-            "description_nl": "<p>Voeg zo nodig een omschrijving of motivatie bij dit bestand toe.</p>\r\n<p>&nbsp;</p>",
+            "description": "<p>Use this optional field describe this file or your motivation for attaching it.</p>",
+            "description_en": "<p>Use this optional field describe this file or your motivation for attaching it.</p>",
+            "description_nl": "<p>Voeg zo nodig een omschrijving of motivatie bij dit bestand toe.</p>",
             "required": false,
             "_order": 1
         }
@@ -1393,9 +1393,9 @@
             "is_repeatable": false,
             "annotation_key": null,
             "step_name_override": false,
-            "text": "Email:",
-            "text_en": "Email:",
-            "text_nl": "E-mail:",
+            "text": "Email",
+            "text_en": "Email",
+            "text_nl": "E-mail",
             "step": 19,
             "form": 1,
             "description": "",
@@ -2160,8 +2160,8 @@
         "pk": 75,
         "fields": {
             "repeatable_step": 15,
-            "create_text": "add datasubject group",
-            "create_text_en": "add datasubject group",
+            "create_text": "add data subject group",
+            "create_text_en": "add data subject group",
             "create_text_nl": "voeg datasubject groep toe",
             "none_yet_text": "No data groups",
             "none_yet_text_en": "No data groups",
@@ -2175,10 +2175,10 @@
             "repeatable_step": 19,
             "create_text": "Add UU researcher",
             "create_text_en": "Add UU researcher",
-            "create_text_nl": "Voeg UU onderzoeker toe",
+            "create_text_nl": "Voeg UU-onderzoeker toe",
             "none_yet_text": "No UU co-researchers yet ...",
             "none_yet_text_en": "No UU co-researchers yet ...",
-            "none_yet_text_nl": "Nog geen UU medeonderzoekers ..."
+            "none_yet_text_nl": "Nog geen UU-medeonderzoekers ..."
         }
     },
     {
@@ -2558,8 +2558,8 @@
         "model": "form.selectoption",
         "pk": 104,
         "fields": {
-            "label": "Processing agreement with external processors (see 'recipients')",
-            "label_en": "Processing agreement with external processors (see 'recipients')",
+            "label": "Processing agreement with external processors (see 'Recipients')",
+            "label_en": "Processing agreement with external processors (see 'Recipients')",
             "label_nl": "Verwerkersovereenkomsten met externe verwerkers (zie 'Ontvangers')",
             "default_selected": false,
             "question": 34,
@@ -3184,7 +3184,7 @@
         "fields": {
             "label": "I am the researcher with final responsibility.",
             "label_en": "I am the researcher with final responsibility.",
-            "label_nl": "Ik ben zelf eindverantwoordelijke onderzoeker.",
+            "label_nl": "Ik ben zelf de eindverantwoordelijke onderzoeker.",
             "default_selected": false,
             "question": 52,
             "_order": 0
@@ -4272,8 +4272,8 @@
             "name": "Data subjects",
             "name_en": "Data subjects",
             "name_nl": "Datasubjecten",
-            "description": "<div>In this step, you specify who the (living) people are whose personal data you will be processing. Individually, we refer to these people as 'data subjects', and as a group, we refer to them as 'data subject groups'. You must specify at least one group. There is no maximum.</div>\r\n<div>\r\n<p>For each group, we ask four things:</p>\r\n</div>\r\n<div>\r\n<ol>\r\n<li>The name you want to use for the relevant group.</li>\r\n<li>To which category these datasubjects belong.</li>\r\n<li>Why it is necessary to use personal data of these data subjects.</li>\r\n<li>Which specific categories of personal data you will be processing, subdivided into special (extra sensitive), sensitive, and normal.</li>\r\n</ol>\r\n</div>",
-            "description_en": "<div>In this step, you specify who the (living) people are whose personal data you will be processing. Individually, we refer to these people as 'data subjects', and as a group, we refer to them as 'data subject groups'. You must specify at least one group. There is no maximum.</div>\r\n<div>\r\n<p>For each group, we ask four things:</p>\r\n</div>\r\n<div>\r\n<ol>\r\n<li>The name you want to use for the relevant group.</li>\r\n<li>To which category these datasubjects belong.</li>\r\n<li>Why it is necessary to use personal data of these data subjects.</li>\r\n<li>Which specific categories of personal data you will be processing, subdivided into special (extra sensitive), sensitive, and normal.</li>\r\n</ol>\r\n</div>",
+            "description": "<div>In this step, you specify who the (living) people are whose personal data you will be processing. Individually, we refer to these people as 'data subjects', and as a group, we refer to them as 'data subject groups'. You must specify at least one group. There is no maximum.</div>\r\n<div>\r\n<p>For each group, we ask four things:</p>\r\n</div>\r\n<div>\r\n<ol>\r\n<li>The name you want to use for the relevant group.</li>\r\n<li>To which category these data subjects belong.</li>\r\n<li>Why it is necessary to use personal data of these data subjects.</li>\r\n<li>Which specific categories of personal data you will be processing, subdivided into special (extra sensitive), sensitive, and normal.</li>\r\n</ol>\r\n</div>",
+            "description_en": "<div>In this step, you specify who the (living) people are whose personal data you will be processing. Individually, we refer to these people as 'data subjects', and as a group, we refer to them as 'data subject groups'. You must specify at least one group. There is no maximum.</div>\r\n<div>\r\n<p>For each group, we ask four things:</p>\r\n</div>\r\n<div>\r\n<ol>\r\n<li>The name you want to use for the relevant group.</li>\r\n<li>To which category these data subjects belong.</li>\r\n<li>Why it is necessary to use personal data of these data subjects.</li>\r\n<li>Which specific categories of personal data you will be processing, subdivided into special (extra sensitive), sensitive, and normal.</li>\r\n</ol>\r\n</div>",
             "description_nl": "<div>In deze stap geef je op wie de (levende) mensen zijn van wie je persoonsgegevens gaat verwerken. Individueel noemen we deze mensen 'datasubjecten' en als groep spreken we van 'datasubjectgroepen'. Je moet minimaal &eacute;&eacute;n groep opgeven. Er geldt geen maximum.</div>\r\n<div></div>\r\n<div>Per groep vragen we vier dingen:</div>\r\n<ol>\r\n<li>\r\n<div>De naam die je voor de desbetreffende groep wilt gebruiken.</div>\r\n</li>\r\n<li>\r\n<div>Tot welke categorie deze groep datasubjecten behoort.</div>\r\n</li>\r\n<li>\r\n<div>Waarom het noodzakelijk is om persoonsgegevens van deze datasubjecten te gebruiken.</div>\r\n</li>\r\n<li>\r\n<div>Welke specifieke categorie&euml;n persoonsgegevens je gaat verwerken, onderverdeeld in bijzonder (extra gevoelig), gevoelig en normaal.</div>\r\n</li>\r\n</ol>",
             "slug": "data-subjects",
             "form": 1,
@@ -4415,7 +4415,7 @@
             "is_repeatable": true,
             "name": "UU researcher",
             "name_en": "UU researcher",
-            "name_nl": "UU onderzoeker",
+            "name_nl": "UU-onderzoeker",
             "description": null,
             "description_en": null,
             "description_nl": null,
@@ -4491,7 +4491,7 @@
             "description": null,
             "description_en": null,
             "description_nl": null,
-            "slug": "document-document",
+            "slug": "document",
             "form": 1,
             "parent": 12,
             "is_overview": false,
@@ -4534,8 +4534,8 @@
             "text": "I already entered this information in another place. Why do I have to enter it again?",
             "text_en": "I already entered this information in another place. Why do I have to enter it again?",
             "text_nl": "Ik heb deze informatie al ergens anders opgegeven. Waarom wordt dit hier weer gevraagd?",
-            "content": "<p>Often multiple applications demand entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this register will be extended with data required for creating a datamanagement plan and for assessment by the FEtC-H. Data will then need to be entered only once.</p>",
-            "content_en": "<p>Often multiple applications demand entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this register will be extended with data required for creating a datamanagement plan and for assessment by the FEtC-H. Data will then need to be entered only once.</p>",
+            "content": "<p>Often multiple applications require entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this register will be extended with data required for creating a data management plan and for assessment by the FEtC-H. Data will then need to be entered only once.</p>",
+            "content_en": "<p>Often multiple applications require entering the same data. We strive to avoid any double data input, but in the current application, this cannot be avoided. In the future, this register will be extended with data required for creating a data management plan and for assessment by the FEtC-H. Data will then need to be entered only once.</p>",
             "content_nl": "<p>Vaak moet je voor verschillende toepassingen dezelfde gegevens opgeven. We streven ernaar om dergelijk dubbel werk zo veel mogelijk te beperken. Met dit register zijn we echter nog niet zo ver. In de toekomst worden de in te vullen data uitgebreid met data die nodig zijn voor het opstellen van een datamanagementplan en voor toetsing door de FETC. Gegevens hoef je dan nog maar &eacute;&eacute;n keer op te geven.</p>",
             "_order": 2
         }
@@ -4564,7 +4564,7 @@
             "text_nl": "Wat zijn medeonderzoekers?",
             "content": "<p>Co-researchers are those who have been involved in this (part of the) research from the start, and with whom we may have to set up an agreement about joint responsibility.</p>",
             "content_en": "<p>Co-researchers are those who have been involved in this (part of the) research from the start, and with whom we may have to set up an agreement about joint responsibility.</p>",
-            "content_nl": "<p>Medeonderzoekers zijn mensen die al vanaf het begin bij dit specifieke (deel-) onderzoek betrokken zijn en met wie we eventueel een regeling of overeenkomst inzake gezamenlijke verantwoordelijkheid moeten aangaan</p>",
+            "content_nl": "<p>Medeonderzoekers zijn mensen die al vanaf het begin bij dit specifieke (deel-) onderzoek betrokken zijn en met wie we eventueel een regeling of overeenkomst inzake gezamenlijke verantwoordelijkheid moeten aangaan.</p>",
             "_order": 1
         }
     },
@@ -4716,8 +4716,8 @@
             "text": "What are personal data?",
             "text_en": "What are personal data?",
             "text_nl": "Wat zijn persoonsgegevens?",
-            "content": "<p>Personal data are data that say something about a living person. Think of name, adress, age, and sex. But also for example audio or video recordings, anwers to questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>",
-            "content_en": "<p>Personal data are data that say something about a living person. Think of name, adress, age, and sex. But also for example audio or video recordings, anwers to questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>",
+            "content": "<p>Personal data are data that say something about a living person. Think of name, address, age, and sex. But also for example audio or video recordings, anwers to questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>",
+            "content_en": "<p>Personal data are data that say something about a living person. Think of name, address, age, and sex. But also for example audio or video recordings, anwers to questions, observations and notes. Data are only personal data if they can be traced back to a person.</p>",
             "content_nl": "<p>Persoonsgegevens zijn gegevens die iets zeggen over een levend persoon. Denk aan naam, adresgegevens, leeftijd, geslacht etc. Maar ook bijvoorbeeld audio- of video-opnamen, antwoorden op vragen, observaties en aantekeningen. Gegevens zijn alleen persoonsgegevens als ze terug te voeren zijn op een bepaalde persoon.</p>",
             "_order": 0
         }
@@ -4783,8 +4783,8 @@
         "pk": 27,
         "fields": {
             "step": 15,
-            "text": "Do I need to enter something for every category of datasubjects?",
-            "text_en": "Do I need to enter something for every category of datasubjects?",
+            "text": "Do I need to enter something for every category of data subjects?",
+            "text_en": "Do I need to enter something for every category of data subjects?",
             "text_nl": "Moet ik bij elke categorie datasubjecten iets opgeven?",
             "content": "<p>No, you do not have to do so. You only have to enter the categories for data subjects whose personal data you process. There can be multiple different groups data subjects per category. For example at participants you can have teachers and students.</p>",
             "content_en": "<p>No, you do not have to do so. You only have to enter the categories for data subjects whose personal data you process. There can be multiple different groups data subjects per category. For example at participants you can have teachers and students.</p>",
@@ -4797,11 +4797,11 @@
         "pk": 28,
         "fields": {
             "step": 15,
-            "text": "What do I do when my datasubject categories is not shown?",
-            "text_en": "What do I do when my datasubject categories is not shown?",
+            "text": "What do I do when my data subject category is not shown?",
+            "text_en": "What do I do when my data subject category is not shown?",
             "text_nl": "Wat moet ik doen als mijn categorie datasubjecten er niet tussen staat?",
-            "content": "<p>The shown datasubject categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
-            "content_en": "<p>The shown datasubject categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
+            "content": "<p>The shown data subject categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
+            "content_en": "<p>The shown data subject categories are expected to be complete. If you think you are unable to proceed please contact the privacy officer.</p>",
             "content_nl": "<p>De opgevoerde categorie&euml;n datasubjecten worden geacht uitputtend te zijn. Mocht je desondanks de indruk hebben niet door te kunnen, neem dan contact op met de privacy officer.</p>",
             "_order": 4
         }
@@ -4900,7 +4900,7 @@
             "text_nl": "Wat is een DPIA?",
             "content": "<p>A DPIA (data protection impact assessment) is a document that is only required when the processing of personal data contains great risks for the persons (such as participants or the researchers themselves), the UU or society. The DPIA contains a systematic description of the research, an inventory of the risks and an overview of the measures taken to reduce the risk as much as possible.</p>\r\n<p>If you suspect that your research has great risks please contact the privacy officer asap.</p>",
             "content_en": "<p>A DPIA (data protection impact assessment) is a document that is only required when the processing of personal data contains great risks for the persons (such as participants or the researchers themselves), the UU or society. The DPIA contains a systematic description of the research, an inventory of the risks and an overview of the measures taken to reduce the risk as much as possible.</p>\r\n<p>If you suspect that your research has great risks please contact the privacy officer asap.</p>",
-            "content_nl": "<div>Een DPIA (data protection impact assessment) is een document dat alleen nodig is wanneer de verwerking van persoonsgegevens grote risico&rsquo;s met zich meebrengt voor personen (zoals de deelnemers of de onderzoeker zelf), voor de universiteit of voor de maatschappij als geheel. De DPIA bevat een systematische beschrijving van het onderzoek, een inventarisatie van de risico&rsquo;s en een overzicht van maatregelen om die risico&rsquo;s zo veel mogelijk te beperken.</div>\r\n<div></div>\r\n<div>Denk je dat jouw onderzoek grote risico&rsquo;s oplevert? Neem dan zo snel mogelijk contact op met de privacy officer.</div>",
+            "content_nl": "<div>Een DPIA (data protection impact assessment) is een document dat alleen nodig is wanneer de verwerking van persoonsgegevens grote risico's met zich meebrengt voor personen (zoals de deelnemers of de onderzoeker zelf), voor de universiteit of voor de maatschappij als geheel. De DPIA bevat een systematische beschrijving van het onderzoek, een inventarisatie van de risico's en een overzicht van maatregelen om die risico's zo veel mogelijk te beperken.</div>\r\n<div></div>\r\n<div>Denk je dat jouw onderzoek grote risico's oplevert? Neem dan zo snel mogelijk contact op met de privacy officer.</div>",
             "_order": 1
         }
     },
@@ -4954,9 +4954,9 @@
             "text": "What is meant by the three categories for groups of data subjects?",
             "text_en": "What is meant by the three categories for groups of data subjects?",
             "text_nl": "Wat wordt er bedoeld met de drie categorie\u00ebn voor groepen datasubjecten?",
-            "content": "<div>&ldquo;Participants&rdquo; refers to participants in the classical sense of the word. For example, people you interview, people who fill out a questionnaire, or people you subject to certain tests.</div>\r\n<div>&nbsp;</div>\r\n<div>&ldquo;People who do not (necessarily) know that research is being conducted on them&rdquo; are, for example, people whose data you &ldquo;scrape&rdquo; on social media or people you secretly record in public spaces.</div>\r\n<div>&nbsp;</div>\r\n<div>&ldquo;People who are otherwise involved&rdquo; are, for example, the parents of participating children (if you ask them to consent to their child's participation or personal data processing) or location holders who are asked permission for the use of their location.</div>",
-            "content_en": "<div>&ldquo;Participants&rdquo; refers to participants in the classical sense of the word. For example, people you interview, people who fill out a questionnaire, or people you subject to certain tests.</div>\r\n<div>&nbsp;</div>\r\n<div>&ldquo;People who do not (necessarily) know that research is being conducted on them&rdquo; are, for example, people whose data you &ldquo;scrape&rdquo; on social media or people you secretly record in public spaces.</div>\r\n<div>&nbsp;</div>\r\n<div>&ldquo;People who are otherwise involved&rdquo; are, for example, the parents of participating children (if you ask them to consent to their child's participation or personal data processing) or location holders who are asked permission for the use of their location.</div>",
-            "content_nl": "<div>Onder &ldquo;Deelnemers&rdquo; wordt verstaan: participanten in de klassieke zin van het woord. Bijvoorbeeld mensen die je interviewt of mensen die een vragenlijst invullen of die je aan bepaalde tests onderwerpt.</div>\r\n<div>&nbsp;</div>\r\n<div>&ldquo;Personen die niet (noodzakelijkerwijs) weten dat er onderzoek naar hen wordt gedaan&rdquo; zijn bijvoorbeeld mensen van wie je data &ldquo;scrapet&rdquo; op social media of mensen van wie je in de publieke ruimte heimelijk opnamen maakt.</div>\r\n<div>&nbsp;</div>\r\n<div>&ldquo;Personen die anderszins betrokken zijn&rdquo; zijn bijvoorbeeld de ouders van deelnemende kinderen (als je hen vraagt om toestemming te geven voor de deelname van hun kind) of locatiehouders die toestemming moeten geven voor het gebruik van hun locatie.</div>",
+            "content": "<div>\"Participants\" refers to participants in the classical sense of the word. For example, people you interview, people who fill out a questionnaire, or people you subject to certain tests.</div>\r\n<div>&nbsp;</div>\r\n<div>\"People who do not (necessarily) know that research is being conducted on them\" are, for example, people whose data you \"scrape\" on social media or people you secretly record in public spaces.</div>\r\n<div>&nbsp;</div>\r\n<div>\"People who are otherwise involved\" are, for example, the parents of participating children (if you ask them to consent to their child's participation or personal data processing) or location holders who are asked permission for the use of their location.</div>",
+            "content_en": "<div>\"Participants\" refers to participants in the classical sense of the word. For example, people you interview, people who fill out a questionnaire, or people you subject to certain tests.</div>\r\n<div>&nbsp;</div>\r\n<div>\"People who do not (necessarily) know that research is being conducted on them\" are, for example, people whose data you \"scrape\" on social media or people you secretly record in public spaces.</div>\r\n<div>&nbsp;</div>\r\n<div>\"People who are otherwise involved\" are, for example, the parents of participating children (if you ask them to consent to their child's participation or personal data processing) or location holders who are asked permission for the use of their location.</div>",
+            "content_nl": "<div>Onder \"Deelnemers\" wordt verstaan: participanten in de klassieke zin van het woord. Bijvoorbeeld mensen die je interviewt of mensen die een vragenlijst invullen of die je aan bepaalde tests onderwerpt.</div>\r\n<div>&nbsp;</div>\r\n<div>\"Personen die niet (noodzakelijkerwijs) weten dat er onderzoek naar hen wordt gedaan\" zijn bijvoorbeeld mensen van wie je data \"scrapet\" op social media of mensen van wie je in de publieke ruimte heimelijk opnamen maakt.</div>\r\n<div>&nbsp;</div>\r\n<div>\"Personen die anderszins betrokken zijn\" zijn bijvoorbeeld de ouders van deelnemende kinderen (als je hen vraagt om toestemming te geven voor de deelname van hun kind) of locatiehouders die toestemming moeten geven voor het gebruik van hun locatie.</div>",
             "_order": 5
         }
     },
@@ -4968,9 +4968,9 @@
             "text": "What are special categories of personal data?",
             "text_en": "What are special categories of personal data?",
             "text_nl": "Wat zijn bijzondere persoonsgegevens?",
-            "content": "<div>Special categories of personal data are data that are so sensitive that they are subject to extra protection under the General Data Protection Regulation (GDPR). You may only process these data under additional conditions, for example, if you have obtained consent or if the persons to whom the data relate (the data subjects) have made those data public themselves.</div>\r\n<div>&nbsp;</div>\r\n<div>The mentioned special categories of personal data must be interpreted &ldquo;broadly&rdquo;. For the category regarding political opinions, for example, it is not necessary for someone to be a member of a political party. Any opinion someone holds about the organization or functioning of society is considered a special category of personal data.</div>",
-            "content_en": "<div>Special categories of personal data are data that are so sensitive that they are subject to extra protection under the General Data Protection Regulation (GDPR). You may only process these data under additional conditions, for example, if you have obtained consent or if the persons to whom the data relate (the data subjects) have made those data public themselves.</div>\r\n<div>&nbsp;</div>\r\n<div>The mentioned special categories of personal data must be interpreted &ldquo;broadly&rdquo;. For the category regarding political opinions, for example, it is not necessary for someone to be a member of a political party. Any opinion someone holds about the organization or functioning of society is considered a special category of personal data.</div>",
-            "content_nl": "<div>Bijzondere persoonsgegevens zijn gegevens die zo gevoelig zijn dat ze onder de Algemene verordening gegevensbescherming (AVG) extra worden beschermd. Deze gegevens mag je alleen onder aanvullende voorwaarden verwerken, bijvoorbeeld als je er toestemming voor hebt gekregen of als degenen op wie de gegevens betrekking hebben (de datasubjecten) die gegevens zelf openbaar hebben gemaakt.</div>\r\n<div>&nbsp;</div>\r\n<div>De genoemde categorie&euml;n bijzondere persoonsgegevens moet je &ldquo;ruim&rdquo; interpreteren. Voor de categorie over politieke opvattingen is het bijvoorbeeld niet nodig dat iemand lid is van een politieke partij. Elke opvatting die iemand heeft over de inrichting of het functioneren van de maatschappij wordt gezien als een bijzonder persoonsgegeven.</div>",
+            "content": "<div>Special categories of personal data are data that are so sensitive that they are subject to extra protection under the General Data Protection Regulation (GDPR). You may only process these data under additional conditions, for example, if you have obtained consent or if the persons to whom the data relate (the data subjects) have made those data public themselves.</div>\r\n<div>&nbsp;</div>\r\n<div>The mentioned special categories of personal data must be interpreted \"broadly\". For the category regarding political opinions, for example, it is not necessary for someone to be a member of a political party. Any opinion someone holds about the organization or functioning of society is considered a special category of personal data.</div>",
+            "content_en": "<div>Special categories of personal data are data that are so sensitive that they are subject to extra protection under the General Data Protection Regulation (GDPR). You may only process these data under additional conditions, for example, if you have obtained consent or if the persons to whom the data relate (the data subjects) have made those data public themselves.</div>\r\n<div>&nbsp;</div>\r\n<div>The mentioned special categories of personal data must be interpreted \"broadly\". For the category regarding political opinions, for example, it is not necessary for someone to be a member of a political party. Any opinion someone holds about the organization or functioning of society is considered a special category of personal data.</div>",
+            "content_nl": "<div>Bijzondere persoonsgegevens zijn gegevens die zo gevoelig zijn dat ze onder de Algemene verordening gegevensbescherming (AVG) extra worden beschermd. Deze gegevens mag je alleen onder aanvullende voorwaarden verwerken, bijvoorbeeld als je er toestemming voor hebt gekregen of als degenen op wie de gegevens betrekking hebben (de datasubjecten) die gegevens zelf openbaar hebben gemaakt.</div>\r\n<div>&nbsp;</div>\r\n<div>De genoemde categorie&euml;n bijzondere persoonsgegevens moet je \"ruim\" interpreteren. Voor de categorie over politieke opvattingen is het bijvoorbeeld niet nodig dat iemand lid is van een politieke partij. Elke opvatting die iemand heeft over de inrichting of het functioneren van de maatschappij wordt gezien als een bijzonder persoonsgegeven.</div>",
             "_order": 6
         }
     },
@@ -4998,7 +4998,7 @@
             "text_nl": "Wat is versleuteling?",
             "content": "<p>Encryption is a way to make data unreadable. Only those who have the key, can 'unlock' the data and read it. For others, the data remain unintelligable. Bitlocker (Microsoft) uses encryption. WhatsApp even uses 'end-to-end encryption', meaning even the supplier has no access to the data.</p>",
             "content_en": "<p>Encryption is a way to make data unreadable. Only those who have the key, can 'unlock' the data and read it. For others, the data remain unintelligable. Bitlocker (Microsoft) uses encryption. WhatsApp even uses 'end-to-end encryption', meaning even the supplier has no access to the data.</p>",
-            "content_nl": "<p>Versleuteling (of 'encryptie') is een manier om data onleesbaar te maken. Alleen diegenen die de sleutel hebben, kunnen de data 'ontsleutelen' en lezen. Voor anderen blijven de data onbegrijpelijk. Bitlocker (Microsoft) werkt met versleuteling. WhatsApp werkt zelfs met 'end-to-end versleuteling'. Dat wil zeggen dat zelfs de leverancier van de encryptiesleutel geen toegang heeft tot de data.</p>",
+            "content_nl": "<p>Versleuteling (of 'encryptie') is een manier om data onleesbaar te maken. Alleen diegenen die de sleutel hebben, kunnen de data 'ontsleutelen' en lezen. Voor anderen blijven de data onbegrijpelijk. Bitlocker (Microsoft) werkt met versleuteling. WhatsApp werkt zelfs met 'end-to-end-versleuteling'. Dat wil zeggen dat zelfs de leverancier van de encryptiesleutel geen toegang heeft tot de data.</p>",
             "_order": 2
         }
     },
@@ -5010,9 +5010,9 @@
             "text": "What is a VPN?",
             "text_en": "What is a VPN?",
             "text_nl": "Wat is een VPN?",
-            "content": "<p>A VPN (Virtual Private Network) encrypts your internet connection and routes your traffic through an intermediary server, making your IP address less visible. A VPN creates a kind of &ldquo;conduit&rdquo; between a sender and a receiver.</p>",
-            "content_en": "<p>A VPN (Virtual Private Network) encrypts your internet connection and routes your traffic through an intermediary server, making your IP address less visible. A VPN creates a kind of &ldquo;conduit&rdquo; between a sender and a receiver.</p>",
-            "content_nl": "<p>Een VPN (Virtual Private Network) versleutelt je internetverbinding en laat je verkeer via een tussenserver lopen, waardoor je IP-adres minder zichtbaar is. Een VPN cre&euml;ert een soort &ldquo;buizenpost&rdquo; tussen een verzender en een ontvanger.</p>",
+            "content": "<p>A VPN (Virtual Private Network) encrypts your internet connection and routes your traffic through an intermediary server, making your IP address less visible. A VPN creates a kind of \"conduit\" between a sender and a receiver.</p>",
+            "content_en": "<p>A VPN (Virtual Private Network) encrypts your internet connection and routes your traffic through an intermediary server, making your IP address less visible. A VPN creates a kind of \"conduit\" between a sender and a receiver.</p>",
+            "content_nl": "<p>Een VPN (Virtual Private Network) versleutelt je internetverbinding en laat je verkeer via een tussenserver lopen, waardoor je IP-adres minder zichtbaar is. Een VPN cre&euml;ert een soort \"buizenpost\" tussen een verzender en een ontvanger.</p>",
             "_order": 3
         }
     },
@@ -5091,12 +5091,12 @@
         "pk": 50,
         "fields": {
             "step": 6,
-            "text": "Which categories of datasubjects are there?",
-            "text_en": "Which categories of datasubjects are there?",
+            "text": "Which categories of data subjects are there?",
+            "text_en": "Which categories of data subjects are there?",
             "text_nl": "Welke categorie\u00ebn datasubjecten zijn er?",
-            "content": "<p>There are three categories of data subjects.</p>\r\n<p>1.&nbsp; &nbsp; Participants, i.e., people who consciously participate in the research.</p>\r\n<p>Participants are for instance people you interview or people who fill out a questionnaire or whom you subject to certain tests. Participants also include infants who participate in e.g. language research.</p>\r\n<p>2.&nbsp; &nbsp; Individuals who do not (necessarily) know they are the subject of research.</p>\r\n<p>This applies, for example, to people whose data you &lsquo;scrape&rsquo; from social media or people whom you secretly record in public spaces.</p>\r\n<p>3.&nbsp; &nbsp; Individuals who are otherwise involved.</p>\r\n<p>This includes, for example, gatekeepers, i.e., people who grant you access to a certain location, where you want to conduct your research, such as schools, musea, theatres or parents of participating children (if you ask them to give permission for their child to participate).</p>",
-            "content_en": "<p>There are three categories of data subjects.</p>\r\n<p>1.&nbsp; &nbsp; Participants, i.e., people who consciously participate in the research.</p>\r\n<p>Participants are for instance people you interview or people who fill out a questionnaire or whom you subject to certain tests. Participants also include infants who participate in e.g. language research.</p>\r\n<p>2.&nbsp; &nbsp; Individuals who do not (necessarily) know they are the subject of research.</p>\r\n<p>This applies, for example, to people whose data you &lsquo;scrape&rsquo; from social media or people whom you secretly record in public spaces.</p>\r\n<p>3.&nbsp; &nbsp; Individuals who are otherwise involved.</p>\r\n<p>This includes, for example, gatekeepers, i.e., people who grant you access to a certain location, where you want to conduct your research, such as schools, musea, theatres or parents of participating children (if you ask them to give permission for their child to participate).</p>",
-            "content_nl": "<p>Er zijn drie categorie&euml;n datasubjecten:</p>\r\n<p>1.&nbsp; &nbsp; Deelnemers, d.w.z. personen die bewust deelnemen aan het onderzoek.&nbsp;</p>\r\n<p>Deelnemers zijn participanten in de klassieke zin van het woord. Bijvoorbeeld mensen die je interviewt of mensen die een vragenlijst invullen of die je aan bepaalde tests onderwerpt, maar ook baby&rsquo;s die meedoen aan bijv. taalonderzoek. &nbsp;</p>\r\n<p>2.&nbsp; &nbsp; Personen die niet (noodzakelijkerwijs) weten dat er onderzoek naar hen wordt gedaan.&nbsp;</p>\r\n<p>Dit geldt bijv. voor mensen van wie je data &ldquo;scrapet&rdquo; op social media of mensen van wie je in de publieke ruimte heimelijk opnamen maakt.&nbsp;</p>\r\n<p>3.&nbsp; &nbsp; Personen die anderszins betrokken zijn. &nbsp;</p>\r\n<p>Hieronder vallen bijv. &lsquo;poortwachters&rsquo;, mensen die je toegang geven tot een bepaalde locatie, waar je je onderzoek wilt doen, zoals scholen, musea, theaters of de ouders van deelnemende kinderen (als je hen vraagt om toestemming te geven voor de deelname van hun kind).&nbsp;</p>",
+            "content": "<p>There are three categories of data subjects.</p>\r\n<p>1.&nbsp; &nbsp; Participants, i.e., people who consciously participate in the research.</p>\r\n<p>Participants are for instance people you interview or people who fill out a questionnaire or whom you subject to certain tests. Participants also include infants who participate in e.g. language research.</p>\r\n<p>2.&nbsp; &nbsp; Individuals who do not (necessarily) know they are the subject of research.</p>\r\n<p>This applies, for example, to people whose data you 'scrape' from social media or people whom you secretly record in public spaces.</p>\r\n<p>3.&nbsp; &nbsp; Individuals who are otherwise involved.</p>\r\n<p>This includes, for example, gatekeepers, i.e., people who grant you access to a certain location, where you want to conduct your research, such as schools, musea, theatres or parents of participating children (if you ask them to give permission for their child to participate).</p>",
+            "content_en": "<p>There are three categories of data subjects.</p>\r\n<p>1.&nbsp; &nbsp; Participants, i.e., people who consciously participate in the research.</p>\r\n<p>Participants are for instance people you interview or people who fill out a questionnaire or whom you subject to certain tests. Participants also include infants who participate in e.g. language research.</p>\r\n<p>2.&nbsp; &nbsp; Individuals who do not (necessarily) know they are the subject of research.</p>\r\n<p>This applies, for example, to people whose data you 'scrape' from social media or people whom you secretly record in public spaces.</p>\r\n<p>3.&nbsp; &nbsp; Individuals who are otherwise involved.</p>\r\n<p>This includes, for example, gatekeepers, i.e., people who grant you access to a certain location, where you want to conduct your research, such as schools, musea, theatres or parents of participating children (if you ask them to give permission for their child to participate).</p>",
+            "content_nl": "<p>Er zijn drie categorie&euml;n datasubjecten:</p>\r\n<p>1.&nbsp; &nbsp; Deelnemers, d.w.z. personen die bewust deelnemen aan het onderzoek.&nbsp;</p>\r\n<p>Deelnemers zijn participanten in de klassieke zin van het woord. Bijvoorbeeld mensen die je interviewt of mensen die een vragenlijst invullen of die je aan bepaalde tests onderwerpt, maar ook baby's die meedoen aan bijv. taalonderzoek. &nbsp;</p>\r\n<p>2.&nbsp; &nbsp; Personen die niet (noodzakelijkerwijs) weten dat er onderzoek naar hen wordt gedaan.&nbsp;</p>\r\n<p>Dit geldt bijv. voor mensen van wie je data \"scrapet\" op social media of mensen van wie je in de publieke ruimte heimelijk opnamen maakt.&nbsp;</p>\r\n<p>3.&nbsp; &nbsp; Personen die anderszins betrokken zijn. &nbsp;</p>\r\n<p>Hieronder vallen bijv. 'poortwachters', mensen die je toegang geven tot een bepaalde locatie, waar je je onderzoek wilt doen, zoals scholen, musea, theaters of de ouders van deelnemende kinderen (als je hen vraagt om toestemming te geven voor de deelname van hun kind).&nbsp;</p>",
             "_order": 2
         }
     },
@@ -5124,7 +5124,7 @@
             "text_nl": "Wat bedoelen we met een beveiligingsprotocol en met projectmedewerkers?",
             "content": "<p>A security protocol contains agreements and instructions that everyone involved in a study must follow, such as transcription assistants, data stewards, and secretarial staff. The goal is to elevate security within the study to a level higher than the current baseline standard.&nbsp;</p>",
             "content_en": "<p>A security protocol contains agreements and instructions that everyone involved in a study must follow, such as transcription assistants, data stewards, and secretarial staff. The goal is to elevate security within the study to a level higher than the current baseline standard.&nbsp;</p>",
-            "content_nl": "<div class=\"OutlineElement Ltr SCXW68524038 BCX2\" style=\"direction: ltr;\">\r\n<p class=\"Paragraph SCXW68524038 BCX2\" style=\"font-weight: normal; font-style: normal; vertical-align: baseline; background-color: transparent; color: windowtext; text-align: left; margin: 0px; padding-left: 0px; padding-right: 0px; text-indent: 0px;\"><span class=\"TextRun SCXW68524038 BCX2\" lang=\"NL-NL\" style=\"font-size: 11pt; line-height: 18px; font-family: Aptos, 'Aptos_EmbeddedFont', 'Aptos_MSFontService', sans-serif;\" xml:lang=\"NL-NL\" data-contrast=\"auto\"><span class=\"NormalTextRun SCXW68524038 BCX2\">Een beveiligingsprotocol bevat afspraken en instructies waaraan iedereen die bij een studie betrokken is zich moet houden, zoals onderzoekers, transcriptieassistenten, datastewards en secretari&euml;le medewerkers. Het doel is om de beveiliging binnen de studie naar een hoger niveau te brengen dan het geldende basisniveau.</span></span><span class=\"EOP Selected SCXW68524038 BCX2\" style=\"font-size: 11pt; line-height: 18px; font-family: Aptos, 'Aptos_EmbeddedFont', 'Aptos_MSFontService', sans-serif;\" data-ccp-props=\"{&quot;335559685&quot;:0,&quot;335559731&quot;:0}\">&nbsp;</span></p>\r\n</div>",
+            "content_nl": "<p>Een beveiligingsprotocol bevat afspraken en instructies waaraan iedereen die bij een studie betrokken is zich moet houden, zoals onderzoekers, transcriptieassistenten, datastewards en secretari&euml;le medewerkers. Het doel is om de beveiliging binnen de studie naar een hoger niveau te brengen dan het geldende basisniveau.</p>",
             "_order": 7
         }
     },
@@ -5136,9 +5136,9 @@
             "text": "What is a processing agreement?",
             "text_en": "What is a processing agreement?",
             "text_nl": "Wat is een verwerkersovereenkomst?",
-            "content": "<p>If, as part of a study, you instruct a third party to process certain personal data on your behalf (e.g., analysis of responses), that third party is a &ldquo;processor,&rdquo; and you must enter into a data processing agreement with that party.</p>",
-            "content_en": "<p>If, as part of a study, you instruct a third party to process certain personal data on your behalf (e.g., analysis of responses), that third party is a &ldquo;processor,&rdquo; and you must enter into a data processing agreement with that party.</p>",
-            "content_nl": "<div class=\"OutlineElement Ltr SCXW233752743 BCX2\" style=\"direction: ltr;\">\r\n<p class=\"Paragraph SCXW233752743 BCX2\" style=\"font-weight: normal; font-style: normal; vertical-align: baseline; background-color: transparent; color: windowtext; text-align: left; margin: 0px; padding-left: 0px; padding-right: 0px; text-indent: 0px;\"><span class=\"TextRun SCXW233752743 BCX2\" lang=\"NL-NL\" style=\"font-size: 11pt; line-height: 18px; font-family: Aptos, 'Aptos_EmbeddedFont', 'Aptos_MSFontService', sans-serif;\" xml:lang=\"NL-NL\" data-contrast=\"auto\"><span class=\"NormalTextRun CommentHighlightRest SCXW233752743 BCX2\">Als jij in het kader van een studie een externe partij opdracht geeft om namens jou bepaalde persoonsgegevens te verwerken (bijv. analyse van antwoorden), </span><span class=\"NormalTextRun CommentHighlightRest SCXW233752743 BCX2\">is die externe partij een &lsquo;verwerker&rsquo; en moet je met die partij een verwerkersovereenkomst sluiten.</span></span></p>\r\n</div>",
+            "content": "<p>If, as part of a study, you instruct a third party to process certain personal data on your behalf (e.g., analysis of responses), that third party is a \"processor,\" and you must enter into a data processing agreement with that party.</p>",
+            "content_en": "<p>If, as part of a study, you instruct a third party to process certain personal data on your behalf (e.g., analysis of responses), that third party is a \"processor,\" and you must enter into a data processing agreement with that party.</p>",
+            "content_nl": "<p>Als jij in het kader van een studie een externe partij opdracht geeft om namens jou bepaalde persoonsgegevens te verwerken (bijv. analyse van antwoorden), is die externe partij een 'verwerker' en moet je met die partij een verwerkersovereenkomst sluiten.</p>",
             "_order": 8
         }
     },
@@ -5152,7 +5152,7 @@
             "text_nl": "Wat is een dataleveringsovereenkomst?",
             "content": "<p>If an external party provides the UU with personal data that the UU wishes to use for its own purposes, in this case, academic research, then that party may require the UU to sign a data supply agreement. Such agreement states what the UU may and may not do with those data. The same applies when the UU provides personal data to an external party that wishes to use these data for its own purposes.</p>",
             "content_en": "<p>If an external party provides the UU with personal data that the UU wishes to use for its own purposes, in this case, academic research, then that party may require the UU to sign a data supply agreement. Such agreement states what the UU may and may not do with those data. The same applies when the UU provides personal data to an external party that wishes to use these data for its own purposes.</p>",
-            "content_nl": "<div class=\"OutlineElement Ltr SCXW26677706 BCX2\" style=\"direction: ltr;\">\r\n<p class=\"Paragraph SCXW26677706 BCX2\" style=\"font-weight: normal; font-style: normal; vertical-align: baseline; background-color: transparent; color: windowtext; text-align: left; margin: 0px; padding-left: 0px; padding-right: 0px; text-indent: 0px;\"><span class=\"TextRun SCXW26677706 BCX2\" lang=\"NL-NL\" style=\"font-size: 11pt; line-height: 18px; font-family: Aptos, 'Aptos_EmbeddedFont', 'Aptos_MSFontService', sans-serif;\" xml:lang=\"NL-NL\" data-contrast=\"auto\"><span class=\"NormalTextRun CommentHighlightRest SCXW26677706 BCX2\">Als een externe partij persoonsgegevens aan de UU levert die de UU voor een eigen doel wil gebruiken, </span><span class=\"NormalTextRun CommentHighlightRest SCXW26677706 BCX2\">in dit geval</span><span class=\"NormalTextRun CommentHighlightRest SCXW26677706 BCX2\"> voor wetenschappelijk onderzoek, kan die partij verlangen dat de UU een </span><span class=\"NormalTextRun SpellingErrorV2Themed CommentHighlightRest SCXW26677706 BCX2\">dataleveringsovereenkomst</span><span class=\"NormalTextRun CommentHighlightRest SCXW26677706 BCX2\"> ondertekent. Daarin staat wat de UU wel en niet met de gegevens mag doen. Hetzelfde geldt wanneer de </span><span class=\"NormalTextRun ContextualSpellingAndGrammarErrorV2Themed CommentHighlightRest SCXW26677706 BCX2\">UU persoonsgegevens</span><span class=\"NormalTextRun CommentHighlightRest SCXW26677706 BCX2\"> levert aan een externe partij die deze </span><span class=\"NormalTextRun CommentHighlightRest SCXW26677706 BCX2\">gegevens </span><span class=\"NormalTextRun CommentHighlightRest SCXW26677706 BCX2\">voor een eigen doel wil gebruiken.</span></span><span class=\"EOP Selected SCXW26677706 BCX2\" style=\"font-size: 11pt; line-height: 18px; font-family: Aptos, 'Aptos_EmbeddedFont', 'Aptos_MSFontService', sans-serif;\" data-ccp-props=\"{&quot;335559685&quot;:0,&quot;335559731&quot;:0}\">&nbsp;</span></p>\r\n</div>",
+            "content_nl": "<p>Als een externe partij persoonsgegevens aan de UU levert die de UU voor een eigen doel wil gebruiken, in dit geval voor wetenschappelijk onderzoek, kan die partij verlangen dat de UU een dataleveringsovereenkomst ondertekent. Daarin staat wat de UU wel en niet met de gegevens mag doen. Hetzelfde geldt wanneer de UU persoonsgegevens levert aan een externe partij die deze gegevens voor een eigen doel wil gebruiken.</p>",
             "_order": 9
         }
     },
@@ -5164,9 +5164,9 @@
             "text": "What is a co-responsibility agreement?",
             "text_en": "What is a co-responsibility agreement?",
             "text_nl": "Wat is een gezamenlijk-verantwoordelijken overeenkomst?",
-            "content": "<p>There are situations in which multiple organizations are jointly responsible for the processing of personal data, for example in a consortium. Those organizations must then reach an agreement or &lsquo;arrangement&rsquo; that specifies, amongst other things, which organization is responsible for informing the data subjects and which organization the data subjects can contact to exercise their rights.&nbsp;</p>",
-            "content_en": "<p>There are situations in which multiple organizations are jointly responsible for the processing of personal data, for example in a consortium. Those organizations must then reach an agreement or &lsquo;arrangement&rsquo; that specifies, amongst other things, which organization is responsible for informing the data subjects and which organization the data subjects can contact to exercise their rights.&nbsp;</p>",
-            "content_nl": "<div class=\"OutlineElement Ltr SCXW5654199 BCX2\" style=\"direction: ltr;\">\r\n<p class=\"Paragraph SCXW5654199 BCX2\" style=\"font-weight: normal; font-style: normal; vertical-align: baseline; background-color: transparent; color: windowtext; text-align: left; margin: 0px; padding-left: 0px; padding-right: 0px; text-indent: 0px;\"><span class=\"TextRun SCXW5654199 BCX2\" lang=\"NL-NL\" style=\"font-size: 11pt; line-height: 18px; font-family: Aptos, 'Aptos_EmbeddedFont', 'Aptos_MSFontService', sans-serif;\" xml:lang=\"NL-NL\" data-contrast=\"auto\"><span class=\"NormalTextRun CommentHighlightRest SCXW5654199 BCX2\">Er zijn situaties waarin meerdere organisaties gezamenlijk verantwoordelijk zijn voor de verwerking van persoonsgegevens, bijvoorbeeld in een consortium. Die </span><span class=\"NormalTextRun CommentHighlightRest SCXW5654199 BCX2\">organisaties</span><span class=\"NormalTextRun CommentHighlightRest SCXW5654199 BCX2\"> moeten dan tot een overeenkomst of &lsquo;regeling&rsquo; komen waarin onder meer wordt vastgelegd welke </span><span class=\"NormalTextRun CommentHighlightRest SCXW5654199 BCX2\">organisatie </span><span class=\"NormalTextRun CommentHighlightRest SCXW5654199 BCX2\">verantwoordelijk is voor het informeren van de datasubjecten en bij welke </span><span class=\"NormalTextRun CommentHighlightRest SCXW5654199 BCX2\">organisatie</span><span class=\"NormalTextRun CommentHighlightRest SCXW5654199 BCX2\"> de datasubjecten kunnen aankloppen om hun rechten uit te oefenen.</span></span><span class=\"EOP Selected SCXW5654199 BCX2\" style=\"font-size: 11pt; line-height: 18px; font-family: Aptos, 'Aptos_EmbeddedFont', 'Aptos_MSFontService', sans-serif;\" data-ccp-props=\"{&quot;335559685&quot;:0,&quot;335559731&quot;:0}\">&nbsp;</span></p>\r\n</div>",
+            "content": "<p>There are situations in which multiple organizations are jointly responsible for the processing of personal data, for example in a consortium. Those organizations must then reach an agreement or 'arrangement' that specifies, amongst other things, which organization is responsible for informing the data subjects and which organization the data subjects can contact to exercise their rights.&nbsp;</p>",
+            "content_en": "<p>There are situations in which multiple organizations are jointly responsible for the processing of personal data, for example in a consortium. Those organizations must then reach an agreement or 'arrangement' that specifies, amongst other things, which organization is responsible for informing the data subjects and which organization the data subjects can contact to exercise their rights.&nbsp;</p>",
+            "content_nl": "<p>Er zijn situaties waarin meerdere organisaties gezamenlijk verantwoordelijk zijn voor de verwerking van persoonsgegevens, bijvoorbeeld in een consortium. Die organisaties moeten dan tot een overeenkomst of 'regeling' komen waarin onder meer wordt vastgelegd welke organisatie verantwoordelijk is voor het informeren van de datasubjecten en bij welke organisatie de datasubjecten kunnen aankloppen om hun rechten uit te oefenen.</p>",
             "_order": 10
         }
     },
@@ -5178,9 +5178,9 @@
             "text": "What does the \u2018four-eyes principle\u2019 involve?",
             "text_en": "What does the \u2018four-eyes principle\u2019 involve?",
             "text_nl": "Wat is het \u2018vier-ogen-principe\u2019?",
-            "content": "<p>The &lsquo;four-eyes principle&rsquo; here means that sensitive or special categories of personal data are never accessed by a single person, but always by two people who can &lsquo;keep an eye&rsquo; on each other. This way of working offers no guarantee that data are used in an improper manner, but it is, however, an extra obstacle.</p>",
-            "content_en": "<p>The &lsquo;four-eyes principle&rsquo; here means that sensitive or special categories of personal data are never accessed by a single person, but always by two people who can &lsquo;keep an eye&rsquo; on each other. This way of working offers no guarantee that data are used in an improper manner, but it is, however, an extra obstacle.</p>",
-            "content_nl": "<p>Het vier-ogen-principe houdt hier in dat gevoelige en bijzondere persoonsgegevens nooit door &eacute;&eacute;n persoon worden ingezien, maar altijd door twee personen die elkaar &lsquo;in de gaten&rsquo; kunnen houden. Deze manier van werken geeft geen garantie dat data niet op een oneigenlijke manier worden gebruikt, maar het is daar wel een extra belemmering voor.&nbsp;</p>",
+            "content": "<p>The 'four-eyes principle' here means that sensitive or special categories of personal data are never accessed by a single person, but always by two people who can 'keep an eye' on each other. This way of working offers no guarantee that data are used in an improper manner, but it is, however, an extra obstacle.</p>",
+            "content_en": "<p>The 'four-eyes principle' here means that sensitive or special categories of personal data are never accessed by a single person, but always by two people who can 'keep an eye' on each other. This way of working offers no guarantee that data are used in an improper manner, but it is, however, an extra obstacle.</p>",
+            "content_nl": "<p>Het vier-ogen-principe houdt hier in dat gevoelige en bijzondere persoonsgegevens nooit door &eacute;&eacute;n persoon worden ingezien, maar altijd door twee personen die elkaar 'in de gaten' kunnen houden. Deze manier van werken geeft geen garantie dat data niet op een oneigenlijke manier worden gebruikt, maar het is daar wel een extra belemmering voor.&nbsp;</p>",
             "_order": 11
         }
     },
