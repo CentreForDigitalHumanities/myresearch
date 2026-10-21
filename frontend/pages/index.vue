@@ -25,37 +25,29 @@ definePageMeta({
                             )
                         }}
                     </p>
-                    <h3>{{ $t("For whom?") }}</h3>
-                    <p>
+                    <ul>
+                        <li class="mb-2"><strong>{{ $t("For whom?") }}</strong>
                         {{
                             $t(
                                 "Researchers from the Faculty of Humanities and the Faculty of Law, Economics and Governance at Utrecht University."
                             )
                         }}
-                    </p>
-                    <h3>{{ $t("Why?") }}</h3>
-                    <p>
-                        {{
-                            $t(
-                                "Some preparatory activities are required by law, while others are required by university or faculty policy."
-                            )
-                        }}
-                    </p>
-                    <h3>{{ $t("What?") }}</h3>
-                    <p>
-                        {{
-                            $t(
-                                "Currently, MyResearch consists of a processing register for personal data. In the future, you will also be able to generate data management plans and request ethical assessment here."
-                            )
-                        }}
-                    </p>
-                    <p>
-                        {{
-                            $t(
-                                "The processing register is a requirement under the GDPR (General Data Protection Regulation)."
-                            )
-                        }}
-                    </p>
+                        </li>
+                        <li class="mb-2"><strong>{{ $t("Why?") }}</strong>
+                            {{
+                                $t(
+                                    "Some preparatory activities are required by law, while others are required by university or faculty policy."
+                                )
+                            }}
+                        </li>
+                        <li class="mb-2"><strong>{{ $t("What?") }}</strong>
+                            {{
+                                $t(
+                                    "Currently, MyResearch consists of a processing register for personal data. In the future, you will also be able to generate data management plans and request ethical assessment here. The processing register is a requirement under the GDPR (General Data Protection Regulation)."
+                                )
+                            }}
+                        </li>
+                    </ul>
                 </div>
             </div>
             <aside class="uu-sidebar pe-3">

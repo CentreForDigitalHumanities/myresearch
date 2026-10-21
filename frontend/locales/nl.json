@@ -146,8 +146,7 @@
     "Why?": "Waarom?",
     "Some preparatory activities are required by law, while others are required by university or faculty policy.": "Sommige voorbereidende activiteiten zijn wettelijk verplicht, andere komen voort uit universitair of facultair beleid.",
     "What?": "Wat?",
-    "Currently, MyResearch consists of a processing register for personal data. In the future, you will also be able to generate data management plans and request ethical assessment here.": "Momenteel bestaat MyResearch uit een verwerkingsregister voor persoonsgegevens. In de toekomst kun je hier ook datamanagementplannen laten genereren en kun je ethische toetsing aanvragen.",
-    "The processing register is a requirement under the GDPR (General Data Protection Regulation).": "Het verwerkingsregister is een vereiste vanuit de AVG (Algemene verordening gegevensbescherming).",
+    "Currently, MyResearch consists of a processing register for personal data. In the future, you will also be able to generate data management plans and request ethical assessment here. The processing register is a requirement under the GDPR (General Data Protection Regulation).": "Momenteel bestaat MyResearch uit een verwerkingsregister voor persoonsgegevens. In de toekomst kun je hier ook datamanagementplannen laten genereren en kun je ethische toetsing aanvragen. Het verwerkingsregister is een vereiste vanuit de AVG (Algemene verordening gegevensbescherming).",
     
     "If you process {personalData} relating to one or more identifiable persons (usually participants) in your research, you are obliged to complete the processing register.": "Als jij in jouw onderzoek {personalData} verwerkt met betrekking tot een of meerdere identificeerbare personen (meestal participanten), ben je verplicht het verwerkingsregister in te vullen.",
     "personal data": "persoonsgegevens",
