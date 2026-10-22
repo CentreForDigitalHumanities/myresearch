@@ -3,7 +3,8 @@ import pytest
 from django.db import IntegrityError, transaction
 from django.core.exceptions import ObjectDoesNotExist
 
-from form.models import MRForm, Step, TextQuestion
+from form.models import MRForm, SelectOption, SelectQuestion, Step, TextQuestion
+from form.models.questions import SelectQuestionOption
 
 
 @pytest.mark.django_db(transaction=True)
@@ -47,6 +48,52 @@ def test_question_save_sets_form(form: MRForm):
     tq2.save()
 
     assert tq2.form == step.form
+
+
+@pytest.mark.django_db
+def test_select_option_can_be_shared_between_questions(form: MRForm):
+    step = Step.objects.create(name="Step", slug="select-step", form=form)
+    question_1 = SelectQuestion.objects.create(text="Question 1", step=step)
+    question_2 = SelectQuestion.objects.create(text="Question 2", step=step)
+    shared = SelectOption.objects.create(label="Shared")
+
+    for question in [question_1, question_2]:
+        SelectQuestionOption.objects.create(
+            question=question,
+            option=shared,
+            _order=0,
+        )
+
+    assert list(question_1.options.all()) == [shared]
+    assert list(question_2.options.all()) == [shared]
+
+
+@pytest.mark.django_db
+def test_select_option_order_is_independent_per_question(form: MRForm):
+    step = Step.objects.create(name="Step", slug="option-order-step", form=form)
+    question_1 = SelectQuestion.objects.create(text="Question 1", step=step)
+    question_2 = SelectQuestion.objects.create(text="Question 2", step=step)
+    first = SelectOption.objects.create(label="First")
+    second = SelectOption.objects.create(label="Second")
+
+    for question in [question_1, question_2]:
+        SelectQuestionOption.objects.create(
+            question=question,
+            option=first,
+            _order=0,
+        )
+        SelectQuestionOption.objects.create(
+            question=question,
+            option=second,
+            _order=1,
+        )
+    question_1.set_option_order([second.pk, first.pk])
+    question_2.set_option_order([first.pk, second.pk])
+
+    assert list(question_1.get_ordered_options()) == [second, first]
+    assert list(question_2.get_ordered_options()) == [first, second]
+    assert question_1.get_option_order() == [second.pk, first.pk]
+    assert question_2.get_option_order() == [first.pk, second.pk]
 
 
 @pytest.mark.django_db(transaction=True)
