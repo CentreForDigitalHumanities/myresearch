@@ -4,8 +4,8 @@ import { useDisplayFileSize } from "~/composables/useDisplayFileSize";
 import type {
     CombinedStepWithValues,
     QuestionWithValue,
-    SelectQuestionWithValue,
 } from "~/composables/useProcessForm";
+import { useSelectLabel } from "~/composables/useSelectLabel";
 
 interface Props {
     step: CombinedStepWithValues;
@@ -16,16 +16,6 @@ defineProps<Props>();
 const { t } = useI18n();
 
 const notAnswered = computed(() => t("Not answered"));
-
-function getSelectLabel(question: SelectQuestionWithValue): string {
-    const options = question.options;
-    const selectedOption = options.find(
-        (option) => option.id === question.value,
-    );
-    return selectedOption
-        ? useTranslateableAttribute(selectedOption, "label")
-        : notAnswered.value;
-}
 
 function getFileName(question: FileUploadQuestionWithValue): string {
     if (!question.value) {
@@ -41,7 +31,7 @@ function formatAnswer(question: QuestionWithValue): string {
         case "TrueFalseQuestionType":
             return value ? t("Yes") : t("No");
         case "SelectQuestionType":
-            return getSelectLabel(question);
+            return useSelectLabel(question) ?? notAnswered.value;
         case "FileUploadQuestionType":
             return getFileName(question);
         case "TextQuestionType":
