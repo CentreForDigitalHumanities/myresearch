@@ -25,7 +25,7 @@ def _delete_document_if_cleared(old_answer: dict, new_answer: dict) -> None:
 
 
 def update_submission(
-    user: User, user_form_input: UserFormInput
+    user: User, user_form_input: UserFormInput, finalize=False
 ) -> tuple[UserFormSubmission, list[ErrorType]]:
     # Usually we can use user_form_input.submission_id or getattr(user_form_input, "submission_id").
     # This breaks the tests, however, where user_form_input is mocked as a dict.
@@ -64,18 +64,20 @@ def update_submission(
         ):
             continue
 
-        try:
-            validate_response(response)
-        except Exception as e:
-            # if responses cause an error, add an error to the mutation's response
-            errors.append(
-                ErrorType(
-                    field="responses",
-                    messages=[f"Invalid response for question {question_id}: {e}"],
+        # Only validate responses if they are final.
+        if finalize:
+            try:
+                validate_response(response)
+            except Exception as e:
+                # if responses cause an error, add an error to the mutation's response
+                question_id = response.get("question_id", "<unknown>")
+                errors.append(
+                    ErrorType(
+                        field="responses",
+                        messages=[f"Invalid response for question {question_id}: {e}"],
+                    )
                 )
-            )
-            # We don't save responses that do not pass validation
-            continue
+                continue
 
         if response_id:
             # See if the response already exists
