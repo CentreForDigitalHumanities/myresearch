@@ -7,10 +7,8 @@ import FormSideBar from "../form/FormSideBar.vue";
 import MRForm from "~/components/form/MRForm.vue";
 import { useBuildFormStepperConfig } from "~/composables/useBuildFormStepperConfig";
 import { useFormState } from "~/composables/useFormState";
+import { useFormSubmission } from "~/composables/useFormSubmission";
 import useVuelidate from "@vuelidate/core";
-import { graphql } from "~/generated/gql";
-import type { UpdateUserFormSubmission } from "~/generated/gql/graphql";
-import { useMutation } from "@vue/apollo-composable";
 import { useStudyId } from "~/composables/useRouteParams";
 import SubmissionOverview from "~/components/form/overview/OverviewForm.vue";
 import { useI18n } from "vue-i18n";
@@ -39,36 +37,10 @@ const v$ = useVuelidate(
     },
 );
 
-const UPDATE_USER_FORM = graphql(`
-    mutation SaveFormSubmission(
-        $userFormInput: UserFormInput!
-        $finalize: Boolean
-    ) {
-        updateFormSubmission(
-            userFormInput: $userFormInput
-            finalize: $finalize
-        ) {
-            ok
-            errors {
-                field
-                messages
-            }
-        }
-    }
-`);
-
-const { mutate: mutateForm } = useMutation<UpdateUserFormSubmission>(
-    UPDATE_USER_FORM,
-    {
-        update: (cache) => {
-            cache.evict({ fieldName: "form" });
-            if (props.reloadStudy) {
-                cache.evict({ fieldName: "study" });
-            }
-            cache.gc();
-        },
-    },
-);
+const { submitForm: mutateFormSubmission } = useFormSubmission({
+    reloadStudy: props.reloadStudy,
+    reloadForm: true,
+});
 
 function submitForm(options = { submit: false }): void {
     const formData = formObject.value;
@@ -88,35 +60,23 @@ function submitForm(options = { submit: false }): void {
         return;
     }
 
-    const inputData = useFormDataToMutationInput(
-        step,
-        props.queriedForm.submissionId,
-    );
-
-    void mutateForm({
-        userFormInput: inputData,
+    void mutateFormSubmission(step, props.queriedForm.submissionId, {
+        reloadStudy: props.reloadStudy,
         finalize: options.submit,
-    })
-        .catch(() => {
+    }).then(() => {
+        if (options.submit) {
             useNotification(
-                t("An error occurred while saving the form. Please try again."),
-                "danger",
+                t("Registration submitted successfully."),
+                "success",
             );
-        })
-        .then(() => {
-            if (options.submit) {
-                useNotification(
-                    t("Registration submitted successfully."),
-                    "success",
-                );
-                void navigateTo({
-                    name: "studies-studyId",
-                    params: {
-                        studyId: studyId.value,
-                    },
-                });
-            }
-        });
+            void navigateTo({
+                name: "studies-studyId",
+                params: {
+                    studyId: studyId.value,
+                },
+            });
+        }
+    });
 }
 
 function finalSubmit(): void {
@@ -335,7 +295,10 @@ function handleBackNavigation() {
                             )
                         "
                     ></div>
-                    <MRForm :step="selectedStep" @submit-form="submitForm" />
+                    <MRForm
+                        :step="selectedStep"
+                        @repeat-step-clicked="navigateToSlug"
+                    />
                 </form>
                 <div class="btn-group">
                     <BSButton

@@ -18,7 +18,7 @@ For the MVP of MyResearch, Permissions will look something like this:
 | 2.2 Detail page                     | Access to own          | No access                  | Access            | Access            |
 | 2.3 View PDF                        | Access to own          | No access                  | Access            | Access            |
 |                                     |                        |                            |                   |                   |
-| 3 Processing registry reviews       |                        |                            |                   |                   |
+| 3 Processing register reviews       |                        |                            |                   |                   |
 | 3.1 Submit decision                 | No access              | No access                  | No access         | Access            |
 | 3.1 Close review                    | No access              | No access                  | No access         | Access            |
 |                                     |                        |                            |                   |                   |
@@ -45,7 +45,7 @@ These permissions are based on the currently-in-production FETC Portal. Ideally,
 | 2.2 Detail page                 | Access to own                | No access                  | Access            | Access               | Unknown              | Unknown              | Unknown       |
 | 2.3 View PDF                    | Access to own                | No access                  | Access            | Access               | Unknown              | Unknown              | Unknown       |
 |                                 |                              |                            |                   |                      |                      |                      |               |
-| 3 Processing registry reviews   |                              |                            |                   |                      |                      |                      |               |
+| 3 Processing register reviews   |                              |                            |                   |                      |                      |                      |               |
 | 3.1 Submit decision             | No access                    | No access                  | No access         | Access               | No Access            | No Access            | No Access     |
 | 3.1 Close review                | No access                    | No access                  | No access         | Access               | No Access            | No Access            | No Access     |
 |                                 |                              |                            |                   |                      |                      |                      |               |

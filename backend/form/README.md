@@ -38,8 +38,17 @@ The following question types are available:
 4. **DateQuestion**: Date picker
 5. **SelectQuestion**: Dropdown or multi-select
 6. **FileUploadQuestion**: File attachment
+7. **RepeatableStepQuestion**: A special question, which does not store answers, but is used to manage repeatable steps.
 
 Each question type may have additional fields specific to its behavior (e.g. options for `SelectQuestion`, or file type restrictions for `FileUploadQuestion`).
+
+### Repeats
+
+Both Steps and Questions can be repeatable, although they work slightly differently. To create a repeatable Step/Question, just ensure is_repeatable = True. This can be done through the admin interface when creating an item.
+
+A repeatable question will receive an add another button in the UI, so you can add as many eg. applicants, as needed when filling in your form. As of now (29-09-2026) we have only tested repeatable TextQuestions, as these are the only repeatable question type we currently use, but other types will probably work as well.
+
+To make repeating steps work, we also need a **RepeatableStepQuestion**. This is a special question in the form, which can create and delete step repeats. It also shows us an overview of them and can link the user to the edit page for each repeat.
 
 ## User-specific forms
 
@@ -64,8 +73,8 @@ TrueFalseQuestion:  {"value": true}
 DateQuestion:       {"value": "2025-12-31"}
 SelectQuestion:     {"value": [1, 3]}
 FileUploadQuestion: {
-    "value": "21cbf05a-987d-443b-b091-7c29e40dee92", 
-    "name": "important.pdf", 
+    "value": "21cbf05a-987d-443b-b091-7c29e40dee92",
+    "name": "important.pdf",
     "size": "500000"
 }
 ```
@@ -109,8 +118,6 @@ Both **QuestionCondition** and **StepCondition** inherit from **BaseCondition** 
 
 1. **show**: display the target only when the condition is met.
 2. **hide**: hide the target when the condition is met.
-3. **repeat**: repeat the target a fixed number of times when triggered.
-4. **repeat_dynamic**: repeat the target based on the answer value (e.g., "How many children?" → repeat child info questions).
 
 Visibility is determined according to the following rules.
 
@@ -125,10 +132,8 @@ Each condition defines:
 
 - **trigger_question**: the question whose answer determines if this condition activates.
 - **target_question** or **target_step**: the question or step affected by this condition.
-- **condition_type**: one of the condition types above (`show`/`hide`/`repeat`/`repeat_dynamic`).
+- **condition_type**: one of the condition types above (`show`/`hide`).
 - **trigger_value**: the answer criteria that activates this condition (see Trigger Values below).
-- **repeat_count**: for static repeats, how many times to repeat.
-- **use_answer_as_count**: for dynamic repeats, whether to use the answer's value as the repeat count.
 
 ### Trigger Values
 
@@ -184,42 +189,6 @@ create multiple conditions with the same target and different single option IDs.
 ```
 
 Conditions with this value are always considered met.
-
-### Repetition
-
-Conditions of type `repeat` and `repeat_dynamic` allow steps or questions to be repeated multiple times based on user input. The steps and questions returned to the user will include multiple instances, each with a unique `repeat_index` starting from 0. The repeat index also features in the slug of the `StepType`, which is used in the URL of the step.
-
-#### Static Repeats
-
-When the trigger question's answer matches `trigger_value`, the target appears `repeat_count` times.
-
-```python
-# Condition configuration
-condition_type = "repeat"
-trigger_value = {"value": true}  # When checkbox is checked
-repeat_count = 3                  # Create 3 instances
-```
-
-#### Dynamic Repeats
-
-The numeric value from the trigger question's answer determines the repeat count.
-
-```python
-# Condition configuration
-condition_type = "repeat_dynamic"
-trigger_value = {}                # Any answer triggers
-use_answer_as_count = True        # Use answer value
-```
-
-A good use case could be:
-
-```
-Question: "How many collaborators do you have?"
-Answer: 3
-Result: The "Collaborator Information" step repeats 3 times
-```
-
-For safety, the number of repeated instances is constrained to 1-10 (see `MAX_REPEAT_LIMIT`).
 
 ## Updating form fixtures
 

@@ -59,7 +59,10 @@ definePageMeta({
                 <h2 class="uu-sidebar-header-linked">
                     {{ $t("Processing Register") }}
                 </h2>
-                <i18n-t keypath="If you process {personalData} relating to one or more identifiable persons (usually participants) in your research, you are obliged to complete the processing register." tag="p">
+                <i18n-t
+                    keypath="If you process {personalData} relating to one or more identifiable persons (usually participants) in your research, you are obliged to complete the processing register."
+                    tag="p"
+                >
                     <template #personalData>
                         <a href="https://utrechtuniversity.github.io/dataprivacyhandbook/personal-data.html" target="_blank">{{
                             $t( "personal data" )

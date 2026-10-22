@@ -32,13 +32,13 @@
         "model": "form.step",
         "pk": 2,
         "fields": {
-            "name": "Processing registry",
-            "name_en": "Processing registry",
+            "name": "Processing register",
+            "name_en": "Processing register",
             "name_nl": "Verwerkingsregister",
             "description": "",
             "description_en": "",
             "description_nl": null,
-            "slug": "processing-registry",
+            "slug": "processing-register",
             "form": 1,
             "parent": null,
             "_order": 1
