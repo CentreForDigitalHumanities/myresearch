@@ -2213,7 +2213,7 @@
               "deprecationReason": null,
               "description": "Retrieves a RepeatableStep for each repeat index, with the repeat_index field populated.",
               "isDeprecated": false,
-              "name": "repeatableStepsWithRepeats",
+              "name": "repeatableSteps",
               "type": {
                 "kind": "LIST",
                 "name": null,
