@@ -21,18 +21,33 @@ definePageMeta({
                     <p>
                         {{
                             $t(
-                                "MyResearch is a portal that supports researchers from the faculties of Humanities and Law, Economics, and Governance of Utrecht University in preparing their research projects. Some preparatory activities are legally required, others arise from university or faculty policy.",
+                                'MyResearch is a portal that supports researchers in preparing their research ("study").'
                             )
                         }}
                     </p>
-                    <i18n-t keypath="MyResearch currently offers a {processingRegister} to comply with legal obligations under the General Data Protection Regulation (GDPR). In the future, more and more preparatory tasks will be accommodated in MyResearch, so that you as a researcher can meet multiple requirements through a single request. For example, you might submit your study for ethical review and simultaneously create a data management plan." tag="p">
-                        <template #processingRegister>
-                            <b>{{
-                                $t( "processing register for personal data in your research" )
+                    <ul>
+                        <li class="mb-2"><strong>{{ $t("For whom?") }}</strong>
+                        {{
+                            $t(
+                                "Researchers from the Faculty of Humanities and the Faculty of Law, Economics and Governance at Utrecht University."
+                            )
+                        }}
+                        </li>
+                        <li class="mb-2"><strong>{{ $t("Why?") }}</strong>
+                            {{
+                                $t(
+                                    "Some preparatory activities are required by law, while others are required by university or faculty policy."
+                                )
                             }}
-                            </b>
-                        </template>
-                    </i18n-t>
+                        </li>
+                        <li class="mb-2"><strong>{{ $t("What?") }}</strong>
+                            {{
+                                $t(
+                                    "Currently, MyResearch consists of a processing register for personal data. In the future, you will also be able to generate data management plans and request ethical assessment here. The processing register is a requirement under the GDPR (General Data Protection Regulation)."
+                                )
+                            }}
+                        </li>
+                    </ul>
                 </div>
             </div>
             <aside class="uu-sidebar pe-3">
@@ -44,7 +59,10 @@ definePageMeta({
                 <h2 class="uu-sidebar-header-linked">
                     {{ $t("Processing Register") }}
                 </h2>
-                <i18n-t keypath="If you process {personalData} relating to one or more identifiable persons (usually participants) in your research, you are obliged to complete the processing register." tag="p">
+                <i18n-t
+                    keypath="If you process {personalData} relating to one or more identifiable persons (usually participants) in your research, you are obliged to complete the processing register."
+                    tag="p"
+                >
                     <template #personalData>
                         <a href="https://utrechtuniversity.github.io/dataprivacyhandbook/personal-data.html" target="_blank">{{
                             $t( "personal data" )
@@ -55,7 +73,7 @@ definePageMeta({
                 <p>
                     {{
                         $t(
-                            "Via MyResearch, the participating faculties offer a processing register that is carefully tailored to the needs of researchers and to the processing operations that most commonly occur in scientific research. You do not need to have knowledge of the GDPR to register the processing in your study: you can complete and submit your registration using a helpful questionnaire.",
+                            "You do not need to have any knowledge of the GDPR: your registration is completed with the help of a practical questionnaire.",
                         )
                     }}
                 </p>
@@ -77,7 +95,7 @@ definePageMeta({
                 <p>
                     {{
                         $t(
-                            'After logging in with your Solis ID, you can start right away by navigating to "New registration".',
+                            'After logging in with your Solis ID, you can start right away by navigating to "New study".',
                         )
                     }}
                 </p>

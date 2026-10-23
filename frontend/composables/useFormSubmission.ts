@@ -45,7 +45,7 @@ export function useFormSubmission(options: FormSubmissionOptions) {
                 if (context?.reloadStudy ?? defaultOptions.reloadStudy) {
                     cache.evict({ fieldName: "study" });
                 }
-                cache.evict({ fieldName: "repeatableStepsWithRepeats" });
+                cache.evict({ fieldName: "repeatableSteps" });
                 cache.gc();
             },
         },
