@@ -25,4 +25,4 @@ COPY . .
 EXPOSE 3000
 
 # Run the development server and codegen in parallel.
-CMD ["npm", "run", "dev", "&", "npm", "run", "codegen"]
+CMD ["npm", "run", "codegen", "&", "npm", "run", "dev"]
