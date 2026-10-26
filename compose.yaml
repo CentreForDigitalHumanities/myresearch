@@ -115,7 +115,6 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
-    entrypoint: ./start_dev.sh
     depends_on:
       django-dev:
         condition: service_healthy
@@ -133,6 +132,12 @@ services:
       - ./frontend/generated:/app/generated
       - ./frontend/.nuxt:/app/.nuxt
       - ./frontend/node_modules:/app/node_modules
+      - ./frontend:/app
+      - node_modules:/app/node_modules
+    command: sh -c "
+      npm run codegen &
+      npm run dev
+      "
     develop:
       watch:
         - path: ./frontend
