@@ -1,6 +1,6 @@
-ARG NODE_VERSION=22.16.0-alpine
+ARG NODE_VERSION=26
 
-FROM node:${NODE_VERSION} AS dev
+FROM node:${NODE_VERSION}-alpine AS dev
 
 ENV NODE_ENV=development
 
@@ -16,13 +16,11 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Install with mount to cache node_modules.
-RUN --mount=type=cache,target=/root/.npm npm install
-
-COPY . .
+RUN --mount=type=cache,target=/root/.npm npm ci
 
 # Nuxt 3 default port is 3000.
 # Does not actually expose the port but documents it.
 EXPOSE 3000
 
 # Run the development server and codegen in parallel.
-CMD ["npm", "run", "dev", "&", "npm", "run", "codegen"]
+CMD ["npm", "run", "codegen", "&", "npm", "run", "dev"]
