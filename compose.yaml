@@ -131,6 +131,7 @@ services:
     volumes:
       - ./frontend:/app
       - node_modules:/app/node_modules
+      - nuxt_cache:/app/.nuxt
     command: sh -c "
       npm run codegen &
       npm run dev
@@ -187,6 +188,7 @@ volumes:
   bapyca:
   backend_static:
   node_modules:
+  nuxt_cache:
 
 networks:
     my-research:
