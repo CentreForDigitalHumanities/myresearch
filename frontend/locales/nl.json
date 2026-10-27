@@ -138,7 +138,6 @@
     "The date must be in the future": "De datum moet in de toekomst zijn",
     "Registration for the FEtC-H can be done at the": "Registratie voor de FEtC-GW kan gebeuren bij de",
     "FAQ": "FAQ",
-
     "What is MyResearch?": "Wat is MyResearch?",
     "MyResearch is a portal that supports researchers in preparing their research (\"study\").": "MyResearch is een portal die onderzoekers ondersteunt in het voorbereiden van hun onderzoek (\"studie\").",
     "For whom?": "Voor wie?",
@@ -147,11 +146,9 @@
     "Some preparatory activities are required by law, while others are required by university or faculty policy.": "Sommige voorbereidende activiteiten zijn wettelijk verplicht, andere komen voort uit universitair of facultair beleid.",
     "What?": "Wat?",
     "Currently, MyResearch consists of a processing register for personal data. In the future, you will also be able to generate data management plans and request ethical assessment here. The processing register is a requirement under the GDPR (General Data Protection Regulation).": "Momenteel bestaat MyResearch uit een verwerkingsregister voor persoonsgegevens. In de toekomst kun je hier ook datamanagementplannen laten genereren en kun je ethische toetsing aanvragen. Het verwerkingsregister is een vereiste vanuit de AVG (Algemene verordening gegevensbescherming).",
-    
     "If you process {personalData} relating to one or more identifiable persons (usually participants) in your research, you are obliged to complete the processing register.": "Als jij in jouw onderzoek {personalData} verwerkt met betrekking tot een of meerdere identificeerbare personen (meestal participanten), ben je verplicht het verwerkingsregister in te vullen.",
     "personal data": "persoonsgegevens",
     "You do not need to have any knowledge of the GDPR: your registration is completed with the help of a practical questionnaire.": "Je hoeft geen kennis van de AVG te hebben: jouw registratie wordt aan de hand van een behulpzame vragenlijst voltooid.",
-
     "Where can I start?": "Waar kan ik beginnen?",
     "The conducting researcher registers the research activities per study. The definition of a “study” may differ per research project. If in doubt, we advise you to take this definition narrowly. That is, the activities required to answer one research question. You can always make additional registrations.": "Het registreren van je onderzoeksactiviteiten gebeurt per studie door de uitvoerende onderzoeker. De definitie van een “studie” kan per onderzoeksproject verschillen. Bij twijfel raden we je aan om deze definitie nauw te nemen. Dat wil zeggen: de activiteiten die nodig zijn voor het beantwoorden van één onderzoeksvraag. Je kunt altijd nog aanvullende registraties maken.",
     "After logging in with your Solis ID, you can start right away by navigating to \"New study\".": "Na in te loggen met je Solis-ID kun je gelijk beginnen door te navigeren naar \"Nieuwe studie\".",
@@ -185,5 +182,6 @@
     "Edit": "Wijzig",
     "An error occurred while adding a question. Please try again.": "Er is een fout opgetreden bij het toevoegen van een vraag. Probeer het opnieuw.",
     "An error occurred while deleting a question. Please try again.": "Er is een fout opgetreden bij het verwijderen van een vraag. Probeer het opnieuw.",
-    "Click to add another": "Voeg nog een toe"
+    "Click to add another": "Voeg nog een toe",
+    "Your study has been submitted. If you'd like to make any further changes, please contact the Privacy Officer:": "Je studie is ingediend. Als je je studie nog wilt wijzigen, neem dan contact op met de Privacy Officer:"
 }
