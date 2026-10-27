@@ -131,7 +131,7 @@ async function handleAddStep(): Promise<void> {
         }
 
         // get the new repeatableStep using a query, to get the slug. If we do
-        // not yet have any repeatableStep created, we may not yet have the slug
+        // not yet have any repeatableStep created, we may not yet have the slug.
         const { data } = await client.query({
             query: GET_REPEATABLE_STEP_QUERY,
             variables: {
@@ -141,6 +141,7 @@ async function handleAddStep(): Promise<void> {
             },
         });
         const newStep = data.repeatableSteps?.[0];
+        // We now force the user to go to their newly created repeatableStep.
         if (newStep?.repeatIndex) {
             emit(
                 "repeat-step-clicked",
