@@ -135,12 +135,6 @@ services:
       npm run codegen &
       npm run dev
       "
-    develop:
-      watch:
-        - path: ./frontend/package.json
-          action: rebuild
-        - path: ./frontend/vite.config.js
-          action: restart
 
   vue-prod:
     image: mr-vue-prod
