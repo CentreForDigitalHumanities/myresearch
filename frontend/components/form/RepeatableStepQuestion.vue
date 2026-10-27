@@ -3,7 +3,7 @@ import type { RepeatableStepQuestionWithValue } from "~/composables/useProcessFo
 import { useSubmissionId } from "~/composables/useRouteParams";
 import FormLabel from "../form/FormLabel.vue";
 import { BSButton } from "cdh-vue-lib";
-import { useMutation } from "@vue/apollo-composable";
+import { useApolloClient, useMutation } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
 import { useNotification } from "~/composables/useNotification";
 import { useI18n } from "vue-i18n";
@@ -75,13 +75,15 @@ const { mutate: createStepRepeat } = useMutation(CREATE_STEP_REPEAT_MUTATION, {
     update: postUpdateCacheEvict,
 });
 
+const { client } = useApolloClient();
+
 const { mutate: deleteStepRepeat } = useMutation(DELETE_STEP_REPEAT_MUTATION, {
     update: postUpdateCacheEvict,
 });
 
 function postUpdateCacheEvict(cache: ApolloCache<unknown>): void {
     cache.evict({ fieldName: "form" });
-    cache.evict({ fieldName: "repeatableStepsWithRepeats" });
+    cache.evict({ fieldName: "repeatableSteps" });
     cache.gc();
 }
 
@@ -109,24 +111,48 @@ const repeatableSteps = computed(
     () => repeatableStepResult.value?.repeatableSteps ?? [],
 );
 
-function handleAddStep(): void {
+async function handleAddStep(): Promise<void> {
     const submissionId = currentSubmissionId.value;
     if (!submissionId) {
         return;
     }
 
-    createStepRepeat({
-        input: {
-            submissionId,
-            stepId: props.question.repeatableStepId,
-            parentId: props.parentRepeatIndex?.toString() ?? null,
-        },
-    }).catch(() => {
+    try {
+        const result = await createStepRepeat({
+            input: {
+                submissionId,
+                stepId: props.question.repeatableStepId,
+                parentId: props.parentRepeatIndex?.toString() ?? null,
+            },
+        });
+        const newRepeatIndex = result?.data?.createStepRepeat?.newRepeatIndex;
+        if (!newRepeatIndex) {
+            return;
+        }
+
+        // get the new repeatableStep using a query, to get the slug. If we do
+        // not yet have any repeatableStep created, we may not yet have the slug
+        const { data } = await client.query({
+            query: GET_REPEATABLE_STEP_QUERY,
+            variables: {
+                repeatableId: props.question.repeatableStepId,
+                submissionId,
+                repeatIndices: [newRepeatIndex],
+            },
+        });
+        const newStep = data.repeatableSteps?.[0];
+        if (newStep?.repeatIndex) {
+            emit(
+                "repeat-step-clicked",
+                `${newStep.slug}.${String(newStep.repeatIndex)}`,
+            );
+        }
+    } catch {
         useNotification(
             t("An error occurred while adding a step. Please try again."),
             "danger",
         );
-    });
+    }
 }
 
 function handleDeleteStep(repeatIndexId: number): void {
