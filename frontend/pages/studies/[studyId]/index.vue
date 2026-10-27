@@ -5,10 +5,13 @@ import type { GetStudyQuery } from "~/generated/gql/graphql";
 import StudyDetailsSidebar from "~/components/studyDetail/StudyDetailsSidebar.vue";
 import AvailableActions from "~/components/studyDetail/AvailableActions.vue";
 import StudyProgressBar from "~/components/studyDetail/StudyProgressBar.vue";
+import { SubmissionStatus } from "~/generated/gql/graphql";
 import { useStudyId } from "~/composables/useRouteParams";
 
 const currentUserStore = useCurrentUserStore();
 await callOnce("user", () => currentUserStore.loadData());
+
+const currentUser = computed(() => useCurrentUserStore().currentUser);
 
 const GET_STUDY = graphql(`
     query GetStudy($id: ID!) {
@@ -26,6 +29,11 @@ const GET_STUDY = graphql(`
                 id
                 email
             }
+            statuses {
+                id
+                status
+                createdAt
+            }
         }
     }
 `);
@@ -39,6 +47,12 @@ const { result: studyResult } = useQuery<GetStudyQuery>(
 );
 
 const study = computed(() => studyResult.value?.study ?? null);
+const statuses = computed(() => study.value?.statuses ?? []);
+
+const isSubmitted = computed(() => {
+    const lastStatus = statuses.value.at(-1)?.status;
+    return lastStatus === SubmissionStatus.Submitted;
+});
 </script>
 
 <template>
@@ -71,6 +85,26 @@ const study = computed(() => studyResult.value?.study ?? null);
                                 {{ study.reference }} -
                                 <em>{{ study.title }}</em>
                             </h1>
+                            <div
+                                v-if="
+                                    isSubmitted &&
+                                    currentUser?.id === study.createdBy.id
+                                "
+                                class="alert alert-info"
+                            >
+                                {{
+                                    $t(
+                                        "Your study has been submitted. If you'd like to make any further changes, please contact the Privacy Officer:",
+                                    )
+                                }}
+                                <a href="mailto:privacy.gw@uu.nl"
+                                    >privacy.gw@uu.nl</a
+                                >
+                                /
+                                <a href="mailto:privacy.rebo@uu.nl"
+                                    >privacy.rebo@uu.nl</a
+                                >
+                            </div>
                             <p>
                                 {{
                                     $t(
@@ -86,7 +120,10 @@ const study = computed(() => studyResult.value?.study ?? null);
                             />
                         </div>
                         <div class="col-2">
-                            <StudyProgressBar :study-id="study.id" />
+                            <StudyProgressBar
+                                v-if="statuses.length > 0"
+                                :statuses="statuses"
+                            />
                         </div>
                     </div>
                 </div>
