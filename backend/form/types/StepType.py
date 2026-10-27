@@ -28,6 +28,7 @@ class StepType(ObjectType):
     slug = String(required=True)
     repeat_index = Int()
     is_overview = Boolean(required=True)
+    is_repeatable = Boolean(required=True)
 
     questions = List(
         NonNull(BaseQuestionInterface),

@@ -186,6 +186,7 @@ describe("useProcessForm", () => {
                 descriptionEn: "Step 1 description",
                 descriptionNl: "Beschrijving step 1",
                 isOverview: false,
+                isRepeatable: false,
                 questions: [
                     createTextQuestion("q1", true),
                     createNumberQuestion("q2", false, true),
@@ -201,6 +202,7 @@ describe("useProcessForm", () => {
                         descriptionEn: "Substep 1 description",
                         descriptionNl: "Beschrijving substep 1",
                         isOverview: false,
+                        isRepeatable: false,
                         questions: [
                             createTrueFalseQuestion("q3", true, true),
                             createFileUploadQuestion("q4", false),
@@ -218,6 +220,7 @@ describe("useProcessForm", () => {
                 descriptionEn: "Step 2 description",
                 descriptionNl: "Beschrijving step 2",
                 isOverview: false,
+                isRepeatable: false,
                 questions: [
                     createDateQuestion("q5", true),
                     createSelectQuestion("q6", false),
@@ -472,6 +475,7 @@ describe("useProcessForm", () => {
                         descriptionEn: "Step 1 description",
                         descriptionNl: "Beschrijving step 1",
                         isOverview: false,
+                        isRepeatable: false,
                         questions: [createNumberQuestion("q1", false, false)],
                         substeps: [],
                     },

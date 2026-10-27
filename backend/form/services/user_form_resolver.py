@@ -119,6 +119,7 @@ class UserFormResolver:
             slug=slug,
             repeat_index=repeat_index,  # type: ignore
             is_overview=step.is_overview,  # type: ignore
+            is_repeatable=step.is_repeatable,  # type: ignore
             questions=questions,  # type: ignore
             substeps=substeps,  # type: ignore
         )
