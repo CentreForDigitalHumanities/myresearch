@@ -169,46 +169,30 @@ function getAllSteps(form: FormWithValues): CombinedStepWithValues[] {
     });
 }
 
+const navigableSteps = computed(() =>
+    allSteps.value.filter((step) => !step.isRepeatable),
+);
+
 function findCurrentStepIndex(): number {
-    const selectedStepValue = selectedStep.value;
-    if (!selectedStepValue) {
+    const slug = selectedStep.value?.slug;
+    if (!slug) {
         return -1;
     }
+    return navigableSteps.value.findIndex((step) => step.slug === slug);
+}
 
-    const steps = allSteps.value;
-    return steps.findIndex((step) => step.slug === selectedStepValue.slug);
+function getAdjacentStepSlug(offset: 1 | -1): string {
+    const index = findCurrentStepIndex();
+    const target = navigableSteps.value[index + offset];
+    return index === -1 ? props.currentStepSlug : target.slug;
 }
 
 function getNextStepSlug(): string {
-    if (!selectedStep.value) {
-        return props.currentStepSlug;
-    }
-
-    const steps = allSteps.value;
-    const currentIndex = findCurrentStepIndex();
-
-    if (currentIndex === -1 || currentIndex >= steps.length - 1) {
-        // Already at the last step or step not found.
-        return props.currentStepSlug;
-    }
-
-    return steps[currentIndex + 1].slug;
+    return getAdjacentStepSlug(1);
 }
 
 function getPreviousStepSlug(): string {
-    if (!selectedStep.value) {
-        return props.currentStepSlug;
-    }
-
-    const steps = allSteps.value;
-    const currentIndex = findCurrentStepIndex();
-
-    if (currentIndex <= 0) {
-        // Already at the first step or step not found.
-        return props.currentStepSlug;
-    }
-
-    return steps[currentIndex - 1].slug;
+    return getAdjacentStepSlug(-1);
 }
 
 /**
