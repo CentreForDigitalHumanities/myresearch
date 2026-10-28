@@ -184,7 +184,7 @@ function findCurrentStepIndex(): number {
 function getAdjacentStepSlug(offset: 1 | -1): string {
     const index = findCurrentStepIndex();
     const target = navigableSteps.value[index + offset];
-    return index === -1 ? props.currentStepSlug : target.slug;
+    return index === -1 || !target ? props.currentStepSlug : target.slug;
 }
 
 function getNextStepSlug(): string {
