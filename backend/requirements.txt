@@ -138,7 +138,7 @@ pygments==2.20.0
     # via
     #   bpython
     #   pytest
-pyjwt==2.13.0
+pyjwt==2.15.0
     # via cdh-django-core
 pyopenssl==24.2.1
     # via pysaml2
