@@ -1,33 +1,12 @@
 <script setup lang="ts">
-import { useQuery } from "@vue/apollo-composable";
-import { graphql } from "~/generated/gql";
+import type { GetStudyQuery } from "~/generated/gql/graphql";
 import { useI18n } from "vue-i18n";
 import { useLocalDateTime } from "~/composables/useLocalisation";
 import { SubmissionStatus } from "~/generated/gql/graphql";
-import Loading from "~/components/shared/Loading.vue";
 
 const props = defineProps<{
-    studyId: string;
+    statuses: NonNullable<GetStudyQuery["study"]>["statuses"];
 }>();
-
-const GET_STUDY_STATUSES = graphql(`
-    query GetStudyStatuses($id: ID!) {
-        study(id: $id, mrPermission: "View") {
-            id
-            statuses {
-                id
-                status
-                createdAt
-            }
-        }
-    }
-`);
-
-const { result, loading } = useQuery(GET_STUDY_STATUSES, () => ({
-    id: props.studyId,
-}));
-
-const statuses = computed(() => result.value?.study?.statuses ?? []);
 
 const { t } = useI18n();
 
@@ -36,7 +15,7 @@ const progressItems = computed(() => {
         [SubmissionStatus.Draft]: t("Returned to submitter"),
         [SubmissionStatus.Submitted]: t("Submitted"),
     };
-    const items = statuses.value.map((change, index) => ({
+    const items = props.statuses.map((change, index) => ({
         // The first draft will read as created
         label: index === 0 ? t("Created") : statusBubbleLabels[change.status],
         // Add the createdAt as the date, except if last status is draft, then just say "Now"
@@ -45,12 +24,12 @@ const progressItems = computed(() => {
         // and the first ("Created") will always be complete
         isComplete:
             change.status === SubmissionStatus.Submitted ||
-            index < statuses.value.length - 1 ||
+            index < props.statuses.length - 1 ||
             index === 0,
         isDisabled: false,
     }));
     // Add a "fake" Draft bubble when we only have one status change ("Created")
-    if (statuses.value.length === 1) {
+    if (props.statuses.length === 1) {
         items.push({
             label: t("Draft"),
             createdAt: t("Now"),
@@ -59,7 +38,7 @@ const progressItems = computed(() => {
         });
     }
     // If the most recent status is Draft, add a "fake" future submitted status
-    if (statuses.value.at(-1)?.status === SubmissionStatus.Draft) {
+    if (props.statuses.at(-1)?.status === SubmissionStatus.Draft) {
         items.push({
             label: t("Submitted"),
             createdAt: null,
@@ -72,10 +51,7 @@ const progressItems = computed(() => {
 </script>
 
 <template>
-    <div v-if="loading">
-        <Loading />
-    </div>
-    <div v-else-if="progressItems.length > 1" class="stepper h-100">
+    <div v-if="progressItems.length > 1" class="stepper h-100">
         <ul class="h-100 d-flex flex-column justify-content-between">
             <li v-for="(progressItem, index) in progressItems" :key="index">
                 <a

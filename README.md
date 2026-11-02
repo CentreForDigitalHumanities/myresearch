@@ -66,7 +66,7 @@ volume and updated automatically every time the container starts.
 
 ### Prerequisites
 
-- Node.js 22.16.0 (LTS) has been tested. Other versions may work.
+- Node.js 26 (LTS). Other versions may work.
 - Python 3.11 has been tested. Other versions may work.
 - PostgreSQL (for local database)
 
