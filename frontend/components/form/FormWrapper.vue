@@ -124,7 +124,8 @@ const selectedStep = computed(() => {
 // The step containing the RepeatableStepQuestion that controls the selected repeatable step
 const repeatableParentStep = computed(() => {
     const step = selectedStep.value;
-    if (!step?.isRepeatable) {
+    const stepRepeatIndex = step?.repeatIndex ?? null;
+    if (!step?.isRepeatable || !stepRepeatIndex) {
         return null;
     }
     return (
@@ -132,7 +133,7 @@ const repeatableParentStep = computed(() => {
             candidate.questions.some(
                 (question) =>
                     question.__typename === "RepeatableStepQuestionType" &&
-                    question.repeatableStepId === step.stepId,
+                    question.value.includes(stepRepeatIndex),
             ),
         ) ?? null
     );
