@@ -2162,7 +2162,7 @@
             "repeatable_step": 15,
             "create_text": "add data subject group",
             "create_text_en": "add data subject group",
-            "create_text_nl": "voeg datasubject groep toe",
+            "create_text_nl": "Voeg datasubjectgroep toe",
             "none_yet_text": "No data groups",
             "none_yet_text_en": "No data groups",
             "none_yet_text_nl": "Geen datagroepen"
