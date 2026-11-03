@@ -326,7 +326,7 @@ function handleBackNavigation() {
                             class="btn-arrow-left"
                             @click="navigateToSlug(repeatableParentStep.slug)"
                         >
-                            {{ $t("Go back") }}
+                            {{ $t("Save") }}
                         </BSButton>
                     </template>
                 </div>
