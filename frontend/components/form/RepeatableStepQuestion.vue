@@ -3,8 +3,12 @@ import type { RepeatableStepQuestionWithValue } from "~/composables/useProcessFo
 import { useSubmissionId } from "~/composables/useRouteParams";
 import FormLabel from "../form/FormLabel.vue";
 import { BSButton } from "cdh-vue-lib";
-import { useMutation } from "@vue/apollo-composable";
+import { useApolloClient, useMutation } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
+import type {
+    RsqCreateStepRepeatMutation,
+    RsqCreateStepRepeatMutationVariables,
+} from "~/generated/gql/graphql";
 import { useNotification } from "~/composables/useNotification";
 import { useI18n } from "vue-i18n";
 import { useTranslateableAttribute } from "~/composables/useLocalisation";
@@ -31,6 +35,7 @@ const CREATE_STEP_REPEAT_MUTATION = graphql(`
     mutation RSQCreateStepRepeat($input: CreateStepRepeatMutationInput!) {
         createStepRepeat(input: $input) {
             newRepeatIndex
+            newRepeatSlug
             errors {
                 field
                 messages
@@ -71,7 +76,10 @@ const DELETE_STEP_REPEAT_MUTATION = graphql(`
     }
 `);
 
-const { mutate: createStepRepeat } = useMutation(CREATE_STEP_REPEAT_MUTATION, {
+const { mutate: createStepRepeat } = useMutation<
+    RsqCreateStepRepeatMutation,
+    RsqCreateStepRepeatMutationVariables
+>(CREATE_STEP_REPEAT_MUTATION, {
     update: postUpdateCacheEvict,
 });
 
@@ -81,7 +89,7 @@ const { mutate: deleteStepRepeat } = useMutation(DELETE_STEP_REPEAT_MUTATION, {
 
 function postUpdateCacheEvict(cache: ApolloCache<unknown>): void {
     cache.evict({ fieldName: "form" });
-    cache.evict({ fieldName: "repeatableStepsWithRepeats" });
+    cache.evict({ fieldName: "repeatableSteps" });
     cache.gc();
 }
 
@@ -109,24 +117,33 @@ const repeatableSteps = computed(
     () => repeatableStepResult.value?.repeatableSteps ?? [],
 );
 
-function handleAddStep(): void {
+async function handleAddStep(): Promise<void> {
     const submissionId = currentSubmissionId.value;
     if (!submissionId) {
         return;
     }
 
-    createStepRepeat({
-        input: {
-            submissionId,
-            stepId: props.question.repeatableStepId,
-            parentId: props.parentRepeatIndex?.toString() ?? null,
-        },
-    }).catch(() => {
+    try {
+        // first we create a new repeatableStep
+        const result = await createStepRepeat({
+            input: {
+                submissionId,
+                stepId: props.question.repeatableStepId,
+                parentId: props.parentRepeatIndex?.toString() ?? null,
+            },
+        });
+        const newRepeatSlug = result?.data?.createStepRepeat?.newRepeatSlug;
+        if (!newRepeatSlug) {
+            return;
+        }
+        // Then we force the user to go to their newly created repeatableStep.
+        emit("repeat-step-clicked", newRepeatSlug);
+    } catch {
         useNotification(
             t("An error occurred while adding a step. Please try again."),
             "danger",
         );
-    });
+    }
 }
 
 function handleDeleteStep(repeatIndexId: number): void {

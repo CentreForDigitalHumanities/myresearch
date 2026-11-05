@@ -121,6 +121,24 @@ const selectedStep = computed(() => {
     return steps.find(({ slug }) => slug === props.currentStepSlug) ?? null;
 });
 
+// The step containing the RepeatableStepQuestion that controls the selected repeatable step
+const repeatableParentStep = computed(() => {
+    const step = selectedStep.value;
+    const stepRepeatIndex = step?.repeatIndex ?? null;
+    if (!step?.isRepeatable || !stepRepeatIndex) {
+        return null;
+    }
+    return (
+        allSteps.value.find((candidate) =>
+            candidate.questions.some(
+                (question) =>
+                    question.__typename === "RepeatableStepQuestionType" &&
+                    question.value.includes(stepRepeatIndex),
+            ),
+        ) ?? null
+    );
+});
+
 const firstStepSelected = computed(() => {
     const selected = selectedStep.value;
     if (!selected) {
@@ -152,46 +170,30 @@ function getAllSteps(form: FormWithValues): CombinedStepWithValues[] {
     });
 }
 
+const navigableSteps = computed(() =>
+    allSteps.value.filter((step) => !step.isRepeatable),
+);
+
 function findCurrentStepIndex(): number {
-    const selectedStepValue = selectedStep.value;
-    if (!selectedStepValue) {
+    const slug = selectedStep.value?.slug;
+    if (!slug) {
         return -1;
     }
+    return navigableSteps.value.findIndex((step) => step.slug === slug);
+}
 
-    const steps = allSteps.value;
-    return steps.findIndex((step) => step.slug === selectedStepValue.slug);
+function getAdjacentStepSlug(offset: 1 | -1): string {
+    const index = findCurrentStepIndex();
+    const target = navigableSteps.value[index + offset];
+    return index === -1 || !target ? props.currentStepSlug : target.slug;
 }
 
 function getNextStepSlug(): string {
-    if (!selectedStep.value) {
-        return props.currentStepSlug;
-    }
-
-    const steps = allSteps.value;
-    const currentIndex = findCurrentStepIndex();
-
-    if (currentIndex === -1 || currentIndex >= steps.length - 1) {
-        // Already at the last step or step not found.
-        return props.currentStepSlug;
-    }
-
-    return steps[currentIndex + 1].slug;
+    return getAdjacentStepSlug(1);
 }
 
 function getPreviousStepSlug(): string {
-    if (!selectedStep.value) {
-        return props.currentStepSlug;
-    }
-
-    const steps = allSteps.value;
-    const currentIndex = findCurrentStepIndex();
-
-    if (currentIndex <= 0) {
-        // Already at the first step or step not found.
-        return props.currentStepSlug;
-    }
-
-    return steps[currentIndex - 1].slug;
+    return getAdjacentStepSlug(-1);
 }
 
 /**
@@ -301,21 +303,33 @@ function handleBackNavigation() {
                     />
                 </form>
                 <div class="btn-group">
-                    <BSButton
-                        v-if="!firstStepSelected"
-                        variant="primary"
-                        class="btn-arrow-left"
-                        @click="navigateToSlug(getPreviousStepSlug())"
-                    >
-                        {{ $t("Previous") }}
-                    </BSButton>
-                    <BSButton
-                        variant="primary"
-                        class="btn-arrow-right"
-                        @click="navigateToSlug(getNextStepSlug())"
-                    >
-                        {{ $t("Next") }}
-                    </BSButton>
+                    <template v-if="!selectedStep.isRepeatable">
+                        <BSButton
+                            v-if="!firstStepSelected"
+                            variant="primary"
+                            class="btn-arrow-left"
+                            @click="navigateToSlug(getPreviousStepSlug())"
+                        >
+                            {{ $t("Previous") }}
+                        </BSButton>
+                        <BSButton
+                            variant="primary"
+                            class="btn-arrow-right"
+                            @click="navigateToSlug(getNextStepSlug())"
+                        >
+                            {{ $t("Next") }}
+                        </BSButton>
+                    </template>
+                    <template v-else-if="repeatableParentStep">
+                        <BSButton
+                            v-if="!firstStepSelected"
+                            variant="primary"
+                            class="btn-arrow-left"
+                            @click="navigateToSlug(repeatableParentStep.slug)"
+                        >
+                            {{ $t("Save") }}
+                        </BSButton>
+                    </template>
                 </div>
             </div>
             <div class="col-3 d-lg-block d-none">
