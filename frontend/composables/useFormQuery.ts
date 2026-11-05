@@ -20,6 +20,7 @@ const GET_FORM = graphql(`
                 descriptionEn
                 descriptionNl
                 isOverview
+                isRepeatable
                 ...StepInfoTextFragment
                 questions {
                     questionId
@@ -78,6 +79,7 @@ const GET_FORM = graphql(`
                     descriptionEn
                     descriptionNl
                     isOverview
+                    isRepeatable
                     ...StepInfoTextFragment
                     questions {
                         questionId

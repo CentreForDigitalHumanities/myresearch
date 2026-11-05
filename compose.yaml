@@ -115,7 +115,6 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
-    entrypoint: ./start_dev.sh
     depends_on:
       django-dev:
         condition: service_healthy
@@ -130,25 +129,13 @@ services:
       - NUXT_PUBLIC_API_URL=${BASE_URL}/api
       - NUXT_PUBLIC_SAML_URL=${BASE_URL}/saml
     volumes:
-      - ./frontend/generated:/app/generated
-      - ./frontend/.nuxt:/app/.nuxt
-      - ./frontend/node_modules:/app/node_modules
-    develop:
-      watch:
-        - path: ./frontend
-          target: /app
-          action: sync
-          ignore:
-            - node_modules
-            - .nuxt
-            - dist
-            - generated
-        - path: ./frontend/package.json
-          target: /app/package.json
-          action: restart
-        - path: ./frontend/vite.config.js
-          target: /app/vite.config.js
-          action: restart
+      - ./frontend:/app
+      - node_modules:/app/node_modules
+      - nuxt_cache:/app/.nuxt
+    command: sh -c "
+      npm run codegen &
+      npm run dev
+      "
 
   vue-prod:
     image: mr-vue-prod
@@ -200,6 +187,8 @@ volumes:
   pgdata:
   bapyca:
   backend_static:
+  node_modules:
+  nuxt_cache:
 
 networks:
     my-research:

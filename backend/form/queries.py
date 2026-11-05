@@ -161,6 +161,7 @@ class RepeatableStepQueries(ObjectType):
                 description_en=repeatable_step.description_en,
                 slug=repeatable_step.slug,
                 is_overview=repeatable_step.is_overview,
+                is_repeatable=repeatable_step.is_repeatable,
                 questions=[],
                 substeps=[],
                 repeat_index=int(repeat_idx.id),

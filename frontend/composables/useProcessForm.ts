@@ -61,7 +61,7 @@ export type SelectQuestionWithValue = SelectQuestionType &
 
 export type RepeatableStepQuestionWithValue = RepeatableStepQuestionType &
     LocatedQuestion & {
-        value: null;
+        value: number[];
     };
 
 export type QuestionWithValue =
@@ -298,6 +298,15 @@ function addValueAndLocationToQuestion(
                     question.defaultValue,
                 ),
             };
+        case "RepeatableStepQuestionType":
+            return {
+                ...question,
+                location,
+                value: parseAnswer<number[]>(
+                    question.answer,
+                    question.__typename,
+                ),
+            };
         case "FileUploadQuestionType": {
             let fileValue: FileUploadAnswer | null = null;
             if (question.answer) {
@@ -310,13 +319,13 @@ function addValueAndLocationToQuestion(
                         "name" in parsed &&
                         "size" in parsed &&
                         typeof (parsed as FileUploadAnswer).value ===
-                            "string" &&
+                        "string" &&
                         typeof (parsed as FileUploadAnswer).name === "string" &&
                         typeof (parsed as FileUploadAnswer).size === "number"
                     ) {
                         fileValue = parsed as FileUploadAnswer;
                     }
-                } catch {}
+                } catch { }
             }
             return {
                 ...question,
@@ -324,12 +333,6 @@ function addValueAndLocationToQuestion(
                 value: fileValue,
             };
         }
-        case "RepeatableStepQuestionType":
-            return {
-                ...question,
-                location,
-                value: null,
-            };
     }
 }
 

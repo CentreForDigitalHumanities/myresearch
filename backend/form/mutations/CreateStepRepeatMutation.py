@@ -1,9 +1,11 @@
-from graphene import ID, InputObjectType, List, Mutation, NonNull, ResolveInfo
+from graphene import ID, String, InputObjectType, List, Mutation, NonNull, ResolveInfo
 from graphene_django.types import ErrorType
 
 from form.models.form import RepeatIndex, Step
 from form.models.responses import UserFormSubmission
 from main.models import User
+
+from form.services.user_form_resolver import generate_slug
 
 
 class CreateStepRepeatMutationInput(InputObjectType):
@@ -14,6 +16,7 @@ class CreateStepRepeatMutationInput(InputObjectType):
 
 class CreateStepRepeatMutation(Mutation):
     new_repeat_index = ID()
+    new_repeat_slug = String()
     errors = List(NonNull(ErrorType))
 
     class Arguments:
@@ -79,6 +82,7 @@ class CreateStepRepeatMutation(Mutation):
         repeatable_step.repeat_indices.add(new_repeat_index)
 
         return cls(
+            new_repeat_slug=generate_slug(repeatable_step, new_repeat_index),
             new_repeat_index=new_repeat_index.pk,  # type: ignore
             errors=[],  # type: ignore
         )
