@@ -5,6 +5,10 @@ import FormLabel from "../form/FormLabel.vue";
 import { BSButton } from "cdh-vue-lib";
 import { useApolloClient, useMutation } from "@vue/apollo-composable";
 import { graphql } from "~/generated/gql";
+import type {
+    RsqCreateStepRepeatMutation,
+    RsqCreateStepRepeatMutationVariables,
+} from "~/generated/gql/graphql";
 import { useNotification } from "~/composables/useNotification";
 import { useI18n } from "vue-i18n";
 import { useTranslateableAttribute } from "~/composables/useLocalisation";
@@ -31,6 +35,7 @@ const CREATE_STEP_REPEAT_MUTATION = graphql(`
     mutation RSQCreateStepRepeat($input: CreateStepRepeatMutationInput!) {
         createStepRepeat(input: $input) {
             newRepeatIndex
+            newRepeatSlug
             errors {
                 field
                 messages
@@ -71,11 +76,12 @@ const DELETE_STEP_REPEAT_MUTATION = graphql(`
     }
 `);
 
-const { mutate: createStepRepeat } = useMutation(CREATE_STEP_REPEAT_MUTATION, {
+const { mutate: createStepRepeat } = useMutation<
+    RsqCreateStepRepeatMutation,
+    RsqCreateStepRepeatMutationVariables
+>(CREATE_STEP_REPEAT_MUTATION, {
     update: postUpdateCacheEvict,
 });
-
-const { client } = useApolloClient();
 
 const { mutate: deleteStepRepeat } = useMutation(DELETE_STEP_REPEAT_MUTATION, {
     update: postUpdateCacheEvict,
@@ -118,6 +124,7 @@ async function handleAddStep(): Promise<void> {
     }
 
     try {
+        // first we create a new repeatableStep
         const result = await createStepRepeat({
             input: {
                 submissionId,
@@ -125,29 +132,12 @@ async function handleAddStep(): Promise<void> {
                 parentId: props.parentRepeatIndex?.toString() ?? null,
             },
         });
-        const newRepeatIndex = result?.data?.createStepRepeat?.newRepeatIndex;
-        if (!newRepeatIndex) {
+        const newRepeatSlug = result?.data?.createStepRepeat?.newRepeatSlug;
+        if (!newRepeatSlug) {
             return;
         }
-
-        // get the new repeatableStep using a query, to get the slug. If we do
-        // not yet have any repeatableStep created, we may not yet have the slug.
-        const { data } = await client.query({
-            query: GET_REPEATABLE_STEP_QUERY,
-            variables: {
-                repeatableId: props.question.repeatableStepId,
-                submissionId,
-                repeatIndices: [newRepeatIndex],
-            },
-        });
-        const newStep = data.repeatableSteps?.[0];
-        // We now force the user to go to their newly created repeatableStep.
-        if (newStep?.repeatIndex) {
-            emit(
-                "repeat-step-clicked",
-                `${newStep.slug}.${String(newStep.repeatIndex)}`,
-            );
-        }
+        // Then we force the user to go to their newly created repeatableStep.
+        emit("repeat-step-clicked", newRepeatSlug);
     } catch {
         useNotification(
             t("An error occurred while adding a step. Please try again."),
