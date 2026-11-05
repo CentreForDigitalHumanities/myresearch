@@ -5,6 +5,8 @@ from form.models.form import RepeatIndex, Step
 from form.models.responses import UserFormSubmission
 from main.models import User
 
+from form.services.user_form_resolver import generate_slug
+
 
 class CreateStepRepeatMutationInput(InputObjectType):
     submission_id = ID(required=True)
@@ -80,7 +82,7 @@ class CreateStepRepeatMutation(Mutation):
         repeatable_step.repeat_indices.add(new_repeat_index)
 
         return cls(
-            new_repeat_slug=f"{repeatable_step.slug}.{new_repeat_index.pk}",
+            new_repeat_slug=generate_slug(repeatable_step, new_repeat_index),
             new_repeat_index=new_repeat_index.pk,  # type: ignore
             errors=[],  # type: ignore
         )
