@@ -4,7 +4,7 @@ from django.db import IntegrityError, transaction
 from django.core.exceptions import ObjectDoesNotExist
 
 from form.models import MRForm, SelectOption, SelectQuestion, Step, TextQuestion
-from form.models.questions import SelectQuestionOption
+from form.models.questions import SelectOptionLink
 
 
 @pytest.mark.django_db(transaction=True)
@@ -58,7 +58,7 @@ def test_select_option_can_be_shared_between_questions(form: MRForm):
     shared = SelectOption.objects.create(label="Shared")
 
     for question in [question_1, question_2]:
-        SelectQuestionOption.objects.create(
+        SelectOptionLink.objects.create(
             question=question,
             option=shared,
             _order=0,
@@ -77,12 +77,12 @@ def test_select_option_order_is_independent_per_question(form: MRForm):
     second = SelectOption.objects.create(label="Second")
 
     for question in [question_1, question_2]:
-        SelectQuestionOption.objects.create(
+        SelectOptionLink.objects.create(
             question=question,
             option=first,
             _order=0,
         )
-        SelectQuestionOption.objects.create(
+        SelectOptionLink.objects.create(
             question=question,
             option=second,
             _order=1,

@@ -20,7 +20,7 @@ from form.models import (
     FileUploadQuestion,
     NumberQuestion,
     SelectQuestion,
-    SelectQuestionOption,
+    SelectOptionLink,
     TextQuestion,
     RepeatableStepQuestion,
 )
@@ -229,7 +229,7 @@ class SelectQuestionType(BaseQuestionMixin, ObjectType):
         # Annotate the default_selected field using the through model.
         return question.get_ordered_options().annotate(
             default_selected=Subquery(
-                SelectQuestionOption.objects.filter(
+                SelectOptionLink.objects.filter(
                     question=question,
                     option_id=OuterRef("pk"),
                     # Slice to get only one result. This is safe because there is a

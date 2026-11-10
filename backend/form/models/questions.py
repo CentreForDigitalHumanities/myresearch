@@ -134,7 +134,7 @@ class SelectOption(models.Model):
 class SelectQuestion(BaseQuestion):
     options = models.ManyToManyField(
         SelectOption,
-        through="form.SelectQuestionOption",
+        through="form.SelectOptionLink",
         related_name="questions",
     )
     multiple = models.BooleanField(
@@ -161,12 +161,12 @@ class SelectQuestion(BaseQuestion):
             raise ValueError("Option order must include every option exactly once.")
 
         for order, option_id in enumerate(option_ids):
-            SelectQuestionOption.objects.filter(
-                question=self, option_id=option_id
-            ).update(_order=order)
+            SelectOptionLink.objects.filter(question=self, option_id=option_id).update(
+                _order=order
+            )
 
 
-class SelectQuestionOption(models.Model):
+class SelectOptionLink(models.Model):
     """
     A through model for the M2M relationship between SelectQuestion and
     SelectOption, with additional ordering and default selection.
