@@ -1203,8 +1203,8 @@
             "is_repeatable": false,
             "annotation_key": null,
             "step_name_override": false,
-            "text": "departement / faculity",
-            "text_en": "departement / faculity",
+            "text": "departement / faculty",
+            "text_en": "departement / faculty",
             "text_nl": "departement / afdeling",
             "step": 16,
             "form": 1,
@@ -2137,9 +2137,9 @@
             "create_text": "New recipient",
             "create_text_en": "New recipient",
             "create_text_nl": "Nieuwe ontvanger",
-            "none_yet_text": "No recipients have been named.",
-            "none_yet_text_en": "No recipients have been named.",
-            "none_yet_text_nl": "Er zijn geen ontvangers ingevuld."
+            "none_yet_text": "No recipients",
+            "none_yet_text_en": "No recipients",
+            "none_yet_text_nl": "Geen ontvangers"
         }
     },
     {
@@ -2150,9 +2150,9 @@
             "create_text": "Add new",
             "create_text_en": "Add new",
             "create_text_nl": "Voeg toe",
-            "none_yet_text": "No documents yet",
-            "none_yet_text_en": "No documents yet",
-            "none_yet_text_nl": "Nog geen documenten"
+            "none_yet_text": "No documents",
+            "none_yet_text_en": "No documents",
+            "none_yet_text_nl": "Geen documenten"
         }
     },
     {
@@ -2176,9 +2176,9 @@
             "create_text": "Add UU researcher",
             "create_text_en": "Add UU researcher",
             "create_text_nl": "Voeg UU-onderzoeker toe",
-            "none_yet_text": "No UU co-researchers yet ...",
-            "none_yet_text_en": "No UU co-researchers yet ...",
-            "none_yet_text_nl": "Nog geen UU-medeonderzoekers ..."
+            "none_yet_text": "No UU co-researchers",
+            "none_yet_text_en": "No UU co-researchers",
+            "none_yet_text_nl": "Geen UU-medeonderzoekers"
         }
     },
     {
@@ -2189,9 +2189,9 @@
             "create_text": "Add researcher",
             "create_text_en": "Add researcher",
             "create_text_nl": "Voeg onderzoeker toe",
-            "none_yet_text": "Placeholder geen ingevulde onderzoekers",
-            "none_yet_text_en": "Placeholder geen ingevulde onderzoekers",
-            "none_yet_text_nl": "Placeholder geen ingevulde onderzoekers"
+            "none_yet_text": "No researchers",
+            "none_yet_text_en": "No researchers",
+            "none_yet_text_nl": "Geen onderzoekers"
         }
     },
     {
