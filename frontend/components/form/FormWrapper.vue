@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from "vue";
-import { BSButton, useConfirm } from "cdh-vue-lib";
+import { useConfirm } from "cdh-vue-lib";
 import type { QueriedForm } from "./FormWrapper";
 import FormStepper, { type FormStepperConfig } from "./FormStepper";
 import FormSideBar from "../form/FormSideBar.vue";
@@ -12,7 +12,7 @@ import useVuelidate from "@vuelidate/core";
 import { useStudyId } from "~/composables/useRouteParams";
 import SubmissionOverview from "~/components/form/overview/OverviewForm.vue";
 import { useI18n } from "vue-i18n";
-import { Send, TriangleAlert, MoveLeft } from "lucide-vue-next";
+import { TriangleAlert, MoveLeft } from "lucide-vue-next";
 import { useAnnotateErrors } from "~/composables/useAnnotateErrors";
 import { useNotification } from "~/composables/useNotification";
 
@@ -121,33 +121,6 @@ const selectedStep = computed(() => {
     return steps.find(({ slug }) => slug === props.currentStepSlug) ?? null;
 });
 
-// The step containing the RepeatableStepQuestion that controls the selected repeatable step
-const repeatableParentStep = computed(() => {
-    const step = selectedStep.value;
-    const stepRepeatIndex = step?.repeatIndex ?? null;
-    if (!step?.isRepeatable || !stepRepeatIndex) {
-        return null;
-    }
-    return (
-        allSteps.value.find((candidate) =>
-            candidate.questions.some(
-                (question) =>
-                    question.__typename === "RepeatableStepQuestionType" &&
-                    question.value.includes(stepRepeatIndex),
-            ),
-        ) ?? null
-    );
-});
-
-const firstStepSelected = computed(() => {
-    const selected = selectedStep.value;
-    if (!selected) {
-        return false;
-    }
-    const steps = allSteps.value;
-    return steps[0].slug === selected.slug;
-});
-
 const showSubmissionWarning = computed(
     // If we are on the overview step, but we have validation errors, show a warning
     () => !!(selectedStep.value?.isOverview && v$.value.$invalid),
@@ -168,32 +141,6 @@ function getAllSteps(form: FormWithValues): CombinedStepWithValues[] {
         }
         return steps;
     });
-}
-
-const navigableSteps = computed(() =>
-    allSteps.value.filter((step) => !step.isRepeatable),
-);
-
-function findCurrentStepIndex(): number {
-    const slug = selectedStep.value?.slug;
-    if (!slug) {
-        return -1;
-    }
-    return navigableSteps.value.findIndex((step) => step.slug === slug);
-}
-
-function getAdjacentStepSlug(offset: 1 | -1): string {
-    const index = findCurrentStepIndex();
-    const target = navigableSteps.value[index + offset];
-    return index === -1 || !target ? props.currentStepSlug : target.slug;
-}
-
-function getNextStepSlug(): string {
-    return getAdjacentStepSlug(1);
-}
-
-function getPreviousStepSlug(): string {
-    return getAdjacentStepSlug(-1);
 }
 
 /**
@@ -264,24 +211,14 @@ function handleBackNavigation() {
                     </span>
                 </div>
             </div>
-            <div class="btn-group">
-                <BSButton
-                    variant="primary"
-                    class="btn-arrow-left"
-                    @click="navigateToSlug(getPreviousStepSlug())"
-                >
-                    {{ $t("Previous") }}
-                </BSButton>
-                <BSButton
-                    v-if="selectedStep.isOverview"
-                    :disabled="showSubmissionWarning"
-                    :variant="showSubmissionWarning ? 'light' : 'success'"
-                    @click="finalSubmit"
-                >
-                    {{ $t("Submit") }}
-                    <Send class="ms-2" :size="16" />
-                </BSButton>
-            </div>
+            <FormNavButtons
+                :selected-step="selectedStep"
+                :all-steps="allSteps"
+                :disable-submit="showSubmissionWarning"
+                is-overview
+                @navigate-to-slug="navigateToSlug"
+                @final-submit="finalSubmit"
+            />
         </div>
         <template v-else>
             <div class="col-12 col-lg-6 pe-4">
@@ -302,35 +239,11 @@ function handleBackNavigation() {
                         @repeat-step-clicked="navigateToSlug"
                     />
                 </form>
-                <div class="btn-group">
-                    <template v-if="!selectedStep.isRepeatable">
-                        <BSButton
-                            v-if="!firstStepSelected"
-                            variant="primary"
-                            class="btn-arrow-left"
-                            @click="navigateToSlug(getPreviousStepSlug())"
-                        >
-                            {{ $t("Previous") }}
-                        </BSButton>
-                        <BSButton
-                            variant="primary"
-                            class="btn-arrow-right"
-                            @click="navigateToSlug(getNextStepSlug())"
-                        >
-                            {{ $t("Next") }}
-                        </BSButton>
-                    </template>
-                    <template v-else-if="repeatableParentStep">
-                        <BSButton
-                            v-if="!firstStepSelected"
-                            variant="primary"
-                            class="btn-arrow-left"
-                            @click="navigateToSlug(repeatableParentStep.slug)"
-                        >
-                            {{ $t("Save") }}
-                        </BSButton>
-                    </template>
-                </div>
+                <FormNavButtons
+                    :selected-step="selectedStep"
+                    :all-steps="allSteps"
+                    @navigate-to-slug="navigateToSlug"
+                />
             </div>
             <div class="col-3 d-lg-block d-none">
                 <FormSideBar :step="selectedStep" />
