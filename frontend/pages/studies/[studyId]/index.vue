@@ -94,7 +94,7 @@ const isSubmitted = computed(() => {
                             >
                                 {{
                                     $t(
-                                        "Your study has been submitted. If you'd like to make any further changes, please contact the Privacy Officer:",
+                                        "Your study has been submitted. If you would like to make any further changes, please contact the Privacy Officer:",
                                     )
                                 }}
                                 <a href="mailto:privacy.gw@uu.nl"
