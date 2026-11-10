@@ -29,6 +29,7 @@ def copy_option_assignments(apps, schema_editor):
 
     deduplicate_select_options(apps, schema_editor)
 
+
 def deduplicate_select_options(apps, schema_editor):
     """
     Part of the forward migrations: deduplicate identical SelectOptions.
@@ -42,7 +43,7 @@ def deduplicate_select_options(apps, schema_editor):
     seen_options: dict[tuple[str, str, str], tuple[int, set[int]]] = {}
     for option in SelectOption.objects.order_by("pk"):
         label_key = (option.label, option.label_en, option.label_nl)
-        
+
         # New/unseen label, add to map and record the question it was seen in.
         if label_key not in seen_options:
             seen_options[label_key] = (option.pk, {option.question_id})
