@@ -30,7 +30,9 @@ class StudyFilter(FilterSet):
 
     faculties = ModelMultipleChoiceFilter(
         field_name="faculty",
-        queryset=SelectOption.objects.filter(question__annotation_key="faculty"),
+        queryset=SelectOption.objects.filter(
+            questions__annotation_key="faculty"
+        ).distinct(),
         method="filter_faculties",
     )
 
@@ -70,7 +72,7 @@ class StudyFilter(FilterSet):
         """
         A generic method for creating filters based on SelectQuestion.
         For this to work:
-            - the SelectQuestion needs to have a string_id, so that it gets
+            - the SelectQuestion needs to have an annotation_key, so that it gets
             annotated to the Study
             - You'll need to use a ModelMultipleChoiceFilter, with:
                 - the SelectOptions as the queryset
@@ -86,7 +88,7 @@ class StudyFilter(FilterSet):
 
         queries = Q()
         for option_id in option_ids:
-            filter = {f"{name}__contains": option_id}
+            filter = {f"{name}__contains": str(option_id)}
             queries |= Q(**filter)
 
         return queryset.filter(queries)
