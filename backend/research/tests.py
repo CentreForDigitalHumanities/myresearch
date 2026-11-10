@@ -2,7 +2,7 @@ import pytest
 from django.contrib.auth.models import AnonymousUser, Group
 from unittest.mock import MagicMock
 
-from form.models.questions import SelectQuestionOption
+from form.models.questions import SelectOptionLink
 from main.models import MRGroups, MRPermission, User
 from research.models.study import YearCounter, Study
 from research.models.reviews import StatusChange, SubmissionStatus
@@ -398,7 +398,7 @@ class TestStudyManagerAnnotations:
         # Now create a shared SelectOption for the 'faculty' question.
         shared_option = SelectOption.objects.create(label="Humanities")
         for question in [question_1, question_2]:
-            SelectQuestionOption.objects.create(
+            SelectOptionLink.objects.create(
                 question=question,
                 option=shared_option,
                 _order=1,

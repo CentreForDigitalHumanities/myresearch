@@ -21,7 +21,7 @@ from .models import (
     QuestionResponse,
     StepCondition,
     QuestionCondition,
-    SelectQuestionOption,
+    SelectOptionLink,
 )
 
 # Utils
@@ -75,8 +75,8 @@ class SubstepInline(TinyMCETextFieldMixin, admin.StackedInline):
     verbose_name_plural = "Substeps"
 
 
-class SelectQuestionOptionInline(admin.TabularInline):
-    model = SelectQuestionOption
+class SelectOptionLinkInline(admin.TabularInline):
+    model = SelectOptionLink
     extra = 0
     fields = ("option", "default_selected")
 
@@ -316,7 +316,7 @@ class SelectQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
             },
         ),
     )
-    inlines = [SelectQuestionOptionInline, QuestionConditionInline]
+    inlines = [SelectOptionLinkInline, QuestionConditionInline]
     form = SelectQuestionAdminForm
 
 

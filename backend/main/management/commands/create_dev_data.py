@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.core.management import call_command
 
-from form.models.questions import RepeatableStepQuestion, SelectQuestionOption
+from form.models.questions import RepeatableStepQuestion, SelectOptionLink
 from form.services.form_evaluator import FormEvaluator
 from research.models.reviews import StatusChange, SubmissionStatus
 from research.models.study import Study
@@ -318,7 +318,7 @@ class Command(BaseCommand):
                     label_nl=self.faker_nl.word(),
                     label_en=self.faker_en.word(),
                 )
-                SelectQuestionOption.objects.create(
+                SelectOptionLink.objects.create(
                     question=select_question,
                     option=option,
                     _order=option_index,
@@ -458,7 +458,7 @@ class Command(BaseCommand):
         selected_options = self.faker.random_elements(
             elements=options, length=num_selected, unique=True
         )
-        return {"value": [option.pk for option in selected_options]}
+        return {"value": ",".join([str(option.pk) for option in selected_options])}
 
     def _generate_true_false_answer(self, question: TrueFalseQuestion) -> dict:
         return {"value": self.faker.pybool()}
