@@ -415,7 +415,7 @@ class TestStudyManagerAnnotations:
                 user=normal_user, form=question_form, study=study
             )
             response = QuestionResponse.objects.create(
-                question=question, answer={"value": [shared_option.pk]}
+                question=question, answer={"value": [str(shared_option.pk)]}
             )
             response.submissions.add(submission)
             studies.append(study)
