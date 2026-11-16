@@ -111,13 +111,19 @@ class FormEvaluator:
         # Check show conditions - at least one must be met.
         if show_conditions.exists():
             return any(
+                # We check if the condition is met
                 self._condition_is_met(condition, repeat_index)
+                # But also whether the trigger question is visible
+                and self.is_question_visible(condition.trigger_question, repeat_index)
                 for condition in show_conditions
             )
 
         if hide_conditions.exists():
             return not any(
+                # We check if the condition is met
                 self._condition_is_met(condition, repeat_index)
+                # But also whether the trigger question is visible
+                and self.is_question_visible(condition.trigger_question, repeat_index)
                 for condition in hide_conditions
             )
 
@@ -165,12 +171,16 @@ class FormEvaluator:
         if show_conditions.exists():
             return any(
                 self._condition_is_met(condition, repeat_index)
+                # Also check whether the trigger question is visible
+                and self.is_question_visible(condition.trigger_question, repeat_index)
                 for condition in show_conditions
             )
 
         if hide_conditions.exists():
             return not any(
                 self._condition_is_met(condition, repeat_index)
+                # Also check whether the trigger question is visible
+                and self.is_question_visible(condition.trigger_question, repeat_index)
                 for condition in hide_conditions
             )
 
