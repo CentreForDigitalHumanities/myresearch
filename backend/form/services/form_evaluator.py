@@ -88,7 +88,9 @@ class FormEvaluator:
 
         return False
 
-    def is_question_visible(self, question: BaseQuestion) -> bool:
+    def is_question_visible(
+        self, question: BaseQuestion, repeat_index: RepeatIndex | None = None
+    ) -> bool:
         """
         Check if a question should be shown based on show/hide conditions.
 
@@ -109,30 +111,45 @@ class FormEvaluator:
         # Check show conditions - at least one must be met.
         if show_conditions.exists():
             return any(
-                self._condition_is_met(condition) for condition in show_conditions
+                self._condition_is_met(condition, repeat_index)
+                for condition in show_conditions
             )
 
         if hide_conditions.exists():
             return not any(
-                self._condition_is_met(condition) for condition in hide_conditions
+                self._condition_is_met(condition, repeat_index)
+                for condition in hide_conditions
             )
 
         return True
 
-    def _condition_is_met(self, condition: QuestionCondition | StepCondition) -> bool:
+    def _condition_is_met(
+        self,
+        condition: QuestionCondition | StepCondition,
+        repeat_index: RepeatIndex | None = None,
+    ) -> bool:
         """
         Helper to evaluate whether a condition is met.
 
         Returns True if *any* response to the trigger question matches the trigger value.
         """
         trigger_responses = self.responses.get(condition.trigger_question.pk, [])
+
+        if repeat_index:
+            trigger_responses = [
+                response
+                for response in trigger_responses
+                if response.repeat_index == repeat_index
+            ]
         # Returns False if list is empty.
         return any(
             self.check_trigger_value(response.answer, condition.trigger_value)
             for response in trigger_responses
         )
 
-    def is_step_visible(self, step: Step) -> bool:
+    def is_step_visible(
+        self, step: Step, repeat_index: RepeatIndex | None = None
+    ) -> bool:
         """Check if a step should be shown based on show/hide conditions."""
         show_conditions = StepCondition.objects.filter(
             target_step=step, condition_type="show"
@@ -147,12 +164,14 @@ class FormEvaluator:
         # Check show conditions - at least one must be met.
         if show_conditions.exists():
             return any(
-                self._condition_is_met(condition) for condition in show_conditions
+                self._condition_is_met(condition, repeat_index)
+                for condition in show_conditions
             )
 
         if hide_conditions.exists():
             return not any(
-                self._condition_is_met(condition) for condition in hide_conditions
+                self._condition_is_met(condition, repeat_index)
+                for condition in hide_conditions
             )
 
         return True
