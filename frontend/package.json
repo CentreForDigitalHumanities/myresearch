@@ -62,7 +62,7 @@
         "vitest": "^4.1.12",
         "vue-eslint-parser": "^10.4.1",
         "vue-i18n-extract": "^2.0.7",
-        "vue-tsc": "^2.2.12"
+        "vue-tsc": "^3.3.14"
     },
     "allowScripts": {
         "@parcel/watcher@2.6.0": true,
@@ -70,8 +70,5 @@
         "vue-demi@0.13.11": true,
         "esbuild@0.28.2": true,
         "unrs-resolver@1.12.2": true
-    },
-    "overrides": {
-        "minimatch": "11.0.9"
     }
 }

@@ -34,7 +34,8 @@ print("Ok.")
 
 for translation_file in translation_files:
     print(f"Checking '{translation_file}' for missing translations...")
-    translations = json.load(open(translation_file, "r"))
+    with open(translation_file, "r", encoding="utf-8") as locale_file:
+        translations = json.load(locale_file)
     if check_empty_value(translations):
         print("One or more translations are missing.")
         exit(1)
