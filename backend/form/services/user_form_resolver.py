@@ -57,7 +57,7 @@ class UserFormResolver:
         instances: list[StepType] = []
         for step in steps:
             # Skip hidden steps
-            if not self.evaluator.is_step_visible(step):
+            if not self.evaluator.is_step_visible(step, parent_index):
                 continue
             # Check for repeatability
             if step.is_repeatable:
@@ -132,7 +132,7 @@ class UserFormResolver:
         step_questions = list(BaseQuestion.objects.filter(step=step))
         for question in step_questions:
             # Skip hidden questions
-            if not self.evaluator.is_question_visible(question):
+            if not self.evaluator.is_question_visible(question, repeat_index):
                 continue
             resolved_questions = self._resolve_question_instances(
                 question,
