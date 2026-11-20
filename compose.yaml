@@ -16,7 +16,7 @@ services:
       - "54320:5432"
 
   nginx-dev: &nginx-dev
-    image: nginx:latest
+    image: nginx:1.31.9
     container_name: ${NAME_PREFIX}mr-nginx-dev
     hostname: mr-nginx
     restart: unless-stopped
