@@ -21,6 +21,7 @@ from .models import (
     QuestionResponse,
     StepCondition,
     QuestionCondition,
+    SelectOptionLink,
 )
 
 # Utils
@@ -74,10 +75,10 @@ class SubstepInline(TinyMCETextFieldMixin, admin.StackedInline):
     verbose_name_plural = "Substeps"
 
 
-class SelectOptionInline(admin.TabularInline):
-    model = SelectOption
+class SelectOptionLinkInline(admin.TabularInline):
+    model = SelectOptionLink
     extra = 0
-    fields = ("label_nl", "label_en", "default_selected")
+    fields = ("option", "default_selected")
 
 
 class StepConditionInline(admin.StackedInline):
@@ -253,7 +254,7 @@ class StepAdmin(admin.ModelAdmin):
             "Step Info Order",
             {
                 "fields": ("step_info_text_order",),
-                "description": "Set the display order of step info. Use the substep IDs shown below.",
+                "description": "Set the display order of step info. Use the step info IDs shown below.",
             },
         ),
     )
@@ -315,7 +316,7 @@ class SelectQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
             },
         ),
     )
-    inlines = [SelectOptionInline, QuestionConditionInline]
+    inlines = [SelectOptionLinkInline, QuestionConditionInline]
     form = SelectQuestionAdminForm
 
 
@@ -490,8 +491,8 @@ class RepeatableStepQuestionAdmin(TinyMCETextFieldMixin, admin.ModelAdmin):
 
 @admin.register(SelectOption)
 class SelectOptionAdmin(admin.ModelAdmin):
-    list_display = ("label_nl", "label_en", "question", "default_selected")
-    list_filter = ("question", "default_selected")
+    list_display = ("label_nl", "label_en")
+    list_filter = ("questions",)
     search_fields = ("label_nl", "label_en")
 
 
